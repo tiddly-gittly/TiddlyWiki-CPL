@@ -1,0 +1,12 @@
+author: Gk0Wk
+created: 20211117170914086
+dependents: 
+description: Use cursor to resize the width of sidebar.
+list: readme
+modified: 20211117170914086
+name: Sidebar Resizer
+plugin-type: plugin
+source: https://github.com/tiddly-gittly/TiddlyWiki-Chinese-Tutorial/tree/master/plugins/Gk0Wk/sidebar-resizer
+title: $:/plugins/Gk0Wk/sidebar-resizer
+type: application/json
+version: 0.0.1

@@ -1,0 +1,23 @@
+{
+  "background_color": "white",
+  "theme_color": "white",
+  "description": "TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "tw5cpl/TiddlyWikiIconBlack.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "tw5cpl/TiddlyWikiIconWhite.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "name": "TiddlyWiki5 CPL",
+  "short_name": "TW5 CPL",
+  "lang": "zh-CN",
+  "start_url": "tw5cpl/",
+  "scope": "tw5cpl/"
+}

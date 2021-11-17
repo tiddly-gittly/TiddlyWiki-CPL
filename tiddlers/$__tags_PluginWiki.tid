@@ -1,0 +1,82 @@
+created: 20211117165810315
+list-after: $:/core/ui/ViewTemplate/tags
+modified: 20211117171740878
+tags: $:/tags/ViewTemplate
+title: $:/tags/PluginWiki
+type: text/vnd.tiddlywiki
+
+\define plugin-info(title,type)
+<$set value="$title$" name="currentTiddler">
+<div class="tc-plugin-info">
+<!-- 展开按钮 -->
+<div class="tc-plugin-info-chunk tc-plugin-info-toggle">
+<$button class="tc-btn-invisible tc-btn-dropdown" set=<<popup-state>> setTo="no">
+{{$:/core/images/chevron-down}}
+</$button>
+</div>
+<!-- 图标 -->
+<div class="tc-plugin-info-chunk tc-plugin-info-icon">
+<$list filter="[<currentTiddler>has[plugin-icon]]" emptyMessage="""<$transclude tiddler="$:/core/images/plugin-generic-$type$"/>""">
+<img src={{!!plugin-icon}}/>
+</$list>
+</div>
+<!-- 名称+描述+标题+版本 -->
+<div class="tc-plugin-info-chunk tc-plugin-info-description">
+<h1><strong><$text text={{{ [<currentTiddler>get[name]] ~[<currentTiddler>get[title]split[/]last[1]] }}}/></strong>: {{!!description}}</h1>
+<h2><$view tiddler=<<currentTiddler>> field="title"/></h2>
+<div><em>{{!!version}}</em></div>
+</div>
+<div class="tc-plugin-info-chunk tc-plugin-info-buttons">
+<$button class="tc-btn-invisible tc-install-plugin">
+{{$:/core/images/download-button}} {{$:/language/ControlPanel/Plugins/Update/Caption}}
+</$button>
+<div>
+</div>
+<$reveal stateTitle=<<currentTiddler>> stateField="requires-reload" type="match" text="yes">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$reveal>
+</div>
+</div>
+<div class="tc-plugin-info-dropdown">
+<$list filter="[enlist{!!dependents}] [<currentTiddler>get[parent-plugin]] +[limit[1]] ~[<currentTiddler>get[title]!is[tiddler]]" variable="ignore">
+<div class="tc-plugin-info-dropdown-message">
+<$list filter="[<currentTiddler>!is[tiddler]]">
+{{$:/language/ControlPanel/Plugins/NotInstalled/Hint}}
+</$list>
+<$list filter="[enlist{!!dependents}] [<currentTiddler>get[parent-plugin]] +[limit[1]]" variable="ignore">
+<div>
+{{$:/language/ControlPanel/Plugins/AlsoRequires}}
+<$list filter="[enlist{!!dependents}] [{!!parent-plugin}] +[sort[name]]" variable="dependency">
+<$text text=<<dependency>>/>
+</$list>
+</div>
+</$list>
+</div>
+</$list>
+<div class="tc-plugin-info-dropdown-body">
+<$transclude tiddler=<<currentTiddler>> field="text" mode="block"/>
+</div>
+</div>
+</$set>
+\end
+
+<$list filter="[all[current]prefix[$:/plugins/]tag[$:/tags/PluginWiki]!is[draft]]">
+<$macrocall $name="plugin-info" title=<<currentTiddler>> type={{{ [<currenrTiddler>get[type]else[plugin]] }}}/>
+<div class="tc-control-panel">
+
+|!Title |<$view tiddler=<<currentTiddler>> field="title"/> |
+|!Version |<$edit-text field="version" tag=input placeholder={{{ [<version>addprefix[Default is ]] }}}/> |
+|!Name |<$edit-text field="name" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[1]addprefix[Shall be: ]] }}}/> |
+|!Description |<$edit-text field="description" tag=textarea class="tc-edit-texteditor" placeholder="Add brief description for this plugin."/> |
+|!Author |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[Shall be: ]] }}}/> |
+|!URL |<$edit-text field="url" tag=input placeholder={{{ [<currentTiddler>get[title]encodeuricomponent[]addprefix[Default is recipes/library/tiddlers/]addsuffix[.json]] }}}/> |
+|!Type |<$select field="type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
+|!Requires Reload |<$checkbox field="requires-reload" checked="yes" unchecked="no" default="no"></$checkbox> |
+|!Readme |<$edit-text class="tc-edit-texteditor" field="text" placeholder="Readme of this plugin." tag=textarea/> |
+|!Icon |<$edit-text field="plugin-icon" placeholder="URL of plugin's Icon" tag=input/> |
+|!Source |<$edit-text field="sourse" tag=input placeholder="Source Code Project URL"/> |
+|!Documentation |<$edit-text field="documentation" tag=input placeholder="Documentation URL"/> |
+|!Dependents |<$edit-text class="tc-edit-texteditor" field="dependents" placeholder="Dependent plugin titles Use [[double square brackets]] for titles with spaces." tag=textarea/> |
+|!Parent Plugin |<$edit-text field="parent-plugin" tag=input placeholder="Parent plugin title"/> |
+|!Core Version |<$edit-text field="core-version" tag=input placeholder="Minimal core version, e.g. '>=5.2.0'"/> |
+
+</div>
+</$list>

@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20211117165500517",
+        "text": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n如想了解更多，请关注我们的[[GitHub Repo|https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced]]。\n\n为TiddlyWiki的CodeMirror编辑器提供一个灵活而丰富的扩展框架(包括高亮、补全、预览等功能)，任何人都可以使用此框架为编辑器编写扩展插件！目前基于此框架实现的功能有：\n\n* TiddlyWiki5(`text/vnd.tiddlywiki`)语法高亮；\n* Wiki链接自动提示；\n* Tiddler预览；\n* 可点击链接；\n\n更多功能正在开发中，欢迎你的加入！\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nView more on [[GitHub Repo|https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced]].\n\nCodeMirror editor for TiddlyWiki provides a flexible and rich extension framework (including highlighting, completion, preview and other features), anyone can use this framework to write extension plug-ins for the editor! Currently based on this framework to achieve the following features.\n\n* TiddlyWiki5 (`text/vnd.tiddlywiki`) syntax highlighting.\n* Wiki link auto-tip;\n* Tiddler preview;\n* Clickable links.\n\nMore features are in development, welcome to join!\n</$list>\n</$list>",
+        "tags": "$:/tags/PluginWiki",
+        "title": "$:/plugins/Gk0Wk/TW5-CodeMirror-Enhanced",
+        "modified": "20211117171846526",
+        "type": "plugin",
+        "version": "0.1.1",
+        "author": "Gk0Wk",
+        "description": "TiddlyWiki5 highlighting mode for CodeMirror.",
+        "dependents": "$:/plugins/tiddlywiki/codemirror\n$:/plugins/tiddlywiki/codemirror-autocomplete",
+        "sourse": "https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced",
+        "documentation": "https://gk0wk.github.io/TW5-CodeMirror-Enhanced",
+        "url": "https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/download/v0.1.1/TW5-CodeMirror-Enhanced-0.1.1.json",
+        "name": "TW5-CodeMirror-Enhanced",
+        "requires-reload": "yes",
+        "page-cover": "https://unsplash.com/photos/_SgRNwAVNKw/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8OXx8Y29kZXx8MHx8fHwxNjM3MTY3MDU0&force=true&w=1920",
+        "icon": "⌨️"
+    }
+]
