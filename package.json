@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "html-minifier-terser": "^6.0.2",
-    "tiddlywiki": "^5.2.0",
-    "uglify-js": "^3.14.3",
-    "workbox-cli": "^6.4.1"
+    "cross-env": "7.0.3",
+    "html-minifier-terser": "6.0.2",
+    "tiddlywiki": "5.2.0",
+    "uglify-js": "3.14.3",
+    "workbox-cli": "6.4.1"
   }
 }
