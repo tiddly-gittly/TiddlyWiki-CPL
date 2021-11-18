@@ -5,7 +5,8 @@
   "main": "scripts/index.js",
   "scripts": {
     "test": "npx tiddlywiki . --listen port=8080",
-    "buildlibrary": "node -e \"require('./scripts/index').build();\""
+    "buildlibrary": "node -e \"require('./scripts/index').build();\"",
+    "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html');\""
   },
   "repository": {
     "type": "git",

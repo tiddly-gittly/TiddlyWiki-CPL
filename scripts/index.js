@@ -51,14 +51,15 @@ function shellI(command, options) {
  */
 function buildLibrary(distDir, minify) {
     if (typeof distDir !== 'string' || distDir.length === 0) distDir = 'dist/library';
-    if (typeof minify !== 'boolean') minify = true;
+    if (typeof minify !== 'boolean') minify = false;
 
     // 导出所有插件
     shell(`npx tiddlywiki . --output ${distDir} --rendertiddler template.plugins.json plugins.json text/plain`);
+    shellI(`mkdir ${distDir}/plugins`);
     let plugins = [];
     JSON.parse(fs.readFileSync(`${distDir}/plugins.json`)).forEach((plugin) => {
         if (!plugin) return;
-        if (!plugin.title || plugin.title === '') return;
+        if (!plugin['_title'] || plugin['_title'] === '') return;
         delete plugin['bag'];
         delete plugin['created'];
         delete plugin['creator'];
@@ -71,10 +72,16 @@ function buildLibrary(distDir, minify) {
         delete plugin['type'];
         delete plugin['icon'];
         delete plugin['page-cover'];
+        plugin['title'] = plugin['_title'];
+        delete plugin['_title'];
         plugin['plugin-type'] = plugin['_type'];
         delete plugin['_type'];
         plugin['icon'] = plugin['plugin-icon'];
         delete plugin['plugin-icon'];
+        if (plugin['uri'] && plugin['uri'] !== '') {
+            shellI(`wget ${plugin['uri']} -O ${distDir}/plugins/${encodeURIComponent(plugin['title'])}.json`);
+        }
+        delete plugin['uri'];
         plugins.push(plugin);
     });
     fs.writeFileSync(`${distDir}/index-raw.html`, new String(fs.readFileSync(`scripts/library.emplate.html`)).replace('\'%%plugins%%\'', JSON.stringify(plugins)));
@@ -84,7 +91,7 @@ function buildLibrary(distDir, minify) {
     if (minify) {
         shellI(`npx html-minifier-terser -c scripts/html-minifier-terser.config.json -o ${distDir}/index.html ${distDir}/index-raw.html && rm ${distDir}/index-raw.html`);
     } else {
-        shellI(`mv ${distDir}/index-raw.html ${distDir}/${htmlName}`);
+        shellI(`mv ${distDir}/index-raw.html ${distDir}/index.html`);
     }
 }
 

@@ -5,12 +5,12 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "tw5cpl/icon-black.png",
+      "src": "TiddlyWiki-CPL/icon-black.png",
       "sizes": "775x775",
       "type": "image/png"
     },
     {
-      "src": "tw5cpl/icon-white.png",
+      "src": "TiddlyWiki-CPL/icon-white.png",
       "sizes": "775x775",
       "type": "image/png"
     }
@@ -18,6 +18,6 @@
   "name": "TiddlyWiki5 CPL",
   "short_name": "TW5 CPL",
   "lang": "zh-CN",
-  "start_url": "tw5cpl/",
-  "scope": "tw5cpl/"
+  "start_url": "TiddlyWiki-CPL/",
+  "scope": "TiddlyWiki-CPL/"
 }

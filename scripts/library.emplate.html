@@ -13,12 +13,6 @@
         ! function() {
             "use strict";
 
-            var pluginMap = {};
-            assetList.forEach(function (asset) {
-                pluginMap['recipes/library/tiddlers/' + encodeURIComponent(asset.title) + '.json']
-                 = asset.uri || ('plugins/' + encodeURIComponent(asset.title) + '.json');
-            });
-
             // Listen for window messages
             window.addEventListener("message", function listener(event) {
                 console.log("plugin library: Received message from", event.origin);
@@ -36,7 +30,7 @@
                                 body: JSON.stringify(assetList, null, 4)
                             }, "*");
                         } else if (event.data.url.indexOf("recipes/library/tiddlers/") === 0) {
-                            var url = pluginMap[event.data.url] || '';
+                            var url = "plugins/" + encodeURIComponent(removePrefix(event.data.url,"recipes/library/tiddlers/"));
                             // Route for recipes/library/tiddlers/<uri-encoded-tiddler-title>.json
                             httpGet(url, function(err, responseText) {
                                 if (err) {
