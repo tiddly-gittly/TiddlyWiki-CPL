@@ -1,9 +1,23 @@
-caption: 插件
+caption: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">关于插件源</$list><$list filter="[<lang>!search[zh]]">About CPL</$list></$list>
 created: 20211117164017462
-modified: 20211117164219096
+modified: 20211118114341039
 tags: $:/tags/SideBar
 title: TableOfContents
 type: text/vnd.tiddlywiki
+
+<<<
+{{$:/config/ChinesePluginLibrary}}
+<<<
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">
+
+!!! 所有收录的插件:
+
+</$list><$list filter="[<lang>!search[zh]]">
+
+!!! All included plugins:
+
+</$list></$list>
 
 <div class="tc-table-of-contents">
 <<toc "$:/tags/PluginWiki">>

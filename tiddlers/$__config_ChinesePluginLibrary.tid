@@ -1,10 +1,10 @@
 caption: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">太微中文社区插件库</$list><$list filter="[<lang>!search[zh]]">TiddlyWiki Chinese CPL</$list></$list>
 created: 20211118102827947
-modified: 20211118102832555
+modified: 20211118114932941
 tags: $:/tags/PluginLibrary
 title: $:/config/ChinesePluginLibrary
 type: text/vnd.tiddlywiki
-url: https://dl.newnan.city/index.html
+url: https://tiddly-gittly.github.io/TiddlyWiki-CPL/library/index.html
 
 <!-- lang变量就是当前语言 -->
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">

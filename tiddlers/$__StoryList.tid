@@ -1,2 +1,5 @@
-list: Index
+created: 20211118114913518
+list: $:/config/ChinesePluginLibrary $:/ControlPanel
+modified: 20211118114933091
 title: $:/StoryList
+type: text/vnd.tiddlywiki
