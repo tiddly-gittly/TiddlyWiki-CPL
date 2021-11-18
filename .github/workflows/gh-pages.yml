@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Build Library
-        run: buildlibrary
+        run: npm run buildlibrary
 
       - name: Make offline cache
         run: npx workbox injectManifest workbox-config.js
