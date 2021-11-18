@@ -9,7 +9,7 @@ type: text/vnd.tiddlywiki
 \whitespace trim
 <$button tooltip="Add plugin info to CPL wiki" aria-label="New Plugin" class="tc-btn-invisible">
 {{$:/core/images/new-button}}
-<$action-createtiddler $basetitle="$:/plugins/?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
+<$action-createtiddler $basetitle="?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
 <$action-navigate $to=<<createTiddler-title>>/>
 </$action-createtiddler>
 </$button>
