@@ -2,9 +2,10 @@
   "name": "tiddlywiki-cpl",
   "version": "1.0.0",
   "description": "TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities",
-  "main": "script/index.js",
+  "main": "scripts/index.js",
   "scripts": {
-    "test": "npx tiddlywiki . --listen port=8080"
+    "test": "npx tiddlywiki . --listen port=8080",
+    "buildlibrary": "node -e \"require('./scripts/index').build();\""
   },
   "repository": {
     "type": "git",

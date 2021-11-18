@@ -1,7 +1,7 @@
 created: 20211117165810315
 list-after: $:/core/ui/ViewTemplate/tags
-modified: 20211117171740878
-tags: $:/tags/ViewTemplate
+modified: 20211118083718798
+tags: $:/tags/ViewTemplate TW5CPL
 title: $:/tags/PluginWiki
 type: text/vnd.tiddlywiki
 
@@ -52,31 +52,59 @@ type: text/vnd.tiddlywiki
 </div>
 </$list>
 <div class="tc-plugin-info-dropdown-body">
-<$transclude tiddler=<<currentTiddler>> field="text" mode="block"/>
+<$transclude tiddler=<<currentTiddler>> field="readme" mode="block"/>
 </div>
 </div>
 </$set>
 \end
 
 <$list filter="[all[current]prefix[$:/plugins/]tag[$:/tags/PluginWiki]!is[draft]]">
-<$macrocall $name="plugin-info" title=<<currentTiddler>> type={{{ [<currenrTiddler>get[type]else[plugin]] }}}/>
+
+!! {{$:/language/Buttons/Preview/Caption}}
+
+<$macrocall $name="plugin-info" title=<<currentTiddler>> type={{{ [<currenrTiddler>get[_type]else[plugin]] }}}/>
+
+!! {{$:/language/Buttons/Edit/Caption}}
+
 <div class="tc-control-panel">
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search[zh]]" variable="lang">
+
+|!标题 |<$view tiddler=<<currentTiddler>> field="title"/> |
+|!版本 |<$edit-text field="version" tag=input placeholder={{{ [<version>addprefix[默认为：]] }}}/> |
+|!名称 |<$edit-text field="name" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[1]addprefix[可能是：]] }}}/> |
+|!简介 |<$edit-text field="description" tag=textarea class="tc-edit-texteditor" placeholder="为插件添加简短的介绍"/> |
+|!作者 |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[可能是：]] }}}/> |
+|!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[title]encodeuricomponent[]addprefix[从哪里可以下载到这个插件(JSON文件), 默认为 plugins/]addsuffix[.json]] }}}/> |
+|!类型 |<$select field="_type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
+|!安装后需要刷新页面 |<$checkbox field="requires-reload" checked="yes" unchecked="no" default="no"></$checkbox> |
+|!介绍 |<$edit-text class="tc-edit-texteditor" field="readme" placeholder="插件的详细介绍" tag=textarea/> |
+|!图标 |<$edit-text field="plugin-icon" placeholder="插件图标的URL" tag=input/> |
+|!源代码 |<$edit-text field="sourse" tag=input placeholder="Source Code Project URL"/> |
+|!文档 |<$edit-text field="documentation" tag=input placeholder="Documentation URL"/> |
+|!前置依赖 |<$edit-text class="tc-edit-texteditor" field="dependents" placeholder="前置依赖插件的标题" tag=textarea/> |
+|!父插件 |<$edit-text field="parent-plugin" tag=input placeholder="父插件的标题"/> |
+|!核心版本要求 |<$edit-text field="core-version" tag=input placeholder="最小的核心版本，如'>=5.2.0'"/> |
+
+</$list>
+<$list filter="[<lang>!search[zh]]" variable="lang">
 
 |!Title |<$view tiddler=<<currentTiddler>> field="title"/> |
 |!Version |<$edit-text field="version" tag=input placeholder={{{ [<version>addprefix[Default is ]] }}}/> |
 |!Name |<$edit-text field="name" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[1]addprefix[Shall be: ]] }}}/> |
 |!Description |<$edit-text field="description" tag=textarea class="tc-edit-texteditor" placeholder="Add brief description for this plugin."/> |
 |!Author |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[Shall be: ]] }}}/> |
-|!URL |<$edit-text field="url" tag=input placeholder={{{ [<currentTiddler>get[title]encodeuricomponent[]addprefix[Default is recipes/library/tiddlers/]addsuffix[.json]] }}}/> |
-|!Type |<$select field="type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
+|!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[title]encodeuricomponent[]addprefix[Where to download this plugin(JSON file), default is plugins/]addsuffix[.json]] }}}/> |
+|!Type |<$select field="_type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
 |!Requires Reload |<$checkbox field="requires-reload" checked="yes" unchecked="no" default="no"></$checkbox> |
-|!Readme |<$edit-text class="tc-edit-texteditor" field="text" placeholder="Readme of this plugin." tag=textarea/> |
+|!Readme |<$edit-text class="tc-edit-texteditor" field="readme" placeholder="Readme of this plugin." tag=textarea/> |
 |!Icon |<$edit-text field="plugin-icon" placeholder="URL of plugin's Icon" tag=input/> |
 |!Source |<$edit-text field="sourse" tag=input placeholder="Source Code Project URL"/> |
 |!Documentation |<$edit-text field="documentation" tag=input placeholder="Documentation URL"/> |
-|!Dependents |<$edit-text class="tc-edit-texteditor" field="dependents" placeholder="Dependent plugin titles Use [[double square brackets]] for titles with spaces." tag=textarea/> |
+|!Dependents |<$edit-text class="tc-edit-texteditor" field="dependents" placeholder="Dependent plugin titles." tag=textarea/> |
 |!Parent Plugin |<$edit-text field="parent-plugin" tag=input placeholder="Parent plugin title"/> |
 |!Core Version |<$edit-text field="core-version" tag=input placeholder="Minimal core version, e.g. '>=5.2.0'"/> |
 
-</div>
 </$list>
+</$list>
+</div>

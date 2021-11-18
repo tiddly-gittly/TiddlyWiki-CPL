@@ -5,13 +5,13 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "tw5cpl/TiddlyWikiIconBlack.png",
-      "sizes": "256x256",
+      "src": "tw5cpl/icon-black.png",
+      "sizes": "775x775",
       "type": "image/png"
     },
     {
-      "src": "tw5cpl/TiddlyWikiIconWhite.png",
-      "sizes": "144x144",
+      "src": "tw5cpl/icon-white.png",
+      "sizes": "775x775",
       "type": "image/png"
     }
   ],

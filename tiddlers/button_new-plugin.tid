@@ -1,0 +1,15 @@
+caption: New Plugin
+created: 20211118061452999
+description: Add plugin info to CPL wiki
+modified: 20211118061712614
+tags: $:/tags/PageControls
+title: button/new-plugin
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$button tooltip="Add plugin info to CPL wiki" aria-label="New Plugin" class="tc-btn-invisible">
+{{$:/core/images/new-button}}
+<$action-createtiddler $basetitle="$:/plugins/?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
+<$action-navigate $to=<<createTiddler-title>>/>
+</$action-createtiddler>
+</$button>

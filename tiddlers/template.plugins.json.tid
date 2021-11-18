@@ -1,0 +1,10 @@
+created: 20211118083535992
+modified: 20211118085141531
+tags: TW5CPL
+title: template.plugins.json
+type: text/vnd.tiddlywiki
+
+`[
+`<$list filter="[all[tiddlers]prefix[$:/plugins/]!prefix[$:/plugins/?]tag[$:/tags/PluginWiki]get[title]]">`	`<<jsontiddler>>`,
+`</$list>`	null
+]`
