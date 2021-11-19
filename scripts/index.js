@@ -8,16 +8,6 @@ const {
 
 /** 项目路径 */
 const repoFolder = path.join(path.dirname(__filename), '..');
-/** 获得TW版本号 */
-const getVersion = '$(npx tiddlywiki . --version | grep -Eo \'^[0-9]+\.[0-9]+\.[0-9]+.*$\' | head -n 1)';
-
-/** 设置环境变量，TW会同时在自己的源码路径以及环境变量定义的路径中寻找插件、主题和语言
- *  如果不这样写，plugins、themes、languages和editions里的内容就无法被加载
- */
-process.env.TIDDLYWIKI_PLUGIN_PATH = `${repoFolder}/plugins`;
-process.env.TIDDLYWIKI_THEME_PATH = `${repoFolder}/themes`;
-process.env.TIDDLYWIKI_LANGUAGE_PATH = `${repoFolder}/languages`;
-process.env.TIDDLYWIKI_EDITION_PATH = `${repoFolder}/editions`;
 
 /**
  * 执行命令行指令，并打印该指令的结果
@@ -60,6 +50,21 @@ function buildLibrary(distDir, minify) {
     JSON.parse(fs.readFileSync(`${distDir}/plugins.json`)).forEach((plugin) => {
         if (!plugin) return;
         if (!plugin['_title'] || plugin['_title'] === '') return;
+        try {
+            if (plugin['uri'] && plugin['uri'] !== '') {
+                shell(`wget ${plugin['uri']} -O ${distDir}/plugins/${encodeURIComponent(plugin['title'])}.json`);
+            }
+          delete plugin['uri'];
+          let pluginjson = JSON.parse(fs.readFileSync(`{distDir}/plugins/${encodeURIComponent(plugin['title'])}.json`))[0];
+          let shuoldReload = false;
+          JSON.parse(pluginjson.text).tiddlers.forEach((title, tiddler) => {
+            if (tiddler.type === "application/javascript" && tiddler.type['module-type'] !== undefined && tiddler.type['module-type'] !== '') shuoldReload = true;
+          });
+          plugin['requires-reload'] = shuoldReload;
+          if (pluginjson['version'] && pluginjson['version'] !== '') plugin['version'] = pluginjson['version'];
+        } catch (e) {
+          return;
+        }
         delete plugin['bag'];
         delete plugin['created'];
         delete plugin['creator'];
@@ -78,10 +83,6 @@ function buildLibrary(distDir, minify) {
         delete plugin['_type'];
         plugin['icon'] = plugin['plugin-icon'];
         delete plugin['plugin-icon'];
-        if (plugin['uri'] && plugin['uri'] !== '') {
-            shellI(`wget ${plugin['uri']} -O ${distDir}/plugins/${encodeURIComponent(plugin['title'])}.json`);
-        }
-        delete plugin['uri'];
         plugins.push(plugin);
     });
     fs.writeFileSync(`${distDir}/index-raw.html`, new String(fs.readFileSync(`scripts/library.emplate.html`)).replace('\'%%plugins%%\'', JSON.stringify(plugins)));
