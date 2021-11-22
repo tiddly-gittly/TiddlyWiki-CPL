@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20211122052309353",
+        "text": "",
+        "title": "oflg/Fishing",
+        "modified": "20211122053536114",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "$:/plugins/oflg/fishing",
+        "_type": "plugin",
+        "author": "oflg",
+        "description": "[[TiddlyWiki|https://tiddlywiki.com/]]集成[[抽认卡|https://docs.ankiweb.net/background.html]]，钓鱼使用[[Anki算法|https://gist.github.com/oflg/6c9cc15bbe2172688a0b4bd817b12bd7]]。",
+        "name": "钓鱼",
+        "requires-reload": "no",
+        "version": "1.5.8",
+        "readme": "抽认卡的背后有两个简单原理：[[间隔重复和主动回忆|https://docs.ankiweb.net/background.html]]。绝大多数人都经历过很多次“复习和考试”，但很少意识到其中运用了这两个原理。\n\n钓鱼插件使用Anki算法将抽认卡集成在TiddlyWiki中，使其不仅能记笔记，更能记住笔记。\n\n既然在TiddlyWiki中Tiddler的意思是故事河中的小鱼，那么就把将其勾入脑海中的插件叫做钓鱼。",
+        "sourse": "https://github.com/oflg/fishing/stargazers",
+        "documentation": "https://oflg.github.io/fishing/",
+        "core-version": ">=5.2.0"
+    }
+]
