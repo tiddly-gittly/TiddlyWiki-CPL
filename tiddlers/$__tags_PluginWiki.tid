@@ -1,6 +1,6 @@
 created: 20211117165810315
 list-after: $:/core/ui/ViewTemplate/tags
-modified: 20211119115521019
+modified: 20211123034129858
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/tags/PluginWiki
 type: text/vnd.tiddlywiki
@@ -71,11 +71,11 @@ type: text/vnd.tiddlywiki
 <$list filter="[<lang>search[zh]]" variable="lang">
 
 |!标题 |<$edit-text field="_title" tag=input placeholder="插件的标题，以$:/plugins/开头" }}}/> |
-|!版本 |<$edit-text field="version" tag=input placeholder={{{ [<version>addprefix[默认为：]] }}}/> |
+|!版本 |<$edit-text field="version" tag=input placeholder="当插件文件不包含版本号时，会用此版本号替代"/> |
 |!名称 |<$edit-text field="name" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[1]addprefix[可能是：]] }}}/> |
 |!简介 |<$edit-text field="description" tag=textarea class="tc-edit-texteditor" placeholder="为插件添加简短的介绍"/> |
 |!作者 |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[可能是：]] }}}/> |
-|!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[_title]encodeuricomponent[]addprefix[从哪里可以下载到这个插件(JSON文件), 不填则会从 public/library/plugins 中寻找]addsuffix[.json]] }}}/> |
+|!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[_title]removeprefix[$:/plugins/]search-replace[/],[_]encodeuricomponent[]addprefix[从哪里可以找到这个插件(JSON文件)。如果插件的json文件在网络上，请填写下载地址；如果插件没有下载地址，需要手动下载或者编译，请将json插件文件放在本项目的本地文件夹的public/library/plugin路径下，并命名为 ]addsuffix[.json]] }}}/> |
 |!类型 |<$select field="_type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
 |!介绍 |<$edit-text class="tc-edit-texteditor" field="readme" placeholder="插件的详细介绍" tag=textarea/> |
 |!图标 |<$edit-text field="plugin-icon" placeholder="插件图标的URL" tag=input/> |
@@ -88,12 +88,12 @@ type: text/vnd.tiddlywiki
 </$list>
 <$list filter="[<lang>!search[zh]]" variable="lang">
 
-|!Title ||!标题 |<$edit-text field="_title" tag=input placeholder="Title of the plugin, starting with $:/plugins/" }}}/> |
-|!Version |<$edit-text field="version" tag=input placeholder={{{ [<version>addprefix[Default is ]] }}}/> |
+|!Title |<$edit-text field="_title" tag=input placeholder="Title of the plugin, starting with $:/plugins/" }}}/> |
+|!Version |<$edit-text field="version" tag=input placeholder="When the plugin file does not contain a version number, this version number will be used instead."/> |
 |!Name |<$edit-text field="name" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[1]addprefix[Shall be: ]] }}}/> |
 |!Description |<$edit-text field="description" tag=textarea class="tc-edit-texteditor" placeholder="Add brief description for this plugin."/> |
 |!Author |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[Shall be: ]] }}}/> |
-|!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[_title]encodeuricomponent[]addprefix[Where to download this plugin(JSON file), if empty then find ]addsuffix[.json in public/library/plugins]] }}}/> |
+|!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[_title]removeprefix[$:/plugins/]search-replace[/],[_]encodeuricomponent[]addprefix[Where to find this plugin(JSON file). Fill with uri if json file can be download from internet. If the plugin does not have a download address and needs to be downloaded or compiled manually, please place the json plugin file under the public/library/plugin path in the local folder of this project and name it to ]addsuffix[.json]] }}}/> |
 |!Type |<$select field="_type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
 |!Readme |<$edit-text class="tc-edit-texteditor" field="readme" placeholder="Readme of this plugin." tag=textarea/> |
 |!Icon |<$edit-text field="plugin-icon" placeholder="URL of plugin's Icon" tag=input/> |

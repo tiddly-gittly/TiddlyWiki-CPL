@@ -41,7 +41,7 @@ function shellI(command, options) {
  */
 function buildLibrary(distDir, minify) {
     if (typeof distDir !== 'string' || distDir.length === 0) distDir = 'dist/library';
-    if (typeof minify !== 'boolean') minify = false;
+    if (typeof minify !== 'boolean') minify = true;
 
     // 导出所有插件
     shell(`npx tiddlywiki . --output ${distDir} --rendertiddler template.plugins.json plugins.json text/plain`);
@@ -51,19 +51,28 @@ function buildLibrary(distDir, minify) {
         if (!plugin) return;
         if (!plugin['_title'] || plugin['_title'] === '') return;
         try {
+            let distPluginPath = `${distDir}/plugins/${encodeURIComponent(plugin['title'].replace('$:/plugins/', '').replace('/', '_'))}.json`;
             if (plugin['uri'] && plugin['uri'] !== '') {
-                shell(`wget ${plugin['uri']} -O ${distDir}/plugins/${encodeURIComponent(plugin['title'])}.json`);
+                shellI(`wget ${plugin['uri']} -O ${distPluginPath}`);
             }
-          delete plugin['uri'];
-          let pluginjson = JSON.parse(fs.readFileSync(`{distDir}/plugins/${encodeURIComponent(plugin['title'])}.json`))[0];
-          let shuoldReload = false;
-          JSON.parse(pluginjson.text).tiddlers.forEach((title, tiddler) => {
-            if (tiddler.type === "application/javascript" && tiddler.type['module-type'] !== undefined && tiddler.type['module-type'] !== '') shuoldReload = true;
-          });
-          plugin['requires-reload'] = shuoldReload;
-          if (pluginjson['version'] && pluginjson['version'] !== '') plugin['version'] = pluginjson['version'];
+            delete plugin['uri'];
+            let pluginjson = JSON.parse(fs.readFileSync(`${distPluginPath}`))[0];
+            let shuoldReload = false;
+            let shadowTiddlers = JSON.parse(pluginjson.text).tiddlers;
+            let shadowTitles = Object.keys(shadowTiddlers);
+            for (let i = 0, length = shadowTitles.length; i < length; i++) {
+                const tiddler = shadowTiddlers[shadowTitles[i]];
+                if (tiddler.type === "application/javascript" && tiddler.type['module-type'] !== undefined && tiddler.type['module-type'] !== '') {
+                    shuoldReload = true;
+                    break;
+                }
+            }
+            plugin['requires-reload'] = shuoldReload;
+            if (pluginjson['version'] && pluginjson['version'] !== '') plugin['version'] = pluginjson['version'];
         } catch (e) {
-          return;
+            console.log('================================================');
+            console.error(e);
+            return;
         }
         delete plugin['bag'];
         delete plugin['created'];
@@ -86,7 +95,7 @@ function buildLibrary(distDir, minify) {
         plugins.push(plugin);
     });
     fs.writeFileSync(`${distDir}/index-raw.html`, new String(fs.readFileSync(`scripts/library.emplate.html`)).replace('\'%%plugins%%\'', JSON.stringify(plugins)));
-    shellI(`rm ${distDir}/plugins.json`);
+    //shellI(`rm ${distDir}/plugins.json`);
 
     // 最小化：HTML
     if (minify) {
