@@ -53,7 +53,7 @@ function buildLibrary(distDir, minify) {
         if (!plugin) return;
         if (!plugin['_title'] || plugin['_title'] === '') return;
         try {
-            let distPluginPath = `${distDir}/plugins/${encodeURIComponent(plugin['_title'].replace('$:/plugins/', '').replace('/', '_'))}.json`;
+            let distPluginPath = `${distDir}/plugins/${encodeURIComponent(plugin['_title'].replace('$:/plugins/', '').replace(/[:/<>"\|?*]/g, '_'))}.json`;
             if (plugin['uri'] && plugin['uri'] !== '') {
                 console.log(`  - Downloading json plugin ${plugin['title']}`);
                 shellI(`wget ${plugin['uri']} -O ${distPluginPath} &> /dev/null`);
