@@ -44,16 +44,19 @@ function buildLibrary(distDir, minify) {
     if (typeof minify !== 'boolean') minify = true;
 
     // 导出所有插件
+    console.log(`Exporting all plugin informations`);
     shell(`npx tiddlywiki . --output ${distDir} --rendertiddler template.plugins.json plugins.json text/plain`);
     shellI(`mkdir ${distDir}/plugins`);
     let plugins = [];
+    console.log(`Downloading all online plugins`);
     JSON.parse(fs.readFileSync(`${distDir}/plugins.json`)).forEach((plugin) => {
         if (!plugin) return;
         if (!plugin['_title'] || plugin['_title'] === '') return;
         try {
-            let distPluginPath = `${distDir}/plugins/${encodeURIComponent(plugin['title'].replace('$:/plugins/', '').replace('/', '_'))}.json`;
+            let distPluginPath = `${distDir}/plugins/${encodeURIComponent(plugin['_title'].replace('$:/plugins/', '').replace('/', '_'))}.json`;
             if (plugin['uri'] && plugin['uri'] !== '') {
-                shellI(`wget ${plugin['uri']} -O ${distPluginPath}`);
+                console.log(`  - Downloading json plugin ${plugin['title']}`);
+                shellI(`wget ${plugin['uri']} -O ${distPluginPath} &> /dev/null`);
             }
             delete plugin['uri'];
             let pluginjson = JSON.parse(fs.readFileSync(`${distPluginPath}`))[0];
@@ -70,7 +73,6 @@ function buildLibrary(distDir, minify) {
             plugin['requires-reload'] = shuoldReload;
             if (pluginjson['version'] && pluginjson['version'] !== '') plugin['version'] = pluginjson['version'];
         } catch (e) {
-            console.log('================================================');
             console.error(e);
             return;
         }
@@ -94,15 +96,18 @@ function buildLibrary(distDir, minify) {
         delete plugin['plugin-icon'];
         plugins.push(plugin);
     });
+    console.log(`Generating plugin library file`);
     fs.writeFileSync(`${distDir}/index-raw.html`, new String(fs.readFileSync(`scripts/library.emplate.html`)).replace('\'%%plugins%%\'', JSON.stringify(plugins)));
-    //shellI(`rm ${distDir}/plugins.json`);
+    shellI(`rm ${distDir}/plugins.json`);
 
     // 最小化：HTML
     if (minify) {
+        console.log(`Minifying plugin library file`);
         shellI(`npx html-minifier-terser -c scripts/html-minifier-terser.config.json -o ${distDir}/index.html ${distDir}/index-raw.html && rm ${distDir}/index-raw.html`);
     } else {
         shellI(`mv ${distDir}/index-raw.html ${distDir}/index.html`);
     }
+    console.log(`CPL generated`);
 }
 
 module.exports = {
