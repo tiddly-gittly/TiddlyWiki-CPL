@@ -30,7 +30,7 @@
                                 body: JSON.stringify(assetList, null, 4)
                             }, "*");
                         } else if (event.data.url.indexOf("recipes/library/tiddlers/") === 0) {
-                            var url = "plugins/" + encodeURIComponent(removePrefix(event.data.url, "recipes/library/tiddlers/").replace('$:/plugins/', '').replace(/[:/<>"\|?*]/g, '_'));
+                            var url = "plugins/" + encodeURIComponent(decodeURIComponent(removePrefix(event.data.url, "recipes/library/tiddlers/")).replace('$:/plugins/', '').replace(/[:/<>"\|?*]/g, '_'));
                             // Route for recipes/library/tiddlers/<uri-encoded-tiddler-title>.json
                             httpGet(url, function(err, responseText) {
                                 if (err) {
