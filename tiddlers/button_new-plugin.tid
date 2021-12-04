@@ -1,9 +1,10 @@
 caption: New Plugin
 created: 20211118061452999
 description: Add plugin info to CPL wiki
-modified: 20211118061712614
+modified: 20211202072925764
 tags: $:/tags/PageControls
 title: button/new-plugin
+tmap.id: 1e652fec-28e9-4dba-a69e-6c114bb2f81b
 type: text/vnd.tiddlywiki
 
 \whitespace trim

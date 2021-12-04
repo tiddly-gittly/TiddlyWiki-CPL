@@ -4,7 +4,7 @@
   "description": "TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities",
   "main": "scripts/index.js",
   "scripts": {
-    "test": "npx tiddlywiki . --listen port=8080",
+    "server": "npx cross-env TIDDLYWIKI_PLUGIN_PATH='./plugins' TIDDLYWIKI_THEME_PATH='./themes' TIDDLYWIKI_LANGUAGE_PATH='./languages' npx tiddlywiki . --listen port=8080",
     "buildlibrary": "node -e \"require('./scripts/index').build();\"",
     "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html');\""
   },
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
   "devDependencies": {
-    "cross-env": "7.0.3",
+    "cross-env": "^7.0.3",
     "html-minifier-terser": "6.1.0",
     "tiddlywiki": "5.2.0",
     "uglify-js": "3.14.3",
