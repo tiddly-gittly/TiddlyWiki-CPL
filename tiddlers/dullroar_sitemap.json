@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20211204101741708",
+        "text": "",
+        "title": "dullroar/sitemap",
+        "modified": "20211204102113445",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "$:/plugins/dullroar/sitemap",
+        "_type": "plugin",
+        "author": "Jim Lehmer",
+        "description": "TiddlyWiki5 plugin to generate sitemap.xml.",
+        "name": "sitemap",
+        "requires-reload": "no",
+        "core-version": ">=5.0.8",
+        "sourse": "https://github.com/dullroar/TW5-sitemap",
+        "documentation": "https://github.com/dullroar/TW5-sitemap/blob/master/README.md",
+        "readme": "iddlyWiki5 plugin to generate sitemap.xml (http://www.sitemaps.org/protocol.html).\n\nIt works in the browser but its primary use case is for generating a sitemap.xml for static sites\nusing something similar to the following when running TiddlyWiki under node.js:\n\n```\ntiddlywiki --rendertiddlers [!is[system]] statictiddler.html static text/plain  --rendertiddler sitemap sitemap.xml text/plain\n```\n\nThe rest of this document presumes familiarity with TiddlyWiki5 (TW) and node.js (node)."
+    }
+]
