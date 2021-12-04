@@ -49,17 +49,23 @@ function buildLibrary(distDir, minify) {
     shellI(`mkdir ${distDir}/plugins`);
     let plugins = [];
     console.log(`Downloading all online plugins`);
+    // 遍历所有插件
     JSON.parse(fs.readFileSync(`${distDir}/plugins.json`)).forEach((plugin) => {
         if (!plugin) return;
         if (!plugin['_title'] || plugin['_title'] === '') return;
         try {
+            // 插件的合法目标路径
             let distPluginPath = `${distDir}/plugins/${encodeURIComponent(plugin['_title'].replace('$:/plugins/', '').replace(/[:/<>"\|?*]/g, '_'))}.json`;
+            // 如果是外置的插件，需要下载下来
             if (plugin['uri'] && plugin['uri'] !== '') {
                 console.log(`  - Downloading json plugin ${plugin['title']}`);
                 shellI(`wget '${plugin['uri']}' -O ${distPluginPath} &> /dev/null`);
             }
             delete plugin['uri'];
-            let pluginjson = JSON.parse(fs.readFileSync(`${distPluginPath}`))[0];
+            // 一般情况下，下载的JSON文件都是tiddler数组的形式，这种是没有办法被安装的
+            let pluginjson = JSON.parse(fs.readFileSync(distPluginPath));
+            if (pluginjson instanceof Array) pluginjson = pluginjson[0];
+            // 解析，并判断是否是安装后需要重新加载页面的插件
             let shuoldReload = false;
             let shadowTiddlers = JSON.parse(pluginjson.text).tiddlers;
             let shadowTitles = Object.keys(shadowTiddlers);
@@ -71,11 +77,16 @@ function buildLibrary(distDir, minify) {
                 }
             }
             plugin['requires-reload'] = shuoldReload;
+            // 版本号的覆盖
             if (pluginjson['version'] && pluginjson['version'] !== '') plugin['version'] = pluginjson['version'];
+            else if (plugin['version'] && plugin['version'] !== '') pluginjson['version'] = plugin['version'];
+            // 保存更改
+            fs.writeFileSync(distPluginPath, JSON.stringify(pluginjson));
         } catch (e) {
             console.error(e);
             return;
         }
+        // TODO: 删除不必要的字段 -> 改成只保留指定的字段
         delete plugin['bag'];
         delete plugin['created'];
         delete plugin['creator'];
@@ -97,6 +108,7 @@ function buildLibrary(distDir, minify) {
         plugins.push(plugin);
     });
     console.log(`Generating plugin library file`);
+    // 生成插件源HTML文件
     fs.writeFileSync(`${distDir}/index-raw.html`, new String(fs.readFileSync(`scripts/library.emplate.html`)).replace('\'%%plugins%%\'', JSON.stringify(plugins)));
     shellI(`rm ${distDir}/plugins.json`);
 
