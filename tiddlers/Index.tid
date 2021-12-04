@@ -1,6 +1,6 @@
 created: 20211117163457173
 icon: 📦
-modified: 20211202072925325
+modified: 20211204170551585
 page-cover: https://unsplash.dogedoge.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
 tags: 
 title: Index
@@ -30,8 +30,27 @@ Click {{button/new-plugin}} to add a new plugin. Click {{$:/core/ui/Buttons/Comm
 </$list>
 </$list>
 
-<$reveal state="$:/tmp/searchplugin/input" type="nomatch" text="">
+
 <$set value={{{ [[$:/tmp/searchplugin/input]get[text]] }}} name="search">
-<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]get[title]search<search>]"/>
+<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]get[title]search<search>count[]!match[0]]">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
+<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]get[title]search<search>]">
+<$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block" style="height: 249px; width: 100%; border-radius: 3px; background: #white; box-shadow: rgb(15 15 15 / 20%) 0px 0px 0px 1px, rgb(15 15 15 / 20%) 0px 2px 4px;  overflow: hidden; user-select: none; cursor: pointer; position: static; display: flex; flex-direction: column;">
+
+<div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
+
+<div style="width: 100%; padding: 8px 10px 10px; height: 69px; display: flex; flex-direction: row;">
+
+<$reveal stateTitle=<<currentTiddler>> stateField="icon" type="nomatch" text=""><div class="gk0wk-backlinksbox-box-link-icon"><$list filter="[<currentTiddler>get[icon]]" variable="icon">
+  <$list filter="[title<icon>is[shadow]]"><$transclude tiddler=<<icon>>/></$list>
+  <$list filter="[title<icon>is[tiddler]]"><$transclude tiddler=<<icon>>/></$list>
+  <$list filter="[title<icon>!is[shadow]!is[tiddler]]"><$wikify name="rendered" text=<<icon>> output=html><<rendered>></$wikify></$list>
+</$list></div></$reveal>
+
+''<$text text=<<currentTiddler>>/>''
+</div>
+</div></$link>
+</$list>
+</div>
+</$list>
 </$set>
-</$reveal>
