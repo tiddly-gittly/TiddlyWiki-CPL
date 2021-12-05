@@ -1,7 +1,7 @@
 created: 20211117163457173
 icon: 📦
-modified: 20211204170551585
-page-cover: https://unsplash.dogedoge.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
+modified: 20211205062505413
+page-cover: https://unsplash.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
 tags: 
 title: Index
 tmap.id: fce51e75-2b61-4d01-953b-ad0e849601d2
@@ -32,10 +32,9 @@ Click {{button/new-plugin}} to add a new plugin. Click {{$:/core/ui/Buttons/Comm
 
 
 <$set value={{{ [[$:/tmp/searchplugin/input]get[text]] }}} name="search">
-<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]get[title]search<search>count[]!match[0]]">
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
 <$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]get[title]search<search>]">
-<$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block" style="height: 249px; width: 100%; border-radius: 3px; background: #white; box-shadow: rgb(15 15 15 / 20%) 0px 0px 0px 1px, rgb(15 15 15 / 20%) 0px 2px 4px;  overflow: hidden; user-select: none; cursor: pointer; position: static; display: flex; flex-direction: column;">
+<$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block">
 
 <div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
 
@@ -51,6 +50,11 @@ Click {{button/new-plugin}} to add a new plugin. Click {{$:/core/ui/Buttons/Comm
 </div>
 </div></$link>
 </$list>
+<$button tag="div" tooltip="Add plugin info to CPL wiki" aria-label="New Plugin" class="tc-btn-invisible gk0wk-notion-gallery-block" style="align-items: center; justify-content: center; flex-direction: row">
+{{$:/core/images/new-button}} <span style="padding-left: 5px;">New Plugin</span>
+<$action-createtiddler $basetitle="?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
+<$action-navigate $to=<<createTiddler-title>>/>
+</$action-createtiddler>
+</$button>
 </div>
-</$list>
 </$set>
