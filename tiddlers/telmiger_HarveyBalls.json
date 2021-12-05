@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20211205075319434",
+        "text": "",
+        "title": "telmiger/HarveyBalls",
+        "modified": "20211205075521038",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://raw.githubusercontent.com/rimi/tw5-telmiger-plugins/gh-pages/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftelmiger%252FHarveyBalls.json",
+        "_title": "$:/plugins/telmiger/HarveyBalls",
+        "_type": "plugin",
+        "author": "Thomas Elmiger",
+        "description": "Harvey balls icon set",
+        "name": "HarveyBalls",
+        "requires-reload": "no",
+        "core-version": "",
+        "documentation": "https://www.tid.li/tw5/plugins.html",
+        "sourse": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/HarveyBalls",
+        "readme": "\\define tr(variant,nr:\"\")\n<$vars tit=\"$:/language/HarveyBalls/$variant$/title\" desc=\"$:/language/HarveyBalls/$variant$/desc\" nr=\"\"\"$nr$\"\"\">\n<tr><td>{{$:/plugins/telmiger/HarveyBalls/$variant$/icon.svg}} </td><td><<nr>></td><td><$link to=<<tit>>><$transclude tiddler=<<tit>>/></$link> </td><td><$link to=<<desc>>><$transclude tiddler=<<desc>>/></$link></td></tr>\n</$vars>\n\\end\n\n!! Harvey Balls\n\n{{$:/plugins/telmiger/HarveyBalls/about}}\n\nHarvey Balls are commonly used in comparison tables to indicate the degree to which a particular item meets a particular criterion.\n\n!!! Macros for display\nThe same as `{{$:/plugins/telmiger/HarveyBalls/half/icon.svg}}` – the Harvey ball <<HB2>> – would be displayed for all three of the following macros:\n\n`<<HarveyBall half>>`\n`<<HB2>>`\n`<<HB 2>>`\n\nTitles or numbers of the following tables can be used.\n\n!!! Available ideograms\n\n//1) more colour is better//\n\n<table>\n<tr><th>icon </th><th># </th><th>title </th><th>desc </th></tr>\n<<tr empty 0>>\n<<tr quarter 1>>\n<<tr half 2>>\n<<tr quarter-empty 3>>\n<<tr full 4>>\n</table>\n\n//2) less colour is better//\n\n<table>\n<tr><th>icon </th><th># </th><th>title </th><th>desc </th></tr>\n<<tr chaotic 34>>\n<<tr complex 21>>\n<<tr complicated 13>>\n<<tr obvious 8>>\n<<tr simple 5>>\n</table>\n\n!!! Adapt or translate for better accessibility\nTo convey another meaning with your Harvey Balls, it is possible to adapt or translate titles and descriptions. So it is possible to use them e.g. for a performance ratings or a score like:\n\n* poor\n* fair\n* good\n* very good\n* excellent\n\nJust click the text in the table above and adapt the content to your needs. The warning is just a reminder that you are overwriting the standard text. You can always delete your own version to return to the original.\n\n!!! Control dimensions via font size\n\nInside surrounding text, the Harvey balls adapt themselves in size. Examples:\n\n! Title H1 {{$:/plugins/telmiger/HarveyBalls/empty/icon.svg}}\n\n!! Title H2 {{$:/plugins/telmiger/HarveyBalls/full/icon.svg}} more text\n\n!!! Title H3 {{$:/plugins/telmiger/HarveyBalls/quarter/icon.svg}} more text\n\n!!!! Title H4 {{$:/plugins/telmiger/HarveyBalls/half/icon.svg}} more text\n\nNormal text paragraph {{$:/plugins/telmiger/HarveyBalls/quarter-empty/icon.svg}} more text or apply [[styling via Wikitext|http://tiddlywiki.com/#Styles%20and%20Classes%20in%20WikiText]]: \n\n@@font-size:2em; \nYou will need some text {{$:/plugins/telmiger/HarveyBalls/full/icon.svg}} to make this big.\n@@\n\n!!! Adjust colours via CSS\nThe styling of the balls can be changed \n\n# by adapting the style sheet $:/plugins/telmiger/HarveyBalls/icons.css\n# by adapting surrounding text color in case of the //less colour is better// version (it uses fill=\"currentColor\")\n\n\n<style>\nth {\n   text-align: left;\n}\n</style>"
+    }
+]
