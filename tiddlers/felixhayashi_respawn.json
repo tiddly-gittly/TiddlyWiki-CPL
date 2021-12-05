@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20211205070224272",
+        "text": "",
+        "title": "felixhayashi/respawn",
+        "modified": "20211205071719357",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "$:/plugins/felixhayashi/respawn",
+        "_type": "plugin",
+        "author": "Felix Küppers",
+        "description": "Open default tiddlers when river is empty",
+        "name": "Respawn",
+        "requires-reload": "no",
+        "readme": "This plugin will prevent an empty story-river experience by respawning all default (home) tiddlers once the river is empty, i.e. all tiddlers have been closed.\n\nThis plugin makes most sense if the wiki is used as website to avoid that the user is confronted with an empty page.",
+        "core-version": ">=5.1.5",
+        "sourse": "https://github.com/felixhayashi/TW5-Respawn",
+        "documentation": "http://felixhayashi.github.io/TW5-Respawn/",
+        "icon": "👻",
+        "page-cover": "https://unsplash.com/photos/nN5L5GXKFz8/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8OHx8Y3JlYXRlfHwwfHx8fDE2Mzg2ODg2Mjc&force=true&w=1920"
+    }
+]
