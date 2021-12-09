@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20211209170818934",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/github-external-image",
+        "modified": "20211209171340447",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fgithub-external-image.json",
+        "modifier": "林一二",
+        "_title": "$:/plugins/linonetwo/github-external-image",
+        "_type": "plugin",
+        "author": "",
+        "description": "Use github as your image storage, add _canonical_uri to all image, pointing to raw.github",
+        "name": "github-external-image",
+        "requires-reload": "no",
+        "readme": "!! Usage\n\nPlease fill in [[$:/GitHub/Repo]] and [[$:/config/linonetwo/github-external-image/tiddler-folder-name]] to get started.\n\nThen, on build, all images will be replaced by place holders.\n\nPlease use following build target:\n\n```json\n\"externalimages\": [\n  \"--setfield\",\n  \"[is[binary]] [type[application/msword]]\",\n  \"_canonical_uri\",\n  \"$:/core/templates/canonical-uri-external-image\",\n  \"text/plain\",\n  \"--setfield\",\n  \"[is[binary]] [type[application/msword]]\",\n  \"text\",\n  \"$:/core/templates/canonical-uri-external-image\",\n  \"text/plain\",\n  \"--rendertiddler\",\n  \"$:/core/save/all\",\n  \"index.html\",\n  \"text/plain\"\n],\n```\n",
+        "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/github-external-image"
+    }
+]
