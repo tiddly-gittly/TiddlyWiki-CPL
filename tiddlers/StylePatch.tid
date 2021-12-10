@@ -1,0 +1,13 @@
+created: 20211210070918636
+creator: Sttot
+modified: 20211210071037136
+modifier: Sttot
+tags: $:/tags/Stylesheet
+title: StylePatch
+type: text/vnd.tiddlywiki
+
+@media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
+  .tc-story-river {
+    padding-top: 0 !important;
+  }
+}
