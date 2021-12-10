@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20211209171452787",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/opened-tiddlers-bar",
+        "modified": "20211209171647602",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fopened-tiddlers-bar.json",
+        "modifier": "林一二",
+        "_title": "$:/plugins/linonetwo/opened-tiddlers-bar",
+        "_type": "plugin",
+        "author": "LinOnetwo",
+        "description": "VSCode style opened files top bar",
+        "name": "Opened Tiddlers Bar",
+        "requires-reload": "no",
+        "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/opened-tiddlers-bar",
+        "readme": "!! Features\n\nThis plugin provides VSCode style \"Opened Tiddlers\" top bar\n\n!! Credits\n\nThis plugin is based on $:/plugins/bj/storytabs , which is in MIT license, thank you, Buggyj!\n"
+    }
+]
