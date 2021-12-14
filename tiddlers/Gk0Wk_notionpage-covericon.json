@@ -1,12 +1,14 @@
 [
     {
         "created": "20211204084347529",
+        "creator": "Sttot",
         "text": "",
         "title": "Gk0Wk/notionpage-covericon",
-        "modified": "20211205060922426",
+        "modified": "20211214150550901",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fnotionpage-covericon.json",
+        "modifier": "Sttot",
         "_title": "$:/plugins/Gk0Wk/notionpage-covericon",
         "_type": "plugin",
         "author": "Gk0Wk",
@@ -16,7 +18,7 @@
         "readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n安装插件后，在每个tiddler的标题上方会有两个按钮(鼠标悬浮在上面就会显示)，分别用于添加图标(默认是emoji📒)和添加页面封面(默认是`https://source.unsplash.com/random`)。点击图标就可以修改图标内容，点击修改封面就可以修改封面地址(可以是url或者tiddler标题)。\n\n使用如下字段来存储页面的图标和封面信息：\n\n* `icon` 存储图标，可以是emoji、WikiText或者tiddler的标题。\n* `page-cover` 存储封面的url或者tiddler的标题。\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nAfter installing the plugin, there will be two buttons above the title of each tiddler (which will be displayed when the mouse hovers over it) for adding icons (default is emoji📒) and adding page covers (default is `https://source.unsplash.com/random`). Click on the icon to modify the icon content, and click on the modify cover to modify the cover address (can be url or tiddler title).\n\nUse the following fields to store the page's icon and cover information.\n\n* `icon` stores the icon, which can be an emoji, WikiText or tiddler title.\n* `page-cover` stores the url of the cover or the title of the tiddler.\n\n</$list>\n</$list>\n\n[img width=500px [https://talk.tiddlywiki.org/uploads/default/optimized/2X/4/499538129be0d92b0130a6c8050a4ef67a215bb6_2_1380x686.jpeg]]\n\n[img width=500px [https://talk.tiddlywiki.org/uploads/default/optimized/2X/a/a23d6f957de24cb9a0f8acec0e233591d9dc0de4_2_1000x1000.jpeg]]",
         "page-cover": "https://unsplash.com/photos/T1OBtJN9Ztk/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM4NTQzNTgz&force=true&w=1920",
         "icon": "✨",
-        "version": "0.0.5",
+        "version": "",
         "sourse": "https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/notionpage-covericon",
         "documentation": "https://gk0wk.github.io/TiddlySeq/#Notion-like%20Icon%20And%20PageCover"
     }

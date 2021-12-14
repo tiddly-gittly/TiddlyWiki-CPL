@@ -1,7 +1,7 @@
 caption: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">关于插件源</$list><$list filter="[<lang>!search[zh]]">About CPL</$list></$list>
 created: 20211117164017462
 creator: Sttot
-modified: 20211210065538170
+modified: 20211214150512481
 modifier: Sttot
 tags: $:/tags/SideBar
 title: TableOfContents
@@ -10,9 +10,13 @@ type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">
 
+! [[我该如何使用CPL?|Index]]
+
 !!! 所有收录的插件:
 
 </$list><$list filter="[<lang>!search[zh]]">
+
+! [[Learn how to use CPL|Index]]
 
 !!! All included plugins:
 

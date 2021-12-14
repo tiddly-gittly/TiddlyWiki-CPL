@@ -1,13 +1,15 @@
 [
     {
         "created": "20211117165500517",
+        "creator": "Sttot",
         "text": "",
         "tags": "$:/tags/PluginWiki",
         "title": "Gk0Wk/TW5-CodeMirror-Enhanced",
-        "modified": "20211205061311402",
+        "modified": "20211214150603674",
         "type": "text/vnd.tiddlywiki",
         "uri": "https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/download/v0.1.1/TW5-CodeMirror-Enhanced-0.1.1.json",
-        "version": "0.1.1",
+        "modifier": "Sttot",
+        "version": "",
         "author": "Gk0Wk",
         "description": "TiddlyWiki5 highlighting mode for CodeMirror.",
         "dependents": "$:/plugins/tiddlywiki/codemirror\n$:/plugins/tiddlywiki/codemirror-autocomplete",

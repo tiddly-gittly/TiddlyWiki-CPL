@@ -1,7 +1,7 @@
 caption: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search:title[zh]]">太微中文社区插件源(大陆加速版)</$list><$list filter="[<lang>!search:title[zh]]">TiddlyWiki Chinese CPL(Netlify Host)</$list></$list>
 created: 20211118102827947
 creator: Sttot
-modified: 20211210070641055
+modified: 20211214150410056
 modifier: Sttot
 tags: $:/tags/PluginLibrary
 title: $:/config/ChinesePluginLibrary/Netlify
@@ -32,7 +32,7 @@ This plugin source is maintained by the [[TiddlyWiki Chinese Community]] and is 
 
 If you don't know how to use TiddlyWiki and this source, you are welcome to read the plugins related section in the [[TiddlyWiki Tutorials for Chinese Communities|https://tw-cn.netlify.app]]. As mentioned above, both the plugin source and the tutorial are open source projects, you can find them in [[GitHub|https://github.com/tiddly-gittly]] and participate in contributing! If you like, you can join us through QQ groups and other means, see the Chinese tutorials mentioned above for details.
 
-To add this plugin library to your Wiki, just drag this link with your mouse into your Wiki: <$link to=<<currentTiddler>>{{!!caption}}</$link>
+To add this plugin library to your Wiki, just drag this link with your mouse into your Wiki: <$link to=<<currentTiddler>>>{{!!caption}}</$link>
 
 Note: The source version of this plugin is a version accelerated by netlify.app, which is more friendly to China mainland users, but there is a delay in updating. There is also another version that uses the GitHub Page server directly, which is faster to update, but may require technology to overturn the GFW.
 
