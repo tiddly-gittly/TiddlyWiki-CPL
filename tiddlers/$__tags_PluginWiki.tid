@@ -1,7 +1,7 @@
 created: 20211117165810315
 creator: Sttot
 list-after: LanguageSwitcher
-modified: 20211214150712787
+modified: 20211215083303535
 modifier: Sttot
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/tags/PluginWiki
@@ -68,6 +68,8 @@ type: text/vnd.tiddlywiki
 
 <$macrocall $name="plugin-info" title=<<currentTiddler>> type={{{ [<currenrTiddler>get[_type]else[plugin]] }}}/>
 
+<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">
+
 !! {{$:/language/Buttons/Edit/Caption}}
 
 <div class="tc-control-panel">
@@ -110,3 +112,4 @@ type: text/vnd.tiddlywiki
 </$list>
 </$list>
 </div>
+</$list>

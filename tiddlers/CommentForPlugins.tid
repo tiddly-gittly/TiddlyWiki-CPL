@@ -1,0 +1,22 @@
+created: 20211215073928577
+creator: Sttot
+list-after: $:/core/ui/ViewTemplate/body
+modified: 20211215083124010
+modifier: Sttot
+tags: $:/tags/ViewTemplate TW5CPL
+title: CommentForPlugins
+type: text/vnd.tiddlywiki
+
+<$list filter="[all[current]tag[$:/tags/PluginWiki]!is[draft]]" variable="plugin">
+<$list filter="[[IfEditorMode]get[text]else[no]!match[yes]]">
+<<aaa>>
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search[zh]]">
+<$giscus id=<<plugin>> lang="zh-CN" theme="light"/>
+</$list>
+<$list filter="[<lang>!search[zh]]">
+<$giscus id=<<plugin>> lang="en" theme="light"/>
+</$list>
+</$list>
+</$list>
+</$list>

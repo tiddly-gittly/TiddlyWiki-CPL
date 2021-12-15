@@ -6,7 +6,7 @@
   "scripts": {
     "server": "npx cross-env TIDDLYWIKI_PLUGIN_PATH='./plugins' TIDDLYWIKI_THEME_PATH='./themes' TIDDLYWIKI_LANGUAGE_PATH='./languages' npx tiddlywiki . --listen port=8080",
     "buildlibrary": "node -e \"require('./scripts/index').build();\"",
-    "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html');\""
+    "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html', true, '-[tag[GenerateExclude]] -[is[draft]]');\""
   },
   "repository": {
     "type": "git",
