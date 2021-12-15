@@ -27,12 +27,26 @@
         scriptNode.setAttribute("data-lang", lang);
         scriptNode.setAttribute("crossorigin", "anonymous");
         scriptNode.setAttribute("async", "true");
+        // Clear other comment nodes' giscus class
+        var commentNodes = this.document.querySelectorAll('.giscus');
+        for (var i = 0, len = commentNodes.length; i < len; i++) {
+            commentNodes[i].classList.remove('giscus');
+        }
+        // Find or create
+      var commentNode = this.document.querySelector('.gk0wk-giscus[tiddler-title="' + id.replace('"', '\\"') + '"]');
+      if (!commentNode) {
+        commentNode = this.document.createElement('div');
+        commentNode.setAttribute('class', 'giscus gk0wk-giscus');
+        commentNode.setAttribute('tiddler-title', id);
+        parent.insertBefore(commentNode, nextSibling);
+        this.domNodes.push(commentNode);
+      }
         parent.insertBefore(scriptNode, nextSibling);
         this.domNodes.push(scriptNode);
     };
     GiscusNodeWidget.prototype.execute = function() {};
     GiscusNodeWidget.prototype.refresh = function() {
-      var changedAttributes = this.computeAttributes();
+        var changedAttributes = this.computeAttributes();
         if (Object.keys(changedAttributes).length > 0) {
             this.refreshSelf();
             return true;
