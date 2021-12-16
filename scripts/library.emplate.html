@@ -4,7 +4,7 @@
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="TiddlyWiki5 CPL" name="application-name">
-    <meta content="v5.2.0" name="application-version">
+    <meta content="v5.2.1" name="application-version">
     <meta content="Copyright 2015 Jeremy Ruston" name="copyright">
     <link href="favicon.ico" id="faviconLink" rel="shortcut icon">
     <title>TiddlyWiki5 CPL</title>
@@ -30,7 +30,13 @@
                                 body: JSON.stringify(assetList, null, 4)
                             }, "*");
                         } else if (event.data.url.indexOf("recipes/library/tiddlers/") === 0) {
-                            var url = "plugins/" + encodeURIComponent(decodeURIComponent(removePrefix(event.data.url, "recipes/library/tiddlers/")).replace('$:/plugins/', '').replace(/[:/<>"\|?*]/g, '_'));
+                            var url = "plugins/" + encodeURIComponent(
+                                decodeURIComponent(removePrefix(event.data.url, "recipes/library/tiddlers/"))
+                                .replace('$:/plugins/', '')
+                                .replace('$:/languages/', '')
+                                .replace('$:/themes/', '')
+                                .replace(/[:/<>"\|?*]/g, '_')
+                            );
                             // Route for recipes/library/tiddlers/<uri-encoded-tiddler-title>.json
                             httpGet(url, function(err, responseText) {
                                 if (err) {
