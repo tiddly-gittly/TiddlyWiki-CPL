@@ -1,0 +1,18 @@
+created: 20211218183634205
+creator: Sttot
+modified: 20211218195236467
+modifier: Sttot
+page-cover: 
+tags: TW5CPL $:/tags/StartupAction/Browser
+title: Startup
+type: text/vnd.tiddlywiki
+
+<!-- 自动切换语言 -->
+<$action-setfield $tiddler="$:/language" text={{{ [{$:/info/browser/language}search:title[zh]then[zh-Hans]else[en-GB]addprefix[$:/languages/]] }}}/>
+
+<!-- 窄屏折叠侧边栏 -->
+<$reveal type="lt" state="$:/info/browser/screen/width" text={{{ [{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}] }}}><$action-setfield $tiddler="$:/state/sidebar" $value="no"/></$reveal>
+<$reveal type="gteq" state="$:/info/browser/screen/width" text={{{ [{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}] }}}><$action-setfield $tiddler="$:/state/sidebar" $value="yes"/></$reveal>
+
+<!-- 根据系统自动切换主题 -->
+<$action-setfield $tiddler="$:/palette" $value={{{ [{$:/info/darkmode}match[yes]then[$:/palettes/CupertinoDark]else[$:/palettes/Vanilla]] }}}/>

@@ -1,7 +1,7 @@
 created: 20211215073928577
 creator: Sttot
 list-after: $:/core/ui/ViewTemplate/body
-modified: 20211218174947145
+modified: 20211218200622503
 modifier: Sttot
 tags: $:/tags/ViewTemplate TW5CPL
 title: CommentForPlugins
@@ -12,11 +12,11 @@ type: text/vnd.tiddlywiki
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
 <$list filter="[<lang>search[zh]]">
 <h2>评论区</h2>
-<$giscus id=<<plugin>> lang="zh-CN" theme="light"/>
+<$giscus id=<<plugin>> lang="zh-CN" theme={{{ [{$:/info/darkmode}match[yes]then[dark_dimmed]else[light]] }}}/>
 </$list>
 <$list filter="[<lang>!search[zh]]">
 <h2>Comments</h2>
-<$giscus id=<<plugin>> lang="en" theme="light"/>
+<$giscus id=<<plugin>> lang="en" theme={{{ [{$:/info/darkmode}match[yes]then[dark_dimmed]else[light]] }}}/>
 </$list>
 </$list>
 </$list>
