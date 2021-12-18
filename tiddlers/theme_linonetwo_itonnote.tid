@@ -8,7 +8,6 @@ modified: 20211210052913405
 modifier: 林一二
 name: Iton Note
 readme: Notion and VSCode inspired theme. Adapted for light theme.
-requires-reload: no
 sourse: https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/themes/linonetwo/itonnote
 tags: $:/tags/PluginWiki
 title: theme/linonetwo/itonnote

@@ -79,28 +79,28 @@ function mkdirsSync(dirname) {
 function mergePluginInfo(pluginTiddler, infoTiddler) {
   infoTiddler['requires-reload'] = ifPluginRequiresReload(pluginTiddler);
   // 版本号的覆盖
-  if (pluginTiddler['version'] && pluginTiddler['version'] !== '') infoTiddler['version'] = pluginTiddler['version'];
-  else if (infoTiddler['version'] && infoTiddler['version'] !== '') pluginTiddler['version'] = infoTiddler['version'];
+  if (pluginTiddler.version && pluginTiddler.version !== '') infoTiddler.version = pluginTiddler.version;
+  else if (infoTiddler.version && infoTiddler.version !== '') pluginTiddler.version = infoTiddler.version;
   // TODO: 删除不必要的字段 -> 改成只保留指定的字段
-  delete infoTiddler['uri'];
-  delete infoTiddler['bag'];
-  delete infoTiddler['created'];
-  delete infoTiddler['creator'];
-  delete infoTiddler['modified'];
-  delete infoTiddler['modifier'];
-  delete infoTiddler['permissions'];
-  delete infoTiddler['recipe'];
-  delete infoTiddler['revision'];
-  delete infoTiddler['text'];
-  delete infoTiddler['type'];
-  delete infoTiddler['icon'];
+  delete infoTiddler.uri;
+  delete infoTiddler.bag;
+  delete infoTiddler.created;
+  delete infoTiddler.creator;
+  delete infoTiddler.modified;
+  delete infoTiddler.modifier;
+  delete infoTiddler.permissions;
+  delete infoTiddler.recipe;
+  delete infoTiddler.revision;
+  delete infoTiddler.text;
+  delete infoTiddler.type;
+  delete infoTiddler.icon;
   delete infoTiddler['page-cover'];
   delete infoTiddler['tmap.id'];
-  infoTiddler['title'] = infoTiddler['_title'];
-  delete infoTiddler['_title'];
-  infoTiddler['plugin-type'] = infoTiddler['_type'];
-  delete infoTiddler['_type'];
-  infoTiddler['icon'] = infoTiddler['plugin-icon'];
+  infoTiddler.title = infoTiddler._title;
+  delete infoTiddler._title;
+  infoTiddler['plugin-type'] = infoTiddler._type;
+  delete infoTiddler._type;
+  infoTiddler.icon = infoTiddler['plugin-icon'];
   delete infoTiddler['plugin-icon'];
   return { pluginTiddler, infoTiddler };
 }
@@ -123,6 +123,11 @@ function buildLibrary(distDir, minify) {
   // 遍历、下载所有插件
   console.log('Downloading all online plugins');
   const pluginsInfo = [];
+  const pluginCallbackInfo = {
+    title: '$:/temp/tw-cpl/plugin-callback-info',
+    text: {},
+    type: 'application/json',
+  };
   const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers('[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]');
   const downloadFileMap = {};
   mkdirsSync(`${distDir}/plugins`); // 插件目标目录
@@ -174,6 +179,7 @@ function buildLibrary(distDir, minify) {
       fs.writeFileSync(`${distDir}/plugins/${pluginName}.json`, JSON.stringify(pluginTiddler));
       // 登记插件
       pluginsInfo.push(infoTiddler);
+      pluginCallbackInfo.text[tiddler._title] = `${infoTiddler['requires-reload'] === true ? 'true' : 'false'}|${infoTiddler.version}`;
     } catch (e) { console.error(e); }
   });
   shellI(`rm -rf ${distDir}/tmp`);
@@ -181,6 +187,10 @@ function buildLibrary(distDir, minify) {
   // 生成插件源HTML文件
   console.log(`Generating plugin library file`);
   fs.writeFileSync(`${distDir}/index-raw.html`, fs.readFileSync(`scripts/library.emplate.html`).toString('utf8').replace('\'%%plugins%%\'', JSON.stringify(pluginsInfo)));
+
+  // 生成插件信息反馈
+  pluginCallbackInfo.text = JSON.stringify(pluginCallbackInfo.text);
+  fs.writeFileSync(`${distDir}/callback.json`, JSON.stringify([pluginCallbackInfo]));
 
   // 最小化：HTML
   if (minify) {

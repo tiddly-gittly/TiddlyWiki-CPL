@@ -14,7 +14,6 @@
         "author": "",
         "description": "Allow you make some tiddlers private, and store them in a private repo.",
         "name": "sub-wiki",
-        "requires-reload": "no",
         "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/sub-wiki",
         "readme": "!! Usage\n\nEdit [[`tiddlers/FileSystemPaths.tid`|FileSystemPaths.tid]] using VSCode or automatically updated by TiddlyGitDesktop (instead of edit it from the TiddlyWiki) to be something like:\n\n```tid\n[!is[system]kin::to[APrivateContent]addprefix[subwiki/private-wiki/]]\n[!is[system]kin::to[Photos]addprefix[subwiki/private-wiki-photos/]]\n```\n"
     }

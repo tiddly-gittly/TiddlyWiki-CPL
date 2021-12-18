@@ -14,7 +14,6 @@
         "author": "LinOnetwo",
         "description": "VSCode style opened files top bar",
         "name": "Opened Tiddlers Bar",
-        "requires-reload": "no",
         "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/opened-tiddlers-bar",
         "readme": "!! Features\n\nThis plugin provides VSCode style \"Opened Tiddlers\" top bar\n\n!! Credits\n\nThis plugin is based on $:/plugins/bj/storytabs , which is in MIT license, thank you, Buggyj!\n"
     }

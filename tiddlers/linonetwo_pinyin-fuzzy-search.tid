@@ -9,7 +9,6 @@ modified: 20211209170416656
 modifier: 林一二
 name: pinyin-fuzzy-search
 page-cover: https://images.unsplash.com/photo-1636968292468-d57f580abdc0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYzOTA2OTQ1Mg&ixlib=rb-1.2.1&q=80&w=1080
-requires-reload: no
 sourse: https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/src/pinyin-fuzzy-search
 tags: $:/tags/PluginWiki
 title: linonetwo/pinyin-fuzzy-search

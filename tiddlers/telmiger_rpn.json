@@ -12,7 +12,6 @@
         "author": "Thomas Elmiger",
         "description": "Basic Math in Reverse Polish Notation",
         "name": "rpn",
-        "requires-reload": "no",
         "core-version": ">=5.1.14",
         "documentation": "https://www.tid.li/tw5/plugins.html",
         "sourse": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/rpn",

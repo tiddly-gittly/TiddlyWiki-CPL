@@ -12,7 +12,6 @@
         "author": "Thomas Elmiger",
         "description": "Harvey balls icon set",
         "name": "HarveyBalls",
-        "requires-reload": "no",
         "core-version": "",
         "documentation": "https://www.tid.li/tw5/plugins.html",
         "sourse": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/HarveyBalls",

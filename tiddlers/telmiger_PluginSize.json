@@ -12,7 +12,6 @@
         "author": "Thomas Elmiger",
         "description": "calculate the extra weight",
         "name": "PluginSize",
-        "requires-reload": "no",
         "core-version": ">=5.1.17",
         "documentation": "https://www.tid.li/tw5/plugins.html",
         "sourse": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/PluginSize",

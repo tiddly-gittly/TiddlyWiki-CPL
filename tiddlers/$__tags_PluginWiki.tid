@@ -1,7 +1,7 @@
 created: 20211117165810315
 creator: Sttot
 list-after: LanguageSwitcher
-modified: 20211216093910313
+modified: 20211218180451513
 modifier: Sttot
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/tags/PluginWiki
@@ -12,12 +12,6 @@ type: text/vnd.tiddlywiki
 \define plugin-info(title,type)
 <$set value="$title$" name="currentTiddler">
 <div class="tc-plugin-info">
-<!-- 展开按钮 -->
-<div class="tc-plugin-info-chunk tc-plugin-info-toggle">
-<$button class="tc-btn-invisible tc-btn-dropdown" set=<<popup-state>> setTo="no">
-{{$:/core/images/chevron-down}}
-</$button>
-</div>
 <!-- 图标 -->
 <div class="tc-plugin-info-chunk tc-plugin-info-icon">
 <$list filter="[<currentTiddler>has[plugin-icon]]" emptyMessage="""<$transclude tiddler="$:/core/images/plugin-generic-$type$"/>""">
@@ -29,13 +23,7 @@ type: text/vnd.tiddlywiki
 <h1><strong><$text text={{{ [<currentTiddler>get[name]] ~[<currentTiddler>get[title]split[/]last[1]] }}}/></strong>: <$text text={{{ [<currentTiddler>get[description]] }}}/></h1>
 <h2><$view tiddler=<<currentTiddler>> field="_title"/></h2>
 <div><em>{{!!version}}</em></div>
-</div>
-<div class="tc-plugin-info-chunk tc-plugin-info-buttons">
-<$button class="tc-btn-invisible tc-install-plugin">
-{{$:/core/images/download-button}} {{$:/language/ControlPanel/Plugins/Update/Caption}}
-</$button>
-<div>
-</div>
+<!-- 是否需要重载 -->
 <$reveal stateTitle=<<currentTiddler>> stateField="requires-reload" type="match" text="yes">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$reveal>
 </div>
 </div>
@@ -56,6 +44,9 @@ type: text/vnd.tiddlywiki
 </div>
 </$list>
 <div class="tc-plugin-info-dropdown-body">
+<$list filter="[<currentTiddler>get[documentation]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/home-button}} <$text text=<<url>>/></$button></$list>
+<br/>
+<$list filter="[<currentTiddler>get[sourse]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text=<<url>>/></$button></$list>
 <$transclude tiddler=<<currentTiddler>> field="readme" mode="block"/>
 </div>
 </div>
@@ -83,7 +74,7 @@ type: text/vnd.tiddlywiki
 |!作者 |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[可能是：]] }}}/> |
 |!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[_title]removeprefix[$:/plugins/]search-replace:gim:regexp<illegalcharexp>,[_]encodeuricomponent[]addprefix[从哪里可以找到这个插件(.json, .tid 或者 .html等)。如果插件的json文件在网络上，请填写下载地址；如果插件没有下载地址，需要手动下载或者编译，请将json插件文件放在本项目的本地文件夹的plugin_files/路径下，并命名为 ]addsuffix[.json]] }}}/> |
 |!类型 |<$select field="_type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
-|!介绍 |<$edit-text class="tc-edit-texteditor" field="readme" placeholder="插件的详细介绍" tag=textarea/> |
+|!介绍 |<$edit-codemirror field="readme" placeholder="插件的详细介绍" type="text/vnd.tiddlywiki"/> |
 |!图标 |<$edit-text field="plugin-icon" placeholder="插件图标的URL" tag=input/> |
 |!源代码 |<$edit-text field="sourse" tag=input placeholder="Source Code Project URL"/> |
 |!文档 |<$edit-text field="documentation" tag=input placeholder="Documentation URL"/> |
@@ -101,7 +92,7 @@ type: text/vnd.tiddlywiki
 |!Author |<$edit-text field="author" tag=input placeholder={{{ [<currentTiddler>get[title]split[/]last[2]addprefix[Shall be: ]] }}}/> |
 |!URI |<$edit-text field="uri" tag=textarea placeholder={{{ [<currentTiddler>get[_title]removeprefix[$:/plugins/]search-replace:gim:regexp<illegalcharexp>,[_]encodeuricomponent[]addprefix[Where to find this plugin(.json, .tid or .html, etc.). Fill with uri if json file can be download from internet. If the plugin does not have a download address and needs to be downloaded or compiled manually, please place the json plugin file under the plugin_files/ path in the local folder of this project and name it to ]addsuffix[.json]] }}}/> |
 |!Type |<$select field="_type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
-|!Readme |<$edit-text class="tc-edit-texteditor" field="readme" placeholder="Readme of this plugin." tag=textarea/> |
+|!Readme |<$edit-codemirror field="readme" placeholder="Readme of this plugin." type="text/vnd.tiddlywiki"/> |
 |!Icon |<$edit-text field="plugin-icon" placeholder="URL of plugin's Icon" tag=input/> |
 |!Source |<$edit-text field="sourse" tag=input placeholder="Source Code Project URL"/> |
 |!Documentation |<$edit-text field="documentation" tag=input placeholder="Documentation URL"/> |

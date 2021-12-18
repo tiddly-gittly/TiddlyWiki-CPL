@@ -12,7 +12,6 @@
         "author": "Jim Lehmer",
         "description": "TiddlyWiki5 plugin to generate sitemap.xml.",
         "name": "sitemap",
-        "requires-reload": "no",
         "core-version": ">=5.0.8",
         "sourse": "https://github.com/dullroar/TW5-sitemap",
         "documentation": "https://github.com/dullroar/TW5-sitemap/blob/master/README.md",

@@ -1,12 +1,13 @@
 _title: ?/?
 _type: plugin
-author:
+author: 
 created: 20211118053256670
-description:
-modified: 20211118104210686
-name:
-requires-reload: no
+creator: Sttot
+description: 
+modified: 20211218182514762
+modifier: Sttot
+name: 
 tags: TW5CPL
 title: CPLPluginWikiTemplate
 type: text/vnd.tiddlywiki
-uri:
+uri: 
