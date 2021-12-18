@@ -1,7 +1,7 @@
 created: 20211117163457173
 creator: Sttot
 icon: 📦
-modified: 20211215083439057
+modified: 20211218035720179
 modifier: Sttot
 page-cover: https://unsplash.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
 tags: 
@@ -29,9 +29,9 @@ type: text/vnd.tiddlywiki
 
 <$list filter="[<lang>!search:title[zh]]" variable="lang">
 
-Welcome to the ''[TiddlyWiki Chinese Community Plugin Source]''!
+Welcome to the ''[TiddlyWiki Chinese Community Plugin Library]''!
 
-This plugin source is maintained by the [[TiddlyWiki Chinese Community]] and is dedicated to collecting all TiddlyWiki5 related plugins on the web, hoping to provide a one-click installation and update plugin experience for TiddlyWiki users in China and around the world.
+This plugin source is maintained by the [[TiddlyWiki Chinese Community]] and is dedicated to collecting all TiddlyWiki5 related plugins on the web, hoping to provide a one-click installation and update plugin experience for TiddlyWiki users all around the world.
 
 If you don't know how to use TiddlyWiki and this source, you are welcome to read the plugins related section in the [[TiddlyWiki Tutorials for Chinese Communities|https://tw-cn.netlify.app]]. As mentioned above, both the plugin source and the tutorial are open source projects, you can find them in [[GitHub|https://github.com/tiddly-gittly]] and participate in contributing! If you like, you can join us through QQ groups and other means, see the Chinese tutorials mentioned above for details.
 

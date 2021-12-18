@@ -13,21 +13,22 @@ const repoFolder = path.join(path.dirname(__filename), '..');
  * @param {string} command 要执行的命令
  * @param {object} options execSync的参数
  */
-function shell(command, options) {
+function shell(command, options, output) {
   if (options !== undefined) options = {};
-  console.log(String(execSync(command, {
+  let outputString = execSync(command, {
     cwd: repoFolder,
     ...options,
-  })));
+  });
+  if (output) console.log(String(outputString));
 }
 /**
  * 执行命令行指令，并打印该指令的结果，同时忽略任何错误
  * @param {string} command 要执行的命令
  * @param {object} options execSync的参数
  */
-function shellI(command, options) {
+function shellI(command, options, output) {
   try {
-    shell(command, options);
+    shell(command, options, output);
   } catch (error) {
     console.error(`[Shell Command Error] ${error}`);
   }
@@ -50,6 +51,11 @@ function ifPluginRequiresReload(pluginTiddler) {
   return false;
 }
 
+/**
+ * 格式化插件tiddler的名称
+ * @param {*} title 插件tiddler的标题
+ * @returns 格式化之后的文件名称
+ */
 function formatTitle(title) {
   return encodeURIComponent(
     title.replace('$:/plugins/', '')
@@ -59,6 +65,11 @@ function formatTitle(title) {
   );
 }
 
+/**
+ * 递归创建文件夹
+ * @param {*} dirname 文件夹路径
+ * @returns 创建成功则返回true
+ */
 function mkdirsSync(dirname) {
   if (fs.existsSync(dirname)) return true;
   mkdirsSync(path.dirname(dirname));
@@ -113,6 +124,7 @@ function buildLibrary(distDir, minify) {
   console.log('Downloading all online plugins');
   const pluginsInfo = [];
   const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers('[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]');
+  const downloadFileMap = {};
   mkdirsSync(`${distDir}/plugins`); // 插件目标目录
   mkdirsSync(`${distDir}/tmp`);     // 临时的插件目录
   shellI(`cp plugin_files/* ${distDir}/tmp/`); // 拷贝本地插件(未在网络上发布的)
@@ -123,7 +135,12 @@ function buildLibrary(distDir, minify) {
       if (tiddler.uri && tiddler.uri !== '' && $tw.config.fileExtensionInfo[path.extname(tiddler.uri)] && tiddler._title && tiddler._title !== '') {
         console.log(`- Downloading plugin file ${tiddler._title}`);
         const distPluginName = formatTitle(tiddler._title) + path.extname(tiddler.uri);
-        shellI(`wget '${tiddler.uri}' -O ${distDir}/tmp/${distPluginName} &> /dev/null`);
+        if (downloadFileMap[tiddler.uri]) {
+          shellI(`cp ${downloadFileMap[tiddler.uri]} ${distDir}/tmp/${distPluginName}`);
+        } else {
+          shellI(`wget '${tiddler.uri}' -O ${distDir}/tmp/${distPluginName}`);
+          downloadFileMap[tiddler.uri] = `${distDir}/tmp/${distPluginName}`;
+        }
       }
     } catch (e) { console.error(e); }
   });
