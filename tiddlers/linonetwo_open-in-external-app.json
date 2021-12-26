@@ -9,7 +9,7 @@
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fopen-in-external-app.json",
-        "_title": "linonetwo/open-in-external-app",
+        "_title": "$:/plugins/linonetwo/open-in-external-app",
         "_type": "plugin",
         "author": "LinOnetwo",
         "description": "(Requires TidGi) A toolbar button to open PDF tiddler in os default reader.",

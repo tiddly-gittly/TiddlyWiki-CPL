@@ -9,7 +9,7 @@
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "https://jasonmhoule.github.io/tw5-mermaid/",
-        "_title": "jmh/mermaid",
+        "_title": "$:/plugins/jmh/mermaid",
         "_type": "plugin",
         "author": "jasonmhoule",
         "description": "This plugin wraps the Mermaid Live Editor to make it easy to edit and maintain Mermaid code in your wiki while displaying the rendered output, all within a very lightweight implementation. (Internet Required)",
