@@ -159,7 +159,10 @@ function buildLibrary(distDir, minify) {
   const files = fs.readdirSync(`${distDir}/tmp`);
   pluginInfoTiddlerTitles.forEach(title => {
     const tiddler = JSON.parse($tw.wiki.getTiddlerAsJson(title));
-    if (!tiddler._title || tiddler._title === '') return;
+    if (!tiddler._title || tiddler._title === '') {
+      console.warn(`[Warning] ${title} missed plugin title, skip this plugin.`);
+      return;
+    }
     try {
       const pluginName = formatTitle(tiddler._title);
       // 找到文件夹下对应的插件文件
@@ -167,7 +170,10 @@ function buildLibrary(distDir, minify) {
       files.forEach(file => {
         if (file.indexOf(pluginName) !== -1 && path.extname(file) !== '' && $tw.config.fileExtensionInfo[path.extname(file)]) tmp.push(file);
       });
-      if (tmp.length == 0) return;
+      if (tmp.length == 0) {
+        console.warn(`[Warning] Cannot find file ${pluginName}.*, skip this plugin.`);
+        return;
+      }
       const fileMIME = $tw.config.fileExtensionInfo[path.extname(tmp[0])].type;
       const fileText = fs.readFileSync(`${distDir}/tmp/${tmp[0]}`).toString('utf8');
       // 加载、提取插件文件
@@ -175,7 +181,10 @@ function buildLibrary(distDir, minify) {
       $tw.utils.each($tw.wiki.deserializeTiddlers(fileMIME, fileText, {}), tiddler_ => {
         if (tiddler_.title === tiddler._title) pluginTiddlers.push(tiddler_);
       });
-      if (pluginTiddlers.length === 0) return;
+      if (pluginTiddlers.length === 0) {
+        console.warn(`[Warning] Cannot find tiddler ${tiddler._title} in file ${tmp[0]}, skip this plugin.`);
+        return;
+      }
       const plugin = pluginTiddlers[0];
       // 整合信息
       const { pluginTiddler, infoTiddler } = mergePluginInfo(plugin, tiddler);
