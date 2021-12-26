@@ -109,6 +109,7 @@ node_modules
 output
 dist
 $__StoryList.tid
+$__StoryList_*.tid
 settings/settings.json
 tiddlers/subwiki/
 

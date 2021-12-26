@@ -1,0 +1,20 @@
+[
+    {
+        "created": "20211226143116917",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/open-in-external-app",
+        "modified": "20211226143407726",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fopen-in-external-app.json",
+        "_title": "linonetwo/open-in-external-app",
+        "_type": "plugin",
+        "author": "LinOnetwo",
+        "description": "(Requires TidGi) A toolbar button to open PDF tiddler in os default reader.",
+        "name": "Open in External App",
+        "readme": "After you import a PDF or image file into your wiki, you can open that tiddler, and click on the button to open that file in external PDF viewer or image reader.\n\nNote that if you use this to open a `.tid` or `.md` file, and edit it, things won't change in the wiki, because the tiddlywiki currently doesn't reload changed files from the disk.",
+        "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/open-in-external-app"
+    }
+]
