@@ -102,6 +102,10 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   delete infoTiddler._type;
   infoTiddler.icon = infoTiddler['plugin-icon'];
   delete infoTiddler['plugin-icon'];
+  if (infoTiddler.documentation && infoTiddler.documentation !== '')
+    infoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${infoTiddler.documentation}"/></$button><br/>` + infoTiddler.readme;
+  if (infoTiddler.source && infoTiddler.source !== '')
+    infoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler.source}">{{$:/core/images/github}} <$text text="${infoTiddler.source}"/></$button><br/>` + infoTiddler.readme;
   return { pluginTiddler, infoTiddler };
 }
 
@@ -121,7 +125,7 @@ function buildLibrary(distDir, minify) {
   $tw.boot.boot();
 
   // 遍历、下载所有插件
-  console.log('Downloading all online plugins');
+  // console.log('Downloading all online plugins');
   const pluginsInfo = [];
   const pluginCallbackInfo = {
     title: '$:/temp/tw-cpl/plugin-callback-info',

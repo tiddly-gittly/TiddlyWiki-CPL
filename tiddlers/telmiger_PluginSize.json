@@ -1,12 +1,14 @@
 [
     {
         "created": "20211205075648759",
+        "creator": "Sttot",
         "text": "",
         "title": "telmiger/PluginSize",
-        "modified": "20211216094708826",
+        "modified": "20211226154417977",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "https://www.tid.li/tw5/plugins.html",
+        "uri": "bai",
+        "modifier": "Sttot",
         "_title": "$:/plugins/telmiger/PluginSize",
         "_type": "plugin",
         "author": "Thomas Elmiger",
