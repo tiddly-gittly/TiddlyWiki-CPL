@@ -1,0 +1,26 @@
+[
+    {
+        "created": "20211231031453964",
+        "text": "",
+        "creator": "Sttot",
+        "title": "Gk0Wk/echarts-liquidfill",
+        "modified": "20211231032524346",
+        "modifier": "Sttot",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://tiddly-gittly.github.io/tw-echarts/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fecharts-liquidfill.json",
+        "_title": "$:/plugins/Gk0Wk/echarts-liquidfill",
+        "_type": "plugin",
+        "author": "Gk0Wk",
+        "description": "Liquid Fill Chart plugin for Apache ECharts, which is usually used to represent data in percentage.",
+        "name": "ECharts Liquid Fill Chart",
+        "sourse": "https://github.com/tiddly-gittly/tw-echarts/tree/master/plugins/Gk0Wk/echarts-liquidfill",
+        "documentation": "",
+        "dependents": "$:/plugins/Gk0Wk/echarts",
+        "readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n[[liquid-fill chart|https://github.com/ecomfe/echarts-liquidfill]] 是一个适合展示单一百分比数据的图表，支持多种水波和动画。\n\n* 文档: https://github.com/ecomfe/echarts-liquidfill\n* 示例: https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nThe [[liquid-fill chart|https://github.com/ecomfe/echarts-liquidfill]] is a chart suitable for presenting a single percentage of data, supporting multiple water waves and animations.\n\n* Doc: https://github.com/ecomfe/echarts-liquidfill\n* Examples: https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all\n\n</$list>\n</$list>\n\n[img[https://camo.githubusercontent.com/5dee5f268a24b4a088abc369149ecaee64db44bc9192e7a54fc186b7e12a5e68/687474703a2f2f672e7265636f726469742e636f2f7a48654d71716c68346a2e676966]]",
+        "page-cover": "https://camo.githubusercontent.com/5dee5f268a24b4a088abc369149ecaee64db44bc9192e7a54fc186b7e12a5e68/687474703a2f2f672e7265636f726469742e636f2f7a48654d71716c68346a2e676966",
+        "icon": "💧",
+        "parent-plugin": "$:/plugins/Gk0Wk/echarts",
+        "core-version": ">=5.2.0"
+    }
+]

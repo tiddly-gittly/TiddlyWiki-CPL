@@ -4,7 +4,7 @@
         "creator": "Sttot",
         "text": "",
         "title": "Gk0Wk/echarts",
-        "modified": "20211226153640596",
+        "modified": "20211231031143917",
         "modifier": "Sttot",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -17,8 +17,9 @@
         "sourse": "https://github.com/tiddly-gittly/tw-echarts",
         "documentation": "https://tiddly-gittly.github.io/tw-echarts/",
         "dependents": "$:/plugins/felixhayashi/hotzone",
-        "readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n将强大的可视化工具 [[ECharts|https://echarts.apache.org/zh/index.html]] 以优雅的方式与 TiddlyWiki 相结合。\n\n插件说明与使用教程较长，请参考 https://tiddly-gittly.github.io/tw-echarts/\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nCombines the powerful visualization tool [[ECharts|https://echarts.apache.org/en/index.html]] with TiddlyWiki in an elegant way.\n\nThe plugin description and tutorial is long, please refer to https://tiddly-gittly.github.io/tw-echarts/\n\n</$list>\n</$list>",
+        "readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n将强大的可视化工具 [[ECharts|https://echarts.apache.org/zh/index.html]] 以优雅的方式与 TiddlyWiki 相结合。\n\n插件说明与使用教程较长，请参考 https://tiddly-gittly.github.io/tw-echarts/\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nCombines the powerful visualization tool [[ECharts|https://echarts.apache.org/en/index.html]] with TiddlyWiki in an elegant way.\n\nThe plugin description and tutorial is long, please refer to https://tiddly-gittly.github.io/tw-echarts/\n\n</$list>\n</$list>\n\n[img[https://tc9011.com/assets/images/Echarts%E6%94%B9%E9%80%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E6%98%BE%E7%A4%BA/banner.png]]",
         "page-cover": "https://tc9011.com/assets/images/Echarts%E6%94%B9%E9%80%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E6%98%BE%E7%A4%BA/banner.png",
-        "icon": "📊"
+        "icon": "📊",
+        "core-version": ">=5.2.0"
     }
 ]
