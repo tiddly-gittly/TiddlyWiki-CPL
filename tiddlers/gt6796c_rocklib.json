@@ -9,7 +9,7 @@
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "https://efurlanm.github.io/mermaid-tw5.html",
-        "_title": "gt6796c/rocklib",
+        "_title": "$:/plugins/gt6796c/rocklib",
         "_type": "plugin",
         "author": "gt6796c",
         "description": "This plugin packages rocklib for use by other plugins (mermaid-tw5) . It does not provide any end-user visible features.",
