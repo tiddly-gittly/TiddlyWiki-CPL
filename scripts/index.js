@@ -167,8 +167,13 @@ function buildLibrary(distDir, minify) {
       const pluginName = formatTitle(tiddler._title);
       // 找到文件夹下对应的插件文件
       const tmp = [];
+      const fileRegExp = new RegExp(pluginName + '\\..*');
       files.forEach(file => {
-        if (file.indexOf(pluginName) !== -1 && path.extname(file) !== '' && $tw.config.fileExtensionInfo[path.extname(file)]) tmp.push(file);
+        if (!fileRegExp.test(file)) return;
+        const extname = path.extname(file);
+        if (extname === '') return;
+        if (!$tw.config.fileExtensionInfo[extname]) return;
+        tmp.push(file);
       });
       if (tmp.length == 0) {
         console.warn(`[Warning] Cannot find file ${pluginName}.*, skip this plugin.`);
