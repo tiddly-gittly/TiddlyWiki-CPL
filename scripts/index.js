@@ -60,7 +60,7 @@ function formatTitle(title) {
   return encodeURIComponent(
     title.replace('$:/plugins/', '')
       .replace('$:/languages/', '')
-      .replace('$:/themes/', '')
+      .replace('$:/themes/', 'themes_')
       .replace(/[:/<>"\|?*]/g, '_')
   );
 }
