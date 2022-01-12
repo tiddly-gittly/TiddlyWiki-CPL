@@ -67,7 +67,7 @@ Note: The content of the two is the same, only the former will be updated a litt
 
 <$set value={{{ [[$:/tmp/searchplugin/input]get[text]] }}} name="search">
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
-<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]get[title]search<search>]">
+<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]search,title,name,description,readme<search>]">
 <$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block">
 
 <div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
