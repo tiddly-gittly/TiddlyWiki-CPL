@@ -1,0 +1,26 @@
+[
+    {
+        "created": "20220111081953232",
+        "text": "",
+        "title": "oflg/Fishing Analysis",
+        "creator": "oflg",
+        "modified": "20220111083714716",
+        "modifier": "oflg",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://oflg.github.io/fishing/$__plugins_oflg_fishing-analysis.json",
+        "_title": "oflg/Fishing Analysis",
+        "_type": "plugin",
+        "author": "oflg",
+        "description": "Analysis for Fishing.",
+        "name": "Fishing Analysis",
+        "version": "0.0.1",
+        "sourse": "https://github.com/oflg/fishing-analysis",
+        "documentation": "https://oflg.github.io/fishing/",
+        "parent-plugin": "$:/plugins/oflg/fishing",
+        "core-version": ">=5.2.1",
+        "page-cover": "https://pic4.zhimg.com/v2-325a3847d920773c1c87b009e4002171",
+        "dependents": "$:/plugins/Gk0Wk/echarts",
+        "readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n[[钓鱼|https://oflg.github.io/fishing/]]的图表子插件。\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nAnalysis for [[Fishing|https://oflg.github.io/fishing/]].\n\n</$list>\n</$list>"
+    }
+]
