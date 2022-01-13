@@ -14,7 +14,6 @@
         "author": "oflg",
         "description": "Analysis for Fishing.",
         "name": "Fishing Analysis",
-        "version": "0.1.0",
         "sourse": "https://github.com/oflg/fishing-analysis",
         "documentation": "https://oflg.github.io/fishing/",
         "parent-plugin": "$:/plugins/oflg/fishing",
