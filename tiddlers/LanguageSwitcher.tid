@@ -5,7 +5,6 @@ modified: 20211214150730666
 modifier: Sttot
 tags: ExcludeFromEmpty $:/tags/ViewTemplate
 title: LanguageSwitcher
-tmap.id: 1015d0d0-d37b-4831-acd4-a83668a41fe7
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
