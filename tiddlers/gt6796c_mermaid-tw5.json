@@ -4,7 +4,7 @@
         "creator": "林一二",
         "text": "",
         "title": "gt6796c/mermaid-tw5",
-        "modified": "20211226160331066",
+        "modified": "20220117165556954",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -18,6 +18,7 @@
         "sourse": "https://github.com/efurlanm/mermaid-tw5",
         "plugin-icon": "https://mermaid-js.github.io/mermaid/img/header.png",
         "documentation": "https://efurlanm.github.io/mermaid-tw5",
-        "dependents": "gt6796c/rocklib"
+        "dependents": "gt6796c/rocklib",
+        "page-cover": "https://mermaid-js.github.io/mermaid/img/header.png"
     }
 ]

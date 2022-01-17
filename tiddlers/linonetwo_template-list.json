@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20220117165042225",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/template-list",
+        "modified": "20220117165322520",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Ftemplate-list.json",
+        "_title": "$:/plugins/linonetwo/template-list",
+        "_type": "plugin",
+        "author": "LinOnetwo",
+        "description": "Show a list of template when you create a new tiddler",
+        "name": "linonetwo/template-list",
+        "readme": "!! Features\n\nThis plugin provides [[FeiShu Doc|https://www.feishu.cn/hc/zh-CN/articles/222318959624]] style template list for newly created tiddler.\n\n!! Add new template\n\n`$:/tags/TextEditor/Template` is the tag for the templates. Add it to a tiddler, and that tiddler will show up in the template list.\n\n!! Apply the template\n\nAfter you create an empty tiddler, that have an empty text field. You will notice that a template and a search bar show up in the bottom of the tiddler.\n\nClick on a template will apply the text field to the currentTiddler.\n\nYou can scroll to reveal more template if you have more than two rows of templates.\n",
+        "page-cover": "https://p9-hera.byteimg.com/tos-cn-i-jbbdkfciu3/713824ab305349aba895654f8a78087a~tplv-jbbdkfciu3-image:0:0.image",
+        "icon": "🧾",
+        "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/template-list"
+    }
+]
