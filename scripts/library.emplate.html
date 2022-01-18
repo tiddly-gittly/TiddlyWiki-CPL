@@ -33,8 +33,8 @@
                             var url = "plugins/" + encodeURIComponent(
                                 decodeURIComponent(removePrefix(event.data.url, "recipes/library/tiddlers/"))
                                 .replace('$:/plugins/', '')
-                                .replace('$:/languages/', '')
-                                .replace('$:/themes/', '')
+                                .replace('$:/languages/', 'languages_')
+                                .replace('$:/themes/', 'themes_')
                                 .replace(/[:/<>"\|?*]/g, '_')
                             );
                             // Route for recipes/library/tiddlers/<uri-encoded-tiddler-title>.json

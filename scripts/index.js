@@ -59,7 +59,7 @@ function ifPluginRequiresReload(pluginTiddler) {
 function formatTitle(title) {
   return encodeURIComponent(
     title.replace('$:/plugins/', '')
-      .replace('$:/languages/', '')
+      .replace('$:/languages/', 'languages_')
       .replace('$:/themes/', 'themes_')
       .replace(/[:/<>"\|?*]/g, '_')
   );
