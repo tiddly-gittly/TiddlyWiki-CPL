@@ -1,0 +1,24 @@
+caption_CN: 如何为CPL登记新插件
+caption_EN: How to register a new plugin for CPL
+created: 20220118145843782
+i18ncaption: yes
+modified: 20220118152229537
+title: RegisterNewPlugins
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search:title[zh]]" variable="lang">
+
+CPL是依靠开源社区运作的，所有人都可以注册插件：只需要登记插件的若干信息，插件就会出现在插件源里，并且每一个小时就检查一次更新。
+
+无论你是希望推广自己插件的作者，还是乐于分享有趣插件的使用者，或者发现插件的信息存在错误的读者，都很欢迎参与贡献！如果你愿意通过直接参与编辑本Wiki的方式来添加插件，请阅读[[编辑本CPL|EditThisWiki]]一节。如果你不方便修改本Wiki，或者对~NodeJS项目或Git并不熟悉，可以通过在[[这里|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]提Issue的方式，直接发下载链接并介绍你要推荐、添加和修改的插件信息。
+
+</$list>
+<$list filter="[<lang>!search:title[zh]]" variable="lang">
+
+CPL operates on an open source community and everyone can register plugins: just register a number of information about the plugin and it will appear in the plugin feed and check for updates every hour.
+
+Whether you are an author wishing to promote your own plugins, a user happy to share interesting plugins, or a reader who has found errors in information about a plugin, you are more than welcome to contribute! If you would like to add plugins by directly participating in editing this Wiki, please read the [[Edit this CPL|EditThisWiki]] section. If you are not comfortable modifying this Wiki, or are not familiar with ~NodeJS projects or Git, you can send a download link and introduction of the plugins to a new Issue in [[here|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]].
+
+</$list>
+</$list>

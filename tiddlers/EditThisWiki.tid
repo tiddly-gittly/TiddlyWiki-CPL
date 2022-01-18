@@ -1,0 +1,100 @@
+caption_CN: 编辑本CPL
+caption_EN: Edit this CPL
+created: 20220118151733303
+i18ncaption: yes
+modified: 20220118162245084
+title: EditThisWiki
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search:title[zh]]" variable="lang">
+
+首先，你需要有一个~GitHub账号、Git软件，以及一个~NodeJS环境(或者[[TidGi|https://github.com/tiddly-gittly/TidGi-Desktop]])。
+
+请对[[CPL的仓库|https://github.com/tiddly-gittly/TiddlyWiki-CPL]]进行fork，fork后clone到本地，用两种方式之一打开并编辑项目：
+
+# 使用npm、yarn或者pnpm(推荐)安装依赖环境，再使用`npm run server`启动项目；
+# 使用[[TidGi|https://github.com/tiddly-gittly/TidGi-Desktop]]导入并打开项目。
+
+打开项目后，点击侧边栏的<kbd>+</kbd>按钮，添加一个新的插件：
+
+<center>
+
+[img width=300px [AddPluginInfoButton.png]]
+
+</center>
+
+随后你将会得到一个以`?/?`为标题的条目，点击修改条目的标题为`作者/插件名`的格式。例如，对于插件`$:/plugins/Gk0Wk/example`，请将条目标题改为`Gk0Wk/example`。修改完标题后，保存条目。
+
+随后条目应该是长这样：
+
+<center>
+
+[img width=500px [PluginInfoEditor_cn.png]]
+
+</center>
+
+请直接根据提示在【编辑】中修改插件的信息，在【预览】中可以看到对应的结果。这里对【编辑】中的一些属性做解释补充：
+
+* ''标题''：插件条目的标题，一般是以`$:/plugins/`、`$:/languages/`或`$:/themes/`开头的。请务必按照原样填写，否则无法登记该插件。
+* ''版本''：一般不填，因为如果插件自己包含了版本号，就会使用插件自己的版本号。但如果一些不规范的插件不包含版本号，就可以在此补充。
+* ''URI''：非常重要！指可以从哪里下载到这个插件。下载链接可以是以下几种：
+*# 指向插件的JSON文件，例如：`https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/download/v0.1.1/TW5-CodeMirror-Enhanced-0.1.1.json`，请一定以`.json`结尾；
+*# 指向插件的TID文件，例如：`https://github.com/TheDiveO/TW5FontAwesome/releases/download/1.2.22/fontawesome.tid`，请一定以`.tid`结尾；
+*# 包含插件的HTML文件，例如：`http://tiddlymap.org/index.html`，请一定以`.html`或者`.htm`结尾；
+*# 其他：理论上所有能被TW支持的文件格式都是可以的，但是我没有测试过。
+
+保存你的修改，使用git提交并发起一次PR，等待审核即可。
+
+!! 其他问题
+
+Q: 如果插件没有下载地址呢？
+A: 如果插件没有下载地址，需要手动下载或者编译，请将json插件文件放在本项目的本地文件夹的`plugin_files/`路径下，且需要将其修改为指定的文件名，具体要求会在你创建插件信息条目、填写【标题】后显示在【URI】里面。
+
+</$list>
+<$list filter="[<lang>!search:title[zh]]" variable="lang">
+
+First, you need to have a ~GitHub account, Git software, and a ~NodeJS environment (or [[TidGi|https://github.com/tiddly-gittly/TidGi-Desktop]]).
+
+Please fork [[CPL's repository|https://github.com/tiddly-gittly/TiddlyWiki-CPL]], fork it, clone it locally, and open and edit the project in one of two ways:
+
+# Install the dependencies using npm, yarn or pnpm (recommended), then start the project using `npm run server`.
+# Import and open the project using [[TidGi|https://github.com/tiddly-gittly/TidGi-Desktop]].
+
+After opening the project, click the <kbd>+</kbd> button in the sidebar to add a new plugin:
+
+<center>
+
+[img width=300px [AddPluginInfoButton.png]]
+
+</center>
+
+You will then be given a tiddler with the letters `? /? ` as the title, click edit button and change the tiddler title to the `author/plugin name` format. For example, for the plugin `$:/plugins/Gk0Wk/example`, change the tiddler title to `Gk0Wk/example`. After modifying the title, save the tiddler.
+
+The tiddler should then look like this.
+
+<center>
+
+[img width=500px [PluginInfoEditor_en.png]]
+
+</center>
+
+Please follow the prompts directly in [edit] to modify the information of the plug-in, and you can see the corresponding results in [preview]. Here is an explanation of some properties in [edit] to add.
+
+* ''Title'': The title of the plugin tiddler, usually starts with `$:/plugins/`, `$:/languages/` or `$:/themes/`. Please make sure to fill in the plugin title as they are, otherwise you will not be able to register the plugin.
+* ''Version'': Generally do not fill in, because if the plug-in itself contains the version info, it will use the plug-in's own version info. However, if some non-standard plug-ins do not include the version info, you can add it here.
+* ''URI'': Very important! Refers to where you can download this plugin from. The download link can be one of the following.
+*# JSON file pointing to the plugin, e.g., `https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/download/v0.1.1/TW5-CodeMirror-Enhanced-0.1.1.json`, please must end with `.json`.
+*# A TID file pointing to the plugin, e.g. `https://github.com/TheDiveO/TW5FontAwesome/releases/download/1.2.22/fontawesome.tid`, please be sure to end with `.tid`.
+*# HTML files containing plugins, e.g. `http://tiddlymap.org/index.html`, please be sure to end with `.html` or `.htm`.
+*# Others: theoretically all file formats that can be supported by TW are possible, but I haven't tested it.
+
+Just save your changes, commit using git and make a PR, and wait for review.
+
+!! Other questions
+
+Q: What if the plugin doesn't have a download uri?
+A: If the plugin does not have a download address and needs to be downloaded or compiled manually, please place the json plugin file in the local folder of this project under the `plugin_files/` path and you need to modify it to the specified file name, the specific requirements will be shown in the [URI] after you create the plugin information entry and fill in the [Title].
+
+</$list>
+</$list>

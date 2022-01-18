@@ -1,0 +1,31 @@
+created: 20220118143905182
+modified: 20220118153749291
+title: Welcome_EN
+type: text/vnd.tiddlywiki
+
+Welcome to the ''[TiddlyWiki Chinese Community Plugin Library]''!
+
+This plugin source is maintained by the [[TiddlyWiki Chinese Community]] and is dedicated to collecting all TiddlyWiki5 related plugins on the web, hoping to provide a one-click installation and update plugin experience for TiddlyWiki users all around the world.
+
+If you don't know how to use TiddlyWiki and this source, you are welcome to read the plugins related section in the [[TiddlyWiki Tutorials for Chinese Communities|https://tw-cn.netlify.app]]. As mentioned above, both the plugin source and the tutorial are open source projects, you can find them in [[GitHub|https://github.com/tiddly-gittly]] and participate in contributing! If you like, you can join us through QQ groups and other means, see the Chinese tutorials mentioned above for details.
+
+To add this plugin library to your Wiki, simply drag the link below to your Wiki with your mouse:
+
+* <$link to="$:/config/ChinesePluginLibrary/Netlify">{{$:/config/ChinesePluginLibrary/Netlify!!caption}}</$link> The source version of this plugin is a version accelerated by netlify.app, which is more friendly to China mainland users, but there is a certain delay in updating.
+* <$link to="$:/config/ChinesePluginLibrary/GitHub">{{$:/config/ChinesePluginLibrary/GitHub!!caption}}</$link> The source version of this plugin is the ~GitHub Page version, which is more up-to-date, but may require scientific Internet access. If you are in China and are not sure what GFW is, please use the above version.
+
+Note: The content of the two is the same, only the former will be updated a little later. But both update the plugin information every hour, so it's not a big problem.
+
+<center>
+
+[img width=800px [install_en.gif]]
+
+</center>
+
+On this site, you can browse through various interesting plugins and install them in your own TW once you find the one you like. There is a comment section under each plugin info tiddler on this site where you can leave your thoughts. ↓
+
+<center>
+
+[img width=600px [CommentSection_en.png]]
+
+</center>

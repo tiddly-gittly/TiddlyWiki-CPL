@@ -1,0 +1,8 @@
+created: 20220118144513345
+list-before: $:/config/ViewTemplateTitleFilters/default
+modified: 20220118145701084
+tags: $:/tags/ViewTemplateTitleFilter
+title: Index Title i18n Cascade
+type: text/vnd.tiddlywiki
+
+[i18ncaption[yes]then[Index Title i18n]]

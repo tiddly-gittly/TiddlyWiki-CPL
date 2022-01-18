@@ -1,0 +1,54 @@
+created: 20220118144111816
+modified: 20220118144117399
+tags: 
+title: PluginsGallery
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search[zh]]">
+
+<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">点击 {{button/new-plugin}} 添加一个新的插件。</$list>点击 {{$:/core/ui/Buttons/CommandPalette}} (或者按 <kbd>ctrl/⌘</kbd> + <kbd>P</kbd>) 打开~CommandPalette。
+
+; 搜索已有的插件：<$edit-text tiddler="$:/tmp/searchplugin/input" default="" placeholder="插件名称" tag=input/>
+
+</$list>
+
+<$list filter="[<lang>!search[zh]]">
+
+<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">Click {{button/new-plugin}} to add a new plugin. </$list>Click {{$:/core/ui/Buttons/CommandPalette}} (or press <kbd>ctrl/⌘</kbd> + <kbd>P</kbd>) to open ~CommandPalette。
+
+; Search for existing plugins: <$edit-text tiddler="$:/tmp/searchplugin/input" default="" placeholder="plugins's name" tag=input/>
+
+</$list>
+</$list>
+
+
+<$set value={{{ [[$:/tmp/searchplugin/input]get[text]] }}} name="search">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
+<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]search:title,name,description,readme<search>]">
+<$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block">
+
+<div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
+
+<div style="width: 100%; padding: 8px 10px 10px; height: 69px; display: flex; flex-direction: row;">
+
+<$reveal stateTitle=<<currentTiddler>> stateField="icon" type="nomatch" text=""><div class="gk0wk-backlinksbox-box-link-icon"><$list filter="[<currentTiddler>get[icon]]" variable="icon">
+  <$list filter="[title<icon>is[shadow]]"><$transclude tiddler=<<icon>>/></$list>
+  <$list filter="[title<icon>is[tiddler]]"><$transclude tiddler=<<icon>>/></$list>
+  <$list filter="[title<icon>!is[shadow]!is[tiddler]]"><$wikify name="rendered" text=<<icon>> output=html><<rendered>></$wikify></$list>
+</$list></div></$reveal>
+
+''<$text text=<<currentTiddler>>/>''
+</div>
+</div></$link>
+</$list>
+<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">
+<$button tag="div" tooltip="Add plugin info to CPL wiki" aria-label="New Plugin" class="tc-btn-invisible gk0wk-notion-gallery-block" style="align-items: center; justify-content: center; flex-direction: row">
+{{$:/core/images/new-button}} <span style="padding-left: 5px;">New Plugin</span>
+<$action-createtiddler $basetitle="?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
+<$action-navigate $to=<<createTiddler-title>>/>
+</$action-createtiddler>
+</$button>
+</$list>
+</div>
+</$set>

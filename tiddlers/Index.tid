@@ -1,96 +1,19 @@
+caption_CN: 欢迎使用CPL！
+caption_EN: Welcome to CPL!
 created: 20211117163457173
 creator: Sttot
+i18ncaption: yes
 icon: 📦
-modified: 20211218192339223
+modified: 20220118145950948
 modifier: Sttot
 page-cover: https://unsplash.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
 title: Index
 type: text/vnd.tiddlywiki
 
-<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
-<$list filter="[<lang>search:title[zh]]" variable="lang">
+{{Welcome}}
 
-欢迎使用''【太微中文社区插件源】''！
-
-本插件源是由[[太微(TiddlyWiki)中文社区|https://github.com/tiddly-gittly]]维护的、致力于搜集网络上所有与 ~TiddlyWiki5 有关插件的、希望为中国以及全世界的太微用户提供一键安装、更新插件体验的公开插件源。
-
-如果还不了解该如何使用太微和本插件源，欢迎阅读[[中文社区共建的太微（TiddlyWiki）教程|https://tw-cn.netlify.app]]里插件相关的部分。如上提到的插件源和教程皆为开源项目，你可以在 [[GitHub|https://github.com/tiddly-gittly]] 中找到并参与贡献！如果乐意，可以通过QQ群等方式加入我们，详情请见如上提到的中文教程。
-
-要添加这个插件库到你的 Wiki 中，只需鼠标拖动如下链接到你的 Wiki 里即可：
-
-* <$link to="$:/config/ChinesePluginLibrary/Netlify">{{$:/config/ChinesePluginLibrary/Netlify!!caption}}</$link> 本插件源版本为经过 netlify.app 加速的版本，对国内用户更加友好，但是更新有一定的延迟。
-* <$link to="$:/config/ChinesePluginLibrary/GitHub">{{$:/config/ChinesePluginLibrary/GitHub!!caption}}</$link> 本插件源版本为 ~GitHub Page 的版本，更新更快，但是可能需要科学上网手段。如果你在国内，而且不清楚什么是“科学上网”，请选用上面的版本。
-
-注意：二者的内容是一样的，只是前者的更新会迟一些。但是二者都是每小时就更新一次插件信息，所以问题不大。
-
-</$list>
-
-<$list filter="[<lang>!search:title[zh]]" variable="lang">
-
-Welcome to the ''[TiddlyWiki Chinese Community Plugin Library]''!
-
-This plugin source is maintained by the [[TiddlyWiki Chinese Community]] and is dedicated to collecting all TiddlyWiki5 related plugins on the web, hoping to provide a one-click installation and update plugin experience for TiddlyWiki users all around the world.
-
-If you don't know how to use TiddlyWiki and this source, you are welcome to read the plugins related section in the [[TiddlyWiki Tutorials for Chinese Communities|https://tw-cn.netlify.app]]. As mentioned above, both the plugin source and the tutorial are open source projects, you can find them in [[GitHub|https://github.com/tiddly-gittly]] and participate in contributing! If you like, you can join us through QQ groups and other means, see the Chinese tutorials mentioned above for details.
-
-To add this plugin library to your Wiki, simply drag the link below to your Wiki with your mouse:
-
-* <$link to="$:/config/ChinesePluginLibrary/Netlify">{{$:/config/ChinesePluginLibrary/Netlify!!caption}}</$link> The source version of this plugin is a version accelerated by netlify.app, which is more friendly to China mainland users, but there is a certain delay in updating.
-* <$link to="$:/config/ChinesePluginLibrary/GitHub">{{$:/config/ChinesePluginLibrary/GitHub!!caption}}</$link> The source version of this plugin is the ~GitHub Page version, which is more up-to-date, but may require scientific Internet access. If you are in China and are not sure what GFW is, please use the above version.
-
-Note: The content of the two is the same, only the former will be updated a little later. But both update the plugin information every hour, so it's not a big problem.
-
-</$list>
-</$list>
+{{RegisterNewPlugins}}
 
 ---
 
-<!-- lang变量就是当前语言 -->
-<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
-<$list filter="[<lang>search[zh]]">
-
-<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">点击 {{button/new-plugin}} 添加一个新的插件。</$list>点击 {{$:/core/ui/Buttons/CommandPalette}} (或者按 <kbd>ctrl/⌘</kbd> + <kbd>P</kbd>) 打开~CommandPalette。
-
-; 搜索已有的插件：<$edit-text tiddler="$:/tmp/searchplugin/input" default="" placeholder="插件名称" tag=input/>
-
-</$list>
-
-<$list filter="[<lang>!search[zh]]">
-
-<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">Click {{button/new-plugin}} to add a new plugin. </$list>Click {{$:/core/ui/Buttons/CommandPalette}} (or press <kbd>ctrl/⌘</kbd> + <kbd>P</kbd>) to open ~CommandPalette。
-
-; Search for existing plugins: <$edit-text tiddler="$:/tmp/searchplugin/input" default="" placeholder="plugins's name" tag=input/>
-
-</$list>
-</$list>
-
-
-<$set value={{{ [[$:/tmp/searchplugin/input]get[text]] }}} name="search">
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
-<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]search:title,name,description,readme<search>]">
-<$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block">
-
-<div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
-
-<div style="width: 100%; padding: 8px 10px 10px; height: 69px; display: flex; flex-direction: row;">
-
-<$reveal stateTitle=<<currentTiddler>> stateField="icon" type="nomatch" text=""><div class="gk0wk-backlinksbox-box-link-icon"><$list filter="[<currentTiddler>get[icon]]" variable="icon">
-  <$list filter="[title<icon>is[shadow]]"><$transclude tiddler=<<icon>>/></$list>
-  <$list filter="[title<icon>is[tiddler]]"><$transclude tiddler=<<icon>>/></$list>
-  <$list filter="[title<icon>!is[shadow]!is[tiddler]]"><$wikify name="rendered" text=<<icon>> output=html><<rendered>></$wikify></$list>
-</$list></div></$reveal>
-
-''<$text text=<<currentTiddler>>/>''
-</div>
-</div></$link>
-</$list>
-<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]">
-<$button tag="div" tooltip="Add plugin info to CPL wiki" aria-label="New Plugin" class="tc-btn-invisible gk0wk-notion-gallery-block" style="align-items: center; justify-content: center; flex-direction: row">
-{{$:/core/images/new-button}} <span style="padding-left: 5px;">New Plugin</span>
-<$action-createtiddler $basetitle="?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
-<$action-navigate $to=<<createTiddler-title>>/>
-</$action-createtiddler>
-</$button>
-</$list>
-</div>
-</$set>
+{{PluginsGallery}}

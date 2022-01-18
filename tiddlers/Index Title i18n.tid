@@ -1,0 +1,19 @@
+created: 20220118144353995
+modified: 20220118144502528
+tags: 
+title: Index Title i18n
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search:title[zh]]" variable="lang">
+<h2 class="tc-title">
+<$view field="caption_CN"/>
+</h2>
+</$list>
+<$list filter="[<lang>!search:title[zh]]" variable="lang">
+<h2 class="tc-title">
+<$view field="caption_EN"/>
+</h2>
+</$list>
+</$list>
