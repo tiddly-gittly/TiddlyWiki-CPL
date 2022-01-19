@@ -2,7 +2,7 @@ caption_CN: 编辑本CPL
 caption_EN: Edit this CPL
 created: 20220118151733303
 i18ncaption: yes
-modified: 20220118162245084
+modified: 20220119083327223
 title: EditThisWiki
 type: text/vnd.tiddlywiki
 
@@ -69,7 +69,7 @@ After opening the project, click the <kbd>+</kbd> button in the sidebar to add a
 
 </center>
 
-You will then be given a tiddler with the letters `? /? ` as the title, click edit button and change the tiddler title to the `author/plugin name` format. For example, for the plugin `$:/plugins/Gk0Wk/example`, change the tiddler title to `Gk0Wk/example`. After modifying the title, save the tiddler.
+You will then be given a tiddler with the letters `?/?` as the title, click edit button and change the tiddler title to the `author/plugin name` format. For example, for the plugin `$:/plugins/Gk0Wk/example`, change the tiddler title to `Gk0Wk/example`. After modifying the title, save the tiddler.
 
 The tiddler should then look like this.
 
