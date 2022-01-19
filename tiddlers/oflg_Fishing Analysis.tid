@@ -1,0 +1,20 @@
+_title: $:/plugins/oflg/fishing-analysis
+_type: plugin
+author: oflg
+core-version: >=5.2.1
+created: 20220111081953232
+creator: oflg
+dependents: $:/plugins/Gk0Wk/echarts $:/plugins/oflg/fishing
+description: Analysis for Fishing.
+documentation: https://oflg.github.io/fishing/
+modified: 20220119042318455
+modifier: oflg
+name: Fishing Analysis
+page-cover: https://pic4.zhimg.com/v2-325a3847d920773c1c87b009e4002171
+parent-plugin: $:/plugins/oflg/fishing
+readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://oflg.github.io/fishing/]]的图表子插件。图表可视化展示钓鱼数据。</$list><$list filter="[<lang>!search[zh]]">Analysis for [[Fishing|https://oflg.github.io/fishing/]]. Graphical visualization of Fishing data.</$list></$list>
+sourse: https://github.com/oflg/fishing-analysis
+tags: $:/tags/PluginWiki
+title: oflg/Fishing Analysis
+type: text/vnd.tiddlywiki
+uri: https://oflg.github.io/fishing/$__plugins_oflg_fishing-analysis.json
