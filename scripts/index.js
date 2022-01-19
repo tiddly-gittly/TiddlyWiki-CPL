@@ -4,7 +4,7 @@ const fs = require('fs');
 const {
     execSync
 } = require('child_process');
-var $tw;
+let $tw;
 
 /** 项目路径 */
 const repoFolder = path.join(path.dirname(__filename), '..');
@@ -48,7 +48,7 @@ function ifPluginRequiresReload(pluginTiddler) {
     const shadowTitles = Object.keys(shadowTiddlers);
     for (let i = 0, length = shadowTitles.length; i < length; i++) {
         const tiddler = shadowTiddlers[shadowTitles[i]];
-        if (tiddler.type === "application/javascript" && tiddler.type['module-type'] !== undefined && tiddler.type['module-type'] !== '') {
+        if (tiddler.type === "application/javascript" && tiddler['module-type'] !== undefined && tiddler['module-type'] !== '') {
             return true;
         }
     }

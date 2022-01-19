@@ -1,7 +1,7 @@
 created: 20211117165810315
 creator: Sttot
 list-after: LanguageSwitcher
-modified: 20211226154301147
+modified: 20220119130710462
 modifier: Sttot
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/tags/PluginWiki
@@ -22,9 +22,9 @@ type: text/vnd.tiddlywiki
 <div class="tc-plugin-info-chunk tc-plugin-info-description">
 <h1><strong><$text text={{{ [<currentTiddler>get[name]] ~[<currentTiddler>get[title]split[/]last[1]] }}}/></strong>: <$text text={{{ [<currentTiddler>get[description]] }}}/></h1>
 <h2><$view tiddler=<<currentTiddler>> field="_title"/></h2>
-<div><em>{{!!version}}</em></div>
+<div><em><$list filter="[all[current]has[version]]"><$text text={{{ [all[current]get[version]] }}}/></$list><$list filter="[all[current]!has[version]]"><$set name="title" value={{{ [all[current]get[_title]] }}}><$text text={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]last[]] }}}/></$set></$list></em></div>
 <!-- 是否需要重载 -->
-<$reveal stateTitle=<<currentTiddler>> stateField="requires-reload" type="match" text="yes">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$reveal>
+<$set name="title" value={{{ [all[current]get[_title]] }}}><$set name="requiresReload" value={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]first[]] }}}><<requiresReload>><$list filter="[<requiresReload>match[yes]]">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$list></$set></$set>
 </div>
 </div>
 <div class="tc-plugin-info-dropdown">
