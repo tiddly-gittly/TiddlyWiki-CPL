@@ -227,7 +227,7 @@ function buildLibrary(distDir, minify) {
 
     // 生成插件信息反馈
     pluginCallbackInfo.text = JSON.stringify(pluginCallbackInfo.text);
-    fs.writeFileSync(`${distDir}/callback.json`, JSON.stringify(pluginCallbackInfo));
+    fs.writeFileSync(`${distDir}/callback.tid`, 'title: $:/temp/tw-cpl/plugin-callback-info\ntype: application/json\n\n' + pluginCallbackInfo.text);
 
     // 最小化：HTML
     if (minify) {
