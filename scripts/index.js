@@ -108,6 +108,9 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
     $tw.utils.each(mergingFields, function (fieldName) {
         mergeField(fieldName, pluginTiddler, infoTiddler);
     });
+    if (typeof pluginTiddler.dependents === 'string') {
+        pluginTiddler.dependents = infoTiddler.dependents = pluginTiddler.dependents.split('\n').join(' ');
+    }
     if (!infoTiddler.readme || infoTiddler.readme.trim() === '') {
         const readmeTitle = pluginTiddler.title + '/readme';
         const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[readmeTitle];
