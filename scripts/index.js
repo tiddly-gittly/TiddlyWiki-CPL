@@ -92,7 +92,7 @@ function mergeField(fieldName, plugin, info, fallback) {
     }
 }
 
-const removingFeilds = ['uri', 'bag', 'created', 'creator', 'modified', 'modifier', 'permissions', 'recipe', 'revision', 'text', 'type', 'icon', 'page-cover', 'tmap.id', '_title', '_type', 'plugin-icon'];
+const keepingFields = ['title', 'type', 'version', 'plugin-type', 'dependents', 'name', 'description', 'author', 'parent-plugin', 'list', 'core-version', 'plugin-priority', 'text-direction']
 const mergingFields = ['title', 'dependents', 'description', 'source', 'parent-plugin', 'core-version', 'icon'];
 
 function mergePluginInfo(pluginTiddler, infoTiddler) {
@@ -120,14 +120,16 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
             infoTiddler.readme = '';
         }
     }
-    // TODO: 删除不必要的字段 -> 改成只保留指定的字段
-    $tw.utils.each(removingFeilds, function (fieldName) {
-        delete infoTiddler[fieldName];
-    });
     if (infoTiddler.documentation && infoTiddler.documentation !== '')
         infoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${infoTiddler.documentation}"/></$button><br/>` + infoTiddler.readme;
     if (infoTiddler.source && infoTiddler.source !== '')
         infoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler.source}">{{$:/core/images/github}} <$text text="${infoTiddler.source}"/></$button><br/>` + infoTiddler.readme;
+    // 改成只保留指定的字段
+    const fields = Object.keys(infoTiddler);
+    for (let i = 0, length = fields.length; i < length; i++) {
+        const field = fields[i];
+        if (keepingFields.indexOf(field) === -1) delete infoTiddler[field];
+    }
     return { pluginTiddler, infoTiddler };
 }
 
@@ -206,7 +208,10 @@ function buildLibrary(distDir, minify) {
             // 加载、提取插件文件
             const pluginTiddlers = [];
             $tw.utils.each($tw.wiki.deserializeTiddlers(fileMIME, fileText, {}), tiddler_ => {
-                if (tiddler_.title === tiddler._title) pluginTiddlers.push(tiddler_);
+                if (tiddler_.title === tiddler._title) {
+                    pluginTiddlers.push(tiddler_);
+                    return false;
+                }
             });
             if (pluginTiddlers.length === 0) {
                 console.warn(`[Warning] Cannot find tiddler ${tiddler._title} in file ${tmp[0]}, skip this plugin.`);
