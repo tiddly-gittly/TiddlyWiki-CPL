@@ -4,6 +4,7 @@ specifiers:
   cross-env: 7.0.3
   html-minifier-terser: 6.1.0
   tiddlywiki: 5.2.1
+  tw5-typed: ^0.0.8
   uglify-js: 3.14.5
   workbox-cli: 6.4.2
 
@@ -11,6 +12,7 @@ devDependencies:
   cross-env: registry.nlark.com/cross-env/7.0.3
   html-minifier-terser: registry.npmmirror.com/html-minifier-terser/6.1.0
   tiddlywiki: registry.npmmirror.com/tiddlywiki/5.2.1
+  tw5-typed: registry.npmmirror.com/tw5-typed/0.0.8
   uglify-js: registry.npmmirror.com/uglify-js/3.14.5
   workbox-cli: registry.npmmirror.com/workbox-cli/6.4.2
 
@@ -3753,7 +3755,7 @@ packages:
     dev: true
 
   registry.npmmirror.com/fsevents/2.3.2:
-    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fsevents/download/fsevents-2.3.2.tgz}
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fsevents/-/fsevents-2.3.2.tgz}
     name: fsevents
     version: 2.3.2
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -4330,6 +4332,7 @@ packages:
     engines: {node: '>=0.8.2'}
     hasBin: true
     dev: true
+    bundledDependencies: []
 
   registry.npmmirror.com/tr46/1.0.1:
     resolution: {integrity: sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tr46/download/tr46-1.0.1.tgz}
@@ -4349,6 +4352,12 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/download/tslib-2.3.1.tgz}
     name: tslib
     version: 2.3.1
+    dev: true
+
+  registry.npmmirror.com/tw5-typed/0.0.8:
+    resolution: {integrity: sha512-Bo6z/KhlGRF9/aFUsI7s+TneXtbt/Qcs35SAoXttzSfMHEQ49HkrhOs1T0FCIDTKPRWNzYfK07AJG9yqujM+NA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tw5-typed/-/tw5-typed-0.0.8.tgz}
+    name: tw5-typed
+    version: 0.0.8
     dev: true
 
   registry.npmmirror.com/type-fest/0.13.1:
