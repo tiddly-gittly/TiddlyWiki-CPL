@@ -4,7 +4,7 @@ specifiers:
   cross-env: 7.0.3
   html-minifier-terser: 6.1.0
   tiddlywiki: 5.2.1
-  tw5-typed: ^0.0.8
+  tw5-typed: 0.1.9
   uglify-js: 3.15.2
   workbox-cli: 6.4.2
 
@@ -12,7 +12,7 @@ devDependencies:
   cross-env: registry.nlark.com/cross-env/7.0.3
   html-minifier-terser: registry.npmmirror.com/html-minifier-terser/6.1.0
   tiddlywiki: registry.npmmirror.com/tiddlywiki/5.2.1
-  tw5-typed: registry.npmmirror.com/tw5-typed/0.0.8
+  tw5-typed: 0.1.9
   uglify-js: 3.15.2
   workbox-cli: registry.npmmirror.com/workbox-cli/6.4.2
 
@@ -31,6 +31,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /tw5-typed/0.1.9:
+    resolution: {integrity: sha512-BDhHSfoUg61FZc1InhMPzhsovUnrmEYfO18nAgsETvcaPdWFkBrzELlHXiFzHm8r4XZAFs/27iEliRd0NNBmLA==}
+    dev: true
 
   /uglify-js/3.15.2:
     resolution: {integrity: sha512-peeoTk3hSwYdoc9nrdiEJk+gx1ALCtTjdYuKSXMTDqq7n1W7dHPqWDdSi+BPL0ni2YMeHD7hKUSdbj3TZauY2A==}
@@ -4362,12 +4366,6 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tslib/download/tslib-2.3.1.tgz}
     name: tslib
     version: 2.3.1
-    dev: true
-
-  registry.npmmirror.com/tw5-typed/0.0.8:
-    resolution: {integrity: sha512-Bo6z/KhlGRF9/aFUsI7s+TneXtbt/Qcs35SAoXttzSfMHEQ49HkrhOs1T0FCIDTKPRWNzYfK07AJG9yqujM+NA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tw5-typed/-/tw5-typed-0.0.8.tgz}
-    name: tw5-typed
-    version: 0.0.8
     dev: true
 
   registry.npmmirror.com/type-fest/0.13.1:
