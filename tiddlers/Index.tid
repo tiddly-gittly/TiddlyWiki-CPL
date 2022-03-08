@@ -4,16 +4,13 @@ created: 20211117163457173
 creator: Sttot
 i18ncaption: yes
 icon: 📦
-modified: 20220119014827352
+modified: 20220308020000684
 modifier: Sttot
 page-cover: https://unsplash.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
 title: Index
 type: text/vnd.tiddlywiki
 
-{{Welcome}}
-
-{{RegisterNewPlugins}}
-
----
 
 {{PluginsGallery}}
+
+---
