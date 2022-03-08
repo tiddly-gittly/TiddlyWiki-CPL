@@ -7,7 +7,7 @@ creator: oflg
 dependents: $:/plugins/Gk0Wk/echarts $:/plugins/oflg/fishing
 description: Analysis for Fishing.
 documentation: https://oflg.github.io/fishing/
-modified: 20220119042318455
+modified: 20220308013605686
 modifier: oflg
 name: Fishing Analysis
 page-cover: https://pic4.zhimg.com/v2-325a3847d920773c1c87b009e4002171
@@ -17,4 +17,4 @@ sourse: https://github.com/oflg/fishing-analysis
 tags: $:/tags/PluginWiki
 title: oflg/Fishing Analysis
 type: text/vnd.tiddlywiki
-uri: https://oflg.github.io/fishing/$__plugins_oflg_fishing-analysis.json
+uri: https://oflg.github.io/fishing/index.html
