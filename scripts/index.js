@@ -1,13 +1,11 @@
 // Creator: Gk0Wk (https://github.com/Gk0Wk)
-const path = require('path');
-const fs = require('fs');
-const {
-    execSync
-} = require('child_process');
+const path = require("path");
+const fs = require("fs");
+const { execSync } = require("child_process");
 let $tw;
 
 /** 项目路径 */
-const repoFolder = path.join(path.dirname(__filename), '..');
+const repoFolder = path.join(path.dirname(__filename), "..");
 
 /**
  * 执行命令行指令，并打印该指令的结果
@@ -16,12 +14,12 @@ const repoFolder = path.join(path.dirname(__filename), '..');
  * @param {boolen} output 是否输出
  */
 function shell(command, options, output) {
-    if (options !== undefined) options = {};
-    let outputString = execSync(command, {
-        cwd: repoFolder,
-        ...options,
-    });
-    if (output) console.log(String(outputString));
+  if (options !== undefined) options = {};
+  let outputString = execSync(command, {
+    cwd: repoFolder,
+    ...options,
+  });
+  if (output) console.log(String(outputString));
 }
 
 /**
@@ -31,11 +29,11 @@ function shell(command, options, output) {
  * @param {boolen} output 是否输出
  */
 function shellI(command, options, output) {
-    try {
-        shell(command, options, output);
-    } catch (error) {
-        console.error(`[Shell Command Error] ${error}`);
-    }
+  try {
+    shell(command, options, output);
+  } catch (error) {
+    console.error(`[Shell Command Error] ${error}`);
+  }
 }
 
 /**
@@ -44,15 +42,19 @@ function shellI(command, options, output) {
  * @returns 需要重载则返回true，反之
  */
 function ifPluginRequiresReload(pluginTiddler) {
-    const shadowTiddlers = JSON.parse(pluginTiddler.text).tiddlers;
-    const shadowTitles = Object.keys(shadowTiddlers);
-    for (let i = 0, length = shadowTitles.length; i < length; i++) {
-        const tiddler = shadowTiddlers[shadowTitles[i]];
-        if (tiddler.type === "application/javascript" && tiddler['module-type'] !== undefined && tiddler['module-type'] !== '') {
-            return true;
-        }
+  const shadowTiddlers = JSON.parse(pluginTiddler.text).tiddlers;
+  const shadowTitles = Object.keys(shadowTiddlers);
+  for (let i = 0, length = shadowTitles.length; i < length; i++) {
+    const tiddler = shadowTiddlers[shadowTitles[i]];
+    if (
+      tiddler.type === "application/javascript" &&
+      tiddler["module-type"] !== undefined &&
+      tiddler["module-type"] !== ""
+    ) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 /**
@@ -61,12 +63,13 @@ function ifPluginRequiresReload(pluginTiddler) {
  * @returns 格式化之后的文件名称
  */
 function formatTitle(title) {
-    return encodeURIComponent(
-        title.replace('$:/plugins/', '')
-            .replace('$:/languages/', 'languages_')
-            .replace('$:/themes/', 'themes_')
-            .replace(/[:/<>"\|?*]/g, '_')
-    );
+  return encodeURIComponent(
+    title
+      .replace("$:/plugins/", "")
+      .replace("$:/languages/", "languages_")
+      .replace("$:/themes/", "themes_")
+      .replace(/[:/<>"\|?*]/g, "_")
+  );
 }
 
 /**
@@ -75,67 +78,94 @@ function formatTitle(title) {
  * @returns 创建成功则返回true
  */
 function mkdirsSync(dirname) {
-    if (fs.existsSync(dirname)) return true;
-    mkdirsSync(path.dirname(dirname));
-    return fs.mkdirSync(dirname);
+  if (fs.existsSync(dirname)) return true;
+  mkdirsSync(path.dirname(dirname));
+  return fs.mkdirSync(dirname);
 }
 
 function mergeField(fieldName, plugin, info, fallback) {
-    const pluginEmpty = !plugin[fieldName] || plugin[fieldName].trim() === '';
-    const infoEmpty = !info[fieldName] || info[fieldName].trim() === '';
-    if (pluginEmpty && infoEmpty) {
-        if (!!fallback && fallback.trim() !== '') plugin[fieldName] = info[fieldName] = fallback;
-    } else if (pluginEmpty) {
-        plugin[fieldName] = info[fieldName];
-    } else if (infoEmpty) {
-        info[fieldName] = plugin[fieldName];
-    }
+  const pluginEmpty = !plugin[fieldName] || plugin[fieldName].trim() === "";
+  const infoEmpty = !info[fieldName] || info[fieldName].trim() === "";
+  if (pluginEmpty && infoEmpty) {
+    if (!!fallback && fallback.trim() !== "")
+      plugin[fieldName] = info[fieldName] = fallback;
+  } else if (pluginEmpty) {
+    plugin[fieldName] = info[fieldName];
+  } else if (infoEmpty) {
+    info[fieldName] = plugin[fieldName];
+  }
 }
 
-const keepingFields = ['title', 'type', 'version', 'plugin-type', 'dependents', 'name', 'description', 'author', 'parent-plugin', 'list', 'core-version', 'plugin-priority', 'text-direction']
-const mergingFields = ['title', 'dependents', 'description', 'source', 'parent-plugin', 'core-version', 'icon'];
+const mergingFields = [
+  "title",
+  "dependents",
+  "description",
+  "source",
+  "parent-plugin",
+  "core-version",
+  "icon",
+];
 
 function mergePluginInfo(pluginTiddler, infoTiddler) {
-    let newInfoTiddler = {
-      title: infoTiddler["cpl.title"],
-      author: infoTiddler["cpl.author"],
-      name: infoTiddler["cpl.name"],
-      description: infoTiddler["cpl.description"],
-      version: infoTiddler["cpl.version"],
-      uri: infoTiddler["cpl.uri"],
-      "plugin-type": infoTiddler["cpl.type"],
-      icon: infoTiddler["cpl.icon"],
-      source: infoTiddler["cpl.source"],
-      documentation: infoTiddler["cpl.documentation"],
-      dependents: infoTiddler["cpl.dependents"] ? infoTiddler["cpl.dependents"].split('\n').join(' ') : '',
-      "parent-plugin": infoTiddler["cpl.parent-plugin"],
-      "core-version": infoTiddler["cpl.core-version"],
-      "requires-reload": ifPluginRequiresReload(pluginTiddler),
-    };
-    mergeField('version', pluginTiddler, newInfoTiddler, $tw.version);
-    mergeField('type', pluginTiddler, newInfoTiddler, 'application/json');
-    mergeField('plugin-type', pluginTiddler, newInfoTiddler, 'plugin');
-    mergeField('author', pluginTiddler, newInfoTiddler, pluginTiddler.title.split('/')[2]);
-    mergeField('name', pluginTiddler, newInfoTiddler, pluginTiddler.title.split('/')[3]);
-    $tw.utils.each(mergingFields, function (fieldName) {
-        mergeField(fieldName, pluginTiddler, newInfoTiddler);
-    });
-    if (!newInfoTiddler.readme || newInfoTiddler.readme.trim() === '') {
-        const readmeTitle = pluginTiddler.title + '/readme';
-        const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[readmeTitle];
-        newInfoTiddler.readme = readmeTiddler ? readmeTiddler.text : "";
-    }
-    if (newInfoTiddler.documentation && newInfoTiddler.documentation !== '')
-        newInfoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${newInfoTiddler.documentation}"/></$button><br/>` + newInfoTiddler.readme;
-    if (newInfoTiddler.source && newInfoTiddler.source !== '')
-        newInfoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.source}">{{$:/core/images/github}} <$text text="${newInfoTiddler.source}"/></$button><br/>` + newInfoTiddler.readme;
-    // 改成只保留指定的字段
-    const fields = Object.keys(newInfoTiddler);
-    for (let i = 0, length = fields.length; i < length; i++) {
-        const field = fields[i];
-        if (keepingFields.indexOf(field) === -1) delete newInfoTiddler[field];
-    }
-    return { pluginTiddler, newInfoTiddler };
+  let newInfoTiddler = {
+    title: infoTiddler["cpl.title"],
+    author: infoTiddler["cpl.author"],
+    name: infoTiddler["cpl.name"],
+    description: infoTiddler["cpl.description"],
+    readme: infoTiddler["cpl.readme"],
+    version: infoTiddler["cpl.version"],
+    "plugin-type": infoTiddler["cpl.type"],
+    icon: infoTiddler["cpl.icon"],
+    dependents: infoTiddler["cpl.dependents"]
+      ? infoTiddler["cpl.dependents"].split("\n").join(" ")
+      : "",
+    "parent-plugin": infoTiddler["cpl.parent-plugin"],
+    "core-version": infoTiddler["cpl.core-version"],
+    "requires-reload": ifPluginRequiresReload(pluginTiddler),
+  };
+  mergeField("version", pluginTiddler, newInfoTiddler, $tw.version);
+  mergeField("type", pluginTiddler, newInfoTiddler, "application/json");
+  mergeField("plugin-type", pluginTiddler, newInfoTiddler, "plugin");
+  mergeField(
+    "author",
+    pluginTiddler,
+    newInfoTiddler,
+    pluginTiddler.title.split("/")[2]
+  );
+  mergeField(
+    "name",
+    pluginTiddler,
+    newInfoTiddler,
+    pluginTiddler.title.split("/")[3]
+  );
+  $tw.utils.each(mergingFields, function (fieldName) {
+    mergeField(fieldName, pluginTiddler, newInfoTiddler);
+  });
+  if (!newInfoTiddler.readme || newInfoTiddler.readme.trim() === "") {
+    const readmeTitle = pluginTiddler.title + "/readme";
+    const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[readmeTitle];
+    newInfoTiddler.readme = readmeTiddler ? readmeTiddler.text : "";
+  }
+  if (newInfoTiddler.documentation && newInfoTiddler.documentation !== "")
+    newInfoTiddler.readme =
+      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${newInfoTiddler.documentation}"/></$button><br/>` +
+      newInfoTiddler.readme;
+  if (newInfoTiddler.source && newInfoTiddler.source !== "")
+    newInfoTiddler.readme =
+      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.source}">{{$:/core/images/github}} <$text text="${newInfoTiddler.source}"/></$button><br/>` +
+      newInfoTiddler.readme;
+  // 改成只保留指定的字段
+  const fields = Object.keys(newInfoTiddler);
+  for (let i = 0, length = fields.length; i < length; i++) {
+    const field = fields[i];
+    if (
+      newInfoTiddler[field] === undefined ||
+      newInfoTiddler[field] === "" ||
+      ["source"].indexOf(field) > -1
+    )
+      delete newInfoTiddler[field];
+  }
+  return { pluginTiddler, newInfoTiddler };
 }
 
 /**
@@ -144,114 +174,163 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
  * @param {boolean} minify 是否最小化HTML，默认为true
  */
 function buildLibrary(distDir, minify) {
-    if (typeof distDir !== 'string' || distDir.length === 0) distDir = 'dist/library';
-    if (typeof minify !== 'boolean') minify = true;
+  if (typeof distDir !== "string" || distDir.length === 0)
+    distDir = "dist/library";
+  if (typeof minify !== "boolean") minify = true;
 
-    // 启动TW
-    console.log('Loading plugin informations');
-    $tw = require('tiddlywiki/boot/boot').TiddlyWiki();
-    $tw.boot.argv = ['.'];
-    $tw.boot.boot();
+  // 启动TW
+  console.log("Loading plugin informations");
+  $tw = require("tiddlywiki/boot/boot").TiddlyWiki();
+  $tw.boot.argv = ["."];
+  $tw.boot.boot();
 
-    // 遍历、下载所有插件
-    // console.log('Downloading all online plugins');
-    const pluginsInfo = [];
-    const pluginCallbackInfo = {
-        title: '$:/temp/tw-cpl/plugin-callback-info',
-        text: {},
-        type: 'application/json',
-    };
-    const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers('[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]');
-    const downloadFileMap = {};
-    mkdirsSync(`${distDir}/plugins`); // 插件目标目录
-    mkdirsSync(`${distDir}/tmp`);     // 临时的插件目录
-    shellI(`cp plugin_files/* ${distDir}/tmp/`); // 拷贝本地插件(未在网络上发布的)
-    pluginInfoTiddlerTitles.forEach(title => {
-        try {
-            const tiddler = $tw.wiki.getTiddler(title).fields;
-            // 带有uri，需要下载下来，但是需要是tw支持的格式
-            if (tiddler['cpl.uri'] && tiddler['cpl.uri'] !== '' && $tw.config.fileExtensionInfo[path.extname(tiddler['cpl.uri'])] && tiddler['cpl.title'] && tiddler['cpl.title'] !== '') {
-                console.log(`- Downloading plugin file ${tiddler['cpl.title']}`);
-                const distPluginName = formatTitle(tiddler['cpl.title']) + path.extname(tiddler['cpl.uri']);
-                if (downloadFileMap[tiddler['cpl.uri']]) {
-                    shellI(`cp ${downloadFileMap[tiddler['cpl.uri']]} ${distDir}/tmp/${distPluginName}`);
-                } else {
-                    shellI(`wget '${tiddler['cpl.uri']}' -O ${distDir}/tmp/${distPluginName}`);
-                    downloadFileMap[tiddler['cpl.uri']] = `${distDir}/tmp/${distPluginName}`;
-                }
-            }
-        } catch (e) { console.error(e); }
-    });
-
-    // 接下来从tmp/下获取所有的插件
-    console.log('Exporting plugins');
-    const files = fs.readdirSync(`${distDir}/tmp`);
-    pluginInfoTiddlerTitles.forEach(title => {
-        const tiddler = JSON.parse($tw.wiki.getTiddlerAsJson(title));
-        if (!tiddler['cpl.title'] || tiddler['cpl.title'] === '') {
-            console.warn(`[Warning] ${title} missed plugin title, skip this plugin.`);
-            return;
+  // 遍历、下载所有插件
+  const pluginsInfo = [];
+  const pluginCallbackInfo = {
+    title: "$:/temp/tw-cpl/plugin-callback-info",
+    text: {},
+    type: "application/json",
+  };
+  const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers('[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]');
+  const downloadFileMap = {};
+  mkdirsSync(`${distDir}/plugins`); // 插件目标目录
+  mkdirsSync(`${distDir}/tmp`); // 临时的插件目录
+  shellI(`cp plugin_files/* ${distDir}/tmp/`); // 拷贝本地插件(未在网络上发布的)
+  pluginInfoTiddlerTitles.forEach((title) => {
+    try {
+      const tiddler = $tw.wiki.getTiddler(title).fields;
+      // 带有uri，需要下载下来，但是需要是tw支持的格式
+      if (
+        tiddler["cpl.uri"] &&
+        tiddler["cpl.uri"] !== "" &&
+        $tw.config.fileExtensionInfo[path.extname(tiddler["cpl.uri"])] &&
+        tiddler["cpl.title"] &&
+        tiddler["cpl.title"] !== ""
+      ) {
+        console.log(`- Downloading plugin file ${tiddler["cpl.title"]}`);
+        const distPluginName =
+          formatTitle(tiddler["cpl.title"]) + path.extname(tiddler["cpl.uri"]);
+        if (downloadFileMap[tiddler["cpl.uri"]]) {
+          shellI(
+            `cp ${
+              downloadFileMap[tiddler["cpl.uri"]]
+            } ${distDir}/tmp/${distPluginName}`
+          );
+        } else {
+          shellI(
+            `wget '${tiddler["cpl.uri"]}' -O ${distDir}/tmp/${distPluginName}`
+          );
+          downloadFileMap[
+            tiddler["cpl.uri"]
+          ] = `${distDir}/tmp/${distPluginName}`;
         }
-        try {
-            const pluginName = formatTitle(tiddler['cpl.title']);
-            // 找到文件夹下对应的插件文件
-            const tmp = [];
-            const fileRegExp = new RegExp(pluginName + '\\..*');
-            files.forEach(file => {
-                if (!fileRegExp.test(file)) return;
-                const extname = path.extname(file);
-                if (extname === '') return;
-                if (!$tw.config.fileExtensionInfo[extname]) return;
-                tmp.push(file);
-            });
-            if (tmp.length == 0) {
-                console.warn(`[Warning] Cannot find file ${pluginName}.*, skip this plugin.`);
-                return;
-            }
-            const fileMIME = $tw.config.fileExtensionInfo[path.extname(tmp[0])].type;
-            const fileText = fs.readFileSync(`${distDir}/tmp/${tmp[0]}`).toString('utf8');
-            // 加载、提取插件文件
-            const pluginTiddlers = [];
-            $tw.utils.each($tw.wiki.deserializeTiddlers(fileMIME, fileText, {}), tiddler_ => {
-                if (tiddler_.title === tiddler['cpl.title']) {
-                    pluginTiddlers.push(tiddler_);
-                    return false;
-                }
-            });
-            if (pluginTiddlers.length === 0) {
-                console.warn(`[Warning] Cannot find tiddler ${tiddler['cpl.title']} in file ${tmp[0]}, skip this plugin.`);
-                return;
-            }
-            const plugin = pluginTiddlers[0];
-            // 整合信息
-            const { pluginTiddler, infoTiddler } = mergePluginInfo(plugin, tiddler);
-            // 保存插件
-            fs.writeFileSync(`${distDir}/plugins/${pluginName}.json`, JSON.stringify(pluginTiddler));
-            // 登记插件
-            pluginsInfo.push(infoTiddler);
-            pluginCallbackInfo.text[infoTiddler.title] = `${infoTiddler['requires-reload'] === true ? 'true' : 'false'}|${infoTiddler.version}`;
-        } catch (e) { console.error(e); }
-    });
-    shellI(`rm -rf ${distDir}/tmp`);
-
-    // 生成插件源HTML文件
-    console.log(`Generating plugin library file`);
-    fs.writeFileSync(`${distDir}/index-raw.html`, fs.readFileSync(`scripts/library.emplate.html`).toString('utf8').replace('\'%%plugins%%\'', JSON.stringify(pluginsInfo)));
-
-    // 生成插件信息反馈
-    pluginCallbackInfo.text = JSON.stringify(pluginCallbackInfo.text);
-    fs.writeFileSync(`${distDir}/callback.tid`, 'title: $:/temp/tw-cpl/plugin-callback-info\ntype: application/json\n\n' + pluginCallbackInfo.text);
-
-    // 最小化：HTML
-    if (minify) {
-        console.log(`Minifying plugin library file`);
-        shellI(`npx html-minifier-terser -c scripts/html-minifier-terser.config.json -o ${distDir}/index.html ${distDir}/index-raw.html && rm ${distDir}/index-raw.html`);
-    } else {
-        shellI(`mv ${distDir}/index-raw.html ${distDir}/index.html`);
+      }
+    } catch (e) {
+      console.error(e);
     }
-    console.log(`CPL generated`);
+  });
+
+  // 接下来从tmp/下获取所有的插件
+  console.log("Exporting plugins");
+  const files = fs.readdirSync(`${distDir}/tmp`);
+  pluginInfoTiddlerTitles.forEach((title) => {
+    const tiddler = JSON.parse($tw.wiki.getTiddlerAsJson(title));
+    if (!tiddler["cpl.title"] || tiddler["cpl.title"] === "") {
+      console.warn(`[Warning] ${title} missed plugin title, skip this plugin.`);
+      return;
+    }
+    try {
+      const pluginName = formatTitle(tiddler["cpl.title"]);
+      // 找到文件夹下对应的插件文件
+      const tmp = [];
+      const fileRegExp = new RegExp(pluginName + "\\..*");
+      files.forEach((file) => {
+        if (!fileRegExp.test(file)) return;
+        const extname = path.extname(file);
+        if (extname === "") return;
+        if (!$tw.config.fileExtensionInfo[extname]) return;
+        tmp.push(file);
+      });
+      if (tmp.length == 0) {
+        console.warn(
+          `[Warning] Cannot find file ${pluginName}.*, skip this plugin.`
+        );
+        return;
+      }
+      const fileMIME = $tw.config.fileExtensionInfo[path.extname(tmp[0])].type;
+      const fileText = fs
+        .readFileSync(`${distDir}/tmp/${tmp[0]}`)
+        .toString("utf8");
+      // 加载、提取插件文件
+      const pluginTiddlers = [];
+      $tw.utils.each(
+        $tw.wiki.deserializeTiddlers(fileMIME, fileText, {}),
+        (tiddler_) => {
+          if (tiddler_.title === tiddler["cpl.title"]) {
+            pluginTiddlers.push(tiddler_);
+            return false;
+          }
+        }
+      );
+      if (pluginTiddlers.length === 0) {
+        console.warn(
+          `[Warning] Cannot find tiddler ${tiddler["cpl.title"]} in file ${tmp[0]}, skip this plugin.`
+        );
+        return;
+      }
+      const plugin = pluginTiddlers[0];
+      // 整合信息
+      const { pluginTiddler, newInfoTiddler } = mergePluginInfo(
+        plugin,
+        tiddler
+      );
+      const infoTiddler = newInfoTiddler;
+      // 保存插件
+      fs.writeFileSync(
+        `${distDir}/plugins/${pluginName}.json`,
+        JSON.stringify(pluginTiddler)
+      );
+      // 登记插件
+      pluginsInfo.push(infoTiddler);
+      pluginCallbackInfo.text[infoTiddler.title] = `${
+        infoTiddler["requires-reload"] === true ? "true" : "false"
+      }|${infoTiddler.version}`;
+    } catch (e) {
+      console.error(e);
+    }
+  });
+  shellI(`rm -rf ${distDir}/tmp`);
+
+  // 生成插件源HTML文件
+  console.log(`Generating plugin library file`);
+  fs.writeFileSync(
+    `${distDir}/index-raw.html`,
+    fs
+      .readFileSync(`scripts/library.emplate.html`)
+      .toString("utf8")
+      .replace("'%%plugins%%'", JSON.stringify(pluginsInfo))
+  );
+
+  // 生成插件信息反馈
+  pluginCallbackInfo.text = JSON.stringify(pluginCallbackInfo.text);
+  fs.writeFileSync(
+    `${distDir}/callback.tid`,
+    "title: $:/temp/tw-cpl/plugin-callback-info\ntype: application/json\n\n" +
+      pluginCallbackInfo.text
+  );
+
+  // 最小化：HTML
+  if (minify) {
+    console.log(`Minifying plugin library file`);
+    shellI(
+      `npx html-minifier-terser -c scripts/html-minifier-terser.config.json -o ${distDir}/index.html ${distDir}/index-raw.html && rm ${distDir}/index-raw.html`
+    );
+  } else {
+    shellI(`mv ${distDir}/index-raw.html ${distDir}/index.html`);
+  }
+  console.log(`CPL generated`);
 }
 
 module.exports = {
-    build: buildLibrary,
+  build: buildLibrary,
 };
