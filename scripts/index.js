@@ -170,9 +170,9 @@ function buildLibrary(distDir, minify) {
         try {
             const tiddler = $tw.wiki.getTiddler(title).fields;
             // 带有uri，需要下载下来，但是需要是tw支持的格式
-            if (tiddler.uri && tiddler.uri !== '' && $tw.config.fileExtensionInfo[path.extname(tiddler.uri)] && tiddler._title && tiddler._title !== '') {
-                console.log(`- Downloading plugin file ${tiddler._title}`);
-                const distPluginName = formatTitle(tiddler._title) + path.extname(tiddler.uri);
+            if (tiddler.uri && tiddler.uri !== '' && $tw.config.fileExtensionInfo[path.extname(tiddler.uri)] && tiddler['cpl.title'] && tiddler['cpl.title'] !== '') {
+                console.log(`- Downloading plugin file ${tiddler['cpl.title']}`);
+                const distPluginName = formatTitle(tiddler['cpl.title']) + path.extname(tiddler.uri);
                 if (downloadFileMap[tiddler.uri]) {
                     shellI(`cp ${downloadFileMap[tiddler.uri]} ${distDir}/tmp/${distPluginName}`);
                 } else {
@@ -188,12 +188,12 @@ function buildLibrary(distDir, minify) {
     const files = fs.readdirSync(`${distDir}/tmp`);
     pluginInfoTiddlerTitles.forEach(title => {
         const tiddler = JSON.parse($tw.wiki.getTiddlerAsJson(title));
-        if (!tiddler._title || tiddler._title === '') {
+        if (!tiddler['cpl.title'] || tiddler['cpl.title'] === '') {
             console.warn(`[Warning] ${title} missed plugin title, skip this plugin.`);
             return;
         }
         try {
-            const pluginName = formatTitle(tiddler._title);
+            const pluginName = formatTitle(tiddler['cpl.title']);
             // 找到文件夹下对应的插件文件
             const tmp = [];
             const fileRegExp = new RegExp(pluginName + '\\..*');
@@ -213,13 +213,13 @@ function buildLibrary(distDir, minify) {
             // 加载、提取插件文件
             const pluginTiddlers = [];
             $tw.utils.each($tw.wiki.deserializeTiddlers(fileMIME, fileText, {}), tiddler_ => {
-                if (tiddler_.title === tiddler._title) {
+                if (tiddler_.title === tiddler['cpl.title']) {
                     pluginTiddlers.push(tiddler_);
                     return false;
                 }
             });
             if (pluginTiddlers.length === 0) {
-                console.warn(`[Warning] Cannot find tiddler ${tiddler._title} in file ${tmp[0]}, skip this plugin.`);
+                console.warn(`[Warning] Cannot find tiddler ${tiddler['cpl.title']} in file ${tmp[0]}, skip this plugin.`);
                 return;
             }
             const plugin = pluginTiddlers[0];
