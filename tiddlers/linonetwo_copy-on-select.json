@@ -7,15 +7,15 @@
         "modified": "20211209170813771",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fcopy-on-select.json",
         "modifier": "林一二",
-        "_title": "$:/plugins/linonetwo/copy-on-select",
-        "_type": "plugin",
-        "author": "LinOnetwo",
-        "description": "Copy what you are selecting inside the wiki into the clipboard",
-        "name": "copy-on-select",
-        "readme": "!! 动机\n\n我已经习惯了用方便的[[Copy On Select|https://addons.mozilla.org/en-US/firefox/addon/copy-on-select]] Firefox 插件，现在到了 TiddlyWiki 里我经常还是以为选中了就复制了，然后黏贴到别的地方才发现其实并没有复制，很不习惯。\n\n所以我自己重新写了一个适配 TiddlyWiki 的选中即复制脚本。\n\n!! 用法\n\n选中编辑器、按钮等区域以外的任何文本都会直接复制。\n\n这个插件里的条件语句让它在编辑器等特殊区域内不会起作用，以免干扰「全选黏贴覆盖原有内容」等操作。\n",
-        "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/copy-on-select",
-        "page-cover": "https://images.unsplash.com/photo-1638374244133-ea991ba2dbaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYzOTA2OTQyOA&ixlib=rb-1.2.1&q=80&w=1080"
+        "page-cover": "https://images.unsplash.com/photo-1638374244133-ea991ba2dbaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYzOTA2OTQyOA&ixlib=rb-1.2.1&q=80&w=1080",
+        "cpl.title": "$:/plugins/linonetwo/copy-on-select",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "copy-on-select",
+        "cpl.description": "Copy what you are selecting inside the wiki into the clipboard",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fcopy-on-select.json",
+        "cpl.readme": "!! 动机\n\n我已经习惯了用方便的[[Copy On Select|https://addons.mozilla.org/en-US/firefox/addon/copy-on-select]] Firefox 插件，现在到了 TiddlyWiki 里我经常还是以为选中了就复制了，然后黏贴到别的地方才发现其实并没有复制，很不习惯。\n\n所以我自己重新写了一个适配 TiddlyWiki 的选中即复制脚本。\n\n!! 用法\n\n选中编辑器、按钮等区域以外的任何文本都会直接复制。\n\n这个插件里的条件语句让它在编辑器等特殊区域内不会起作用，以免干扰「全选黏贴覆盖原有内容」等操作。\n",
+        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/copy-on-select",
+        "cpl.plugin-type": "plugin"
     }
 ]

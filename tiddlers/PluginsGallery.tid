@@ -1,5 +1,5 @@
 created: 20220118144111816
-modified: 20220308015755460
+modified: 20220321143017782
 tags: 
 title: PluginsGallery
 type: text/vnd.tiddlywiki
@@ -30,7 +30,7 @@ type: text/vnd.tiddlywiki
 
 <$set value={{{ [[$:/tmp/searchplugin/input]get[text]] }}} name="search">
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
-<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]search:title,name,description,readme<search>]">
+<$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]search:cpl.title,cpl.name,cpl.description,cpl.readme<search>]">
 <$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block">
 
 <div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
@@ -43,7 +43,7 @@ type: text/vnd.tiddlywiki
   <$list filter="[title<icon>!is[shadow]!is[tiddler]]"><$wikify name="rendered" text=<<icon>> output=html><<rendered>></$wikify></$list>
 </$list></div></$reveal>
 
-''<$text text=<<currentTiddler>>/>''
+''<$text text={{{ [<currentTiddler>get[cpl.name]] }}}/>'': <$text text={{{ [<currentTiddler>get[cpl.description]] }}}/>
 </div>
 </div></$link>
 </$list>

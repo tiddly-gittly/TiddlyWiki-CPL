@@ -1,7 +1,7 @@
 caption: New Plugin
 created: 20211118061452999
 description: Add plugin info to CPL wiki
-modified: 20211218200857642
+modified: 20220321144711883
 tags: $:/tags/PageControls TW5CPL
 title: button/new-plugin
 type: text/vnd.tiddlywiki
@@ -9,7 +9,7 @@ type: text/vnd.tiddlywiki
 \whitespace trim
 <$list filter="[[IfEditorMode]get[text]else[no]match[yes]]"><$button tooltip="Add plugin info to CPL wiki" aria-label="New Plugin" class="tc-btn-invisible">
 {{$:/core/images/new-button}}
-<$action-createtiddler $basetitle="?/?" tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
+<$action-createtiddler $basetitle={{{ [[Plugin_]addsuffix<now YYYY0MM0DD0mm0ss0XXX>] }}} tags="$:/tags/PluginWiki" $template="CPLPluginWikiTemplate">
 <$action-navigate $to=<<createTiddler-title>>/>
 </$action-createtiddler>
 </$button></$list>

@@ -96,41 +96,46 @@ const keepingFields = ['title', 'type', 'version', 'plugin-type', 'dependents', 
 const mergingFields = ['title', 'dependents', 'description', 'source', 'parent-plugin', 'core-version', 'icon'];
 
 function mergePluginInfo(pluginTiddler, infoTiddler) {
-    infoTiddler.title = infoTiddler._title;
-    infoTiddler.icon = infoTiddler['plugin-icon'];
-    infoTiddler['plugin-type'] = infoTiddler._type;
-    infoTiddler['requires-reload'] = ifPluginRequiresReload(pluginTiddler);
-    mergeField('version', pluginTiddler, infoTiddler, $tw.version);
-    mergeField('type', pluginTiddler, infoTiddler, 'application/json');
-    mergeField('plugin-type', pluginTiddler, infoTiddler, 'plugin');
-    mergeField('author', pluginTiddler, infoTiddler, pluginTiddler.title.split('/')[2]);
-    mergeField('name', pluginTiddler, infoTiddler, pluginTiddler.title.split('/')[3]);
+    let newInfoTiddler = {
+      title: newInfoTiddler["cpl.title"],
+      author: newInfoTiddler["cpl.author"],
+      name: newInfoTiddler["cpl.name"],
+      description: newInfoTiddler["cpl.description"],
+      version: newInfoTiddler["cpl.version"],
+      uri: newInfoTiddler["cpl.uri"],
+      "plugin-type": newInfoTiddler["cpl.type"],
+      icon: newInfoTiddler["cpl.icon"],
+      source: newInfoTiddler["cpl.source"],
+      documentation: newInfoTiddler["cpl.documentation"],
+      dependents: newInfoTiddler["cpl.dependents"] ? newInfoTiddler["cpl.dependents"].split('\n').join(' ') : '',
+      "parent-plugin": newInfoTiddler["cpl.parent-plugin"],
+      "core-version": newInfoTiddler["cpl.core-version"],
+      "requires-reload": ifPluginRequiresReload(pluginTiddler),
+    };
+    mergeField('version', pluginTiddler, newInfoTiddler, $tw.version);
+    mergeField('type', pluginTiddler, newInfoTiddler, 'application/json');
+    mergeField('plugin-type', pluginTiddler, newInfoTiddler, 'plugin');
+    mergeField('author', pluginTiddler, newInfoTiddler, pluginTiddler.title.split('/')[2]);
+    mergeField('name', pluginTiddler, newInfoTiddler, pluginTiddler.title.split('/')[3]);
     $tw.utils.each(mergingFields, function (fieldName) {
-        mergeField(fieldName, pluginTiddler, infoTiddler);
+        mergeField(fieldName, pluginTiddler, newInfoTiddler);
     });
-    if (typeof pluginTiddler.dependents === 'string') {
-        pluginTiddler.dependents = infoTiddler.dependents = pluginTiddler.dependents.split('\n').join(' ');
-    }
-    if (!infoTiddler.readme || infoTiddler.readme.trim() === '') {
+    if (!newInfoTiddler.readme || newInfoTiddler.readme.trim() === '') {
         const readmeTitle = pluginTiddler.title + '/readme';
         const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[readmeTitle];
-        if (readmeTiddler) {
-            infoTiddler.readme = readmeTiddler.text;
-        } else {
-            infoTiddler.readme = '';
-        }
+        newInfoTiddler.readme = readmeTiddler ? readmeTiddler.text : "";
     }
-    if (infoTiddler.documentation && infoTiddler.documentation !== '')
-        infoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${infoTiddler.documentation}"/></$button><br/>` + infoTiddler.readme;
-    if (infoTiddler.source && infoTiddler.source !== '')
-        infoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler.source}">{{$:/core/images/github}} <$text text="${infoTiddler.source}"/></$button><br/>` + infoTiddler.readme;
+    if (newInfoTiddler.documentation && newInfoTiddler.documentation !== '')
+        newInfoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${newInfoTiddler.documentation}"/></$button><br/>` + newInfoTiddler.readme;
+    if (newInfoTiddler.source && newInfoTiddler.source !== '')
+        newInfoTiddler.readme = `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.source}">{{$:/core/images/github}} <$text text="${newInfoTiddler.source}"/></$button><br/>` + newInfoTiddler.readme;
     // 改成只保留指定的字段
-    const fields = Object.keys(infoTiddler);
+    const fields = Object.keys(newInfoTiddler);
     for (let i = 0, length = fields.length; i < length; i++) {
         const field = fields[i];
-        if (keepingFields.indexOf(field) === -1) delete infoTiddler[field];
+        if (keepingFields.indexOf(field) === -1) delete newInfoTiddler[field];
     }
-    return { pluginTiddler, infoTiddler };
+    return { pluginTiddler, newInfoTiddler };
 }
 
 /**

@@ -6,17 +6,17 @@
         "modified": "20211216094742875",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "https://tobibeer.github.io/tw5-plugins/index.html",
-        "_title": "$:/plugins/tobibeer/appear",
-        "_type": "plugin",
-        "author": "Tobias Beer",
-        "description": "Create popups, sliders or accordion menus with the appear widget.",
-        "name": "appear",
-        "documentation": "https://tobibeer.github.io/tw5-plugins/#appear",
-        "sourse": "https://github.com/tobibeer/tw5-appear",
-        "core-version": ">=5.1.9",
-        "readme": "This plugin provides the ''$appear'' widget that can render popups and sliders (inline or block) as well as accordion menus.\n\n!! Attributes\n; type\n: set to `popup` to have the content appear as a popup\n; show\n: the button label\n; hide\n: the hide button label\n; mode\n: either `block` or `inline`, with respect to the inner content\n: any other mode is interpreted as block mode, without the default styles applying, e.g. drop-shadows\n; once\n: allows to click the button once, then hides it (unless the state is deleted)\n; $state\n: the widget calculates a state for you, use this to append a simple id\n; state\n: alternatively, specify a fully qualified state\n; keep\n: make popups sticky when `yes` or `true`\n; handle / handler / variables\n: allows to take the popup contents out of the flow and render them elsewhere on the page\n: required to properly create popups in table cells and other constained elements\n: specify variables to take along\n\n<br>\n\n; documentation / examples / demos...\n: http://tobibeer.github.io/tw5-plugins#appear",
         "icon": "💭",
-        "page-cover": "https://unsplash.com/photos/N1YPvfy0-cM/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8cG9wJTIwdXB8fDB8fHx8MTYzODYzNzc1Ng&force=true&w=1920"
+        "page-cover": "https://unsplash.com/photos/N1YPvfy0-cM/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8cG9wJTIwdXB8fDB8fHx8MTYzODYzNzc1Ng&force=true&w=1920",
+        "cpl.title": "$:/plugins/tobibeer/appear",
+        "cpl.author": "Tobias Beer",
+        "cpl.name": "appear",
+        "cpl.description": "Create popups, sliders or accordion menus with the appear widget.",
+        "cpl.uri": "https://tobibeer.github.io/tw5-plugins/index.html",
+        "cpl.readme": "This plugin provides the ''$appear'' widget that can render popups and sliders (inline or block) as well as accordion menus.\n\n!! Attributes\n; type\n: set to `popup` to have the content appear as a popup\n; show\n: the button label\n; hide\n: the hide button label\n; mode\n: either `block` or `inline`, with respect to the inner content\n: any other mode is interpreted as block mode, without the default styles applying, e.g. drop-shadows\n; once\n: allows to click the button once, then hides it (unless the state is deleted)\n; $state\n: the widget calculates a state for you, use this to append a simple id\n; state\n: alternatively, specify a fully qualified state\n; keep\n: make popups sticky when `yes` or `true`\n; handle / handler / variables\n: allows to take the popup contents out of the flow and render them elsewhere on the page\n: required to properly create popups in table cells and other constained elements\n: specify variables to take along\n\n<br>\n\n; documentation / examples / demos...\n: http://tobibeer.github.io/tw5-plugins#appear",
+        "cpl.sourse": "https://github.com/tobibeer/tw5-appear",
+        "cpl.documentation": "https://tobibeer.github.io/tw5-plugins/#appear",
+        "cpl.core-version": ">=5.1.9",
+        "cpl.plugin-type": "plugin"
     }
 ]

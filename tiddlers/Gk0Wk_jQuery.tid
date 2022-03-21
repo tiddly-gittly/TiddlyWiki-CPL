@@ -1,17 +1,17 @@
-_title: $:/plugins/Gk0Wk/jQuery
-_type: plugin
-author: Gk0Wk
+cpl.author: Gk0Wk
+cpl.description: jQuery for TiddlyWiki5
+cpl.name: jQuery
+cpl.plugin-type: plugin
+cpl.readme: [[jQuery|https://jquery.com/]] is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+cpl.sourse: https://github.com/tiddly-gittly/tw-echarts/tree/master/plugins/Gk0Wk/jQuery
+cpl.title: $:/plugins/Gk0Wk/jQuery
+cpl.uri: https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252FjQuery.json
 created: 20220122012312789
 creator: Sttot
-description: jQuery for TiddlyWiki5
 icon: 🔍
 modified: 20220122014918011
 modifier: Sttot
-name: jQuery
 page-cover: https://unsplash.com/photos/wUbNvDTsOIc/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjQyODE1Nzg0&force=true&w=1920
-readme: [[jQuery|https://jquery.com/]] is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
-sourse: https://github.com/tiddly-gittly/tw-echarts/tree/master/plugins/Gk0Wk/jQuery
 tags: $:/tags/PluginWiki
 title: Gk0Wk/jQuery
 type: text/vnd.tiddlywiki
-uri: https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252FjQuery.json

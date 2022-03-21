@@ -1,0 +1,7 @@
+created: 20220321143724952
+modified: 20220321143849060
+tags: 
+title: Plugin Info Title
+type: text/vnd.tiddlywiki
+
+<$text text={{{ [<currentTiddler>get[cpl.title]split[/]last[2]join[/]] }}}/>

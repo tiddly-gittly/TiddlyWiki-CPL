@@ -7,14 +7,14 @@
         "modified": "20211209172148170",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fservice-worker.json",
         "modifier": "林一二",
-        "_title": "$:/plugins/linonetwo/service-worker",
-        "_type": "plugin",
-        "author": "LinOnetwo",
-        "description": "Use service worker to cache content, make it works even offline, and can be add to the desktop as an App.",
-        "name": "service-worker",
-        "readme": "!! Usage\n\nAfter install, you have to publish your wiki as a HTTPS website to make it work.\n\n!!! Make sure to include all necessary step in the build process\n\nAdd following files to your `/public` folder after build, you can use a script to copy them to the build folder after the wiki build process:\n\n1. Add a `manifest.webmanifest` like:\n\n```json\n{\n  \"background_color\": \"white\",\n  \"theme_color\": \"white\",\n  \"description\": \"Meme of LinOnetwo 林一二的模因和想法 - TiddlyWiki 非线性的知识库和博客\",\n  \"display\": \"standalone\",\n  \"icons\": [\n    {\n      \"src\": \"/TiddlyWikiIconBlack.png\",\n      \"sizes\": \"256x256\",\n      \"type\": \"image/png\"\n    },\n    {\n      \"src\": \"/TiddlyWikiIconWhite.png\",\n      \"sizes\": \"144x144\",\n      \"type\": \"image/png\"\n    }\n  ],\n  \"name\": \"TiddlyWiki\",\n  \"short_name\": \"Wiki\",\n  \"lang\": \"zh-CN\",\n  \"start_url\": \"/\",\n  \"scope\": \"/\"\n}\n```\n\nMake sure icon size is at least 144x144. And change all necessary fields.\n\n2. Add `service-worker.js`:\n\nSee [[https://github.com/linonetwo/Meme-of-LinOnetwo/public/service-worker.js|https://github.com/linonetwo/Meme-of-LinOnetwo/blob/d088f72a2b95ee21b68af1b349d9993a3997bf19/Meme-of-LinOnetwo/public/service-worker.js]] for example.\n\n!!! Config router\n\nSometimes request from this plugin to your `service-worker.js` will resulted in 404, this is basically because you are not putting `service-worker.js` just besides your `index.html`, or the router config is wrong.\n",
-        "sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/service-worker"
+        "cpl.title": "$:/plugins/linonetwo/service-worker",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "service-worker",
+        "cpl.description": "Use service worker to cache content, make it works even offline, and can be add to the desktop as an App.",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fservice-worker.json",
+        "cpl.readme": "!! Usage\n\nAfter install, you have to publish your wiki as a HTTPS website to make it work.\n\n!!! Make sure to include all necessary step in the build process\n\nAdd following files to your `/public` folder after build, you can use a script to copy them to the build folder after the wiki build process:\n\n1. Add a `manifest.webmanifest` like:\n\n```json\n{\n  \"background_color\": \"white\",\n  \"theme_color\": \"white\",\n  \"description\": \"Meme of LinOnetwo 林一二的模因和想法 - TiddlyWiki 非线性的知识库和博客\",\n  \"display\": \"standalone\",\n  \"icons\": [\n    {\n      \"src\": \"/TiddlyWikiIconBlack.png\",\n      \"sizes\": \"256x256\",\n      \"type\": \"image/png\"\n    },\n    {\n      \"src\": \"/TiddlyWikiIconWhite.png\",\n      \"sizes\": \"144x144\",\n      \"type\": \"image/png\"\n    }\n  ],\n  \"name\": \"TiddlyWiki\",\n  \"short_name\": \"Wiki\",\n  \"lang\": \"zh-CN\",\n  \"start_url\": \"/\",\n  \"scope\": \"/\"\n}\n```\n\nMake sure icon size is at least 144x144. And change all necessary fields.\n\n2. Add `service-worker.js`:\n\nSee [[https://github.com/linonetwo/Meme-of-LinOnetwo/public/service-worker.js|https://github.com/linonetwo/Meme-of-LinOnetwo/blob/d088f72a2b95ee21b68af1b349d9993a3997bf19/Meme-of-LinOnetwo/public/service-worker.js]] for example.\n\n!!! Config router\n\nSometimes request from this plugin to your `service-worker.js` will resulted in 404, this is basically because you are not putting `service-worker.js` just besides your `index.html`, or the router config is wrong.\n",
+        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/service-worker",
+        "cpl.plugin-type": "plugin"
     }
 ]

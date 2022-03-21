@@ -6,17 +6,17 @@
         "modified": "20211205060858399",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "",
-        "_title": "$:/plugins/dullroar/sitemap",
-        "_type": "plugin",
-        "author": "Jim Lehmer",
-        "description": "TiddlyWiki5 plugin to generate sitemap.xml.",
-        "name": "sitemap",
-        "core-version": ">=5.0.8",
-        "sourse": "https://github.com/dullroar/TW5-sitemap",
-        "documentation": "https://github.com/dullroar/TW5-sitemap/blob/master/README.md",
-        "readme": "iddlyWiki5 plugin to generate sitemap.xml (http://www.sitemaps.org/protocol.html).\n\nIt works in the browser but its primary use case is for generating a sitemap.xml for static sites\nusing something similar to the following when running TiddlyWiki under node.js:\n\n```\ntiddlywiki --rendertiddlers [!is[system]] statictiddler.html static text/plain  --rendertiddler sitemap sitemap.xml text/plain\n```\n\nThe rest of this document presumes familiarity with TiddlyWiki5 (TW) and node.js (node).",
         "icon": "🗺️",
-        "page-cover": "https://unsplash.com/photos/OqtafYT5kTw/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8NHx8c2l0ZXx8MHx8fHwxNjM4NjM3MjU4&force=true&w=1920"
+        "page-cover": "https://unsplash.com/photos/OqtafYT5kTw/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8NHx8c2l0ZXx8MHx8fHwxNjM4NjM3MjU4&force=true&w=1920",
+        "cpl.title": "$:/plugins/dullroar/sitemap",
+        "cpl.author": "Jim Lehmer",
+        "cpl.name": "sitemap",
+        "cpl.description": "TiddlyWiki5 plugin to generate sitemap.xml.",
+        "cpl.uri": "",
+        "cpl.readme": "iddlyWiki5 plugin to generate sitemap.xml (http://www.sitemaps.org/protocol.html).\n\nIt works in the browser but its primary use case is for generating a sitemap.xml for static sites\nusing something similar to the following when running TiddlyWiki under node.js:\n\n```\ntiddlywiki --rendertiddlers [!is[system]] statictiddler.html static text/plain  --rendertiddler sitemap sitemap.xml text/plain\n```\n\nThe rest of this document presumes familiarity with TiddlyWiki5 (TW) and node.js (node).",
+        "cpl.sourse": "https://github.com/dullroar/TW5-sitemap",
+        "cpl.documentation": "https://github.com/dullroar/TW5-sitemap/blob/master/README.md",
+        "cpl.core-version": ">=5.0.8",
+        "cpl.plugin-type": "plugin"
     }
 ]

@@ -1,0 +1,8 @@
+created: 20220321143441737
+list-before: $:/config/ViewTemplateTitleFilters/default
+modified: 20220321143720816
+tags: $:/tags/ViewTemplateTitleFilter
+title: Plugin Info Title Cascade
+type: text/vnd.tiddlywiki
+
+[tag[$:/tags/PluginWiki]then[Plugin Info Title]]

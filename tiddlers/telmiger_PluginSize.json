@@ -7,17 +7,17 @@
         "modified": "20211226155203298",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "https://www.tid.li/tw5/plugins.html",
         "modifier": "Sttot",
-        "_title": "$:/plugins/telmiger/PluginSize",
-        "_type": "plugin",
-        "author": "Thomas Elmiger",
-        "description": "calculate the extra weight",
-        "name": "PluginSize",
-        "core-version": ">=5.1.17",
-        "documentation": "https://www.tid.li/tw5/plugins.html",
-        "sourse": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/PluginSize",
-        "readme": "!! Plugin Size\n\n{{$:/plugins/telmiger/PluginSize/about}}\n\n!!! Categories (character count)\n\n* <<HB34>> more than 500 k\n* <<HB21>> up to 500 k \n* <<HB13>> up to 100 k\n* <<HB8>> up to 50 k\n* <<HB5>> up to 25 k\n\n!!! Dependencies\n\nThis is done using the following other plugins: \n\n* [[Editor Counter|https://tid.li/tw5/plugins.html#%24%3A%2Fplugins%2Ftelmiger%2FEditorCounter]] to count the characters in the text field of plugin tiddlers\n* [[RPN|https://tid.li/tw5/plugins.html#%24%3A%2Fplugins%2Ftelmiger%2Frpn]] for number formatting\n* [[Harvey Balls|https://tid.li/tw5/plugins.html#%24%3A%2Fplugins%2Ftelmiger%2FHarveyBalls]] for size indication icons\n\n!!! Information\n\nThe size of installed plugins can be found on \n\n* a tab //{{$:/core/images/info-button}} Plugin Info// in the $:/ControlPanel \n* on $:/plugins/telmiger/PluginSize/plugin-info\n\n!!! Copyright \n\n© 2019-2020, Thomas Elmiger",
-        "dependents": "$:/plugins/telmiger/EditorCounter\n$:/plugins/telmiger/HarveyBalls\n$:/plugins/telmiger/rpn"
+        "cpl.title": "$:/plugins/telmiger/PluginSize",
+        "cpl.author": "Thomas Elmiger",
+        "cpl.name": "PluginSize",
+        "cpl.description": "calculate the extra weight",
+        "cpl.uri": "https://www.tid.li/tw5/plugins.html",
+        "cpl.readme": "!! Plugin Size\n\n{{$:/plugins/telmiger/PluginSize/about}}\n\n!!! Categories (character count)\n\n* <<HB34>> more than 500 k\n* <<HB21>> up to 500 k \n* <<HB13>> up to 100 k\n* <<HB8>> up to 50 k\n* <<HB5>> up to 25 k\n\n!!! Dependencies\n\nThis is done using the following other plugins: \n\n* [[Editor Counter|https://tid.li/tw5/plugins.html#%24%3A%2Fplugins%2Ftelmiger%2FEditorCounter]] to count the characters in the text field of plugin tiddlers\n* [[RPN|https://tid.li/tw5/plugins.html#%24%3A%2Fplugins%2Ftelmiger%2Frpn]] for number formatting\n* [[Harvey Balls|https://tid.li/tw5/plugins.html#%24%3A%2Fplugins%2Ftelmiger%2FHarveyBalls]] for size indication icons\n\n!!! Information\n\nThe size of installed plugins can be found on \n\n* a tab //{{$:/core/images/info-button}} Plugin Info// in the $:/ControlPanel \n* on $:/plugins/telmiger/PluginSize/plugin-info\n\n!!! Copyright \n\n© 2019-2020, Thomas Elmiger",
+        "cpl.sourse": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/PluginSize",
+        "cpl.documentation": "https://www.tid.li/tw5/plugins.html",
+        "cpl.dependents": "$:/plugins/telmiger/EditorCounter\n$:/plugins/telmiger/HarveyBalls\n$:/plugins/telmiger/rpn",
+        "cpl.core-version": ">=5.1.17",
+        "cpl.plugin-type": "plugin"
     }
 ]

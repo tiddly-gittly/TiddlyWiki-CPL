@@ -1,30 +1,28 @@
 caption: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">关于插件源</$list><$list filter="[<lang>!search[zh]]">About CPL</$list></$list>
 created: 20211117164017462
 creator: Sttot
-modified: 20220308015835475
+modified: 20220321145015232
 modifier: Sttot
 tags: $:/tags/SideBar
 title: TableOfContents
 type: text/vnd.tiddlywiki
 
+{{LanguageSwitcher}}
+
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">
 
-!! [[如何使用CPL？|Welcome]]
+!! 1. [[如何使用CPL？|Welcome]]
 
-!! [[如何为CPL登记新插件？|RegisterNewPlugins]]
+!! 2. [[如何为CPL登记新插件？|RegisterNewPlugins]]
 
-!!! 所有收录的插件:
+!! 3. [[所有收录的插件|PluginsGallery]]
 
 </$list><$list filter="[<lang>!search[zh]]">
 
-!! [[How to use CPL?|Welcome]]
+!! 1. [[How to use CPL?|Welcome]]
 
-!! [[How to register a new plugin for CPL?|RegisterNewPlugins]]
+!! 2. [[How to register a new plugin for CPL?|RegisterNewPlugins]]
 
-!!! All included plugins:
+!! 3. [[All included plugins|PluginsGallery]]
 
 </$list></$list>
-
-<div class="tc-table-of-contents">
-<<toc "$:/tags/PluginWiki">>
-</div>
