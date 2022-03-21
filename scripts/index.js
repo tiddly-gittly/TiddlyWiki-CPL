@@ -1,6 +1,7 @@
 // Creator: Gk0Wk (https://github.com/Gk0Wk)
 const path = require("path");
 const fs = require("fs");
+const readline = require("readline");
 const { execSync } = require("child_process");
 let $tw;
 
@@ -11,7 +12,7 @@ const repoFolder = path.join(path.dirname(__filename), "..");
  * 执行命令行指令，并打印该指令的结果
  * @param {string} command 要执行的命令
  * @param {ExecSyncOptionsWithStringEncoding} options 执行指令时的附带参数
- * @param {boolen} output 是否输出
+ * @param {boolean} output 是否输出
  */
 function shell(command, options, output) {
   if (options !== undefined) options = {};
@@ -26,7 +27,7 @@ function shell(command, options, output) {
  * 执行命令行指令，并打印该指令的结果，同时忽略任何错误
  * @param {string} command 要执行的命令
  * @param {ExecSyncOptionsWithStringEncoding} options 执行指令时的附带参数
- * @param {boolen} output 是否输出
+ * @param {boolean} output 是否输出
  */
 function shellI(command, options, output) {
   try {
@@ -37,9 +38,44 @@ function shellI(command, options, output) {
 }
 
 /**
+ * 从列表中返回第一个满足要求的项，如果没有就返回undefined
+ *
+ * @param {unknown[]} list 若干项的列表
+ * @param {(unknown) => boolean} condition
+ * @returns {unknown | undefined}
+ */
+function findFirstOne(list, condition) {
+  const len = list.length;
+  for (let i = 0; i < len; i++) {
+    if (condition(list[i])) return list[i];
+  }
+  return undefined;
+}
+
+/**
+ * 从指定文件获得指定的tiddler
+ *
+ * @param {string} wikiFile
+ * @param {string} tiddlerTitle
+ * @returns {$tw.Tiddler}
+ */
+function getTiddlerFromFile(wikiFile, tiddlerTitle) {
+  try {
+    const fileMIME = $tw.config.fileExtensionInfo[path.extname(wikiFile)].type;
+    const fileText = fs.readFileSync(wikiFile).toString("utf8");
+    return findFirstOne(
+      $tw.wiki.deserializeTiddlers(fileMIME, fileText, {}),
+      (tiddler_) => tiddler_.title === tiddlerTitle
+    );
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * 判断是否是安装后需要重新加载页面的插件
  * @param {Record<string, string | number>} pluginTiddler 插件tiddler
- * @returns 需要重载则返回true，反之
+ * @returns {boolean} 需要重载则返回true，反之
  */
 function ifPluginRequiresReload(pluginTiddler) {
   const shadowTiddlers = JSON.parse(pluginTiddler.text).tiddlers;
@@ -60,7 +96,7 @@ function ifPluginRequiresReload(pluginTiddler) {
 /**
  * 格式化插件tiddler的名称
  * @param {string} title 插件tiddler的标题
- * @returns 格式化之后的文件名称
+ * @returns {string} 格式化之后的文件名称
  */
 function formatTitle(title) {
   return encodeURIComponent(
@@ -75,7 +111,7 @@ function formatTitle(title) {
 /**
  * 递归创建文件夹
  * @param {string} dirname 文件夹路径
- * @returns 创建成功则返回true
+ * @returns {boolean} 创建成功则返回true
  */
 function mkdirsSync(dirname) {
   if (fs.existsSync(dirname)) return true;
@@ -94,6 +130,13 @@ function mergeField(fieldName, plugin, info, fallback) {
   } else if (infoEmpty) {
     info[fieldName] = plugin[fieldName];
   }
+}
+
+function getReadmeFromPlugin(pluginTiddler) {
+  const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[
+    pluginTiddler.title + "/readme"
+  ];
+  return readmeTiddler ? readmeTiddler.text : "";
 }
 
 const mergingFields = [
@@ -142,9 +185,7 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
     mergeField(fieldName, pluginTiddler, newInfoTiddler);
   });
   if (!newInfoTiddler.readme || newInfoTiddler.readme.trim() === "") {
-    const readmeTitle = pluginTiddler.title + "/readme";
-    const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[readmeTitle];
-    newInfoTiddler.readme = readmeTiddler ? readmeTiddler.text : "";
+    newInfoTiddler.readme = getReadmeFromPlugin(pluginTiddler);
   }
   if (newInfoTiddler.documentation && newInfoTiddler.documentation !== "")
     newInfoTiddler.readme =
@@ -168,6 +209,103 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   return { pluginTiddler, newInfoTiddler };
 }
 
+const fieldConvert = [
+  ["title", "cpl.title"],
+  ["author", "cpl.author"],
+  ["name", "cpl.name"],
+  ["description", "cpl.description"],
+  ["plugin-type", "cpl.plugin-type"],
+  ["source", "cpl.source"],
+  ["sourcecode", "cpl.source"],
+  ["github", "cpl.source"],
+  ["documentation", "cpl.documentation"],
+  ["document", "cpl.documentation"],
+  ["doc", "cpl.documentation"],
+  ["dependents", "cpl.dependents"],
+  ["parent-plugin", "cpl.parent-plugin"],
+  ["core-version", "cpl.core-version"],
+];
+
+function _importPlugin(uri, title) {
+  let distDir = "dist/library";
+  if (!$tw) {
+    $tw = require("tiddlywiki/boot/boot").TiddlyWiki();
+    $tw.boot.argv = ["."];
+    $tw.boot.boot();
+  }
+
+  mkdirsSync(`${distDir}/tmp`);
+  const formatedTitle = formatTitle(title);
+  const fileName = formatedTitle + path.extname(uri);
+  const fileRegExp = new RegExp(formatedTitle + "\\..*");
+  let pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
+    if (!fileRegExp.test(file)) return false;
+    const extname = path.extname(file);
+    if (extname === "") return false;
+    return extname in $tw.config.fileExtensionInfo;
+  });
+  if (!pluginFile) shellI(`wget '${uri}' -O ${distDir}/tmp/${fileName}`);
+  pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
+    if (!fileRegExp.test(file)) return false;
+    const extname = path.extname(file);
+    if (extname === "") return false;
+    return extname in $tw.config.fileExtensionInfo;
+  });
+  if (!pluginFile) {
+    console.warn(`[Warning] Cannot find file ${formatedTitle}.*`);
+    return;
+  }
+  // 加载、提取插件文件
+  const plugin = getTiddlerFromFile(`${distDir}/tmp/${pluginFile}`, title);
+  if (!plugin) {
+    console.warn(
+      `[Warning] Cannot find tiddler ${title} in file ${pluginFile}.`
+    );
+    return;
+  }
+  let pluginInfo = {
+    title:
+      "Plugin_" + $tw.wiki.filterTiddlers("[<now YYYY0MM0DD0mm0ss0XXX>]")[0],
+    type: "application/json",
+    tags: "$:/tags/PluginWiki",
+    "cpl.readme": getReadmeFromPlugin(plugin),
+    "cpl.uri": uri,
+  };
+  fieldConvert.forEach((fieldPair) => {
+    if (fieldPair[0] in plugin) pluginInfo[fieldPair[1]] = plugin[fieldPair[0]];
+  });
+  $tw.wiki.addTiddler(pluginInfo);
+  console.log(
+    `Successfully add ${pluginInfo.title}(${pluginInfo["cpl.title"]}) to cpl.`
+  );
+  return true;
+}
+
+function importPlugin() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  function questionLoop() {
+    rl.question(
+      "Downloadable URI of plugin(.html/.json/.tid etc.)(ctrl-D to terminate):\n",
+      (uri) => {
+        rl.question(
+          "Title of the plugin(e.g. $:/plugins/tiddlywiki/codemirror)(ctrl-D to terminate):\n",
+          (title) => {
+            _importPlugin(uri, title);
+            questionLoop();
+          }
+        );
+      }
+    );
+  }
+  rl.on("close", function () {
+    process.exit();
+  });
+  questionLoop();
+}
+
 /**
  * 构建插件源
  * @param {string} distDir 目标路径，空或者不填则默认为'dist/library'
@@ -180,9 +318,11 @@ function buildLibrary(distDir, minify) {
 
   // 启动TW
   console.log("Loading plugin informations");
-  $tw = require("tiddlywiki/boot/boot").TiddlyWiki();
-  $tw.boot.argv = ["."];
-  $tw.boot.boot();
+  if (!$tw) {
+    $tw = require("tiddlywiki/boot/boot").TiddlyWiki();
+    $tw.boot.argv = ["."];
+    $tw.boot.boot();
+  }
 
   // 遍历、下载所有插件
   const pluginsInfo = [];
@@ -191,7 +331,9 @@ function buildLibrary(distDir, minify) {
     text: {},
     type: "application/json",
   };
-  const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers('[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]');
+  const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers(
+    "[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]"
+  );
   const downloadFileMap = {};
   mkdirsSync(`${distDir}/plugins`); // 插件目标目录
   mkdirsSync(`${distDir}/tmp`); // 临时的插件目录
@@ -242,43 +384,32 @@ function buildLibrary(distDir, minify) {
     try {
       const pluginName = formatTitle(tiddler["cpl.title"]);
       // 找到文件夹下对应的插件文件
-      const tmp = [];
       const fileRegExp = new RegExp(pluginName + "\\..*");
-      files.forEach((file) => {
-        if (!fileRegExp.test(file)) return;
+      const pluginFile = findFirstOne(files, (file) => {
+        if (!fileRegExp.test(file)) return false;
         const extname = path.extname(file);
-        if (extname === "") return;
-        if (!$tw.config.fileExtensionInfo[extname]) return;
-        tmp.push(file);
+        if (extname === "") return false;
+        return extname in $tw.config.fileExtensionInfo;
       });
-      if (tmp.length == 0) {
+      if (!pluginFile) {
         console.warn(
           `[Warning] Cannot find file ${pluginName}.*, skip this plugin.`
         );
         return;
       }
-      const fileMIME = $tw.config.fileExtensionInfo[path.extname(tmp[0])].type;
-      const fileText = fs
-        .readFileSync(`${distDir}/tmp/${tmp[0]}`)
-        .toString("utf8");
+
       // 加载、提取插件文件
-      const pluginTiddlers = [];
-      $tw.utils.each(
-        $tw.wiki.deserializeTiddlers(fileMIME, fileText, {}),
-        (tiddler_) => {
-          if (tiddler_.title === tiddler["cpl.title"]) {
-            pluginTiddlers.push(tiddler_);
-            return false;
-          }
-        }
+      const plugin = getTiddlerFromFile(
+        `${distDir}/tmp/${pluginFile}`,
+        tiddler["cpl.title"]
       );
-      if (pluginTiddlers.length === 0) {
+      if (!plugin) {
         console.warn(
-          `[Warning] Cannot find tiddler ${tiddler["cpl.title"]} in file ${tmp[0]}, skip this plugin.`
+          `[Warning] Cannot find tiddler ${tiddler["cpl.title"]} in file ${pluginFile}, skip this plugin.`
         );
         return;
       }
-      const plugin = pluginTiddlers[0];
+
       // 整合信息
       const { pluginTiddler, newInfoTiddler } = mergePluginInfo(
         plugin,
@@ -333,4 +464,5 @@ function buildLibrary(distDir, minify) {
 
 module.exports = {
   build: buildLibrary,
+  import: importPlugin,
 };
