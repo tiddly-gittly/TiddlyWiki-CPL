@@ -97,19 +97,19 @@ const mergingFields = ['title', 'dependents', 'description', 'source', 'parent-p
 
 function mergePluginInfo(pluginTiddler, infoTiddler) {
     let newInfoTiddler = {
-      title: newInfoTiddler["cpl.title"],
-      author: newInfoTiddler["cpl.author"],
-      name: newInfoTiddler["cpl.name"],
-      description: newInfoTiddler["cpl.description"],
-      version: newInfoTiddler["cpl.version"],
-      uri: newInfoTiddler["cpl.uri"],
-      "plugin-type": newInfoTiddler["cpl.type"],
-      icon: newInfoTiddler["cpl.icon"],
-      source: newInfoTiddler["cpl.source"],
-      documentation: newInfoTiddler["cpl.documentation"],
-      dependents: newInfoTiddler["cpl.dependents"] ? newInfoTiddler["cpl.dependents"].split('\n').join(' ') : '',
-      "parent-plugin": newInfoTiddler["cpl.parent-plugin"],
-      "core-version": newInfoTiddler["cpl.core-version"],
+      title: infoTiddler["cpl.title"],
+      author: infoTiddler["cpl.author"],
+      name: infoTiddler["cpl.name"],
+      description: infoTiddler["cpl.description"],
+      version: infoTiddler["cpl.version"],
+      uri: infoTiddler["cpl.uri"],
+      "plugin-type": infoTiddler["cpl.type"],
+      icon: infoTiddler["cpl.icon"],
+      source: infoTiddler["cpl.source"],
+      documentation: infoTiddler["cpl.documentation"],
+      dependents: infoTiddler["cpl.dependents"] ? infoTiddler["cpl.dependents"].split('\n').join(' ') : '',
+      "parent-plugin": infoTiddler["cpl.parent-plugin"],
+      "core-version": infoTiddler["cpl.core-version"],
       "requires-reload": ifPluginRequiresReload(pluginTiddler),
     };
     mergeField('version', pluginTiddler, newInfoTiddler, $tw.version);
