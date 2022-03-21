@@ -170,14 +170,14 @@ function buildLibrary(distDir, minify) {
         try {
             const tiddler = $tw.wiki.getTiddler(title).fields;
             // 带有uri，需要下载下来，但是需要是tw支持的格式
-            if (tiddler.uri && tiddler.uri !== '' && $tw.config.fileExtensionInfo[path.extname(tiddler.uri)] && tiddler['cpl.title'] && tiddler['cpl.title'] !== '') {
+            if (tiddler['cpl.uri'] && tiddler['cpl.uri'] !== '' && $tw.config.fileExtensionInfo[path.extname(tiddler['cpl.uri'])] && tiddler['cpl.title'] && tiddler['cpl.title'] !== '') {
                 console.log(`- Downloading plugin file ${tiddler['cpl.title']}`);
-                const distPluginName = formatTitle(tiddler['cpl.title']) + path.extname(tiddler.uri);
-                if (downloadFileMap[tiddler.uri]) {
-                    shellI(`cp ${downloadFileMap[tiddler.uri]} ${distDir}/tmp/${distPluginName}`);
+                const distPluginName = formatTitle(tiddler['cpl.title']) + path.extname(tiddler['cpl.uri']);
+                if (downloadFileMap[tiddler['cpl.uri']]) {
+                    shellI(`cp ${downloadFileMap[tiddler['cpl.uri']]} ${distDir}/tmp/${distPluginName}`);
                 } else {
-                    shellI(`wget '${tiddler.uri}' -O ${distDir}/tmp/${distPluginName}`);
-                    downloadFileMap[tiddler.uri] = `${distDir}/tmp/${distPluginName}`;
+                    shellI(`wget '${tiddler['cpl.uri']}' -O ${distDir}/tmp/${distPluginName}`);
+                    downloadFileMap[tiddler['cpl.uri']] = `${distDir}/tmp/${distPluginName}`;
                 }
             }
         } catch (e) { console.error(e); }
