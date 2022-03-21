@@ -226,6 +226,13 @@ const fieldConvert = [
   ["core-version", "cpl.core-version"],
 ];
 
+/**
+ * 导入一个插件
+ *
+ * @param {string} uri
+ * @param {string} title
+ * @returns
+ */
 function _importPlugin(uri, title) {
   let distDir = "dist/library";
   if (!$tw) {
