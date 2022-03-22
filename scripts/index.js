@@ -210,6 +210,11 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   return { pluginTiddler, newInfoTiddler };
 }
 
+function importLibrary(uri) {
+    uri.split('/')
+    shellI(`wget '${uri}' -O ${distDir}/tmp/${fileName}`);
+}
+
 const fieldConvert = [
   ["title", "cpl.title"],
   ["author", "cpl.author"],

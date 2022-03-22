@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203220924151",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! ~DatePicker\n\nA plugin for [[TiddlyWiki|http://tiddlywiki.com]] 5, that provides [[Pikaday|https://github.com/dbushell/Pikaday]].\n",
+        "cpl.uri": "http://kixam.github.io/TW5-datePicker/index.html",
+        "cpl.title": "$:/plugins/kixam/datepicker",
+        "cpl.author": "kixam",
+        "cpl.description": "datepicker plugin for TiddlyWiki5, based on Pikaday version 1.6.1",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kixam/TW5-datepicker",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.8"
+    }
+]

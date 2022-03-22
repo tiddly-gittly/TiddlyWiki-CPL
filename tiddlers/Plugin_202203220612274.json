@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Plugin_202203220612274",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "*required: \n\n**~TiddlyTables plugin\n\n**add //priority// to tbl-column-list of $:/plugins/aaldrich/tables/template/body/edit\n\n**add //status// to tbl-column-list of $:/plugins/aaldrich/tables/template/body/anything\n\n**click here to patch automatically: <$button>\n<$action-listops $tiddler=\"$:/plugins/aaldrich/tables/template/body/anything\" $field=\"tbl-column-list\" $subfilter=\"status\"/>\n<$action-listops $tiddler=\"$:/plugins/aaldrich/tables/template/body/edit\" $field=\"tbl-column-list\" $subfilter=\"priority\"/>\nFix Templates</$button>\n\n\n\n",
+        "cpl.uri": "http://tiddlytables.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/aaldrich/task-manager",
+        "cpl.author": "Alan Aldrich",
+        "cpl.description": "Task Manager for TiddlyTables",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/aaldrich/tables",
+        "cpl.core-version": "5.1.16"
+    }
+]

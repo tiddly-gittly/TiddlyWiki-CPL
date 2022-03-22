@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203220736484",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!!How\nSimply put this in your tiddler:\n\n``<$tidgraph start=\"MyRootTiddler\" />``\n\nThere are other options covered in the [[documentation|$:/plugins/ihm/tidgraph/documentation]].\n\n!!Features\n* No third-party libraries\n* Light weight\n* Rendering of map/graph with HTML5 and SVG (no heavy png or jpg images)\n* Automatic map/graph creation, no need for dragging/connecting/etc\n* Figures out tree-graph by means of tags or links, or custom modes \n* Collapse/expand nodes\n* User defined Node Templates!!\n\n!!Limitations\n* Layout is horizontal from left to right, if needed a vertical layout will be added later\n",
+        "cpl.uri": "https://ihm4u.github.io/tw5plugs/index.html",
+        "cpl.title": "$:/plugins/ihm/tidgraph",
+        "cpl.author": "ihm4u",
+        "cpl.description": "Tidgraph - Easy tiddler graphs for TW5",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://ihm4u.github.io/tw5plugs",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.9"
+    }
+]
