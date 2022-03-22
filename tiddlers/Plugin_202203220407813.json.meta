@@ -1,0 +1,12 @@
+cpl.author: inmysocks
+cpl.core-version: >=5.1.8
+cpl.dependents: 
+cpl.description: A daemon that will trigger actions when the wiki is opened or reloaded.
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/inmysocks/TW5-StartupActions
+cpl.title: $:/plugins/inmysocks/StartupActions
+cpl.uri: https://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FStartupActions.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203220407813
+type: application/json

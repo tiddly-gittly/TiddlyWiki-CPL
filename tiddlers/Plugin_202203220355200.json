@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "To see this plugin in use you can see it on my page [[here|http://ooktech.com/jed/externalbrain/#Calendar%20Archives]]\n\nThis plugin has:\n\n*The calendar-month widget\n*Default css class for the calendar month widget\n*Default macro for calendar days\n*This readme\n\n!The calendar-month widget\n\nUsage: `<$calendar-month year=YYYY month=MM day_macro=someMacro class=someCSSClass/>`\n\nContent of the `<$calendar-month>` widget is ignored.\n\n|!Attribute |!Description |\n|year |The year that the month displayed is from. It must be in 4 digit YYYY format and has no default value. |\n|month |The month to display. See list below for valid month values. month has no default value. |\n|day_macro |(optional) The macro that defines the content of each calendar day. It is passed the parameter `day` with the value of the current day of the month. Defaluts to `CalendarListDailyThings` defined in [[Calendar Default Macros|$:/plugins/inmysocks/Calendar/Calendar Default Macros]] |\n|class |(optional) A css class to use. Defaults to the class `calendar-table` defined in [[Calendar Table Style|$:/plugins/inmysocks/Calendar/Calendar Table Style]] |\n\n!The default ~CalendarListDailyThings macro\n\nThis macro lists any tiddlers that have fields called `day`, `month` and `year` in the matching calendar day. If you click on a cell than a tiddler with a title in the form of (day)-(month)-(year) is opened.\n\n!Month values\n\nThis is a complete list of the month values the widget understands, if you want some other format added leave a message at [[my site|http://www.inmysocks.tiddlyspot.com]].:\n\n1\n01\nJan\nJan.\nJanuary\n\n2\n02\nFeb\nFeb.\nFebruary\n\n3\n03\nMar\nMar.\nMarch\n\n4\n04\nApr\nApr.\nApril\n\n5\n05\nMay\n\n6\n06\nJun\nJun.\nJune\n\n7\n07\nJul\nJul.\nJuly\n\n8\n08\nAug\nAug.\nAugust\n\n9\n09\nSep\nSep.\nSept\nSept.\nSeptember\n\n10\nOct\nOct.\nOctober\n\n11\nNov\nNov.\nNovember\n\n12\nDec\nDec.\nDecember\n\n!Example:\n\n```\nSelect year: <$select field='year'><$list filter='1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000'><option><<currentTiddler>></option></$list></$select>\n\nSelect month: <$select field='month'><$list filter='1 2 3 4 5 6 7 8 9 10 11 12'><option><<currentTiddler>></option></$list></$select>\n\n<$calendar-month year={{!!year}} month={{!!month}}/>\n```\n\nSelect year: <$select field='year'><$list filter='1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000'><option><<currentTiddler>></option></$list></$select>\n\nSelect month: <$select field='month'><$list filter='1 2 3 4 5 6 7 8 9 10 11 12'><option><<currentTiddler>></option></$list></$select>\n\n<$calendar-month year={{!!year}} month={{!!month}}/>\n",
+        "cpl.uri": "https://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FCalendar.json",
+        "cpl.title": "$:/plugins/inmysocks/Calendar",
+        "cpl.author": "inmysocks",
+        "cpl.description": "A calendar thing",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/inmysocks/TW5-NoLearningRequired-Full",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.6",
+        "title": "Plugin_202203220355200"
+    }
+]

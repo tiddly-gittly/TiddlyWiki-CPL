@@ -1,0 +1,12 @@
+cpl.author: inmysocks
+cpl.core-version: >=5.1.6
+cpl.dependents: 
+cpl.description: A simple searchable dictionary for TiddlyWiki
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/inmysocks/TW5-NoLearningRequired-Full
+cpl.title: $:/plugins/inmysocks/SearchableDictionary
+cpl.uri: https://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FSearchableDictionary.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203220405611
+type: application/json

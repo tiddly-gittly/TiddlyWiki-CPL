@@ -1,0 +1,12 @@
+cpl.author: inmysocks
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Theme for mobile devices
+cpl.name: Mobile
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.title: $:/themes/inmysocks/Mobile
+cpl.uri: https://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fthemes%252Finmysocks%252FMobile.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203220353069
+type: application/json
