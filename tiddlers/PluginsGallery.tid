@@ -1,5 +1,5 @@
 created: 20220118144111816
-modified: 20220322092730079
+modified: 20220322171716707
 tags: 
 title: PluginsGallery
 type: text/vnd.tiddlywiki
@@ -21,8 +21,8 @@ type: text/vnd.tiddlywiki
 <$edit-text tiddler="$:/tmp/searchplugin/input" default="" placeholder="Enter plugin name to search" focus="true" tag=input  class="tc-titlebar tc-edit-texteditor"/>
 </center>
 
-: [[I want to install plugins. How to use CPL|Welcome]]
-: [[I'm plugins author.How to register a new plugin for CPL?|RegisterNewPlugins]]
+: [[I want to install plugins. How to use CPL?|Welcome]]
+: [[I'm plugins author. How to register a new plugin for CPL?|RegisterNewPlugins]]
 
 </$list>
 </$list>

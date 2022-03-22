@@ -1,7 +1,7 @@
 caption: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search:title[zh]]">太微中文社区插件源(大陆加速版)</$list><$list filter="[<lang>!search:title[zh]]">TiddlyWiki CPL(Netlify Host)</$list></$list>
 created: 20211118102827947
 creator: Sttot
-modified: 20220119014521921
+modified: 20220322171459736
 modifier: Sttot
 tags: $:/tags/PluginLibrary
 title: $:/config/TiddlyWiki-CPL/Netlify
@@ -22,6 +22,8 @@ url: https://tw-cpl.netlify.app/library/index.html
 
 注意：本插件源版本为经过 netlify.app 加速的版本，对国内用户更加友好，但是更新有一定的延迟。还提供另一版本，是直接使用 ~GitHub Page 服务器的版本，更新更快，但是可能需要科学上网手段。
 
+@@color:red;''安装任何插件前，请记得备份你的Wiki，本插件源无法为插件造成的个人损失负责！''@@
+
 </$list>
 
 <$list filter="[<lang>!search:title[zh]]" variable="lang">
@@ -35,6 +37,8 @@ If you don't know how to use TiddlyWiki and this source, you are welcome to read
 To add this plugin library to your Wiki, just drag this link with your mouse into your Wiki: <$link to=<<currentTiddler>>>{{!!caption}}</$link>
 
 Note: The source version of this plugin is a version accelerated by netlify.app, which is more friendly to China mainland users, but there is a delay in updating. There is also another version that uses the GitHub Page server directly, which is faster to update, but may require technology to overturn the GFW.
+
+@@color:red;''Please remember to back up your Wiki before installing any plugins, this plugin source cannot be held responsible for personal losses caused by plugins!''@@
 
 </$list>
 </$list>

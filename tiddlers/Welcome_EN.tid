@@ -1,5 +1,5 @@
 created: 20220118143905182
-modified: 20220119083259043
+modified: 20220322171544536
 title: Welcome_EN
 type: text/vnd.tiddlywiki
 
@@ -15,6 +15,8 @@ To add this plugin library to your Wiki, simply drag the link below to your Wiki
 * <$link to="$:/config/TiddlyWiki-CPL/GitHub">{{$:/config/TiddlyWiki-CPL/GitHub!!caption}}</$link> The source version of this plugin is the ~GitHub Page version, which is more up-to-date, but may require VPN when you are in China mainland. If you are in China and are not sure what GFW is, please use the above version.
 
 Note: The content of the two is the same, only the former will be updated a little later. But both update the plugin information every hour, so it's not a big problem.
+
+@@color:red;''Please remember to back up your Wiki before installing any plugins, this plugin source cannot be held responsible for personal losses caused by plugins!''@@
 
 <center>
 

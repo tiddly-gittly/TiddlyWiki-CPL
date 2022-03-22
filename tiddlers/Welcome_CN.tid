@@ -1,5 +1,5 @@
 created: 20220118143832019
-modified: 20220119014811888
+modified: 20220322171554620
 tags: 
 title: Welcome_CN
 type: text/vnd.tiddlywiki
@@ -16,6 +16,8 @@ type: text/vnd.tiddlywiki
 * <$link to="$:/config/TiddlyWiki-CPL/GitHub">{{$:/config/TiddlyWiki-CPL/GitHub!!caption}}</$link> 本插件源版本为 ~GitHub Page 的版本，更新更快，但是可能需要科学上网手段。如果你在国内，而且不清楚什么是“科学上网”，请选用上面的版本。
 
 注意：二者的内容是一样的，只是前者的更新会迟一些。但是二者都是每小时就更新一次插件信息，所以问题不大。
+
+@@color:red;''安装任何插件前，请记得备份你的Wiki，本插件源无法为插件造成的个人损失负责！''@@
 
 <center>
 
