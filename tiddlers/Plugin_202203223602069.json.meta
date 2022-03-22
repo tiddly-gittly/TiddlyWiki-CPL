@@ -1,0 +1,13 @@
+cpl.author: JD
+cpl.core-version: >=5.1.19
+cpl.dependents: $:/themes/tiddlywiki/vanilla
+cpl.description: For writing long texts
+cpl.name: Mono
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.source: http://j.d.mono.tiddlyspot.com
+cpl.title: $:/themes/jd/Mono
+cpl.uri: http://j.d.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203223602069
+type: application/json

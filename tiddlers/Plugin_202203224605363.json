@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Plugin_202203224605363",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin enhances ~TiddlyWiki5 with global keyboard shortcuts\n\nIt's recommended to use version 5.1.17 or newer of ~TiddlyWiki5\n\n",
+        "cpl.uri": "http://j.d.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/BurningTreeC/KeeBoord",
+        "cpl.author": "Simon Huber",
+        "cpl.description": "KeeBoord - A plugin for global keyboard shortcuts",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": ""
+    }
+]

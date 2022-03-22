@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203224221344",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Hello, this [[TW5|https://tiddlywiki.com/]] theme is inspired by Google's ''Material Design''\n\nWhen updating, you might want to delete this config tiddler first: $:/themes/jd/Material/ConfigDB\n<br><em class=\"tc-muted\">the above shadow tiddler gets overwritten when tweaking this theme at the control panel</em>\n\nYou can always get the latest updates here:\n\nhttp://j.d.material.tiddlyspot.com/\n\nPlease report bugs / suggest anything here:\n\nhttps://github.com/jdjdjdjdjdjd/TW5-Material\n\nGoogle Groups discussion:\n\nhttps://groups.google.com/forum/#!topic/TiddlyWiki/qiS1Vs46EQw%5B1-25%5D\n\nMy other TW5 stuff:\n\nhttp://j.d.tiddlyspot.com/",
+        "cpl.uri": "http://j.d.tiddlyspot.com/index.html",
+        "cpl.title": "$:/themes/jd/Material",
+        "cpl.author": "JD",
+        "cpl.name": "Material",
+        "cpl.description": "Not-quite-there-yet quantum paper for TW5",
+        "cpl.plugin-type": "theme",
+        "cpl.dependents": "$:/themes/tiddlywiki/vanilla",
+        "cpl.core-version": ">=5.1.14"
+    }
+]

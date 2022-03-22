@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203224001765",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This theme uses an overhauled sidebar, which can be accessed via a hamburger button at the topright or topleft of the screen. I turned this into a theme just to make it easier for me to move it around my TW5's. \n\n''The hamburger button:''\n\n* When the sidebar is minimized, hovering on the hamburger button will expand the sidebar. The sidebar will minimize when it loses mouse focus. Clicking on the hamburger button will make the sidebar \"sticky\" until it is clicked again.\n\n* Below the hamburger button (when sidebar is minimized) are the usual Page Control buttons. \n\n''Changes to the sidebar:''\n\n# Minimize-able via the hamburger button\n# Movable to the left or the right of the screen\n# Sidebar tabs are turned into draggable, removable, and minimize-able \"card\"-things\n\n''Changes to the sidebar tabs:''\n\n# Draggable = click on the card title + drag above or below other \"cards\" in the sidebar\n# Removable = hover on card title + click the right-most button that appears\n# Minimize-able = click on the card title (expand by clicking again)\n* The card title is the \"caption\" of the tiddler. Otherwise, it's the tiddler title\n\n''~PageControls:''\n\n* ~PageControls appear beside the hamburger button on hover (when sidebar is expanded), or below it when sidebar is \"minimized\"\n\n//Note:// \n\nThis theme is best used with [[Very Simple Mobile Layout (plugin)|http://j.d.tiddlyspot.com/#Very%20Simple%20Mobile%20Layout%20(plugin)]].\n\n<a target=\"blank\" href=\"http://j.d.whitespace.tiddlyspot.com\">Project Homepage on Tiddlyspot</a>",
+        "cpl.uri": "http://j.d.tiddlyspot.com/index.html",
+        "cpl.title": "$:/themes/jd/Whitespace",
+        "cpl.author": "jd",
+        "cpl.name": "Whitespace",
+        "cpl.description": "Lots of unused, negative space; an experiment on TW5 design",
+        "cpl.plugin-type": "theme",
+        "cpl.dependents": "$:/themes/tiddlywiki/vanilla",
+        "cpl.core-version": ">=5.1.17"
+    }
+]

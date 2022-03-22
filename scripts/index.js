@@ -67,7 +67,8 @@ function getTiddlerFromFile(wikiFile, tiddlerTitle) {
       $tw.wiki.deserializeTiddlers(fileMIME, fileText, {}),
       (tiddler_) => tiddler_.title === tiddlerTitle
     );
-  } catch {
+  } catch (e) {
+    console.error(e);
     return undefined;
   }
 }
@@ -225,7 +226,7 @@ const fieldConvert = [
   ["parent-plugin", "cpl.parent-plugin"],
   ["core-version", "cpl.core-version"],
 ];
-
+const importCache = {};
 /**
  * 导入一个插件
  *
@@ -240,28 +241,35 @@ function _importPlugin(uri, title) {
     $tw.boot.argv = ["."];
     $tw.boot.boot();
   }
-
   mkdirsSync(`${distDir}/tmp`);
+
   const formatedTitle = formatTitle(title);
   const fileName = formatedTitle + path.extname(uri);
-  const fileRegExp = new RegExp(formatedTitle + "\\..*");
-  let pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
-    if (!fileRegExp.test(file)) return false;
-    const extname = path.extname(file);
-    if (extname === "") return false;
-    return extname in $tw.config.fileExtensionInfo;
-  });
-  if (!pluginFile) shellI(`wget '${uri}' -O ${distDir}/tmp/${fileName}`);
-  pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
-    if (!fileRegExp.test(file)) return false;
-    const extname = path.extname(file);
-    if (extname === "") return false;
-    return extname in $tw.config.fileExtensionInfo;
-  });
-  if (!pluginFile) {
-    console.warn(`[Warning] Cannot find file ${formatedTitle}.*`);
-    return;
+  let pluginFile;
+  if (uri in importCache) {
+    pluginFile = importCache[uri];
+  } else {
+    const fileRegExp = new RegExp(formatedTitle + "\\..*");
+    pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
+      if (!fileRegExp.test(file)) return false;
+      const extname = path.extname(file);
+      if (extname === "") return false;
+      return extname in $tw.config.fileExtensionInfo;
+    });
+    if (!pluginFile) shellI(`wget '${uri}' -O ${distDir}/tmp/${fileName}`);
+    pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
+      if (!fileRegExp.test(file)) return false;
+      const extname = path.extname(file);
+      if (extname === "") return false;
+      return extname in $tw.config.fileExtensionInfo;
+    });
+    if (!pluginFile) {
+      console.warn(`[Warning] Cannot find file ${formatedTitle}.*`);
+      return;
+    }
+    importCache[uri] = fileName;
   }
+
   // 加载、提取插件文件
   const plugin = getTiddlerFromFile(`${distDir}/tmp/${pluginFile}`, title);
   if (!plugin) {
@@ -300,7 +308,7 @@ function importPlugin() {
         rl.question(
           "Title of the plugin(e.g. $:/plugins/tiddlywiki/codemirror)(ctrl-D to terminate):\n",
           (title) => {
-            _importPlugin(uri, title);
+            _importPlugin(uri.trim(), title.trim());
             questionLoop();
           }
         );

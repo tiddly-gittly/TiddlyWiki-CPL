@@ -1,0 +1,12 @@
+cpl.author: JD
+cpl.core-version: >=5.1.17
+cpl.dependents: $:/themes/tiddlywiki/vanilla
+cpl.description: Alone
+cpl.name: Alone
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.title: $:/themes/jd/Alone
+cpl.uri: http://j.d.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203223429213
+type: application/json

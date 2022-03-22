@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Plugin_202203224555040",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<b>This plugin is incompatible with <a target=\"blank\" href=\"http://j.d.simplemobile.tiddlyspot.com\">JD Mob</a>, please don't use them at the same time.</b>\n\nThis is a mobile layout that applies to narrow screens. It introduces the following:\n\n# A Searchbar\n\n# A Bottombar containing ''Top Left Bar'', ''Page Control'', ''Mob-only'', and ''Top Right Bar'' buttons (in that order)\n#**  ''Top Left Bar'' >> buttons tagged ''~$:/tags/TopLeftBar''\n#**  ''Page control'' >> buttons tagged ''~$:/tags/PageControls''\n#**  ''Mob-only'' >> other buttons tagged ''~$:/tags/jd/mobbutton''\n#**  ''Top Right Bar'' >> buttons tagged ''~$:/tags/TopRightBar''\n#**  Buttons you don't want to appear here should be tagged ''~$:/tags/jd/mobno'' \n#*** For example, you can use this on page control buttons you want to appear in desktop layout but not in mobile layout\n\n//Note:// \n\nThis layout is tied to the ''Sidebar Breakpoint'' set at ''Control Panel'' >> ''Appearance'' >> ''Theme Tweaks''.\n\nThis layout is compatible with any core theme as of release date.\n\n<a target=\"blank\" href=\"http://j.d.simplemobile.tiddlyspot.com\">Project Homepage on Tiddlyspot</a>\n\n!! Version History\n\n!!! 2017-11-22 Release of version 1.0.0",
+        "cpl.uri": "http://j.d.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/jd/mobvsimp",
+        "cpl.author": "JD",
+        "cpl.description": "JD Mobile Layout - very basic",
+        "cpl.plugin-type": "plugin",
+        "cpl.core-version": ">=5.1.14"
+    }
+]
