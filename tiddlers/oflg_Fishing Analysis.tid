@@ -2,11 +2,11 @@ cpl.author: oflg
 cpl.core-version: >=5.2.1
 cpl.dependents: $:/plugins/Gk0Wk/echarts $:/plugins/oflg/fishing
 cpl.description: Analysis for Fishing.
-cpl.documentation: https://oflg.github.io/fishing/
+cpl.documentation: https://oflg.github.io/fishing-manual/
 cpl.name: Fishing Analysis
 cpl.parent-plugin: $:/plugins/oflg/fishing
 cpl.plugin-type: plugin
-cpl.readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://oflg.github.io/fishing/]]的图表子插件。图表可视化展示钓鱼数据。</$list><$list filter="[<lang>!search[zh]]">Analysis for [[Fishing|https://oflg.github.io/fishing/]]. Graphical visualization of Fishing data.</$list></$list>
+cpl.readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://oflg.github.io/fishing-manual/]]的图表子插件。图表可视化展示钓鱼数据。</$list><$list filter="[<lang>!search[zh]]">Analysis for [[Fishing|https://oflg.github.io/fishing-manual/]]. Graphical visualization of Fishing data.</$list></$list>
 cpl.sourse: https://github.com/oflg/fishing-analysis
 cpl.title: $:/plugins/oflg/fishing-analysis
 cpl.uri: https://oflg.github.io/fishing-manual/index.html
