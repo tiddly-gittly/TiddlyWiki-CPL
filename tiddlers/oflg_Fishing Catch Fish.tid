@@ -1,0 +1,20 @@
+cpl.author: oflg
+cpl.core-version: >=5.2.1
+cpl.dependents: $:/plugins/oflg/fishing
+cpl.description:  Catch Fish for Fishing.
+cpl.documentation: https://oflg.github.io/fishing-manual/
+cpl.name: Fishing Catch Fish
+cpl.parent-plugin: $:/plugins/oflg/fishing
+cpl.plugin-type: plugin
+cpl.readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://oflg.github.io/fishing-manual/]]的渐进阅读子插件。用来渐进阅读已有或者导入的条目。可在阅读中摘录句子，也可注释单词并配合单词学习包来学习外语。</$list><$list filter="[<lang>!search[zh]]">Incremental Reading plugin for [[Fishing|https://oflg.github.io/fishing-manual/]]. Use to incrementally read existing or imported tiddlers.You can excerpt sentences as you read, or annotate words with the Learning Pack and learn foreign languages.</$list></$list>
+cpl.sourse: https://github.com/oflg/fishing-catchfish
+cpl.title: $:/plugins/oflg/fishing-catchfish
+cpl.uri: https://oflg.github.io/fishing-manual/index.html
+created: 20220111081953232
+creator: oflg
+modified: 20220308013605686
+modifier: oflg
+page-cover: https://pic1.zhimg.com/80/v2-72e85a191052c740dc8e371ac03eac0f_720w.jpg
+tags: $:/tags/PluginWiki
+title: oflg/Fishing Catch Fish
+type: text/vnd.tiddlywiki
