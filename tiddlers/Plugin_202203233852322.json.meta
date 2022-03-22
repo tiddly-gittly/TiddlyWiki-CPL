@@ -1,0 +1,16 @@
+cpl.author: Riz
+cpl.core-version: >=5.1.13
+cpl.dependents: $:/themes/tiddlywiki/vanilla
+cpl.description: Moments: A little color won't hurt
+cpl.name: Moments
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.source: https://ibnishak.github.io/tesseract/
+cpl.title: $:/plugins/tesseract/Moments
+cpl.uri: https://ibnishak.github.io/Tesseract/themes/moments.html
+created: 20220322163957568
+modified: 20220322163959186
+page-cover: https://nesslabs.com/wp-content/uploads/2020/04/moment-tw-theme-screenshot.png
+tags: $:/tags/PluginWiki
+title: Plugin_202203233852322
+type: application/json

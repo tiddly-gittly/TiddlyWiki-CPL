@@ -1,0 +1,15 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Plugin wrapper for Sweet Alerts library\n\n",
+        "cpl.uri": "https://ibnishak.github.io/Tesseract/pluginsandmacros/index.html",
+        "cpl.title": "$:/plugins/tesseract/swal",
+        "cpl.author": "Riz",
+        "cpl.description": "Sweet Alerts",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202203235843339"
+    }
+]

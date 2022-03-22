@@ -1,0 +1,12 @@
+cpl.author: Jeffrey Wilkinson (aka BJ)
+cpl.core-version: >=5.1.10
+cpl.dependents: 
+cpl.description: include web content
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/buggyj/tiddlyclip-plugin
+cpl.title: $:/plugins/bj/tiddlyclip
+cpl.uri: http://bjtools.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203235518014
+type: application/json

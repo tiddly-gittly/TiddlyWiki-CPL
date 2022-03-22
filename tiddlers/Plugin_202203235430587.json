@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Presents json as a tree to be edited. Note that on keypress updating is disabled as a default, there is a 'set value' button that is used to enter values. \n\nOptions are provide via the file: $:/plugins/bj/jsoneditor/options.json. On keypress updating can be switched on but may be slow due to the editor compiling the json. The other option controls the pretty printing indent spacing.\n\nProject home: http://bjtools.tiddlyspot.com\n\nThis widget is an adaption to TW5 of software of the same name. The orignial can be seen here:\n\nhttp://www.thomasfrank.se/downloadableJS/JSONeditor_example.html \n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/jsoneditor",
+        "cpl.author": "Jeffrey Wilkinson (BJ)",
+        "cpl.description": "editor of json!",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/tw5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235430587"
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\n----\n\n##Example Source\n```\n# Source of content made to be even more markdown like\nIn this content I have made the following changes to the rules\n\none level of markdow number lists now supported\n\n1. using **listmod rule** - now I am using a  . for ordered lists\n2. using **headingmod rule** I am using # inplace of ! for headings\n3. using **boldmode rule** I am using two * inplace of two '\n\nI have also:\n\n+ **replaced** * with + for unordered lists\n```\n----\n\n##Example Rendered\n# Source of content made to be even more markdown like\nIn this content I have made the following changes to the rules\n\none level of markdow number lists now supported\n\n1. using **listmod rule** - now I am using a  . for ordered lists\n2. using **headingmod rule** I am using # inplace of ! for headings\n3. using **boldmode rule** I am using two * inplace of two '\n##\nI have also:\n\n+ **replaced** * with + for unordered lists\n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/markdownlike",
+        "cpl.author": "JeffreyWilkinson",
+        "cpl.description": "Markdown Like Wikitext Extension",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/Tw5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235531226"
+    }
+]

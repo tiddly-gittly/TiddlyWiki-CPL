@@ -1,0 +1,15 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This is the core plugin of ~NoteSelf.\nIt includes the customizations that make ~NoteSelf what it is. This includes\n\n* Custom UI elements\n* Better mechanism to enhance user experience (ej: login)\n* Some useful stuff like friendly snippets",
+        "cpl.uri": "https://noteself.org/online/index.html",
+        "cpl.title": "$:/plugins/noteself/core",
+        "cpl.author": "Danielo Rodríguez Rivero",
+        "cpl.description": "Core plugin of NoteSelf",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.13",
+        "title": "Plugin_202203234729316"
+    }
+]

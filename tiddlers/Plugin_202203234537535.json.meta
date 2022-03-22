@@ -1,0 +1,14 @@
+cpl.author: Riz
+cpl.core-version: 5.1.19
+cpl.dependents: $:/themes/tiddlywiki/vanilla
+cpl.description: CleverNote
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.title: $:/plugins/tesseract/CleverNote
+cpl.uri: https://ibnishak.github.io/Timimi/index.html
+created: 20220322164611108
+modified: 20220322164613559
+page-cover: https://nesslabs.com/wp-content/uploads/2020/04/clevernote-tw-theme-screenshot.png
+tags: $:/tags/PluginWiki
+title: Plugin_202203234537535
+type: application/json

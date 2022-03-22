@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\n!!The Click Widget\nwatches for writes to tiddler specified in 'state' and clicks when the it sees the contents matches that specified by'text'\n\n!!Usage\ncan be used to click all items on a list \n\n!!Example open all tiddlers with the same tag:\n\n`\n<$button set=<<qualify \"$:/state\">> setTo=\"open\">Open all tagged</$button> \n<$edit-text tiddler=\"$:/temp/openall\" tag=\"input\" type=\"text\"/>\n\n\n<$list filter=\"[!has[draft.of]tag{$:/temp/openall}sort[created]]\">\n\n<$link><$click state=<<qualify \"$:/state\">> text=\"open\"/> </$link>\n\n</$list>\n`\n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/clickaction",
+        "cpl.author": "JeffreyWilkinson aka BJ",
+        "cpl.description": "click trigger widget",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/TW5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235408738"
+    }
+]

@@ -1,0 +1,15 @@
+cpl.author: Venomspinner
+cpl.dependents: $:/themes/tiddlywiki/vanilla
+cpl.description: A minimalist, mobile responsive theme for blogging
+cpl.name: Ghostwriter
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.source: https://ibnishak.github.io/irreverent-mudblood/
+cpl.title: $:/plugins/venomspinner/ghostwriter
+cpl.uri: https://ibnishak.github.io/ghostwriter/index.html
+created: 20220322164214854
+modified: 20220322164217251
+page-cover: https://nesslabs.com/wp-content/uploads/2020/04/ghostwriter-tw-theme-screenshot.png
+tags: $:/tags/PluginWiki
+title: Plugin_202203234123867
+type: application/json

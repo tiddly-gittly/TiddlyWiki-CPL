@@ -1,0 +1,11 @@
+cpl.author: Danielo Rodríguez Rivero
+cpl.core-version: >=5.1.13
+cpl.dependents: 
+cpl.description: Plugin containing specific configurations for the online version of NoteSelf
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/noteself/online
+cpl.uri: https://noteself.org/online/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203234744742
+type: application/json

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Allows a user defined collection of tiddlywiki type parser rules to be associated with a (flexible) type. The flexible type has the form \n\n```\ntext/vnd.twbase;flexibility=htmlp\n```\nwhere:\n\nvnd.twbase refers to the tiddlywiki5 parser stripped of its rules. \n\nhtmlp is a json tiddler that contains options to define which rules will make up the new type.\n\nIn this example htmlp could contain\n\n```\n{\n  \"parserrules\": {\n    \"pragmaRuleList\": [],\n    \"blockRuleList\": [\n      \"html\"\n    ],\n    \"inlineRuleList\": [\n      \"html\",\n      \"prettylink\",\n      \"transcludeinline\",\n      \"entity\",\n      \"wikilink\"\n    ]\n  }\n}\n```\n\"prettylink\" etc are the tiddlywiki5 supplied 'parser rules'.  Non-tiddlywiki defined rules may also be be used.\n\nSee working examples at the project home: http://bjtools.tiddlyspot.com\n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/flexitype",
+        "cpl.author": "Jeffrey Wilkinson",
+        "cpl.description": "flexible types",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/TW5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235458620"
+    }
+]

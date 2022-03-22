@@ -1,0 +1,12 @@
+cpl.author: JeffreyWilkinson
+cpl.core-version: >=5.1.11
+cpl.dependents: 
+cpl.description: enables user templates for each type
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/buggyj/TW5-tools
+cpl.title: $:/plugins/bj/typestemplate
+cpl.uri: http://bjtools.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203235445035
+type: application/json

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Adapter for the marked markdown parser:\nhttps://github.com/chjj/marked\n\n!!Usage\nWhen creating a tiddler, from the 'type' dropdown select 'text/x-marked'\n\n!!!Advanced Options (with defaults)\n<pre>`  gfm: true,\n  tables: true,\n  breaks: false,\n  pedantic: false,\n  sanitize: false,\n  smartLists: false,\n  silent: false,\n  highlight: null,\n  langPrefix: 'lang-',\n  smartypants: false,\n  headerPrefix: '',\n  renderer: new Renderer,\n  xhtml: false\n`</pre>\n\nAt present advanced options can only be set using the Flexitype plugin.\n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/plugins/marked",
+        "cpl.author": "JeffreyWilkinson",
+        "cpl.description": "alternative markdown",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/Tw5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235327072"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! Tekan\n\nTekan is a simple kanban client using TW5. ",
+        "cpl.uri": "https://ibnishak.github.io/Tesseract/projects/tekan/Tekan.html",
+        "cpl.title": "$:/plugins/tesseract/tekan",
+        "cpl.author": "Riz",
+        "cpl.name": "Tekan",
+        "cpl.description": "Tekan - Kanban TW",
+        "cpl.plugin-type": "plugin",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202203230025458"
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!!!Drag and Drop Widgets\n\nPlugin contains the following widgets\n\n# taglist - re-orderable list of tiddlers with the same tag. Api parameters:\n#* targettag - name of the lists tag\n#* template - The title of a template tiddler for transcluding each tiddler in the list. When no template is specified, the body of the widget serves as the item template. With no body, a simple link to the tiddler is returned.\n#* variable - The name for a variable in which the title of each listed tiddler is stored. Defaults to currentTiddler\n#* nodrop - drops are ignored\n#* htmltag - enclosing html element for list items\n# ondrop - and or remove tags in response to a drop event. Api parameters:\n#* targeTtag name of tag to act with. \n#* tagAction can be set to addtag or removetag\n\nThis plugin also adds ondragover click events to the link and button widgets. \n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/drag-and-drop",
+        "cpl.author": "Jeffrey Wilkinson aka buggyj",
+        "cpl.description": "drag and drop widgets",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/TW5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235419225"
+    }
+]

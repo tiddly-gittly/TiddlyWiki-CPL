@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Facilitates easier navigating between open tiddlers. Links to open tiddlers appear above top of the story river . If 'story mode' is set to zooming (see in appearance tab in the $:/ControlPanel tiddler) then the open tiddlers appear in tabs. The top links are controlled from the 'setting' tab in the $:/ControlPanel tiddler.\n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/storytabs",
+        "cpl.author": "Jeffrey Wilkinson aka BJ",
+        "cpl.description": "story tabs",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/tw5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235542567"
+    }
+]

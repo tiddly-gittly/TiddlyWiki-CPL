@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!!!Basic Configuration\nThis plugin enables ckeditor to be used in a tiddlywiki. For the Ckeditor license see http://ckeditor.com/about/license\n\nckeditor can be used directly from the web, eg http://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js\nor can be obtained directly from http://ckeditor.com/download\n\nNote that this plugin is designed to work with the ckeditor standard packages (but can be configured for custom packages).\n\nThe tiddler $:/plugin/bj/visualeditor/includelib\n\nneeds to contain the location of the ckeditor library. The default is\n\n```\nhttp://127.0.0.1/libs/ckeditor/ckeditor.js\n```\nchange to your location. Note that this can be an online location eg\n\n```\nhttp://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js\n\n```\n\n!!!Advanced configuration\nConfiguration options as described on the ckeditor website can be set in the tiddler \n$:/plugins/bj/visualeditor/config.json\nUser styles (also described on the ckeditor website) are included in the tiddler \n$:/plugins/bj/visualeditor/styles.json\n",
+        "cpl.uri": "http://bjtools.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/bj/visualeditor",
+        "cpl.author": "JeffreyWilkinson",
+        "cpl.description": "ckeditor adapter plugin",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/buggyj/TW5-tools",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.11",
+        "title": "Plugin_202203235355276"
+    }
+]
