@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222522679",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Utility plugin\nThe utility plugin objective is to provide set of tools for authors. These tools includes simple transclusions, show raw contents of tiddlers, author tools, wikitext macros, show fields in view mode, and much more!\n\n; Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Utility/\n* Code: https://github.com/kookma/TW-Utility\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Futility.json",
+        "cpl.title": "$:/plugins/kookma/utility",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Utility",
+        "cpl.description": "Small tools for authors and developers",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Utility",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.24"
+    }
+]

@@ -1,0 +1,12 @@
+cpl.author: Matthew Lauber
+cpl.core-version: >=5.0.1
+cpl.dependents: 
+cpl.description: SoundPad
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/mklauber/tw5-SoundPad
+cpl.title: $:/plugins/mklauber/SoundPad
+cpl.uri: https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fmklauber%252FSoundPad.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203222242491
+type: application/json

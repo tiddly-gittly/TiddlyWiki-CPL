@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222516544",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Thinkup\nThink Up in [[Lexico|https://www.lexico.com/definition/think_up]] means: use one's ingenuity to invent or devise something. Thinkup is a Tiddlywiki plugin uses Zettlekasten method for note taking\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Thinkup/\n* Code: https://github.com/kookma/TW-Thinkup\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fthinkup.json",
+        "cpl.title": "$:/plugins/kookma/thinkup",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Thinkup",
+        "cpl.description": "Personal knowledge management with Tiddlywiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Thinkup",
+        "cpl.dependents": "Shiraz",
+        "cpl.core-version": ">=5.2.0"
+    }
+]

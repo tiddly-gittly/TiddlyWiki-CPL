@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203222514744",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Solution plugin\nThere are many questions and answers in [[TW Google forum|https://groups.google.com/forum/#!forum/tiddlywiki]], some of them shows elegant solution to raised questions and worth to be documented in a manner to be accessible easily later on.\n\nSolution is a small plugin to create solution tiddlers. It adds a button to page controls, on click, creates a tiddler tagged with `solution`, contains `keywords`, `responder`, and `url` fields. It then uses a view template to show the `responder` (author), reference post (`url`), and the `keywords` in a semantic way.\n\nThe `keywords` field acts like tags, so, clicking on them shows a list of all tiddlers tagged with this keyword or has this keyword in its `keywords` field.\n\n; Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Solution/\n* Code: https://github.com/kookma/TW-Solution\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fsolution.json",
+        "cpl.title": "$:/plugins/kookma/solution",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.description": "Solution Resource",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Solution",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.21"
+    }
+]

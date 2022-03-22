@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203222513729",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! What ia slider plugin?\nSlider is a small plugin to create an ordered set of tiddlers also called ''Trail''.\n\nA trail can be used to create a sequence of selected contents like step by step tutorial, guided help, lessons and similar.\n\nThe slider plugin user interface contains three sections\n\n# A sidebar tab called ''Trails'' to manage trails\n# A ''dashboard'' for each trail (where trail structure is managed)\n# Tiddlers in a trail, also called ''slides''\n\n!! How to create a trail\nFrom the sibebar tab ''Trails'' click on the ''Create new trail'' button. In the newly opened tiddler:\n\n# Enter a short name for //title//\n#* This title is used as a parent //tag// for all slides in the trail\n# Enter a meaningful caption to describe the subject of trail\n#* Caption is displayed in ''Trails'' sidebar tab, so it used to find and recognize the trail\n# Save the tiddler\n#* After saving the dashboard will be appeared\n#* Using dashboard, manage the trail\n\n!! Add slides to trail\nSlides (tiddlers) can be added to a specified trail in several ways including:\n\n# By clicking on the `New slide` button on the trail dashboard\n# By dragging and droping a tiddler into the `List of slides` on the trail dashboard\n# By opening the `sidebar / Trails` tab and then clicking on the `Add slide to ...` button\n# By creating new tiddler and tagging with the specified trail title\n# By tagging an exisiting tiddler with the specified trail title\n\n!! Create slide footer \n* The slider footer can be used to add a text to all slides in a trail.\n* The slider footer is an ordinary tiddler and can be opned and edited\n* The slider footer has the same title of trail with `-Footer` prefix and tagged with `slideFooter`\n* The footer can be used for date stamp, author and institution name or any other information you like.\n* The footer can be formatted for color, size, font and etc. It can accept all the standard markup.\n\n!! Navigate through slides\n# Set the desired trail as the active trail by opening it and clicking on `Set for presentation`\n# From the //List of slides// click on the first slide or any slide you like to start from\n# One the footer of newly opened slide, click on the next button to navigate to the next slide\n# You can click on the slide-list button to open a local window and see the list of all slides, then you can click on any slide you like and jump to that slide\n# The slide footer also has a //previous// button which lets to navigate to previous slide in the list\n\n\n!! Demo\nThere few trails for demonstration on\nhttps://kookma.github.io/slider/\n\n!! Installation\nSimply drag and drop the below ling into your wiki\n\n* $:/plugins/kookma/slider",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fslider.json",
+        "cpl.title": "$:/plugins/kookma/slider",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.description": "Slider",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Slider",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.21"
+    }
+]

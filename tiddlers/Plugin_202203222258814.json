@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203222258814",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "|!purpose|Randomize the order of the input list|\n|!input|a selection of titles|\n|!parameter|a random string to be used to create consistent random ordering|\n|!output|The input titles, rearranged in a random order|\n\nThis plugin implements a new filter operator called Shuffle.  This operator takes the input list and randomizes the order of the list.  If no parameter is provided, the list order is random every time.\n\n!!!Example:\n```\n<$list filter=\"1 2 3 4 5 +[shuffle[]]\">\n\n</$list>\n```\n\n<$button popup=\"$:/state/shuffle/reveal1\">Run Demo</$button>\n\n<$reveal type=\"popup\" state=\"$:/state/shuffle/reveal1\">\n<div class=\"tc-drop-down\">\n<$list filter=\"1 2 3 4 5 +[shuffle[]]\">\n\n</$list>\n</div>\n</$reveal>\n\nCombining this operator with the first operator allows you to choose 1 or more titles randomly from a list.\n\n!!!Example:\n```\n<$list filter=\"1 2 3 4 5 +[shuffle[]first[2]]\">\n\n</$list>\n```\n\n<$button popup=\"$:/state/shuffle/reveal2\">Run Demo</$button>\n\n<$reveal type=\"popup\" state=\"$:/state/shuffle/reveal2\">\n<div class=\"tc-drop-down\">\n<$list filter=\"1 2 3 4 5 +[shuffle[]first[2]]\">\n\n</$list>\n</div>\n</$reveal>\n\nIf a parameter is provided the list will be ordered identically every time it is rendered.  This can be useful in conjunction a button that updates a state tiddler.  Set the parameter of this operator to reference that state tiddler, and create a button that updates that tiddler, and now the ordering of the random operators only changes when the button is pressed.\n\n!!!Example:\n```\n<$button>\n<$action-setfield $tiddler=\"$:/temp/shuffle/example\" $field=\"state\" $value=<<now \"0hh:0mm:0ss\">>/>\nChange Order\n</$button>\n\n<$list filter=\"1 2 3 4 5 +[shuffle{$:/temp/shuffle/example!!state}]\">\n\n</$list>\n```\n\n<$button>\n<$action-setfield $tiddler=\"$:/temp/shuffle/example\" $field=\"state\" $value=<<now \"0hh:0mm:0ss\">>/>\nUpdate\n</$button>\n\n<$list filter=\"1 2 3 4 5 +[shuffle{$:/temp/shuffle/example!!state}]\">\n\n</$list>\n",
+        "cpl.uri": "https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fmklauber%252Fshuffle.json",
+        "cpl.title": "$:/plugins/mklauber/shuffle",
+        "cpl.author": "Matthew Lauber",
+        "cpl.description": "A Shuffle filter operator",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/mklauber/tiddly-shuffle",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0"
+    }
+]

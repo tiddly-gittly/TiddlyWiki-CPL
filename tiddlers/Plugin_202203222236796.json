@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203222236796",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "The [[Creature Manager|$:/plugins/D&DTools/CreatureManager]] plugin is a tool for displaying Stat Blocks for D&D 5e creatures.\n\n<div style=\"clear:both\" />\n\n<div style=\"float:left;\">\nSelect a Monster: <$select tiddler=\"$:/temp/CreatureManager/Monster\">\n<$list filter=\"[all[tiddlers+shadows]type[Creature]]\">\n<option value=<<currentTiddler>>><$view field='title'/></option>\n</$list>\n</$select>\n</div>\n\n<div style=\"float:right;\">\n<$tiddler tiddler={{$:/temp/CreatureManager/Monster}}>\n<$transclude tiddler=\"$:/plugins/D&DTools/CreatureManager/ViewTemplate\">\n{{Kobold||$:/plugins/D&DTools/CreatureManager/ViewTemplate}}\n</$transclude>\n</$tiddler> \n</div>\n<div style=\"clear:both;\" />",
+        "cpl.uri": "https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FD%2526DTools%252FCreatureManager.json",
+        "cpl.title": "$:/plugins/D&DTools/CreatureManager",
+        "cpl.author": "Matt Lauber",
+        "cpl.description": "D&D Creature Manager",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/mklauber/tw-CreatureManager",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.22"
+    }
+]

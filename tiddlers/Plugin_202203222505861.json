@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222505861",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Highlight Selected Lines (HSL)\nThis tools is used to highlight selected lines or a range of lines to be standout.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-hsl/\n* Code: https://github.com/kookma/TW-hsl\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fhsl.json",
+        "cpl.title": "$:/plugins/kookma/hsl",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Highlight Selected Lines",
+        "cpl.description": "Extract the content and stand out specific lines and/or line ranges",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Hsl",
+        "cpl.dependents": "$:/plugins/tiddlywiki/highlight",
+        "cpl.core-version": "5.1.24-prerelease"
+    }
+]

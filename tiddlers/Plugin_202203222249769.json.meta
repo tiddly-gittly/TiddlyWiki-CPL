@@ -1,0 +1,11 @@
+cpl.author: Matthew Lauber
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Sane Substory Implementation
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/mklauber/substory
+cpl.uri: https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fmklauber%252Fsubstory.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203222249769
+type: application/json

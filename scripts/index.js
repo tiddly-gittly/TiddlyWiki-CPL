@@ -73,6 +73,24 @@ function getTiddlerFromFile(wikiFile, tiddlerTitle) {
   }
 }
 
+function getTiddlersFromFile(wikiFile) {
+  try {
+    const fileType = path.extname(wikiFile).toLowerCase();
+    if (fileType === "" || !(fileType in $tw.config.fileExtensionInfo))
+      return [];
+    const fileMIME = $tw.config.fileExtensionInfo[fileType].type;
+    const fileText = fs.readFileSync(wikiFile).toString("utf8");
+    return $tw.wiki.deserializeTiddlers(fileMIME, fileText, {});
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
+}
+
+function saveTiddlersFromFile(wikiFile) {
+  getTiddlersFromFile(wikiFile).forEach($tw.wiki.addTiddler);
+}
+
 /**
  * 判断是否是安装后需要重新加载页面的插件
  * @param {Record<string, string | number>} pluginTiddler 插件tiddler
@@ -210,9 +228,54 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   return { pluginTiddler, newInfoTiddler };
 }
 
-function importLibrary(uri) {
-    uri.split('/')
-    shellI(`wget '${uri}' -O ${distDir}/tmp/${fileName}`);
+// https://mklauber.github.io/tw5-plugins/library/index.html
+function _importLibrary(uri) {
+  let distDir = "dist/library";
+  const tmp = uri.split("/");
+  tmp.pop();
+  const baseUri = tmp.join("/");
+
+  try {
+    // 下载JSON文件，包含插件的信息
+    shellI(
+      `wget '${baseUri}'/recipes/library/tiddlers.json -O ${distDir}/tmp/tiddlers.json`
+    );
+    let pluginsJson = fs.readFileSync(`${distDir}/tmp/tiddlers.json`, "utf-8");
+    pluginsJson = JSON.parse(pluginsJson);
+    pluginsJson.forEach((plugin) => {
+      if ("title" in plugin) {
+        _importPlugin(
+          `${baseUri}/recipes/library/tiddlers/${encodeURIComponent(
+            encodeURIComponent(plugin.title)
+          )}.json`,
+          plugin.title
+        );
+      }
+    });
+  } catch (e) {
+    console.error(e);
+    return;
+  }
+}
+
+function importLibrary() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  function questionLoop() {
+    rl.question(
+      "Library HTML file uri(must be xxx/index.html, can find in url field of the plugin library tiddler)(ctrl-D to terminate):\n",
+      (uri) => {
+        _importLibrary(uri);
+        questionLoop();
+      }
+    );
+  }
+  rl.on("close", function () {
+    process.exit();
+  });
+  questionLoop();
 }
 
 const fieldConvert = [
@@ -484,5 +547,6 @@ function buildLibrary(distDir, minify) {
 
 module.exports = {
   build: buildLibrary,
-  import: importPlugin,
+  importPlugin: importPlugin,
+  importLibrary: importLibrary,
 };

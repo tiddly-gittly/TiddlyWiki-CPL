@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Plugin_202203222510547",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Searchwikis\nSearchwikis plugin uses index (dataTiddler) to search multiple external Tiddlywikis. It has two parts\n\n# An indexer, to build an index of all tiddlers in an external wiki\n# A search tool to search indexes and display a link to a tiddler found in an external wiki\n\nThen one master wiki can hosts many index tiddlers and lets to search several external wikis through index tiddlers.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Searchwikis/\n* Code: https://github.com/kookma/TW-Searchwikis\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fsearchwikis.json",
+        "cpl.title": "$:/plugins/kookma/searchwikis",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.description": "Searchwikis",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Searchwikis",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.22"
+    }
+]

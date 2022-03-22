@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222511217",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Section Editor plugin\nSectionize big tiddlers on headings, edit in place, create, fold and manage sections.\n\nCreate patchwork tiddlers, to weave the fragments together to present narrative stories.\n\n; Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Section/\n* Code: https://github.com/kookma/TW-Section\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fsection.json",
+        "cpl.title": "$:/plugins/kookma/section",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Section Editor",
+        "cpl.description": "Sectionize tiddler, create patchworks, and manage sections",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Section",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.1"
+    }
+]

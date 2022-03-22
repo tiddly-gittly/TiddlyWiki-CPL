@@ -1,0 +1,11 @@
+cpl.author: Matt Lauber
+cpl.dependents: 
+cpl.description: D&D 5e SRD Spells
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/mklauber/tw-5eSRD-Spells
+cpl.title: $:/plugins/D&DTools/Spells
+cpl.uri: https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FD%2526DTools%252FSpells.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203222235341
+type: application/json

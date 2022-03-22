@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222521367",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Trashbin\nThe concept behind Trashbin plugin is to have a simple mechanism to move deleted tiddlers to Trashbin and be able to restore them later if required.\n\n; Code and demo\nFor learning plugin features, mechanism, terminology, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Trashbin/\n* Code: https://github.com/kookma/TW-Trashbin\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftrashbin.json",
+        "cpl.title": "$:/plugins/kookma/trashbin",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Trashbin",
+        "cpl.description": "A trashbin mechanism for Tiddlywiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Trashbin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">= 5.1.22"
+    }
+]

@@ -1,0 +1,12 @@
+cpl.author: Matt Lauber
+cpl.core-version: >=5.1.22
+cpl.dependents: $:/plugins/D&DTools/CreatureManager $:/plugins/D&DTools/EncounterBuilder $:/plugins/mklauber/in.js $:/plugins/D&DTools/d20.js $:/plugins/mklauber/shuffle $:/plugins/D&DTools/Creatures $:/plugins/D&DTools/Spells $:/plugins/D&DTools/NPCNameGenerator
+cpl.description: D&D Edition
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/mklauber/tw-D-and-D-Edition.git
+cpl.title: $:/plugins/D&DTools/D&DEdition
+cpl.uri: https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FD%2526DTools%252FD%2526DEdition.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203222301111
+type: application/json

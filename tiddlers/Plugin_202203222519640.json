@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222519640",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; TOC\nTOC plugin contains several macros, stylesheets and templates to create table of contents and navigator buttons. In contrast to Tiddlywiki core macros, the TOC plugin has many extra features including\n\n* non recursive two level toc\n* hierarchical navigation\n* exclude feature to exclude a branch or specific entries\n* track and highlight the TOC entry opened from table of contents or by navigation buttons\n\nLike core toc macro, TOC plugin supports also the recursive multi level table of contents, but here, it also support hierarchical navigation.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-TOC/\n* Code: https://github.com/kookma/TW-TOC\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftoc.json",
+        "cpl.title": "$:/plugins/kookma/toc",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Toc",
+        "cpl.description": "Table of contents and navigation builder",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TOC",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.21"
+    }
+]

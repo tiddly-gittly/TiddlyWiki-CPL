@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222518977",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Shiraz[use correct name]\ndescribe what is the plugin in one paragraph\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-???/\n* Code: https://github.com/kookma/TW-???\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftimelines.json",
+        "cpl.title": "$:/plugins/kookma/timelines",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Timelines",
+        "cpl.description": "create horizontal and vertical timelines",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Timelines",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.21"
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222501931",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Tiddler Commander\nTiddler Commander, in short ''Commander'' is a unique tool for batch operations on tiddlers. Commander has the below features\n\n* Bulk tiddler creation/deletion\n* Combo search to filter and select tiddlers\n* Title operation: add, remove prefixes and suffixes, also remove cahras form begining and end of title (on renaming tiddlers, [[relink|$:/plugins/kookma/commander/help/uicomp/relink]] can be used to update title in other tiddlers)\n* Tag operation: add, remove, replace\n* Field operation: add, remove, rename, and set field value\n* SNR, search and replace in all fields including text, tags, //title//, and common fields\n* Inspect, to review and inspect tiddlers in one place, scroll among them and edit all fields (including common fields), tags, text (title is an exception!)\n* Log, create logs of all operations\n* Search, //save and load// any combination of filter search\n\n; Start Commander\n* Normally Commander adds its icon: <span class=\"cmd-doc\">{{$:/plugins/kookma/commander/images/commander.svg}}</span> to page controls.\n* Open the right sidebar and click on the  <span class=\"cmd-doc\">{{$:/plugins/kookma/commander/images/commander.svg}}</span> Commander is started\n*  In standard Tiddlywiki, control buttons are shown on the right sidebar under site title.\n\n; Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Commander/\n* Code: https://github.com/kookma/TW-Commander\n\n<style>\n.cmd-doc svg{\nwidth: 1.2em;\nheight: 1.2em;\nvertical-align: middle;}\n</style>",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fcommander.json",
+        "cpl.title": "$:/plugins/kookma/commander",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Tiddler Commander",
+        "cpl.description": "batch processing tiddlers",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Commander",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.22"
+    }
+]

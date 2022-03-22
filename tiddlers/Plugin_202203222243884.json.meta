@@ -1,0 +1,12 @@
+cpl.author: Matthew Lauber
+cpl.core-version: >=5.2.0
+cpl.dependents: 
+cpl.description: Aliases - Alias Manager
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/mklauber/tiddly-aliases
+cpl.title: $:/plugins/mklauber/aliases
+cpl.uri: https://mklauber.github.io/tw5-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fmklauber%252Faliases.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203222243884
+type: application/json

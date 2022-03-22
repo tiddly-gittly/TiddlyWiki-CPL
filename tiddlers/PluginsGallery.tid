@@ -1,5 +1,5 @@
 created: 20220118144111816
-modified: 20220321171524629
+modified: 20220322092730079
 tags: 
 title: PluginsGallery
 type: text/vnd.tiddlywiki
@@ -43,7 +43,7 @@ type: text/vnd.tiddlywiki
   <$list filter="[title<icon>!is[shadow]!is[tiddler]]"><$wikify name="rendered" text=<<icon>> output=html><<rendered>></$wikify></$list>
 </$list></div></$reveal>
 
-''<$text text={{{ [<currentTiddler>get[cpl.name]] }}}/>'': <$text text={{{ [<currentTiddler>get[cpl.description]] }}}/>
+''<$text text={{{ [<currentTiddler>get[cpl.name]] ~[<currentTiddler>get[cpl.title]split[/]last[1]] }}}/>'': <$text text={{{ [<currentTiddler>get[cpl.description]] }}}/>
 </div>
 </div></$link>
 </$list>

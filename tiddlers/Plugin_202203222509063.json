@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222509063",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Refnotes\nRefnotes is a Tiddlywiki plugin to create and manage footnotes, abbreviations, citations, and references. Refnotes can create bibliography, but for the best performance, and to use import bibtex entries, the use of the official ''bibtex importer'' plugin is required.\n\n;Code and demo\nFor learning Refnotes features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Refnotes/\n* Code: https://github.com/kookma/TW-Refnotes\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Frefnotes.json",
+        "cpl.title": "$:/plugins/kookma/refnotes",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Refnotes",
+        "cpl.description": "references, citations, footnotes and abbreviations in Tiddlywiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Refnotes",
+        "cpl.dependents": "bibtex",
+        "cpl.core-version": ">=5.2.0"
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Plugin_202203222504484",
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Gatha Studio Workspace\nCreate Tiddlywiki plugins, themes, languages, editions, contents in browser in an easy way and distribute as packaged JSON file, Node.JS plugin folder, or a Tiddlywiki app.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Gatha/\n* Code: https://github.com/kookma/TW-Gatha\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fgatha.json",
+        "cpl.title": "$:/plugins/kookma/gatha",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Gatha",
+        "cpl.description": "Plugin maker and content manager",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Gatha",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.1"
+    }
+]
