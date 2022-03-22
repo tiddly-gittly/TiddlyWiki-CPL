@@ -347,8 +347,6 @@ function _importPlugin(uri, title) {
     return;
   }
   let pluginInfo = {
-    title:
-      "Plugin_" + $tw.wiki.filterTiddlers("[<now YYYY0MM0DD0mm0ss0XXX>]")[0],
     type: "application/json",
     tags: "$:/tags/PluginWiki",
     "cpl.readme": getReadmeFromPlugin(plugin),
@@ -357,6 +355,13 @@ function _importPlugin(uri, title) {
   fieldConvert.forEach((fieldPair) => {
     if (fieldPair[0] in plugin) pluginInfo[fieldPair[1]] = plugin[fieldPair[0]];
   });
+  const tmp = $tw.wiki.filterTiddlers(
+    `[tag[$:/tags/PluginWiki]cpl.title[${pluginInfo["cpl.title"]}]]`
+  );
+  pluginInfo.title =
+    tmp.length > 0
+      ? tmp[0]
+      : "Plugin_" + $tw.wiki.filterTiddlers("[<now YYYY0MM0DD0mm0ss0XXX>]")[0];
   $tw.wiki.addTiddler(pluginInfo);
   console.log(
     `Successfully add ${pluginInfo.title}(${pluginInfo["cpl.title"]}) to cpl.`
