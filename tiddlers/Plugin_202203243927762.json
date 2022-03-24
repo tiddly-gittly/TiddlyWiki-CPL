@@ -1,0 +1,17 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Supercharged code and text editor component using the excellent [[Monaco Editor|https://microsoft.github.io/monaco-editor/]] - the editor that powers [[Visual Studio Code|https://code.visualstudio.com/]].\n\nThe integration is somewhat basic right now. See below.\n\nInspired by the CodeMirror plugin. Monaco Editor is licensed under MIT, copyright Microsoft. \n\n!! Disclaimer\nThis is very alpha-level code for now,\nso no guarantee that it will not delete\nall your text and tiddlers randomly, brick\nand/or otherwise corrupt your installation.\n\nOf course I don't expect that to happen\nand for what it's worth, I wrote this\nreadme with it, so it seems to work\nalright for what it is.\n\n!! Features\nA lot of the out-of-the-box features of Monaco\nalready work well.\n\n* Syntax highlighting and formatting for TiddlyWiki wikitext, HTML, JS, Markdown\n* Advanced multiselections and editing\n* Scrollbar minimap\n* Tiddler autocompletion\n* Hover tooltips with tiddler contents\n\n!! Limitations\n\n* ''Online only''. The Monaco editor source itself will be loaded remotely from `unpkg.com`, so editing while offline isn't possible at this point.\n* ''No configuration''. Yet?\n* ''Highlighting heuristics''. Wikitext highlighting might not always be accurate due to missing  TiddlyWiki parser text ranges. \n",
+        "cpl.uri": "https://smilyorg.github.io/tw5-monaco/index.html",
+        "cpl.title": "$:/plugins/smilyorg/monaco",
+        "cpl.author": "Miha Lunar",
+        "cpl.name": "Monaco",
+        "cpl.description": "Monaco Editor packaged for TiddlyWiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/smilyorg/tw5-monaco",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.21",
+        "title": "Plugin_202203243927762"
+    }
+]
