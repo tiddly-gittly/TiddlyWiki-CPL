@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin adds a little bit of CSS that creates small scrollbars for ~FireFox and ~WebKit based browsers\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fthin-scrollbars.json",
+        "cpl.title": "$:/plugins/wikilabs/thin-scrollbars",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Thin Scrollbars",
+        "cpl.description": "A bit of CSS to modify default scrollbars",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203243736630"
+    }
+]

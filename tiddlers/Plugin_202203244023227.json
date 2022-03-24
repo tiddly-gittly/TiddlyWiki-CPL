@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "It is always good to have a look at the code/~WikiText TW uses in the core tiddlers and learn from it.<br>\nWith this plugin you can explore code/~WikiText core tiddlers like the UI shadow tiddlers, code snippets, macros, themes and so on.\n",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/exploration",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Exploration",
+        "cpl.description": "Exploration",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244023227"
+    }
+]

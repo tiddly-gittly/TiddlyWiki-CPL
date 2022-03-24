@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "''Mobie'', a mobile theme.\n\n|Icon |description|h\n|{{$:/core/images/chevron-down}}|Toggle menu on/off|\n|{{$:/core/images/home-button}}|Open the default tiddlers|\n|{{$:/core/images/new-button}}|New tiddler|\n|{{$:/core/images/save-button}}|Save wiki|\n|{{$:/core/images/options-button}}|Control panel|\n|<$transclude tiddler=\"$:/themes/tg/mobie\" subtiddler=\"$:/themes/tg/mobie/images/editor-toolbar\"/>|Toggle editor toolbar on / off|\n|{{$:/core/images/help}}|Help (displays readme)|\n\n\n''Note:''\n\n* The menu button toggles $:/core/ui/SideBarLists on/off (displaying only search and sidebar tabs)\n* The title of the wiki ($:/SiteTitle) will be shown on top (title contained in tiddler tagged with `$:/tags/AboveStory`)\n* Toggle buttons (''Menu'' & ''Editor toolbar'') are colored when active\n* Buttons can be enabled / disabled / rearranged in ''Control panel'' (''Appearance > Toolbars > Top toolbar'') like all other buttons<br>(for quick access click $:/core/ui/ControlPanel/Toolbars/Topbar).",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/themes/tg/mobie",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Mobie",
+        "cpl.description": "Mobile theme",
+        "cpl.plugin-type": "theme",
+        "cpl.dependents": "$:/themes/tiddlywiki/vanilla",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244014334"
+    }
+]

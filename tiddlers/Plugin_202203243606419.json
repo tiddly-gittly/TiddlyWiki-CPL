@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! vis.js Timeline\n\nA timeline plugin for [[TiddlyWiki|http://tiddlywiki.com]] 5, using [[vis.js|http://visjs.org]].\n\n---\n\nContinued from [[emkay's plugin|https://github.com/emkayonline/tw5visjs]].\n\nProvides [[vis-timeline|https://github.com/visjs/vis-timeline]], and integrates the Timeline object.\n\nDepends on [[hammer.js plugin|https://github.com/kixam/TW5-hammer.js]] and [[moment.js plugin|https://github.com/kixam/TW5-moment.js]], which are available, along with installation instructions, on the [[demo site|http://kixam.github.io/TW5-visjsTimeline]].\n",
+        "cpl.uri": "http://kixam.github.io/TW5-visjsTimeline/index.html",
+        "cpl.title": "$:/plugins/kixam/timeline",
+        "cpl.author": "kixam",
+        "cpl.description": "vis.js Timeline plugin for TiddlyWiki5, based on vis-timeline version 5.1.0",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kixam/TW5-visjsTimeline",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.8",
+        "title": "Plugin_202203243606419"
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin adds a new tab to the tiddler info section. It's a multi column list of all tiddler tags plus all tagged tiddlers.\n\nThis plugin doesn't change any core templates.\n\nThe code below can be copied into the tag tiddlers.\n\n```\nAll tiddlers tagged: {{!!title}}\n\n<<list-links filter:\"[tag{!!title}]\">>\n```",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Finfo-tagmap.json",
+        "cpl.title": "$:/plugins/wikilabs/info-tagmap",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Info TagMap",
+        "cpl.description": "Adds a Tag-Map tab to the tiddler info section",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.0",
+        "title": "Plugin_202203243725053"
+    }
+]

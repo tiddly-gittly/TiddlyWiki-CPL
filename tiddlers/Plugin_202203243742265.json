@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "* TODO\n\n! Example\n\n```\nTODO\n```",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fxenlist.json",
+        "cpl.title": "$:/plugins/wikilabs/xenlist",
+        "cpl.author": "pmario",
+        "cpl.name": "xenlist",
+        "cpl.description": "New enlist operator that understands comments and filter syntax",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202203243742265"
+    }
+]

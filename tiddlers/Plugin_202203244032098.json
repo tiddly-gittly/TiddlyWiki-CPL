@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This 'Go to bottom' plugin will be useful when editing tiddlers with a lot of text.\nThe plugin provides in edit mode a button that brings you to the bottom of the text of the tiddler to edit.\n\nSince it interferes with the permalink/permaview behavior of ~TiddlyWiki there are some quirks:\n\n# The first time you use the 'Go to bottom' button (@@font-size:1.2em;&darr;@@) you have to click it twice. After the first click you will see the bottom tiddler on top (`#bottom` will be appended to the URL); after the second click you get to the bottom of the tiddler to be edited\n#* The next time you click the 'Go to bottom' button you get to the bottom of the tiddler to be edited directly\n# After using the button a refresh of the ~TiddlyWiki opens the `bottom` tiddler and ''not'' the tiddler(s) programmed in Control panel.<br>You can click the Home button (<<icn $:/core/ui/Buttons/home>>) in the `bottom` tiddler to get the tiddlers as expected after a refresh, but see the ''Note'' below.\n\n<<<\n''Note:''\n\n* The Home button appends a `#` to the URL thus replacing `#bottom` by `#`\n* After clicking the Home button you are starting all over again (step 1 above)!\n* The 'Go to bottom' function is incompatible with scrollable preview!\n<<<\n",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/bottom",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Go to bottom",
+        "cpl.description": "Go to bottom",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244032098"
+    }
+]

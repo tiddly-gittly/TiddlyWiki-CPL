@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin creates a toolbar on top of the screen.<br>\nWith buttons to replicate the functions normally only available in the sidebar and buttons for a few new functions: tagging in view mode, rename tags, delete a corrupt tiddler, list (open/all/recent/tags/untagged), new template tiddler, ...\n\n<<<\n''Note:''\n\n* ''This plugin needs my $:/plugins/tg/layout plugin for general layout settings (available at http://tongerner.tiddlyspot.com/)''\n* ''As of version 4.0.1 several buttons in $:/plugins/tg/toolbar have been replaced by checkboxes in $:/plugins/tg/layout''\n<<<\n\nSettings for the layout can be found in ~ControlPanel > Appearance > [[Plugin tweaks|$:/plugins/tg/layout/tweaks]].\n\nThe buttons in the toolbar can be switched on/off in ''~ControlPanel > Appearance > Toolbars > [[Top toolbar|$:/core/ui/ControlPanel/Toolbars/TopToolbar]]''. Drag and drop to change the ordering.\n\n<<<\n''Note:''\n\n* This plugin incorporates a slightly modified version of [[Danielo's TagsSearch plugin|http://braintest.tiddlyspot.com/#TagsSearch-Plugin]]\n* If the standard search button (<<icn $:/plugins/tg/toolbar/images/search>>) is used:\n** it needs to be the first button!\n** the top bar needs to have an appropriate height and background color!\n* All 'List' buttons do not work via 'More actions'!\n<<<\n",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/toolbar",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Top toolbar",
+        "cpl.description": "Top toolbar",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.17",
+        "title": "Plugin_202203244201657"
+    }
+]

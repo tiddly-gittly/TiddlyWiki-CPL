@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\define createFieldSwitcherElement()\n<$action-createtiddler $basetitle=\"$:/config/wikilabs/field/<your field name comes here>\" $template=\"$:/config/wikilabs/field/text\" tags=\"$:/tags/wikilabs/fieldswitcher\" description=\"Add a short description text here and replace the icon below\" icon=\"{{$:/core/images/spiral}}\" $overwrite=\"yes\" text=\"yourFieldName\"/>\n<$action-sendmessage $message=\"tm-edit-tiddler\" $param=\"$:/config/wikilabs/field/<your field name comes here>\"/>\n\\end\n\n!! About\n\nThis plugin adds a field selector above the text editor and a new button that allows you to edit different fields in multiline edit mode side by side\n\n!! Video\n\nTODO\n\n!! Create a new Field Switcher Element\n\nTo create a new field-switcher button click the button below and follow the instructions.\n\n<$button actions=<<createFieldSwitcherElement>> >\nCreate a new Field Switcher Element\n</$button>\n\n!! Toggle Field label\n\nBy default a label is shown, when the tiddler shows a filed different to the \"text\" field.\n\n<$checkbox tiddler=\"$:/config/wikilabs/show-field-label\" field=text checked=\"yes\" unchecked=\"no\" default=\"yes\"> Show Field Label</$checkbox>\n\n!!! ''Imporant''\n\n* If you use an icon it has to be covered in double curly braces eg: `{{$:/core/images/globe}}`.\n* Icons can be found at the [[Image Gallery Examples|https://tiddlywiki.com/#Icon%20Gallery:%5B%5BIcon%20Gallery%5D%5D%20%5B%5BLanguageGallery%20Example%5D%5D]]\n* [[\"TW Icons\" by morosanuae|https://tiddlywiki.com/#%22TW%20Icons%22%20by%20morosanuae]]\n\n!! Existing Field Switcher Elements\n\n<<list-links \"[all[shadows+tiddlers]tag[$:/tags/wikilabs/fieldswitcher]]\">>\n\n!! Dependencies\n\nThis plugin depends on the: [[Field Visibility Plugin|https://wikilabs.github.io/editions/field-visibility]]\n\n!! Modified Core Tiddles\n\nThis plugin changes the following core tiddlers:\n\n* $:/core/ui/Buttons/info\n* $:/core/ui/EditTemplate\n* $:/core/ui/EditTemplate/body\n* $:/core/ui/EditTemplate/body/editor\n* $:/core/ui/EditTemplate/body/preview/output\n* $:/core/ui/EditTemplate/fields\n* $:/core/ui/ViewTemplate\n* $:/core/ui/ViewTemplate/body\n* $:/core/ui/ViewTemplate/subtitle\n\nThe full list of tiddlers in the plugin can be found at: [[$:/plugins/wikilabs/field-editor]] '': contents'' tab.",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ffield-editor.json",
+        "cpl.title": "$:/plugins/wikilabs/field-editor",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Multiline Field Editor",
+        "cpl.description": "Side by side multiline field editor",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/wikilabs/field-visibility",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203243721287"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Allow Camel_Case links\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fspeciallinks.json",
+        "cpl.title": "$:/plugins/wikilabs/speciallinks",
+        "cpl.name": "Speciallinks",
+        "cpl.description": "Camel_Case wikilinks are possible",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.13",
+        "title": "Plugin_202203243735882"
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\define showInfo()\n<$action-setfield $tiddler=\"$:/state/popup/tiddler-info-471453735\" text=\"yes\" />\n\\end\n\nThis plugin adds a toggle button to the Fields tab in the tiddler info area, which can be seen in tiddler view mode.\n\nIf you need the tiddler info button in edit mode you will need to install the: \"Tiddler Info in Edit Mode\" plugin.\n\n<$button actions=<<showInfo>> to=\"test-field-visibility\" >\nClick this button to show the tiddler info area\n</$button>\n\n''Important:'' This plugin changes the following core tiddlers\n\n* $:/core/ui/TiddlerInfo/Fields\n* $:/core/ui/TiddlerFieldTemplate\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ffield-visibility.json",
+        "cpl.title": "$:/plugins/wikilabs/field-visibility",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Toggle Field Visibility",
+        "cpl.description": "Change the field visibility in the tiddler info area fields tab",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203243723000"
+    }
+]

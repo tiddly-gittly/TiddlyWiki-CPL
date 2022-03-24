@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<<i18n readme $:/plugins/sycom/feather-icons>>\n",
+        "cpl.uri": "http://sycom.gitlab.io/TiddlyWiki-Plugins/index.html",
+        "cpl.title": "$:/plugins/sycom/feather-icons",
+        "cpl.author": "Sylvain Comte",
+        "cpl.description": "Feather icons",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://framagit.org/sycom/TiddlyWiki-Plugins",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202203242415126"
+    }
+]

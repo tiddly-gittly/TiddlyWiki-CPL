@@ -1,0 +1,11 @@
+cpl.author: Roma Hicks
+cpl.core-version: >=5.1.8
+cpl.dependents: 
+cpl.description: GSD5 Tickler plugin
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/gsd5/ticklers
+cpl.uri: http://gsd5.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203244353945
+type: application/json

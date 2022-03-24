@@ -1,0 +1,12 @@
+cpl.author: JoeRenes
+cpl.core-version: >=5.0.8
+cpl.dependents: 
+cpl.description: Mathematics typesetting plugin wrapping TeXZilla, a LaTeX to MathML parser
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/joerenes/TW5-TeXZilla
+cpl.title: $:/plugins/joerenes/TW5-TeXZilla
+cpl.uri: http://tw5-texzilla.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203243851642
+type: application/json

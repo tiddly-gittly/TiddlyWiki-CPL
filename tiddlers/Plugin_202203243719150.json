@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Adds a possibilty to style text content with wikitext syntax\n\nIt's possible to manipulate the rules behaviour with: \n\n`\\rules only ticktext`\n`\\rules excpet ticktext`\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fcustom-markup.json",
+        "cpl.title": "$:/plugins/wikilabs/custom-markup",
+        "cpl.name": "Custom Markup",
+        "cpl.description": "Adds a possibilty to style text content with wikitext syntax",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/wikilabs/pragma-comment",
+        "title": "Plugin_202203243719150"
+    }
+]

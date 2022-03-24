@@ -1,0 +1,11 @@
+cpl.author: rboue
+cpl.core-version: >=5.1.1
+cpl.dependents: 
+cpl.description: Three.js extras
+cpl.plugin-type: plugin
+cpl.readme: Three.js r69 extras for ~TiddlyWiki (needs Three.js plugin).
+cpl.title: $:/plugins/rboue/Three.js-plus
+cpl.uri: http://rboue.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203244531815
+type: application/json

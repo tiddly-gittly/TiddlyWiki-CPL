@@ -1,0 +1,12 @@
+cpl.author: DanieloRodrigez
+cpl.core-version: >=5.1.1
+cpl.dependents: 
+cpl.description: adds the ability to encrypt single tiddlers
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/danielo515/TIddlywiki5-EncryptTiddlerPlugin
+cpl.title: $:/plugins/danielo515/encryptTiddler
+cpl.uri: https://danielorodriguez.com/TW5-EncryptTiddlerPlugin/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203241449091
+type: application/json

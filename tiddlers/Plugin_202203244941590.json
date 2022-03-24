@@ -1,0 +1,15 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Use the //Third Flow// plugin in your Node.js-based ~TiddlyWikis to develop your customization plugins inside ~TiddlyWiki but with support for well-structured source code repository layouts.\n\nThe //Third Flow// plugin supports your plugin development in that it organizes all your tiddler source files into a clear hierarchical folder structure based on tiddler titles. An additional plugin creation command module makes it easy to create the package plugin itself as well as a demonstration ~TiddlyWiki without the hassle of having to maintain separate and even multiple ``tiddlers/`` and ``plugin/`` folders. Also, the //Third Flow// relieves you from shuffling tiddler source code files around in your source code repository.\n\nThere's only a ''single'' tiddler source code tree and it is synchronized to your tiddler's title-based structure. Thus, no more need for external editing sessions and source file shuffling.\n\nSimply install this plugin into your ~TiddlyWiki in which you are developing your customizations. For more information, please go to the [[Third Flow project website|http://thediveo.github.io/ThirdFlow]].\n\nYou can use the new [[File Storage|$:/plugins/TheDiveO/ThirdFlow/ui/ControlPanel/FileStorage]] control panel tab to configure how your tiddlers get organized into folders and subfolders in your source code repository.\n\nEnjoy the //Third Flow//!",
+        "cpl.uri": "http://thediveo.github.io/ThirdFlow/output/thirdflow.tid",
+        "cpl.title": "$:/plugins/TheDiveO/ThirdFlow",
+        "cpl.author": "TheDiveO",
+        "cpl.description": "Third Flow in-TW plugin development process support",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://thediveo.github.io/ThirdFlow",
+        "cpl.core-version": ">=5.1.20",
+        "title": "Plugin_202203244941590"
+    }
+]

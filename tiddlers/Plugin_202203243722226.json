@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin adds a \"Field Search\" tab to the search results\n\n{{$:/plugins/wikilabs/field-search/CP/Settings/field-search}}\n\n!! This plugin replaces the following system modules\n\n<$list filter=\"[[$:/plugins/wikilabs/field-search]plugintiddlers[]prefix[$:/core/]]\"><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></$list>",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ffield-search.json",
+        "cpl.title": "$:/plugins/wikilabs/field-search",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Field Search",
+        "cpl.description": "New tabs are added to search results",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.18",
+        "title": "Plugin_202203243722226"
+    }
+]

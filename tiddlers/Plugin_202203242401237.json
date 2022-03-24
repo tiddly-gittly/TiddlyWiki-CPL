@@ -1,0 +1,15 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<<i18n readme $:/plugins/sycom/g-analytics>>\n",
+        "cpl.uri": "http://sycom.gitlab.io/TiddlyWiki-Plugins/index.html",
+        "cpl.title": "$:/plugins/sycom/g-analytics",
+        "cpl.author": "JeremyRuston",
+        "cpl.description": "G-Analytics: website statistics",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202203242401237"
+    }
+]

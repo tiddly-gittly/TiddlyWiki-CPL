@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! Overview\n\nThis plugin creates a simple UI, to remove all state tiddlers.\n\n! Simple UI\n\n[[$:/plugins/wikilabs/ui/remove-states]]\n\n{{$:/plugins/wikilabs/ui/remove-states}}\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fremove-states.json",
+        "cpl.title": "$:/plugins/wikilabs/remove-states",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Remove States",
+        "cpl.description": "Remove all state tiddlers. Simple UI",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.6",
+        "title": "Plugin_202203243734145"
+    }
+]

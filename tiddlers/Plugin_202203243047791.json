@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!![[QuickJump Plugin|$:/plugins/eucaly/quickjump/readme]]\n<hr>\n\nQuickJump - Quick jump to tiddlers in story list\n\n!!!Features\n\n# Add \" <<QuickJump>> \" button to bring a popup menu to ''jump to tiddlers in story list'' -- emulate the function of ` Open tab ` ( [[$:/core/ui/SideBar/Open]] @sidebar )\n# After jumping\n#* Keep  popup menu on top, or\n#* Auto close the popup\n# Technical\n#* Practice `<$linkcatcher>` widget\n\n!!!Install\n* Drag&Drop -- [[$:/plugins/eucaly/quickjump]] (with documentation)\n\n!!!Uasge\n# Create a new tiddler that contains `<<QuickJump>>` macro call\n# Add {{$:/tags/TopRightBar||$:/core/ui/TagTemplate}} tag to the tiddler\n# If necessary, tweak [[$:/plugins/eucaly/quickjump/StyleSheet]]\n# Possible for other locations, such as {{$:/tags/TopLeftBar||$:/core/ui/TagTemplate}} {{$:/tags/PageControls||$:/core/ui/TagTemplate}} {{$:/tags/ViewToolbar||$:/core/ui/TagTemplate}} or  [[$:/SiteSubtitle]]. While, might need to tweak:\n#* ~StyleSheet as mentioned above\n#* [[Popup position|http://tiddlywiki.com/#RevealWidget]] (other than ''belowleft'') in [[$:/plugins/eucaly/quickjump/macros]]",
+        "cpl.uri": "http://eucaly-tw5.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/eucaly/quickjump",
+        "cpl.author": "EucalyJ",
+        "cpl.description": "QuickJump - Quick jump to tiddlers in story list",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://eucaly-tw5.tiddlyspot.com/",
+        "title": "Plugin_202203243047791"
+    }
+]

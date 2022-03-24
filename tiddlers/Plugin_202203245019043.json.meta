@@ -1,0 +1,12 @@
+cpl.author: Jeffrey Wilkinson
+cpl.core-version: >=5.0.16
+cpl.dependents: 
+cpl.description: re-orderable list on a tag
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/buggyj/TW5-taglist
+cpl.title: $:/plugins/bj/taglist
+cpl.uri: http://tiddlyclip.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203245019043
+type: application/json

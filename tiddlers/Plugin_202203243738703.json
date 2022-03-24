@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\n* see trigger-test-edition\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ftrigger.json",
+        "cpl.title": "$:/plugins/wikilabs/trigger",
+        "cpl.author": "pmario",
+        "cpl.name": "Trigger",
+        "cpl.description": "Activate actions, whenever the widget is shown",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202203243738703"
+    }
+]

@@ -1,0 +1,12 @@
+cpl.author: Joerg Plewe
+cpl.core-version: >=5.0.8
+cpl.dependents: 
+cpl.description: use cloud9 editor ace
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/yourgithub/pluginname
+cpl.title: $:/plugins/innoq/ace
+cpl.uri: http://innoq.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203243646081
+type: application/json

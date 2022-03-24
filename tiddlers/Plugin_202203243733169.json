@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! Deprecated\n\nA similar function is part of the TW core since V5.2.0 See: https://tiddlywiki.com/#HTML%20in%20WikiText : Pragma Comments\n\n! Pragma Comment\n\nThe following lines will not create a parse-tree element and it will not interrupt the \"pragma parser\". So comments can be placed outside of macro definitions, which is much faster during macro execution.\n\n```\n\\\\ comment comes here till the end of the line\n\\\\ comments like this are fast since they are ignored and the result is cached!\n\n\\define test()\n\\\\ This comment is as slow as the next line\n<!-- HTML comment -->\n\\end\n\n\\\\ The whole definition is deactivated. .... Works well for a few lines of code!\n\\\\define test()\n\\\\end\n\n\\\\ if you have big junks of code, it's easier to rename the macro eg: testXXXX() as shown below!\n\\define testXXXX()\nx\nx\nx\n\\end\n```\n\n\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpragma-comment.json",
+        "cpl.title": "$:/plugins/wikilabs/pragma-comment",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Pragma Comment",
+        "cpl.description": "Add possibility to add 'pragma comments'",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203243733169"
+    }
+]

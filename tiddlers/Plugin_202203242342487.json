@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "The [leaflet plugin](#$:/plugins/sycom/leaflet) is a work in progress integration of the [leaflet][leaflet] library in TiddlyWiki in order to display geographical purpose tiddlers.\n\nHave a look at [demo page on the web][plugindemo] or at integrated documentation which describes usage and examples.\n\nKeep in mind that the plugin might be buggy or imperfect. Please [report any comment or issue][issues] on main repo.\n\n## Sources / licenses\n* [leaflet][leaflet] library (_1.3.1_) - License 2-clause BSD\n    * leaflet-[markerCluster][markercluster] extension - Licence MIT\n* [leaflet plugin][source] is released under similar [BSD 3-Clause license][license] as TiddlyWiki.\n!! Side projects\n\n[plugindemo]: https://sycom.gitlab.io/TiddlyWiki-Plugins/#Michel%20Strogoff%20from%20the%20sky\n[source]: https://framagit.org/sycom/TiddlyWiki-Plugins/plugins/sycom/leaflet\n[issues]: https://framagit.org/sycom/TiddlyWiki-Plugins/issues\n[leaflet]: http://leafletjs.com/\n[markercluster]: https://github.com/Leaflet/Leaflet.markercluster\n[license]: https://framagit.org/sycom/TiddlyWiki-Plugins/LICENSE.md\n",
+        "cpl.uri": "http://sycom.gitlab.io/TiddlyWiki-Plugins/index.html",
+        "cpl.title": "$:/plugins/sycom/leaflet",
+        "cpl.author": "Sylvain Comte",
+        "cpl.description": "Leaflet maps",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://framagit.org/sycom/TiddlyWiki-Plugins",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202203242342487"
+    }
+]

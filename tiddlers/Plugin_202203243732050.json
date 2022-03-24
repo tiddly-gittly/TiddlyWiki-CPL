@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! Overview\n\nThis plugin saves all $:/state/ tiddlers and creates a simple UI, to remove them manually.\n\n! Important\n\nThis plugin in meant to be used for single-file wikis. It does ''not'' work in a \"multi user\" environment, since it will overwrite other users states if they are synchronized. \n\nThis plugin changes the following core tiddlers:\n\n* $:/config/SyncFilter\n* $:/config/SaverFilter\n\n! Simple UI\n\n[[$:/plugins/wikilabs/ui/persistent-states]]\n\n{{$:/plugins/wikilabs/ui/persistent-states}}\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpersistent-states.json",
+        "cpl.title": "$:/plugins/wikilabs/persistent-states",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Persistent States",
+        "cpl.description": "Makes all state tiddlers persistent",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.0",
+        "title": "Plugin_202203243732050"
+    }
+]

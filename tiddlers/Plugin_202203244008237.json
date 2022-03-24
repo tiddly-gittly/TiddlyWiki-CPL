@@ -1,0 +1,17 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A theme that emphasizes Titles.\n\n<<<\n''Note:''\n\n* My former Bluish theme contained font families and all colors  (it was made a long time ago, before the palette was introduced).\n* The former Bluish theme has been divided now in the 'Emphasized' theme and the 'Bluish' palette (separate available).\n<<<",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/themes/tg/emphasized",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Emphasized theme",
+        "cpl.description": "Emphasized theme",
+        "cpl.plugin-type": "theme",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.dependents": "$:/themes/tiddlywiki/vanilla",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244008237"
+    }
+]

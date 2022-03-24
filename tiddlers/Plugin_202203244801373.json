@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! About\n\nThis ''~TwTube'' plugin provides a video player using the new `<$videojs>` widget. The video player uses the free and open source HTML5 [[Video.js|https://videojs.com/]] video player.\n\n! Installation\n\nSimply drag [[this TwTube plugin|$:/plugins/TheDiveO/TwTube]] into your own [[TiddlyWiki 5|https://tiddlywiki.com/]] wikis, save, reload, and start enjoying the `<$videojs>` widget.\n\n! Quickstart\n\nA video player widget is created using `<$videojs>`. You then specify the audio-video media to play inside the widget using ordinary HTML5 `source` elements. Such as:\n\n```\n<$videojs controls=\"controls\" fluid=\"fluid\">\n  <source src=\"test.mp4\" type=\"video/mp4\">\n</$videojs>\n```\n\nFor more details, please refer to our comprehensive [[usage guide|$:/plugins/TheDiveO/TwTube/usage]].\n\n! Skins\n\nSimply install one or several of the ~TwTube Video.js Skin plugins to be able to switch media player skins. You can then select one of these skins, or the default skin, in the control panel: <$button>\n<$action-setfield $tiddler=\"$:/state/tab-1749438307\" text=\"$:/plugins/TheDiveO/TwTube/ui/ControlPanel/VideojsSkins\"/>\n<$action-navigate $to=\"$:/ControlPanel\"/>\nOpen Control Panel \"Media Player Skin\" tab\n</$button>\n\n! Player Plugins\n\nYou can also install Video.js extension plugins. The ~TwTube plugin already includes a persistent volume plugin that stores the player volume level and muting state in the browser storage.",
+        "cpl.uri": "https://thediveo.github.io/TwTube/output/twtube.tid",
+        "cpl.title": "$:/plugins/TheDiveO/TwTube",
+        "cpl.author": "TheDiveO",
+        "cpl.description": "Video.js: Your own Tube in a TiddlyWiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://thediveo.github.io/TwTube",
+        "title": "Plugin_202203244801373"
+    }
+]

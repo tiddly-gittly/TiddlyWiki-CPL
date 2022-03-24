@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "''Important:'' This plugin takes precedence over the core webDav PUT saver!\n\nThis saver uses `last-modified` and `if-unmodified-since` HTTP header attributes, to detect file inconsistencies,\nwhich allows the server to activate server-side file compression. \n\nThe core PUT saver uses etags, which don't work, if server-side file compression is active.\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fwebdav-lm.json",
+        "cpl.title": "$:/plugins/wikilabs/webdav-lm",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "WegDav lm",
+        "cpl.description": "WebDav PUT saver - takes precedence",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202203243740650"
+    }
+]

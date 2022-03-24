@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "The plugin version mirrors the markdown-it library version!\n\nThis is a WikiLabs plugin for parsing Markdown text, based on the [[markdown-it|https://markdown-it.github.io/]] project.\n\nIt is completely self-contained, and doesn't need an Internet connection in order to work. It works both in the browser and under Node.js.\n\n[[Source code can be found here!|https://github.com/wikilabs/plugins/tree/master/wikilabs]]\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fmarkdown-it.json",
+        "cpl.title": "$:/plugins/wikilabs/markdown-it",
+        "cpl.author": "pmario",
+        "cpl.name": "Markdown It",
+        "cpl.description": "Markdown parser (Commonmark compatible)",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202203243728585"
+    }
+]

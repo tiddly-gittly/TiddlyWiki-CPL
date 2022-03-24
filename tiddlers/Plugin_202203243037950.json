@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!![[MatchFilter|$:/plugins/eucaly/matchfilter/readme]]\n\nThe MatchFilter returns ''matching text'' by regular expression (instead of //__a list of the tiddlers__ from [[FieldFilter|http://tiddlywiki.com/#FilterOperator%3A%20field]]// or ''regexp filter'')\n\n!!!Features\n# Transclude tiddler sections (picking parts out of fields) by regular expressions\n\n!!!Usage\n# Follow the ''regexp filter'' (new in 5.0.17-beta), the MatchFilter comes with the syntax `match:fieldName[regexp(?modifier)]`. Because the support for regular expression filter operands `/regexp/(modifier)` might be removed after a while.\n# Note that the filter syntax doesn't allow you to directly enter regular expressions that include square brackets `[` `]` . Instead, you would have to use an indirect field from a variable. Please see the example.\n\n!!!Install\n* Drag&Drop (essestial module only) -- [[$:/core/modules/filters/match.js]], or\n* Drag&Drop (with documentation) -- [[$:/plugins/eucaly/matchfilter]]\n\n!!!Resources\n* Test by ''Filter tab'' of [[AdvancedSearch|$:/AdvancedSearch]] within ~TiddlyWiki\n* Experiment and learning at [[regexr.com|http://www.regexr.com/]]\n\n!!!Examples\n<<tabs \"[all[shadows+tiddlers]tag[$:/_readme]tag[$:/_matchfilter]!tag[$:/_toc_exclude]!regexp:title[readme(?i)]!has[draft.of]sort[]]\" \"\" \"\" \"tc-vertical\">>",
+        "cpl.uri": "http://eucaly-tw5.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/eucaly/matchfilter",
+        "cpl.author": "EucalyJ",
+        "cpl.description": "MatchFilter - returns \"matching text\" by regular expression",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://eucaly-tw5.tiddlyspot.com/",
+        "title": "Plugin_202203243037950"
+    }
+]

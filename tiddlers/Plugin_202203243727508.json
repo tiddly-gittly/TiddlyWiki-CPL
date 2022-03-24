@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin adds a little link icon to every tab.\n\n''Important:'' This plugin changes the core tabs macro.\n\n! Link-to-Tabs Settings\n\n{{$:/core/ui/ControlPanel/Settings/link-to-tabs}}",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Flink-to-tabs.json",
+        "cpl.title": "$:/plugins/wikilabs/link-to-tabs",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Link to Tabs",
+        "cpl.description": "Internal links are added to tabs if selected",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203243727508"
+    }
+]

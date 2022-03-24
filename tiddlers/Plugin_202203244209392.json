@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin is meant for widescreen monitors.<br>It changes the standard 'twostate' (<<icn $:/core/images/chevron-right>> / <<icn $:/core/images/chevron-left>>) functionality of the Sidebar to a 'tristate' (<<icn $:/core/images/right-arrow>> / <<icn $:/core/images/chevron-right>> / <<icn $:/core/images/chevron-left>>) functionality:\n\n# normal tiddler width (default 686px) with a broad Sidebar (showing <<icn $:/core/images/right-arrow>>).\n# small Sidebar (with programmable width; default 30em) and fluid tiddler width (showing <<icn $:/core/images/chevron-right>>).\n# fluid tiddler width without Sidebar (showing <<icn $:/core/images/chevron-left>>).\n\n<<<\n''Note:''\n\n* ''This plugin needs my $:/plugins/tg/layout plugin for general layout settings (available at http://tongerner.tiddlyspot.com/).''\n* Sidebar layout (''~ControlPanel > Appearance > Theme Tweaks: Options'') @@color:red;must@@ be set at 'Fixed story, fluid sidebar'<br>('Fluid story, fixed sidebar' interferes with the Tristate plugin!)\n* The Sidebar width (default 30em) can be configured in [[Tristate width|$:/plugins/tg/tristate/settings]] (can also be found in ''~ControlPanel > Appearance > [[Plugin tweaks|$:/plugins/tg/layout/tweaks]], tab 'Tristate''').\n<<<\n",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/tristate",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Tristate sidebar",
+        "cpl.description": "Tristate sidebar",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244209392"
+    }
+]

@@ -1,0 +1,10 @@
+cpl.author: TheDiveO
+cpl.description: Keyboard hotkeys for the Video.js video player
+cpl.plugin-type: plugin
+cpl.readme: Provides the [[Video.js Hotkeys Plugin|https://github.com/ctd1500/videojs-hotkeys]] (~GitHub) by [[ctd1500|https://github.com/ctd1500]] (~GitHub) for use with the [[TwTube plugin|https://github.com/TheDiveO/TwTube]] (//you guessed right// ... ~GitHub). Simply install this plugin into your ~TiddlyWiki alongside the ~TwTube plugin and you're done.
+cpl.source: http://thediveo.github.io/TwTube
+cpl.title: $:/plugins/TheDiveO/VideojsHotkeys
+cpl.uri: https://thediveo.github.io/TwTube/output/videojshotkeys.tid
+tags: $:/tags/PluginWiki
+title: Plugin_202203244857492
+type: application/json

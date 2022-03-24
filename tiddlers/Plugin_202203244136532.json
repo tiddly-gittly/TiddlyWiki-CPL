@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin - based on Buggy j's [[StoryTopTabs plugin|http://bjtools.tiddlyspot.com/#StoryTopTabs]] - creates a 'Tiddlersbar' of open tiddlers (as tabs) on top of the screen. It works best in Zoomin view.<br>\nThe Tiddlersbar can be toggled on/off (<<icn $:/plugins/tg/tiddlersbar/image-tiddlersbar-on>>/<<icn $:/plugins/tg/tiddlersbar/image-tiddlersbar-off>>) with a button in the Page toolbar and/or the View toolbar.\n\n<<<\n''Note:''<br>''This plugin needs my $:/plugins/tg/layout plugin for general layout settings (available at http://tongerner.tiddlyspot.com/).''\n<<<\n\nSettings for the layout can be found in ''~ControlPanel > Appearance > [[Plugin tweaks|$:/plugins/tg/layout/tweaks]]''.\n",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/tiddlersbar",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Tiddlersbar",
+        "cpl.description": "Tiddlersbar",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tw5custom.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244136532"
+    }
+]

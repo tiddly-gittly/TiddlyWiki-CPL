@@ -1,0 +1,12 @@
+cpl.author: Jeffrey Wilkinson (BJ)
+cpl.core-version: >=5.0.13
+cpl.dependents: 
+cpl.description: editor of json!
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/buggyj/TW5-jsoneditor
+cpl.title: $:/plugins/bj/jsoneditor
+cpl.uri: http://tiddlyclip.tiddlyspot.com/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202203235430587
+type: application/json

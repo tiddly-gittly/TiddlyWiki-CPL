@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<<i18n readme $:/plugins/sycom/atom-feed>>\n",
+        "cpl.uri": "http://sycom.gitlab.io/TiddlyWiki-Plugins/index.html",
+        "cpl.title": "$:/plugins/sycom/atom-feed",
+        "cpl.author": "Sylvain Comte",
+        "cpl.description": "Atom feed",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://framagit.org/sycom/TiddlyWiki-Plugins",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202203242430779"
+    }
+]

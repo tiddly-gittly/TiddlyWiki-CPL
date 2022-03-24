@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin provides a simple progress bar widget.\n\n! Parameters\n\n* `current` - the current progress of the progressbar.\n* `total` - the total value that represents completion for this progressbar.\n\n! Example\n\n```\n<$hoelzro-progressbar current={{!!current}} total={{!!total}} />\n```\n\n! Potential Future Enhancements\n\nThe coloration and size are currently hardcoded, and the progressbar\ndoesn't support animation.  Contributions adding these are most welcome!\n",
+        "cpl.uri": "https://hoelz.ro/files/fts.html",
+        "cpl.title": "$:/plugins/hoelzro/progress-bar",
+        "cpl.author": "RobHoelz",
+        "cpl.description": "Progress Bar Widget",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/hoelzro/tw-progress-bar",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.13",
+        "title": "Plugin_202203242820965"
+    }
+]

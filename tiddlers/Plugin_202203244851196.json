@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Provides an YouTube-inspired Video.js skin for use with the [[TwTube plugin|https://github.com/TheDiveO/TwTube]] created using the [[Videojs Skin Generator|http://www.scriptsmashup.com/Video_Skin_Generator/Videojs/videojs-skin-generator.html]]. Simply install this plugin into your ~TiddlyWiki alongside the ~TwTube plugin and you're done.\n",
+        "cpl.uri": "https://thediveo.github.io/TwTube/output/ytskin.tid",
+        "cpl.title": "$:/plugins/TheDiveO/YouTubeInspiredVideojsSkin",
+        "cpl.author": "TheDiveO + Vijay Dubb",
+        "cpl.description": "YouTube-inspired skin for Videojs",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://thediveo.github.io/TwTube",
+        "title": "Plugin_202203244851196"
+    }
+]

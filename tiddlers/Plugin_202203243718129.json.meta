@@ -1,0 +1,12 @@
+cpl.author: Mario Pietsch
+cpl.core-version: >=5.2.0
+cpl.dependents: 
+cpl.description: A plugin to test subtypes
+cpl.name: Presentation Test
+cpl.plugin-type: content
+cpl.readme: 
+cpl.title: $:/plugins/wikilabs/presentation-test
+cpl.uri: https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpresentation-test.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203243718129
+type: application/json

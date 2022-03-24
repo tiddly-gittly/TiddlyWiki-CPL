@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "* Adds the \"Advanced Search\" tab also to the right sidebar\n* Replaces the default search option with an icon\n* Adds a \"+\" button to the advanced search function\n** Allows to pin existing search settings to a new tab\n\n----\n\n''Important'': This plugin modifies several core templates\n\n<$list filter=\"[[$:/plugins/wikilabs/advanced-search-plus]plugintiddlers[]prefix[$:/core/]] $:/AdvancedSearch $:/tags/AdvancedSearch\"><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></$list>",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fadvanced-search-plus.json",
+        "cpl.title": "$:/plugins/wikilabs/advanced-search-plus",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Advance Search Plus",
+        "cpl.description": "Adds some powerfull search tools",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203243715284"
+    }
+]

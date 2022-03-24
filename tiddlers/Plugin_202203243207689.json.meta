@@ -1,0 +1,12 @@
+cpl.author: bimlas
+cpl.core-version: >=5.1.18
+cpl.dependents: 
+cpl.description: Disqus comments
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://gitlab.com/bimlas/tw5-disqus
+cpl.title: $:/plugins/bimlas/disqus
+cpl.uri: https://bimlas.gitlab.io/tw5-disqus/tw5-disqus.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203243207689
+type: application/json

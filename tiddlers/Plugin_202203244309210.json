@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! loadnew\nA command to load new or modified tiddlers from a file.\n\nIt is based on the built-in \"load\" command except that it only loads new tiddlers or tiddlers with a later modification date than an existing tiddler with the same title.\n\n",
+        "cpl.uri": "http://malsandbox.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/malgam/loadnew",
+        "cpl.author": "Mal Gamble",
+        "cpl.description": "loadnew - an incremental load command",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/malgam/tw5-loadnew",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202203244309210"
+    }
+]

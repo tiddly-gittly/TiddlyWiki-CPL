@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A plugin to make ~TiddlyWiki read-only.\n\nYou can hide:\n\n* ''All'' toolbar buttons\n* 'Sidebar' button (to switch Sidebar) and 'Advanced search' button (next to Search)\n* All Sidebar tabs tagged with $:/tags/SideBar.\n\nClick the Publish button <<icn $:/plugins/tg/ro/images/publish>> next to the sidebar button <<icn $:/core/images/chevron-left>>/<<icn $:/core/images/chevron-right>> to start making your TW 'publish-ready'.  A new window with six tabs opens. Read the Help tab and follow the 5 steps.\n\n<<<\n''Note:''<br>@@.RED Although you can hide the 'Sidebar' button and 'Advanced Search' button, they remain 'active'!@@\n<<<\n\nThere are a few ways to return from readonly to edit mode, see [[Help|$:/plugins/tg/ro/help]].\n",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/ro",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Makes TW readonly",
+        "cpl.description": "Makes TW readonly",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202203244107387"
+    }
+]

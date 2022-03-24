@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!![[FlexWidth Plugin|$:/plugins/eucaly/flexwidth/readme]]\n<hr>\n\nThis ''FlexWidth'' plugin provides a handy machenism to ''flexibly tweak sidebar width'' for [[TiddlyWiki 5|http://tiddlywiki.com/]]. \n\n!!!Features\n\n# Add extra buttons next to system ~TopRightBar Icon, such as - `▼` `◀` {{$:/core/ui/TopBar/menu}}\n# `◀` / `▶` to toggle between default and custom sidebar width.\n# `▼` to select different sidebar width.\n<p>** Inspired by [[TW5 tristate Sidebar|http://tw5tristate.tiddlyspot.com/]] </p>\n\n!!!Install\n* Drag&Drop package -- [[$:/plugins/eucaly/flexwidth]] (with documentation)",
+        "cpl.uri": "http://eucaly-tw5.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/eucaly/flexwidth",
+        "cpl.author": "EucalyJ",
+        "cpl.description": "FlexWidth - Flexibly tweak sidebar width for TiddlyWiki 5",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://eucaly-tw5.tiddlyspot.com/",
+        "title": "Plugin_202203243013878"
+    }
+]

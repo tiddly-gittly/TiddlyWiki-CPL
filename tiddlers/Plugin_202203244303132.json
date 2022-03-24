@@ -1,0 +1,14 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Simple Tiddler Version Control\n\nThis plugin provides a simple tiddler versioning system.  Refer to the [[usage tiddler|$:/plugins/malgam/version-control/usage]] for guidance.\n\nIt was created to meet the following basic requirements:\n\n* The code for the plugin resides in a single wikitext tiddler.\n* The version control functionality does not interfere with the normal operation of a tiddlywiki and is contained in the \"Versions\" tab in the tiddler Info panel.\n* Committed versions of any tiddler can be saved at any time along with a simple commit message.\n* There is no automatic saving of versions during the edit process.\n* Committed versions can be restored to replace the current version of the subject tiddler.\n* Committed versions can be deleted.\n* Committed versions are saved as system tiddlers so that they do not show up in normal searches.\n* Incremental differences between each version and the next previous version can be displayed.\n\nThe plugin code is contained in the single tiddler [[$:/plugins/malgam/version-control/versionTab]] and consists of just wikitext, widgets and macros.\n\nAcknowledgements:\n\n* This plugin was inspired by and uses some code from JD's [[Plain Revisions Plugin|http://j.d.revisions.tiddlyspot.com/]]\n",
+        "cpl.uri": "http://malsandbox.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/malgam/version-control",
+        "cpl.author": "malgam",
+        "cpl.description": "Simple Tiddler Version Control",
+        "cpl.plugin-type": "plugin",
+        "cpl.core-version": "5.1.19",
+        "title": "Plugin_202203244303132"
+    }
+]

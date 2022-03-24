@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! ~ReadMe\n\n* Documentation and more can be found at: https://wikilabs.github.io/editions/bundler\n* The position of the \"Bundles\" tab can be selected in the $:/ControlPanel : Bundles tab\n* There are 2 version of bundles\n** Bundle lists\n** Filtered Bundles ... which have to be activated by the user\n* The filter examples can be live tested, clicking on the number besides the \"export button\"\n* The Bundler can bundle itself and other plugins into a bundle :-).\n* You can create several \"selections\". Those combinations are persistently stored for reuse. \n* Bundle lists can be built up, over time. Just as the TW evolves. \n* The \"Enable Import Bundle\" option lets you collect / log imported tiddlers and create a new bundle, for future use.\n* This plugin only works with TW >= 5.1.18 since we use the \"subfilter\" operator which has been added in 5.1.18\n* It's easy to add the bundle configuration to the bundle itself eg: \n** If the bundle is named: `tagged-test.bundle`, the filter can look like this: `[tag[test]] tagged-test.bundle`\n* Have a closer look at the ~$:/ControlPanel: Bundles tab for more [[settings|$:/plugins/wikilabs/bundler/ui/ControlPanel/bundler-config]]. \n\n---\n\n''Important:'' This plugin modifies a core module and templates\n\n<$list filter=\"[[$:/plugins/wikilabs/bundler]plugintiddlers[]prefix[$:/core/]] \"><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></$list>",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fbundler.json",
+        "cpl.title": "$:/plugins/wikilabs/bundler",
+        "cpl.author": "pmario",
+        "cpl.name": "Bundler",
+        "cpl.description": "Simple UI to create tiddler bundles",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.0",
+        "title": "Plugin_202203243716325"
+    }
+]

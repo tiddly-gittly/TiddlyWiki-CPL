@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin creates a fixed left menu with a shifted story-river (which assumes a widescreen monitor - otherwise is is not possible to display the left menu, the story river, and the sidebar together).<br>\nThe tiddler $:/plugins/tg/leftmenu/leftmenu-entries contains the left menu entries (transcluded in $:/plugins/tg/leftmenu/leftmenu).<br>\nFor an alternative left menu (no widescreen needed) see http://tw5topleft.tiddlyspot.com/\n\n<<<\n''Note:''\n\n* This plugin needs my $:/plugins/tg/layout plugin for general layout settings (available at http://tongerner.tiddlyspot.com/)\n* For more information about possible left menu entries see http://tw5topleft.tiddlyspot.com/\n* To create more 'room' you can consider the 'Tight' theme\n<<<\n\nSettings for the layout can be found in ''~ControlPanel > Appearance > [[Plugin tweaks|$:/plugins/tg/layout/tweaks]]''.",
+        "cpl.uri": "http://tongerner.tiddlyspot.com/index.html",
+        "cpl.title": "$:/plugins/tg/leftmenu",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Left menu",
+        "cpl.description": "Left menu",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://tongerner.tiddlyspot.com/",
+        "cpl.core-version": ">=5.1.17",
+        "title": "Plugin_202203244052315"
+    }
+]

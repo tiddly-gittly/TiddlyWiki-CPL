@@ -1,0 +1,10 @@
+cpl.author: TheDiveO + zanechua
+cpl.description: Sublime-inspired skin for Videojs
+cpl.plugin-type: plugin
+cpl.readme: Provides the [[Sublime-inspired Video.js skin|https://github.com/zanechua/videojs-sublime-inspired-skin]] (~GitHub) by [[zanechua|https://github.com/zanechua]] (~GitHub) for use with the [[TwTube plugin|https://github.com/TheDiveO/TwTube]] (//you guessed right// ... ~GitHub). Simply install this plugin into your ~TiddlyWiki alongside the ~TwTube plugin and you're done.
+cpl.source: http://thediveo.github.io/TwTube
+cpl.title: $:/plugins/TheDiveO/SublimeInspiredVideojsSkin
+cpl.uri: https://thediveo.github.io/TwTube/output/sublimeskin.tid
+tags: $:/tags/PluginWiki
+title: Plugin_202203244834946
+type: application/json
