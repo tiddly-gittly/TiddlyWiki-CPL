@@ -362,9 +362,17 @@ function _importPlugin(uri, title) {
     tmp.length > 0
       ? tmp[0]
       : "Plugin_" + $tw.wiki.filterTiddlers("[<now YYYY0MM0DD0mm0ss0XXX>]")[0];
+  if (tmp.length > 0) {
+    pluginInfo = {
+      ...JSON.parse($tw.wiki.getTiddlerAsJson(tmp[0])),
+      ...pluginInfo,
+    };
+  }
   $tw.wiki.addTiddler(pluginInfo);
   console.log(
-    `Successfully add ${pluginInfo.title}(${pluginInfo["cpl.title"]}) to cpl.`
+    `Successfully ${tmp.length > 0 ? "update" : "add"} ${pluginInfo.title}(${
+      pluginInfo["cpl.title"]
+    }) to cpl.`
   );
   return true;
 }

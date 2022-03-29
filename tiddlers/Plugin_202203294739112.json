@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[lodash.js|https://lodash.com/]] is modern JavaScript utility library delivering modularity, performance & extras.\n",
+        "cpl.uri": "https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Flodash.json",
+        "cpl.title": "$:/plugins/Gk0Wk/lodash",
+        "cpl.author": "Gk0Wk",
+        "cpl.name": "lodash.js",
+        "cpl.description": "lodash.js for TiddlyWiki5",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/lodash",
+        "cpl.dependents": "",
+        "title": "Plugin_202203294739112"
+    }
+]
