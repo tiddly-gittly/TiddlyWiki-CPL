@@ -2,7 +2,9 @@
 const path = require("path");
 const fs = require("fs");
 const readline = require("readline");
+const readlineSync = require("readline-sync");
 const { execSync } = require("child_process");
+const chalk = require("chalk");
 let $tw;
 
 /** 项目路径 */
@@ -16,11 +18,11 @@ const repoFolder = path.join(path.dirname(__filename), "..");
  */
 function shell(command, options, output) {
   if (options !== undefined) options = {};
-  let outputString = execSync(command, {
+  execSync(command, {
     cwd: repoFolder,
+    stdio: output ? "inherit" : [("inherit", "ignore", "ignore")],
     ...options,
   });
-  if (output) console.log(String(outputString));
 }
 
 /**
@@ -33,7 +35,7 @@ function shellI(command, options, output) {
   try {
     shell(command, options, output);
   } catch (error) {
-    console.error(`[Shell Command Error] ${error}`);
+    console.error(chalk.red.bold(`[Shell Command Error] ${error}`));
   }
 }
 
@@ -68,7 +70,7 @@ function getTiddlerFromFile(wikiFile, tiddlerTitle) {
       (tiddler_) => tiddler_.title === tiddlerTitle
     );
   } catch (e) {
-    console.error(e);
+    console.error(chalk.red.bold(e));
     return undefined;
   }
 }
@@ -82,7 +84,7 @@ function getTiddlersFromFile(wikiFile) {
     const fileText = fs.readFileSync(wikiFile).toString("utf8");
     return $tw.wiki.deserializeTiddlers(fileMIME, fileText, {});
   } catch (e) {
-    console.error(e);
+    console.error(chalk.red.bold(e));
     return undefined;
   }
 }
@@ -253,7 +255,7 @@ function _importLibrary(uri) {
       }
     });
   } catch (e) {
-    console.error(e);
+    console.error(chalk.red.bold(e));
     return;
   }
 }
@@ -265,7 +267,11 @@ function importLibrary() {
   });
   function questionLoop() {
     rl.question(
-      "Library HTML file uri(must be xxx/index.html, can find in url field of the plugin library tiddler)(ctrl-D to terminate):\n",
+      chalk.grey(
+        `(must be xxx/index.html, can find in url field of the plugin library tiddler)(${chalk.red(
+          "ctrl-D"
+        )} to terminate)\n`
+      ) + chalk.bold("Library HTML file uri: "),
       (uri) => {
         _importLibrary(uri);
         questionLoop();
@@ -332,7 +338,9 @@ function _importPlugin(uri, title) {
       return extname in $tw.config.fileExtensionInfo;
     });
     if (!pluginFile) {
-      console.warn(`[Warning] Cannot find file ${formatedTitle}.*`);
+      console.warn(
+        chalk.yellow(`[Warning] Cannot find file ${formatedTitle}.*`)
+      );
       return;
     }
     importCache[uri] = fileName;
@@ -342,12 +350,13 @@ function _importPlugin(uri, title) {
   const plugin = getTiddlerFromFile(`${distDir}/tmp/${pluginFile}`, title);
   if (!plugin) {
     console.warn(
-      `[Warning] Cannot find tiddler ${title} in file ${pluginFile}.`
+      chalk.yellow(
+        `[Warning] Cannot find tiddler ${title} in file ${pluginFile}.`
+      )
     );
     return;
   }
   let pluginInfo = {
-    type: "application/json",
     tags: "$:/tags/PluginWiki",
     "cpl.readme": getReadmeFromPlugin(plugin),
     "cpl.uri": uri,
@@ -358,6 +367,23 @@ function _importPlugin(uri, title) {
   const tmp = $tw.wiki.filterTiddlers(
     `[tag[$:/tags/PluginWiki]cpl.title[${pluginInfo["cpl.title"]}]]`
   );
+  if (tmp.length > 0) {
+    let answer = readlineSync.question(
+      chalk.blue(
+        `Plugin ${chalk.bold(
+          pluginInfo["cpl.title"]
+        )} already exists ${chalk.grey(
+          "(as " + tmp[0] + ")"
+        )}, should I overwrite it with a new message? [Y/N]\n`
+      )
+    );
+    answer =
+      answer.trim() === "" ||
+      answer.indexOf("y") !== -1 ||
+      answer.indexOf("Y") !== -1;
+    if (!answer) return false;
+  }
+
   pluginInfo.title =
     tmp.length > 0
       ? tmp[0]
@@ -370,9 +396,13 @@ function _importPlugin(uri, title) {
   }
   $tw.wiki.addTiddler(pluginInfo);
   console.log(
-    `Successfully ${tmp.length > 0 ? "update" : "add"} ${pluginInfo.title}(${
-      pluginInfo["cpl.title"]
-    }) to cpl.`
+    chalk.green(
+      `Successfully ${
+        tmp.length > 0
+          ? chalk.yellow.bold.underline("update")
+          : chalk.green.bold.underline("add")
+      } ${pluginInfo.title}(${chalk.grey(pluginInfo["cpl.title"])}) to cpl.`
+    )
   );
   return true;
 }
@@ -384,10 +414,20 @@ function importPlugin() {
   });
   function questionLoop() {
     rl.question(
-      "Downloadable URI of plugin(.html/.json/.tid etc.)(ctrl-D to terminate):\n",
+      chalk.bold("Downloadable URI of plugin") +
+        chalk.grey(
+          `(.html/.json/.tid etc.)(${chalk.red("ctrl-D")} to terminate)`
+        ) +
+        chalk.bold(":\n"),
       (uri) => {
         rl.question(
-          "Title of the plugin(e.g. $:/plugins/tiddlywiki/codemirror)(ctrl-D to terminate):\n",
+          chalk.bold("Title of the plugin") +
+            chalk.grey(
+              `(e.g. $:/plugins/tiddlywiki/codemirror)(${chalk.red(
+                "ctrl-D"
+              )} to terminate)`
+            ) +
+            chalk.bold(":\n"),
           (title) => {
             _importPlugin(uri.trim(), title.trim());
             questionLoop();
@@ -413,7 +453,7 @@ function buildLibrary(distDir, minify) {
   if (typeof minify !== "boolean") minify = true;
 
   // 启动TW
-  console.log("Loading plugin informations");
+  console.log(chalk.grey.bold("Loading plugin informations"));
   if (!$tw) {
     $tw = require("tiddlywiki/boot/boot").TiddlyWiki();
     $tw.boot.argv = ["."];
@@ -445,7 +485,9 @@ function buildLibrary(distDir, minify) {
         tiddler["cpl.title"] &&
         tiddler["cpl.title"] !== ""
       ) {
-        console.log(`- Downloading plugin file ${tiddler["cpl.title"]}`);
+        console.log(
+          `- Downloading plugin file ${chalk.bold(tiddler["cpl.title"])}`
+        );
         const distPluginName =
           formatTitle(tiddler["cpl.title"]) + path.extname(tiddler["cpl.uri"]);
         if (downloadFileMap[tiddler["cpl.uri"]]) {
@@ -464,17 +506,21 @@ function buildLibrary(distDir, minify) {
         }
       }
     } catch (e) {
-      console.error(e);
+      console.error(chalk.red.bold(e));
     }
   });
 
   // 接下来从tmp/下获取所有的插件
-  console.log("Exporting plugins");
+  console.log(chalk.gray.bold("Exporting plugins"));
   const files = fs.readdirSync(`${distDir}/tmp`);
   pluginInfoTiddlerTitles.forEach((title) => {
     const tiddler = JSON.parse($tw.wiki.getTiddlerAsJson(title));
     if (!tiddler["cpl.title"] || tiddler["cpl.title"] === "") {
-      console.warn(`[Warning] ${title} missed plugin title, skip this plugin.`);
+      console.warn(
+        chalk.yellow(
+          `[Warning] ${title} missed plugin title, skip this plugin.`
+        )
+      );
       return;
     }
     try {
@@ -489,7 +535,9 @@ function buildLibrary(distDir, minify) {
       });
       if (!pluginFile) {
         console.warn(
-          `[Warning] Cannot find file ${pluginName}.*, skip this plugin.`
+          chalk.yellow(
+            `[Warning] Cannot find file ${pluginName}.*, skip this plugin.`
+          )
         );
         return;
       }
@@ -501,7 +549,9 @@ function buildLibrary(distDir, minify) {
       );
       if (!plugin) {
         console.warn(
-          `[Warning] Cannot find tiddler ${tiddler["cpl.title"]} in file ${pluginFile}, skip this plugin.`
+          chalk.yellow(
+            `[Warning] Cannot find tiddler ${tiddler["cpl.title"]} in file ${pluginFile}, skip this plugin.`
+          )
         );
         return;
       }
@@ -523,13 +573,13 @@ function buildLibrary(distDir, minify) {
         infoTiddler["requires-reload"] === true ? "true" : "false"
       }|${infoTiddler.version}`;
     } catch (e) {
-      console.error(e);
+      console.error(chalk.red.bold(e));
     }
   });
   shellI(`rm -rf ${distDir}/tmp`);
 
   // 生成插件源HTML文件
-  console.log(`Generating plugin library file`);
+  console.log(chalk.gray.bold("Generating plugin library file"));
   fs.writeFileSync(
     `${distDir}/index-raw.html`,
     fs
@@ -548,14 +598,14 @@ function buildLibrary(distDir, minify) {
 
   // 最小化：HTML
   if (minify) {
-    console.log(`Minifying plugin library file`);
+    console.log(chalk.gray.bold("Minifying plugin library file"));
     shellI(
       `npx html-minifier-terser -c scripts/html-minifier-terser.config.json -o ${distDir}/index.html ${distDir}/index-raw.html && rm ${distDir}/index-raw.html`
     );
   } else {
     shellI(`mv ${distDir}/index-raw.html ${distDir}/index.html`);
   }
-  console.log(`CPL generated`);
+  console.log(chalk.green.bold("CPL generated"));
 }
 
 module.exports = {

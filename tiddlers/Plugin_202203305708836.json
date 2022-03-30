@@ -1,0 +1,17 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "@@color:red;''Highly experimental - no support available. Use at your own risk.''@@ \n\n* PUT support for the files directory on node.js. Allows the PUT uploader to be used with ~TiddlyWiki on node.js\n** Enables PUT requests to save files to the `files` directory that is server by the TW node.js server\n* The directory for uploaded files must be set to `files` (the default).",
+        "cpl.uri": "https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fsq%252Fnode-files-PUT-support.json",
+        "cpl.title": "$:/plugins/sq/node-files-PUT-support",
+        "cpl.author": "Saq Imtiaz",
+        "cpl.name": "Node.js files PUT uploader support",
+        "cpl.description": "EXPERIMENTAL node.js support for PUT uploader",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/sq/file-uploads-PUT $:/plugins/commons/file-uploads",
+        "cpl.parent-plugin": "$:/plugins/commons/file-uploads",
+        "cpl.core-version": ">=5.1.23",
+        "title": "Plugin_202203305708836"
+    }
+]

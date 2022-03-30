@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "@@color:red;''Highly experimental - no support available. Use at your own risk.''@@\n\n* Adds an extensible and customisable context menu for links to tiddlers.\n* Display the browser default contextmenu by using the <kbd>Ctrl</kbd> key.\n* Add entries to the menu by adding tiddlers with the tag <<tag $:/tags/links-context-menu/menuitems>>\n** For an example see [[$:/plugins/sq/links-context-menu/menuitems/new-window]]\n\n//Screenshot://\n\n{{$:/plugins/sq/links-context-menu/screenshot.png}}",
+        "cpl.uri": "https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fsq%252Flinks-context-menu.json",
+        "cpl.title": "$:/plugins/sq/links-context-menu",
+        "cpl.author": "Saq Imtiaz",
+        "cpl.name": "Links Context Menu",
+        "cpl.description": "Context menu for tiddler links",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.0",
+        "title": "Plugin_202203305708097"
+    }
+]

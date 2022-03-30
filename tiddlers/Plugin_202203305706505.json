@@ -1,0 +1,17 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Fission uploader module for the File Uploads plugin. Saves uploads to Fission's Webnative file system which is based on IPFS.\n\nMeant for use on [[TiddlyWiki on Fission|https://tiddlywiki.fission.app/]]",
+        "cpl.uri": "https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fcommons%252Ffile-uploads-fission.json",
+        "cpl.title": "$:/plugins/commons/file-uploads-fission",
+        "cpl.author": "Saq Imtiaz",
+        "cpl.name": "File Uploads: Fission",
+        "cpl.description": "Fission uploader for uploading binary files to external storage",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "$:/plugins/commons/file-uploads",
+        "cpl.core-version": ">=5.1.23",
+        "title": "Plugin_202203305706505"
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Experimental plugin in active development for uploading binary tiddlers to different storage backends and creating canonical_uri tiddlers in their stead.\n\nIt is recommended to ''disable ~AutoSave when using this plugin'', to avoid saving imported binary tiddlers twice and using up twice the bandwidth.\n\nStorage backends are pluggable and can be added via uploader modules. This plugin includes a \"dummy\" uploader module that implements the minimal interface needed for an uploader module but does not actually upload anything and just logs to the developer console.\n\nAfter installing this plugin and at least one uploader sub-plugin, you must configure the uploader to use in the [[settings|$:/plugins/commons/file-uploads/settings]] of this plugin.\n\nThis plugin uses a [[filter|$:/config/fileUploadFilter]] to determine which tiddlers are uploaded. The default filter uploads all binary tiddlers over 100kb in size.\n\nAlternatively, you can disable the automatic file uploads and use the widget message `tm-upload-tiddlers` to manually upload specific tiddlers as files. The message accepts a `param` that is a filter which specifies the tiddlers to upload.\n\nExamples:\n\n* `<$action-sendmessage $message=\"tm-upload-tiddlers\" $param=\"MyTiddler\"/>`\n* `<$action-sendmessage $message=\"tm-upload-tiddlers\" $param=\"[type[image/png]]\"/>`",
+        "cpl.uri": "https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fcommons%252Ffile-uploads.json",
+        "cpl.title": "$:/plugins/commons/file-uploads",
+        "cpl.author": "Saq Imtiaz",
+        "cpl.name": "File Uploads",
+        "cpl.description": "Upload binary files to external storage",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.0",
+        "title": "Plugin_202203305705822"
+    }
+]

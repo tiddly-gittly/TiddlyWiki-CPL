@@ -1,0 +1,13 @@
+cpl.author: Saq Imtiaz
+cpl.core-version: >=5.1.23
+cpl.dependents: $:/plugins/flibbles/relink
+cpl.description: Rapid data entry with a keyboard driven workflow. Divide content into smaller tiddlers as you write.
+cpl.name: Streams
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://saqimtiaz.github.io/streams/
+cpl.title: $:/plugins/sq/streams
+cpl.uri: https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fsq%252Fstreams.json
+tags: $:/tags/PluginWiki
+title: Plugin_202203305709777
+type: application/json

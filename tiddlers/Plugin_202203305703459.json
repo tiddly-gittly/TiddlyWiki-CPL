@@ -1,0 +1,17 @@
+[
+    {
+        "type": "application/json",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "@@color:red;''Highly experimental - no support available. Use at your own risk.''@@ \n\nPUT uploader module for the File Uploads plugin. Saves to ~WebDav or other servers accepting PUT requests.\n\nCurrently the uploader derives the base URL for the ~WebDav server from the URL of the document. This fits the use case of using a ~WebDav (or other PUT enabled server) used to host a ~TiddlyWiki that can be saved.\n\nFor a lightweight and easy solution for hosting a local ~TiddlyWiki using ~WebDav see this [[discussion|https://talk.tiddlywiki.org/t/use-webdav-for-saving-a-single-file-wiki/441]].",
+        "cpl.uri": "https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fsq%252Ffile-uploads-PUT.json",
+        "cpl.title": "$:/plugins/sq/file-uploads-PUT",
+        "cpl.author": "Saq Imtiaz",
+        "cpl.name": "File Uploads: PUT",
+        "cpl.description": "EXPERIMENTAL PUT uploader for uploading binary files to external storage",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "$:/plugins/commons/file-uploads",
+        "cpl.core-version": ">=5.1.23",
+        "title": "Plugin_202203305703459"
+    }
+]
