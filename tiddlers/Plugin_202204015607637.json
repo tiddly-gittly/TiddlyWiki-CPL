@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Horizontal story view for tiddlers and bi-directional links.\n\nHomepage: https://github.com/crazko/krystal\n\nMade by [[Roman Veselý|https://romanvesely.com/]] - <span class=\"krystal-icon\">{{$:/core/images/github}}</span> [[@crazko|https://github.com/crazko]], <span class=\"krystal-icon\">{{$:/core/images/twitter}}</span> [[@rmnvsl|https://twitter.com/rmnvsl]]",
+        "cpl.uri": "https://crazko.github.io/krystal/index.html",
+        "cpl.title": "$:/plugins/rmnvsl/krystal",
+        "cpl.author": "Roman Veselý",
+        "cpl.name": "Krystal",
+        "cpl.description": "Horizontal Story River",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/crazko/krystal",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.0.8",
+        "title": "Plugin_202204015607637"
+    }
+]
