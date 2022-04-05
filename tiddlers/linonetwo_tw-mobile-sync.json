@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20220405134727855",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/tw-mobile-sync",
+        "modified": "20220405135150197",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/tw-mobile-sync",
+        "cpl.name": "Mobile NodeJS Sync",
+        "cpl.description": "Sync data between Mobile HTML (Tiddloid) <-> Desktop NodeJS App (TidGi)",
+        "cpl.author": "linonetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/tw-mobile-sync/releases/latest/download/__plugins_linonetwo_tw-mobile-sync.json",
+        "cpl.readme": "! TiddlyWiki5 Mobile Sync\n\nSync data between Mobile HTML (Tiddloid) <-> Desktop App (TidGi).\n\n!! Why this plugin\n\nTo enjoy the [REST API of TiddlyWiki](https://tiddlywiki.com/#WebServer%20API) and **privacy of local stored** data, we choose to use [TidGi](https://github.com/tiddly-gittly/TidGi-Desktop) on the Desktop.\n\nWe can open localhost wiki on the [Tiddloid](https://github.com/donmor/Tiddloid) or on a browser on the Mobile, but it's not possible to sync data back to the desktop, if the ip of desktop wiki has changed. (Mobile don't know where is the desktop wiki to sync back.) So we need a plugin to keep track of the known ip of the desktop wiki, allow user to click on a desktop ip and sync data back to that desktop wiki.\n\nAnd you may write some tiddlers in the subway when you getting home, these tiddlers may have conflict with the one in your home's desktop wiki, we need this plugin to handle it.",
+        "cpl.sourse": "https://github.com/tiddly-gittly/tw-mobile-sync",
+        "cpl.documentation": "http://tiddly-gittly.github.io/tw-mobile-sync/",
+        "cpl.dependents": "$:/plugins/tiddlywiki/qrcode"
+    }
+]
