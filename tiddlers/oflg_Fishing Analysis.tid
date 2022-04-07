@@ -1,5 +1,5 @@
 cpl.author: oflg
-cpl.core-version: >=5.2.1
+cpl.core-version: >=5.2.2
 cpl.dependents: $:/plugins/Gk0Wk/echarts $:/plugins/oflg/fishing
 cpl.description: Analysis for Fishing.
 cpl.documentation: https://tiddlymemo.org/manual/
