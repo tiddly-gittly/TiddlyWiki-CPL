@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20220422154549432",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/flowtiwi-sidebar",
+        "modified": "20220422160031123",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/flowtiwi-sidebar",
+        "cpl.name": "FlowTiwi Multi-column draggable resizable sidebar",
+        "cpl.description": "Enhanced multi-column sidebar gives you Flow in TiddlyWiki. 强大的多栏侧边栏让你在太微里享受心流。",
+        "cpl.author": "linonetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/flowtiwi-sidebar/releases/latest/download/__plugins_linonetwo_flowtiwi-sidebar.json",
+        "cpl.readme": "!! How to use 如何使用\n\nYou can resize the tab block to be narrower so there can be two columns of tab blocks. And you can resize the sidebar (using [[Resizable Sidebar|https://talk.tiddlywiki.org/t/resizable-sidebar-resize-your-sidebar-with-mouse-dragging/1740]]) so you get more space for more columns. \n\n你可以调整标签页瓷砖的大小，使其更小，这样就可以有两列标签页瓷砖了。而且你可以调整侧边栏的大小(使用[[可调整的侧边栏插件（Resizable Sidebar）|https://talk.tiddlywiki.org/t/resizable-sidebar-resize-your-sidebar-with-mouse-dragging/1740]])，来放下更多的列。\n\n!! Why this 缘起\n\nI always hope I can view multiple sidebar tabs at the same time, so I try to make this plugin. You can reorder sidebar tabs block with their title, and resize each tab block with the handle on the bottom right of each tab block.\n\nKnowledge is full of context, but the human brain has a limited working memory, so in order to keep this Cybersyn efficient when I/O knowledge through human-computer interface, we need the machine to provide an interface such as a dynamic sidebar to display real-time context to assist the human part of the system in obtaining context at low cost. Different types of work require different types and amounts of context, so the sidebar needs to be able to adjust the size of the display area and the content of area in real time through human interaction and automation API, to make the work unconstrained from the working memory.\n\n我一直希望能同时查看多个侧边栏标签，所以我尝试做了这个插件。你可以拖动侧边栏标签页瓷砖的标题重新排列侧边栏的标签页瓷砖，还可以用每个标签页瓷砖右下方的手柄调整每个标签页瓷砖的大小。\n\n知识充满上下文，但人脑的工作记忆有限，因此在通过人机交互录入和提取知识时，为了让这个赛博协同系统维持高效，我们需要机器提供动态化侧边栏这样的界面展示实时上下文，辅助系统的人类部分低成本获取上下文。不同的工作类型需要不同种类、数量的上下文，所以侧边栏需要能通过人类交互、自动化接口实时对各上下文的展示区域大小、内容范围进行调整，来让工作尽可能不受到工作记忆的限制。",
+        "cpl.sourse": "https://github.com/tiddly-gittly/flowtiwi-sidebar",
+        "cpl.documentation": "http://tiddly-gittly.github.io/flowtiwi-sidebar/",
+        "cpl.dependents": "$:/plugins/linonetwo/tw-react"
+    }
+]
