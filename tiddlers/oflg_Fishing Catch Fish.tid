@@ -6,7 +6,7 @@ cpl.documentation:https://tiddlymemo.org/manual/
 cpl.name: Fishing Catch Fish
 cpl.parent-plugin: $:/plugins/oflg/fishing
 cpl.plugin-type: plugin
-cpl.readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://oflg.github.io/fishing-manual/]]的渐进阅读子插件。用来渐进阅读已有或者导入的条目。可在阅读中摘录句子，也可注释单词并配合单词学习包来学习外语。</$list><$list filter="[<lang>!search[zh]]">Incremental Reading plugin for [[Fishing|https://oflg.github.io/fishing-manual/]]. Use to incrementally read existing or imported tiddlers.You can excerpt sentences as you read, or annotate words with the Learning Pack and learn foreign languages.</$list></$list>
+cpl.readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://tiddlymemo.org/manual/zh-Hans#%E9%92%93%E9%B1%BC%E6%8F%92%E4%BB%B6]]的渐进阅读子插件。用来渐进阅读已有或者导入的条目。可在阅读中摘录句子，也可注释单词并配合单词学习包来学习外语。</$list><$list filter="[<lang>!search[zh]]">Incremental Reading plugin for [[Fishing|https://tiddlymemo.org/manual/zh-Hans#%E9%92%93%E9%B1%BC%E6%8F%92%E4%BB%B6]]. Use to incrementally read existing or imported tiddlers.You can excerpt sentences as you read, or annotate words with the Learning Pack and learn foreign languages.</$list></$list>
 cpl.sourse: https://github.com/oflg/fishing-catchfish
 cpl.title: $:/plugins/oflg/fishing-catchfish
 cpl.uri: https://tiddlymemo.org/manual/index.html

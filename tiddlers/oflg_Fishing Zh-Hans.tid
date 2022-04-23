@@ -1,0 +1,19 @@
+cpl.author: oflg
+cpl.core-version: >=5.2.2
+cpl.description: Fishing Chinese (Simplified).
+cpl.documentation: https://tiddlymemo.org/manual/
+cpl.name: Fishing zh-Hans
+cpl.parent-plugin: $:/plugins/oflg/fishing
+cpl.plugin-type: plugin
+cpl.readme: [[钓鱼插件|https://tiddlymemo.org/manual/zh-Hans#%E9%92%93%E9%B1%BC%E6%8F%92%E4%BB%B6]]的中文简体语言包。
+cpl.sourse: https://github.com/oflg/fishing-zh-Hans
+cpl.title: $:/plugins/oflg/fishing-zh-Hans
+cpl.uri: https://tiddlymemo.org/manual/index.html
+created: 20220111081953232
+creator: oflg
+modified: 20220308013605686
+modifier: oflg
+page-cover: https://www.gov.cn/guoqing/site1/20100928/001aa04acfdf0e0bfb6401.gif
+tags: $:/tags/PluginWiki
+title: oflg/Fishing zh-Hans
+type: text/vnd.tiddlywiki
