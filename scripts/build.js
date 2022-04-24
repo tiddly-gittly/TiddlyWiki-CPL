@@ -63,6 +63,9 @@ function buildOnlineHTML(distDir, htmlName, minify, excludeFilter) {
     shellI(`cp tiddlers/TiddlyWikiIconWhite.png ${distDir}/TiddlyWikiIconWhite.png &> /dev/null`);
     shellI(`cp tiddlers/TiddlyWikiIconBlack.png ${distDir}/TiddlyWikiIconBlack.png &> /dev/null`);
 
+    // 部署 vercel
+    shellI(`cp vercel.json ${distDir}/vercel.json &> /dev/null`);
+
     // 构建HTML
     shell('cp -r tiddlers/ tmp_tiddlers_backup &> /dev/null'); // 备份 因为下面有改变tiddler的field的操作(媒体文件全部转为canonical)
     shell(`npx tiddlywiki . --output ${distDir}` +
