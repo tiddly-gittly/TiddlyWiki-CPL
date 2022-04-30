@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20220430141238923",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/slate-write",
+        "modified": "20220430141903350",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/slate-write",
+        "cpl.name": "SlateWrite WYSIWYG editor 「板书」所见即所得编辑器",
+        "cpl.description": "Advanced editor with outline and drag&drop, edit your tiddler in the view mode. 先进的带大纲、块级拖动排序的编辑器，让你可以在查看模式下编辑内容。",
+        "cpl.author": "linonetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/slate-write/releases/latest/download/__plugins_linonetwo_slate-write.json",
+        "cpl.readme": "一个用于 [[太微TiddlyWiki|https://tiddlywiki.com/]] 的所见即所得编辑器。打开 [[演示页面|https://tiddly-gittly.github.io/slate-write/]] 可以试玩以及查看完整的使用说明。\n\n点击条目查看工具栏上的按钮即可在只读模式和编所见即所得辑模式之间切换。\n\nA WYSIWYG editor for [[TiddlyWiki|https://tiddlywiki.com/]]. See [[Demo Site|https://tiddly-gittly.github.io/slate-write/]] for the example and the Full Readme.\n\nYou can click on button on view toolbar on your tiddler to switch between read-only mode and wysiwyg-edit mode.",
+        "cpl.sourse": "https://github.com/tiddly-gittly/slate-write",
+        "cpl.documentation": "http://tiddly-gittly.github.io/slate-write/",
+        "cpl.dependents": "$:/plugins/linonetwo/tw-react"
+    }
+]
