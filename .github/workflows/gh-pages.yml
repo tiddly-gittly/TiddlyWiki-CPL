@@ -53,3 +53,4 @@ jobs:
           white_list: 'TiddlyWiki-CPL'
           static_list: 'TiddlyWiki-CPL'
           force_update: true
+          mappings: "TiddlyWiki-CPL=>tiddly-wiki-cpl"
