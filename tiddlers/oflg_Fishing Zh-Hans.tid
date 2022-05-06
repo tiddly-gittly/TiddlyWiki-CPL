@@ -8,7 +8,7 @@ cpl.plugin-type: plugin
 cpl.readme: [[钓鱼插件|https://tiddlymemo.org/manual/zh-Hans#%E9%92%93%E9%B1%BC%E6%8F%92%E4%BB%B6]]的中文简体语言包。
 cpl.sourse: https://github.com/oflg/fishing-zh-Hans
 cpl.title: $:/plugins/oflg/fishing-zh-Hans
-cpl.uri: https://tiddlymemo.org/manual/index.html
+cpl.uri: https://tiddlymemo.org/manual/zh-Hans.html
 created: 20220111081953232
 creator: oflg
 modified: 20220308013605686
