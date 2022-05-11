@@ -1,0 +1,19 @@
+[
+    {
+        "created": "20211122052309353",
+        "text": "",
+        "title": "oflg/LazyTiddler",
+        "modified": "20220321145751005",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.title": "$:/plugins/oflg/lazy-tiddler",
+        "cpl.author": "oflg",
+        "cpl.name": "Lazy Tiddler",
+        "cpl.description": "Lazy load tiddler",
+        "cpl.uri": "https://tiddly-gittly.github.io/lazy-tiddler/index.html",
+        "cpl.sourse": "https://github.com/tiddly-gittly/lazy-tiddler",
+        "cpl.documentation": "https://tiddly-gittly.github.io/lazy-tiddler/",
+        "cpl.core-version": ">=5.2.2",
+        "cpl.plugin-type": "plugin"
+    }
+]
