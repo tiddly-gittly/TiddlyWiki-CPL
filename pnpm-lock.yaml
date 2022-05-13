@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   chalk: 4.1.2
@@ -6,7 +6,7 @@ specifiers:
   html-minifier-terser: 6.1.0
   readline-sync: ^1.4.10
   tiddlywiki: 5.2.2
-  tw5-typed: 0.2.6
+  tw5-typed: 0.2.8
   uglify-js: 3.15.4
   workbox-cli: 6.5.3
 
@@ -18,7 +18,7 @@ devDependencies:
   cross-env: registry.nlark.com/cross-env/7.0.3
   html-minifier-terser: registry.npmmirror.com/html-minifier-terser/6.1.0
   tiddlywiki: 5.2.2
-  tw5-typed: 0.2.6
+  tw5-typed: 0.2.8
   uglify-js: 3.15.4
   workbox-cli: 6.5.3
 
@@ -325,6 +325,8 @@ packages:
     resolution: {integrity: sha512-i7jDUfrVBWc+7OKcBzEe5n7fbv3i2fWtxKzzCvOjnzSxMfWMigAhtfJ7qzZNGFNMsCCd67+uz553dYKWXPvCKw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.16.8
     dev: true
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/7.16.7_@babel+core@7.16.7:
@@ -1161,7 +1163,7 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@rollup/plugin-babel/5.3.0_@babel+core@7.16.7+rollup@2.64.0:
+  /@rollup/plugin-babel/5.3.0_e3iurkddvdhm6x4lmww7sdg7tm:
     resolution: {integrity: sha512-9uIC8HZOnVLrLHxayq/PTzw+uS25E14KPUBh5ktF+18Mjo5yK0ToMMx6epY0uEgkjwJw0aBW4x2horYXh8juWw==}
     engines: {node: '>= 10.0.0'}
     peerDependencies:
@@ -1240,6 +1242,12 @@ packages:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
     dev: true
 
+  /@types/keyv/3.1.4:
+    resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+    dependencies:
+      '@types/node': 17.0.9
+    dev: true
+
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
@@ -1258,8 +1266,20 @@ packages:
       '@types/node': 17.0.9
     dev: true
 
+  /@types/responselike/1.0.0:
+    resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
+    dependencies:
+      '@types/node': 17.0.9
+    dev: true
+
   /@types/trusted-types/2.0.2:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
+    dev: true
+
+  /acorn/8.7.1:
+    resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
     dev: true
 
   /ajv/8.9.0:
@@ -1926,6 +1946,8 @@ packages:
     dependencies:
       '@sindresorhus/is': 0.14.0
       '@szmarczak/http-timer': 1.1.2
+      '@types/keyv': 3.1.4
+      '@types/responselike': 1.0.0
       cacheable-request: 6.1.0
       decompress-response: 3.3.0
       duplexer3: 0.1.4
@@ -2810,8 +2832,6 @@ packages:
       rollup: 2.64.0
       serialize-javascript: 4.0.0
       terser: 5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: true
 
   /rollup/2.64.0:
@@ -3058,12 +3078,11 @@ packages:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
     engines: {node: '>=10'}
     hasBin: true
-    peerDependencies:
-      acorn: ^8.5.0
     peerDependenciesMeta:
       acorn:
         optional: true
     dependencies:
+      acorn: 8.7.1
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21
@@ -3123,8 +3142,8 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
-  /tw5-typed/0.2.6:
-    resolution: {integrity: sha512-4RckfRikPYFcVPy7r5BkMV40lqTE0z0x/u7OHTjd9d+EA/4rG0oAU8w9QexOHSZqiDPC25uFsZFjcJF/cQCAeA==}
+  /tw5-typed/0.2.8:
+    resolution: {integrity: sha512-s5K7g/HQdEvArsWY/CmdaSkHJB+JOtgiRwxrB18KwsxqIL017wg1NxUbm3iNNTTK/te0/cIAYcwe2qYo2xY0WQ==}
     dev: true
 
   /type-fest/0.13.1:
@@ -3312,7 +3331,7 @@ packages:
       '@babel/core': 7.16.7
       '@babel/preset-env': 7.16.8_@babel+core@7.16.7
       '@babel/runtime': 7.16.7
-      '@rollup/plugin-babel': 5.3.0_@babel+core@7.16.7+rollup@2.64.0
+      '@rollup/plugin-babel': 5.3.0_e3iurkddvdhm6x4lmww7sdg7tm
       '@rollup/plugin-node-resolve': 11.2.1_rollup@2.64.0
       '@rollup/plugin-replace': 2.4.2_rollup@2.64.0
       '@surma/rollup-plugin-off-main-thread': 2.2.3
@@ -3347,7 +3366,6 @@ packages:
       workbox-window: 6.5.3
     transitivePeerDependencies:
       - '@types/babel__core'
-      - acorn
       - supports-color
     dev: true
 
@@ -3377,7 +3395,6 @@ packages:
       workbox-build: 6.5.3
     transitivePeerDependencies:
       - '@types/babel__core'
-      - acorn
       - supports-color
     dev: true
 
@@ -3645,8 +3662,6 @@ packages:
       param-case: registry.nlark.com/param-case/3.0.4
       relateurl: registry.nlark.com/relateurl/0.2.7
       terser: registry.npmmirror.com/terser/5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: true
 
   registry.npmmirror.com/readline-sync/1.4.10:
@@ -3662,12 +3677,11 @@ packages:
     version: 5.10.0
     engines: {node: '>=10'}
     hasBin: true
-    peerDependencies:
-      acorn: ^8.5.0
     peerDependenciesMeta:
       acorn:
         optional: true
     dependencies:
+      acorn: 8.7.1
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21
