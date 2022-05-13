@@ -1,0 +1,18 @@
+[
+	{
+		"text": "",
+		"type": "application/json",
+		"cpl.author": "oeyoews",
+		"cpl.plugin-type": "plugin",
+		"cpl.source": "https://gitlab.com/oeyoews/twm",
+		"cpl.uri": "https://twms.vercel.app",
+		"created": "20220513164052878",
+		"description": "A music player in TiddlyWiki5",
+		"modified": "20220513164938698",
+		"name": "TWM",
+		"tags": "$:/tags/PluginWiki",
+		"title": "$:/plugins/oeyoews/twm/releasetocpl",
+		"revision": "0",
+		"bag": "default"
+	}
+]
