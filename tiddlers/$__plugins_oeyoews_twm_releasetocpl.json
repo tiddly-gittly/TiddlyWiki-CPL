@@ -1,18 +1,21 @@
 [
 	{
+		"created": "20220513164052878",
 		"text": "",
-		"type": "application/json",
+		"type": "text/vnd.tiddlywiki",
 		"cpl.author": "oeyoews",
 		"cpl.plugin-type": "plugin",
-		"cpl.source": "https://gitlab.com/oeyoews/twm",
-		"cpl.uri": "https://twms.vercel.app",
-		"created": "20220513164052878",
+		"cpl.source": "https://gitlab.com/oeyoews/twm/",
+		"cpl.uri": "https://twms.vercel.app/index.html",
 		"description": "A music player in TiddlyWiki5",
-		"modified": "20220513164938698",
-		"name": "TWM",
+		"modified": "20220514065753075",
 		"tags": "$:/tags/PluginWiki",
 		"title": "$:/plugins/oeyoews/twm/releasetocpl",
 		"revision": "0",
-		"bag": "default"
+		"bag": "default",
+		"cpl.core-version": ">=5.2.2",
+		"cpl.title": "$:/plugins/oeyoews/twm",
+		"cpl.name": "TWM",
+		"cpl.documentation": "https://gitlab.com/oeyoews/twm/"
 	}
 ]
