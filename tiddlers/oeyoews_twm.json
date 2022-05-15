@@ -1,6 +1,6 @@
 [
 	{
-		"title": "$:/plugins/oeyoews/twm/releasetocpl",
+		"title": "oeyoews/twm",
 		"cpl.author": "oeyoews",
 		"cpl.core-version": ">=5.2.2",
 		"cpl.documentation": "https://gitlab.com/oeyoews/twm/",
@@ -10,7 +10,7 @@
 		"cpl.title": "$:/plugins/oeyoews/twm",
 		"cpl.uri": "https://twms.vercel.app/index.html",
 		"created": "20220513164052878",
-		"description": "A music player in TiddlyWiki5",
+		"cpl.description": "A music player in TiddlyWiki5",
 		"icon": "🎵",
 		"modified": "20220514122410546",
 		"page-cover": "https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fG11c2ljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
