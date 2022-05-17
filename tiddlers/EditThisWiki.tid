@@ -1,8 +1,10 @@
 caption_CN: 编辑本CPL
 caption_EN: Edit this CPL
 created: 20220118151733303
+creator: 林一二
 i18ncaption: yes
-modified: 20220119083327223
+modified: 20220517025642390
+modifier: 林一二
 title: EditThisWiki
 type: text/vnd.tiddlywiki
 
@@ -39,7 +41,9 @@ type: text/vnd.tiddlywiki
 * ''标题''：插件条目的标题，一般是以`$:/plugins/`、`$:/languages/`或`$:/themes/`开头的。请务必按照原样填写，否则无法登记该插件。
 * ''版本''：一般不填，因为如果插件自己包含了版本号，就会使用插件自己的版本号。但如果一些不规范的插件不包含版本号，就可以在此补充。
 * ''URI''：非常重要！指可以从哪里下载到这个插件。下载链接可以是以下几种：
-*# 指向插件的JSON文件，例如：`https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/download/v0.1.1/TW5-CodeMirror-Enhanced-0.1.1.json`，请一定以`.json`结尾；
+*# 指向插件的JSON文件，例如：`https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Ftemplate-list.json`，请一定以`.json`结尾；
+*#* 而且如果你使用带 `releases/latest` 的 url，就能总是取到 Github Release 里最新版的插件
+*#* 这样你写了新版插件后，只需要（通过 Github Actions 自动地）发布最新 JSON  到 Release 里即可，不需要来 CPL 更新链接和版本号了
 *# 指向插件的TID文件，例如：`https://github.com/TheDiveO/TW5FontAwesome/releases/download/1.2.22/fontawesome.tid`，请一定以`.tid`结尾；
 *# 包含插件的HTML文件，例如：`http://tiddlymap.org/index.html`，请一定以`.html`或者`.htm`结尾；
 *# 其他：理论上所有能被TW支持的文件格式都是可以的，但是我没有测试过。
