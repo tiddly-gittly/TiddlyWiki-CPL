@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: Embed Tiddlywiki5 Hitokoto
+cpl.documentation: 
+cpl.name: Hitokoto
+cpl.plugin-type: plugin
+cpl.readme: show a random sentence
+cpl.source: 
+cpl.title: $:/plugins/oeyoews/tw-hitokoto
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220518104201228
+icon: 🧷
+modified: 20220518104538539
+page-cover: https://images.unsplash.com/photo-1611164322025-2f5a1b4cf53d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2F5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/tw-hitokoto
+type: text/vnd.tiddlywiki
+
