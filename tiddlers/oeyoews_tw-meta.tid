@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: Prevent Zoom Page
+cpl.documentation: https://twms.vercel.app/
+cpl.name: TiddlyWiki Meta
+cpl.plugin-type: plugin
+cpl.readme: * prevent zoom in or out in mobile phone by add meta tag * can prevent mostle scale situation, but some special operatoe still can zoom page(can ignore it)
+cpl.source: https://twms.vercel.app/
+cpl.title: $:/plugins/oeyoews/tw-meta
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220519164843565
+icon: 📿
+modified: 20220519165206510
+page-cover: https://images.unsplash.com/photo-1587740896339-96a76170508d?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c2NhbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/tw-meta
+type: text/vnd.tiddlywiki
+
