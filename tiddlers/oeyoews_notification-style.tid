@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: gradient notification window style
+cpl.documentation: https://twms.vercel.app/
+cpl.name: Notification Style
+cpl.plugin-type: plugin
+cpl.readme: Notification Style
+cpl.source: https://twms.vercel.app/
+cpl.title: $:/plugins/oeyoews/notification-style
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220519051154286
+icon: 🐮
+modified: 20220519051413130
+page-cover: https://images.unsplash.com/photo-1514464750060-00e6e34c8b8c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/notification-style
+type: text/vnd.tiddlywiki
+
