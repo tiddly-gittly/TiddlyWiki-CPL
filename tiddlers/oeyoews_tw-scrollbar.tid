@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: better scrollbar
+cpl.documentation: https://twms.vercel.app/
+cpl.name: tw-scrollbar
+cpl.plugin-type: plugin
+cpl.readme: better tiddlywiki scrollbar
+cpl.source: https://twms.vercel.app/
+cpl.title: $:/plugins/oeyoews/tw-scrollbar
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220520105919869
+icon: 📜
+modified: 20220520110111091
+page-cover: https://images.unsplash.com/photo-1580501170961-bb0dbf63a6df?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2Nyb2xsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/tw-scrollbar
+type: text/vnd.tiddlywiki
+
