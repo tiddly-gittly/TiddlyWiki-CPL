@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: Hide mobile sidebar default
+cpl.documentation: https://twms.vercel.app/
+cpl.name: 
+cpl.plugin-type: plugin
+cpl.readme: Hide mobile sidebar default
+cpl.source: https://twms.vercel.app/
+cpl.title: $:/plugins/oeyoews/mb-hidesidebar
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220521172147372
+icon: 🐤
+modified: 20220521172349412
+page-cover: https://images.unsplash.com/photo-1550424616-ccbd4dc882e8?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YWN0aW9uc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/mb-hidesidebar
+type: text/vnd.tiddlywiki
+
