@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: some shortcuts
+cpl.documentation: https://twms.vercel.app/
+cpl.name: Shortcuts
+cpl.plugin-type: plugin
+cpl.readme: some shortcuts
+cpl.source: https://twms.vercel.app/
+cpl.title: $:/plugins/oeyoews/shortcuts
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220521121915156
+icon: 🏑
+modified: 20220521122047274
+page-cover: https://images.unsplash.com/photo-1560762484-813fc97650a0?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8a2V5Ym9hcmR8ZW58MHx8MHx8&auto=format&fit=crop&w=500
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/shortcuts
+type: text/vnd.tiddlywiki
+
