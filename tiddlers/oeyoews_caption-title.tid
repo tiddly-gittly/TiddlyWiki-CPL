@@ -1,0 +1,19 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.2.2
+cpl.description: show caption
+cpl.documentation: https://twms.vercel.app/
+cpl.name: Show Caption
+cpl.plugin-type: plugin
+cpl.readme: show caption in tiddler title
+cpl.source: https://twms.vercel.app/
+cpl.title: $:/plugins/oeyoews/title-caption
+cpl.uri: https://twms.vercel.app/index.html
+created: 20220523123156265
+icon: 🎫
+modified: 20220523123335811
+page-cover: https://images.unsplash.com/photo-1502078534399-8190479363f5?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGl0bGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500
+revision: 0
+tags: $:/tags/PluginWiki
+title: oeyoews/caption-title
+type: text/vnd.tiddlywiki
+
