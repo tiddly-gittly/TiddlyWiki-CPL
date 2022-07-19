@@ -1,0 +1,12 @@
+cpl.author: NicolasPetton
+cpl.core-version: >=5.1.22
+cpl.dependents: 
+cpl.description: JavaScript hooks for mobile devices support of the Notebook theme
+cpl.name: Mobile support for the Notebook theme
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/NicolasPetton/Notebook
+cpl.title: $:/plugins/nico/notebook-mobile
+cpl.uri: https://nicolas.petton.fr/tw/notebook.html
+tags: $:/tags/PluginWiki
+title: Plugin_202207200117231
