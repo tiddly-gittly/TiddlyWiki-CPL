@@ -1,0 +1,13 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin adds the Muuri ~StoryView to ~TiddlyWiki5\n\nThe Muuri ~StoryView allows for building all kinds of layouts\n\nSee the usage section for more details",
+        "cpl.uri": "https://burningtreec.github.io/tiddlywiki-muuri/index.html",
+        "cpl.title": "$:/plugins/BTC/Muuri",
+        "cpl.author": "Simon Huber",
+        "cpl.description": "A gridded storyview",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202207201142525"
+    }
+]

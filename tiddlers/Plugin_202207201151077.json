@@ -1,0 +1,13 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin adds the Muuri Kanban to ~TiddlyWiki5\n\nIt needs the Muuri ~StoryView plugin installed in order to work",
+        "cpl.uri": "https://burningtreec.github.io/tiddlywiki-muuri/index.html",
+        "cpl.title": "$:/plugins/BTC/Muuri-Kanban",
+        "cpl.author": "Simon Huber",
+        "cpl.description": "A Kanban based on Muuri",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202207201151077"
+    }
+]
