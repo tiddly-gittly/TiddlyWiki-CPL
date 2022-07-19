@@ -154,10 +154,15 @@ function mergeField(fieldName, plugin, info, fallback) {
 }
 
 function getReadmeFromPlugin(pluginTiddler) {
-  const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[
-    pluginTiddler.title + "/readme"
-  ];
-  return readmeTiddler ? readmeTiddler.text : "";
+  try {
+    const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[
+      pluginTiddler.title + "/readme"
+    ];
+    return readmeTiddler ? readmeTiddler.text : "";
+  } catch (e) {
+    console.error(e);
+    return "";
+  }
 }
 
 const mergingFields = [

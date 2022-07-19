@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A button (<<icn $:/core/images/iframe>> ) for the Editor toolbar that applies an iframe to the selected url<br>\nAssigned shortcut: {{$:/config/shortcuts/iframe}}\n\n<<<\n''Note:''<br>The full iframe code `<iframe src=\"url\" frameborder=\"0\" width=\"1024\"; height=\"600\"></iframe>` is used here.<br>So - if required - it can be adpted per tiddler.\n<<<\n",
+        "cpl.uri": "http://89.98.117.72/TW5/TW5_playground.html",
+        "cpl.title": "$:/plugins/tg/iframe-button",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Iframe button",
+        "cpl.description": "Iframe button",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://www.tongerner.nl/TW5/TW5_index.html",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202207202110417"
+    }
+]

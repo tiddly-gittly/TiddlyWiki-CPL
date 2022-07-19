@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\define icn(icon)\n<button class=\"tc-btn-invisible\"> {{$icon$}}</button>\n\\end\n\nA button (<<icn $:/core/images/mark>>) for the Editor toolbar that applies coloring / highlighting  to the selected text<br>\nAssigned shortcut: {{$:/config/shortcuts/mark}}\n\nTo decrease the added CSS (defined in `$:/language/Marklets/<color>`), classes have been defined in $:/plugins/tg/mark-button/styles:\n\n|Class |CSS ||h\n|`tgc` |`@@background-color:Cyan;`|@@.tgc text@@|\n|`tglc` |`@@background-color:LightCyan;`|@@.tglc text@@|\n|`tgy` |`@@background-color:Yellow;`|@@.tgy text@@|\n|`tgb` |`@@color:Blue;`|@@.tgb text@@|\n|`tgr` |`@@color:Red;`|@@.tgr text@@|\n|`tgwr` |`@@color:White;background-color:Red;`|@@.tgwr text@@|\n\nYou can add new entries via 'Add your own' in the dropdown menu.\n",
+        "cpl.uri": "http://89.98.117.72/TW5/TW5_playground.html",
+        "cpl.title": "$:/plugins/tg/mark-button",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Mark selected text",
+        "cpl.description": "Mark selected text",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://www.tongerner.nl/TW5/TW5_index.html",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202207202018626"
+    }
+]

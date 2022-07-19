@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\define icn(icon)\n<button class=\"tc-btn-invisible\"> {{$icon$}}</button>\n\\end\n\nA button (<<icn $:/core/images/prettylink>>) for the Editor toolbar that applies a 'pretty link'  to the selected text 'abc' (`[[link|abc]]`)<br>\nAssigned shortcut: {{$:/config/shortcuts/prettylink}}",
+        "cpl.uri": "http://89.98.117.72/TW5/TW5_playground.html",
+        "cpl.title": "$:/plugins/tg/prettylink-button",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Pretty link button",
+        "cpl.description": "Pretty link button",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://www.tongerner.nl/TW5/TW5_index.html",
+        "cpl.core-version": ">=5.1.13",
+        "title": "Plugin_202207202018818"
+    }
+]

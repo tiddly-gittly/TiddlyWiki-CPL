@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\define icn(icon)\n<button class=\"tc-btn-invisible\"> {{$icon$}}</button>\n\\end\n\nA button (<<icn $:/core/images/note>>) for the Editor toolbar that applies 'note' formatting to the selected text:\n\n<<<\n''Note:''<br>This is a note\n<<<\n\nAssigned shortcut: {{$:/config/shortcuts/note}}",
+        "cpl.uri": "http://89.98.117.72/TW5/TW5_playground.html",
+        "cpl.title": "$:/plugins/tg/note-button",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Note button",
+        "cpl.description": "Note button",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://www.tongerner.nl/TW5/TW5_index.html",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202207202018763"
+    }
+]

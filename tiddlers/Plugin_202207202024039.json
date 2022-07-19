@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\define icn(icon)\n<button class=\"tc-btn-invisible\"> {{$icon$}}</button>\n\\end\n\nA button (<<icn $:/core/images/timestamp>>) for the Editor toolbar that inserts a timestamp.<br>Adapt the date/time format - `<<now [format]>>` in $:/core/ui/EditorToolbar/timestamp - to your liking.<br>\nAssigned shortcut: {{$:/config/shortcuts/timestamp}}\n\n\n\n",
+        "cpl.uri": "http://89.98.117.72/TW5/TW5_playground.html",
+        "cpl.title": "$:/plugins/tg/timestamp-button",
+        "cpl.author": "TonGerner",
+        "cpl.name": "Timestamp button",
+        "cpl.description": "Timestamp button",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "http://www.tongerner.nl/TW5/TW5_index.html",
+        "cpl.core-version": ">=5.1.13",
+        "title": "Plugin_202207202024039"
+    }
+]
