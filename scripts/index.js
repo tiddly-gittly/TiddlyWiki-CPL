@@ -239,6 +239,7 @@ function _importLibrary(uri) {
 
   try {
     // 下载JSON文件，包含插件的信息
+    mkdirsSync(`${distDir}/tmp`);
     shellI(
       `wget '${baseUri}'/recipes/library/tiddlers.json -O ${distDir}/tmp/tiddlers.json`
     );

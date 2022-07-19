@@ -1,0 +1,11 @@
+cpl.author: kl
+cpl.dependents: $:/plugins/tgrosinger/tw5-checklist $:/plugins/xp/aggregation
+cpl.description: Manage your checklist
+cpl.name: Checklist
+cpl.parent-plugin: $:/plugins/xp/aggregation
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/xp/aggregation-checklist
+cpl.uri: https://keatonlao.github.io/tiddlywiki-xp/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202207204641255

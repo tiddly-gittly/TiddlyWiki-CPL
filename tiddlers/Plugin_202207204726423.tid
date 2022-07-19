@@ -1,0 +1,11 @@
+cpl.author: kl
+cpl.dependents: $:/plugins/xp/aggregation
+cpl.description: Manage your TiddlyWiki plugins
+cpl.name: Plugins
+cpl.parent-plugin: $:/plugins/xp/aggregation
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/xp/aggregation-plugins
+cpl.uri: https://keatonlao.github.io/tiddlywiki-xp/index.html
+tags: $:/tags/PluginWiki
+title: Plugin_202207204726423

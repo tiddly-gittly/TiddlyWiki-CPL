@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Display the journal list in the sidebar to make it easier to manage your diary.\n\n!!! 注意事项\n\n只能在 $:/config/NewJournal/Tags 中设置一个标签。超过一个，则所有过滤器失效。",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "cpl.title": "$:/plugins/xp/diary",
+        "cpl.author": "kl",
+        "cpl.name": "Diary",
+        "cpl.description": "Manage journal tiddlers",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/danielo515/encryptTiddler",
+        "title": "Plugin_202207204751299"
+    }
+]

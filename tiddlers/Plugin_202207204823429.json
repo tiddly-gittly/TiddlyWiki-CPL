@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A button ({{$:/core/images/marker}}) for the Editor toolbar that applies coloring or highlighting  to the selected text<br>\nAssigned shortcut: {{$:/config/shortcuts/mark}}\n\n> See also: [[$:/plugins/tg/mark-button|http://tw5custom.tiddlyspot.com/#%24%3A%2Fplugins%2Ftg%2Fmark-button]]\n",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "cpl.title": "$:/plugins/xp/mark-button",
+        "cpl.author": "kl",
+        "cpl.name": "Mark Button",
+        "cpl.description": "Mark selected text",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202207204823429"
+    }
+]

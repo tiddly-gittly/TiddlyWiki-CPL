@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A button ({{$:/core/images/emoji}}) for inserting emojis.<br>\nAssigned shortcut: {{$:/config/shortcuts/emoji}}",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "cpl.title": "$:/plugins/xp/emoji-button",
+        "cpl.author": "kl",
+        "cpl.name": "Emoji Button",
+        "cpl.description": "Insert an emoji",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202207204757810"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A button ({{$:/core/images/html}}) for inserting html codes.\n\n!! See also\n\n* https://www.runoob.com/html/html-quicklist.html\n* https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "cpl.title": "$:/plugins/xp/html-button",
+        "cpl.author": "kl",
+        "cpl.name": "HTML Button",
+        "cpl.description": "Insert a html code",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202207204802954"
+    }
+]
