@@ -1,0 +1,12 @@
+cpl.author: NicolasPetton
+cpl.core-version: >=5.1.22
+cpl.dependents: $:/themes/tiddlywiki/vanilla $:/plugins/nico/notebook-mobile
+cpl.description: A clean, uncluttered TiddlyWiki theme
+cpl.name: Notebook theme
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.source: https://github.com/NicolasPetton/Notebook
+cpl.title: $:/themes/nico/notebook
+cpl.uri: https://nicolas.petton.fr/tw/notebook.html
+tags: $:/tags/PluginWiki
+title: Plugin_202207202152449
