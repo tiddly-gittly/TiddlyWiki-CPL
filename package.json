@@ -30,7 +30,7 @@
         "tiddlywiki": "5.2.2",
         "tw5-typed": "0.2.8",
         "uglify-js": "3.15.4",
-        "workbox-cli": "6.5.3"
+        "workbox-cli": "6.5.4"
     },
     "dependencies": {
         "chalk": "4.1.2",
