@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   chalk: 4.1.2
   cross-env: 7.0.3
-  html-minifier-terser: 6.1.0
+  html-minifier-terser: 7.0.0
   readline-sync: ^1.4.10
   tiddlywiki: 5.2.2
   tw5-typed: 0.2.8
@@ -16,7 +16,7 @@ dependencies:
 
 devDependencies:
   cross-env: registry.nlark.com/cross-env/7.0.3
-  html-minifier-terser: registry.npmmirror.com/html-minifier-terser/6.1.0
+  html-minifier-terser: 7.0.0
   tiddlywiki: 5.2.2
   tw5-typed: 0.2.8
   uglify-js: 3.15.4
@@ -1163,6 +1163,43 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
+  /@jridgewell/gen-mapping/0.3.2:
+    resolution: {integrity: sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      '@jridgewell/set-array': 1.1.2
+      '@jridgewell/sourcemap-codec': 1.4.14
+      '@jridgewell/trace-mapping': 0.3.15
+    dev: true
+
+  /@jridgewell/resolve-uri/3.1.0:
+    resolution: {integrity: sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==}
+    engines: {node: '>=6.0.0'}
+    dev: true
+
+  /@jridgewell/set-array/1.1.2:
+    resolution: {integrity: sha512-xnkseuNADM0gt2bs+BvhO0p78Mk762YnZdsuzFV018NoG1Sj1SCQvpSqa7XUaTam5vAGasABV9qXASMKnFMwMw==}
+    engines: {node: '>=6.0.0'}
+    dev: true
+
+  /@jridgewell/source-map/0.3.2:
+    resolution: {integrity: sha512-m7O9o2uR8k2ObDysZYzdfhb08VuEml5oWGiosa1VdaPZ/A6QyPkAJuwN0Q1lhULOf6B7MtQmHENS743hWtCrgw==}
+    dependencies:
+      '@jridgewell/gen-mapping': 0.3.2
+      '@jridgewell/trace-mapping': 0.3.15
+    dev: true
+
+  /@jridgewell/sourcemap-codec/1.4.14:
+    resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
+    dev: true
+
+  /@jridgewell/trace-mapping/0.3.15:
+    resolution: {integrity: sha512-oWZNOULl+UbhsgB51uuZzglikfIKSUBO/M9W2OfEjn7cmqoAiCgmv9lyACTUacZwBz0ITnJ2NqjU8Tx0DHL88g==}
+    dependencies:
+      '@jridgewell/resolve-uri': 3.1.0
+      '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
+
   /@rollup/plugin-babel/5.3.0_e3iurkddvdhm6x4lmww7sdg7tm:
     resolution: {integrity: sha512-9uIC8HZOnVLrLHxayq/PTzw+uS25E14KPUBh5ktF+18Mjo5yK0ToMMx6epY0uEgkjwJw0aBW4x2horYXh8juWw==}
     engines: {node: '>= 10.0.0'}
@@ -1483,6 +1520,13 @@ packages:
       get-intrinsic: 1.1.1
     dev: true
 
+  /camel-case/4.1.2:
+    resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
+    dependencies:
+      pascal-case: 3.1.2
+      tslib: 2.3.1
+    dev: true
+
   /camelcase-keys/6.2.2:
     resolution: {integrity: sha512-YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==}
     engines: {node: '>=8'}
@@ -1548,6 +1592,13 @@ packages:
     resolution: {integrity: sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==}
     dev: true
 
+  /clean-css/5.2.0:
+    resolution: {integrity: sha512-2639sWGa43EMmG7fn8mdVuBSs6HuWaSor+ZPoFWzenBc6oN+td8YhTfghWXZ25G1NiiSvz8bOFBS7PdSbTiqEA==}
+    engines: {node: '>= 10.0'}
+    dependencies:
+      source-map: 0.6.1
+    dev: true
+
   /cli-boxes/2.2.1:
     resolution: {integrity: sha512-y4coMcylgSCdVinjiDBuR8PCC2bLjyGTwEmPb9NHR/QaNU6EUOXcTY/s6VjGMD6ENSEaeQYHCY0GNGS5jfMwPw==}
     engines: {node: '>=6'}
@@ -1602,6 +1653,11 @@ packages:
 
   /commander/2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+    dev: true
+
+  /commander/9.4.0:
+    resolution: {integrity: sha512-sRPT+umqkz90UA8M1yqYfnHlZA7fF6nSphDtxeywPZ49ysjxDQybzk13CL+mXekDRG92skbcqCLVovuCusNmFw==}
+    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /common-tags/1.8.2:
@@ -1702,6 +1758,13 @@ packages:
       object-keys: 1.1.1
     dev: true
 
+  /dot-case/3.0.4:
+    resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
+    dependencies:
+      no-case: 3.0.4
+      tslib: 2.3.1
+    dev: true
+
   /dot-prop/5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
     engines: {node: '>=8'}
@@ -1733,6 +1796,11 @@ packages:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
     dependencies:
       once: 1.4.0
+    dev: true
+
+  /entities/4.3.1:
+    resolution: {integrity: sha512-o4q/dYJlmyjP2zfnaWDUC6A3BQFmVTX+tZPezK7k0GLSU9QYCauscf5Y+qcEPzKL+EixVouYDgLQK5H9GrLpkg==}
+    engines: {node: '>=0.12'}
     dev: true
 
   /error-ex/1.3.2:
@@ -2008,6 +2076,20 @@ packages:
 
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
+    dev: true
+
+  /html-minifier-terser/7.0.0:
+    resolution: {integrity: sha512-Adqk0b/pWKIQiGvEAuzPKpBKNHiwblr3QSGS7TTr6v+xXKV9AI2k4vWW+6Oytt6Z5SeBnfvYypKOnz8r75pz3Q==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      camel-case: 4.1.2
+      clean-css: 5.2.0
+      commander: 9.4.0
+      entities: 4.3.1
+      param-case: 3.0.4
+      relateurl: 0.2.7
+      terser: 5.14.2
     dev: true
 
   /http-cache-semantics/4.1.0:
@@ -2397,6 +2479,12 @@ packages:
       is-unicode-supported: 0.1.0
     dev: true
 
+  /lower-case/2.0.2:
+    resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
+    dependencies:
+      tslib: 2.3.1
+    dev: true
+
   /lowercase-keys/1.0.1:
     resolution: {integrity: sha512-G2Lj61tXDnVFFOi8VZds+SoQjtQC3dgokKdDG2mTm1tx4m50NUHBOZSBwQQHyy0V12A0JTG4icfZQH+xPyh8VA==}
     engines: {node: '>=0.10.0'}
@@ -2491,6 +2579,13 @@ packages:
 
   /mute-stream/0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
+    dev: true
+
+  /no-case/3.0.4:
+    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
+    dependencies:
+      lower-case: 2.0.2
+      tslib: 2.3.1
     dev: true
 
   /node-releases/2.0.1:
@@ -2602,6 +2697,13 @@ packages:
       semver: 6.3.0
     dev: true
 
+  /param-case/3.0.4:
+    resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
+    dependencies:
+      dot-case: 3.0.4
+      tslib: 2.3.1
+    dev: true
+
   /parse-json/5.2.0:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
     engines: {node: '>=8'}
@@ -2610,6 +2712,13 @@ packages:
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
+    dev: true
+
+  /pascal-case/3.1.2:
+    resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
+    dependencies:
+      no-case: 3.0.4
+      tslib: 2.3.1
     dev: true
 
   /path-exists/4.0.0:
@@ -2794,6 +2903,11 @@ packages:
       jsesc: 0.5.0
     dev: true
 
+  /relateurl/0.2.7:
+    resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
+    engines: {node: '>= 0.10'}
+    dev: true
+
   /require-from-string/2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
@@ -2831,7 +2945,7 @@ packages:
       jest-worker: 26.6.2
       rollup: 2.64.0
       serialize-javascript: 4.0.0
-      terser: 5.10.0
+      terser: 5.14.2
     dev: true
 
   /rollup/2.64.0:
@@ -2914,18 +3028,13 @@ packages:
     dev: true
 
   /source-map/0.5.7:
-    resolution: {integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=}
+    resolution: {integrity: sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==}
     engines: {node: '>=0.10.0'}
     dev: true
 
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /source-map/0.7.3:
-    resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}
-    engines: {node: '>= 8'}
     dev: true
 
   /source-map/0.8.0-beta.0:
@@ -3074,17 +3183,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /terser/5.10.0:
-    resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
+  /terser/5.14.2:
+    resolution: {integrity: sha512-oL0rGeM/WFQCUd0y2QrWxYnq7tfSuKBiqTjRPWrRgB46WD/kiwHwF8T23z78H6Q6kGCuuHcPB+KULHRdxvVGQA==}
     engines: {node: '>=10'}
     hasBin: true
-    peerDependenciesMeta:
-      acorn:
-        optional: true
     dependencies:
+      '@jridgewell/source-map': 0.3.2
       acorn: 8.7.1
       commander: 2.20.3
-      source-map: 0.7.3
       source-map-support: 0.5.21
     dev: true
 
@@ -3505,15 +3611,6 @@ packages:
       decamelize: 1.2.0
     dev: true
 
-  registry.nlark.com/camel-case/4.1.2:
-    resolution: {integrity: sha1-lygHKpVPgFIoIlpt7qazhGHhvVo=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/camel-case/download/camel-case-4.1.2.tgz}
-    name: camel-case
-    version: 4.1.2
-    dependencies:
-      pascal-case: registry.nlark.com/pascal-case/3.1.2
-      tslib: 2.3.1
-    dev: true
-
   registry.nlark.com/cross-env/7.0.3:
     resolution: {integrity: sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/cross-env/download/cross-env-7.0.3.tgz}
     name: cross-env
@@ -3535,61 +3632,10 @@ packages:
       which: registry.nlark.com/which/2.0.2
     dev: true
 
-  registry.nlark.com/dot-case/3.0.4:
-    resolution: {integrity: sha1-mytnDQCkMWZ6inW6Kc0bmICc51E=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/dot-case/download/dot-case-3.0.4.tgz}
-    name: dot-case
-    version: 3.0.4
-    dependencies:
-      no-case: registry.nlark.com/no-case/3.0.4
-      tslib: 2.3.1
-    dev: true
-
-  registry.nlark.com/he/1.2.0:
-    resolution: {integrity: sha1-hK5l+n6vsWX922FWauFLrwVmTw8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/he/download/he-1.2.0.tgz}
-    name: he
-    version: 1.2.0
-    hasBin: true
-    dev: true
-
   registry.nlark.com/isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/isexe/download/isexe-2.0.0.tgz?cache=0&sync_timestamp=1631509552476&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fisexe%2Fdownload%2Fisexe-2.0.0.tgz}
     name: isexe
     version: 2.0.0
-    dev: true
-
-  registry.nlark.com/lower-case/2.0.2:
-    resolution: {integrity: sha1-b6I3xj29xKgsoP2ILkci3F5jTig=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/lower-case/download/lower-case-2.0.2.tgz}
-    name: lower-case
-    version: 2.0.2
-    dependencies:
-      tslib: 2.3.1
-    dev: true
-
-  registry.nlark.com/no-case/3.0.4:
-    resolution: {integrity: sha1-02H9XJgA9VhVGoNp/A3NRmK2Ek0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/no-case/download/no-case-3.0.4.tgz}
-    name: no-case
-    version: 3.0.4
-    dependencies:
-      lower-case: registry.nlark.com/lower-case/2.0.2
-      tslib: 2.3.1
-    dev: true
-
-  registry.nlark.com/param-case/3.0.4:
-    resolution: {integrity: sha1-fRf+SqEr3jTUp32RrPtiGcqtAcU=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/param-case/download/param-case-3.0.4.tgz}
-    name: param-case
-    version: 3.0.4
-    dependencies:
-      dot-case: registry.nlark.com/dot-case/3.0.4
-      tslib: 2.3.1
-    dev: true
-
-  registry.nlark.com/pascal-case/3.1.2:
-    resolution: {integrity: sha1-tI4O8rmOIF58Ha50fQsVCCN2YOs=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/pascal-case/download/pascal-case-3.1.2.tgz}
-    name: pascal-case
-    version: 3.1.2
-    dependencies:
-      no-case: registry.nlark.com/no-case/3.0.4
-      tslib: 2.3.1
     dev: true
 
   registry.nlark.com/path-key/3.1.1:
@@ -3597,13 +3643,6 @@ packages:
     name: path-key
     version: 3.1.1
     engines: {node: '>=8'}
-    dev: true
-
-  registry.nlark.com/relateurl/0.2.7:
-    resolution: {integrity: sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/relateurl/download/relateurl-0.2.7.tgz}
-    name: relateurl
-    version: 0.2.7
-    engines: {node: '>= 0.10'}
     dev: true
 
   registry.nlark.com/shebang-command/2.0.0:
@@ -3632,57 +3671,9 @@ packages:
       isexe: registry.nlark.com/isexe/2.0.0
     dev: true
 
-  registry.npmmirror.com/clean-css/5.2.2:
-    resolution: {integrity: sha1-06fG7iURAR4FFxmDi9z4MU3EVI0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/clean-css/download/clean-css-5.2.2.tgz}
-    name: clean-css
-    version: 5.2.2
-    engines: {node: '>= 10.0'}
-    dependencies:
-      source-map: 0.6.1
-    dev: true
-
-  registry.npmmirror.com/commander/8.3.0:
-    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/commander/download/commander-8.3.0.tgz}
-    name: commander
-    version: 8.3.0
-    engines: {node: '>= 12'}
-    dev: true
-
-  registry.npmmirror.com/html-minifier-terser/6.1.0:
-    resolution: {integrity: sha512-YXxSlJBZTP7RS3tWnQw74ooKa6L9b9i9QYXY21eUEvhZ3u9XLfv6OnFsQq6RxkhHygsaUMvYsZRV5rU/OVNZxw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/html-minifier-terser/download/html-minifier-terser-6.1.0.tgz}
-    name: html-minifier-terser
-    version: 6.1.0
-    engines: {node: '>=12'}
-    hasBin: true
-    dependencies:
-      camel-case: registry.nlark.com/camel-case/4.1.2
-      clean-css: registry.npmmirror.com/clean-css/5.2.2
-      commander: registry.npmmirror.com/commander/8.3.0
-      he: registry.nlark.com/he/1.2.0
-      param-case: registry.nlark.com/param-case/3.0.4
-      relateurl: registry.nlark.com/relateurl/0.2.7
-      terser: registry.npmmirror.com/terser/5.10.0
-    dev: true
-
   registry.npmmirror.com/readline-sync/1.4.10:
     resolution: {integrity: sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/readline-sync/-/readline-sync-1.4.10.tgz}
     name: readline-sync
     version: 1.4.10
     engines: {node: '>= 0.8.0'}
     dev: false
-
-  registry.npmmirror.com/terser/5.10.0:
-    resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/terser/download/terser-5.10.0.tgz}
-    name: terser
-    version: 5.10.0
-    engines: {node: '>=10'}
-    hasBin: true
-    peerDependenciesMeta:
-      acorn:
-        optional: true
-    dependencies:
-      acorn: 8.7.1
-      commander: 2.20.3
-      source-map: 0.7.3
-      source-map-support: 0.5.21
-    dev: true
