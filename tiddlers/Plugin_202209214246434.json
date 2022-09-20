@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "* twm\n",
+        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-music.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-music",
+        "cpl.author": "oeyoews",
+        "cpl.name": "twm",
+        "cpl.description": "twm",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.3",
+        "title": "Plugin_202209214246434"
+    }
+]

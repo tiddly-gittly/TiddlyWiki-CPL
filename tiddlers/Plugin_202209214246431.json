@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "* neotw-hitokoto\n",
+        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-hitokoto.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-hitokoto",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-hitokoto",
+        "cpl.description": "neotw-hitokoto",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.3",
+        "title": "Plugin_202209214246431"
+    }
+]

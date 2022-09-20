@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Record\n\n* test\n",
+        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-record.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-record",
+        "cpl.author": "oeyoews",
+        "cpl.name": "record",
+        "cpl.description": "record",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202209214246437"
+    }
+]
