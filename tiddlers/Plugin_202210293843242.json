@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20221029103843242",
+        "creator": "Miao",
+        "title": "Plugin_202210293843242",
+        "modified": "20221029104822459",
+        "modifier": "Miao",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/miao/tw-2048",
+        "cpl.name": "TiddlyWiki_2048游戏",
+        "cpl.description": "TiddlyWiki游戏",
+        "cpl.author": "miao",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-game-2048/releases/latest/download/tiddlywiki-game-2048.json",
+        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-game-2048",
+        "cpl.core-version": ">=5.1.23",
+        "cpl.version": "0.1.2",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-game-2048/tw-2048-Gatha.html",
+        "cpl.readme": "一个TiddlyWiki版2048小游戏\n\n安装后搜索tw-2048条目游玩。在插件的README选项卡中包含tw-2048小游戏的制作过程（、游戏说明，感兴趣可以看看。\n\n仅支持屏幕宽度大于336px的设备，不同设备的屏幕大小的UI适配问题根据林一二的建议采用媒体查询（Media Query）解决。建议使用桌面端游玩，体验会更好。\n\n致谢：感谢群友机柕（dongrentianyu）的想法和意见。"
+    }
+]
