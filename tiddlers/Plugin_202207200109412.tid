@@ -6,6 +6,11 @@ cpl.name: Snow White
 cpl.plugin-type: theme
 cpl.readme: 
 cpl.title: $:/themes/tiddlywiki/snowwhite
-cpl.uri: https://nicolas.petton.fr/tw/notebook.html
+cpl.uri: https://tiddlywiki.com/index.html
+created: 20221029102938082
+creator: Miao
+modified: 20221029103005647
+modifier: Miao
 tags: $:/tags/PluginWiki
 title: Plugin_202207200109412
+type: text/vnd.tiddlywiki
