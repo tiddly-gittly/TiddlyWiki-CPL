@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20221124040453854",
+        "creator": "WhiteFall",
+        "title": "Plugin_202211240453854",
+        "modified": "20221124040846918",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/wikilabs/info-tagmap",
+        "cpl.readme": "This plugin adds a new tab to the tiddler info section. It's a multi column list of all tiddler tags plus all tagged tiddlers.\n\n该插件在 tiddler 信息部分添加了一个新选项卡。这是一个包含所有 tiddler 标签和所有标记 tiddler 的多列列表。\n\nThis plugin doesn't change any core templates.\n\n此插件不会更改任何核心模板。\n\nThe code below can be copied into the tag tiddlers.\n\n```\nAll tiddlers tagged: {{!!title}}\n\n<<list-links filter:\"[tag{!!title}]\">>\n```",
+        "cpl.uri": "https://zhangaz1-pro.github.io/tiddlywikis-collection/wikis/wikilabs.github.io_editions-slant-01.html",
+        "cpl.author": "wikilabs",
+        "cpl.name": "info-tagmap",
+        "cpl.description": "",
+        "cpl.documentation": "https://zhangaz1-pro.github.io/tiddlywikis-collection/wikis/wikilabs.github.io_editions-slant-01.html"
+    }
+]
