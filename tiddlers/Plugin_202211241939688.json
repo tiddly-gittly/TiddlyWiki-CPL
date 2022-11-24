@@ -3,7 +3,7 @@
         "created": "20221124031939688",
         "creator": "WhiteFall",
         "title": "Plugin_202211241939688",
-        "modified": "20221124032631733",
+        "modified": "20221124053108571",
         "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -19,6 +19,7 @@
         "cpl.description": "graphviz",
         "cpl.documentation": "https://chanilino.github.io/tw5viz/tw5.html",
         "cpl.readme": "Plugin based on grapviz library:\n\nhttps://github.com/mdaines/viz.js/\n\nFor syntax of graphviz:\n\n* https://graphs.grevian.org/example\n* https://graphviz.gitlab.io/documentation/\n* https://www.graphviz.org/ ",
-        "cpl.sourse": "https://github.com/chanilino/tw5viz"
+        "cpl.sourse": "https://github.com/chanilino/tw5viz",
+        "cpl.name": "viz"
     }
 ]
