@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20221124045448689",
+        "creator": "WhiteFall",
+        "title": "Plugin_202211245448688",
+        "modified": "20221124045649489",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/telmiger/details",
+        "cpl.name": "DetailsWidget",
+        "cpl.author": "telmiger",
+        "cpl.description": "使用这个小组件创建HTML5 <details>元素，包括<summary>",
+        "cpl.uri": "http://tid.li/tw5/plugins.html",
+        "cpl.documentation": "http://tid.li/tw5/plugins.html#DetailsWidget",
+        "cpl.readme": "https://keatonlao.github.io/tiddlywiki-xp/index.html#%24%3A%2Fplugins%2Ftelmiger%2Fdetails\n\n!~DetailsWidget\n\n{{$:/plugins/telmiger/details/about}}\n\nDocumentation can be found at http://tid.li/tw5/plugins.html#DetailsWidget\\n"
+    }
+]
