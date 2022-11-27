@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20221127124329543",
+        "creator": "林一二",
+        "title": "Plugin_202211274329542",
+        "modified": "20221127125154434",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/tw-whiteboard",
+        "cpl.name": "tw-whiteboard",
+        "cpl.description": "Tiny little drawing app in TW, using tldraw. Providing diagram widget and whiteboard view. ",
+        "cpl.author": "linonetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-whiteboard/releases/latest/download/__plugins_linonetwo_tw-whiteboard.json",
+        "cpl.readme": "# Provides a whiteboard widget, use it like `<$whiteboard tiddler=\"tiddlerToStoreData\" />`\n# Tiddler with type `application/tldr` will be parsed as whiteboard, showing whiteboard in tiddler's ViewTemplate\n# Provides a whiteboard view, use `ctrl+shift+L` to switch to this view, you can choose a tiddler with type `application/tldr`, and edit it in full screen.",
+        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-whiteboard"
+    }
+]
