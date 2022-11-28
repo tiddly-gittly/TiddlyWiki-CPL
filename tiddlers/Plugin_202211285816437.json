@@ -1,0 +1,25 @@
+[
+    {
+        "created": "20221128125816437",
+        "creator": "WhiteFall",
+        "title": "Plugin_202211285816437",
+        "modified": "20221128130836775",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.uri": "https://sukima.github.io/tiddlywiki-reveal-js/index.html",
+        "cpl.title": "$:/plugins/sukima/reveal-js",
+        "cpl.name": "reveal-js",
+        "cpl.documentation": "https://sukima.github.io/tiddlywiki-reveal-js/index.html",
+        "cpl.readme": "This plugin embeds [[Reveal.js|https://revealjs.com]] presentations into a TiddlyWiki.\n\nIt uses two widgets `<$presentation>` and `<$slide>`. A simple example:\n\n```xml\n<$presentation>\n<$slide>Welcome to ''Reveal.js''</$slide>\n<$slide>Embedded inside TiddlyWiki</$slide>\n<$slide>\n  <$slide>Vertical Slides</$slide>\n  <$slide>Can also me manged with one level of nesting</$slide>\n</$slide>\n</$presentation>\n```\n\nThe embedded presentation is configured to capture keyboard input only when focused. This means that to open the presentation into fullscreen mode first click the presentation to set it as the focus then press <kbd>F</kbd> to have it open in fullscreen mode.\n\nThe content of the `<$slide>` can be WikiText including transcluded tiddlers.\n\nA complementary plugin worth looking at: [[Talk Timer|https://sukima.github.io/tiddlywiki-talktimer]].\n\n!! Usage\n\nThe documentation for Reveal.js explains the use of `<section>` with `data-*` attributes to control the slide options. With the above two Widgets the same options are supported.\n\nAny options passed to `<$slide>` will be converted to from ''camelCase'' to their corresponding `data-*` attributes. See the [[documentation|https://revealjs.com/backgrounds/]] for the full list. Example:\n\n```xml\n<$slide backgroundColor=\"aquamarine\">\nWill make a `<section data-background-color=\"aquamarine\">`\n</$slide>\n```\n\nAny options passed to `<$presentation>` will be converted to `initialize(…)` options. See the [[documentation|https://revealjs.com/config/]] for the full list. Example:\n\n```xml\n<$presentation autoSlide=\"5000\" loop>\n<$slide>Slide will automatically move in 5 seconds</$slide>\n<$slide>This is the second slide</$slide>\n</$presentation>\n```\n\n!!! Default height\n\nBecause these presentations are embedded they must have a height. By default this is ''400px'' but can be overridden using the `$height` attribute.\n\n```xml\n<$presentation $height=\"600\">\n  …\n</$presentation>\n```\n\nAny CSS unit is allowed but will default to `px` if no unit type is provided. For example `$height=\"1.2rem\"` is also acceptable.\n\n!! Using tiddlers for slides\n\nIt is also possible to have TiddlyWiki dynamically build the presentation for you using transclusion.\n\n```xml\n<$presentation>\n<$list filter=\"[tag[slide]sort[title]]\">\n<$slide tiddlerTitle={{!!title}} backgroundColor={{!!color}}>\n<$transclude mode=\"block\" />\n</$slide>\n</$list>\n</$presentation>\n```\n\n<small>`tiddlerTitle` is added so the rendered DOM node can have a `data-tiddler-title` attribute which a custom stylesheet could be used to further customize the slide.</small>\n\n!! Code Blocks\n\nReveal.js uses it's own code highlighting mechanics. To make things compatible and animate smoothly we have a custom `<$slidecodeblock>` component which takes the same attributes as the <code>[[<$codeblock>|https://tiddlywiki.com/#CodeBlockWidget]]</code> and also the ''camelCased'' option that Reveal.js understands.\n\n```xml\n<$slidecodeblock language-\"javascript\" trim lineNumbers=\"3-5\" code=\"\"\"\nimport { tracked } from '@glimmer/tracking';\n…\n\"\"\" />\n```\n\n!! Technical Details\n\nThe `<$presentation>` widget will create the following markup and instantiate and initialize an instance of a `new Reveal(…)` presentation.\n\n```xml\n<div class=\"reveal\">\n  <div class=\"slides\">\n    …\n  </div>\n</div>\n```\n\nThe `<$slide>` widget will generate a `<section>` converting the ''camelCase'' attributes to `data-*` attributes.\n\n!! Known caveats\n\nTiddlers with an embedded presentation will ''not'' refresh when slides change. This is an unfortunate limitation with the Reveal.js library as it expects to be initialized once and not have the DOM mutate beneath it. This only affects dynamic adding and removing of slides via TiddlyWiki. Updating a slides content will be reflected in a currently rendered presentation. Close and reopen the presentation tiddler to get the updated slides.\n\nThe `hash` configuration options is not compatible with TiddlyWiki.\n\nThe Speaker notes does not work with TiddlyWiki as it depends on routing to the hash URL which TiddlyWiki intercepts.\n",
+        "cpl.author": "Sukima",
+        "cpl.description": "将Reveal.js演示文稿嵌入到TiddlyWiki中。",
+        "cpl.sourse": "https://github.com/sukima/tiddlywiki-reveal-js"
+    }
+]
