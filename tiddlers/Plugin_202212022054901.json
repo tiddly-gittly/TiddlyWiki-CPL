@@ -3,7 +3,7 @@
         "created": "20221201192054901",
         "creator": "林一二",
         "title": "Plugin_202212022054901",
-        "modified": "20221201192446488",
+        "modified": "20221201193607781",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -18,7 +18,7 @@
         "cpl.description": "Widget and Page Layout displaying tiddlers on calendar and agenda, based on created, modified, startDate and endDate fields.",
         "cpl.author": "LinOnetwo",
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-calendar/releases/latest/download/__plugins_linonetwo_tw-calendar.json",
-        "cpl.readme": "# Provides a calendar widget, use it like `<$calendar />`\n# Use the whole wiki as a data source, aggregate tiddler based on their `created` `modified` `startDate` and `endDate` field\n# Drag to create new event with `startDate` and `endDate` field\n# Provides a calendar view, use `ctrl+shift+L` to switch to this view, you can click `Home` button to go back",
+        "cpl.readme": "# Provides a calendar widget, use it like `<$calendar />`\n# Use the whole wiki as a data source, aggregate tiddler based on their `created` `modified` `startDate` and `endDate` field\n# Drag to create new event with `startDate` and `endDate` field\n# Provides a calendar view, use `ctrl+shift+L` to switch to this view, you can click `Home` button to go back\n# Add `color` field to change color. When `color` field missing, it will try get color from tags on it.",
         "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-calendar",
         "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-calendar"
     }
