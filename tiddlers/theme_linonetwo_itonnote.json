@@ -1,0 +1,20 @@
+[
+    {
+        "created": "20211210052714809",
+        "creator": "林一二",
+        "title": "theme/linonetwo/itonnote",
+        "modified": "20221204035401432",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "LinOnetwo",
+        "cpl.description": "ItonNote Light Theme",
+        "cpl.name": "Iton Note",
+        "cpl.plugin-type": "theme",
+        "cpl.readme": "A notion like white theme, build for TiddlyGit default light experience, good for eyes in light environment. ",
+        "cpl.sourse": "https://github.com/tiddly-gittly/itonnote-theme",
+        "cpl.title": "$:/themes/linonetwo/itonnote",
+        "cpl.uri": "https://github.com/tiddly-gittly/itonnote-theme/releases/latest/download/__themes_linonetwo_itonnote.json",
+        "cpl.documentation": "https://tiddly-gittly.github.io/itonnote-theme/"
+    }
+]
