@@ -1,0 +1,22 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: LinOnetwo
+cpl.description: Import *.ical calendar file exported from services like GoogleCalendar into TiddlyWiki.
+cpl.documentation: https://tiddly-gittly.github.io/ical-calendar-importer/
+cpl.name: iCal Calendar Importer
+cpl.parent-plugin: $:/plugins/linonetwo/tw-calendar
+cpl.readme: See [[demo site|https://tiddly-gittly.github.io/ical-calendar-importer/]] for usage!
+cpl.sourse: https://github.com/tiddly-gittly/ical-calendar-importer
+cpl.title: $:/plugins/linonetwo/ical-calendar-importer
+cpl.uri: https://github.com/tiddly-gittly/ical-calendar-importer/releases/latest/download/__plugins_linonetwo_ical-calendar-importer.json
+created: 20221205184827319
+creator: 林一二
+description: 
+modified: 20221205185240564
+modifier: 林一二
+name: 
+tags: $:/tags/PluginWiki
+title: Plugin_202212064827319
+type: text/vnd.tiddlywiki
+uri: 
