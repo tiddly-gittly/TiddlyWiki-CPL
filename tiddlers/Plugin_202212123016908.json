@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20221212153016908",
+        "creator": "林一二",
+        "title": "Plugin_202212123016908",
+        "modified": "20221212153655014",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/tiddlywiki/tiddloid-tweaks",
+        "cpl.name": "Tiddloid Tweaks",
+        "cpl.readme": "This plugin applies appearance tweaks to Tiddloid client. Currently it have these features:\n\n* Hiding the toolbar when the file is fully loaded (Thanks to jdjdjdjdjdjd's [[idea|https://github.com/donmor/Tiddloid/issues/7]])\n* Making the toolbar (as well as system status bar and navigation bar) match the page background\n* An `Export data` link in [[ControlPanel|$:/ControlPanel]]\n* An entrance to a JSON tiddler where custom action buttons on the toolbar can be configured",
+        "cpl.description": "Applies appearance tweaks to Tiddloid client",
+        "cpl.author": "donmor",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-whiteboard/releases/latest/download/tiddloid-tweaks-plugin.tid",
+        "cpl.sourse": "https://github.com/donmor/Tiddloid/blob/master/app/src/main/assets/tiddloid-tweaks-plugin.tid"
+    }
+]
