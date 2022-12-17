@@ -11,6 +11,8 @@ let $tw;
 const repoFolder = path.join(path.dirname(__filename), "..");
 // https://github.com/twcloud/tiddlyweb-sse use .info as extension name
 $tw.config.fileExtensionInfo['.info'] = $tw.config.fileExtensionInfo['.json']
+// default empty ext name as .html, because https://tiddlywiki.com/editions/full don't have an ext name,
+$tw.config.fileExtensionInfo[''] = $tw.config.fileExtensionInfo['.html']
 
 /**
  * 执行命令行指令，并打印该指令的结果
