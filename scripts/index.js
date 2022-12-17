@@ -75,24 +75,6 @@ function getTiddlerFromFile(wikiFile, tiddlerTitle) {
   }
 }
 
-function getTiddlersFromFile(wikiFile) {
-  try {
-    const fileType = path.extname(wikiFile).toLowerCase();
-    if (fileType === "" || !(fileType in $tw.config.fileExtensionInfo))
-      return [];
-    const fileMIME = $tw.config.fileExtensionInfo[fileType].type;
-    const fileText = fs.readFileSync(wikiFile).toString("utf8");
-    return $tw.wiki.deserializeTiddlers(fileMIME, fileText, {});
-  } catch (e) {
-    console.error(chalk.red.bold(e));
-    return undefined;
-  }
-}
-
-function saveTiddlersFromFile(wikiFile) {
-  getTiddlersFromFile(wikiFile).forEach($tw.wiki.addTiddler);
-}
-
 /**
  * 判断是否是安装后需要重新加载页面的插件
  * @param {Record<string, string | number>} pluginTiddler 插件tiddler
