@@ -14,7 +14,7 @@
         "cpl.description": "Be notified when tiddlers are scrolled into view",
         "cpl.uri": "http://tiddlymap.org/index.html",
         "cpl.readme": "The HotZone plugin gives you Information about the tiddler currently in focus.\n\nEverytime a tiddler's body reaches a defined threshold, the value of `$:/temp/focussedTiddler` is updated with the title of the currently focussed tiddler. Moreover, a css class (`hzone-focus`) is added to the tiddler frame to allow css styling.\n\n!! Inspiration\n\nYou could write a small widget that listens to the changes of `$:/temp/focussedTiddler` to \n\n* Unfold the table of contents or highlight the current topic.\n* Change the page title\n* Update the permalink in the address bar\n* Log the user behavior\n* Highlight the focussed tiddler\n\nTiddlyMap uses the HotZone plugin to update its live view in the sidebar. Now that's cool or not?",
-        "cpl.sourse": "https://github.com/felixhayashi/TW5-HotZone",
+        "cpl.source": "https://github.com/felixhayashi/TW5-HotZone",
         "cpl.core-version": ">=5.1.5",
         "cpl.plugin-type": "plugin"
     }

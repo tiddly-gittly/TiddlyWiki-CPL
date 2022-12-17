@@ -17,7 +17,7 @@
         "cpl.version": "",
         "cpl.uri": "https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fnotionpage-backlink.json",
         "cpl.readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n在Tiddler的副标题下添加类似Notion的反向链接按钮。样例可见本tiddler的标题下方。\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\nAdd notion-like backlink button under tiddler's subtitle. A sample can be found below the title of this tiddler.\n\n</$list>\n</$list>",
-        "cpl.sourse": "https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/notionpage-backlink",
+        "cpl.source": "https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/notionpage-backlink",
         "cpl.documentation": "https://gk0wk.github.io/TiddlySeq/#Notion-like%20backlinks%20box",
         "cpl.plugin-type": "plugin"
     }

@@ -14,7 +14,7 @@
         "cpl.description": "A very lightweight way of flagging something for later. ☐ make this funnier later 😊",
         "cpl.uri": "https://stobot.github.io/sticky/index.html",
         "cpl.readme": "[[Sticky Todo|https://stobot.github.io/sticky]] is intended as a lightweight addition to your task management toolbox within TiddlyWiki. It's for things that on paper you might add a sticky-note to. Some of those things can be handled in a minute, some of those things might be added to your formal task list. Because of that, the priorities with this plugin are:\n\n# ''Quickness to add to'' - must minimize the interruption to note taking\n# ''Lightness of storage'' - no data to be stored outside the tiddler text area where notes are being taken\n\nMuch more documentation including a video walkthrough is available at [ext[https://stobot.github.io/sticky/]]\n\nFor questions or suggestions, I can be found as @stobot at [ext[https://talk.tiddlywiki.org/]] as well\n\nNote that I'm not an TiddlyWiki expert or software developer and offer no warranty, PLEASE BACKUP before / while using.\n",
-        "cpl.sourse": "https://github.com/stobot/sticky",
+        "cpl.source": "https://github.com/stobot/sticky",
         "cpl.documentation": "https://stobot.github.io/sticky",
         "cpl.plugin-type": "plugin"
     }

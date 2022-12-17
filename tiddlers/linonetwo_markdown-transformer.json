@@ -15,7 +15,7 @@
         "cpl.description": "Generate wikitext from markdown file, help you migrate your markdown to wikitext.",
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fmarkdown-transformer.json",
         "cpl.readme": "!! Background\n\n[[Web-clipper|https://github.com/webclipper/web-clipper/]] only provides the markdown output, and markdown don't have block level editor [[section-editor|https://github.com/kookma/TW-Section]] support. So we need a way to convert markdown to tiddlywiki's wikitext.\n\n!! Basic Usage\n\n!!! Button on markdown Tiddler Type\n\nIf you add filetype `text/x-markdown` to your tiddler, there will be a view toolbar icon show up, which will help you transform markdown to tiddlywiki on clicked.\n\n!! TODO\n\nWe use [[Unifiedjs|https://github.com/unifiedjs/unified]]'s [[mdast-util-from-markdown|https://github.com/syntax-tree/mdast-util-from-markdown]] to parse md, and use modified version of [[mdast-util-to-markdown|https://github.com/syntax-tree/mdast-util-to-markdown]] to generate tid file. If someday we have a tid parser that generate unified AST, we might be able to generate md file from tid.\n\n!! Developer\n\nThis project is based on the [[tiddly-gittly/md-to-tid|https://github.com/tiddly-gittly/md-to-tid]], you might want to take a look and give it a star.\n",
-        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/markdown-transformer",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/markdown-transformer",
         "cpl.plugin-type": "plugin"
     }
 ]

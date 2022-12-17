@@ -20,6 +20,6 @@
         "cpl.description": "Applies appearance tweaks to Tiddloid client",
         "cpl.author": "donmor",
         "cpl.uri": "https://github.com/donmor/Tiddloid/releases/latest/download/tiddloid-tweaks-plugin.tid",
-        "cpl.sourse": "https://github.com/donmor/Tiddloid/blob/master/app/src/main/assets/tiddloid-tweaks-plugin.tid"
+        "cpl.source": "https://github.com/donmor/Tiddloid/blob/master/app/src/main/assets/tiddloid-tweaks-plugin.tid"
     }
 ]

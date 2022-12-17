@@ -3,7 +3,7 @@ cpl.core-version: >=5.2.0
 cpl.description: 提供模糊搜索和拼音搜索的能力
 cpl.name: pinyin-fuzzy-search
 cpl.plugin-type: plugin
-cpl.sourse: https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/src/pinyin-fuzzy-search
+cpl.source: https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/src/pinyin-fuzzy-search
 cpl.title: $:/plugins/linonetwo/pinyin-fuzzy-search
 cpl.uri: https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fpinyin-fuzzy-search.json
 created: 20211209170052386

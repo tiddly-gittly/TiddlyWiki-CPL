@@ -14,7 +14,7 @@
         "cpl.description": "VSCode style opened files top bar",
         "cpl.uri": "https://github.com/tiddly-gittly/opened-tiddlers-bar/releases/latest/download/__plugins_linonetwo_opened-tiddlers-bar.json",
         "cpl.readme": "!! Features\n\nThis plugin provides VSCode style \"Opened Tiddlers\" top bar\n\nUse the middle mouse button or the X button to close the tab.\n\nUse Shift + mouse wheel to swipe sideways to view.\n\n!! Credits\n\nThis plugin is based on [[$:/plugins/bj/storytabs|http://bjtools.tiddlyspot.com/]] , which is in MIT license, thank you, Buggyj!\n",
-        "cpl.sourse": "https://github.com/tiddly-gittly/opened-tiddlers-bar",
+        "cpl.source": "https://github.com/tiddly-gittly/opened-tiddlers-bar",
         "cpl.plugin-type": "plugin",
         "cpl.documentation": "https://tiddly-gittly.github.io/opened-tiddlers-bar/"
     }

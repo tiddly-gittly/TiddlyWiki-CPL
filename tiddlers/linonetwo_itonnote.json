@@ -15,7 +15,7 @@
         "cpl.description": "Heavy lifting for new users to set up a powerful and opinionated knowledge management system in TidGi Desktop. ",
         "cpl.uri": "https://github.com/tiddly-gittly/itonnote-plugin/releases/latest/download/__plugins_linonetwo_itonnote.json",
         "cpl.readme": "!! 功能\n\n预配置了一系列琐碎的内容，一般来自各插件的Readme和论坛讨论，但大多数人懒得看Readme，故在此直接帮忙配置好了。\n\n具体预置内容介绍可见文档网站。\n",
-        "cpl.sourse": "https://github.com/tiddly-gittly/itonnote-plugin",
+        "cpl.source": "https://github.com/tiddly-gittly/itonnote-plugin",
         "cpl.plugin-type": "plugin",
         "cpl.documentation": "https://tiddly-gittly.github.io/itonnote-plugin",
         "cpl.dependents": "$:/plugins/bimlas/locator"

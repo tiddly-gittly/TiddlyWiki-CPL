@@ -15,7 +15,7 @@
         "description": "",
         "name": "",
         "cpl.uri": "https://raw.githubusercontent.com/cdaven/tiddlywiki-stuff/main/markdown-export/%24__plugins_cdaven_markdown-export.json",
-        "cpl.sourse": "https://github.com/cdaven/tiddlywiki-stuff/tree/main/markdown-export",
+        "cpl.source": "https://github.com/cdaven/tiddlywiki-stuff/tree/main/markdown-export",
         "cpl.title": "$:/plugins/cdaven/markdown-export",
         "cpl.name": "markdown-export 导出Markdown",
         "cpl.description": "Export tiddlers to Markdown.",

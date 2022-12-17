@@ -19,7 +19,7 @@
         "cpl.description": "graphviz",
         "cpl.documentation": "https://chanilino.github.io/tw5viz/tw5.html",
         "cpl.readme": "Plugin based on grapviz library:\n\nhttps://github.com/mdaines/viz.js/\n\nFor syntax of graphviz:\n\n* https://graphs.grevian.org/example\n* https://graphviz.gitlab.io/documentation/\n* https://www.graphviz.org/ ",
-        "cpl.sourse": "https://github.com/chanilino/tw5viz",
+        "cpl.source": "https://github.com/chanilino/tw5viz",
         "cpl.name": "viz"
     }
 ]

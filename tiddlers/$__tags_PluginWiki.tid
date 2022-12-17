@@ -47,7 +47,7 @@ type: text/vnd.tiddlywiki
 </$list>
 <div class="tc-plugin-info-dropdown-body">
 <$list filter="[<currentTiddler>get[cpl.documentation]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/home-button}} <$text text=<<url>>/></$button><br/></$list>
-<$list filter="[<currentTiddler>get[cpl.sourse]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text=<<url>>/></$button><br/></$list>
+<$list filter="[<currentTiddler>get[cpl.source]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text=<<url>>/></$button><br/></$list>
 <$transclude tiddler=<<currentTiddler>> field="cpl.readme" mode="block"/>
 </div>
 </div>
@@ -83,7 +83,7 @@ type: text/vnd.tiddlywiki
 |!类型 |<$select field="cpl.plugin-type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
 |!介绍 |<$edit-codemirror class="edit-plugin-textarea" field="cpl.readme" placeholder="插件的详细介绍" type="text/vnd.tiddlywiki"/> |
 |!图标 |<$edit-text field="cpl.icon" placeholder="插件图标的URL" tag=input/> |
-|!源代码 |<$edit-text field="cpl.sourse" tag=input placeholder="Source Code Project URL"/> |
+|!源代码 |<$edit-text field="cpl.source" tag=input placeholder="Source Code Project URL"/> |
 |!文档 |<$edit-text field="cpl.documentation" tag=input placeholder="Documentation URL"/> |
 |!前置依赖 |<$edit-text class="tc-edit-texteditor" field="cpl.dependents" placeholder="前置依赖插件的标题" tag=textarea/> |
 |!父插件 |<$edit-text field="cpl.parent-plugin" tag=input placeholder="父插件的标题"/> |
@@ -101,7 +101,7 @@ type: text/vnd.tiddlywiki
 |!Type |<$select field="cpl.plugin-type" default="plugin"><$list filter="[[plugin]] [[language]] [[theme]] [[import]] [[library]] [[info]]"><option value=<<currentTiddler>>><$view field="title"/></option></$list></$select> |
 |!Readme |<$edit-codemirror class="edit-plugin-textarea" field="cpl.readme" placeholder="Readme of this plugin." type="text/vnd.tiddlywiki"/> |
 |!Icon |<$edit-text field="cpl.icon" placeholder="URL of plugin's Icon" tag=input/> |
-|!Source |<$edit-text field="cpl.sourse" tag=input placeholder="Source Code Project URL"/> |
+|!Source |<$edit-text field="cpl.source" tag=input placeholder="Source Code Project URL"/> |
 |!Documentation |<$edit-text field="cpl.documentation" tag=input placeholder="Documentation URL"/> |
 |!Dependents |<$edit-text class="tc-edit-texteditor" field="cpl.dependents" placeholder="Dependent plugin titles." tag=textarea/> |
 |!Parent Plugin |<$edit-text field="cpl.parent-plugin" tag=input placeholder="Parent plugin title"/> |

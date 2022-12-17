@@ -14,7 +14,7 @@
         "cpl.description": "Allow you make some tiddlers private, and store them in a private repo.",
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fsub-wiki.json",
         "cpl.readme": "!! Usage\n\nEdit [[`tiddlers/FileSystemPaths.tid`|FileSystemPaths.tid]] using VSCode or automatically updated by TiddlyGitDesktop (instead of edit it from the TiddlyWiki) to be something like:\n\n```tid\n[!is[system]kin::to[APrivateContent]addprefix[subwiki/private-wiki/]]\n[!is[system]kin::to[Photos]addprefix[subwiki/private-wiki-photos/]]\n```\n",
-        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/sub-wiki",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/sub-wiki",
         "cpl.plugin-type": "plugin"
     }
 ]

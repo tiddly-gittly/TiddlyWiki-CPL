@@ -19,6 +19,6 @@
         "cpl.dependents": "",
         "cpl.core-version": ">=5.2.1",
         "cpl.documentation": "https://kookma.github.io/TW-Gatha/",
-        "cpl.sourse": "https://github.com/kookma/TW-Gatha"
+        "cpl.source": "https://github.com/kookma/TW-Gatha"
     }
 ]

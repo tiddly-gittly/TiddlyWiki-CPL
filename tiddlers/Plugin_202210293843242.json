@@ -18,7 +18,7 @@
         "cpl.description": "TiddlyWiki游戏",
         "cpl.author": "Miao(WhiteFall)",
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-game-2048/releases/latest/download/tiddlywiki-game-2048.json",
-        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-game-2048",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-game-2048",
         "cpl.core-version": ">=5.1.23",
         "cpl.version": "",
         "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-game-2048/tw-2048-Gatha.html",

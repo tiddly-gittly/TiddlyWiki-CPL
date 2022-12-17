@@ -11,7 +11,7 @@
         "cpl.description": "A shared dependency for many plugins, to reduce those plugins' size. 许多插件的共享依赖，以减少这些插件的大小。\n\n",
         "cpl.name": "ReactJS",
         "cpl.plugin-type": "plugin",
-        "cpl.sourse": "https://github.com/tiddly-gittly/tw-react",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-react",
         "cpl.title": "$:/plugins/linonetwo/tw-react",
         "cpl.uri": "https://github.com/tiddly-gittly/tw-react/releases/latest/download/__plugins_linonetwo_tw-react.json",
         "page-cover": "https://reactjs.org/static/bb4b10114882a50090b8ff61b3c4d0fd/1e088/react_17_delegation.png",

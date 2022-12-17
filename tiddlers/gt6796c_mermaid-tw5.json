@@ -16,7 +16,7 @@
         "cpl.uri": "https://efurlanm.github.io/mermaid-tw5.html",
         "cpl.readme": "This is a TiddlyWiki plugin for using [[mermaid.js|https://mermaid-js.github.io/mermaid/#/]].\n\nIt is completely self-contained, and doesn't need an Internet connection in order to work. It works both in the browser and under Node.js.\n\nIt is currently based on [[mermaid.js 8.13.2|http://mermaid-js.github.io/mermaid]]\n\n!! Installation\nYou can drag the plugin link into your TiddlyWiki to install, from http://efurlanm.github.io/mermaid-tw5\n\n!! Dependencies\n;This plugin requires:\n*[[rocklib Plugin|https://gt6796c.github.io]]\n(will be auto installed by CPL)",
         "cpl.icon": "https://mermaid-js.github.io/mermaid/img/header.png",
-        "cpl.sourse": "https://github.com/efurlanm/mermaid-tw5",
+        "cpl.source": "https://github.com/efurlanm/mermaid-tw5",
         "cpl.documentation": "https://efurlanm.github.io/mermaid-tw5",
         "cpl.dependents": "gt6796c/rocklib",
         "cpl.plugin-type": "plugin"

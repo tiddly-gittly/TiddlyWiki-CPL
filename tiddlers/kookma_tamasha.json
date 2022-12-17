@@ -19,6 +19,6 @@
         "cpl.dependents": "",
         "cpl.core-version": ">=5.1.23",
         "cpl.documentation": "https://kookma.github.io/TW-Tamasha/",
-        "cpl.sourse": "https://github.com/kookma/TW-Tamasha"
+        "cpl.source": "https://github.com/kookma/TW-Tamasha"
     }
 ]

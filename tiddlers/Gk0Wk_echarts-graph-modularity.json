@@ -16,7 +16,7 @@
         "cpl.description": "Graph modularity extension for Apache ECharts",
         "cpl.uri": "https://tiddly-gittly.github.io/tw-echarts/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fecharts-graph-modularity.json",
         "cpl.readme": "<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n<$list filter=\"[<lang>search[zh]]\">\n\n[[Graph modularity extension|https://github.com/ecomfe/echarts-graph-modularity]] 将进行社区检测，并将图的顶点划分为几个子集。每个子集都将被分配一个不同的颜色。\n\n* 文档: https://github.com/ecomfe/echarts-graph-modularity\n\n</$list>\n\n<$list filter=\"[<lang>!search[zh]]\">\n\n[[Graph modularity extension|https://github.com/ecomfe/echarts-graph-modularity]] will do community detection and partition a graph's vertices in several subsets. Each subset will be assigned a different color.\n\n* Doc: https://github.com/ecomfe/echarts-graph-modularity\n\n</$list>\n</$list>\n\n[img[https://github.com/ecomfe/echarts-graph-modularity/raw/master/example/modularity.png]]",
-        "cpl.sourse": "https://github.com/tiddly-gittly/tw-echarts/tree/master/plugins/Gk0Wk/echarts-graph-modularity",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-echarts/tree/master/plugins/Gk0Wk/echarts-graph-modularity",
         "cpl.documentation": "",
         "cpl.dependents": "$:/plugins/Gk0Wk/echarts",
         "cpl.parent-plugin": "$:/plugins/Gk0Wk/echarts",

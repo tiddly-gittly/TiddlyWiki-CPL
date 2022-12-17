@@ -14,7 +14,7 @@
         "cpl.description": "Use github as your image storage, add _canonical_uri to all image, pointing to raw.github",
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fgithub-external-image.json",
         "cpl.readme": "!! Usage\n\nPlease fill in [[$:/GitHub/Repo]] and [[$:/config/linonetwo/github-external-image/tiddler-folder-name]] to get started.\n\nThen, on build, all images will be replaced by place holders.\n\nPlease use following build target:\n\n```json\n\"externalimages\": [\n  \"--setfield\",\n  \"[is[binary]] [type[application/msword]]\",\n  \"_canonical_uri\",\n  \"$:/core/templates/canonical-uri-external-image\",\n  \"text/plain\",\n  \"--setfield\",\n  \"[is[binary]] [type[application/msword]]\",\n  \"text\",\n  \"$:/core/templates/canonical-uri-external-image\",\n  \"text/plain\",\n  \"--rendertiddler\",\n  \"$:/core/save/all\",\n  \"index.html\",\n  \"text/plain\"\n],\n```\n",
-        "cpl.sourse": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/github-external-image",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/github-external-image",
         "cpl.plugin-type": "plugin"
     }
 ]

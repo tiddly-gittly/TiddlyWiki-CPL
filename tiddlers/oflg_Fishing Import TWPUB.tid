@@ -7,7 +7,7 @@ cpl.name: Fishing Import TWPUB
 cpl.parent-plugin: $:/plugins/oflg/fishing
 cpl.plugin-type: plugin
 cpl.readme: <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang"><$list filter="[<lang>search[zh]]">[[钓鱼|https://tiddlymemo.org/manual/zh-Hans#%E9%92%93%E9%B1%BC%E6%8F%92%E4%BB%B6]]的导入 TWPUB 电子书子插件。导入 TWPUB 电子书进行渐进阅读。。</$list><$list filter="[<lang>!search[zh]]">Incremental Reading plugin for [[Fishing|https://tiddlymemo.org/manual/zh-Hans#%E9%92%93%E9%B1%BC%E6%8F%92%E4%BB%B6]]. Import TWPUB eBooks for incremental reading.</$list></$list>
-cpl.sourse: https://github.com/oflg/fishing-twpub
+cpl.source: https://github.com/oflg/fishing-twpub
 cpl.title: $:/plugins/oflg/fishing-twpub
 cpl.uri: https://tiddlymemo.org/manual/index.html
 created: 20220111081953232
