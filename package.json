@@ -33,7 +33,7 @@
         "workbox-cli": "6.5.4"
     },
     "dependencies": {
-        "chalk": "5.2.0",
+        "chalk": "4.1.2",
         "readline-sync": "^1.4.10"
     }
 }

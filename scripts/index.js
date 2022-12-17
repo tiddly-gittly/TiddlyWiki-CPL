@@ -9,6 +9,8 @@ let $tw;
 
 /** 项目路径 */
 const repoFolder = path.join(path.dirname(__filename), "..");
+// https://github.com/twcloud/tiddlyweb-sse use .info as extension name
+$tw.config.fileExtensionInfo['.info'] = $tw.config.fileExtensionInfo['.json']
 
 /**
  * 执行命令行指令，并打印该指令的结果
