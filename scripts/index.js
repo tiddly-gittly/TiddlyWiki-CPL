@@ -200,14 +200,14 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   if (!newInfoTiddler.readme || newInfoTiddler.readme.trim() === "") {
     newInfoTiddler.readme = getReadmeFromPlugin(pluginTiddler);
   }
-  if (newInfoTiddler.documentation && newInfoTiddler.documentation !== "")
+  if (infoTiddler['cpl.documentation'] && infoTiddler['cpl.documentation'] !== '') {
     newInfoTiddler.readme =
-      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.documentation}">{{$:/core/images/home-button}} <$text text="${newInfoTiddler.documentation}"/></$button><br/>` +
-      newInfoTiddler.readme;
-  if (newInfoTiddler.source && newInfoTiddler.source !== "")
+      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler['cpl.documentation']}">{{$:/core/images/home-button}} <$text text="${infoTiddler['cpl.documentation']}"/></$button>\n\n${newInfoTiddler.readme}`;
+  }
+  if (infoTiddler['cpl.source'] && infoTiddler['cpl.source'] !== '') {
     newInfoTiddler.readme =
-      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${newInfoTiddler.source}">{{$:/core/images/github}} <$text text="${newInfoTiddler.source}"/></$button><br/>` +
-      newInfoTiddler.readme;
+      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler['cpl.source']}">{{$:/core/images/github}} <$text text="${infoTiddler['cpl.source']}"/></$button>\n\n${newInfoTiddler.readme}`;
+  }
   // 改成只保留指定的字段
   const fields = Object.keys(newInfoTiddler);
   for (let i = 0, length = fields.length; i < length; i++) {
@@ -277,6 +277,9 @@ function importLibrary() {
   questionLoop();
 }
 
+/**
+ * Will move value in the left key, to the right key. So we can just process standard cpl.xxx keys
+ */
 const fieldConvert = [
   ["title", "cpl.title"],
   ["author", "cpl.author"],
