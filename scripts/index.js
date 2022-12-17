@@ -202,11 +202,11 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   }
   if (infoTiddler['cpl.documentation'] && infoTiddler['cpl.documentation'] !== '') {
     newInfoTiddler.readme =
-      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler['cpl.documentation']}">{{$:/core/images/home-button}} <$text text="${infoTiddler['cpl.documentation']}"/></$button>\n\n${newInfoTiddler.readme}`;
+      `<$button class="tc-btn-invisible" style="overflow: hidden;white-space: pre;width: 100%;" message="tm-open-external-window" param="${infoTiddler['cpl.documentation']}">{{$:/core/images/home-button}} <$text text="${infoTiddler['cpl.documentation']}"/></$button>\n\n${newInfoTiddler.readme}`;
   }
   if (infoTiddler['cpl.source'] && infoTiddler['cpl.source'] !== '') {
     newInfoTiddler.readme =
-      `<$button class="tc-btn-invisible" message="tm-open-external-window" param="${infoTiddler['cpl.source']}">{{$:/core/images/github}} <$text text="${infoTiddler['cpl.source']}"/></$button>\n\n${newInfoTiddler.readme}`;
+      `<$button class="tc-btn-invisible" style="overflow: hidden;white-space: pre;width: 100%;" message="tm-open-external-window" param="${infoTiddler['cpl.source']}">{{$:/core/images/github}} <$text text="${infoTiddler['cpl.source']}"/></$button>\n\n${newInfoTiddler.readme}`;
   }
   // 改成只保留指定的字段
   const fields = Object.keys(newInfoTiddler);
