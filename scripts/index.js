@@ -12,8 +12,33 @@ const repoFolder = path.join(path.dirname(__filename), "..");
 
 function fixExtName() {
   // https://github.com/twcloud/tiddlyweb-sse use .info as extension name
-  $tw.config.fileExtensionInfo['.info'] = $tw.config.fileExtensionInfo['.json']
+  $tw.config.fileExtensionInfo['.info'] = { type: 'application/json-info' };
+  $tw.Wiki.tiddlerDeserializerModules['application/json-info'] = infoPluginDeserializer
 }
+/**
+ * https://github.com/twcloud/tiddlyweb-sse is a json with `tiddlers` field, which should have been a stringified JSON text in the text field.
+ * 
+ * tw's json deserializer will omit all non-text field. we have to fix that in our deserializer
+ * 
+ * copy from tw core's core/modules/deserializers.js
+ */
+function infoPluginDeserializer(text,fields) {
+	var results = [],
+		incoming = $tw.utils.parseJSONSafe(text,function(err) {
+			return [{
+				title: "JSON error: " + err,
+				text: ""
+			}];
+		});
+	if(!$tw.utils.isArray(incoming)) {
+		incoming = [incoming];
+	}
+	for(var t=0; t<incoming.length; t++) {
+		var incomingFields = incoming[t]
+		results.push(incomingFields);
+	}
+	return results;
+};
 
 /**
  * 执行命令行指令，并打印该指令的结果
@@ -86,7 +111,7 @@ function getTiddlerFromFile(wikiFile, tiddlerTitle) {
  * @returns {boolean} 需要重载则返回true，反之
  */
 function ifPluginRequiresReload(pluginTiddler) {
-  const shadowTiddlers = JSON.parse(pluginTiddler.text).tiddlers;
+  const shadowTiddlers = getPluginContentTiddlers(pluginTiddler);
   const shadowTitles = Object.keys(shadowTiddlers);
   for (let i = 0, length = shadowTitles.length; i < length; i++) {
     const tiddler = shadowTiddlers[shadowTitles[i]];
@@ -142,7 +167,7 @@ function mergeField(fieldName, plugin, info, fallback) {
 
 function getReadmeFromPlugin(pluginTiddler) {
   try {
-    const readmeTiddler = JSON.parse(pluginTiddler.text).tiddlers[
+    const readmeTiddler = getPluginContentTiddlers(pluginTiddler)[
       pluginTiddler.title + "/readme"
     ];
     return readmeTiddler ? readmeTiddler.text : "";
@@ -161,6 +186,10 @@ const mergingFields = [
   "core-version",
   "icon",
 ];
+
+function getPluginContentTiddlers(pluginTiddler) {
+  return pluginTiddler.tiddlers ?? JSON.parse(pluginTiddler.text).tiddlers
+}
 
 function mergePluginInfo(pluginTiddler, infoTiddler) {
   let newInfoTiddler = {
