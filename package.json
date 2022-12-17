@@ -26,14 +26,14 @@
     "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
     "devDependencies": {
         "cross-env": "7.0.3",
-        "html-minifier-terser": "6.1.0",
-        "tiddlywiki": "5.2.2",
-        "tw5-typed": "0.2.13",
+        "html-minifier-terser": "7.1.0",
+        "tiddlywiki": "5.2.4",
+        "tw5-typed": "0.2.14",
         "uglify-js": "3.17.4",
-        "workbox-cli": "6.5.3"
+        "workbox-cli": "6.5.4"
     },
     "dependencies": {
-        "chalk": "4.1.2",
+        "chalk": "5.2.0",
         "readline-sync": "^1.4.10"
     }
 }
