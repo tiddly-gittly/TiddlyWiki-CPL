@@ -34,8 +34,19 @@ function infoPluginDeserializer(text,fields) {
 		incoming = [incoming];
 	}
 	for(var t=0; t<incoming.length; t++) {
-		var incomingFields = incoming[t]
-		results.push(incomingFields);
+		var incomingFields = incoming[t],
+			fields = {};
+		for(var f in incomingFields) {
+			if(typeof incomingFields[f] === "string") {
+				fields[f] = incomingFields[f];
+			} else if (f === 'tiddlers' && typeof incomingFields[f] === 'object') {
+        Object.keys(incomingFields[f]).forEach(tiddlerTitle => {
+          incomingFields[f][tiddlerTitle].text = incomingFields[f][tiddlerTitle].text.replaceAll('\r\n', '\n\n').replaceAll('\t', ' ')
+        })
+				fields['text'] = JSON.stringify({[f]:incomingFields[f]});
+      }
+		}
+		results.push(fields);
 	}
 	return results;
 };
