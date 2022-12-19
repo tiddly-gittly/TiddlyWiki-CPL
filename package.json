@@ -27,7 +27,7 @@
     "devDependencies": {
         "cross-env": "7.0.3",
         "html-minifier-terser": "7.1.0",
-        "tiddlywiki": "5.2.4",
+        "tiddlywiki": "5.2.5",
         "tw5-typed": "0.2.15",
         "uglify-js": "3.17.4",
         "workbox-cli": "6.5.4"
