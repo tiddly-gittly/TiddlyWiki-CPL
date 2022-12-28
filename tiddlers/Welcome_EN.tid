@@ -1,5 +1,5 @@
 created: 20220118143905182
-modified: 20220322171544536
+modified: 20221228055030644
 title: Welcome_EN
 type: text/vnd.tiddlywiki
 
@@ -11,10 +11,11 @@ If you don't know how to use ~TiddlyWiki and this source, you are welcome to rea
 
 To add this plugin library to your Wiki, simply drag the link below to your Wiki with your mouse:
 
-* <$link to="$:/config/TiddlyWiki-CPL/Netlify">{{$:/config/TiddlyWiki-CPL/Netlify!!caption}}</$link> The source version of this plugin is a version accelerated by netlify.app, which is more friendly to China mainland users, but there is a certain delay in updating.
-* <$link to="$:/config/TiddlyWiki-CPL/GitHub">{{$:/config/TiddlyWiki-CPL/GitHub!!caption}}</$link> The source version of this plugin is the ~GitHub Page version, which is more up-to-date, but may require VPN when you are in China mainland. If you are in China and are not sure what GFW is, please use the above version.
-
-Note: The content of the two is the same, only the former will be updated a little later. But both update the plugin information every hour, so it's not a big problem.
+<center>
+<$link to="$:/plugins/Gk0Wk/CPL-Repo">
+<div style="display:flex;color:white;font-weight:700;font-size:15px;background:#0A84FF;border-radius:3px;width:260px;justify-content:space-around;align-items:center;height:50px;padding:0 10px;" href="./offline.html">Drag me to your Wiki page {{$:/core/images/save-button}}</div>
+</$link>
+</center>
 
 @@color:red;''Please remember to back up your Wiki before installing any plugins, this plugin source cannot be held responsible for personal losses caused by plugins!''@@
 

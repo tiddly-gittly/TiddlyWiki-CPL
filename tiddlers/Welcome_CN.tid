@@ -1,5 +1,5 @@
 created: 20220118143832019
-modified: 20220322171554620
+modified: 20221228054753328
 tags: 
 title: Welcome_CN
 type: text/vnd.tiddlywiki
@@ -12,10 +12,11 @@ type: text/vnd.tiddlywiki
 
 要添加这个插件库到你的 Wiki 中，只需鼠标拖动如下链接到你的 Wiki 里即可：
 
-* <$link to="$:/config/TiddlyWiki-CPL/Netlify">{{$:/config/TiddlyWiki-CPL/Netlify!!caption}}</$link> 本插件源版本为经过 netlify.app 加速的版本，对国内用户更加友好，但是更新有一定的延迟。
-* <$link to="$:/config/TiddlyWiki-CPL/GitHub">{{$:/config/TiddlyWiki-CPL/GitHub!!caption}}</$link> 本插件源版本为 ~GitHub Page 的版本，更新更快，但是可能需要科学上网手段。如果你在国内，而且不清楚什么是“科学上网”，请选用上面的版本。
-
-注意：二者的内容是一样的，只是前者的更新会迟一些。但是二者都是每小时就更新一次插件信息，所以问题不大。
+<center>
+<$link to="$:/plugins/Gk0Wk/CPL-Repo">
+<div style="display:flex;color:white;font-weight:700;font-size:15px;background:#0A84FF;border-radius:3px;width:230px;justify-content:space-around;align-items:center;height:50px;padding:0 10px;" href="./offline.html">将我拖至你的 Wiki 页面 {{$:/core/images/save-button}}</div>
+</$link>
+</center>
 
 @@color:red;''安装任何插件前，请记得备份你的Wiki，本插件源无法为插件造成的个人损失负责！''@@
 
