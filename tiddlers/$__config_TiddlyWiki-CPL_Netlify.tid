@@ -3,7 +3,7 @@ created: 20211118102827947
 creator: Sttot
 modified: 20220322171459736
 modifier: Sttot
-tags: $:/tags/PluginLibrary
+tags: $:/tags/PluginLibrary $:/tags/PluginLibrary/CPL
 title: $:/config/TiddlyWiki-CPL/Netlify
 type: text/vnd.tiddlywiki
 url: https://tw-cpl.netlify.app/library/index.html
