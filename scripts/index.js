@@ -647,7 +647,7 @@ function buildLibrary(distDir, minify) {
         name: "CPL Repo",
         description: "Repos for CPL",
         author: "Gk0Wk",
-        text: JSON.stringify({ plugins: cplPluginTiddlers }),
+        text: JSON.stringify({ tiddlers: cplPluginTiddlers }),
       })
     );
     pluginsInfo.push({
