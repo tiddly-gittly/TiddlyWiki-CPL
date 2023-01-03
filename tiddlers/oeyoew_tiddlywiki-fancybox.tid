@@ -5,7 +5,6 @@ cpl.documentation: https://oeyoewl.top/fancybox-gallery-tiddlywiki
 cpl.name: Tiddlywiki Fancybox
 cpl.plugin-type: plugin
 cpl.readme:
-cpl.source: https://twms.vercel.app/
 cpl.sourse: https://github.com/oeyoews/neotw/tree/main/dev/plugins/tiddlywiki-fancybox
 cpl.title: $:/plugins/oeyoews/tiddlywiki-fancybox
 cpl.uri: https://neotw.netlify.app/main.html
