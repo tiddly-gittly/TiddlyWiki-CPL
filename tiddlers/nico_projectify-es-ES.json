@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20230105054217294",
+        "creator": "WhiteFall",
+        "text": "",
+        "title": "nico_projectify-es-ES",
+        "modified": "20230105054504133",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/nico/projectify-es-ES",
+        "cpl.description": "Projectify Castellano (Spain) ",
+        "cpl.name": "Projectify-es-ES",
+        "cpl.author": "nico",
+        "cpl.uri": "https://thaddeusjiang.github.io/Projectify/demo.html",
+        "cpl.readme": "For the Spanish language pack, Projectify Castellano (Spain) ",
+        "cpl.source": "https://github.com/NicolasPetton/Projectify",
+        "cpl.documentation": "https://thaddeusjiang.github.io/Projectify/demo.html",
+        "cpl.core-version": ">=5.1.23"
+    }
+]

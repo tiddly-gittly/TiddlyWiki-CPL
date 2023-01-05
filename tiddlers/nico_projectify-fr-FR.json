@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20230105053622355",
+        "creator": "WhiteFall",
+        "text": "",
+        "title": "nico_projectify-fr-FR",
+        "modified": "20230105054405553",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/nico/projectify-fr-FR",
+        "cpl.description": "Projectify Français (France) ",
+        "cpl.name": "Projectify-fr-FR",
+        "cpl.author": "nico",
+        "cpl.uri": "https://thaddeusjiang.github.io/Projectify/demo.html",
+        "cpl.readme": "For the French language pack,Projectify Français (France) ",
+        "cpl.source": "https://github.com/NicolasPetton/Projectify",
+        "cpl.documentation": "https://thaddeusjiang.github.io/Projectify/demo.html",
+        "cpl.core-version": ">=5.1.23"
+    }
+]
