@@ -1,0 +1,22 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: nico
+cpl.core-version: >=5.1.23
+cpl.description: Projectify Dutch (The Netherlands)
+cpl.documentation: https://thaddeusjiang.github.io/Projectify/demo.html
+cpl.name: Projectify-nl-NL
+cpl.readme: For the Dutch language pack,Projectify Dutch (The Netherlands)
+cpl.source: https://github.com/NicolasPetton/Projectify
+cpl.title: $:/plugins/nico/projectify-nl-NL
+cpl.uri: https://thaddeusjiang.github.io/Projectify/demo.html
+created: 20230105053903929
+creator: WhiteFall
+description: 
+modified: 20230105054430430
+modifier: WhiteFall
+name: 
+tags: $:/tags/PluginWiki
+title: nico_projectify-nl-NL
+type: text/vnd.tiddlywiki
+uri: 
