@@ -2,7 +2,7 @@
     {
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[lodash.js|https://lodash.com/]] is modern JavaScript utility library delivering modularity, performance & extras.\n",
+        "cpl.readme": "[[lodash.js|https://lodash.com/]] is modern JavaScript utility library delivering modularity, performance & extras.\n\n> This plugin uses the flexible and powerful <$text text=\"TiddlyWiki\" /> development framework [[Tiddly.ModernDev|https://github.com/tiddly-gittly/Modern.TiddlyDev]]\n",
         "cpl.uri": "https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Flodash.json",
         "cpl.title": "$:/plugins/Gk0Wk/lodash",
         "cpl.author": "Gk0Wk",
