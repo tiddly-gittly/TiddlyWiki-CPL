@@ -533,21 +533,21 @@ function buildLibrary(distDir, minify) {
         console.log(
           `- Downloading plugin file ${chalk.bold(tiddler["cpl.title"])}`
         );
-        const distPluginName =
-          formatTitle(tiddler["cpl.title"]) + path.extname(tiddler["cpl.uri"]) || '.html';
+        const distPluginContainerFileName =
+          formatTitle(tiddler["cpl.title"]) + (path.extname(tiddler["cpl.uri"]) || '.html');
         if (downloadFileMap[tiddler["cpl.uri"]]) {
           shellI(
             `cp ${
               downloadFileMap[tiddler["cpl.uri"]]
-            } ${distDir}/tmp/${distPluginName}`
+            } ${distDir}/tmp/${distPluginContainerFileName}`
           );
         } else {
           shellI(
-            `wget '${tiddler["cpl.uri"]}' -O ${distDir}/tmp/${distPluginName}`
+            `wget '${tiddler["cpl.uri"]}' -O ${distDir}/tmp/${distPluginContainerFileName}`
           );
           downloadFileMap[
             tiddler["cpl.uri"]
-          ] = `${distDir}/tmp/${distPluginName}`;
+          ] = `${distDir}/tmp/${distPluginContainerFileName}`;
         }
       }
     } catch (e) {
