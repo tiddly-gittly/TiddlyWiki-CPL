@@ -1,0 +1,21 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: yaisog
+cpl.description: select random tiddler(s) from the input
+cpl.documentation: https://yaisog.tiddlyhost.com/
+cpl.name: choose-random
+cpl.readme: 
+cpl.source: 
+cpl.title: $:/plugins/yaisog/choose-random-filter
+cpl.uri: https://yaisog.tiddlyhost.com
+created: 20230202214438725
+creator: 林一二
+description: 
+modified: 20230202214510934
+modifier: 林一二
+name: 
+tags: $:/tags/PluginWiki
+title: Plugin_202302034048668 1 1 1
+type: text/vnd.tiddlywiki
+uri: 

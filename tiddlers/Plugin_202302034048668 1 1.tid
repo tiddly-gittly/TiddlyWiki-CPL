@@ -1,0 +1,21 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: yaisog
+cpl.description: generate random numbers within a range
+cpl.documentation: https://yaisog.tiddlyhost.com/
+cpl.name: random-filter
+cpl.readme: 
+cpl.source: 
+cpl.title: $:/plugins/yaisog/random-filter
+cpl.uri: https://yaisog.tiddlyhost.com
+created: 20230202214355816
+creator: 林一二
+description: 
+modified: 20230202214514682
+modifier: 林一二
+name: 
+tags: $:/tags/PluginWiki
+title: Plugin_202302034048668 1 1
+type: text/vnd.tiddlywiki
+uri: 

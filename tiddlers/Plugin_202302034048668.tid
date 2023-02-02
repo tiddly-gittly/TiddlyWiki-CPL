@@ -1,0 +1,20 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: yaisog
+cpl.description: select all ancestors of the input tiddler(s)
+cpl.documentation: https://yaisog.tiddlyhost.com/#taggingtree%20and%20tagstree%20Example
+cpl.name: tagstree-filter
+cpl.readme: [[Recursive filter operators to show all tiddlers beneath a tag and all tags above a tiddler|https://talk.tiddlywiki.org/t/recursive-filter-operators-to-show-all-tiddlers-beneath-a-tag-and-all-tags-above-a-tiddler/3814/19]]
+cpl.title: $:/plugins/yaisog/tagstree-filter
+cpl.uri: https://yaisog.tiddlyhost.com
+created: 20230202214048669
+creator: 林一二
+description: 
+modified: 20230202214157806
+modifier: 林一二
+name: 
+tags: $:/tags/PluginWiki
+title: Plugin_202302034048668
+type: text/vnd.tiddlywiki
+uri: 

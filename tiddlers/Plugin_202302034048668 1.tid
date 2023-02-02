@@ -1,0 +1,21 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: yaisog
+cpl.description: for debugging filters
+cpl.documentation: https://yaisog.tiddlyhost.com/
+cpl.name: debug-log-filter
+cpl.readme: [[ Add a debug-log filter operator #7190 |https://github.com/Jermolene/TiddlyWiki5/pull/7190]]
+cpl.source: https://github.com/Jermolene/TiddlyWiki5/pull/7190
+cpl.title: $:/plugins/yaisog/debug-log-filter
+cpl.uri: https://yaisog.tiddlyhost.com
+created: 20230202214218737
+creator: 林一二
+description: 
+modified: 20230202214345757
+modifier: 林一二
+name: 
+tags: $:/tags/PluginWiki
+title: Plugin_202302034048668 1
+type: text/vnd.tiddlywiki
+uri: 
