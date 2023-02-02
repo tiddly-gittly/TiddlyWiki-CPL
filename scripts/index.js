@@ -526,7 +526,7 @@ function buildLibrary(distDir, minify) {
       if (
         tiddler["cpl.uri"] &&
         tiddler["cpl.uri"] !== "" &&
-        $tw.config.fileExtensionInfo[path.extname(tiddler["cpl.uri"])] &&
+        $tw.config.fileExtensionInfo[path.extname(tiddler["cpl.uri"]) || '.html'] &&
         tiddler["cpl.title"] &&
         tiddler["cpl.title"] !== ""
       ) {
@@ -534,7 +534,7 @@ function buildLibrary(distDir, minify) {
           `- Downloading plugin file ${chalk.bold(tiddler["cpl.title"])}`
         );
         const distPluginName =
-          formatTitle(tiddler["cpl.title"]) + path.extname(tiddler["cpl.uri"]);
+          formatTitle(tiddler["cpl.title"]) + path.extname(tiddler["cpl.uri"]) || '.html';
         if (downloadFileMap[tiddler["cpl.uri"]]) {
           shellI(
             `cp ${
