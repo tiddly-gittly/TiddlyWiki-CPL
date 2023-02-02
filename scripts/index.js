@@ -13,6 +13,8 @@ const repoFolder = path.join(path.dirname(__filename), "..");
 function fixExtName() {
   // https://github.com/twcloud/tiddlyweb-sse use .info as extension name
   $tw.config.fileExtensionInfo[".info"] = { type: "application/json-info" };
+  // for https://yaisog.tiddlyhost.com , recognized as .com
+  $tw.config.fileExtensionInfo['.com'] = { type: 'text/html' };
   $tw.Wiki.tiddlerDeserializerModules["application/json-info"] =
     infoPluginDeserializer;
 }
