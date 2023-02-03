@@ -4,7 +4,7 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/template-list",
-        "modified": "20220513081612073",
+        "modified": "20230203151701845",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -14,9 +14,10 @@
         "cpl.author": "LinOnetwo",
         "cpl.name": "Template List 模板列表",
         "cpl.description": "Show a list of template when you create a new tiddler, and apply a template with a click.",
-        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Ftemplate-list.json",
-        "cpl.readme": "!! Features\n\nThis plugin provides [[FeiShu Doc|https://www.feishu.cn/hc/zh-CN/articles/222318959624]] style template list for newly created tiddler.\n\n!! Add new template\n\n`$:/tags/TextEditor/Template` is the tag for the templates. Add this tag to a tiddler, and that tiddler will show up in the template list.\n\n!! Apply the template\n\nAfter you create an empty tiddler, that have an empty text field. You will notice that a template and a search bar show up in the bottom of the tiddler.\n\nClick on a template will apply all tags and all fields to the currentTiddler.\n\nYou can scroll to reveal more template if you have more than two rows of templates.",
-        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/template-list",
-        "cpl.plugin-type": "plugin"
+        "cpl.uri": "https://github.com/tiddly-gittly/template-list/releases/latest/download/__plugins_linonetwo_template-list.json",
+        "cpl.readme": "!! Features\n\nThis plugin provides [[FeiShu Doc|https://www.feishu.cn/hc/zh-CN/articles/222318959624]] style template list for newly created tiddler.\n\n!! Add new template\n\n`$:/tags/TextEditor/Template` is the tag for the templates. Add this tag to a tiddler, and that tiddler will show up in the template list.\n\nThere is a `+` button in the template list, click on it to create a new template.\n\nOr you can use a button in this plugin's readme `$:/plugins/linonetwo/template-list/Readme` to create a new template.\n\n!! Apply the template\n\nAfter you create an empty tiddler, that have an empty text field. You will notice that a template and a search bar show up in the bottom of the tiddler.\n\nClick on a template will apply all tags and all fields to the currentTiddler.\n\nYou can scroll to reveal more template if you have more than two rows of templates.\n",
+        "cpl.source": "https://github.com/tiddly-gittly/template-list",
+        "cpl.plugin-type": "plugin",
+        "cpl.documentation": "https://tiddly-gittly.github.io/template-list/"
     }
 ]
