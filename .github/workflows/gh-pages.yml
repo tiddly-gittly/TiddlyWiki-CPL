@@ -7,6 +7,12 @@ on:
   schedule:
     - cron: '0 * * * *'
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-18.04
@@ -31,9 +37,12 @@ jobs:
 
       - name: Make offline cache
         run: npx workbox injectManifest workbox-config.js
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          # Upload entire repository
+          path: ./dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
