@@ -1,0 +1,21 @@
+_title: 
+_type: plugin
+author: 
+cpl.author: tobibeer
+cpl.description: A macro to rate tiddlers
+cpl.documentation: http://tobibeer.github.io/tw5-plugins/index.html#rate
+cpl.name: rate
+cpl.readme: 评分宏插件
+cpl.source: https://github.com/tobibeer/tw5-plugins
+cpl.title: $:/plugins/tobibeer/rate
+cpl.uri: http://tobibeer.github.io/tw5-plugins/index.html
+created: 20230207024742937
+creator: WhiteFall
+description: 
+modified: 20230207025619863
+modifier: WhiteFall
+name: 
+tags: $:/tags/PluginWiki
+title: Plugin_202302074742937
+type: text/vnd.tiddlywiki
+uri: 
