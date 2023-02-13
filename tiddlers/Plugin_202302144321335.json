@@ -1,0 +1,26 @@
+[
+    {
+        "created": "20230213194321335",
+        "creator": "林一二",
+        "title": "Plugin_202302144321335",
+        "modified": "20230213194545158",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/intention-tower-knowledge-graph",
+        "cpl.name": "Intention Tower & Knowledge Graph",
+        "cpl.description": "ITKG is a knowledge and task management framework for tiddlywiki.",
+        "cpl.author": "LinOnetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/intention-tower-knowledge-graph/releases/latest/download/__plugins_linonetwo_intention-tower-knowledge-graph.json",
+        "cpl.readme": "project: favorited tiddler, as a root of a flow chart\n\nthe whole wiki is a graph of tasks, you can select multiple node in the graph as project, to view a sub graph of the wiki.\n\n用一个单独的视图，左侧是加了project标签的条目作为列表展示。点击某个条目后，将它作为当前布局的focusedtiddler，在右侧展示以他作为父节点的子任务树或者意义之塔。在没有聚焦条目时，默认聚焦当前待办展示所有叶子节点。\n\n还有一个意义之塔条目，会展示从更意义节点出发的所有项目，可以从一个比较抽象的视角看自己的意义树。\n\n写一个 userscript，作用范围是任意网站，然后从配置的端口和太微条目里读取本地配置的网站列表，来在工作时间（日历上配置了，现在是解决问题的时间）打开这些网站的时候，弹出当前待办的任务树，提醒自己不要摸鱼\n\n所以project指的就是一些被收藏的作为重点关注节点的任务。任务本身就不需要标签，可以用完成计数字段来作为标记，这个字段不用布，只要是用数量来记录完成次数，以应对可以重复完成的任务\n\n也可以不用布局，而是加一个侧边栏意义之塔tab，在里面列出左边的列表。加了project标签的条目的展示模板的底部加上一个树状图。上面还是展示原本的文本内容。\n\n这都在 itkg 插件里做，用tab切换列表或树状图的展示\n\n日历允许加字段，通过一个标准化的task字段来标注当前安排的事项要结合到哪一个任务上\n\n从先新建任务和新建项目的流程出发，侧边来要有两个按钮，可以用来新建项目，还有任务。任务新建后可以选择加标签，默认推荐加项目，如果是想要加其他中间节点的话，其实是可以从图上加的\n\n用数和表格展示任务的子任务，在底部用一个脑图展示他的腹肌任务，也就是意义\n\n意义和原因要分开：\n\n意义：主要是父子任务关系，表示积极的原因，例如跑30分钟跑步机的父任务是训练计划，锻炼的原因是想变更健康\n\n原因：表示剩下的中立和消极的原因，例如肌肉酸痛的原因是锻炼，腿瘸了的原因是走路踏空了",
+        "cpl.source": "https://github.com/tiddly-gittly/intention-tower-knowledge-graph",
+        "cpl.documentation": "https://tiddly-gittly.github.io/intention-tower-knowledge-graph/",
+        "cpl.dependents": "$:/plugins/kookma/shiraz $:/plugins/linonetwo/flow-chart $:/plugins/yaisog/taggingtree-filter"
+    }
+]
