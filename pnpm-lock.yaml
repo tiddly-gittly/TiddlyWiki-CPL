@@ -6,7 +6,7 @@ specifiers:
   html-minifier-terser: 7.1.0
   readline-sync: ^1.4.10
   tiddlywiki: 5.2.5
-  tw5-typed: 0.2.26
+  tw5-typed: 0.2.27
   uglify-js: 3.17.4
   workbox-cli: 6.5.4
 
@@ -18,7 +18,7 @@ devDependencies:
   cross-env: registry.nlark.com/cross-env/7.0.3
   html-minifier-terser: 7.1.0
   tiddlywiki: 5.2.5
-  tw5-typed: 0.2.26
+  tw5-typed: 0.2.27
   uglify-js: 3.17.4
   workbox-cli: 6.5.4
 
@@ -3272,8 +3272,8 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
-  /tw5-typed/0.2.26:
-    resolution: {integrity: sha512-KuJUENsOMzPf5g/RmX2/aXKUfQP9HQpc46xYPYpi18m3bfooi342IBwlyHFxv5u8kMW24u1UoJvgAtiP8YJUNQ==}
+  /tw5-typed/0.2.27:
+    resolution: {integrity: sha512-ATJaMZh1udwzcgqNOoPTmH9nzI/yMo5TLgv5u3O8WKDIE8SzuDVteah0G4gSsx/ogDyHAdmn0Wu5m+2hQ2wc7A==}
     dependencies:
       '@types/codemirror': 5.60.7
       '@types/echarts': 4.9.16
