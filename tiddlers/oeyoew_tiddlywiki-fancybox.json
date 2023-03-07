@@ -1,0 +1,20 @@
+[
+    {
+        "title": "oeyoew/tiddlywiki-fancybox",
+        "cpl.author": "oeyoews",
+        "cpl.core-version": ">=5.2.5",
+        "cpl.description": "Tiddlywiki Gallery",
+        "cpl.documentation": "https://oeyoewl.top/fancybox-gallery-tiddlywiki",
+        "cpl.name": "Tiddlywiki Fancybox",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "<a style=\"text-decoration:none;\" href=\"https://github.com/fancyapps/fancybox\" target=\"_blank\">\n  <img src=\"https://img.shields.io/badge/Powered by-Fancybox-green?style=flat\" />\n</a>\n<$image source={{{ [[][https://img.shields.io/badge/Version-]] [<currentTiddler>get[version]] [[-red?style=flat&logo=dev.to&logoColor=red]] +[join[]]}}} />\n\n!! Readme\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/dev/plugins/tiddlywiki-fancybox]]\n\n* [[Tiddlyhost site|https://fancybox-oeyoews.tiddlyhost.com]]\n\n!! Features\n\n* support download images, fullscreen, custom style and shortcuts,\n* support local images online images, mix that is also supported\n\n!! Usage\n\n<$button>\n  Usage\n  <$action-sendmessage $message=\"tm-modal\" $param=\"$:/plugins/oeyoews/tiddlywiki-fancybox/example\"/>\n</$button>\n\n!! Note\n\n* need refresh on installed this fancybox plugin\n* if you use splashscreen, please remove `remove-when-wiki-loaded` class,\notherwise this plugin will not work normally [[warn|https://github.com/Jermolene/TiddlyWiki5/search?q=tc-remove-when-wiki-loaded]]\n\n!! TODO\n\n* support filter\n",
+        "cpl.sourse": "https://github.com/oeyoews/neotw/tree/main/dev/plugins/tiddlywiki-fancybox",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-fancybox",
+        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-fancybox.json",
+        "description": "This is a cpl release template",
+        "icon": "🖼️",
+        "page-cover": "https://images.unsplash.com/photo-1608371945786-d47d3cdd31da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGdhbGxlcnl8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-modal-ui"
+    }
+]
