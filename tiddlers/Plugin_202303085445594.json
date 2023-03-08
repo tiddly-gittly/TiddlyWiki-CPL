@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[jQuery|https://jquery.com/]] is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.\n\nUsage:\n\n```\nconst $ = require('$:/plugins/Gk0Wk/jquery/jquery.min.js');\n```\n\nThen, if you use [[Tiddly.ModernDev|https://github.com/tiddly-gittly/Modern.TiddlyDev]]:\n\n```\nimport $ from '$:/plugins/Gk0Wk/jquery/jquery.min.js';\n```\n\n> This plugin uses the flexible and powerful <$text text=\"TiddlyWiki\" /> development framework [[Tiddly.ModernDev|https://github.com/tiddly-gittly/Modern.TiddlyDev]]\n",
+        "cpl.uri": "https://gk0wk.github.io/TW5-Libraries/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fjquery.json",
+        "cpl.title": "$:/plugins/Gk0Wk/jquery",
+        "cpl.author": "Gk0Wk",
+        "cpl.name": "jQuery",
+        "cpl.description": "jquery for TiddlyWiki5",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/Gk0Wk/TW5-Libraries/tree/master/src/jquery",
+        "cpl.dependents": "",
+        "title": "Plugin_202303085445594"
+    }
+]
