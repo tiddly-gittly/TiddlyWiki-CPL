@@ -1,0 +1,25 @@
+[
+    {
+        "created": "20230304155249238",
+        "creator": "林一二",
+        "title": "Plugin_202303045249238",
+        "modified": "20230304155540534",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/in-tagtree-of",
+        "cpl.name": "",
+        "cpl.description": "Fask \"in TagTree of\" check filter operator",
+        "cpl.author": "LinOnetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/in-tagtree-of/releases/latest/download/__plugins_linonetwo_in-tagtree-of.json",
+        "cpl.readme": "A very fast version of `kin::to[xxx]`.\n\n> Finds out where a tiddler originates from, is it in a tag tree with xxx as root?\n\n!! Usage\n\nSee [[demo site|https://tiddly-gittly.github.io/in-tagtree-of/]] for interactive examples.\n\n!!! Normal usage\n\n`[[Ling]in-tagtree-of[Clancy]]` : check if `Ling` is ''in a tag tree'' with `Clancy` as root.\n\n`[all[tiddlers]!in-tagtree-of[Clancy]]` : with `!` prefix, get all tiddlers that are ''not'' in a tag tree with `Clancy` as root.\n\n!!! Advanced usage\n\n`[all[tiddlers]in-tagtree-of:inclusive[Clancy]]` : with `inclusive` suffix, get all tiddlers that are ''in a tag tree'' with `Clancy` as root, ''including `Clancy` himself''\n",
+        "cpl.source": "https://github.com/tiddly-gittly/in-tagtree-of",
+        "cpl.documentation": "https://tiddly-gittly.github.io/in-tagtree-of/"
+    }
+]

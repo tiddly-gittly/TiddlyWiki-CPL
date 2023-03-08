@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<a href=\"https://github.com/oeyoews/neotw\" target=\"_blank\">\n  <img src=\"https://img.shields.io/badge/Powered by-Neotw-green?style=flat\" />\n</a>\n\n!! emoji on tiddlywiki\n",
+        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-emoji.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-emoji",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-emoji",
+        "cpl.description": "emoji",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.3",
+        "title": "Plugin_202303073004531"
+    }
+]

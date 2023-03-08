@@ -13,6 +13,8 @@ const repoFolder = path.join(path.dirname(__filename), "..");
 function fixExtName() {
   // https://github.com/twcloud/tiddlyweb-sse use .info as extension name
   $tw.config.fileExtensionInfo[".info"] = { type: "application/json-info" };
+  // for https://yaisog.tiddlyhost.com , recognized as .com
+  $tw.config.fileExtensionInfo['.com'] = { type: 'text/html' };
   $tw.Wiki.tiddlerDeserializerModules["application/json-info"] =
     infoPluginDeserializer;
 }
@@ -526,28 +528,28 @@ function buildLibrary(distDir, minify) {
       if (
         tiddler["cpl.uri"] &&
         tiddler["cpl.uri"] !== "" &&
-        $tw.config.fileExtensionInfo[path.extname(tiddler["cpl.uri"])] &&
+        $tw.config.fileExtensionInfo[path.extname(tiddler["cpl.uri"]) || '.html'] &&
         tiddler["cpl.title"] &&
         tiddler["cpl.title"] !== ""
       ) {
         console.log(
           `- Downloading plugin file ${chalk.bold(tiddler["cpl.title"])}`
         );
-        const distPluginName =
-          formatTitle(tiddler["cpl.title"]) + path.extname(tiddler["cpl.uri"]);
+        const distPluginContainerFileName =
+          formatTitle(tiddler["cpl.title"]) + (path.extname(tiddler["cpl.uri"]) || '.html');
         if (downloadFileMap[tiddler["cpl.uri"]]) {
           shellI(
             `cp ${
               downloadFileMap[tiddler["cpl.uri"]]
-            } ${distDir}/tmp/${distPluginName}`
+            } ${distDir}/tmp/${distPluginContainerFileName}`
           );
         } else {
           shellI(
-            `wget '${tiddler["cpl.uri"]}' -O ${distDir}/tmp/${distPluginName}`
+            `wget '${tiddler["cpl.uri"]}' -O ${distDir}/tmp/${distPluginContainerFileName}`
           );
           downloadFileMap[
             tiddler["cpl.uri"]
-          ] = `${distDir}/tmp/${distPluginName}`;
+          ] = `${distDir}/tmp/${distPluginContainerFileName}`;
         }
       }
     } catch (e) {

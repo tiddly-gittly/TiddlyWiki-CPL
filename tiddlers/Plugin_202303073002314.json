@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<a style=\"text-decoration:none;\" href=\"https://github.com/oeyoews/neotw\" target=\"_blank\">\n  <img src=\"https://img.shields.io/badge/Powered by-Neotw-green?style=flat\" />\n</a>\n<$image source={{{ [[][https://img.shields.io/badge/Version-]] [<currentTiddler>get[version]] [[-red?style=flat&logo=dev.to&logoColor=red]] +[join[]]}}} />\n<a style=\"text-decoration:none;\" href=\"https://github.com/catdad/canvas-confetti\" target=\"_blank\">\n  <img src=\"https://img.shields.io/badge/Powered by-confetti-green?style=flat\" />\n</a>\n\n!! TODO\n\n* add config to switch effect\n",
+        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-confetti.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-confetti",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-confetti",
+        "cpl.description": "neotw-confetti",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.3",
+        "title": "Plugin_202303073002314"
+    }
+]

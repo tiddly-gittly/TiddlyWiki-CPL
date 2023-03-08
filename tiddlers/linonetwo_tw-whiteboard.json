@@ -4,7 +4,7 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/tw-whiteboard",
-        "modified": "20221217160027470",
+        "modified": "20230219104309118",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -22,6 +22,7 @@
         "cpl.readme": "[[User Manual|https://tiddly-gittly.github.io/tiddlywiki-whiteboard/]]\n\n# Provides a whiteboard widget, use it like `<$whiteboard tiddler=\"tiddlerToStoreData\" />`\n# Tiddler with type `application/tldr` will be parsed as whiteboard, showing whiteboard in tiddler's ViewTemplate\n# Provides a whiteboard view, use `ctrl+shift+L` to switch to this view, you can choose a tiddler with type `application/tldr`, and edit it in full screen.",
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-whiteboard/",
         "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-whiteboard/",
-        "cpl.dependents": "$:/plugins/linonetwo/tw-react"
+        "cpl.dependents": "$:/plugins/linonetwo/tw-react",
+        "page-cover": "https://talk.tiddlywiki.org/uploads/default/original/2X/6/6194354a99f652dc579d95a266e5ad2a1e5bb1ea.png"
     }
 ]
