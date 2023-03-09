@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20230309054840696",
+        "creator": "林一二",
+        "title": "Plugin_202303094840696",
+        "modified": "20230309055232295",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/linonetwo/speech-synthesis",
+        "cpl.name": "speech-synthesis",
+        "cpl.description": "Web Speech synthesis (TTS), free and offline",
+        "cpl.readme": "It works completely offline.\n\n!! Usage\n\n```tw5\n\\define text-to-speak() Hello World\n\n<$button>\n  Speak Hello World\n  <$speech-synthesis-widget text=<<text-to-speak>> />\n</$button>\n```",
+        "cpl.source": "https://github.com/tiddly-gittly/speech-synthesis",
+        "cpl.documentation": "https://tiddly-gittly.github.io/speech-synthesis/"
+    }
+]
