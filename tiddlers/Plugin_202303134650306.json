@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[Github|https://github.com/EvidentlyCube/TW5-MiddleClickActions]]\n\n----\n\nAllows invoking an action when middle click is pressed on an element.\n\nInitially developed as a way to close open tabs with middle click\n(an extension to [[BJ/StoryTabs|http://bjtools.tiddlyspot.com/]] plugin).\n\n! Example:\n\nThe button will do nothing on click and will create a new draft on middle click.\n\n```\n<$button>\n<$middle-click-actions>\n<$action-sendmessage $message=\"tm-new-tiddler\"/>\n</$middle-click-actions>\nDo nothing on Click but create new draft on Middle Click.\n</$button>\n```\n\n<$button>\n<$middle-click-actions>\n<$action-sendmessage $message=\"tm-new-tiddler\"/>\n</$middle-click-actions>\nDo nothing on Click but create new draft on Middle Click.\n</$button>\n\n! Keep in mind\n\n* `<$middle-click-actions/>` widget must be a direct child of the widget/UI element that you want to react to the middle click, since it attaches itself to its parent and listens on clicks on there.\n* The widget does not need to be the first child.\n* Any actions defined inside this widget will be protected from being invoked by any parent widget^^[1]^^\n\n----\n\n!! Footnotes:\n\n[1]: Do keep in mind that it will only be the case with widgets that use the normal way of invoking actions. If the widget uses a custom implementation it can ignore the request to not be invoked, but in practice I highly doubt it will ever be a problem with any other plugin in the wild.",
+        "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%2524%253A%252Fplugins%252FEvidentlyCube%252FMiddleClickActions.json",
+        "cpl.title": "$:/plugins/EvidentlyCube/MiddleClickActions",
+        "cpl.author": "Maurycy Zarzycki",
+        "cpl.name": "Middle Click Actions",
+        "cpl.description": "Allows invoking actions on middle click.",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/EvidentlyCube/TW5-MiddleClickActions",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.0",
+        "title": "Plugin_202303134650306"
+    }
+]

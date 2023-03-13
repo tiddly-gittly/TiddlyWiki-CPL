@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\n[[Github|https://github.com/EvidentlyCube/TW5-AdvancedPerformance]]\n\n----\n\n! Features\n\nExpand TiddlyWiki's performance instrumentation and make its results available directly in your wiki,\nwithout having to use developer console of the browser.\n\n!! How to Use\n\n* Install the plugin\n* Enable //Performance Instrumentation// (Control Panel -> Settings -> Performance Instrumentation)\n* Save wiki\n* Refresh the page\n\nThe bottom widget will now be available and advanced instrumentation will happen. The functionality of this plugin can be easily toggled off by disabling //Performance Instrumentation// and refreshing the page.\n",
+        "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%2524%253A%252Fplugins%252FEvidentlyCube%252FAdvancedPerformance.json",
+        "cpl.title": "$:/plugins/EvidentlyCube/AdvancedPerformance",
+        "cpl.author": "Maurycy Zarzycki",
+        "cpl.name": "Advanced Performance",
+        "cpl.description": "Additional functionalities to measure your TW's performance.",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/EvidentlyCube/TW5-AdvancedPerformance",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.3",
+        "title": "Plugin_202303134646785"
+    }
+]
