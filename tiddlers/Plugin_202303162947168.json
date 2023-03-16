@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! codemirror-themes\n\nTons of codemirror themes for TiddlyWiki",
+        "cpl.uri": "https://gk0wk.github.io/TW5-CodeMirror-Enhanced/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fcodemirror-themes.json",
+        "cpl.title": "$:/plugins/Gk0Wk/codemirror-themes",
+        "cpl.author": "Gk0Wk",
+        "cpl.name": "CodeMirror Themes",
+        "cpl.description": "Tons of codemirror themes for TiddlyWiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202303162947168"
+    }
+]
