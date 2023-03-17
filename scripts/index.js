@@ -282,7 +282,7 @@ function _importLibrary(uri) {
     // 下载JSON文件，包含插件的信息
     mkdirsSync(`${distDir}/tmp`);
     shellI(
-      `wget '${baseUri}'/recipes/library/tiddlers.json -O ${distDir}/tmp/tiddlers.json`
+      `wget '${baseUri}/recipes/library/tiddlers.json' --no-check-certificate -O ${distDir}/tmp/tiddlers.json`
     );
     let pluginsJson = fs.readFileSync(`${distDir}/tmp/tiddlers.json`, "utf-8");
     pluginsJson = JSON.parse(pluginsJson);
@@ -375,7 +375,7 @@ function _importPlugin(uri, title) {
       if (extname === "") return false;
       return extname in $tw.config.fileExtensionInfo;
     });
-    if (!pluginFile) shellI(`wget '${uri}' -O ${distDir}/tmp/${fileName}`);
+    if (!pluginFile) shellI(`wget '${uri}' --no-check-certificate -O ${distDir}/tmp/${fileName}`);
     pluginFile = findFirstOne(fs.readdirSync(`${distDir}/tmp`), (file) => {
       if (!fileRegExp.test(file)) return false;
       const extname = path.extname(file);
@@ -545,7 +545,7 @@ function buildLibrary(distDir, minify) {
           );
         } else {
           shellI(
-            `wget '${tiddler["cpl.uri"]}' -O ${distDir}/tmp/${distPluginContainerFileName}`
+            `wget '${tiddler["cpl.uri"]}' --no-check-certificate -O ${distDir}/tmp/${distPluginContainerFileName}`
           );
           downloadFileMap[
             tiddler["cpl.uri"]
