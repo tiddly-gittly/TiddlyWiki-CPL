@@ -1,0 +1,11 @@
+cpl.author: Ben Webber
+cpl.core-version: >=5.0.0
+cpl.dependents: $:/languages/en-GB
+cpl.description: English (US)
+cpl.name: en-US
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/en-US
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fen-US.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171242690

@@ -1,0 +1,11 @@
+cpl.author: JeremyRuston
+cpl.core-version: >=5.0.0
+cpl.dependents: $:/themes/tiddlywiki/tight $:/themes/tiddlywiki/heavier
+cpl.description: Tight and Heavier font theme
+cpl.name: Tight and Heavier
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.title: $:/themes/tiddlywiki/tight-heavier
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Fthemes%252Ftiddlywiki%252Ftight-heavier.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171232521

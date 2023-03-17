@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin provides primitives for working with Zip files. It also makes the [[JSZip|https://stuk.github.io/jszip/]] library available for use by other plugins.\n",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fjszip.json",
+        "cpl.title": "$:/plugins/tiddlywiki/jszip",
+        "cpl.author": "Stuart Knightley, David Duponchel, Franz Buchinger, António Afonso",
+        "cpl.name": "JSZip",
+        "cpl.description": "JSZip library",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202303171221206"
+    }
+]

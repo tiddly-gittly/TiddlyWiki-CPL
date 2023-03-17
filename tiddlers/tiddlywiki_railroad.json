@@ -15,12 +15,14 @@
         "description": "",
         "name": "",
         "cpl.title": "$:/plugins/tiddlywiki/railroad",
-        "cpl.name": "RailRoad",
-        "cpl.description": "Official TiddlyWiki Plugin: Railroad widget",
-        "cpl.author": "tiddlywiki",
-        "cpl.uri": "https://tiddlywiki.com/editions/full/index.html",
-        "cpl.readme": "[[Official Doc|https://tiddlywiki.com/editions/full/#%24%3A%2Fplugins%2Ftiddlywiki%2Fqrcode]]\n\nThis plugin provides a `<$railroad>` widget for generating railroad diagrams as SVG images.\n\nAlternatively, the [[diagram notation|$:/plugins/tiddlywiki/railroad/syntax]] can be stored in a dedicated tiddler with its `type` field set to `text/vnd.tiddlywiki.railroad`, and that tiddler can simply be transcluded to wherever it is needed.\n\nThe plugin is based on [[a library by Tab Atkins|https://github.com/tabatkins/railroad-diagrams]], and has been extended to make it more flexible, including allowing components of a diagram to function as links or be transcluded from other tiddlers.",
+        "cpl.name": "Railroad",
+        "cpl.description": "Railroad diagram generator",
+        "cpl.author": "Astrid Elocson",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Frailroad.json",
+        "cpl.readme": "This plugin provides a `<$railroad>` widget for generating railroad diagrams as SVG images.\n\nAlternatively, the [[diagram notation|$:/plugins/tiddlywiki/railroad/syntax]] can be stored in a dedicated tiddler with its `type` field set to `text/vnd.tiddlywiki.railroad`, and that tiddler can simply be transcluded to wherever it is needed.\n\nThe plugin is based on [[a library by Tab Atkins|https://github.com/tabatkins/railroad-diagrams]], and has been extended to make it more flexible, including allowing components of a diagram to function as links or be transcluded from other tiddlers.\n",
         "cpl.source": "https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/railroad",
-        "cpl.documentation": "https://tiddlywiki.com/editions/full/#%24%3A%2Fplugins%2Ftiddlywiki%2Frailroad"
+        "cpl.documentation": "https://tiddlywiki.com/editions/full/#%24%3A%2Fplugins%2Ftiddlywiki%2Frailroad",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": ""
     }
 ]

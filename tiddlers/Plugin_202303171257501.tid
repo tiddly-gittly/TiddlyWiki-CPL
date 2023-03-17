@@ -1,0 +1,11 @@
+cpl.author: Mauricio Lucas
+cpl.core-version: >=5.1.14
+cpl.dependents: 
+cpl.description: Português (Brasil)
+cpl.name: pt-BR
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/pt-BR
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fpt-BR.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171257501

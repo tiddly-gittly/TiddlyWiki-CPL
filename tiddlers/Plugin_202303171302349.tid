@@ -1,0 +1,11 @@
+cpl.author: Tomaž Ficko
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Solvenian (Slovenia)
+cpl.name: sl-SI
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/sl-SI
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fsl-SI.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171302349

@@ -1,0 +1,11 @@
+cpl.author: AndreyYankin aka andrey013, Глеб Прохожев <glebujka@gmail.com>
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Russian (Russia)
+cpl.name: ru-RU
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/ru-RU
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fru-RU.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171259841

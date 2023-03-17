@@ -1,0 +1,11 @@
+cpl.author: JeremyRuston
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Basic theme
+cpl.name: Vanilla
+cpl.plugin-type: theme
+cpl.readme: 
+cpl.title: $:/themes/tiddlywiki/vanilla
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Fthemes%252Ftiddlywiki%252Fvanilla.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171233576

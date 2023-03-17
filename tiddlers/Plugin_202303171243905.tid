@@ -1,0 +1,11 @@
+cpl.author: Pau DeLuca,Joe Bordes
+cpl.core-version: >=5.1.23
+cpl.dependents: 
+cpl.description: Castellano. (Spain)
+cpl.name: es-ES
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/es-ES
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fes-ES.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171243905

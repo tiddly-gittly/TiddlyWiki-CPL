@@ -1,0 +1,11 @@
+cpl.author: Myeongjin
+cpl.core-version: >=5.1.4
+cpl.dependents: 
+cpl.description: Korean (Korea Republic)
+cpl.name: ko-KR
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/ko-KR
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fko-KR.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171252780

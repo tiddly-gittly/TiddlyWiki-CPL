@@ -1,0 +1,11 @@
+cpl.author: MarioPietsch aka pmario
+cpl.core-version: >=5.0.0
+cpl.dependents: $:/languages/de-DE
+cpl.description: Deutsch (Schweiz)
+cpl.name: de-CH
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/de-CH
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fde-CH.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171239536

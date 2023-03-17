@@ -1,0 +1,11 @@
+cpl.author: gernert
+cpl.core-version: >=5.1.5
+cpl.dependents: 
+cpl.description: Dutch (The Netherlands)
+cpl.name: nl-NL
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/nl-NL
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fnl-NL.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171254037

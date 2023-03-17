@@ -1,0 +1,11 @@
+cpl.author: xcazin
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Français (France)
+cpl.name: fr-FR
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/fr-FR
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Ffr-FR.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171246151

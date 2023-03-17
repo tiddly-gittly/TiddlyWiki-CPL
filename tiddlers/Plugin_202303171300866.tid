@@ -1,0 +1,11 @@
+cpl.author: Vlado Luknar
+cpl.core-version: >=5.0.0
+cpl.dependents: 
+cpl.description: Slovak (Slovakia)
+cpl.name: sk-SK
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/sk-SK
+cpl.uri: https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fsk-SK.json
+tags: $:/tags/PluginWiki
+title: Plugin_202303171300866
