@@ -1,0 +1,27 @@
+[
+    {
+        "created": "20230401052728383",
+        "creator": "WhiteFall",
+        "text": "",
+        "title": "danielo515_2click2edit",
+        "modified": "20230401053837399",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.title": "$:/plugins/danielo515/2click2edit",
+        "cpl.description": "double click to edit tiddlers",
+        "cpl.author": "Danielo Rodriguez",
+        "cpl.core-version": ">=5.1.0",
+        "cpl.source": "https://github.com/danielo515/TW5-2click2edit",
+        "cpl.name": "2click2edit",
+        "cpl.uri": "https://danielorodriguez.com/TW5-2click2edit/index.html",
+        "cpl.documentation": "https://danielorodriguez.com/TW5-2click2edit/",
+        "cpl.readme": "This plugin adds the ability to edit tiddlers by double clicking on its body. Just try to edit any tiddler shown here by double clicking on it.\n\nThis can be considered a fast solution. It is only to fill the gap until TiddlyWiki adds support for it officially."
+    }
+]
