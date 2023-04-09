@@ -8,7 +8,8 @@
         "buildlibrary": "node -e \"require('./scripts/index').build();\"",
         "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html', true, '-[tag[GenerateExclude]] -[is[draft]]');\"",
         "importplugin": "node -e \"require('./scripts/index').importPlugin();\"",
-        "importlibrary": "node -e \"require('./scripts/index').importLibrary();\""
+        "importlibrary": "node -e \"require('./scripts/index').importLibrary();\"",
+        "importlibraryofficial": "node -e \"require('./scripts/index').importLibrary('official');\""
     },
     "repository": {
         "type": "git",

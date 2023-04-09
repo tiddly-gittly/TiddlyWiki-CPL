@@ -68,7 +68,7 @@ function infoPluginDeserializer(text, fields) {
  */
 function shell(command, options, output) {
   if (options !== undefined) options = {};
-  execSync(command, {
+  return execSync(command, {
     cwd: repoFolder,
     stdio: output ? "inherit" : [("inherit", "ignore", "ignore")],
     ...options,
@@ -83,7 +83,7 @@ function shell(command, options, output) {
  */
 function shellI(command, options, output) {
   try {
-    shell(command, options, output);
+    return shell(command, options, output);
   } catch (error) {
     console.error(chalk.red.bold(`[Shell Command Error] ${error}`));
   }
@@ -272,7 +272,16 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
 }
 
 // https://mklauber.github.io/tw5-plugins/library/index.html
-function _importLibrary(uri) {
+// https://tiddlywiki.com/library/v5.2.7/index.html
+/**
+ * 导入一个插件源
+ *
+ * @param {string} uri
+ * @param {{ yes: boolean }} options
+ *  yes: 是否自动确认
+ * @returns
+ */
+function _importLibrary(uri, options) {
   let distDir = "dist/library";
   const tmp = uri.split("/");
   tmp.pop();
@@ -292,7 +301,8 @@ function _importLibrary(uri) {
           `${baseUri}/recipes/library/tiddlers/${encodeURIComponent(
             encodeURIComponent(plugin.title)
           )}.json`,
-          plugin.title
+          plugin.title,
+          options,
         );
       }
     });
@@ -302,7 +312,13 @@ function _importLibrary(uri) {
   }
 }
 
-function importLibrary() {
+function importLibrary(libraryType) {
+  if (libraryType ==='official') {
+    const latestVersion = execSync(
+      `curl https://api.github.com/repos/Jermolene/TiddlyWiki5/tags -s | jq -r '.[0].name'`
+    ).toString().trim();
+    _importLibrary(`https://tiddlywiki.com/library/${latestVersion}/index.html`, { yes: true });
+  }
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -351,9 +367,11 @@ const importCache = {};
  *
  * @param {string} uri
  * @param {string} title
+ * @param {{ yes: boolean }} options
+ *  yes: 是否自动确认
  * @returns
  */
-function _importPlugin(uri, title) {
+function _importPlugin(uri, title, options) {
   let distDir = "dist/library";
   if (!$tw) {
     $tw = require("tiddlywiki/boot/boot").TiddlyWiki();
@@ -412,7 +430,7 @@ function _importPlugin(uri, title) {
   const tmp = $tw.wiki.filterTiddlers(
     `[tag[$:/tags/PluginWiki]cpl.title[${pluginInfo["cpl.title"]}]]`
   );
-  if (tmp.length > 0) {
+  if (tmp.length > 0 && !options?.yes) {
     let answer = readlineSync.question(
       chalk.blue(
         `Plugin ${chalk.bold(

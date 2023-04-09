@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "The filesystem plugin is used under Node.js to synchronise tiddler changes back to the file system. It is inert when used in the browser.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/filesystem]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.2.5/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ffilesystem.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.2.7/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ffilesystem.json",
         "cpl.title": "$:/plugins/tiddlywiki/filesystem",
         "cpl.name": "Filesystem",
         "cpl.description": "Synchronize changes from the node.js server to the local filesystem",
