@@ -1,0 +1,11 @@
+cpl.author: OokTech
+cpl.core-version: >=5.1.0
+cpl.dependents: 
+cpl.description: A plugin to help create setup wizards or slideshows
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/OokTech/TW5-WizardWizard
+cpl.title: $:/plugins/OokTech/WizardWizard
+cpl.uri: https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FWizardWizard.json
+tags: $:/tags/PluginWiki
+title: Plugin_202304105856782

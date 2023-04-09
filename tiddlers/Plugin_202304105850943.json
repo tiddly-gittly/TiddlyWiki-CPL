@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "To use this plugin you first create a photo gallery by using the tools in the [[edit photo gallery|$:/plugins/OokTech/Photo Gallery/Edit Photo Gallery]] tiddler. Click the `New Gallery` button and give the gallery a name and a filter. Tiddlers returned by the filter will be part of the gallery. You can then see the images that will be part of your gallery as well as give the images captions to be displayed in the gallery and to set the order of the images in the gallery.\n\nThen to display the photo gallery you have created put `<<PhotoGallery GalleryName>>` in your tiddler where you replace `GalleryName` with whatever name you gave your photo gallery.\n\nLicense: [[BSD 3 Clause|$:/plugins/OokTech/PhotoGallery/License]]\n\nCreator: [[OokTech|$:/plugins/OokTech/OokTechInfo]]\n\nSource: [[GitHub|https://https://github.com/OokTech/TW5-PhotoGallery]]\n",
+        "cpl.uri": "https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FPhotoGallery.json",
+        "cpl.title": "$:/plugins/OokTech/PhotoGallery",
+        "cpl.author": "OokTech",
+        "cpl.description": "A plugin that adds a simple photo gallery to tiddlywiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/OokTech/TW5-PhotoGallery",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.8",
+        "title": "Plugin_202304105850943"
+    }
+]

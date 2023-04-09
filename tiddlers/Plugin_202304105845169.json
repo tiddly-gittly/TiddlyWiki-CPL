@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "License: [[BSD 3 Clause|$:/plugins/OokTech/CategoryLists/License]]\n\nCreator: [[OokTech|$:/plugins/OokTech/OokTechInfo]]\n\nSource: [[GitHub|https://https://github.com/OokTech/TW5-CategoryLists]]\n",
+        "cpl.uri": "https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FBookmarks.json",
+        "cpl.title": "$:/plugins/OokTech/Bookmarks",
+        "cpl.author": "OokTech",
+        "cpl.description": "A searchable bookmarks library for tiddlywiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/OokTech/TW5-Bookmarks",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.13",
+        "title": "Plugin_202304105845169"
+    }
+]

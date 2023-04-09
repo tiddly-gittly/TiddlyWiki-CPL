@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This is a simple searchable dictionary. To use it open the tiddler [[$:/plugins/OokTech/SearchableDictionary/Dictionary]], you add a term by entering the `Term` text field, and add the definition in the `Meaning` text field, then click the `Add Term` button.\n\nYou can search the existing terms using the `Search` text box. Clicking on `Edit Dictionary` adds buttons thta will allow you to remove entries from the dictionary.\n\nYou can put `{{$:/plugins/OokTech/SearchableDictionary/Dictionary}}` inside any tiddler to display the dictionary in that tiddler.\n\nLicense: [[BSD 3 Clause|$:/plugins/OokTech/SearchableDictionary/License]]\n\nCreator: [[OokTech|$:/plugins/OokTech/OokTechInfo]]\n\nSource: [[GitHub|https://https://github.com/OokTech/TW5-SearchableDictionary]]\n",
+        "cpl.uri": "https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FSearchableDictionary.json",
+        "cpl.title": "$:/plugins/OokTech/SearchableDictionary",
+        "cpl.author": "OokTech",
+        "cpl.description": "A simple searchable dictionary for TiddlyWiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/OokTech/TW5-SearchableDictionary",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.6",
+        "title": "Plugin_202304105853409"
+    }
+]

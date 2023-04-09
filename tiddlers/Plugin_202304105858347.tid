@@ -1,0 +1,11 @@
+cpl.author: inmysocks
+cpl.core-version: >=5.1.13
+cpl.dependents: 
+cpl.description: A plugin to add hidden message to images
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: 
+cpl.title: $:/plugins/OokTech/ToDoBarChart
+cpl.uri: https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FToDoBarChart.json
+tags: $:/tags/PluginWiki
+title: Plugin_202304105858347

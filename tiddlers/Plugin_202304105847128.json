@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin is in the OokTech plugin library, you can add the library to your wiki by importing [[$:/pluginlibrary/OokTech/OokTechPlugins]] and then install the plugin using the `get more plugins` button in the $:/ControlPanel you can also import this plugin directly by importing the plugin tiddler [[$:/plugins/Ooktech/Contacts]]\n\n\nLicense: [[BSD 3 Clause|$:/plugins/OokTech/Contacts/License]]\n\nCreator: [[OokTech|$:/plugins/OokTech/OokTechInfo]]\n\nSource: [[GitHub|https://https://github.com/OokTech/TW5-Contacts]]\n",
+        "cpl.uri": "https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FContacts.json",
+        "cpl.title": "$:/plugins/OokTech/Contacts",
+        "cpl.author": "OokTech",
+        "cpl.description": "A contacts database for TiddlyWiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/OokTech/TW5-Contacts",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.6",
+        "title": "Plugin_202304105847128"
+    }
+]

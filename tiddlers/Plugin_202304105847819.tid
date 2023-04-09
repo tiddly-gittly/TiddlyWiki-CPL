@@ -1,0 +1,11 @@
+cpl.author: OokTech
+cpl.core-version: >=5.1.8
+cpl.dependents: 
+cpl.description: A directory listing for TiddlyWiki5
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/OokTech/TW5-Directory
+cpl.title: $:/plugins/OokTech/Directory
+cpl.uri: https://ooktech.com/TiddlyWiki/PluginLibrary/recipes/library/tiddlers/%2524%253A%252Fplugins%252FOokTech%252FDirectory.json
+tags: $:/tags/PluginWiki
+title: Plugin_202304105847819
