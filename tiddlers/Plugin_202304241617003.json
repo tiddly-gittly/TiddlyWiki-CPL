@@ -1,0 +1,25 @@
+[
+    {
+        "created": "20230424111617003",
+        "creator": "WhiteFall",
+        "title": "Plugin_202304241617003",
+        "modified": "20230424112138270",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "uri": "",
+        "_title": "",
+        "_type": "plugin",
+        "author": "",
+        "description": "",
+        "name": "",
+        "cpl.uri": "https://github.com/Telumire/Tiddlywiki-Fonts-Plugin/releases/latest/download/plugin_Telumire_Fonts.json",
+        "cpl.title": "$:/plugins/Telumire/Fonts",
+        "cpl.description": "Customize your wiki's fonts ",
+        "cpl.name": "Fonts",
+        "cpl.readme": "\n字体管理插件\n\n''TL;DR''\n\nCreate categories in the font manager, set a css selector and a font to customize your wiki's fonts.\n",
+        "cpl.source": "https://github.com/Telumire/Tiddlywiki-Fonts-Plugin",
+        "cpl.author": "Telumire",
+        "cpl.documentation": "https://fontmanager.tiddlyhost.com/"
+    }
+]
