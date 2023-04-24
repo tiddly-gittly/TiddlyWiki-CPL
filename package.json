@@ -27,7 +27,7 @@
     "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
     "devDependencies": {
         "cross-env": "7.0.3",
-        "html-minifier-terser": "7.1.0",
+        "html-minifier-terser": "7.2.0",
         "tiddlywiki": "5.2.5",
         "tw5-typed": "0.2.27",
         "uglify-js": "3.17.4",
