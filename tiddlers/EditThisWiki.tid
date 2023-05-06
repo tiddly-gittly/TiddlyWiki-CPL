@@ -3,8 +3,8 @@ caption_EN: Edit this CPL
 created: 20220118151733303
 creator: 林一二
 i18ncaption: yes
-modified: 20220517025642390
-modifier: 林一二
+modified: 20230506082423443
+modifier: WhiteFall
 title: EditThisWiki
 type: text/vnd.tiddlywiki
 
@@ -46,6 +46,7 @@ type: text/vnd.tiddlywiki
 *#* 这样你写了新版插件后，只需要（通过 Github Actions 自动地）发布最新 JSON  到 Release 里即可，不需要来 CPL 更新链接和版本号了
 *# 指向插件的TID文件，例如：`https://github.com/TheDiveO/TW5FontAwesome/releases/download/1.2.22/fontawesome.tid`，请一定以`.tid`结尾；
 *# 包含插件的HTML文件，例如：`http://tiddlymap.org/index.html`，请一定以`.html`或者`.htm`结尾；
+*# 包含插件的HTML文件但仅有URL，且URL域名为`.com`结尾的链接，例如：`https://whitefall.tiddlyhost.com`，请一定以`.com`结尾；
 *# 其他：理论上所有能被TW支持的文件格式都是可以的，但是我没有测试过。
 
 保存你的修改，使用git提交并发起一次PR，等待审核即可。
@@ -91,6 +92,7 @@ Please follow the prompts directly in [edit] to modify the information of the pl
 *# JSON file pointing to the plugin, e.g., `https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/download/v0.1.1/TW5-CodeMirror-Enhanced-0.1.1.json`, please must end with `.json`.
 *# A TID file pointing to the plugin, e.g. `https://github.com/TheDiveO/TW5FontAwesome/releases/download/1.2.22/fontawesome.tid`, please be sure to end with `.tid`.
 *# HTML files containing plugins, e.g. `http://tiddlymap.org/index.html`, please be sure to end with `.html` or `.htm`.
+*# Links that contain the HTML file of the plugin but only the URL and whose URL domain name ends in `.com`, e.g. `https://whitefall.tiddlyhost.com`, please make sure it ends in `.com`;
 *# Others: theoretically all file formats that can be supported by TW are possible, but I haven't tested it.
 
 Just save your changes, commit using git and make a PR, and wait for review.
