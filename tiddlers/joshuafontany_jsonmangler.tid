@@ -1,0 +1,16 @@
+_title: 
+_type: plugin
+author: 
+cpl.dependents: $:/plugins/ebalster/modloader
+cpl.title: $:/plugins/joshuafontany/jsonmangler
+cpl.uri: https://tomzheng-jsonmangler.tiddlyhost.com
+created: 20230506021255453
+creator: tomzcn
+description: 
+modified: 20230506022630769
+modifier: tomzcn
+name: 
+tags: $:/tags/PluginWiki
+title: joshuafontany/jsonmangler
+type: text/vnd.tiddlywiki
+uri: 

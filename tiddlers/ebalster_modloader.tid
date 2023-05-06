@@ -1,0 +1,15 @@
+_title: $:/plugins/ebalster/modloader
+_type: plugin
+author: ebalster
+cpl.title: $:/plugins/ebalster/modloader
+created: 20230506020236905
+creator: Sttot
+description: modify the TiddlyWiki core but can maintain compatibility with newer versions of the core.
+modified: 20230506022538032
+modifier: tomzheng
+name: modloader
+tags: $:/tags/PluginWiki
+title: ebalster/modloader
+type: text/vnd.tiddlywiki
+uri: https://tomzheng-jsonmangler.tiddlyhost.com
+
