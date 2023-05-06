@@ -1,15 +1,20 @@
-_title: $:/plugins/ebalster/modloader
+_title: 
 _type: plugin
-author: ebalster
+author: 
+cpl.author: ebalster
+cpl.description: Mod加载插件
+cpl.documentation: https://chronicles.wiki/TW5-JsonMangler/#%24%3A%2Fplugins%2Febalster%2Fmodloader
+cpl.name: Mod-Loader
+cpl.readme: Mod-Loader插件是~TiddlyWiki的一个强大的元插件，它有利于包括~TiddlyWiki核心在内的插件在加载时被修改。这允许创建修改~TiddlyWiki核心的插件，但可以保持与较新版本的核心的兼容性。
 cpl.title: $:/plugins/ebalster/modloader
-created: 20230506020236905
-creator: Sttot
-description: modify the TiddlyWiki core but can maintain compatibility with newer versions of the core.
-modified: 20230506022538032
-modifier: tomzheng
-name: modloader
+cpl.uri: https://chronicles.wiki/TW5-JsonMangler/index.html
+created: 20230506080644371
+creator: WhiteFall
+description: 
+modified: 20230506080822464
+modifier: WhiteFall
+name: 
 tags: $:/tags/PluginWiki
 title: ebalster/modloader
 type: text/vnd.tiddlywiki
-uri: https://tomzheng-jsonmangler.tiddlyhost.com
-
+uri: 
