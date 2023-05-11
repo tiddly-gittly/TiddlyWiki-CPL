@@ -1,13 +1,10 @@
-_title:
-_type: plugin
-author: 
+cpl.author: 
+cpl.title: 
+cpl.type: plugin
 created: 20211118053256670
 creator: Sttot
-description: 
-modified: 20211218182514762
-modifier: Sttot
-name: 
+modified: 20230511082746488
+modifier: WhiteFall
 tags: TW5CPL
 title: CPLPluginWikiTemplate
 type: text/vnd.tiddlywiki
-uri: 
