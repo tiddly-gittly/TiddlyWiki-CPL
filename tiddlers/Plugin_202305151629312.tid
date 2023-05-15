@@ -1,0 +1,12 @@
+cpl.author: Ben Webber
+cpl.core-version: >=5.2.3
+cpl.dependents: 
+cpl.description: Add simple checklists to tiddlers
+cpl.name: checklist
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/benwebber/tiddlywiki-plugins
+cpl.title: $:/plugins/benwebber/checklist
+cpl.uri: https://benwebber.github.io/tiddlywiki-plugins/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fbenwebber%252Fchecklist.json
+tags: $:/tags/PluginWiki
+title: Plugin_202305151629312
