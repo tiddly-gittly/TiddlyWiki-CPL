@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20230519040006112",
+        "creator": "WhiteFall",
+        "text": "",
+        "title": "tgrosinger/tw5-checklist",
+        "modified": "20230519040840739",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "",
+        "cpl.title": "$:/plugins/tgrosinger/tw5-checklist",
+        "cpl.type": "plugin",
+        "cpl.name": "tw5-checklist",
+        "cpl.version": "",
+        "cpl.description": "清单、复选框、TODO语法。",
+        "cpl.uri": "https://tgrosinger.github.io/tw5-checklist/index.html",
+        "cpl.readme": "示例：\n\n```\n[ ] Milk\n[ ] Eggs\n[x] Bread\n```",
+        "cpl.source": "https://github.com/tgrosinger/tw5-checklist",
+        "cpl.documentation": "https://tgrosinger.github.io/tw5-checklist/index.html"
+    }
+]
