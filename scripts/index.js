@@ -271,6 +271,12 @@ function mergePluginInfo(pluginTiddler, infoTiddler) {
   return { pluginTiddler, newInfoTiddler };
 }
 
+/**
+ * Don't let user install these two plugins manually
+ * https://github.com/Jermolene/TiddlyWiki5/issues/4484#issuecomment-596779416
+ */
+const forbiddenOfficialLibraryPlugins = ['$:/plugins/tiddlywiki/tiddlyweb', '$:/plugins/tiddlywiki/filesystem'];
+
 // https://mklauber.github.io/tw5-plugins/library/index.html
 // https://tiddlywiki.com/library/v5.2.7/index.html
 /**
@@ -297,6 +303,9 @@ function _importLibrary(uri, options) {
     pluginsJson = JSON.parse(pluginsJson);
     pluginsJson.forEach((plugin) => {
       if ("title" in plugin) {
+        if (options.libraryType ==='official' && forbiddenOfficialLibraryPlugins.includes(plugin.title)) {
+          return
+        }
         _importPlugin(
           `${baseUri}/recipes/library/tiddlers/${encodeURIComponent(
             encodeURIComponent(plugin.title)
@@ -317,7 +326,7 @@ function importLibrary(libraryType) {
     const latestVersion = execSync(
       `curl https://api.github.com/repos/Jermolene/TiddlyWiki5/tags -s | jq -r '.[0].name'`
     ).toString().trim();
-    _importLibrary(`https://tiddlywiki.com/library/${latestVersion}/index.html`, { yes: true });
+    _importLibrary(`https://tiddlywiki.com/library/${latestVersion}/index.html`, { yes: true, libraryType });
   }
   const rl = readline.createInterface({
     input: process.stdin,
