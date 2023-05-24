@@ -1,0 +1,20 @@
+cpl.author: Gk0Wk
+cpl.dependents: $:/plugins/tiddlywiki/codemirror
+cpl.description: Tons of codemirror themes for TiddlyWiki's codemirror editor
+cpl.documentation: https://gk0wk.github.io/TW5-CodeMirror-Enhanced
+cpl.name: CodeMirror Themes Pack
+cpl.plugin-type: plugin
+cpl.readme: After install, you will have multiple themes selectable in ControlPanel's codemirror config.
+cpl.source: https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced
+cpl.title: $:/plugins/Gk0Wk/codemirror-themes
+cpl.uri: https://github.com/Gk0Wk/TW5-CodeMirror-Enhanced/releases/latest/download/__plugins_Gk0Wk_codemirror-themes.json
+cpl.version: 
+created: 20230524120348018
+creator: 林一二
+icon: ⌨️
+modified: 20230524120725627
+modifier: 林一二
+page-cover: https://unsplash.com/photos/cOkpTiJMGzA/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8NDB8fGNvZGV8ZW58MHx8fHwxNjM4Njg0NzQ0&force=true&w=1920
+tags: $:/tags/PluginWiki
+title: Gk0Wk/TW5-CodeMirror-Theme
+type: text/vnd.tiddlywiki
