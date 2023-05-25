@@ -1,11 +1,13 @@
 [
     {
         "created": "20211205075319434",
+        "creator": "WhiteFall",
         "text": "",
         "title": "telmiger/HarveyBalls",
-        "modified": "20211205075521038",
+        "modified": "20230525111305932",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
+        "modifier": "WhiteFall",
         "cpl.title": "$:/plugins/telmiger/HarveyBalls",
         "cpl.author": "Thomas Elmiger",
         "cpl.name": "HarveyBalls",
@@ -15,6 +17,7 @@
         "cpl.source": "https://github.com/rimi/tw5-telmiger-plugins/tree/master/plugins/telmiger/HarveyBalls",
         "cpl.documentation": "https://www.tid.li/tw5/plugins.html",
         "cpl.core-version": "",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "page-cover": "https://seibelpublishingservices.com/wp-content/uploads/2020/10/1-harvey-balls-forms.png"
     }
 ]

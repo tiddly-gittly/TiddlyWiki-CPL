@@ -6,8 +6,8 @@
         "title": "kookma/gatha",
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "modified": "20221217160040088",
-        "modifier": "林一二",
+        "modified": "20230525105336415",
+        "modifier": "WhiteFall",
         "cpl.readme": "; Gatha Studio Workspace\nCreate Tiddlywiki plugins, themes, languages, editions, contents in browser in an easy way and distribute as packaged JSON file, Node.JS plugin folder, or a Tiddlywiki app.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n",
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fgatha.json",
         "cpl.title": "$:/plugins/kookma/gatha",
@@ -19,6 +19,6 @@
         "cpl.dependents": "",
         "cpl.core-version": ">=5.2.1",
         "cpl.documentation": "https://kookma.github.io/TW-Gatha/",
-        "cpl.source": "https://github.com/kookma/TW-Gatha"
+        "page-cover": "https://img1.imgtp.com/2023/05/25/nkzRWA5x.png"
     }
 ]

@@ -4,10 +4,10 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/github-external-image",
-        "modified": "20211209171340447",
+        "modified": "20230525105748429",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "modifier": "林一二",
+        "modifier": "WhiteFall",
         "cpl.title": "$:/plugins/linonetwo/github-external-image",
         "cpl.author": "",
         "cpl.name": "github-external-image",
@@ -15,6 +15,7 @@
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fgithub-external-image.json",
         "cpl.readme": "!! Usage\n\nPlease fill in [[$:/GitHub/Repo]] and [[$:/config/linonetwo/github-external-image/tiddler-folder-name]] to get started.\n\nThen, on build, all images will be replaced by place holders.\n\nPlease use following build target:\n\n```json\n\"externalimages\": [\n  \"--setfield\",\n  \"[is[binary]] [type[application/msword]]\",\n  \"_canonical_uri\",\n  \"$:/core/templates/canonical-uri-external-image\",\n  \"text/plain\",\n  \"--setfield\",\n  \"[is[binary]] [type[application/msword]]\",\n  \"text\",\n  \"$:/core/templates/canonical-uri-external-image\",\n  \"text/plain\",\n  \"--rendertiddler\",\n  \"$:/core/save/all\",\n  \"index.html\",\n  \"text/plain\"\n],\n```\n",
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/github-external-image",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "page-cover": "https://images.unsplash.com/photo-1654277041218-84424c78f0ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1462&q=80"
     }
 ]

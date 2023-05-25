@@ -4,10 +4,10 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/opened-tiddlers-bar",
-        "modified": "20221202065408789",
+        "modified": "20230525111910490",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "modifier": "林一二",
+        "modifier": "WhiteFall",
         "cpl.title": "$:/plugins/linonetwo/opened-tiddlers-bar",
         "cpl.author": "LinOnetwo",
         "cpl.name": "Opened Tiddlers Bar",
@@ -16,6 +16,7 @@
         "cpl.readme": "!! Features\n\nThis plugin provides VSCode style \"Opened Tiddlers\" top bar\n\nUse the middle mouse button or the X button to close the tab.\n\nUse Shift + mouse wheel to swipe sideways to view.\n\n!! Credits\n\nThis plugin is based on [[$:/plugins/bj/storytabs|http://bjtools.tiddlyspot.com/]] , which is in MIT license, thank you, Buggyj!\n",
         "cpl.source": "https://github.com/tiddly-gittly/opened-tiddlers-bar",
         "cpl.plugin-type": "plugin",
-        "cpl.documentation": "https://tiddly-gittly.github.io/opened-tiddlers-bar/"
+        "cpl.documentation": "https://tiddly-gittly.github.io/opened-tiddlers-bar/",
+        "page-cover": "https://img1.imgtp.com/2023/05/25/CiYh9ttq.png"
     }
 ]

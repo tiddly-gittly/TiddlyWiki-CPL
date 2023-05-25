@@ -4,8 +4,8 @@
         "creator": "林一二",
         "text": "",
         "title": "tiddlywiki/qrcode",
-        "modified": "20221217160015560",
-        "modifier": "林一二",
+        "modified": "20230525101301292",
+        "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "",
@@ -23,6 +23,7 @@
         "cpl.source": "https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/qrcode",
         "cpl.documentation": "https://tiddlywiki.com/editions/full/#%24%3A%2Fplugins%2Ftiddlywiki%2Fqrcode",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": ""
+        "cpl.dependents": "",
+        "page-cover": "https://plus.unsplash.com/premium_photo-1682339496371-d71e65e3e42d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
     }
 ]

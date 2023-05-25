@@ -4,7 +4,7 @@
         "creator": "WhiteFall",
         "text": "",
         "title": "nico_projectify",
-        "modified": "20230105054953513",
+        "modified": "20230525103925816",
         "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -24,6 +24,7 @@
         "cpl.icon": "https://raw.githubusercontent.com/NicolasPetton/Projectify/master/docs/img/favicon.svg",
         "cpl.source": "https://github.com/NicolasPetton/Projectify",
         "cpl.documentation": "https://thaddeusjiang.github.io/Projectify/",
-        "cpl.core-version": ">=5.1.23"
+        "cpl.core-version": ">=5.1.23",
+        "page-cover": "https://img1.imgtp.com/2023/05/25/6sMOozcY.png"
     }
 ]

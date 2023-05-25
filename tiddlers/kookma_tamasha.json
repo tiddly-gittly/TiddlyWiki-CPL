@@ -6,8 +6,8 @@
         "title": "kookma/tamasha",
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "modified": "20221217160052567",
-        "modifier": "林一二",
+        "modified": "20230525105609542",
+        "modifier": "WhiteFall",
         "cpl.readme": "!! What is Tamasha?\n\nTamasha is a presentation app based on web technology (Html5, CSS, and JS). It has been developed using [[Tiddlywiki|https://tiddlywiki.com/]], so it can be used as a single html file and can be opened using any modern browser. This makes Tamasha a quite powerfull app. It can be viewd on any operating system (e.g. Linux, Windows, Android, IOS, ...)\n\n!! Applications\n\nTamasha is quite versatile. It is an html page so whatever you can do with an offline/online single html/webpage you can do with Tamasha.\n\n* Tamasha can be used on desktop or mobile as an offline, private presentation app in a single html file.\n* Tamasha can be used in a private/public network using Node.js\n* Tamasha can be used as an online slideshow app. It can be hosted on ~GitHub Pages or other online hosts.\n\n> Tamasha runs on top of Tiddlywiki. So, it inherits all the power of Tiddlywiki.",
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftamasha.json",
         "cpl.title": "$:/plugins/kookma/tamasha",
@@ -19,6 +19,6 @@
         "cpl.dependents": "",
         "cpl.core-version": ">=5.1.23",
         "cpl.documentation": "https://kookma.github.io/TW-Tamasha/",
-        "cpl.source": "https://github.com/kookma/TW-Tamasha"
+        "page-cover": ""
     }
 ]

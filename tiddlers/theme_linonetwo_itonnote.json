@@ -3,8 +3,8 @@
         "created": "20211210052714809",
         "creator": "林一二",
         "title": "theme/linonetwo/itonnote",
-        "modified": "20221204035401432",
-        "modifier": "林一二",
+        "modified": "20230525103236408",
+        "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "cpl.author": "LinOnetwo",
@@ -15,6 +15,7 @@
         "cpl.source": "https://github.com/tiddly-gittly/itonnote-theme",
         "cpl.title": "$:/themes/linonetwo/itonnote",
         "cpl.uri": "https://github.com/tiddly-gittly/itonnote-theme/releases/latest/download/__themes_linonetwo_itonnote.json",
-        "cpl.documentation": "https://tiddly-gittly.github.io/itonnote-theme/"
+        "cpl.documentation": "https://tiddly-gittly.github.io/itonnote-theme/",
+        "page-cover": "https://img1.imgtp.com/2023/05/25/JA5ORb2k.png"
     }
 ]

@@ -4,7 +4,7 @@
         "creator": "WhiteFall",
         "text": "",
         "title": "danielo515_2click2edit",
-        "modified": "20230401053837399",
+        "modified": "20230525101204496",
         "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -15,13 +15,14 @@
         "description": "",
         "name": "",
         "cpl.title": "$:/plugins/danielo515/2click2edit",
-        "cpl.description": "double click to edit tiddlers",
+        "cpl.description": "双击编辑条目",
         "cpl.author": "Danielo Rodriguez",
         "cpl.core-version": ">=5.1.0",
         "cpl.source": "https://github.com/danielo515/TW5-2click2edit",
         "cpl.name": "2click2edit",
         "cpl.uri": "https://danielorodriguez.com/TW5-2click2edit/index.html",
         "cpl.documentation": "https://danielorodriguez.com/TW5-2click2edit/",
-        "cpl.readme": "This plugin adds the ability to edit tiddlers by double clicking on its body. Just try to edit any tiddler shown here by double clicking on it.\n\nThis can be considered a fast solution. It is only to fill the gap until TiddlyWiki adds support for it officially."
+        "cpl.readme": "This plugin adds the ability to edit tiddlers by double clicking on its body. Just try to edit any tiddler shown here by double clicking on it.\n\nThis can be considered a fast solution. It is only to fill the gap until TiddlyWiki adds support for it officially.\n\n这个插件增加了通过双击其条目主体来编辑tiddlers的能力。试着通过双击这里显示的任何tiddler来编辑它。\n\n这可以说是一个快速解决方案。它只是为了在TiddlyWiki正式添加支持之前填补空白。",
+        "page-cover": "https://img1.imgtp.com/2023/05/25/UIjGPITn.png"
     }
 ]

@@ -4,8 +4,8 @@
         "creator": "林一二",
         "text": "",
         "title": "tiddlywiki/railroad",
-        "modified": "20221217104213838",
-        "modifier": "林一二",
+        "modified": "20230525102610700",
+        "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "",
@@ -23,6 +23,7 @@
         "cpl.source": "https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/railroad",
         "cpl.documentation": "https://tiddlywiki.com/editions/full/#%24%3A%2Fplugins%2Ftiddlywiki%2Frailroad",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": ""
+        "cpl.dependents": "",
+        "page-cover": "https://images.unsplash.com/photo-1428532183904-32d2d9ff1e4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
     }
 ]

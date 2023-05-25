@@ -4,8 +4,8 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/ical-calendar-importer",
-        "modified": "20221218100907084",
-        "modifier": "林一二",
+        "modified": "20230525111516147",
+        "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "uri": "",
@@ -22,6 +22,7 @@
         "cpl.title": "$:/plugins/linonetwo/ical-calendar-importer",
         "cpl.uri": "https://github.com/tiddly-gittly/ical-calendar-importer/releases/latest/download/__plugins_linonetwo_ical-calendar-importer.json",
         "description": "",
-        "name": ""
+        "name": "",
+        "page-cover": "http://up.92sucai.com/image/20181122/1542849448482754.jpg"
     }
 ]
