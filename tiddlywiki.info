@@ -17,9 +17,7 @@
         "tiddlywiki/highlight",
         "tiddlywiki/katex",
         "tiddlywiki/markdown",
-        "tiddlywiki/sax",
-        "tiddlywiki/filesystem",
-        "tiddlywiki/tiddlyweb"
+        "tiddlywiki/sax"
     ],
     "themes": [
         "tiddlywiki/vanilla"
