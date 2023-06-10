@@ -4,7 +4,11 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/zx-script",
+<<<<<<< HEAD
         "modified": "20230525104657432",
+=======
+        "modified": "20230610081028417",
+>>>>>>> 2d20371 (Updated with Git-Sync)
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "WhiteFall",
@@ -12,8 +16,8 @@
         "cpl.author": "LinOnetwo",
         "cpl.name": "ZX Script Executor",
         "cpl.description": "ZX is a tool for writing better scripts, this plugin allows you to execute a tiddler with zx.",
-        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fzx-script.json",
-        "cpl.readme": "!! Background\n\n[[google/zx|https://github.com/google/zx]] is a tool for writing better scripts, with Javascript.\n\nThis tiddlywiki plugin enables you to run any tiddler with zx.\n\n!! Usage\n\n!!! Tiddler Type\n\nTiddler with title extension `*.js *.md *.mjs` can be execute without problem. Other tiddler witout extension (no `.xxx`) will be executed as `*.md` file, for example, tid file without extions will be executed as `*.md`, but it works without problem too, even you are writing wiki text instead of markdown.\n\nIf you add filetype `application/javascript` to your tiddler, it will be recognized as `*.mjs`.\n\n!!! Prerequisit\n\nThis plugin requires [TiddlyGit](https://github.com/tiddly-gittly/TiddlyGit-Desktop) environment to function properly. It will send tiddler content to the `zx` inside TiddlyGit, and prints the output.\n\n!!! Button\n\nA ViewToolbar button is added. You can click on it to execute the script inside your tiddler.\n\nAnd the zx output will be printed below your tiddler content.\n\n!! Developer Documentation\n\nSee [[$:/plugins/linonetwo/zx-script/developer]]\n",
+        "cpl.uri": "https://github.com/tiddly-gittly/zx-script/releases/latest/download/__plugins_linonetwo_zx-script.json",
+        "cpl.readme": "!! Background\n\n[[google/zx|https://github.com/google/zx]] is a tool for writing better scripts, with Javascript.\n\nThis tiddlywiki plugin enables you to run any tiddler with zx.\n\n!! Basic Usage\n\n!!! Prerequisit\n\nThis plugin requires [TidGi](https://github.com/tiddly-gittly/TidGi-Desktop) Desktop App environment to function properly. It will send tiddler content to the `zx` inside TidGi, and prints the output.\n\n!!! Tiddler Type\n\nTiddler with title extension `*.js *.md *.mjs` can be execute without problem. Other tiddler witout extension (no `.xxx`) will be executed as `*.md` file, for example, tid file without extions will be executed as `*.md`, but it works without problem too, even you are writing wiki text instead of markdown.\n\nIf you add filetype `application/javascript` to your tiddler, it will be recognized as `*.mjs`.\n\n!!! Button\n\nA ViewToolbar button is added. You can click on it to execute the script inside your tiddler.\n\nAnd the zx output will be printed below your tiddler content.\n\n!!! Demo\n\n```js\nconsole.log(`!! Hi!`);\n```\n\nSee [[$:/plugins/linonetwo/zx-script/demo]] for demo of full tiddler execution.\n\n!! Wiki Scripting\n\n!!! Execute the code block on the $tw context\n\nYou can write some code that is surrounded with `/** tw */` separator. They will be recognized as js code and executed on the context that have access to the $tw api.\n\nGlobal variables you can use:\n\n* `$tw` try it in your [[developer tool|https://developer.mozilla.org/en-US/docs/Tools]] to play around!\n* `_` [[lodash|https://lodash.com/docs/]]\n\nThis means you can fetch some data on the zx script, and write the results to the wiki, creating new tiddlers.\n\n!!! Access filter and macros\n\nFilter function's call example is\n\n```js\n/** tw */\nconst result = $tw.wiki.filterOperators.sum((callback) => {callback({}, '2');callback({}, '2')})\nconsole.log(result)\n```\n\n!! Developer Documentation\n\nSee [[$:/plugins/linonetwo/zx-script/developer]]\n",
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/zx-script",
         "cpl.plugin-type": "plugin",
         "page-cover": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
