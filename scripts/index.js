@@ -207,7 +207,11 @@ const mergingFields = [
 ];
 
 function getPluginContentTiddlers(pluginTiddler) {
-  return pluginTiddler.tiddlers ?? JSON.parse(pluginTiddler.text).tiddlers;
+  try {
+    return pluginTiddler.tiddlers ?? JSON.parse(pluginTiddler.text).tiddlers;
+  } catch (error) {
+    throw new Error(`[Get Plugin Content Tiddlers Error] ${error} , this maybe $tw.wiki.deserializeTiddlers(fileMIME, fileText, {}), can't deserialize tiddler ${pluginTiddler.title} properly, for example, json tiddler without a text field with jsonstringify content.`);
+  }
 }
 
 function mergePluginInfo(pluginTiddler, infoTiddler) {
@@ -726,7 +730,7 @@ function buildLibrary(distDir, minify) {
 }
 
 module.exports = {
-  build: buildLibrary,
-  importPlugin: importPlugin,
-  importLibrary: importLibrary,
+  buildLibrary,
+  importPlugin,
+  importLibrary,
 };

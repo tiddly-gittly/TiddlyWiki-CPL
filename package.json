@@ -5,7 +5,7 @@
     "main": "scripts/index.js",
     "scripts": {
         "server": "npx cross-env TIDDLYWIKI_PLUGIN_PATH='./plugins' TIDDLYWIKI_THEME_PATH='./themes' TIDDLYWIKI_LANGUAGE_PATH='./languages' npx tiddlywiki . --listen port=8080",
-        "buildlibrary": "node -e \"require('./scripts/index').build();\"",
+        "buildlibrary": "node -e \"require('./scripts/index').buildLibrary();\"",
         "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html', true, '-[tag[GenerateExclude]] -[is[draft]]');\"",
         "importplugin": "node -e \"require('./scripts/index').importPlugin();\"",
         "importlibrary": "node -e \"require('./scripts/index').importLibrary();\"",
