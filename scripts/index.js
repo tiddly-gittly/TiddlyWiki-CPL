@@ -307,7 +307,7 @@ function _importLibrary(uri, options) {
     pluginsJson = JSON.parse(pluginsJson);
     pluginsJson.forEach((plugin) => {
       if ("title" in plugin) {
-        if (options.libraryType ==='official' && forbiddenOfficialLibraryPlugins.includes(plugin.title)) {
+        if (options && options.libraryType ==='official' && forbiddenOfficialLibraryPlugins.includes(plugin.title)) {
           return
         }
         _importPlugin(
