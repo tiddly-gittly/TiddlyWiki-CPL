@@ -1,0 +1,20 @@
+[
+    {
+        "created": "20230618041036986",
+        "creator": "WhiteFall",
+        "text": "",
+        "title": "whitefall/obsidian-manager",
+        "modified": "20230618041506677",
+        "modifier": "WhiteFall",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "whitefall",
+        "cpl.title": "$:/plugins/whitefall/obsidian-manager",
+        "cpl.type": "plugin",
+        "cpl.uri": "https://github.com/tiddly-gittly/tidgi-obsidian-manager/releases/latest/download/__plugins_whitefall_obsidian-manager.json",
+        "cpl.name": "obsidian-manager",
+        "cpl.description": "导入并管理你的Obsidian存储库",
+        "cpl.readme": "* 提供根据目录导入ob存储库的md、jpg、png、jpeg文件。\n* 提供清除写入（导入）文件的清空操作。\n* 提供对md和ob一般图片语法的替换，替换为[img[]]",
+        "cpl.source": "https://github.com/tiddly-gittly/tidgi-obsidian-manager"
+    }
+]
