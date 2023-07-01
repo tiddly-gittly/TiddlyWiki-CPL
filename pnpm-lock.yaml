@@ -20,8 +20,8 @@ devDependencies:
     specifier: 7.2.0
     version: 7.2.0
   tiddlywiki:
-    specifier: 5.2.5
-    version: 5.2.5
+    specifier: 5.3.0
+    version: 5.3.0
   tw5-typed:
     specifier: 0.3.1
     version: 0.3.1
@@ -3232,12 +3232,11 @@ packages:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
 
-  /tiddlywiki@5.2.5:
-    resolution: {integrity: sha512-Xfq9NHxAwg2UvCimbtZWWqZyfUpVyq1w+tfb0vMrx3wyWK3VZD1hogJTN1a5qBNyvD9d+WmpZkCw/xN5smRzLQ==}
+  /tiddlywiki@5.3.0:
+    resolution: {integrity: sha512-q18h1fT3MhyBrMGhWP1tmFdyhPcUrC22Ue6OFDp9V8offtFw5pV1zZ7okSu1JHHMjl4R5/ivv3KlXO9qcdmJkQ==}
     engines: {node: '>=0.8.2'}
     hasBin: true
     dev: true
-    bundledDependencies: []
 
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
