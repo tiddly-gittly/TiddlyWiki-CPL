@@ -56,7 +56,9 @@ type: text/vnd.tiddlywiki
 
 <div style="display:none;">
 
-<!-- {{CallbackInfo}} -->
+<$reveal state="$:/info/tidgi" type="nomatch" text="yes">
+{{CallbackInfo}}
+</$reveal>
 
 </div>
 
