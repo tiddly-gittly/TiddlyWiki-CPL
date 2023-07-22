@@ -1,0 +1,17 @@
+cpl.author: mabuqian
+cpl.core-version: >=5.2.0
+cpl.description: 马不前个人定制化插件
+cpl.documentation: https://dongrentianyu.github.io/mabuqian-customisation
+cpl.name: GuMo-Customisation
+cpl.readme: 里面包含了常用配置文件，也包含了实验性质内容，安装前请备份。
+cpl.source: https://github.com/dongrentianyu/mabuqian-customisation
+cpl.title: $:/plugins/mabuqian/gumo-customisation
+cpl.type: plugin
+cpl.uri: https://github.com/dongrentianyu/mabuqian-customisation/releases/latest/download/__plugins_mabuqian_gumo-customisation.json
+created: 20230722043055641
+creator: Sttot
+modified: 20230722043332065
+modifier: WhiteFall
+tags: $:/tags/PluginWiki
+title: mabuqian/gumo-customisation
+type: text/vnd.tiddlywiki
