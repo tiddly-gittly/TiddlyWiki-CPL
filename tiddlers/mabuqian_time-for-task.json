@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20230730074437771",
+        "creator": "马不前",
+        "text": "",
+        "title": "mabuqian/time-for-task",
+        "cpl.author": "mabuqian",
+        "cpl.title": "$:/plugins/mabuqian/time-for-task",
+        "cpl.type": "plugin",
+        "modified": "20230730075217851",
+        "modifier": "马不前",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.description": "time only for task",
+        "cpl.name": "time-for-task",
+        "cpl.core-version": ">=5.1.22",
+        "cpl.dependents": "\"$:/plugins/kookma/shiraz\", \"$:/plugins/yaisog/taggingtree-filter\", \"$:/plugins/yaisog/tagstree-filter\", \"$:/plugins/linonetwo/in-tagtree-of\", \"$:/plugins/Gk0Wk/echarts\", \"$:/plugins/linonetwo/super-tag\", \"$:/plugins/xp/aggregation\"",
+        "cpl.uri": "https://github.com/dongrentianyu/timefortask/releases/latest/download/__plugins_mabuqian_time-for-task.json\n",
+        "cpl.source": "https://github.com/dongrentianyu/timefortask",
+        "cpl.documentation": "https://dongrentianyu.github.io/timefortask",
+        "cpl.readme": "time task and the meanings\n\n修改自林一二的[[意义之塔插件|https://github.com/tiddly-gittly/intention-tower-knowledge-graph]]。"
+    }
+]
