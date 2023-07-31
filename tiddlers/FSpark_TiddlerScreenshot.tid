@@ -1,0 +1,15 @@
+cpl.author: FSpark
+cpl.description: to export the Tiddler as a PNG image
+cpl.documentation: https://tiddly-gittly.github.io/TiddlerScreenshot/
+cpl.name: TiddlerScreenshot
+cpl.source: https://github.com/tiddly-gittly/TiddlerScreenshot
+cpl.title: $:/plugins/FSpark/TiddlerScreenshot
+cpl.type: plugin
+cpl.uri: https://github.com/tiddly-gittly/TiddlerScreenshot/releases/latest/download/__plugins_FSpark_TiddlerScreenshot.json
+created: 20230731181432574
+creator: 马不前
+modified: 20230731181806478
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: FSpark/TiddlerScreenshot
+type: text/vnd.tiddlywiki
