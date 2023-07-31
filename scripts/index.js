@@ -331,6 +331,7 @@ function importLibrary(libraryType) {
       `curl https://api.github.com/repos/Jermolene/TiddlyWiki5/tags -s | jq -r '.[0].name'`
     ).toString().trim();
     _importLibrary(`https://tiddlywiki.com/library/${latestVersion}/index.html`, { yes: true, libraryType });
+    return;
   }
   const rl = readline.createInterface({
     input: process.stdin,
