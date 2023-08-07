@@ -1,19 +1,22 @@
 [
     {
         "created": "20211122052309353",
+        "creator": "林一二",
         "text": "",
         "title": "oflg/LazyTiddler",
-        "modified": "20220321145751005",
+        "modified": "20230807084325321",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "cpl.title": "$:/plugins/oflg/lazy-tiddler",
         "cpl.author": "oflg",
         "cpl.name": "Lazy Tiddler",
-        "cpl.description": "Lazy load tiddler",
-        "cpl.uri": "https://tiddly-gittly.github.io/lazy-tiddler/index.html",
+        "cpl.description": "A ViewTemplate that improve performance by hiding tiddlers when out of view.",
+        "cpl.uri": "https://github.com/tiddly-gittly/lazy-tiddler/releases/latest/download/__plugins_oflg_lazy-tiddler.json",
         "cpl.source": "https://github.com/tiddly-gittly/lazy-tiddler",
         "cpl.documentation": "https://tiddly-gittly.github.io/lazy-tiddler/",
         "cpl.core-version": ">=5.2.2",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "modifier": "林一二",
+        "cpl.readme": "Installation and usage tutorial is available at [[Manual|https://tiddly-gittly.github.io/lazy-tiddler/]].\n\n可在 [[手册|https://tiddly-gittly.github.io/lazy-tiddler]] 中查看安装使用教程。"
     }
 ]
