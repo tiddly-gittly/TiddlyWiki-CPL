@@ -6,14 +6,14 @@
         "cpl.author": "LinOnetwo",
         "cpl.title": "$:/plugins/linonetwo/health-buff-debuff-tracker",
         "cpl.type": "plugin",
-        "modified": "20230818174711277",
+        "modified": "20230818175029127",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "cpl.description": "Record your life issues, medication usage, and the process of recovery, in TiddlyWiki",
         "cpl.name": "Health Buff Debuff Tracker",
         "cpl.uri": "https://github.com/tiddly-gittly/health-buff-debuff-tracker/releases/latest/download/__plugins_linonetwo_health-buff-debuff-tracker.json",
-        "cpl.readme": "!! Health Buff & Debuff Tracker\n\nThis Health Status Recording App aims to provide a simple and convenient tool for users to document various health issues, medication usage, and the process of recovery, addressing the growing demand for personal health monitoring.\n\nUser data will be saved in the local-first way for privacy, the interface will be user-friendly, and potential future additions include data analysis features to further enhance users' understanding of their health conditions.\n",
+        "cpl.readme": "\\whitespace trim\n<$list filter=\"[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]\" variable=\"lang\">\n\t<$list filter=\"[<lang>search[zh]]\">\n\n!! 健康 Buff 和 Debuff 追踪器\n\n本健康状况记录应用程序旨在为用户提供一个简单方便的工具，用于记录各种健康问题、药物使用情况和恢复过程，满足日益增长的个人健康监测需求。\n\n用户数据将以本地优先的方式保存，以保护隐私，界面也将非常友好，未来还可能增加数据分析功能，以进一步提高用户对自身健康状况的了解。\n\n  </$list>\n\t<$list filter=\"[<lang>!search[zh]]\">\n\n!! Health Buff & Debuff Tracker\n\nThis Health Status Recording App aims to provide a simple and convenient tool for users to document various health issues, medication usage, and the process of recovery, addressing the growing demand for personal health monitoring.\n\nUser data will be saved in the local-first way for privacy, the interface will be user-friendly, and potential future additions include data analysis features to further enhance users' understanding of their health conditions.\n\n  </$list>\n</$list>",
         "cpl.source": "https://github.com/tiddly-gittly/health-buff-debuff-tracker",
         "cpl.documentation": "https://tiddly-gittly.github.io/health-buff-debuff-tracker/"
     }
