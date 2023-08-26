@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20230826150003706",
+        "creator": "马不前",
+        "text": "",
+        "title": "mabuqian/time-prints",
+        "cpl.author": "mabuqian",
+        "cpl.title": "$:/plugins/mabuqian/time-prints",
+        "cpl.type": "plugin",
+        "modified": "20230826150231812",
+        "modifier": "马不前",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.name": "Time Prints",
+        "cpl.description": "print time",
+        "cpl.readme": "这是一个个人化自定义的时间管理插件，文档还没写好，安装前请备份tiddlywiki。\n\n* code: https://github.com/dongrentianyu/time-prints\n* demo: https://dongrentianyu.github.io/time-prints/",
+        "cpl.source": "https://github.com/dongrentianyu/time-prints",
+        "cpl.documentation": "https://dongrentianyu.github.io/time-prints/",
+        "cpl.core-version": ">=5.2.0",
+        "cpl.uri": "https://github.com/dongrentianyu/time-prints/releases/latest/download/__plugins_mabuqian_time-prints.json"
+    }
+]
