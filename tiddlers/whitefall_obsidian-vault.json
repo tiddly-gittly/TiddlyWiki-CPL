@@ -4,7 +4,7 @@
         "creator": "WhiteFall",
         "text": "",
         "title": "whitefall/obsidian-vault",
-        "modified": "20230812003500648",
+        "modified": "20230905124854084",
         "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -13,10 +13,9 @@
         "cpl.type": "plugin",
         "cpl.uri": "https://github.com/tiddly-gittly/tidgi-obsidian-manager/releases/latest/download/__plugins_whitefall_obsidian-vault.json",
         "cpl.name": "Obsidian-Vault",
-        "cpl.description": "Obsidian Vault发布工具 by NodeJS TiddlyWiki",
-        "cpl.readme": "''Obsidian Vault发布工具 by ~NodeJS ~TiddlyWiki''\n\n> ~TidGi v0.8.0 需要在工作区设置 博客和服务器设置中 启用 HTTP API 并 关闭 凭证鉴权选项。\n\n更新需要先点清除在点导入；因为条目名的唯一性，建议一个wiki仅导入一个obsidian vault。\n\n# 提供清除写入（导入）文件的清空操作。\n# 提供对md和ob一般图片语法的替换，替换为[img[]]\n# 提供根据目录导入ob存储库的md、jpg、png、jpeg文件。\n# 提供写入文件的记录功能。\n# 提供筛选文件和忽略文件夹功能。\n# 提供转写obsidian文件系统目录树的功能。",
+        "cpl.description": "从 Obsidian 笔记库导入 Markdown 文件到 TiddlyWiki",
+        "cpl.readme": "! tw5-obsidian-vault\n\n从 Obsidian 笔记库导入 Markdown 文件到 ~TiddlyWiki\n\n插件要求、使用方式和预览链接请查看：[[参考手册|https://tiddly-gittly.github.io/tidgi-obsidian-manager/]]\n\nGithub Repo: https://github.com/tiddly-gittly/tidgi-obsidian-manager",
         "cpl.source": "https://github.com/tiddly-gittly/tidgi-obsidian-manager",
-        "cpl.core-version": ">=5.3.0",
         "page-cover": "https://obsidian.md/images/obsidian-logo-gradient.svg"
     }
 ]
