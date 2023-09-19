@@ -8,7 +8,7 @@
         "cpl.name": "Neotw Markdown Extensions",
         "cpl.description": "Neotw Markdown Extensions",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/tiddlywiki/markdown",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
         "cpl.parent-plugin": "$:/plugins/tiddlywiki/markdown",
         "cpl.core-version": ">=5.2.7",
         "title": "Plugin_202309190830297"

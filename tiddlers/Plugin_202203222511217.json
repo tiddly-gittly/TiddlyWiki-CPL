@@ -12,6 +12,7 @@
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Section",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.1"
+        "cpl.core-version": ">=5.2.5",
+        "cpl.parent-plugin": ""
     }
 ]

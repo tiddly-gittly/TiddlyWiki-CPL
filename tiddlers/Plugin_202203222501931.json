@@ -8,10 +8,11 @@
         "cpl.title": "$:/plugins/kookma/commander",
         "cpl.author": "Mohammad Rahmani",
         "cpl.name": "Tiddler Commander",
-        "cpl.description": "batch processing tiddlers",
+        "cpl.description": "Tiddler Commander",
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Commander",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.1.22"
+        "cpl.core-version": ">=5.2.0",
+        "cpl.parent-plugin": ""
     }
 ]

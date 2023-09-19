@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[Github|https://github.com/EvidentlyCube/TW5-Permaviews]]\n\n----\n\n! Features\n\nDefine lists of tiddlers that automatically open when you visit a predefined permalink.\n\n! How to use:\n\nGo to Control Panel -> Evidently Cube -> Permaviews and define as many views as you would like:\n\n * Give it a name by which it can be accessed.\n * Optionally describe it for bookkeeping.\n * Write a filter or a list of tiddler you want to be opened when you visit the permalink\n\nThen use the permalink to change the story river to be those tiddlers only,",
+        "cpl.readme": "[[Github|https://github.com/EvidentlyCube/TW5-PluginShowcase/tree/main/plugins/EvidentlyCube/TW5-Permaviews]]\n\n----\n\n! Features\n\nDefine lists of tiddlers that automatically open when you visit a predefined permalink.\n\n! How to use:\n\nGo to Control Panel -> Evidently Cube -> Permaviews and define as many views as you would like:\n\n * Give it a name by which it can be accessed.\n * Optionally describe it for bookkeeping.\n * Write a filter or a list of tiddler you want to be opened when you visit the permalink\n\nThen use the permalink to change the story river to be those tiddlers only,",
         "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%2524%253A%252Fplugins%252FEvidentlyCube%252FPermaviews.json",
         "cpl.title": "$:/plugins/EvidentlyCube/Permaviews",
         "cpl.author": "Maurycy Zarzycki",
