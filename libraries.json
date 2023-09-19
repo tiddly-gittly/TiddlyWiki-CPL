@@ -1,0 +1,22 @@
+[
+  {
+    "name": "KooKma",
+    "uri": "https://kookma.github.io/TW-PluginLibrary/library/index.html"
+  },
+  {
+    "name": "Wikilabs",
+    "uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/index.html"
+  },
+  {
+    "name": "TiddlyMemo",
+    "uri": "https://tiddlymemo.org/library/"
+  },
+  {
+    "name": "Relink (flibbles)",
+    "uri": "https://flibbles.github.io/tw5-relink/library/index.html"
+  },
+  {
+    "name": "NeoTW (oeyoews)",
+    "uri": "https://neotw.oeyoewl.top/library/index.html"
+  }
+]
