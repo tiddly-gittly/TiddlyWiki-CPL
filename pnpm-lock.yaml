@@ -10,7 +10,7 @@ dependencies:
     version: 4.1.2
   readline-sync:
     specifier: ^1.4.10
-    version: registry.npmmirror.com/readline-sync@1.4.10
+    version: 1.4.10
 
 devDependencies:
   cross-env:
@@ -20,11 +20,11 @@ devDependencies:
     specifier: 7.2.0
     version: 7.2.0
   tiddlywiki:
-    specifier: 5.3.0
-    version: 5.3.0
+    specifier: 5.3.1
+    version: 5.3.1
   tw5-typed:
-    specifier: 0.3.9
-    version: 0.3.9
+    specifier: 0.3.10
+    version: 0.3.10
   uglify-js:
     specifier: 3.17.4
     version: 3.17.4
@@ -2861,6 +2861,11 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /readline-sync@1.4.10:
+    resolution: {integrity: sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==}
+    engines: {node: '>= 0.8.0'}
+    dev: false
+
   /redent@3.0.0:
     resolution: {integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==}
     engines: {node: '>=8'}
@@ -3232,8 +3237,8 @@ packages:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
 
-  /tiddlywiki@5.3.0:
-    resolution: {integrity: sha512-q18h1fT3MhyBrMGhWP1tmFdyhPcUrC22Ue6OFDp9V8offtFw5pV1zZ7okSu1JHHMjl4R5/ivv3KlXO9qcdmJkQ==}
+  /tiddlywiki@5.3.1:
+    resolution: {integrity: sha512-17uoTt8w3wvqaF1fqulHeeR86984N0eC8fgd0Ql1LIKgrHRu1+M3fBW8V/ikofU2s74xr6S1efREHaA2zyhe1w==}
     engines: {node: '>=0.8.2'}
     hasBin: true
     dev: true
@@ -3282,8 +3287,8 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
-  /tw5-typed@0.3.9:
-    resolution: {integrity: sha512-FypE+YbEcpi+1vDg3EZP0jYyPYZLoH5HEDIwBvrWaLa7VhVNcMSZHCuIevZAyEAPnPT94g7gSWI08aVsWLxD7Q==}
+  /tw5-typed@0.3.10:
+    resolution: {integrity: sha512-c/NEOxuiGS75spVzT88BgAQORDg9l9z2g4HWCOmAoVQN27t0B910K4Db7IN5W7PF3BF88Zn4n+tjxqIwuDg2uQ==}
     dependencies:
       '@types/codemirror': 5.60.7
       '@types/echarts': 4.9.16
@@ -3650,7 +3655,7 @@ packages:
     dev: true
 
   registry.nlark.com/cross-env@7.0.3:
-    resolution: {integrity: sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/cross-env/download/cross-env-7.0.3.tgz}
+    resolution: {integrity: sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/cross-env/download/cross-env-7.0.3.tgz}
     name: cross-env
     version: 7.0.3
     engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
@@ -3660,7 +3665,7 @@ packages:
     dev: true
 
   registry.nlark.com/cross-spawn@7.0.3:
-    resolution: {integrity: sha1-9zqFudXUHQRVUcF34ogtSshXKKY=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/cross-spawn/download/cross-spawn-7.0.3.tgz}
+    resolution: {integrity: sha1-9zqFudXUHQRVUcF34ogtSshXKKY=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/cross-spawn/download/cross-spawn-7.0.3.tgz}
     name: cross-spawn
     version: 7.0.3
     engines: {node: '>= 8'}
@@ -3671,20 +3676,20 @@ packages:
     dev: true
 
   registry.nlark.com/isexe@2.0.0:
-    resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/isexe/download/isexe-2.0.0.tgz?cache=0&sync_timestamp=1631509552476&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fisexe%2Fdownload%2Fisexe-2.0.0.tgz}
+    resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/isexe/download/isexe-2.0.0.tgz?cache=0&sync_timestamp=1631509552476&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fisexe%2Fdownload%2Fisexe-2.0.0.tgz}
     name: isexe
     version: 2.0.0
     dev: true
 
   registry.nlark.com/path-key@3.1.1:
-    resolution: {integrity: sha1-WB9q3mWMu6ZaDTOA3ndTKVBU83U=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/path-key/download/path-key-3.1.1.tgz}
+    resolution: {integrity: sha1-WB9q3mWMu6ZaDTOA3ndTKVBU83U=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/path-key/download/path-key-3.1.1.tgz}
     name: path-key
     version: 3.1.1
     engines: {node: '>=8'}
     dev: true
 
   registry.nlark.com/shebang-command@2.0.0:
-    resolution: {integrity: sha1-zNCvT4g1+9wmW4JGGq8MNmY/NOo=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/shebang-command/download/shebang-command-2.0.0.tgz}
+    resolution: {integrity: sha1-zNCvT4g1+9wmW4JGGq8MNmY/NOo=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/shebang-command/download/shebang-command-2.0.0.tgz}
     name: shebang-command
     version: 2.0.0
     engines: {node: '>=8'}
@@ -3693,14 +3698,14 @@ packages:
     dev: true
 
   registry.nlark.com/shebang-regex@3.0.0:
-    resolution: {integrity: sha1-rhbxZE2HPsrYQ7AwexQzYtTEIXI=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/shebang-regex/download/shebang-regex-3.0.0.tgz}
+    resolution: {integrity: sha1-rhbxZE2HPsrYQ7AwexQzYtTEIXI=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/shebang-regex/download/shebang-regex-3.0.0.tgz}
     name: shebang-regex
     version: 3.0.0
     engines: {node: '>=8'}
     dev: true
 
   registry.nlark.com/which@2.0.2:
-    resolution: {integrity: sha1-fGqN0KY2oDJ+ELWckobu6T8/UbE=, registry: https://registry.npmjs.org/, tarball: https://registry.nlark.com/which/download/which-2.0.2.tgz?cache=0&sync_timestamp=1631509556835&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fwhich%2Fdownload%2Fwhich-2.0.2.tgz}
+    resolution: {integrity: sha1-fGqN0KY2oDJ+ELWckobu6T8/UbE=, registry: https://registry.npmmirror.com/, tarball: https://registry.nlark.com/which/download/which-2.0.2.tgz?cache=0&sync_timestamp=1631509556835&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fwhich%2Fdownload%2Fwhich-2.0.2.tgz}
     name: which
     version: 2.0.2
     engines: {node: '>= 8'}
@@ -3708,10 +3713,3 @@ packages:
     dependencies:
       isexe: registry.nlark.com/isexe@2.0.0
     dev: true
-
-  registry.npmmirror.com/readline-sync@1.4.10:
-    resolution: {integrity: sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/readline-sync/-/readline-sync-1.4.10.tgz}
-    name: readline-sync
-    version: 1.4.10
-    engines: {node: '>= 0.8.0'}
-    dev: false
