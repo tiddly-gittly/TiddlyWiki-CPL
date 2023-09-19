@@ -325,6 +325,13 @@ function _importLibrary(uri, options) {
   }
 }
 
+function importAllLibrary(libraryType) {
+  const libraryList = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'libraries.json')));
+  for (const item of libraryList) {
+    _importLibrary(item.uri, { yes: true });
+  }
+}
+
 function importLibrary(libraryType) {
   if (libraryType ==='official') {
     const latestVersion = execSync(
@@ -734,4 +741,5 @@ module.exports = {
   buildLibrary,
   importPlugin,
   importLibrary,
+  importAllLibrary,
 };
