@@ -23,8 +23,8 @@ devDependencies:
     specifier: 5.3.0
     version: 5.3.0
   tw5-typed:
-    specifier: 0.3.9
-    version: 0.3.9
+    specifier: 0.3.10
+    version: 0.3.10
   uglify-js:
     specifier: 3.17.4
     version: 3.17.4
@@ -3282,8 +3282,8 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
-  /tw5-typed@0.3.9:
-    resolution: {integrity: sha512-FypE+YbEcpi+1vDg3EZP0jYyPYZLoH5HEDIwBvrWaLa7VhVNcMSZHCuIevZAyEAPnPT94g7gSWI08aVsWLxD7Q==}
+  /tw5-typed@0.3.10:
+    resolution: {integrity: sha512-c/NEOxuiGS75spVzT88BgAQORDg9l9z2g4HWCOmAoVQN27t0B910K4Db7IN5W7PF3BF88Zn4n+tjxqIwuDg2uQ==}
     dependencies:
       '@types/codemirror': 5.60.7
       '@types/echarts': 4.9.16
