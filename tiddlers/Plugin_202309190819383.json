@@ -9,7 +9,6 @@
         "cpl.description": "Neotw Emoji Picker",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
-        "cpl.parent-plugin": "$:/plugins/oeyoews/neotw",
         "cpl.core-version": ">=5.2.7",
         "title": "Plugin_202309190819383"
     }
