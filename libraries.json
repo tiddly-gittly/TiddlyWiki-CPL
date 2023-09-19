@@ -1,0 +1,50 @@
+[
+  {
+    "name": "KooKma",
+    "uri": "https://kookma.github.io/TW-PluginLibrary/library/index.html"
+  },
+  {
+    "name": "Wikilabs",
+    "uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/index.html"
+  },
+  {
+    "name": "TiddlyMemo",
+    "uri": "https://tiddlymemo.org/library/"
+  },
+  {
+    "name": "Relink (flibbles)",
+    "uri": "https://flibbles.github.io/tw5-relink/library/index.html"
+  },
+  {
+    "name": "benwebber",
+    "uri": "https://benwebber.github.io/tiddlywiki-plugins/library/"
+  },
+  {
+    "name": "EvidentlyCube (Maurycy Zarzycki)",
+    "uri": "https://evidentlycube.github.io/TW5-PluginShowcase/library.html"
+  },
+  {
+    "name": "SoundCite",
+    "uri": "https://fkohrt.gitlab.io/tw5-soundcite/library/index.html"
+  },
+  {
+    "name": "Andrew Harrison",
+    "uri": "https://t5a.github.io/plugins"
+  },
+  {
+    "name": "Inmysocks (ooktech Eskha)",
+    "uri": "http://ooktech.com/jed/pluginlibrary/stable/index.html"
+  },
+  {
+    "name": "Matt (mklauber)",
+    "uri": "https://mklauber.github.io/tw5-plugins/library/index.html"
+  },
+  {
+    "name": "SQPL (Saq)",
+    "uri": "https://saqimtiaz.github.io/SQPL/library/index.html"
+  },
+  {
+    "name": "NeoTW (oeyoews)",
+    "uri": "https://neotw.oeyoewl.top/library/index.html"
+  }
+]

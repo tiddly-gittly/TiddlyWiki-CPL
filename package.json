@@ -10,6 +10,7 @@
         "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html', true, '-[tag[GenerateExclude]] -[is[draft]]');\"",
         "importplugin": "node -e \"require('./scripts/index').importPlugin();\"",
         "importlibrary": "node -e \"require('./scripts/index').importLibrary();\"",
+        "importAllLibrary": "node -e \"require('./scripts/index').importAllLibrary();\"",
         "importlibraryofficial": "node -e \"require('./scripts/index').importLibrary('official');\""
     },
     "repository": {
@@ -29,8 +30,8 @@
     "devDependencies": {
         "cross-env": "7.0.3",
         "html-minifier-terser": "7.2.0",
-        "tiddlywiki": "5.3.0",
-        "tw5-typed": "0.3.9",
+        "tiddlywiki": "5.3.1",
+        "tw5-typed": "0.3.10",
         "uglify-js": "3.17.4",
         "workbox-cli": "7.0.0"
     },

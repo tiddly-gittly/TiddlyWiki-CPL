@@ -2,7 +2,7 @@
     {
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "* Adds the \"Advanced Search\" tab also to the right sidebar\n* Replaces the default search option with an icon\n* Adds a \"+\" button to the advanced search function\n** Allows to pin existing search settings to a new tab\n\n----\n\n''Important'': This plugin modifies several core templates\n\n<$list filter=\"[[$:/plugins/wikilabs/advanced-search-plus]plugintiddlers[]prefix[$:/core/]] $:/AdvancedSearch $:/tags/AdvancedSearch\"><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></$list>",
+        "cpl.readme": "* Important: ''No browser reload'' needed\n* Change the default \"Advanced Search\" tiddler\n* Adds the \"Advanced Search\" tab to the right sidebar\n* Replaces the default search option with an icon\n* Adds a \"new search tab\" button to the advanced search function\n* Allows to pin existing search settings to a new tab\n\n----\n\n''Important'': This plugin modifies several core templates\n\n<ul><$list filter=\"[[$:/plugins/wikilabs/advanced-search-plus]plugintiddlers[]prefix[$:/core/]] $:/AdvancedSearch\"><li><$link to=<<currentTiddler>>><<currentTiddler>></$link></li></$list></ul>\n",
         "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fadvanced-search-plus.json",
         "cpl.title": "$:/plugins/wikilabs/advanced-search-plus",
         "cpl.author": "Mario Pietsch",

@@ -2,14 +2,14 @@
     {
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "! Overview\n\nThis is an opinonated theme, used by pmario.\n\n!!! License\n\nCC-BY-NC-SA - {{$:/themes/wikilabs/slant-01/license}}",
+        "cpl.readme": "! Overview\n\nThis is an opinonated theme, used by pmario.\n\n!! License\n\nCC-BY-NC-SA - {{$:/themes/wikilabs/slant-01/license}}\n\n''Important:'' This plugin modifies a core module and templates\n\n<ul><$list filter=\"[[$:/themes/wikilabs/slant-01]plugintiddlers[]prefix[$:/core/]] \"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>",
         "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fthemes%252Fwikilabs%252Fslant-01.json",
         "cpl.title": "$:/themes/wikilabs/slant-01",
         "cpl.author": "Mario Pietsch",
         "cpl.name": "Slant 01",
         "cpl.description": "slant-01 - an opinionated theme",
         "cpl.plugin-type": "theme",
-        "cpl.dependents": "$:/themes/tiddlywiki/snowwhite $:/plugins/wikilabs/info-session $:/plugins/wikilabs/info-tagmap $:/plugins/wikilabs/multicol-dropdown",
+        "cpl.dependents": "$:/themes/tiddlywiki/snowwhite $:/plugins/wikilabs/info-tagmap $:/plugins/wikilabs/multicol-dropdown",
         "cpl.core-version": ">=5.1.10",
         "title": "Plugin_202203243743199"
     }
