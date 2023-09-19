@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Neotw Battery\n\n* Show Battery\n* 展示电量\n\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-battery.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-battery",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Neotw Battery",
+        "cpl.description": "Neotw Battery",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.2.5",
+        "title": "Plugin_202309190816446"
+    }
+]

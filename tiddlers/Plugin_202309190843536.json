@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "{{$:/languages/neotw-tw-bot/readme}}\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-tw-bot.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-tw-bot",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Neotw Tw Bot",
+        "cpl.description": "快速记录你的想法",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.parent-plugin": "$:/plugins/oeyoews/neotw",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202309190843536"
+    }
+]

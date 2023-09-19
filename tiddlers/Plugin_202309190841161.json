@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<div class=\"prose prose-indigo max-w-none\">\n\n!! Neotw Swal2\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/oeyoews/neotw-swal2]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n* https://sweetalert2.github.io/#configuration\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-swal2.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-swal2",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Neotw Swal2",
+        "cpl.description": "Neotw Swal2",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.parent-plugin": "$:/plugins/oeyoews/neotw",
+        "cpl.core-version": ">=5.2.7",
+        "title": "Plugin_202309190841161"
+    }
+]

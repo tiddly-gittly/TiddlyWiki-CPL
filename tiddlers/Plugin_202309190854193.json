@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Tiddlywiki Cards\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-cards.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-cards",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Tiddlywiki Cards",
+        "cpl.description": "Tiddlywiki Cards",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.2.5",
+        "title": "Plugin_202309190854193"
+    }
+]

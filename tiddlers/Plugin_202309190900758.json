@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<div class=\"prose max-w-none\">\n\n!! New Fancybox\n\n> 推荐使用轻量的 neotw-view-image插件代替\n\n</div>\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-fancybox-ui.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-fancybox-ui",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Tiddlywiki Fancybox Ui",
+        "cpl.description": "New Fancybox",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.7",
+        "title": "Plugin_202309190900758"
+    }
+]

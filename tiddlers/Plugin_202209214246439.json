@@ -1,8 +1,8 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "* neotw-snippet\n",
-        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-snippet.json",
+        "cpl.readme": "@[toc]\n\n## TODO\n\n* [ ] enable snippets hint for markdown type\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-snippet.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-snippet",
         "cpl.author": "oeyoews",
         "cpl.name": "snippet",

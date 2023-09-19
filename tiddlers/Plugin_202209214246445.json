@@ -1,15 +1,15 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "This plugin adds a ''Keymap'' with some of the most important ''Vim'' keyboard shortcuts\n\nFor information about available ''keyboard shortcuts'' see the [ext[CodeMirror vim demo|https://codemirror.net/demo/vim.html]]\n",
-        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fcodemirror-keymap-vimjk.json",
+        "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n* support `jk`, H L replace 0 $\n\n> vim 不能没有jk, 就像西方不能没有耶路撒冷\n\n</div>\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fcodemirror-keymap-vimjk.json",
         "cpl.title": "$:/plugins/oeyoews/codemirror-keymap-vimjk",
         "cpl.author": "oeyoews",
         "cpl.name": "CodeMirror Keymap VimJK",
-        "cpl.description": "Keymap compatible with Vim for CodeMirror",
+        "cpl.description": "VimJK",
         "cpl.plugin-type": "plugin",
         "cpl.source": "",
-        "cpl.dependents": "$:/plugins/tiddlywiki/codemirror-search-replace $:/plugins/tiddlywiki/codemirror-closebrackets",
+        "cpl.dependents": "[[$:/plugins/tiddlywiki/codemirror-search-replace $:/plugins/tiddlywiki/codemirror-closebrackets]]",
         "cpl.parent-plugin": "$:/plugins/tiddlywiki/codemirror",
         "cpl.core-version": "5.2.3",
         "title": "Plugin_202209214246445"

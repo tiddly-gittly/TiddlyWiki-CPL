@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n!! Neotw Time\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/oeyoews/neotw-time]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n\n!! Examples\n\n```\n<$ostage />\n<$ostage timestamp='2023-6-1'/>\n<$ostage timestamp='2022-01-01'/>\n<$ostage timestamp='2024-01-01'/>\n```\n\n<$ostage />\n\n<$ostage timestamp='2023-6-1'/>\n\n<$ostage timestamp='2022-01-01'/>\n\n<$ostage timestamp='2024-01-01'/>\n\n</div>\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-time.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-time",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Neotw Time",
+        "cpl.description": "Neotw Time",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.2.5",
+        "title": "Plugin_202309190841745"
+    }
+]

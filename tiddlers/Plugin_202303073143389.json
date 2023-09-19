@@ -1,8 +1,8 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<a href=\"https://github.com/oeyoews/neotw\" target=\"_blank\">\n  <img src=\"https://img.shields.io/badge/Powered by-Neotw-green?style=flat\" />\n</a>\n\n* Show Tiddler Info\n* note: reoverwrite [[$:/core/ui/ViewTemplate/subtitle]] tiddler\n",
-        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tiddler-info.json",
+        "cpl.readme": "* Show Tiddler Info\n* note: reoverwrite [[$:/core/ui/ViewTemplate/subtitle]] tiddler\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tiddler-info.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-tiddler-info",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Tiddler Info",

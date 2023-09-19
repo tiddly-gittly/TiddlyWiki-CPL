@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "{{$:/language/neotw-emoji-picker/readme}}\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-emoji-picker.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-emoji-picker",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Neotw Emoji Picker",
+        "cpl.description": "Neotw Emoji Picker",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.parent-plugin": "$:/plugins/oeyoews/neotw",
+        "cpl.core-version": ">=5.2.7",
+        "title": "Plugin_202309190819383"
+    }
+]

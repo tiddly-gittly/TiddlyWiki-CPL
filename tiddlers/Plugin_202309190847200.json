@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "{{$:/languages/neotw-view-image/readme}}\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-view-image.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-view-image",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-view-image",
+        "cpl.description": "灯箱插件",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "$:/plugins/oeyoews/neotw",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202309190847200"
+    }
+]

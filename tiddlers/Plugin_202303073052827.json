@@ -1,15 +1,15 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<a style=\"text-decoration:none;\" href=\"https://github.com/oeyoews/neotw\" target=\"_blank\">\n  <img src=\"https://img.shields.io/badge/Powered by-Neotw-green?style=flat\" />\n</a>\n<a style=\"text-decoration:none;\" href=\"https://github.com/oeyoews\" target=\"_blank\">\n<$image source={{{ [[][https://img.shields.io/badge/Author-]] [<currentTiddler>get[author]] [[-lightblue?style=flat]] +[join[]]}}} />\n</a>\n<$image source={{{ [[][https://img.shields.io/badge/Version-]] [<currentTiddler>get[version]] [[-red?style=flat&logo=dev.to&logoColor=red]] +[join[]]}}} />\n\n* Github Share Button\n* compatiable font-awesome plugin\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/dev/plugins/tiddlywiki-github-share]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n\n!! TODO\n\n* add macro to embed single tid, not copy tid\n\n<!-- * if you use tiddlywiki menu plugin, this share button maybe  -->\n",
-        "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-github-share.json",
+        "cpl.readme": "<div class=\"prose max-w-none\">\n\n* Github Share Button\n* compatiable font-awesome plugin\n\n!! TODO\n\n* add macro to embed single tid, not copy tid\n\n<!-- * if you use tiddlywiki menu plugin, this share button maybe  -->\n\n</div>\n",
+        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-github-share.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-github-share",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Github Share",
         "cpl.description": "Github Share Button",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.5",
+        "cpl.core-version": ">=5.2.7",
         "title": "Plugin_202303073052827"
     }
 ]
