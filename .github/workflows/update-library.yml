@@ -1,9 +1,12 @@
-name: Format
+name: Auto Import 3rd Party Plugin Libraries
 
 on:
   push:
     branches:
       - master
+    paths:
+      - libraries.json
+      - scripts/index.js
   schedule:
     - cron: '0 1 * * *'
 
