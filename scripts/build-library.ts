@@ -30,6 +30,10 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
   const pluginsDir = resolve(distDir, 'plugins'); // 插件目标目录
   mkdirsForFileSync(resolve(tmpDir, 'foo'));
   mkdirsForFileSync(resolve(pluginsDir, 'foo'));
+  console.log(`Cache mode: ${cache}`);
+  if (cache) {
+    mkdirsForFileSync(resolve(cachePluginsDir, 'foo'));
+  }
 
   // 启动TW
   const $tw = tiddlywiki();

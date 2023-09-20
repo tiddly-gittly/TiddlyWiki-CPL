@@ -49,10 +49,9 @@ jobs:
           fetch-depth: 1
 
       - name: Build Library
-        run: npm run buildonline && npm run buildlibrary --cache-mode
-
-      - name: Process Cache
         run: |
+          pnpm run buildonline
+          pnpm run buildlibrary --cache-mode
           cp -r cache/plugins dist/library/all
           rm -rf cache/.git
 
