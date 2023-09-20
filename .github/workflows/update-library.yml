@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - libraries.json
-      - scripts/index.js
+      - scripts
   schedule:
     - cron: '0 1 * * *'
 
@@ -47,32 +47,32 @@ jobs:
       # Other steps that change files in the repository
 
       - name: Import All Library in libraries.json
-        run: npm run importAllLibrary
+        run: pnpm run importAllLibrary
       - name: Import Latest Official Library
-        run: npm run importlibraryofficial
+        run: pnpm run importlibraryofficial
 
       # Commit all changed files back to the repository
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Update all Library in libraries.json
-      
+
           file_pattern: 'tiddlers/*.json'
-      
+
           # commit_user_name: My GitHub Actions Bot # defaults to "github-actions[bot]"
           # commit_user_email: my-github-actions-bot@example.org # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_author: Author <actions@github.com> # defaults to author of the commit that triggered the run
-      
-      
+
+
           # Optional. Options used by `git-add`.
           # See https://git-scm.com/docs/git-add#_options
           add_options: '-u'
-      
+
           # Optional. Disable dirty check and always try to create a commit and push
-          skip_dirty_check: true    
+          skip_dirty_check: true
           # Optional. Skip internal call to `git fetch`
-          skip_fetch: true    
+          skip_fetch: true
           # Optional. Skip internal call to `git checkout`
           skip_checkout: true
-          # Optional. Prevents the shell from expanding filenames. 
+          # Optional. Prevents the shell from expanding filenames.
           # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
           disable_globbing: true

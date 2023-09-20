@@ -23,6 +23,7 @@ export const tiddlywiki = (
   $tw.boot.argv = [dir, ...commands];
   $tw.preloadTiddlerArray(preloadTiddlers);
   beforeBoot?.($tw);
+  $tw.boot.boot();
 
   // 添加一些拓展名
   // https://github.com/twcloud/tiddlyweb-sse use .info as extension name
@@ -68,8 +69,6 @@ export const tiddlywiki = (
       return fields;
     });
   };
-
-  $tw.boot.boot();
   return $tw;
 };
 

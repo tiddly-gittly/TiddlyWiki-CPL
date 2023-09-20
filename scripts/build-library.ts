@@ -1,7 +1,6 @@
 import { URL } from 'url';
 import { resolve, extname } from 'path';
 import {
-  mkdirSync,
   readdirSync,
   copyFileSync,
   rmSync,
@@ -12,7 +11,7 @@ import {
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import { shell, tiddlywiki } from './utils';
+import { shell, tiddlywiki, mkdirsForFileSync } from './utils';
 import { findFirstOne, formatTitle, getTiddlerFromFile } from './tiddler-utils';
 import { mergePluginInfo } from './merge';
 
@@ -25,17 +24,18 @@ const defaultDistDir = resolve('dist', 'library');
 export const buildLibrary = (distDir = defaultDistDir) => {
   const tmpDir = resolve(distDir, 'tmp'); // 临时的插件目录
   const pluginsDir = resolve(distDir, 'plugins'); // 插件目标目录
-  mkdirSync(resolve(tmpDir, 'foo'));
-  mkdirSync(resolve(pluginsDir, 'foo'));
+  mkdirsForFileSync(resolve(tmpDir, 'foo'));
+  mkdirsForFileSync(resolve(pluginsDir, 'foo'));
 
   // 启动TW
   const $tw = tiddlywiki();
 
   // 拷贝本地插件(未在网络上发布的)  cp plugin_files/* ${distDir}/tmp/
-  const pluginFilesDir = resolve(distDir, 'plugin_files');
+  const pluginFilesDir = resolve('plugin_files');
   for (const file of readdirSync(pluginFilesDir)) {
-    if (statSync(file).isFile()) {
-      copyFileSync(resolve(pluginFilesDir, file), resolve(tmpDir, file));
+    const p = resolve(pluginFilesDir, file);
+    if (statSync(p).isFile()) {
+      copyFileSync(p, resolve(tmpDir, file));
     }
   }
 
@@ -62,7 +62,6 @@ export const buildLibrary = (distDir = defaultDistDir) => {
         continue;
       }
       const title_ = tiddler['cpl.title'] as string;
-      console.log(chalk.cyan(`Downloading plugin ${title_}`));
       // 带有uri，需要下载下来，但是需要是tw支持的格式
       if (!tiddler['cpl.uri'] || (tiddler['cpl.uri'] as string).trim() === '') {
         console.warn(
