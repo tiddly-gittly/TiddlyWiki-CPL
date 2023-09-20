@@ -1,0 +1,164 @@
+import { resolve } from 'path';
+import { execSync } from 'child_process';
+import { readFileSync, writeFileSync } from 'fs';
+import chalk from 'chalk';
+import inquirer from 'inquirer';
+import { program } from 'commander';
+import { importPlugin } from './import/plugin';
+import { importLibrary } from './import/library';
+import { buildLibrary } from './build-library';
+
+program
+  .name('TiddlyWiki CPL')
+  .description('TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities');
+
+const importCommand = program
+  .command('import')
+  .description('导入插件或插件源 - Import plugins or plugin-libraries');
+
+importCommand
+  .command('plugin')
+  .description('导入一个插件 - Import a plugin')
+  .action(async () => {
+    // 处理输入
+    const { url, title } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'url',
+        message: chalk.bold(
+          `请输入插件的URL链接 - Input URL of plugin (.tid, .json, .html, etc.)`,
+        ),
+      },
+      {
+        type: 'input',
+        name: 'title',
+        message: chalk.bold(
+          `请输入插件的标题 - Input title of plugin tiddler  ${chalk.grey(
+            `(e.g. $:/plugins/tiddlywiki/codemirror)`,
+          )}`,
+        ),
+      },
+    ]);
+    // 导入插件
+    await importPlugin(url.trim(), title.trim(), {
+      yes: true,
+      includeOfficial: false,
+    });
+  });
+
+importCommand
+  .command('library')
+  .description('导入一个插件库 - Import a plugin library')
+  .option(
+    '--official',
+    '导入官方插件源 - Import official plugin library',
+    false,
+  )
+  .option('--all', '更新已注册的插件源 - Update registered library', false)
+  .action(async ({ official, all }: { official: boolean; all: boolean }) => {
+    interface IRegisteredLibrary {
+      name: string;
+      uri: string;
+    }
+
+    if (all) {
+      const registeredLibrariesPath = resolve('libraries.json');
+      let registeredLibraries: IRegisteredLibrary[] = [];
+      try {
+        registeredLibraries = JSON.parse(
+          readFileSync(registeredLibrariesPath, 'utf-8'),
+        );
+      } catch {}
+      console.log(
+        chalk.cyan(
+          `即将更新 ${registeredLibraries.length} 个插件源  Importing ${registeredLibraries.length} libraries...`,
+        ),
+      );
+      for (const { uri, name } of registeredLibraries) {
+        console.log(chalk.cyan(`导入 Importing  ${chalk.bold(name)}...`));
+        try {
+          await importLibrary(uri, { yes: true, includeOfficial: false });
+        } catch (e: any) {
+          console.log(chalk.red.bold(`失败 Error: ${e}`));
+        }
+      }
+    } else if (official) {
+      console.log(chalk.cyan('导入官方插件源 - Importing official library...'));
+      const latestVersion = execSync(
+        `curl https://api.github.com/repos/Jermolene/TiddlyWiki5/tags -s | jq -r '.[0].name'`,
+      )
+        .toString()
+        .trim();
+      console.log(`版本(Version): ${chalk.green(latestVersion)}`);
+      // https://tiddlywiki.com/library/v5.2.7
+      await importLibrary(`https://tiddlywiki.com/library/${latestVersion}`, {
+        yes: true,
+        includeOfficial: official,
+      });
+    } else {
+      const { url } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'url',
+          message: chalk.bold(
+            `请输入插件源的链接${chalk.gray(
+              '(可从插件源条目的url字段找到)',
+            )}\nInput libaray url${chalk.gray(
+              '(can find in url field of the plugin library tiddler)',
+            )}`,
+          ),
+        },
+      ]);
+      await importLibrary(url, { yes: true, includeOfficial: false });
+      const registeredLibrariesPath = resolve('libraries.json');
+      let registeredLibraries: IRegisteredLibrary[] = [];
+      try {
+        registeredLibraries = JSON.parse(
+          readFileSync(registeredLibrariesPath, 'utf-8'),
+        );
+      } catch {}
+      if (!registeredLibraries.find(({ uri }) => uri === url)) {
+        const { register } = await inquirer.prompt([
+          {
+            type: 'confirm',
+            name: 'register',
+            message: chalk.bold(
+              `是否要将该插件源注册? 下次只需 ${chalk.blue(
+                'import --all',
+              )} 即可更新所有插件源!\nRegister this library? Then just ${chalk.blue(
+                'import --all',
+              )} next time!`,
+            ),
+          },
+        ]);
+        if (!register) {
+          return;
+        }
+        const { name } = await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'name',
+            message: '给插件源起一个名字 - Name the library',
+          },
+        ]);
+        registeredLibraries.push({
+          uri: url,
+          name,
+        });
+        writeFileSync(
+          registeredLibrariesPath,
+          JSON.stringify(registeredLibraries),
+        );
+      }
+    }
+  });
+
+program
+  .command('build')
+  .description('构建 CPL 插件源  -  Build CPL library')
+  .option('--dist <dist>', '构建输出路径 Build output path', undefined)
+  .action(({ dist }: { dist?: string }) => {
+    buildLibrary(dist);
+  });
+
+program.parse();

@@ -1,42 +1,50 @@
 {
-    "name": "tiddlywiki-cpl",
-    "version": "1.0.0",
-    "description": "TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities",
-    "main": "scripts/index.js",
-    "scripts": {
-        "server": "npx cross-env TIDDLYWIKI_PLUGIN_PATH='./plugins' TIDDLYWIKI_THEME_PATH='./themes' TIDDLYWIKI_LANGUAGE_PATH='./languages' npx tiddlywiki . --listen port=8080",
-        "start": "npx tiddlywiki +plugins/tiddlywiki/filesystem +plugins/tiddlywiki/tiddlyweb . --listen port=8080",
-        "buildlibrary": "node -e \"require('./scripts/index').buildLibrary();\"",
-        "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html', true, '-[tag[GenerateExclude]] -[is[draft]]');\"",
-        "importplugin": "node -e \"require('./scripts/index').importPlugin();\"",
-        "importlibrary": "node -e \"require('./scripts/index').importLibrary();\"",
-        "importAllLibrary": "node -e \"require('./scripts/index').importAllLibrary();\"",
-        "importlibraryofficial": "node -e \"require('./scripts/index').importLibrary('official');\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tiddly-gittly/TiddlyWiki-CPL.git"
-    },
-    "keywords": [
-        "TiddlyWiki5",
-        "PluginLibrary"
-    ],
-    "author": "Gk0Wk",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues"
-    },
-    "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
-    "devDependencies": {
-        "cross-env": "7.0.3",
-        "html-minifier-terser": "7.2.0",
-        "tiddlywiki": "5.3.1",
-        "tw5-typed": "0.3.10",
-        "uglify-js": "3.17.4",
-        "workbox-cli": "7.0.0"
-    },
-    "dependencies": {
-        "chalk": "4.1.2",
-        "readline-sync": "^1.4.10"
-    }
+  "name": "tiddlywiki-cpl",
+  "version": "1.0.0",
+  "description": "TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities",
+  "main": "scripts/index.js",
+  "scripts": {
+    "help": "ts-node scripts help",
+    "server": "run start",
+    "start": "tiddlywiki +plugins/tiddlywiki/filesystem +plugins/tiddlywiki/tiddlyweb . --listen port=8080",
+    "buildlibrary": "ts-node scripts build",
+    "buildonline": "node -e \"require('./scripts/build').buildOnlineHTML('dist', 'index.html', true, '-[tag[GenerateExclude]] -[is[draft]]');\"",
+    "importplugin": "ts-node scripts import plugin",
+    "importlibrary": "ts-node scripts import library",
+    "importAllLibrary": "ts-node scripts import library --all",
+    "importlibraryofficial": "ts-node scripts import library --official"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiddly-gittly/TiddlyWiki-CPL.git"
+  },
+  "keywords": [
+    "TiddlyWiki5",
+    "PluginLibrary"
+  ],
+  "author": "Gk0Wk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
+  "devDependencies": {
+    "@modern-js/eslint-config": "^2.35.0",
+    "@modern-js/tsconfig": "^2.35.0",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^20.6.3",
+    "html-minifier-terser": "7.2.0",
+    "tiddlywiki": "5.3.1",
+    "ts-node": "^10.9.1",
+    "tw5-typed": "0.3.10",
+    "workbox-cli": "7.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "inquirer": "^8.1.3"
+  }
 }

@@ -21,3 +21,9 @@ On this site, you can browse through various interesting plugins and install the
 ![image](https://user-images.githubusercontent.com/16955102/157163710-3da56081-4b1a-4a50-83eb-0eb3e037bdf9.png)
 
 </center>
+
+## Import plugins / libraries
+
+1. Pull this repo
+2. Make sure to install NodeJS and run `npm i`
+3. In this repo folder, run: `npm run help` for further guidance
