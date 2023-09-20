@@ -157,8 +157,9 @@ program
   .command('build')
   .description('构建 CPL 插件源  -  Build CPL library')
   .option('--dist <dist>', '构建输出路径 Build output path', undefined)
-  .action(({ dist }: { dist?: string }) => {
-    buildLibrary(dist);
+  .option('--cache-mode', '开启缓存模式 Cache mode', false)
+  .action(({ dist, cacheMode }: { dist?: string; cacheMode: boolean }) => {
+    buildLibrary(dist, cacheMode);
   });
 
 program.parse();

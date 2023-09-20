@@ -41,12 +41,28 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Pull Cache
+        uses: actions/checkout@v4
+        with:
+            ref: cache
+            path: cache
+            fetch-depth: 1
+
       - name: Build Library
-        run: npm run buildonline && npm run buildlibrary
+        run: npm run buildonline && npm run buildlibrary --cache
+
+      - name: Push Cache
+        run: |
+          cd cache
+          git add .
+          git commit -m "Update cache"
+          git reset --hard $(git rev-list --max-parents=0 HEAD)
+          git push --force
+          cd ..
 
       - name: Make offline cache
         run: npx workbox injectManifest workbox-config.js
-          
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
