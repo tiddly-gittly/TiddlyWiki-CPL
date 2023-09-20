@@ -44,21 +44,25 @@ jobs:
       - name: Pull Cache
         uses: actions/checkout@v4
         with:
-            ref: cache
-            path: cache
-            fetch-depth: 1
+          ref: cache
+          path: cache
+          fetch-depth: 1
 
       - name: Build Library
         run: npm run buildonline && npm run buildlibrary --cache
 
-      - name: Push Cache
+      - name: Process Cache
         run: |
-          cd cache
-          git add .
-          git commit -m "Update cache"
-          git reset --hard $(git rev-list --max-parents=0 HEAD)
-          git push --force
-          cd ..
+          cp -r cache/plugins dist/library/all
+          rm -rf cache/.git
+
+      - name: Push Cache
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: cache
+          FOLDER: cache
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Make offline cache
         run: npx workbox injectManifest workbox-config.js
