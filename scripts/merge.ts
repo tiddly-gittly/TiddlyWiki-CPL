@@ -1,4 +1,4 @@
-import { ITiddlerFields } from 'tiddlywiki';
+import type { ITiddlerFields, ITiddlyWiki } from 'tiddlywiki';
 import { getReadmeFromPlugin, ifPluginRequiresReload } from './tiddler-utils';
 
 const mergingFields = [
@@ -46,6 +46,7 @@ export const mergeField = (
 export const mergePluginInfo = (
   pluginTiddler: ITiddlerFields,
   infoTiddler: ITiddlerFields,
+  $tw: ITiddlyWiki,
 ) => {
   const newInfoTiddler = {
     title: infoTiddler['cpl.title'],

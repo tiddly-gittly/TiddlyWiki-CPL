@@ -49,7 +49,7 @@ jobs:
           fetch-depth: 1
 
       - name: Build Library
-        run: npm run buildonline && npm run buildlibrary --cache
+        run: npm run buildonline && npm run buildlibrary --cache-mode
 
       - name: Process Cache
         run: |

@@ -164,6 +164,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       const { pluginTiddler, newInfoTiddler } = mergePluginInfo(
         plugin as any,
         meta,
+        $tw,
       );
 
       // 保存插件
