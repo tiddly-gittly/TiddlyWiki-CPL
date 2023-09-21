@@ -9,6 +9,7 @@
     "clean": "rimraf ./dist",
     "start": "tiddlywiki +plugins/tiddlywiki/filesystem +plugins/tiddlywiki/tiddlyweb . --listen port=8080",
     "build": "ts-node scripts build website && ts-node scripts build library --cache-mode",
+    "dev:build": "npm run clean && cross-env NODE_ENV=development npm run build",
     "dev:buildlibrary": "npm run clean && cross-env NODE_ENV=development ts-node scripts build library",
     "buildlibrary": "ts-node scripts build library",
     "buildonline": "ts-node scripts build website",
