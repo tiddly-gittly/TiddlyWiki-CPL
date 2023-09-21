@@ -6,7 +6,7 @@
   "scripts": {
     "help": "ts-node scripts help",
     "server": "run start",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist ./cache",
     "start": "tiddlywiki +plugins/tiddlywiki/filesystem +plugins/tiddlywiki/tiddlyweb . --listen port=8080",
     "build": "ts-node scripts build website && ts-node scripts build library --cache-mode",
     "dev:build": "npm run clean && cross-env NODE_ENV=development npm run build",

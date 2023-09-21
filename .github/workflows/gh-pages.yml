@@ -1,4 +1,4 @@
-name: Deploy Tiddlywiki To Github Pages
+name: Deploy Plugin Library Wiki To Github Pages + Netlify
 
 on:
   push:
@@ -38,10 +38,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
+      - name: Install pnpm dependencies
         run: pnpm install
 
-      - name: Pull Cache
+      - name: Restore Plugin Cache
         uses: actions/checkout@v4
         with:
           ref: cache
@@ -49,23 +49,25 @@ jobs:
           fetch-depth: 1
 
       - name: Build Library
+        run: pnpm run build
+
+      - name: Minify Front Page HTML (also check if it exists)
+        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
+      - name: Minify Library HTML (also check if it exists)
+        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/library/index.html dist/library/index.html
+
+      - name: Add history version from cache to library
         run: |
-          pnpm run build
           cp -r cache/plugins dist/library/all
           rm -rf cache/.git
 
-      - name: Push Cache
+      - name: Save Plugin Cache
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: cache
           FOLDER: cache
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Minify Front Page HTML (also check if it exists)
-        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
-      - name: Minify Library HTML (also check if it exists)
-        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/library/index.html dist/library/index.html
 
       - name: Make offline cache
         run: pnpm exec workbox injectManifest workbox-config.js
