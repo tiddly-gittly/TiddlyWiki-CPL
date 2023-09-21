@@ -161,7 +161,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
               `  Cannot find file ${formatedTitle}.*, skip this plugin.`,
             ),
           );
-          return;
+          continue;
         }
 
         // 加载、提取插件文件
@@ -173,7 +173,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
               `  Cannot find tiddler ${title} in file ${pluginFile}, skip this plugin.`,
             ),
           );
-          return;
+          continue;
         }
 
         // 整合信息
