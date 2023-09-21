@@ -109,7 +109,6 @@ export const importPlugin = async (
   // 生成插件摘要
   let pluginInfo = {
     tags: '$:/tags/PluginWiki',
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     'cpl.readme': getReadmeFromPlugin(plugin as any as ITiddlerFields),
     'cpl.uri': uri,
   } as Record<string, unknown>;
@@ -145,6 +144,14 @@ export const importPlugin = async (
   }
 
   // 覆盖(合并)
+  const old: Record<string, any> = tmp
+    ? JSON.parse(($tw.wiki as any).getTiddlerAsJson(tmp))
+    : {};
+  for (const field in old) {
+    if (field.startsWith('cpl.')) {
+      delete old[field];
+    }
+  }
   pluginInfo = {
     ...(tmp ? JSON.parse(($tw.wiki as any).getTiddlerAsJson(tmp)) : {}),
     ...pluginInfo,
