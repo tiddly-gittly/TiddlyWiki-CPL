@@ -123,6 +123,10 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           downloadFileMap[url.href] = filePath;
         }
         cplMetas.push(tiddler);
+        if (process.env.NODE_ENV === 'development') {
+          // only download one plugin for test on development.
+          break;
+        }
       } catch (e: any) {
         console.error(chalk.red.bold(e));
       }
