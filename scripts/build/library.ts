@@ -254,6 +254,8 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     // 生成插件源HTML文件
     console.log(chalk.bgCyan.black.bold('\nGenerating plugin library file...'));
 
+    // DEBUG: console resolve(distDir, 'index.html')
+    console.log(`resolve(distDir, 'index.html')`, resolve(distDir, 'index.html'));
     writeFileSync(
       resolve(distDir, 'index.html'),
       readFileSync(resolve(__dirname, 'library.emplate.html'), 'utf-8').replace(
@@ -261,7 +263,11 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
         JSON.stringify(pluginInfos),
       ),
     );
+    // DEBUG: console JSON.stringify(pluginInfos)
+    console.log(`JSON.stringify(pluginInfos)`, JSON.stringify(pluginInfos));
 
+    // DEBUG: console resolve(distDir, 'callback.tid')
+    console.log(`resolve(distDir, 'callback.tid')`, resolve(distDir, 'callback.tid'));
     // 生成插件信息反馈
     writeFileSync(
       resolve(distDir, 'callback.tid'),
@@ -276,6 +282,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
 
     console.log(chalk.green.bold('CPL generated'));
   } catch (e: any) {
+    console.error(`Failed to create library with error:  ${chalk.red(e)}`);
     rmSync(tmpDir, { recursive: true, force: true });
     throw e;
   }
