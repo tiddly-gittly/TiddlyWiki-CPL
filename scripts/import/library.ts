@@ -1,6 +1,7 @@
 import { URL } from 'url';
-import { resolve, dirname } from 'path';
+import { tmpdir } from 'os';
 import { readFileSync } from 'fs';
+import { resolve, dirname } from 'path';
 import chalk from 'chalk';
 import { ITiddlerFields } from 'tiddlywiki';
 import { mkdirsForFileSync, shellI } from '../utils';
@@ -25,17 +26,18 @@ const forbiddenOfficialLibraryPlugins = [
  * @returns
  */
 export const importLibrary = async (uri: string, options: IImportOption) => {
-  const tmpDir = resolve('dist', 'library', 'tmp');
-  const u = new URL(uri);
-  let { pathname } = u;
-  // index.html 可能被省略
-  if (!pathname.endsWith('.html') && !pathname.endsWith('.htm')) {
-    pathname = `${pathname}/index.html`;
-    u.pathname = pathname;
-  }
-  const basePathname = dirname(pathname);
+  const tmpDir = resolve(tmpdir(), 'tiddlywiki-cpl');
 
   try {
+    const u = new URL(uri);
+    let { pathname } = u;
+    // index.html 可能被省略
+    if (!pathname.endsWith('.html') && !pathname.endsWith('.htm')) {
+      pathname = `${pathname}/index.html`;
+      u.pathname = pathname;
+    }
+    const basePathname = dirname(pathname);
+
     // 下载JSON文件，包含插件的信息
     console.log(chalk.cyan('获取插件源信息 - Fetching library...'));
     const tmpLibraryJsonPath = resolve(tmpDir, 'tiddlers.json');

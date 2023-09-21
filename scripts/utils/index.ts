@@ -4,6 +4,8 @@ import { execSync, ExecSyncOptionsWithStringEncoding } from 'child_process';
 import chalk from 'chalk';
 import { ITiddlyWiki, ITiddlerFields, TiddlyWiki } from 'tiddlywiki';
 
+export * from './tiddler';
+
 /**
  * 初始化 TiddlyWiki
  *

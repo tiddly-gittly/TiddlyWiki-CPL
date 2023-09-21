@@ -1,6 +1,6 @@
 created: 20220118144111816
 modified: 20220322171716707
-tags: 
+tags:
 title: PluginsGallery
 type: text/vnd.tiddlywiki
 
@@ -33,7 +33,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]search:cpl.title,cpl.name,cpl.description,cpl.readme<search>]">
 <$link to=<<currentTiddler>> tag="div"><div class="gk0wk-notion-gallery-block">
 
-<div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto"/></$reveal></div>
+<div style="witdh: 100%; height: 180px; overflow: hidden;"><$reveal stateTitle=<<currentTiddler>> stateField="page-cover" type="nomatch" text=""><$image source={{{ [<currentTiddler>get[page-cover]] }}} width="100%" height="auto" loading="lazy" /></$reveal></div>
 
 <div style="width: 100%; padding: 8px 10px 10px; height: 69px; display: flex; flex-direction: row;">
 

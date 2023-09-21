@@ -1,16 +1,20 @@
 import { URL } from 'url';
+import { tmpdir } from 'os';
 import { readdirSync } from 'fs';
 import { resolve, extname } from 'path';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
+import type { ITiddlerFields } from 'tiddlywiki';
 
-import { mkdirsForFileSync, shellI, tiddlywiki } from '../utils';
 import {
+  mkdirsForFileSync,
+  shellI,
+  tiddlywiki,
   findFirstOne,
   formatTitle,
   getReadmeFromPlugin,
   getTiddlerFromFile,
-} from '../tiddler-utils';
+} from '../utils';
 import { IImportOption } from './options';
 
 /**
@@ -59,7 +63,7 @@ export const importPlugin = async (
   let pluginFile = importCache[uri] as string | undefined;
   // 缓存中不存在
   if (!pluginFile) {
-    const tmpDir = resolve('dist', 'library', 'tmp');
+    const tmpDir = resolve(tmpdir(), 'tiddlywiki-cpl');
     const tmpTiddlerPath = resolve(tmpDir, fileName);
     mkdirsForFileSync(tmpTiddlerPath);
     const filePrefix = `${formatedTitle}.`;
@@ -105,7 +109,8 @@ export const importPlugin = async (
   // 生成插件摘要
   let pluginInfo = {
     tags: '$:/tags/PluginWiki',
-    'cpl.readme': getReadmeFromPlugin(plugin as any),
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    'cpl.readme': getReadmeFromPlugin(plugin as any as ITiddlerFields),
     'cpl.uri': uri,
   } as Record<string, unknown>;
   fieldConvert.forEach(([from, to]) => {

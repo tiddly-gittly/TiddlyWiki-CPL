@@ -1,5 +1,5 @@
 import type { ITiddlerFields, ITiddlyWiki } from 'tiddlywiki';
-import { getReadmeFromPlugin, ifPluginRequiresReload } from './tiddler-utils';
+import { getReadmeFromPlugin, ifPluginRequiresReload } from '../utils/tiddler';
 
 const mergingFields = [
   'title',

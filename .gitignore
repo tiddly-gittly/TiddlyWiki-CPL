@@ -108,6 +108,7 @@ dist
 node_modules
 output
 dist
+cache
 $__StoryList.tid
 $__StoryList_*.tid
 settings/settings.json

@@ -50,8 +50,7 @@ jobs:
 
       - name: Build Library
         run: |
-          pnpm run buildonline
-          pnpm run buildlibrary --cache-mode
+          pnpm run build
           cp -r cache/plugins dist/library/all
           rm -rf cache/.git
 
@@ -71,6 +70,7 @@ jobs:
         with:
           # Upload entire repository
           path: ./dist
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

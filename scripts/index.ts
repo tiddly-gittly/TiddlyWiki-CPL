@@ -6,7 +6,8 @@ import inquirer from 'inquirer';
 import { program } from 'commander';
 import { importPlugin } from './import/plugin';
 import { importLibrary } from './import/library';
-import { buildLibrary } from './build-library';
+import { buildLibrary } from './build/library';
+import { buildOnlineHTML } from './build/website';
 
 program
   .name('TiddlyWiki CPL')
@@ -153,13 +154,43 @@ importCommand
     }
   });
 
-program
-  .command('build')
+const buildCommand = program.command('build');
+
+buildCommand
+  .command('library')
   .description('构建 CPL 插件源  -  Build CPL library')
-  .option('--dist <dist>', '构建输出路径 Build output path', undefined)
+  .option('--dist <dist-path>', '构建输出路径 Build output path', undefined)
   .option('--cache-mode', '开启缓存模式 Cache mode', false)
-  .action(({ dist, cacheMode }: { dist?: string; cacheMode: boolean }) => {
-    buildLibrary(dist, cacheMode);
-  });
+  .action(
+    ({ distPath, cacheMode }: { distPath?: string; cacheMode: boolean }) => {
+      buildLibrary(distPath, cacheMode);
+    },
+  );
+
+buildCommand
+  .command('website')
+  .description(
+    '构建 CPL 网站(不包含插件源)  -  Build CPL website (not including library)',
+  )
+  .option('--wiki <wiki-path>', 'wiki的根路径, root path of wiki', '.')
+  .option('--dist <dist-path>', '构建输出路径 Build output path', 'dist')
+  .option(
+    '--exclude <exclude-filter>',
+    '要排除的tiddler的过滤表达式  Filter to exclude publishing tiddlers',
+    '-[is[draft]]',
+  )
+  .action(
+    async ({
+      distPath,
+      wikiPath,
+      excludeFilter,
+    }: {
+      distPath: string;
+      wikiPath: string;
+      excludeFilter: string;
+    }) => {
+      await buildOnlineHTML(wikiPath, distPath, 'index.html', excludeFilter);
+    },
+  );
 
 program.parse();
