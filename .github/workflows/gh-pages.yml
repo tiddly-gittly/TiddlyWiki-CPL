@@ -62,8 +62,13 @@ jobs:
           FOLDER: cache
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Minify Front Page HTML (also check if it exists)
+        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
+      - name: Minify Library HTML (also check if it exists)
+        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/library/index.html dist/library/index.html
+
       - name: Make offline cache
-        run: npx workbox injectManifest workbox-config.js
+        run: pnpm exec workbox injectManifest workbox-config.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
