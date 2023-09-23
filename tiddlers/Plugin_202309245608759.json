@@ -1,0 +1,20 @@
+[
+    {
+        "created": "20230923165608759",
+        "creator": "林一二",
+        "title": "Plugin_202309245608759",
+        "cpl.author": "",
+        "cpl.title": "$:/plugins/ebalster/formula",
+        "cpl.type": "plugin",
+        "modified": "20230923165900009",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.name": "TiddlyFormula",
+        "cpl.uri": "http://chronicles.wiki/TiddlyWikiFormula",
+        "cpl.readme": "''Formula'' for TiddlyWiki, version {{$:/plugins/ebalster/formula!!version}}, by Evan Balster. Updated by [[Joshua Fontany||https://joshuafontany.github.com/]]\n\nFormulas are written between `(=` mushroom brackets `=)`.  Where possible, their functions and syntax are designed to emulate popular spreadsheet software (Microsoft Excel and Google Sheets).  They //also// support WikiText-like syntax for `{{`transclusion`}}`, `[`filters`]`, `<<`variables`>>`, and a large number of functions.\n\nFormulas can also be evaluated by the `$formula` widget, the `$formula-vars` widget and the `<<formula>>` macro.\n\nFurther documentation is available here: [[https://evanbalster.com/tiddlywiki/formulas.html]], especially [[Functions|http://chronicles.wiki/TiddlyWikiFormula/#Functions]]\n\nThis plugin is a work in progress; please report any issues on GitHub: [[https://github.com/EvanBalster/TiddlyWikiFormula/issues]].",
+        "cpl.description": "spreadsheet-inspired number crunching, with `(=` mushroom brackets `=)`.",
+        "cpl.source": "https://github.com/EvanBalster/TiddlyWikiFormula",
+        "cpl.documentation": "http://chronicles.wiki/TiddlyWikiFormula"
+    }
+]

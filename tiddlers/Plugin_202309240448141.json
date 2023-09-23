@@ -1,0 +1,19 @@
+[
+    {
+        "created": "20230923170448142",
+        "creator": "林一二",
+        "title": "Plugin_202309240448141",
+        "cpl.author": "",
+        "cpl.title": "$:/plugins/ebalster/modloader",
+        "cpl.type": "plugin",
+        "modified": "20230923170647400",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.description": "Allow plugins including the TiddlyWiki core to be modified at load-time. This allows for the creation of patches that modify the TiddlyWiki core but can maintain compatibility with newer versions of the core.",
+        "cpl.uri": "http://chronicles.wiki/TiddlyWikiFormula",
+        "cpl.readme": "The ''Mod-Loader Plugin'' is a powerful meta-plugin for TiddlyWiki which facilitates plugins including the TiddlyWiki core to be modified at load-time.  This allows for the creation of plugins that modify the TiddlyWiki core but can maintain compatibility with newer versions of the core.\n\nMods can only affect shadow tiddlers.  `startup` modules cannot be meaningfully patched at this time.\n\n!!Limitations and Conflicts\n\nIt may not be able to apply a patch due to conflicts with another patch or changes in the specific part of a file a patch is meant to modify.  Currently, if //any// patch fails to apply, the modloader will abort completely and a warning will be displayed on startup.  This avoids a situation where only certain changes are applied and the resulting code is non-functional.\n\nFuture versions of the modloader may introduce a concept of patch \"groups\", where only those changes in a given group will be aborted upon failure or conflict.\n\nThe modloader can patch the TiddlyWiki core, as well as other plugins, in principle.  However, it //cannot// currently patch plugins that do not define any `plugin-priority`.  In the future we may investigate lifting this limitation.\n\n\n!!Creating Mods\n\nA mod is a collection of Patch Tiddlers (see below) which is usually packaged as a plugin.  To generate a mod, use the [[Mod Maker Utility|$:/plugins/ebalster/modloader/modmaker]].\n\n\n!!Patch Tiddlers\n\nA patch tiddler is a tiddler with its `modloader-target` field set to the title of a shadow tiddler which it modifies.\n\n\n!!Technical Explanation\n\nThe modloader patch runs before TiddlyWiki's startup modules, finds all tiddlers with a defined `modloader-target` field whose type is `text/x-patch` and applies the changes to the corresponding targets' text.  The changed tiddlers are packaged into a new plugin `$:/temp/modloader-plugin` which is immediately added to the wiki.\n\nPatches are applied only to shadow tiddlers, and the tiddlers produced by the modloader are also shadows.  Thus, it is not possible for the modloader to affect non-shadow tiddlers in the wiki.\n\n\nDevelopment notes:\n\n* Can we force other startup modules to be re-eval'd?",
+        "cpl.source": "https://github.com/EvanBalster/TiddlyWikiFormula",
+        "cpl.documentation": "http://chronicles.wiki/TiddlyWikiFormula"
+    }
+]
