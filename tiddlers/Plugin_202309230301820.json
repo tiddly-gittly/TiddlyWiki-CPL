@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20230923050301820",
+        "creator": "Sttot",
+        "title": "Plugin_202309230301820",
+        "modified": "20230923051542799",
+        "modifier": "oflg",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Tidme",
+        "cpl.title": "$:/plugins/tidme/fsrs4tw",
+        "cpl.type": "plugin",
+        "cpl.name": "Tidme Core",
+        "cpl.description": "TiddlyWiki-based memory programme using advanced FSRS algorithm",
+        "cpl.readme": "Installation and usage tutorial is available at [[Tidme Manual|https://oflg.github.io/Tidme/manual/]].\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Ffsrs4tw.json",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.dependents": "$:/plugins/tiddlywiki/confetti $:/plugins/tiddlywiki/browser-sniff",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.documentation": "https://oflg.github.io/Tidme"
+    }
+]
