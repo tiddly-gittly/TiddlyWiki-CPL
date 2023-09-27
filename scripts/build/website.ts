@@ -1,10 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import { tmpdir } from 'os';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import { tiddlywiki, mkdirsForFileSync, waitForFile, shellI } from '../utils';
+import {
+  tiddlywiki,
+  mkdirsForFileSync,
+  waitForFile,
+  shellI,
+  getTmpDir,
+} from '../utils';
 import { buildCPLPlugin } from './cpl-plugin';
 
 /** 项目路径 */
@@ -97,7 +102,7 @@ export const buildOnlineHTML = async (
   console.log(
     chalk.bgCyan.black.bold('\nBuilding up TiddlyWiki online website...'),
   );
-  const tmpFolder = fs.mkdtempSync(path.resolve(tmpdir(), 'tiddlywiki-cpl'));
+  const tmpFolder = getTmpDir();
   try {
     fs.cpSync(
       path.resolve(wikiFolder, 'tiddlywiki.info'),

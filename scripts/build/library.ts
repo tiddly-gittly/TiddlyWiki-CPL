@@ -1,5 +1,4 @@
 import { URL } from 'url';
-import { tmpdir } from 'os';
 import { resolve, extname } from 'path';
 import {
   readdirSync,
@@ -9,7 +8,6 @@ import {
   readFileSync,
   writeFileSync,
   existsSync,
-  mkdtempSync,
 } from 'fs';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
@@ -21,6 +19,7 @@ import {
   findFirstOne,
   formatTitle,
   getTiddlerFromFile,
+  getTmpDir,
 } from '../utils';
 import { mergePluginInfo } from './merge';
 import { buildCPLPlugin } from './cpl-plugin';
@@ -35,7 +34,7 @@ const defaultDistDir = resolve('dist', 'library');
 export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
   const cacheDir = resolve('cache');
   const cachePluginsDir = resolve(cacheDir, 'plugins');
-  const tmpDir = mkdtempSync(resolve(tmpdir(), 'tiddlywiki-cpl-')); // 临时的插件目录
+  const tmpDir = getTmpDir(); // 临时的插件目录
   const pluginsDir = resolve(distDir, 'plugins'); // 插件目标目录
   try {
     mkdirsForFileSync(resolve(tmpDir, 'foo'));

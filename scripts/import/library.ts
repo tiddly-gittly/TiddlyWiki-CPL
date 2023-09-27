@@ -1,10 +1,9 @@
 import { URL } from 'url';
-import { tmpdir } from 'os';
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import chalk from 'chalk';
 import { ITiddlerFields } from 'tiddlywiki';
-import { mkdirsForFileSync, shellI } from '../utils';
+import { mkdirsForFileSync, shellI, getTmpDir, tiddlywiki } from '../utils';
 import { IImportOption } from './options';
 import { importPlugin } from './plugin';
 
@@ -26,21 +25,23 @@ const forbiddenOfficialLibraryPlugins = [
  * @returns
  */
 export const importLibrary = async (uri: string, options: IImportOption) => {
-  const tmpDir = resolve(tmpdir(), 'tiddlywiki-cpl');
+  const tmpDir = getTmpDir();
 
   try {
     const u = new URL(uri);
     let { pathname } = u;
     // index.html 可能被省略
     if (!pathname.endsWith('.html') && !pathname.endsWith('.htm')) {
-      pathname = `${pathname}/index.html`;
+      pathname = pathname.endsWith('/')
+        ? `${pathname}index.html`
+        : `${pathname}/index.html`;
       u.pathname = pathname;
     }
     const basePathname = dirname(pathname);
 
     // 下载JSON文件，包含插件的信息
     console.log(chalk.cyan('获取插件源信息 - Fetching library...'));
-    const tmpLibraryJsonPath = resolve(tmpDir, 'tiddlers.json');
+    const tmpLibraryJsonPath = resolve(tmpDir, 'library-json', 'tiddlers.json');
     mkdirsForFileSync(tmpLibraryJsonPath);
     u.pathname = `${basePathname}/recipes/library/tiddlers.json`;
     shellI(
@@ -56,6 +57,7 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
         `准备导入 ${pluginsJson.length} 个插件  -  Importing ${pluginsJson.length} plugins...`,
       ),
     );
+    const $tw = tiddlywiki();
     for (const plugin of pluginsJson) {
       const { title } = plugin;
       if (!title || title.trim() === '') {
@@ -70,9 +72,9 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
       }
       console.log(chalk.gray(`导入 Importing ${chalk.underline(title)}`));
       u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
-        encodeURIComponent(plugin.title),
+        encodeURIComponent(encodeURIComponent(plugin.title)),
       )}.json`;
-      await importPlugin(u.href, plugin.title, options);
+      await importPlugin(u.href, plugin.title, options, $tw);
     }
   } catch (e) {
     console.error(chalk.red.bold(e));

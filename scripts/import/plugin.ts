@@ -1,5 +1,4 @@
 import { URL } from 'url';
-import { tmpdir } from 'os';
 import { readdirSync } from 'fs';
 import { resolve, extname } from 'path';
 import chalk from 'chalk';
@@ -7,13 +6,14 @@ import inquirer from 'inquirer';
 import type { ITiddlerFields } from 'tiddlywiki';
 
 import {
-  mkdirsForFileSync,
+  getTmpDir,
   shellI,
   tiddlywiki,
   findFirstOne,
   formatTitle,
   getReadmeFromPlugin,
   getTiddlerFromFile,
+  mkdirsForFileSync,
 } from '../utils';
 import { IImportOption } from './options';
 
@@ -60,13 +60,14 @@ export const importPlugin = async (
   }`;
 
   // 从缓存中寻找已下载的文件
-  let pluginFile = importCache[uri] as string | undefined;
+  let pluginFilePath = importCache[uri] as string | undefined;
   // 缓存中不存在
-  if (!pluginFile) {
-    const tmpDir = resolve(tmpdir(), 'tiddlywiki-cpl');
+  if (!pluginFilePath) {
+    const tmpDir = resolve(getTmpDir(), 'plugins');
+    mkdirsForFileSync(resolve(tmpDir, '1'));
     const tmpTiddlerPath = resolve(tmpDir, fileName);
-    mkdirsForFileSync(tmpTiddlerPath);
     const filePrefix = `${formatedTitle}.`;
+    let pluginFile: string | undefined;
     const findFile = () => {
       pluginFile = findFirstOne(readdirSync(tmpDir), file => {
         if (!file.startsWith(filePrefix)) {
@@ -92,16 +93,16 @@ export const importPlugin = async (
       );
       return false;
     }
-    importCache[uri] = pluginFile;
+    importCache[uri] = tmpTiddlerPath;
+    pluginFilePath = tmpTiddlerPath;
   }
 
   // 加载、提取插件文件
-  const tmpJsonPath = resolve('dist', 'library', 'tmp', pluginFile);
-  const plugin = getTiddlerFromFile($tw, tmpJsonPath, title);
+  const plugin = getTiddlerFromFile($tw, pluginFilePath, title);
   if (!plugin) {
     console.warn(
       chalk.yellow(
-        `[Warning] Cannot find tiddler ${title} in file ${pluginFile}.`,
+        `[Warning] Cannot find tiddler ${title} in file ${pluginFilePath}`,
       ),
     );
     return false;

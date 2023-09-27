@@ -9,6 +9,13 @@ import { importLibrary } from './import/library';
 import { buildLibrary } from './build/library';
 import { buildOnlineHTML } from './build/website';
 
+const sleep = (t: number) =>
+  new Promise<void>(resolve =>
+    setTimeout(() => {
+      resolve();
+    }, t),
+  );
+
 program
   .name('TiddlyWiki CPL')
   .description('TiddlyWiki5 Plugin Library for TiddlyWiki Chinese Communities');
@@ -45,6 +52,8 @@ importCommand
       yes: true,
       includeOfficial: false,
     });
+
+    await sleep(1000);
   });
 
 importCommand
@@ -118,7 +127,10 @@ importCommand
           readFileSync(registeredLibrariesPath, 'utf-8'),
         );
       } catch {}
-      if (!registeredLibraries.find(({ uri }) => uri === url)) {
+      if (
+        process.env.GITHUB_ACTIONS !== 'true' &&
+        !registeredLibraries.find(({ uri }) => uri === url)
+      ) {
         const { register } = await inquirer.prompt([
           {
             type: 'confirm',
@@ -152,6 +164,7 @@ importCommand
         );
       }
     }
+    await sleep(1000);
   });
 
 const buildCommand = program.command('build');

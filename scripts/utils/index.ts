@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { tmpdir } from 'os';
 import { dirname, resolve } from 'path';
 import { execSync, ExecSyncOptionsWithStringEncoding } from 'child_process';
 import chalk from 'chalk';
@@ -179,4 +180,14 @@ export const shellI = (
     console.error(chalk.red.bold(`[Shell Command Error] ${error}`));
     return undefined;
   }
+};
+
+let tmpDir: string | undefined;
+export const getTmpDir = () => {
+  if (!tmpDir) {
+    tmpDir = resolve(tmpdir(), 'tiddlywiki-cpl');
+    const tmpTiddlerPath = resolve(tmpDir, '1');
+    mkdirsForFileSync(tmpTiddlerPath);
+  }
+  return tmpDir;
 };
