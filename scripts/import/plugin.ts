@@ -52,15 +52,16 @@ export const importPlugin = async (
   title: string,
   options: IImportOption,
   $tw = tiddlywiki(),
+  downloadUri = uri,
 ): Promise<boolean> => {
   // 文件暂存路径
   const formatedTitle = formatTitle(title);
   const fileName = `${formatedTitle}${
-    extname(new URL(uri).pathname) || '.html'
+    extname(new URL(downloadUri).pathname) || '.html'
   }`;
 
   // 从缓存中寻找已下载的文件
-  let pluginFilePath = importCache[uri] as string | undefined;
+  let pluginFilePath = importCache[downloadUri] as string | undefined;
   // 缓存中不存在
   if (!pluginFilePath) {
     const tmpDir = resolve(getTmpDir(), 'plugins');
@@ -84,7 +85,9 @@ export const importPlugin = async (
     findFile();
     // 文件不存在，尝试下载
     if (!pluginFile) {
-      shellI(`wget "${uri}" --no-check-certificate -O "${tmpTiddlerPath}"`);
+      shellI(
+        `wget "${downloadUri}" --no-check-certificate -O "${tmpTiddlerPath}"`,
+      );
     }
     findFile();
     if (!pluginFile) {
@@ -93,7 +96,7 @@ export const importPlugin = async (
       );
       return false;
     }
-    importCache[uri] = tmpTiddlerPath;
+    importCache[downloadUri] = tmpTiddlerPath;
     pluginFilePath = tmpTiddlerPath;
   }
 

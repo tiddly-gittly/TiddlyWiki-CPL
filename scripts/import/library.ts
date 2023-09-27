@@ -74,7 +74,12 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
       u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
         encodeURIComponent(encodeURIComponent(plugin.title)),
       )}.json`;
-      await importPlugin(u.href, plugin.title, options, $tw);
+      const url1 = u.href;
+      u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
+        encodeURIComponent(plugin.title),
+      )}.json`;
+      const url2 = u.href;
+      await importPlugin(url2, plugin.title, options, $tw, url1);
     }
   } catch (e) {
     console.error(chalk.red.bold(e));
