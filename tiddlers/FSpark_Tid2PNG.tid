@@ -1,0 +1,17 @@
+cpl.author: FSpark
+cpl.description: 条目截图 （Screenshot Tiddler）
+cpl.documentation: https://tiddly-gittly.github.io/Tid2PNG/
+cpl.name: Tid2PNG
+cpl.readme: Usage: Click the icon on the Tiddler toolbar to export the current Tiddler as a PNG image.
+cpl.source: https://github.com/tiddly-gittly/Tid2PNG/
+cpl.title: $:/plugins/FSpark/tid2png
+cpl.type: plugin
+cpl.uri: https://github.com/tiddly-gittly/TiddlerScreenshot/releases/latest/download/__plugins_FSpark_TiddlerScreenshot.json
+created: 20230731181432574
+creator: 马不前
+modified: 20231003072150236
+modifier: WhiteFall
+page-cover: https://img.thosefree.com/wp-content/uploads/2020/09/html2canvas-cover.jpg&720x405.jpg
+tags: $:/tags/PluginWiki
+title: FSpark/Tid2PNG
+type: text/vnd.tiddlywiki
