@@ -15,8 +15,12 @@ import { buildCPLPlugin } from './cpl-plugin';
 /** 项目路径 */
 const bypassTiddlers = new Set([
   '$:/core',
+  'IfEditorMode',
   '$:/UpgradeLibrary',
   '$:/UpgradeLibrary/List',
+  '$:/plugins/telmiger/EditorCounter',
+  '$:/plugins/tiddlywiki/pluginlibrary',
+  '$:/plugins/flibbles/relink-titles',
 ]);
 
 const headerMetadataTiddler: ITiddlerFields = {
@@ -59,7 +63,8 @@ export const buildOnlineHTML = async (
     if (
       bypassTiddlers.has(title) ||
       title.startsWith('$:/boot/') ||
-      title.startsWith('$:/temp/')
+      title.startsWith('$:/temp/') ||
+      title.startsWith('$:/plugins/tiddlywiki/codemirror')
     ) {
       return;
     }

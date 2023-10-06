@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -22,6 +21,7 @@
         "cpl.readme": "For the German language pack, Projectify Deutsch (German) ",
         "cpl.source": "https://github.com/NicolasPetton/Projectify",
         "cpl.documentation": "https://thaddeusjiang.github.io/Projectify/demo.html",
-        "cpl.core-version": ">=5.1.23"
+        "cpl.core-version": ">=5.1.23",
+        "cpl.plugin-type": "plugin"
     }
 ]

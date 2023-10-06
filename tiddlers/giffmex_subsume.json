@@ -8,7 +8,6 @@
         "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "cpl.type": "plugin",
         "cpl.title": "$:/plugins/giffmex/subsume",
         "cpl.author": "giffmex",
         "cpl.uri": "https://giffmex.org/gifts/subsume.html",

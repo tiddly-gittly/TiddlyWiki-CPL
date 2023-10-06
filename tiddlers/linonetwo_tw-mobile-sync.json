@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -23,6 +22,7 @@
         "cpl.source": "https://github.com/tiddly-gittly/tw-mobile-sync",
         "cpl.documentation": "http://tiddly-gittly.github.io/tw-mobile-sync/",
         "cpl.dependents": "$:/plugins/tiddlywiki/qrcode $:/plugins/kixam/moment/moment.js",
-        "page-cover": "https://img1.imgtp.com/2023/05/25/48p2ihMk.png"
+        "page-cover": "https://img1.imgtp.com/2023/05/25/48p2ihMk.png",
+        "cpl.plugin-type": "plugin"
     }
 ]

@@ -1,10 +1,10 @@
 _title: 
-_type: plugin
 author: 
 cpl.author: ebalster
 cpl.description: Mod加载插件
 cpl.documentation: https://chronicles.wiki/TW5-JsonMangler/#%24%3A%2Fplugins%2Febalster%2Fmodloader
 cpl.name: Mod-Loader
+cpl.plugin-type: plugin
 cpl.readme: Mod-Loader插件是~TiddlyWiki的一个强大的元插件，它有利于包括~TiddlyWiki核心在内的插件在加载时被修改。这允许创建修改~TiddlyWiki核心的插件，但可以保持与较新版本的核心的兼容性。
 cpl.title: $:/plugins/ebalster/modloader
 cpl.uri: https://chronicles.wiki/TW5-JsonMangler/index.html

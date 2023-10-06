@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -23,6 +22,7 @@
         "cpl.uri": "https://danielorodriguez.com/TW5-2click2edit/index.html",
         "cpl.documentation": "https://danielorodriguez.com/TW5-2click2edit/",
         "cpl.readme": "This plugin adds the ability to edit tiddlers by double clicking on its body. Just try to edit any tiddler shown here by double clicking on it.\n\nThis can be considered a fast solution. It is only to fill the gap until TiddlyWiki adds support for it officially.\n\n这个插件增加了通过双击其条目主体来编辑tiddlers的能力。试着通过双击这里显示的任何tiddler来编辑它。\n\n这可以说是一个快速解决方案。它只是为了在TiddlyWiki正式添加支持之前填补空白。",
-        "page-cover": "https://img1.imgtp.com/2023/05/25/UIjGPITn.png"
+        "page-cover": "https://img1.imgtp.com/2023/05/25/UIjGPITn.png",
+        "cpl.plugin-type": "plugin"
     }
 ]

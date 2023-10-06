@@ -1,6 +1,6 @@
 created: 20211205054602372
-modified: 20211205061456091
-tags: $:/tags/Stylesheet
+modified: 20231006185048791
+tags: $:/tags/Stylesheet TW5CPL
 title: StyleForCPL
 type: text/vnd.tiddlywiki
 
@@ -19,4 +19,14 @@ type: text/vnd.tiddlywiki
 
 .gk0wk-notion-gallery-block p {
 	margin: 0;
+}
+
+.tc-body {
+    background-attachment: fixed !important;
+    background-image: -webkit-linear-gradient(45deg, {{{ [{$:/palette}get[color-scheme]match[dark]then[#1c1b24, #242e2e]else[#ecb9e9, #efe3d0]] }}}) !important;
+    background-image: linear-gradient(45deg, {{{ [{$:/palette}get[color-scheme]match[dark]then[#1c1b24, #242e2e]else[#ecb9e9, #efe3d0]] }}}) !important;
+}
+
+.tc-tiddler-frame {
+	opacity: 0.95 !important;
 }

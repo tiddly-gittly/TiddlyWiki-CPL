@@ -1,0 +1,19 @@
+created: 20231006114436505
+modified: 20231006120922602
+tags: $:/tags/ViewTemplate TW5CPL
+title: $:/core/ui/ViewTemplate/tags
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[all[current]has[cpl.title]then[yes]else[no]]" variable="CPL" >
+<$list filter="[<CPL>match[no]]" variable="CPL">
+<$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-tags-wrapper"><$list filter="[all[current]tags[]sort[title]]" template="$:/core/ui/TagTemplate" storyview="pop"/></div>
+</$reveal>
+</$list>
+<$list filter="[<CPL>match[yes]]" variable="CPL">
+<$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-tags-wrapper"><$list filter="[all[current]get[cpl.tags]enlist-input[]]" template="$:/core/ui/TagTemplate" storyview="pop"/></div>
+</$reveal>
+</$list>
+</$list>

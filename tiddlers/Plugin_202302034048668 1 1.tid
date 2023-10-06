@@ -1,10 +1,10 @@
 _title: 
-_type: plugin
 author: 
 cpl.author: yaisog
 cpl.description: generate random numbers within a range
 cpl.documentation: https://yaisog.tiddlyhost.com/
 cpl.name: random-filter
+cpl.plugin-type: plugin
 cpl.readme: 
 cpl.source: 
 cpl.title: $:/plugins/yaisog/random-filter

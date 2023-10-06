@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -23,6 +22,7 @@
         "cpl.readme": "~TiddlerSets允许您拍摄当前tiddler河的“快照”，并在以后重新打开这些相同的tiddlers。（~TiddlerSets lets you take \"snapshots\" of the current tiddler river and reopen these same tiddlers at a later time.）\n\n简而言之，你可以手动的写一个栏位：list：条目名、条目名。保存这个tiddler，然后下次看的时候快速打开，仅需要点击按钮打开它们。",
         "cpl.icon": "",
         "cpl.core-version": ">=5.1.23",
-        "cpl.description": "故事河快照"
+        "cpl.description": "故事河快照",
+        "cpl.plugin-type": "plugin"
     }
 ]

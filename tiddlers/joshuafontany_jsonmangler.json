@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "cpl.dependents": "$:/plugins/ebalster/modloader",
         "cpl.title": "$:/plugins/joshuafontany/jsonmangler",
@@ -21,6 +20,7 @@
         "cpl.documentation": "https://joshuafontany.github.io/TW5-JsonMangler/",
         "cpl.source": "https://github.com/joshuafontany/TW5-JsonMangler",
         "cpl.author": "Joshua Fontany",
-        "cpl.readme": "复杂的JSON支持和工具，作者：Joshua Fontany，v 2.2.5\n\n这个 tiddlywiki 插件改变了 tiddlywiki 用来在 json 数据 tiddler 中检索和设置值的方法。它以向后兼容性为目标的方式这样做。\n\n它引入了新功能、小部件和过滤器运算符来管理、编辑和查看 json 和 csv tiddler。\n\n更多文档可在示例 wiki 中找到：\nhttps://joshuafontany.github.io/TW5-JsonMangler/\n\n该插件正在进行中;非常欢迎任何建议或错误报告。\n\n请在 GitHub 上报告任何问题：\nhttps://github.com/joshuafontany/TW5-JsonMangerPlugin/issues"
+        "cpl.readme": "复杂的JSON支持和工具，作者：Joshua Fontany，v 2.2.5\n\n这个 tiddlywiki 插件改变了 tiddlywiki 用来在 json 数据 tiddler 中检索和设置值的方法。它以向后兼容性为目标的方式这样做。\n\n它引入了新功能、小部件和过滤器运算符来管理、编辑和查看 json 和 csv tiddler。\n\n更多文档可在示例 wiki 中找到：\nhttps://joshuafontany.github.io/TW5-JsonMangler/\n\n该插件正在进行中;非常欢迎任何建议或错误报告。\n\n请在 GitHub 上报告任何问题：\nhttps://github.com/joshuafontany/TW5-JsonMangerPlugin/issues",
+        "cpl.plugin-type": "plugin"
     }
 ]

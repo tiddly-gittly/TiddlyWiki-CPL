@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -22,6 +21,7 @@
         "cpl.source": "https://github.com/tiddly-gittly/intention-tower-knowledge-graph",
         "cpl.documentation": "https://tiddly-gittly.github.io/intention-tower-knowledge-graph/",
         "cpl.dependents": "$:/plugins/kookma/shiraz $:/plugins/linonetwo/flow-chart $:/plugins/yaisog/taggingtree-filter $:/plugins/yaisog/tagstree-filter $:/plugins/Gk0Wk/echarts $:/plugins/linonetwo/super-tag",
-        "page-cover": "https://www.njdry.com/uploads/allimg/20220821/13-220R1150541361.png"
+        "page-cover": "https://www.njdry.com/uploads/allimg/20220821/13-220R1150541361.png",
+        "cpl.plugin-type": "plugin"
     }
 ]

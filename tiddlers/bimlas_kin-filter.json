@@ -1,10 +1,10 @@
 [
     {
         "created": "20211204092116167",
-        "creator": "Sttot",
         "text": "",
+        "creator": "Sttot",
         "title": "bimlas/kin-filter",
-        "modified": "20211218182601514",
+        "modified": "20231006193037199",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "Sttot",
@@ -19,6 +19,7 @@
         "cpl.source": "https://gitlab.com/bimlas/tw5-kin-filter",
         "cpl.documentation": "https://bimlas.gitlab.io/tw5-kin-filter/",
         "cpl.core-version": ">=5.1.18",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "cpl.category": "Functional"
     }
 ]

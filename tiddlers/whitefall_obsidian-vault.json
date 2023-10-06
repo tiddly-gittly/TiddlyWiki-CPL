@@ -10,12 +10,12 @@
         "type": "text/vnd.tiddlywiki",
         "cpl.author": "whitefall",
         "cpl.title": "$:/plugins/whitefall/obsidian-vault",
-        "cpl.type": "plugin",
         "cpl.uri": "https://github.com/tiddly-gittly/tidgi-obsidian-manager/releases/latest/download/__plugins_whitefall_obsidian-vault.json",
         "cpl.name": "Obsidian-Vault",
         "cpl.description": "从 Obsidian 笔记库导入 Markdown 文件到 TiddlyWiki",
         "cpl.readme": "! tw5-obsidian-vault\n\n从 Obsidian 笔记库导入 Markdown 文件到 ~TiddlyWiki\n\n插件要求、使用方式和预览链接请查看：[[参考手册|https://tiddly-gittly.github.io/tidgi-obsidian-manager/]]\n\nGithub Repo: https://github.com/tiddly-gittly/tidgi-obsidian-manager",
         "cpl.source": "https://github.com/tiddly-gittly/tidgi-obsidian-manager",
-        "page-cover": "https://obsidian.md/images/obsidian-logo-gradient.svg"
+        "page-cover": "https://obsidian.md/images/obsidian-logo-gradient.svg",
+        "cpl.plugin-type": "plugin"
     }
 ]

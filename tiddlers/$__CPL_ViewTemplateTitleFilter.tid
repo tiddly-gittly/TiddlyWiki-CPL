@@ -1,0 +1,8 @@
+created: 20231006113602080
+list-before: $:/config/ViewTemplateTitleFilters/system
+modified: 20231006113910780
+tags: $:/tags/ViewTemplateTitleFilter TW5CPL
+title: $:/CPL/ViewTemplateTitleFilter
+type: text/vnd.tiddlywiki
+
+[tag[$:/tags/PluginWiki]then[$:/CPL/ViewTemplateTitle]]

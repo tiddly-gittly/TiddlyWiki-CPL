@@ -1,0 +1,38 @@
+created: 20231006115812787
+modified: 20231006194114863
+tags: $:/tags/ViewTemplate TW5CPL
+title: $:/core/ui/ViewTemplate/subtitle
+type: text/vnd.tiddlywiki
+
+<!-- 图标 -->
+\define icon(plugin-type)
+<div style="position:absolute;z-index:-1;opacity:0.05;user-select:none;bottom:-100px;right:60px;scale:6;"><$list filter="[<currentTiddler>has[cpl.icon]]" emptyMessage="""<$transclude tiddler="$:/core/images/plugin-generic-$plugin-type$"/>"""><img src={{!!cpl.icon}}/></$list></div>
+\end
+
+\whitespace trim
+<$list filter="[all[current]has[cpl.title]then[yes]else[no]]" variable="CPL" >
+<$list filter="[<CPL>match[no]]" variable="CPL1">
+<$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-subtitle">
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/ViewTemplate/Subtitle]!has[draft.of]]" variable="subtitleTiddler" counter="indexSubtitleTiddler">
+<$list filter="[<indexSubtitleTiddler-first>match[no]]" variable="ignore">
+&nbsp;
+</$list>
+<$transclude tiddler=<<subtitleTiddler>> mode="inline"/>
+</$list>
+</div>
+</$reveal>
+</$list>
+<$list filter="[<CPL>match[yes]]" variable="CPL1">
+<$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
+<div class="tc-subtitle" style="position:relative;">
+<$text text={{{ [all[current]get[cpl.title]] }}} /><em><$list filter="[all[current]has[cpl.version]]"><$text text={{{ [all[current]get[cpl.version]] }}}/></$list><$list filter="[all[current]!has[cpl.version]]"><$set name="title" value={{{ [all[current]get[cpl.title]] }}}><$text text={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]last[]] }}}/></$set></$list></em>
+<$macrocall $name="icon" plugin-type={{{ [<currenrTiddler>get[cpl.plugin-type]else[plugin]] }}}/>
+</div>
+<!-- 是否需要重载 -->
+<div class="tc-plugin-info-chunk tc-plugin-info-buttons">
+<$set name="title" value={{{ [all[current]get[cpl.title]] }}}><$set name="requiresReload" value={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]first[]] }}}><$list filter="[<requiresReload>match[true]]">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$list></$set></$set>
+</div>
+</$reveal>
+</$list>
+</$list>

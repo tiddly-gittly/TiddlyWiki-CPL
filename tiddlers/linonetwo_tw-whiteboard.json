@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -23,6 +22,7 @@
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-whiteboard/",
         "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-whiteboard/",
         "cpl.dependents": "$:/plugins/linonetwo/tw-react",
-        "page-cover": "https://talk.tiddlywiki.org/uploads/default/original/2X/6/6194354a99f652dc579d95a266e5ad2a1e5bb1ea.png"
+        "page-cover": "https://talk.tiddlywiki.org/uploads/default/original/2X/6/6194354a99f652dc579d95a266e5ad2a1e5bb1ea.png",
+        "cpl.plugin-type": "plugin"
     }
 ]

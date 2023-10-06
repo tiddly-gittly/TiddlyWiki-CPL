@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -21,6 +20,7 @@
         "cpl.readme": "Building workflow editors, flow charts and diagrams, with reaviz/reaflow ",
         "cpl.source": "https://github.com/tiddly-gittly/flow-chart",
         "cpl.documentation": "https://tiddly-gittly.github.io/flow-chart/",
-        "cpl.dependents": "$:/plugins/linonetwo/tw-react"
+        "cpl.dependents": "$:/plugins/linonetwo/tw-react",
+        "cpl.plugin-type": "plugin"
     }
 ]

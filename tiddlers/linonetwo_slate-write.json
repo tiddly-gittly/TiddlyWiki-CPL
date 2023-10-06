@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -22,6 +21,7 @@
         "cpl.readme": "一个用于 [[太微TiddlyWiki|https://tiddlywiki.com/]] 的所见即所得编辑器。打开 [[演示页面|https://tiddly-gittly.github.io/slate-write/]] 可以试玩以及查看完整的使用说明。\n\n点击条目查看工具栏上的按钮即可在只读模式和编所见即所得辑模式之间切换。\n\nA WYSIWYG editor for [[TiddlyWiki|https://tiddlywiki.com/]]. See [[Demo Site|https://tiddly-gittly.github.io/slate-write/]] for the example and the Full Readme.\n\nYou can click on button on view toolbar on your tiddler to switch between read-only mode and wysiwyg-edit mode.",
         "cpl.source": "https://github.com/tiddly-gittly/slate-write",
         "cpl.documentation": "http://tiddly-gittly.github.io/slate-write/",
-        "cpl.dependents": "$:/plugins/linonetwo/tw-react"
+        "cpl.dependents": "$:/plugins/linonetwo/tw-react",
+        "cpl.plugin-type": "plugin"
     }
 ]

@@ -1,10 +1,10 @@
 _title: 
-_type: plugin
 author: 
 cpl.author: tobibeer
 cpl.description: A macro to rate tiddlers
 cpl.documentation: http://tobibeer.github.io/tw5-plugins/index.html#rate
 cpl.name: rate
+cpl.plugin-type: plugin
 cpl.readme: 评分宏插件
 cpl.source: https://github.com/tobibeer/tw5-plugins
 cpl.title: $:/plugins/tobibeer/rate

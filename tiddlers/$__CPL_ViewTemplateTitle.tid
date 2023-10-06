@@ -1,0 +1,28 @@
+code-body: yes
+created: 20231006113559506
+modified: 20231006180853813
+tags: TW5CPL
+title: $:/CPL/ViewTemplateTitle
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<h2>
+<strong><$text text={{{ [<currentTiddler>get[cpl.name]] ~[<currentTiddler>get[cpl.title]split[/]last[1]] }}}/></strong>:&nbsp;
+<$text text={{{ [<currentTiddler>get[cpl.description]] }}}/>
+</h2>
+<$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[limit[1]] ~[<currentTiddler>get[cpl.title]!is[tiddler]]" variable="ignore">
+<div>
+<$list filter="[<currentTiddler>!is[tiddler]]">
+{{$:/language/ControlPanel/Plugins/NotInstalled/Hint}}
+</$list>
+<$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[limit[1]]" variable="ignore">
+<div>
+{{$:/language/ControlPanel/Plugins/AlsoRequires}}
+<$list filter="[enlist{!!cpl.dependents}] [{!!cpl.parent-plugin}] +[sort[cpl.name]]" variable="dependency">
+<$text text=<<dependency>>/>
+</$list>
+</div>
+</$list>
+</div>
+</$list>

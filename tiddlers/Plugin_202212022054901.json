@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -20,6 +19,7 @@
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-calendar/releases/latest/download/__plugins_linonetwo_tw-calendar.json",
         "cpl.readme": "[[User Manual|https://tiddly-gittly.github.io/tiddlywiki-calendar/]]\n\n# Provides a calendar widget, use it like `<$calendar />`\n# Use the whole wiki as a data source, aggregate tiddler based on their `created` `modified` `startDate` and `endDate` field\n# Drag to create new event with `startDate` and `endDate` field\n# Provides a calendar view, use `ctrl+shift+L` to switch to this view, you can click `Home` button to go back\n# Add `color` field to change color. When `color` field missing, it will try get color from tags on it.",
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-calendar",
-        "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-calendar"
+        "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-calendar",
+        "cpl.plugin-type": "plugin"
     }
 ]

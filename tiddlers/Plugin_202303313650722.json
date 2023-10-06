@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -21,6 +20,7 @@
         "cpl.source": " http://sideeditor.tiddlyspot.com/ ",
         "cpl.documentation": " http://sideeditor.tiddlyspot.com/ ",
         "cpl.uri": "https://sideeditor.tiddlyspot.com/index.html",
-        "cpl.readme": "SideEditor floats a tiddlers editor by the story river side.\n\nYou see the changes live in the tiddler and you can scroll to, and reference, stuff from other tiddlers while you edit.\n\n!!Usage\n\n    Activate SideEditor by clicking the tiddler tool \n\nor page tool\n\n    Re-size it via the \"handle bars\" at upper-right and lower-left corner\n    Switch focus between Sidebar, River and SideEditor by hovering\n\n!!Split-out window  \n\n    Distraction free authoring by maximizing the window (Do test it!)\n    Stick window by using 3'd party software (e.g) to easily collect data from other applications and tabs into your wiki\n\n''Installation'' - drag and drop the link $:/plugins/TWaddle/SideEditor into your TW.\n\nMat von TWaddle <:-)"
+        "cpl.readme": "SideEditor floats a tiddlers editor by the story river side.\n\nYou see the changes live in the tiddler and you can scroll to, and reference, stuff from other tiddlers while you edit.\n\n!!Usage\n\n    Activate SideEditor by clicking the tiddler tool \n\nor page tool\n\n    Re-size it via the \"handle bars\" at upper-right and lower-left corner\n    Switch focus between Sidebar, River and SideEditor by hovering\n\n!!Split-out window  \n\n    Distraction free authoring by maximizing the window (Do test it!)\n    Stick window by using 3'd party software (e.g) to easily collect data from other applications and tabs into your wiki\n\n''Installation'' - drag and drop the link $:/plugins/TWaddle/SideEditor into your TW.\n\nMat von TWaddle <:-)",
+        "cpl.plugin-type": "plugin"
     }
 ]

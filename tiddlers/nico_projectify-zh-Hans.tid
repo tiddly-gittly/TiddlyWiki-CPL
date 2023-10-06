@@ -1,11 +1,11 @@
 _title: 
-_type: plugin
 author: 
 cpl.author: nico
 cpl.core-version: >=5.1.23
 cpl.description: Projectify Chinese (Simplified)
 cpl.documentation: https://thaddeusjiang.github.io/Projectify/demo.html
 cpl.name: projectify-zh-Hans
+cpl.plugin-type: plugin
 cpl.readme: Projectify，简体中文语言包。
 cpl.source: https://github.com/NicolasPetton/Projectify
 cpl.title: $:/plugins/nico/projectify-zh-Hans

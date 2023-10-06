@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -19,6 +18,7 @@
         "cpl.uri": "https://tobibeer.github.io/tw5-plugins/index.html",
         "cpl.author": "tobibeer",
         "cpl.documentation": "http://tobibeer.github.io/tw5-plugins#plantuml",
-        "cpl.readme": "阅读插件文档主页。\n\n~PlantUML官网：https://plantuml.com/zh/"
+        "cpl.readme": "阅读插件文档主页。\n\n~PlantUML官网：https://plantuml.com/zh/",
+        "cpl.plugin-type": "plugin"
     }
 ]

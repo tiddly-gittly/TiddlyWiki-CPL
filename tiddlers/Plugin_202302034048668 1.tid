@@ -1,10 +1,10 @@
 _title: 
-_type: plugin
 author: 
 cpl.author: yaisog
 cpl.description: for debugging filters
 cpl.documentation: https://yaisog.tiddlyhost.com/
 cpl.name: debug-log-filter
+cpl.plugin-type: plugin
 cpl.readme: [[ Add a debug-log filter operator #7190 |https://github.com/Jermolene/TiddlyWiki5/pull/7190]]
 cpl.source: https://github.com/Jermolene/TiddlyWiki5/pull/7190
 cpl.title: $:/plugins/yaisog/debug-log-filter

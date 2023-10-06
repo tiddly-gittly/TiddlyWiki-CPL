@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -22,6 +21,7 @@
         "cpl.source": "https://github.com/tiddly-gittly/super-tag",
         "cpl.documentation": "https://tiddly-gittly.github.io/super-tag/",
         "cpl.icon": "",
-        "page-cover": "https://talk.tiddlywiki.org/uploads/default/optimized/2X/1/187e4fb88404427a4f2704e4d1ea07bda6b69653_2_832x750.png"
+        "page-cover": "https://talk.tiddlywiki.org/uploads/default/optimized/2X/1/187e4fb88404427a4f2704e4d1ea07bda6b69653_2_832x750.png",
+        "cpl.plugin-type": "plugin"
     }
 ]

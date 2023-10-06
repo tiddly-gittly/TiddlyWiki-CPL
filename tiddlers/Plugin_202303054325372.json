@@ -9,7 +9,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -19,6 +18,7 @@
         "cpl.uri": "https://github.com/tiddly-gittly/mobile-imessage-layout/releases/latest/download/__plugins_linonetwo_mobile-imessage-layout.json",
         "cpl.readme": "Simple chat style (or Twitter style) layout for mobile. Quickly input todo and thoughts in few seconds.\n\n[[Forum thread - Design a Layout for Mobile|https://talk.tiddlywiki.org/t/design-a-layout-for-mobile/5781]]",
         "cpl.source": "https://github.com/tiddly-gittly/mobile-imessage-layout",
-        "cpl.documentation": "https://tiddly-gittly.github.io/mobile-imessage-layout/"
+        "cpl.documentation": "https://tiddly-gittly.github.io/mobile-imessage-layout/",
+        "cpl.plugin-type": "plugin"
     }
 ]

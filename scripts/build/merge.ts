@@ -49,20 +49,24 @@ export const mergePluginInfo = (
   $tw: ITiddlyWiki,
 ) => {
   const newInfoTiddler = {
-    title: infoTiddler['cpl.title'],
-    author: infoTiddler['cpl.author'],
-    name: infoTiddler['cpl.name'],
-    description: infoTiddler['cpl.description'],
-    readme: infoTiddler['cpl.readme'],
-    version: infoTiddler['cpl.version'],
-    'plugin-type': infoTiddler['cpl.type'],
-    icon: infoTiddler['cpl.icon'],
-    dependents:
-      (infoTiddler['cpl.dependents'] as any)?.split?.('\n')?.join?.(' ') ?? '',
-    'parent-plugin': infoTiddler['cpl.parent-plugin'],
-    'core-version': infoTiddler['cpl.core-version'],
+    title: infoTiddler['cpl.title'] as string,
+    author: infoTiddler['cpl.author'] as string,
+    name: infoTiddler['cpl.name'] as string,
+    description: infoTiddler['cpl.description'] as string,
+    readme: infoTiddler['cpl.readme'] as string,
+    version: infoTiddler['cpl.version'] as string,
+    'plugin-type': infoTiddler['cpl.plugin-type'] as string,
+    icon: infoTiddler['cpl.icon'] as string | undefined,
+    dependents: ((infoTiddler['cpl.dependents'] as any)
+      ?.split?.('\n')
+      ?.join?.(' ') ?? '') as string | undefined,
+    'parent-plugin': infoTiddler['cpl.parent-plugin'] as string | undefined,
+    'core-version': infoTiddler['cpl.core-version'] as string | undefined,
     'requires-reload': ifPluginRequiresReload(pluginTiddler),
-  } as Record<string, unknown>;
+    category: (infoTiddler['cpl.category'] || 'Unknown') as string,
+    tags: (infoTiddler['cpl.tags'] || '') as string,
+    type: 'application/json',
+  };
   mergeField('version', pluginTiddler, newInfoTiddler, $tw.version);
   mergeField('type', pluginTiddler, newInfoTiddler, 'application/json');
   mergeField('plugin-type', pluginTiddler, newInfoTiddler, 'plugin');
@@ -97,7 +101,9 @@ export const mergePluginInfo = (
     newInfoTiddler.readme = `<$button class="tc-btn-invisible" style="overflow: hidden;white-space: pre;width: 100%;" message="tm-open-external-window" param="${infoTiddler['cpl.source']}">{{$:/core/images/github}} <$text text="${infoTiddler['cpl.source']}"/></$button>\n\n${newInfoTiddler.readme}`;
   }
   // 改成只保留指定的字段
-  const fields = Object.keys(newInfoTiddler);
+  const fields = Object.keys(
+    newInfoTiddler,
+  ) as unknown as (keyof typeof newInfoTiddler)[];
   for (let i = 0, { length } = fields; i < length; i++) {
     const field = fields[i];
     if (

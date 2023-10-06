@@ -133,7 +133,8 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
 
     // 接下来从tmpDir处理所有的插件
     const pluginCallbackInfo: Record<string, string> = {};
-    const pluginInfos = [];
+    const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] =
+      [];
     console.log(chalk.bgCyan.black.bold('\nExporting plugins...'));
     const files = readdirSync(tmpDir);
     for (const meta of cplMetas) {
@@ -208,12 +209,15 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           const versions = new Set(meta.versions ?? []);
           versions.add(pluginTiddler.version);
           meta.versions = Array.from(versions);
-          writeFileSync(metaPath, JSON.stringify(meta));
+          writeFileSync(
+            metaPath,
+            JSON.stringify({ ...newInfoTiddler, ...meta }),
+          );
         }
 
         // 登记插件
         pluginInfos.push(newInfoTiddler);
-        pluginCallbackInfo[newInfoTiddler.title as string] = `${
+        pluginCallbackInfo[newInfoTiddler.title] = `${
           newInfoTiddler['requires-reload'] === true ? 'true' : 'false'
         }|${newInfoTiddler.version}`;
       } catch (e: any) {
@@ -241,14 +245,42 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       author: 'Gk0Wk',
       name: 'CPL Repo',
       description: 'Repos for CPL',
-      version: $tw.wiki.getTiddlerText('CPL-Repo-Version'),
+      version: $tw.wiki.getTiddlerText('CPL-Repo-Version')!,
       'plugin-type': 'plugin',
       'requires-reload': false,
       type: 'application/json',
+      readme: '',
+      icon: undefined,
+      dependents: undefined,
+      'parent-plugin': undefined,
+      'core-version': undefined,
+      category: 'Functional',
+      tags: '',
     });
     pluginCallbackInfo[
       '$:/plugins/Gk0Wk/CPL-Repo'
     ] = `false|${$tw.wiki.getTiddlerText('CPL-Repo-Version')}`;
+
+    // 生成插件索引
+    if (cache) {
+      const pluginIndexPath = resolve(cachePluginsDir, 'index.json');
+      mkdirsForFileSync(pluginIndexPath);
+      writeFileSync(
+        pluginIndexPath,
+        JSON.stringify(
+          pluginInfos.map(i => ({
+            title: i.title,
+            name: i.name,
+            author: i.author,
+            tags: i.tags,
+            category: i.category,
+            type: i['plugin-type'],
+            version: i.version,
+            core: i['core-version'],
+          })),
+        ),
+      );
+    }
 
     // 生成插件源HTML文件
     console.log(chalk.bgCyan.black.bold('\nGenerating plugin library file...'));

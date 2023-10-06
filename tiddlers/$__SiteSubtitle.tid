@@ -1,6 +1,6 @@
 created: 20211117155758865
-modified: 20211117155806843
+modified: 20231006183716739
 title: $:/SiteSubtitle
 type: text/vnd.tiddlywiki
 
-~TiddlyWiki5 Plugin Library for ~TiddlyWiki Chinese Communities
+<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[太微插件聚合中心]else[TiddlyWiki5 Central Plugin Library]] }}} />

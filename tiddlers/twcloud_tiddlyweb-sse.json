@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -19,6 +18,7 @@
         "cpl.description": "Sync changes immediately from the browser to TW5 (node.js), and Sync between multiple pages, using SSE, works in a NodeJS wiki setup.",
         "cpl.title": "$:/plugins/twcloud/tiddlyweb-sse",
         "cpl.source": "https://github.com/twcloud/tiddlyweb-sse",
-        "cpl.author": "Arlen22"
+        "cpl.author": "Arlen22",
+        "cpl.plugin-type": "plugin"
     }
 ]

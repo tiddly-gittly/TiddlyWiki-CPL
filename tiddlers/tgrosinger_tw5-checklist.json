@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "cpl.author": "",
         "cpl.title": "$:/plugins/tgrosinger/tw5-checklist",
-        "cpl.type": "plugin",
         "cpl.name": "tw5-checklist",
         "cpl.version": "",
         "cpl.description": "清单、复选框、TODO语法。",
@@ -18,6 +17,7 @@
         "cpl.readme": "示例：\n\n```\n[ ] Milk\n[ ] Eggs\n[x] Bread\n```",
         "cpl.source": "https://github.com/tgrosinger/tw5-checklist",
         "cpl.documentation": "https://tgrosinger.github.io/tw5-checklist/index.html",
-        "page-cover": "https://img1.imgtp.com/2023/05/25/MtsGZo8S.png"
+        "page-cover": "https://img1.imgtp.com/2023/05/25/MtsGZo8S.png",
+        "cpl.plugin-type": "plugin"
     }
 ]

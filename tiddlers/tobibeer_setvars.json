@@ -10,7 +10,6 @@
         "type": "text/vnd.tiddlywiki",
         "uri": "",
         "_title": "",
-        "_type": "plugin",
         "author": "",
         "description": "",
         "name": "",
@@ -19,6 +18,7 @@
         "cpl.description": "Set multiple, complex variables based on attributes, filters, or conditionals",
         "cpl.uri": "https://tobibeer.github.io/tw5-plugins/index.html",
         "cpl.readme": "The plugin`$:/plugins/tobibeer/setvars` provides:\n\n`<$setvars/>`\na widget to declare multiple variables while joining a range of attribute values\nallows basic conditional expressions using OR logic or IF clauses\n\nProvides the widget `<$setvars>`...\n\n!! Usage\n\n```\n<$setvars\n_attr1=<<currentTiddler>>\n_attr2={{!!title}}\n_attr3=\"1 2 3\"\n_attr4=\"[all[current]tagging[]]\"\nvar1=\"attr1 \\ = literal = \\ attr2\"\nvar2=\"attr3[n] \\ \\ [attr4[1,2][when-empty]] \\ \\ [attr3[][][ - ]]\"\nvar3=\"if(attr1 ? [attr4]) || attr3 attr2\"\nvar4=\"if(attr1 == attr2 ? attr3[1]) || [attr3[2]]\">\n\n* <<var1>>\n* <<var2>>\n* <<var3>>\n* <<var4>>\n\n</$setvars>\n```",
-        "cpl.documentation": "http://tobibeer.github.io/tw5-plugins#setvars"
+        "cpl.documentation": "http://tobibeer.github.io/tw5-plugins#setvars",
+        "cpl.plugin-type": "plugin"
     }
 ]

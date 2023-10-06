@@ -1,77 +1,13 @@
-created: 20211117165810315
-creator: Sttot
-list-after: LanguageSwitcher
-modified: 20220321151023208
-modifier: Sttot
-tags: $:/tags/ViewTemplate TW5CPL
-title: $:/tags/PluginWiki
+code-body: yes
+created: 20231006082350928
+modified: 20231006193008603
+tags: TW5CPL
+title: $:/CPL/PluginEditTemplate
 type: text/vnd.tiddlywiki
 
 \define illegalcharexp() [:/<>"\|?*]
 
-\define plugin-info(title,type)
-<$set value="$title$" name="currentTiddler">
-<div class="tc-plugin-info">
-<!-- 图标 -->
-<div class="tc-plugin-info-chunk tc-plugin-info-icon">
-<$list filter="[<currentTiddler>has[cpl.icon]]" emptyMessage="""<$transclude tiddler="$:/core/images/plugin-generic-$type$"/>""">
-<img src={{!!cpl.icon}}/>
-</$list>
-</div>
-<!-- 名称+描述+标题+版本 -->
-<div class="tc-plugin-info-chunk tc-plugin-info-description">
-<h1><strong><$text text={{{ [<currentTiddler>get[cpl.name]] ~[<currentTiddler>get[cpl.title]split[/]last[1]] }}}/></strong>: <$text text={{{ [<currentTiddler>get[cpl.description]] }}}/></h1>
-<h2><$view tiddler=<<currentTiddler>> field="cpl.title"/></h2>
-<div><em><$list filter="[all[current]has[cpl.version]]"><$text text={{{ [all[current]get[cpl.version]] }}}/></$list><$list filter="[all[current]!has[cpl.version]]"><$set name="title" value={{{ [all[current]get[cpl.title]] }}}><$text text={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]last[]] }}}/></$set></$list></em></div>
-</div>
-<!-- 是否需要重载 -->
-<div class="tc-plugin-info-chunk tc-plugin-info-buttons">
-<$set name="title" value={{{ [all[current]get[cpl.title]] }}}><$set name="requiresReload" value={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]first[]] }}}><$list filter="[<requiresReload>match[true]]">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$list></$set></$set>
-</div>
-</div>
-<div class="tc-plugin-info-dropdown">
-<$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[limit[1]] ~[<currentTiddler>get[cpl.title]!is[tiddler]]" variable="ignore">
-<div class="tc-plugin-info-dropdown-message">
-<$list filter="[<currentTiddler>!is[tiddler]]">
-{{$:/language/ControlPanel/Plugins/NotInstalled/Hint}}
-</$list>
-<$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[limit[1]]" variable="ignore">
-<div>
-{{$:/language/ControlPanel/Plugins/AlsoRequires}}
-<$list filter="[enlist{!!cpl.dependents}] [{!!cpl.parent-plugin}] +[sort[cpl.name]]" variable="dependency">
-<$text text=<<dependency>>/>
-</$list>
-</div>
-</$list>
-</div>
-</$list>
-<div class="tc-plugin-info-dropdown-body">
-<$list filter="[<currentTiddler>get[cpl.documentation]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/home-button}} <$text text=<<url>>/></$button><br/></$list>
-<$list filter="[<currentTiddler>get[cpl.source]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text=<<url>>/></$button><br/></$list>
-<$transclude tiddler=<<currentTiddler>> field="cpl.readme" mode="block"/>
-</div>
-</div>
-</$set>
-\end
-
-<div style="display:none;">
-
-<$reveal state="$:/info/tidgi" type="nomatch" text="yes">
-{{CallbackInfo}}
-</$reveal>
-
-</div>
-
-<$list filter="[all[current]tag[$:/tags/PluginWiki]!is[draft]]">
-
-!! {{$:/language/Buttons/Preview/Caption}}
-
-<$macrocall $name="plugin-info" title=<<currentTiddler>> type={{{ [<currenrTiddler>get[_type]else[plugin]] }}}/>
-
-<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]" variable="editorMode">
-
-!! {{$:/language/Buttons/Edit/Caption}}
-
+<$list filter="[[IfEditorMode]get[text]else[no]match[yes]]" variable="edit">
 <div class="tc-control-panel">
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
 <$list filter="[<lang>search[zh]]" variable="lang">
@@ -79,6 +15,7 @@ type: text/vnd.tiddlywiki
 |!标题 |<$edit-text field="cpl.title" tag=input placeholder="插件的标题，以$:/plugins/开头" }}}/> |
 |!版本 |<$edit-text field="cpl.version" tag=input placeholder="当插件文件不包含版本号时，会用此版本号替代"/> |
 |!名称 |<$edit-text field="cpl.name" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[1]addprefix[可能是：]] }}}/> |
+|!类别 |<$select field="cpl.category" default="Unknown"><$list filter="[prefix[$:/CPL/PluginCategory/]]" variable="category"><option value={{{ [<category>removeprefix[$:/CPL/PluginCategory/]] }}}><$text text={{{ [<category>get[text]] }}}/></option></$list></$select> |
 |!简介 |<$edit-text field="cpl.description" tag=textarea class="tc-edit-texteditor" placeholder="为插件添加简短的介绍"/> |
 |!作者 |<$edit-text field="cpl.author" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[2]first[1]addprefix[可能是：]] }}}/> |
 |!URI |<$edit-text field="cpl.uri" tag=textarea placeholder={{{ [<currentTiddler>get[cpl.title]removeprefix[$:/plugins/]search-replace:gim:regexp<illegalcharexp>,[_]encodeuricomponent[]addprefix[从哪里可以找到这个插件(.json, .tid 或者 .html等)。如果插件的json文件在网络上，请填写下载地址；如果插件没有下载地址，需要手动下载或者编译，请将json插件文件放在本项目的本地文件夹的plugin_files/路径下，并命名为 ]addsuffix[.json]] }}}/> |
@@ -97,6 +34,7 @@ type: text/vnd.tiddlywiki
 |!Title |<$edit-text field="cpl.title" tag=input placeholder="Title of the plugin, starting with $:/plugins/" }}}/> |
 |!Version |<$edit-text field="cpl.version" tag=input placeholder="When the plugin file does not contain a version number, this version number will be used instead."/> |
 |!Name |<$edit-text field="cpl.name" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[1]addprefix[Shall be: ]] }}}/> |
+|!Category |<$select field="cpl.category" default="Unknown"><$list filter="[prefix[$:/CPL/PluginCategory/]removeprefix[$:/CPL/PluginCategory/]]" variable="category"><option value=<<category>>><$text text=<<category>>/></option></$list></$select> |
 |!Description |<$edit-text field="cpl.description" tag=textarea class="tc-edit-texteditor" placeholder="Add brief description for this plugin."/> |
 |!Author |<$edit-text field="cpl.author" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[2]first[1]addprefix[Shall be: ]] }}}/> |
 |!URI |<$edit-text field="cpl.uri" tag=textarea placeholder={{{ [<currentTiddler>get[cpl.title]removeprefix[$:/plugins/]search-replace:gim:regexp<illegalcharexp>,[_]encodeuricomponent[]addprefix[Where to find this plugin(.json, .tid or .html, etc.). Fill with uri if json file can be download from internet. If the plugin does not have a download address and needs to be downloaded or compiled manually, please place the json plugin file under the plugin_files/ path in the local folder of this project and name it to ]addsuffix[.json]] }}}/> |
@@ -112,4 +50,15 @@ type: text/vnd.tiddlywiki
 </$list>
 </$list>
 </div>
+</$list>
+
+<$list filter="[[IfEditorMode]get[text]else[no]!match[yes]]">
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search[zh]]" variable="lang">
+网站模式只读，不可编辑！
+</$list>
+<$list filter="[<lang>!search[zh]]" variable="lang">
+Website is read-only!
+</$list>
+</$list>
 </$list>

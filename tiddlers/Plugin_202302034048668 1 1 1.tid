@@ -1,10 +1,10 @@
 _title: 
-_type: plugin
 author: 
 cpl.author: yaisog
 cpl.description: select random tiddler(s) from the input
 cpl.documentation: https://yaisog.tiddlyhost.com/
 cpl.name: choose-random
+cpl.plugin-type: plugin
 cpl.readme: 
 cpl.source: 
 cpl.title: $:/plugins/yaisog/choose-random-filter
