@@ -1,1 +1,1 @@
-{"latest":"0.2.2","versions":["0.2.2"]}
+{"title":"$:/plugins/xp/html-button","author":"kl","name":"HTML Button","description":"Insert a html code","readme":"A button ({{$:/core/images/html}}) for inserting html codes.\n\n!! See also\n\n* https://www.runoob.com/html/html-quicklist.html\n* https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element","version":"0.2.2","plugin-type":"plugin","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.2.2","versions":["0.2.2"]}

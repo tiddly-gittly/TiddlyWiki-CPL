@@ -1,1 +1,1 @@
-{"latest":"0.2.2","versions":["0.2.2"]}
+{"title":"$:/plugins/xp/switchlayout","author":"kl","name":"Switch Layout","description":"Switch sidebar layout","readme":";切换侧边栏布局\n:在 `固定故事` {{$:/xp/switchlayout/images/left-arrow}} 和 `固定侧边栏` {{$:/xp/switchlayout/images/right-arrow}} 之间切换。默认快捷键为 <kbd>shift-alt-Down</kbd>。\n","version":"0.2.2","plugin-type":"plugin","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.2.2","versions":["0.2.2"]}

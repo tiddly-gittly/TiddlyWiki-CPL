@@ -1,1 +1,1 @@
-{"latest":"0.5.3","versions":["0.5.3"]}
+{"title":"$:/plugins/tesseract/ImportResolution","author":"Riz","name":"ImportResolution","description":"ImportResolution: Auto enumerates the imported tiddlers if there is a conflict","version":"0.5.3","plugin-type":"plugin","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.5.3","versions":["0.5.3"]}

@@ -1,1 +1,1 @@
-{"latest":"0.5.0","versions":["0.5.0"]}
+{"title":"$:/plugins/xp/aggregation-plugins","author":"kl","name":"Plugins","description":"Manage your TiddlyWiki plugins","version":"0.5.0","plugin-type":"plugin","dependents":"$:/plugins/xp/aggregation","parent-plugin":"$:/plugins/xp/aggregation","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.5.0","versions":["0.5.0"]}

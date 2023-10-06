@@ -1,1 +1,1 @@
-{"latest":"5.3.1","versions":["5.3.1"]}
+{"title":"$:/plugins/tiddlywiki/powered-by-tiddlywiki","author":"tiddlywiki","name":"Powered By TiddlyWiki","description":"Powered by TiddlyWiki banner","readme":"This plugin adds a \"Powered by ~TiddlyWiki\" banner that links back to https://tiddlywiki.com\n\nIt's very basic at the moment, but the plan is to improve it by making it more customisable.\n","version":"5.3.1","plugin-type":"plugin","requires-reload":false,"category":"Unknown","type":"application/json","latest":"5.3.1","versions":["5.3.1"]}

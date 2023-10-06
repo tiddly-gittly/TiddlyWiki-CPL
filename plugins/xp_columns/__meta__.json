@@ -1,1 +1,1 @@
-{"latest":"0.2.1","versions":["0.2.1"]}
+{"title":"$:/plugins/xp/columns","author":"kl","name":"Columns","description":"Display content in multiple columns using CSS","readme":"多栏（{{$:/core/images/columns}} Columns）是一个编辑器工具栏按钮，提供的 CSS 代码可以将文本内容显示为多栏。请查看[[示例|$:/xp/columns/preview]]。\n\nAssigned shortcut: {{$:/config/shortcuts/columns}}","version":"0.2.1","plugin-type":"plugin","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.2.1","versions":["0.2.1"]}

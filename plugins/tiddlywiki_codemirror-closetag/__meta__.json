@@ -1,1 +1,1 @@
-{"latest":"5.3.1","versions":["5.3.1"]}
+{"title":"$:/plugins/tiddlywiki/codemirror-closetag","author":"tiddlywiki","name":"CodeMirror Close Tag","description":"Close tags automatically for CodeMirror","readme":"This plugin adds the ability to ''automatically close Tags''. It needs the latest [[CodeMirror plugin|$:/plugins/tiddlywiki/codemirror]] to be installed\n\n\n","version":"5.3.1","plugin-type":"plugin","parent-plugin":"$:/plugins/tiddlywiki/codemirror","requires-reload":false,"category":"Unknown","type":"application/json","latest":"5.3.1","versions":["5.3.1"]}
