@@ -1,6 +1,6 @@
 code-body: yes
 created: 20231006080749205
-modified: 20231006194300498
+modified: 20231006202845319
 tags: TW5CPL
 title: $:/CPL/PluginViewTemplate
 type: text/vnd.tiddlywiki
@@ -13,7 +13,7 @@ type: text/vnd.tiddlywiki
 
 <<<
 <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[作者]else[Author]] }}} />: <$text text={{!!cpl.author}}/><br/>
-<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[all[current]get[cpl.category]addprefix[$:/CPL/PluginCategory/]get[text]addprefix[类别: ]] :else[all[current]get[cpl.category]addprefix[Category: ]] }}}/><br/>
+<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[all[current]get[cpl.category]else[Unknown]addprefix[$:/CPL/PluginCategory/]get[text]addprefix[类别: ]] :else[all[current]get[cpl.category]else[Unknown]addprefix[Category: ]] }}}/><br/>
 <$list filter="[<currentTiddler>get[cpl.documentation]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/home-button}} <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[文档]else[Documentation]] }}} />:&nbsp;<$text text=<<url>>/></$button><br/></$list>
 <$list filter="[<currentTiddler>get[cpl.source]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[源码]else[Source Code]] }}} />:&nbsp;<$text text=<<url>>/></$button><br/></$list>
 <<<
