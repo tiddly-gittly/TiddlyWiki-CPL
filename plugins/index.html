@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <title>TiddlyWiki5 CPL</title>
+    <script>
+      'use strict';
+      !(function () {
+        function sendBack(success, payload, event) {
+          event.source.postMessage(
+            {
+              type: event.data.type,
+              token: event.data.token,
+              success,
+              payload,
+            },
+            '*',
+          );
+        }
+        // Helper for HTTP GET
+        function httpGet(url, callback) {
+          var http = new XMLHttpRequest();
+          http.open('GET', url, true);
+          http.onreadystatechange = function () {
+            if (http.readyState == 4 && http.status == 200) {
+              callback(null, http.responseText);
+            }
+          };
+          http.send();
+        }
+
+        // Listen for window messages
+        window.addEventListener(
+          'message',
+          function listener(event) {
+            console.log('plugin library: Received message from', event.origin);
+            console.log('plugin library: Message content', event.data);
+            function handle(url) {
+              httpGet(url, function (err, text) {
+                if (err) sendBack(false, err, event);
+                else sendBack(true, text, event);
+                console.log('plugin library: Send back', err || text);
+              });
+            }
+            switch (event.data.type) {
+              case 'Update': {
+                handle('update.json');
+                break;
+              }
+              case 'Index': {
+                handle('index.json');
+                break;
+              }
+              case 'Query': {
+                handle(`${event.data.plugin}/__meta__.json`);
+                break;
+              }
+              case 'Install': {
+                handle(`${event.data.plugin}/${event.data.version}.json`);
+                break;
+              }
+              default: {
+              }
+            }
+          },
+          false,
+        );
+
+        // 加载完毕
+        window.parent.postMessage(
+          {
+            type: 'Ready',
+            token: Date.now(),
+            success: true,
+            payload: '',
+          },
+          '*',
+        );
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
