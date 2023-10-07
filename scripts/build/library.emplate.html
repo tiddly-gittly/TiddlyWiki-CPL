@@ -15,8 +15,6 @@
         window.addEventListener(
           'message',
           function listener(event) {
-            console.log('plugin library: Received message from', event.origin);
-            console.log('plugin library: Message content', event.data);
             switch (event.data.verb) {
               case 'GET':
                 if (event.data.url === 'recipes/library/tiddlers.json') {

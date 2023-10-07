@@ -133,6 +133,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
 
     // 接下来从tmpDir处理所有的插件
     const pluginCallbackInfo: Record<string, string> = {};
+    const pluginTitlePathMap: Record<string, string> = {};
     const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] =
       [];
     console.log(chalk.bgCyan.black.bold('\nExporting plugins...'));
@@ -213,6 +214,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
             metaPath,
             JSON.stringify({ ...newInfoTiddler, ...meta }),
           );
+          pluginTitlePathMap[newInfoTiddler.title] = formatedTitle;
         }
 
         // 登记插件
@@ -277,6 +279,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
             type: i['plugin-type'],
             version: i.version,
             core: i['core-version'],
+            path: pluginTitlePathMap[i.title],
           })),
         ),
       );
@@ -287,7 +290,13 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       for (const { title, version } of pluginInfos) {
         updateMap[title] = version;
       }
-      writeFileSync(pluginUpdatePath, JSON.stringify(updateMap));
+      writeFileSync(pluginUpdatePath, JSON.stringify(updateMap), 'utf-8');
+
+      // 生成跨域通信用 html
+      writeFileSync(
+        resolve(cachePluginsDir, 'index.html'),
+        readFileSync(resolve(__dirname, 'allplugins.emplate.html'), 'utf-8'),
+      );
     }
 
     // 生成插件源HTML文件
