@@ -8,8 +8,6 @@
         "modifier": "WhiteFall",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "uri": "",
-        "_title": "",
         "author": "",
         "cpl.author": "LinOnetwo",
         "cpl.description": "Import *.ical calendar file exported from services like GoogleCalendar into TiddlyWiki.",
@@ -20,8 +18,6 @@
         "cpl.source": "https://github.com/tiddly-gittly/ical-calendar-importer",
         "cpl.title": "$:/plugins/linonetwo/ical-calendar-importer",
         "cpl.uri": "https://github.com/tiddly-gittly/ical-calendar-importer/releases/latest/download/__plugins_linonetwo_ical-calendar-importer.json",
-        "description": "",
-        "name": "",
         "page-cover": "http://up.92sucai.com/image/20181122/1542849448482754.jpg",
         "cpl.plugin-type": "plugin"
     }

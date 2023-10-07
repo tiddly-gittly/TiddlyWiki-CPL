@@ -1,4 +1,3 @@
-_title: 
 author: 
 cpl.author: nico
 cpl.core-version: >=5.1.23
@@ -12,11 +11,8 @@ cpl.title: $:/plugins/nico/projectify-zh-Hans
 cpl.uri: https://thaddeusjiang.github.io/Projectify/demo.html
 created: 20230105051526662
 creator: WhiteFall
-description: 
 modified: 20230105054634403
 modifier: WhiteFall
-name: 
 tags: $:/tags/PluginWiki
 title: nico_projectify-zh-Hans
 type: text/vnd.tiddlywiki
-uri: 

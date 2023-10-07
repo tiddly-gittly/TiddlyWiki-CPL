@@ -1,5 +1,5 @@
 created: 20231006115812787
-modified: 20231006194114863
+modified: 20231007073437063
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/core/ui/ViewTemplate/subtitle
 type: text/vnd.tiddlywiki
@@ -23,15 +23,28 @@ type: text/vnd.tiddlywiki
 </div>
 </$reveal>
 </$list>
+
+
+
 <$list filter="[<CPL>match[yes]]" variable="CPL1">
 <$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
 <div class="tc-subtitle" style="position:relative;">
-<$text text={{{ [all[current]get[cpl.title]] }}} /><em><$list filter="[all[current]has[cpl.version]]"><$text text={{{ [all[current]get[cpl.version]] }}}/></$list><$list filter="[all[current]!has[cpl.version]]"><$set name="title" value={{{ [all[current]get[cpl.title]] }}}><$text text={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]last[]] }}}/></$set></$list></em>
-<$macrocall $name="icon" plugin-type={{{ [<currenrTiddler>get[cpl.plugin-type]else[plugin]] }}}/>
+
+<$text text={{{ [{!!cpl.title}] }}} /><em style="font-weight: 800;"><$list filter="[all[current]has[cpl.version]]"><$text text={{{ [{!!cpl.version}] }}}/></$list><$list filter="[all[current]!has[cpl.version]]"><$set name="title" value={{{ [{!!cpl.title}] }}}><$text text={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]last[]] }}}/></$set></$list></em>
+
+<!-- 依赖插件 -->
+<$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[!is[tiddler]limit[1]]" variable="ignore">
+<div style="background:#e91e3db0;color:white;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);">{{$:/language/ControlPanel/Plugins/AlsoRequires}}&nbsp;<$list filter="[enlist{!!cpl.dependents}] [{!!cpl.parent-plugin}] +[sort[cpl.name]]" variable="dependency"><$text text=<<dependency>>/></$list></div>
+</$list>
+
+<!-- 插件图标 -->
+<$macrocall $name="icon" plugin-type={{{ [{!!cpl.plugin-type}else[plugin]] }}}/>
 </div>
+
+
 <!-- 是否需要重载 -->
 <div class="tc-plugin-info-chunk tc-plugin-info-buttons">
-<$set name="title" value={{{ [all[current]get[cpl.title]] }}}><$set name="requiresReload" value={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]first[]] }}}><$list filter="[<requiresReload>match[true]]">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$list></$set></$set>
+<$set name="title" value={{{ [{!!cpl.title}] }}}><$set name="requiresReload" value={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]first[]] }}}><$list filter="[<requiresReload>match[true]]">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$list></$set></$set>
 </div>
 </$reveal>
 </$list>

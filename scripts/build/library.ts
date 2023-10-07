@@ -261,8 +261,8 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       '$:/plugins/Gk0Wk/CPL-Repo'
     ] = `false|${$tw.wiki.getTiddlerText('CPL-Repo-Version')}`;
 
-    // 生成插件索引
     if (cache) {
+      // 生成插件索引
       const pluginIndexPath = resolve(cachePluginsDir, 'index.json');
       mkdirsForFileSync(pluginIndexPath);
       writeFileSync(
@@ -280,6 +280,14 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           })),
         ),
       );
+
+      // 生成插件更新信息
+      const pluginUpdatePath = resolve(cachePluginsDir, 'update.json');
+      const updateMap: Record<string, string> = {};
+      for (const { title, version } of pluginInfos) {
+        updateMap[title] = version;
+      }
+      writeFileSync(pluginUpdatePath, JSON.stringify(updateMap));
     }
 
     // 生成插件源HTML文件

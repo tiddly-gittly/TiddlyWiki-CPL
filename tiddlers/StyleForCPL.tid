@@ -1,5 +1,5 @@
 created: 20211205054602372
-modified: 20231006185048791
+modified: 20231007101723650
 tags: $:/tags/Stylesheet TW5CPL
 title: StyleForCPL
 type: text/vnd.tiddlywiki
@@ -21,6 +21,21 @@ type: text/vnd.tiddlywiki
 	margin: 0;
 }
 
+.gk0wk-notion-gallery-block .gk0wk-backlinksbox-box-link-icon {
+  margin-right: 0 !important;
+}
+
+.gk0wk-notion-gallery-block .gk0wk-backlinksbox-box-link-icon p {
+  display: inline;
+}
+
+.row-scroll-plugin-item {
+    flex-shrink: 0;
+    width: 270px;
+    margin: -35px;
+    scale: 0.7;
+}
+
 .tc-body {
     background-attachment: fixed !important;
     background-image: -webkit-linear-gradient(45deg, {{{ [{$:/palette}get[color-scheme]match[dark]then[#1c1b24, #242e2e]else[#ecb9e9, #efe3d0]] }}}) !important;
@@ -28,5 +43,18 @@ type: text/vnd.tiddlywiki
 }
 
 .tc-tiddler-frame {
-	opacity: 0.95 !important;
+	border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 1px 4px 14px #0002;
+    backdrop-filter: brightness(1.2) blur(10px);
+    background-image: linear-gradient(45deg, <<colour page-background>>99, <<colour page-background>>99);
+    background-color: transparent !important;
+}
+
+.tc-tiddler-title, .hljs {
+    background: transparent !important;
+}
+
+blockquote {
+    border-left: 5px solid #84b9eea6 !important;
 }

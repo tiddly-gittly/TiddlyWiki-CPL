@@ -1,13 +1,19 @@
 code-body: yes
 created: 20231006082350928
-modified: 20231006193008603
+modified: 20231007114506039
 tags: TW5CPL
 title: $:/CPL/PluginEditTemplate
 type: text/vnd.tiddlywiki
 
 \define illegalcharexp() [:/<>"\|?*]
+\import $:/core/ui/EditTemplate/tags
 
 <$list filter="[[IfEditorMode]get[text]else[no]match[yes]]" variable="edit">
+
+<$let saveTiddler=<<currentTiddler>>>
+<$macrocall $name="edit-tags-template" tagField="cpl.tags"/>
+</$let>
+
 <div class="tc-control-panel">
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
 <$list filter="[<lang>search[zh]]" variable="lang">

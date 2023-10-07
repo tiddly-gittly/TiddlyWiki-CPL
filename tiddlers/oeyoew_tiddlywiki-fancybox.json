@@ -1,6 +1,8 @@
 [
     {
         "title": "oeyoew/tiddlywiki-fancybox",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
         "cpl.author": "oeyoews",
         "cpl.core-version": ">=5.2.5",
         "cpl.description": "Tiddlywiki Gallery",
@@ -11,10 +13,8 @@
         "cpl.sourse": "https://github.com/oeyoews/neotw/tree/main/dev/plugins/tiddlywiki-fancybox",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-fancybox",
         "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-fancybox.json",
-        "description": "This is a cpl release template",
         "icon": "🖼️",
         "page-cover": "https://images.unsplash.com/photo-1608371945786-d47d3cdd31da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGdhbGxlcnl8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
-        "tags": "$:/tags/PluginWiki",
         "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-modal-ui"
     }
 ]

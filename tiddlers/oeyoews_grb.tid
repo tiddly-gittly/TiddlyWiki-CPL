@@ -9,12 +9,9 @@ cpl.source: https://twms.vercel.app/
 cpl.title: $:/plugins/oeyoews/gh-repo-btn
 cpl.uri: https://twms.vercel.app/index.html
 created: 20220722073006345
-description: This is a cpl release template🌔
 icon: 🌔
 modified: 20220722080732517
 page-cover: https://source.unsplash.com/random
-revision: 0
 tags: $:/tags/PluginWiki
 title: oeyoews/grb
 type: text/vnd.tiddlywiki
-

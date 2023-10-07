@@ -1,15 +1,15 @@
 created: 20231006154850533
 list-before: $:/core/ui/ViewTemplate/title
-modified: 20231006180637487
+modified: 20231007165519780
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/plugins/Gk0Wk/notionpage-covericon/body
 type: text/vnd.tiddlywiki
 
 \define contentbase64() [<currentTiddler>is[binary]] :then[<currentTiddler>get[text]] :else[<currentTiddler>get[text]encodeuricomponent[]]
 \define imagetobase64() [[data:]] [{!!type}] [<currentTiddler>is[binary]then[;base64,]else[,]] [subfilter<contentbase64>] :and[join[]]
-\define coverbox-db(cover,class:"",class1:"",class2:"",style:"",style1:"",style2:"")
+\define coverbox-db(cover,default:"",class:"",class1:"",class2:"",style:"",style1:"",style2:"")
 \whitespace trim
-<$let currentTiddler=<<__cover__>>>
+<$let currentTiddler={{{ [<__cover__>!is[blank]then<__cover__>else<__default__>] }}}>
 <$let imguri={{{ [<currentTiddler>is[image]!has[_canonical_uri]] :then[subfilter<imagetobase64>] :else[<currentTiddler>get[_canonical_uri]else<currentTiddler>] }}}>
 <div class="$class$" style="$style$;display:flex;position:relative;overflow:hidden;align-items:center;justify-content:center;" >
 <div class="$class$" style={{{ [[background-image:url(]] [<imguri>] [[);background-size:cover;background-position:center;position:absolute;top:-10px;left:-10px;filter:blur(8px);height:calc(100% + 20px);width:calc(100% + 20px);]] [<__style1__>] :and[join[]] }}} />

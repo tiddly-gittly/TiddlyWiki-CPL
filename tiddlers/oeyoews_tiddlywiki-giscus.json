@@ -17,7 +17,6 @@
         "cpl.source": "https://github.com/oeyoews/neotw/tree/main/archive/plugins/tiddlywiki-giscus",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-giscus",
         "cpl.uri": "https://neotw.netlify.app/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-giscus.json",
-        "description": "This is a cpl release template",
         "icon": "ℹ️",
         "page-cover": "",
         "cpl.dependents": "$:/plugins/Gk0Wk/focused-tiddler $:/plugins/oeyoews/tiddlywiki-modal-ui"

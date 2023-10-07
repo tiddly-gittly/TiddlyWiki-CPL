@@ -1,4 +1,3 @@
-_title: 
 author: 
 cpl.author: yaisog
 cpl.description: select all descendants of the input tiddler(s)
@@ -10,11 +9,8 @@ cpl.title: $:/plugins/yaisog/taggingtree-filter
 cpl.uri: https://yaisog.tiddlyhost.com
 created: 20230202213851321
 creator: 林一二
-description: 
 modified: 20230202214425899
 modifier: 林一二
-name: 
 tags: $:/tags/PluginWiki
 title: Plugin_202302033851321
 type: text/vnd.tiddlywiki
-uri: 

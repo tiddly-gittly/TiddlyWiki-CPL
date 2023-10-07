@@ -1,0 +1,41 @@
+code-body: yes
+created: 20231007085122358
+modified: 20231007170141773
+page-cover: 
+tags: TW5CPL
+title: $:/CPL/PluginGalleryItem
+type: text/vnd.tiddlywiki
+
+\define plugin-item(title,class:"")
+<$let currentTiddler=<<__title__>>>
+<$link to=<<currentTiddler>> tag="div" class="gk0wk-notion-gallery-block $class$">
+
+<!-- 封面 -->
+<div style="witdh: 100%; height: 180px; overflow: hidden;">
+    <$macrocall $name="coverbox-db" cover={{!!page-cover}} style="width: 100%; height: 100%;" default="https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3870&q=80" />
+</div>
+
+<div style="width: 100%; padding: 8px 10px 10px; height: 69px; overflow: hidden;">
+    <!-- 图标 -->
+    <$list filter="[all[current]has[icon]]" variable="t">
+        <span class="gk0wk-backlinksbox-box-link-icon">
+            <$list filter="[{!!icon}is[shadow]]" variable="t">
+                <$transclude tiddler={{!!icon}}/>
+            </$list>
+            <$list filter="[{!!icon}is[tiddler]]" variable="t">
+                <$transclude tiddler={{!!icon}}/>
+            </$list>
+            <$list filter="[{!!icon}!is[shadow]!is[tiddler]]" variable="t">
+                <$wikify name="rendered" text={{!!icon}} output="html"><<rendered>></$wikify>
+            </$list>
+        </span>
+    </$list>
+    <!-- 名称 -->
+    <span style="font-weight:700;"><$text text={{{ [all[current]has[cpl.name]] :then[{!!cpl.name}] :else[{!!cpl.title}split[/]last[1]] }}}/>:</span>&nbsp;
+    <!-- 简介 -->
+    <span style=""><$text text={{!!cpl.description}} /></span>
+</div>
+
+</$link>
+</$let>
+\end

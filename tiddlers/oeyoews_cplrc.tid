@@ -9,12 +9,9 @@ cpl.source: https://twms.vercel.app/
 cpl.title: $:/plugins/oeyoews/cpl-info
 cpl.uri: https://twms.vercel.app/index.html
 created: 20220726090056825
-description: This is a cpl release template
 icon: 🐮
 modified: 20220726090242305
 page-cover: 
-revision: 0
 tags: $:/tags/PluginWiki
 title: oeyoews/cplrc
 type: text/vnd.tiddlywiki
-

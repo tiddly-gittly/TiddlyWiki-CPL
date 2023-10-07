@@ -1,0 +1,31 @@
+code-body: yes
+created: 20231007150846632
+modified: 20231007163114179
+tags: TW5CPL
+title: $:/CPL/HomeTabTemplate
+type: text/vnd.tiddlywiki
+
+\import $:/CPL/PluginGalleryItem
+\import $:/plugins/Gk0Wk/notionpage-covericon/body
+
+<$list filter="[<currentTab>match[Home]]">
+<!-- 搜索 -->
+<center>
+<$edit-text tiddler="$:/tmp/searchplugin/input" default="" placeholder={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[搜索插件]else[Search for plugin]] }}} focus="true" tag=input class="tc-titlebar tc-edit-texteditor"/>
+</center>
+<!-- 呈现 -->
+<$set value={{$:/tmp/searchplugin/input!!text}} name="search">
+<div style="margin-top: 10px;display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
+<$list filter="[<search>trim[]length[]!compare:integer:gteq[3]] :then[all[tiddlers]tag[$:/tags/PluginWiki]!is[draft]shuffle[12]] :else[all[tiddlers]tag[$:/tags/PluginWiki]!is[draft]search:cpl.title,cpl.name,cpl.author<search>]" variable="plugin">
+<$macrocall $name="plugin-item" title=<<plugin>> />
+</$list>
+</div>
+</$set>
+</$list>
+<$list filter="[<currentTab>!match[Home]]">
+<div style="margin-top: 10px;display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
+<$list filter="[all[tiddlers]tag[$:/tags/PluginWiki]field:cpl.category<currentTab>]" variable="plugin">
+<$macrocall $name="plugin-item" title=<<plugin>> />
+</$list>
+</div>
+</$list>
