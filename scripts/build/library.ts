@@ -287,7 +287,10 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       const pluginUpdatePath = resolve(cachePluginsDir, 'update.json');
       const updateMap: Record<string, [string, string]> = {};
       for (const { title, version, ...p } of pluginInfos) {
-        updateMap[title] = [version, p['core-version'] || ''];
+        updateMap[title] = [
+          version,
+          p['core-version']?.replace?.(/[\s>=<!]/g, '') || '',
+        ];
       }
       writeFileSync(pluginUpdatePath, JSON.stringify(updateMap), 'utf-8');
 

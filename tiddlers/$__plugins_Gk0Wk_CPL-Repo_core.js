@@ -25,40 +25,42 @@ var cpl = function (type, payload) {
         style: { display: "none" },
         });
         function ccc(e) {
-        if (iframe.contentWindow === null || e.source !== iframe.contentWindow)
-            return;
-        if (e.data.target !== "tiddlywiki-cpl" || e.data.token === undefined)
-            return;
-        switch (e.data.type) {
-            case "Ready": {
-            if (counter === 0) {
-                counter++;
-                rrr(function (type, payload) {
-                return new Promise(function (resolve, reject) {
-                    var token = counter++;
-                    callbackMap.set(token, [resolve, reject]);
-                    iframe.contentWindow.postMessage(
-                    Object.assign({}, payload, {
-                        type: type,
-                        token: token,
-                        target: "tiddlywiki-cpl",
-                    }),
-                    "*"
-                    );
-                });
-                });
+            //console.log('<=', e.data);
+            if (iframe.contentWindow === null || e.source !== iframe.contentWindow)
+                return;
+            if (e.data.target !== "tiddlywiki-cpl" || e.data.token === undefined)
+                return;
+            switch (e.data.type) {
+                case "Ready": {
+                if (counter === 0) {
+                    counter++;
+                    rrr(function (type, payload) {
+                        return new Promise(function (resolve, reject) {
+                            var token = counter++;
+                            callbackMap.set(token, [resolve, reject]);
+                            //console.log('=>', { type, token, target: "tiddlywiki-cpl", ...payload });
+                            iframe.contentWindow.postMessage(
+                                Object.assign({}, payload, {
+                                    type: type,
+                                    token: token,
+                                    target: "tiddlywiki-cpl",
+                                }),
+                                "*"
+                            );
+                        });
+                    });
+                }
+                break;
+                }
+                default: {
+                var r = callbackMap.get(e.data.token);
+                if (r !== undefined) {
+                    callbackMap.delete(e.data.token);
+                    r[e.data.success ? 0 : 1](e.data.payload);
+                }
+                break;
+                }
             }
-            break;
-            }
-            default: {
-            var r = callbackMap.get(e.data.token);
-            if (r !== undefined) {
-                callbackMap.delete(e.data.token);
-                r[e.data.success ? 0 : 1](e.data.payload);
-            }
-            break;
-            }
-        }
         }
         window.addEventListener("message", ccc);
         document.body.appendChild(iframe);
@@ -93,6 +95,7 @@ exports.startup = function () {
 		updateP.then(function (text) {
 			// 统计需要更新的插件
 			var updatePlugins = JSON.parse(text);
+            console.log({ updatePlugins });
 			for (var len=plugins.length, i=0; i<len; i++) {
 				var title = plugins[i];
 				var lastestVersion = updatePlugins[title]; // [version, coreVersion]
@@ -147,6 +150,6 @@ exports.startup = function () {
 		autoUpdateInterval = setInterval(function () {
 			update();
 		}, time * 60_000);
-	}, 13_000);
+	}, 3_000);
 };
 })();
