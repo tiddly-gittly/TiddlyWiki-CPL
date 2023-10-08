@@ -34,7 +34,7 @@
         window.addEventListener(
           'message',
           function listener(event) {
-            if (event.target !== 'tiddlywiki-cpl') return;
+            if (event.data.target !== 'tiddlywiki-cpl') return;
             // console.log('plugin library: Received message from', event.origin);
             // console.log('plugin library: Message content', event.data);
             function handle(url) {
