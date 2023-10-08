@@ -80,7 +80,7 @@ function getAutoUpdateTime() {
 	return parseInt($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes', '-1')) || -1;
 }
 
-// 自动更新服务
+// 自动更新服务、各种消息通信
 exports.startup = function () {
     globalThis.__tiddlywiki_cpl__ = cpl;
 	// 检测更新
@@ -104,7 +104,8 @@ exports.startup = function () {
 				t.push(title);
 			}
 			if (t.length > 0) {
-                console.log(t);
+                // 写入临时信息
+                $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(t) });
 				// 暂时修改通知停留时间为 10s
 				var tt = $tw.config.preferences.notificationDuration;
 				$tw.config.preferences.notificationDuration = 10_000;
@@ -150,5 +151,59 @@ exports.startup = function () {
 			update();
 		}, time * 60_000);
 	}, 3_000);
+
+
+    // 消息监听
+    var installLock = false;
+    $tw.rootWidget.addEventListener("cpl-install-plugin", function (event) {
+        if (installLock) return;
+        var paramObject = event.paramObject || {};
+        var title = paramObject.title;
+        var version = paramObject.version || "latest";
+        if (!title) return;
+        installLock = true;
+        $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/installing-plugin', text: 'yes', 'plugin-title': title });
+        cpl('Install', { plugin: title, version: version }).then(function (text) {
+            var tiddler = $tw.utils.parseJSONSafe(text);
+            $tw.wiki.addTiddler(new $tw.Tiddler(tiddler));
+            $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/installing-plugin');
+        }).catch(function (err) {
+            console.error(err);
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/installing-plugin', text: err, 'plugin-title': title });
+        }).finally(function () {
+            installLock = false;
+        });
+    });
+    var getPluginsIndexLock = false;
+    $tw.rootWidget.addEventListener("cpl-get-plugins-index", function () {
+        if (getPluginsIndexLock) return;
+        getPluginsIndexLock = true;
+        $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/getting-plugins-index', text: 'yes' });
+        cpl('Index').then(function (text) {
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugins-index', text: text });
+        }).catch(function (err) {
+            console.error(err);
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/getting-plugins-index', text: err });
+        }).finally(function () {
+            getPluginsIndexLock = false;
+        });
+    });
+    var queryPluginLocks = new Set();
+    $tw.rootWidget.addEventListener("cpl-query-plugin", function (event) {
+        var paramObject = event.paramObject || {};
+        var title = paramObject.title;
+        if (queryPluginLocks.has(title)) return;
+        if (!title) return;
+        queryPluginLocks.add(title);
+        $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/querying-plugin', text: 'yes', 'plugin-title': title });
+        cpl('Index').then(function (text) {
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugin-info/' + title, text: text });
+        }).catch(function (err) {
+            console.error(err);
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/querying-plugin', text: err, 'plugin-title': title });
+        }).finally(function () {
+            queryPluginLocks.delete(title);
+        });
+    });
 };
 })();
