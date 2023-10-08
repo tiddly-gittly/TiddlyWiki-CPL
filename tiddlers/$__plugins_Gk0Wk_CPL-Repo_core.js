@@ -196,7 +196,7 @@ exports.startup = function () {
         if (!title) return;
         queryPluginLocks.add(title);
         $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/querying-plugin', text: 'yes', 'plugin-title': title });
-        cpl('Index').then(function (text) {
+        cpl('Query', { plugin: title }).then(function (text) {
             $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugin-info/' + title, text: text });
         }).catch(function (err) {
             console.error(err);
