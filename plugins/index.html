@@ -6,6 +6,15 @@
     <script>
       'use strict';
       !(function () {
+        function formatPluginTitle(title) {
+          return encodeURIComponent(
+            title
+              .replace('$:/plugins/', '')
+              .replace('$:/languages/', 'languages_')
+              .replace('$:/themes/', 'themes_')
+              .replace(/[:/<>"|?*]/g, '_'),
+          );
+        }
         function sendBack(success, payload, event) {
           event.source.postMessage(
             {
@@ -24,7 +33,9 @@
           http.open('GET', url, true);
           http.onreadystatechange = function () {
             if (http.readyState == 4 && http.status == 200) {
-              callback(null, http.responseText);
+              callback(undefined, http.responseText);
+            } else {
+              callback(http.statusText || 'Not found', undefined);
             }
           };
           http.send();
@@ -54,11 +65,11 @@
                 break;
               }
               case 'Query': {
-                handle(`${event.data.plugin}/__meta__.json`);
+                handle(`${formatPluginTitle(event.data.plugin)}/__meta__.json`);
                 break;
               }
               case 'Install': {
-                handle(`${event.data.plugin}/${event.data.version}.json`);
+                handle(`${formatPluginTitle(event.data.plugin)}/${event.data.version}.json`);
                 break;
               }
               default: {
