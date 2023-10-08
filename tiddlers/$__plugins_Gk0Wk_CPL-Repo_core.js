@@ -1,6 +1,6 @@
 (function () {
 "use strict";
-	
+
 exports.name = "cpl-repo-init";
 exports.platforms = ["browser"];
 exports.after = ["render"];
@@ -12,7 +12,7 @@ exports.synchronous = true;
  */
 var messagerPromise;
 var previousEntry;
-var cpl = globalThis.__tiddlywiki_cpl__ = function (type, payload) {
+var cpl = function (type, payload) {
 	var entry = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/core-entry', 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/library/all');
 	if (previousEntry !== entry && globalThis.__tiddlywiki_cpl__reset__ !== undefined) globalThis.__tiddlywiki_cpl__reset__();
 	previousEntry = entry;
@@ -73,13 +73,14 @@ var cpl = globalThis.__tiddlywiki_cpl__ = function (type, payload) {
     });
   return messagerPromise.then(function (r) { return r(type, payload) });
 };
-	
+
 function getAutoUpdateTime() {
 	return parseInt($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes', '-1')) || -1;
 }
 
 // 自动更新服务
-exports.startup = function () {\
+exports.startup = function () {
+    globalThis.__tiddlywiki_cpl__ = cpl;
 	// 检测更新
 	var lastUpdateTime = -1;
 	function update() {
@@ -87,7 +88,7 @@ exports.startup = function () {\
 		// filter 和 网络请求并发一下
 		var updateP = cpl('Update');
 		// 根据条件筛选插件
-		var plugins = $tw.wiki.filterTiddlers($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/auto-update-filter')));
+		var plugins = $tw.wiki.filterTiddlers($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/auto-update-filter'));
 		var t = [];
 		updateP.then(function (text) {
 			// 统计需要更新的插件
@@ -111,7 +112,7 @@ exports.startup = function () {\
 				});
 				$tw.config.preferences.notificationDuration = tt;
 			}
-		}.catch(function (err) {
+		}).catch(function (err) {
 			console.error(err);
 		});
 	}
