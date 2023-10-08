@@ -1,0 +1,11 @@
+created: 20231008081456278
+modified: 20231008082458268
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/update-notify-template
+type: text/vnd.tiddlywiki
+
+!! CPL 更新提醒
+
+您的 Wiki 中有 <<updateCount>> 款插件在 CPL 中有更新版本, 快来更新吧!
+
+<$button>更新</$button> <$button>修改更新策略</$button>

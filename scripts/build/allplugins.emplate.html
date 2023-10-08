@@ -11,6 +11,7 @@
             {
               type: event.data.type,
               token: event.data.token,
+              target: 'tiddlywiki-cpl',
               success,
               payload,
             },
@@ -33,13 +34,14 @@
         window.addEventListener(
           'message',
           function listener(event) {
-            console.log('plugin library: Received message from', event.origin);
-            console.log('plugin library: Message content', event.data);
+            if (event.target !== 'tiddlywiki-cpl') return;
+            // console.log('plugin library: Received message from', event.origin);
+            // console.log('plugin library: Message content', event.data);
             function handle(url) {
               httpGet(url, function (err, text) {
                 if (err) sendBack(false, err, event);
                 else sendBack(true, text, event);
-                console.log('plugin library: Send back', err || text);
+                // console.log('plugin library: Send back', err || text);
               });
             }
             switch (event.data.type) {
@@ -71,6 +73,7 @@
           {
             type: 'Ready',
             token: Date.now(),
+            target: 'tiddlywiki-cpl',
             success: true,
             payload: '',
           },

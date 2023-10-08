@@ -279,16 +279,15 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
             type: i['plugin-type'],
             version: i.version,
             core: i['core-version'],
-            path: pluginTitlePathMap[i.title],
           })),
         ),
       );
 
       // 生成插件更新信息
       const pluginUpdatePath = resolve(cachePluginsDir, 'update.json');
-      const updateMap: Record<string, string> = {};
-      for (const { title, version } of pluginInfos) {
-        updateMap[title] = version;
+      const updateMap: Record<string, [string, string]> = {};
+      for (const { title, version, ...p } of pluginInfos) {
+        updateMap[title] = [version, p['core-version'] || ''];
       }
       writeFileSync(pluginUpdatePath, JSON.stringify(updateMap), 'utf-8');
 
