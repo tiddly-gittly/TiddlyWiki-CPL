@@ -1,6 +1,6 @@
 code-body: yes
 created: 20231007085122358
-modified: 20231007170141773
+modified: 20231008174241399
 page-cover: 
 tags: TW5CPL
 title: $:/CPL/PluginGalleryItem
@@ -31,7 +31,7 @@ type: text/vnd.tiddlywiki
         </span>
     </$list>
     <!-- 名称 -->
-    <span style="font-weight:700;"><$text text={{{ [all[current]has[cpl.name]] :then[{!!cpl.name}] :else[{!!cpl.title}split[/]last[1]] }}}/>:</span>&nbsp;
+    <span style="font-weight:700;"><$text text={{{ [{!!cpl.name}trim[]!is[blank]] ~[{!!cpl.title}split[/]last[1]] }}}/>:</span>&nbsp;
     <!-- 简介 -->
     <span style=""><$text text={{!!cpl.description}} /></span>
 </div>

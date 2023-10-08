@@ -72,11 +72,11 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
       }
       console.log(chalk.gray(`导入 Importing ${chalk.underline(title)}`));
       u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
-        encodeURIComponent(encodeURIComponent(plugin.title)),
+        encodeURIComponent(plugin.title),
       )}.json`;
       const url1 = u.href;
       u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
-        encodeURIComponent(plugin.title),
+        plugin.title,
       )}.json`;
       const url2 = u.href;
       await importPlugin(url2, plugin.title, options, $tw, url1);

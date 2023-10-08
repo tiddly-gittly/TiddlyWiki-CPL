@@ -312,14 +312,6 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       ),
     );
 
-    // 生成插件信息反馈
-    writeFileSync(
-      resolve(distDir, 'callback.tid'),
-      `title: $:/temp/tw-cpl/plugin-callback-info\ntype: application/json\n\n${JSON.stringify(
-        pluginCallbackInfo,
-      )}`,
-    );
-
     // 清理缓存
     console.log(chalk.bgCyan.black.bold('\nCleaning up...'));
     rmSync(tmpDir, { recursive: true, force: true });

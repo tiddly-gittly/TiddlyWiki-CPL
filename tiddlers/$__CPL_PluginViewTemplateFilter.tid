@@ -1,5 +1,6 @@
 created: 20231006080707364
-modified: 20231007164440575
+list-before: $:/config/ViewTemplateBodyFilters/hide-body
+modified: 20231008153857419
 tags: TW5CPL $:/tags/ViewTemplateBodyFilter
 title: $:/CPL/PluginViewTemplateFilter
 type: text/vnd.tiddlywiki

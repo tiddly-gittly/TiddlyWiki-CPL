@@ -1,6 +1,9 @@
-cpl.author:
-cpl.title:
+cpl.author: 
+cpl.name: 
 cpl.plugin-type: plugin
-tags: TW5CPL
+cpl.title: 
+created: 20231008153211851
+modified: 20231008153244400
+tags: 
 title: CPLPluginWikiTemplate
 type: text/vnd.tiddlywiki

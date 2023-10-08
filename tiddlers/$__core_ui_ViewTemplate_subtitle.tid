@@ -1,5 +1,5 @@
 created: 20231006115812787
-modified: 20231007073437063
+modified: 20231008162447403
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/core/ui/ViewTemplate/subtitle
 type: text/vnd.tiddlywiki
@@ -27,10 +27,16 @@ type: text/vnd.tiddlywiki
 
 
 <$list filter="[<CPL>match[yes]]" variable="CPL1">
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 <$reveal type="nomatch" stateTitle=<<folded-state>> text="hide" tag="div" retain="yes" animate="yes">
 <div class="tc-subtitle" style="position:relative;">
 
-<$text text={{{ [{!!cpl.title}] }}} /><em style="font-weight: 800;"><$list filter="[all[current]has[cpl.version]]"><$text text={{{ [{!!cpl.version}] }}}/></$list><$list filter="[all[current]!has[cpl.version]]"><$set name="title" value={{{ [{!!cpl.title}] }}}><$text text={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]last[]] }}}/></$set></$list></em>
+<!-- 插件名 -->
+<$text text={{{ [{!!cpl.title}] }}} />
+<!-- 最新版本 -->
+&nbsp;&nbsp;&nbsp;<em style="font-weight: 800;"><$text text={{{ [<chinese>match[yes]then[最新版本: ]else[Latest version: ]] }}}/><$text text={{{ [{$:/temp/CPL/plugin-infos.json}jsonget{!!cpl.title}else{!!cpl.version}else[?]] }}}/></em>
+
+{{!!cpl.title}}
 
 <!-- 依赖插件 -->
 <$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[!is[tiddler]limit[1]]" variable="ignore">
@@ -41,11 +47,7 @@ type: text/vnd.tiddlywiki
 <$macrocall $name="icon" plugin-type={{{ [{!!cpl.plugin-type}else[plugin]] }}}/>
 </div>
 
-
-<!-- 是否需要重载 -->
-<div class="tc-plugin-info-chunk tc-plugin-info-buttons">
-<$set name="title" value={{{ [{!!cpl.title}] }}}><$set name="requiresReload" value={{{ [[$:/temp/tw-cpl/plugin-callback-info]getindex<title>split[|]first[]] }}}><$list filter="[<requiresReload>match[true]]">{{$:/language/ControlPanel/Plugins/PluginWillRequireReload}}</$list></$set></$set>
-</div>
 </$reveal>
+</$list>
 </$list>
 </$list>

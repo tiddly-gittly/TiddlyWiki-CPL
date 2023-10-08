@@ -95,9 +95,7 @@ exports.startup = function () {
 		updateP.then(function (text) {
 			// 统计需要更新的插件
 			var updatePlugins = JSON.parse(text);
-            console.log({ updatePlugins });
-			for (var len=plugins.length, i=0; i<len; i++) {
-				var title = plugins[i];
+			for (var title of plugins) {
 				var lastestVersion = updatePlugins[title]; // [version, coreVersion]
 				if (lastestVersion === undefined) continue; // 不存在该插件
 				if (lastestVersion[1] && $tw.utils.compareVersions($tw.version, lastestVersion[1]) < 0) continue; // 插件兼容性检查
@@ -106,6 +104,7 @@ exports.startup = function () {
 				t.push(title);
 			}
 			if (t.length > 0) {
+                console.log(t);
 				// 暂时修改通知停留时间为 10s
 				var tt = $tw.config.preferences.notificationDuration;
 				$tw.config.preferences.notificationDuration = 10_000;
