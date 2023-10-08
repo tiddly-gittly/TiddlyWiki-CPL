@@ -57,7 +57,11 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
         `准备导入 ${pluginsJson.length} 个插件  -  Importing ${pluginsJson.length} plugins...`,
       ),
     );
-    const $tw = tiddlywiki();
+    const $tw = tiddlywiki(
+      process.env.GITHUB_ACTIONS === 'true'
+        ? [{ title: '$:/status/UserName', text: 'GitHub Action' }]
+        : [],
+    );
     for (const plugin of pluginsJson) {
       const { title } = plugin;
       if (!title || title.trim() === '') {
