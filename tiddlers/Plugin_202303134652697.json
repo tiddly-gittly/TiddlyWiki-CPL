@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "[[Github|https://github.com/EvidentlyCube/TW5-PluginShowcase/tree/main/plugins/EvidentlyCube/TW5-TaskList]]\n\n----\n\n! Features\n\nA very powerful Task List/Todo plugin where you can customize almost any aspect of it:\n* Define your own fields\n** Simple text input fields\n** Select powered by Data tiddlers or list fields\n* How the list items are displayed\n* Sorting\n* CSS class applied to each element\n\nAdditionally you can make it so that each task list item has custom tags or fields added on save for maximum power.\n\n''To use'' just create a new tiddler with the tag `TaskList` and use the built-in builder.",
-        "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%2524%253A%252Fplugins%252FEvidentlyCube%252FTaskList.json",
+        "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%24%3A%2Fplugins%2FEvidentlyCube%2FTaskList.json",
         "cpl.title": "$:/plugins/EvidentlyCube/TaskList",
         "cpl.author": "Maurycy Zarzycki",
         "cpl.name": "Task List",

@@ -4,7 +4,7 @@
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "; Timelines\nA chronological arrangement of events in the order of their occurrence.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Timelines/\n* Code: https://github.com/kookma/TW-Timelines\n",
-        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftimelines.json",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%24%3A%2Fplugins%2Fkookma%2Ftimelines.json",
         "cpl.title": "$:/plugins/kookma/timelines",
         "cpl.author": "Mohammad Rahmani",
         "cpl.name": "Timelines",

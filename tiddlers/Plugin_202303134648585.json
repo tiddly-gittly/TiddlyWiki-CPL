@@ -8,7 +8,7 @@
         "modifier": "林一二",
         "type": "text/vnd.tiddlywiki",
         "cpl.readme": "[[Github|https://github.com/EvidentlyCube/TW5-PluginShowcase/tree/main/plugins/EvidentlyCube/TW5-ExtraFilters]]\n\n----\n\n! Features\n\nA collection of awesome filters. The documentation for the filters is available on [[Evidently Cube Plugin Showcase|https://evidentlycube.github.io/TW5-PluginShowcase/#Extra%20Operators]].",
-        "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%2524%253A%252Fplugins%252FEvidentlyCube%252FExtraOperators.json",
+        "cpl.uri": "https://evidentlycube.github.io/TW5-PluginShowcase/recipes/library/tiddlers/%24%3A%2Fplugins%2FEvidentlyCube%2FExtraOperators.json",
         "cpl.title": "$:/plugins/EvidentlyCube/ExtraOperators",
         "cpl.author": "Maurycy Zarzycki",
         "cpl.name": "Extra Operators",
