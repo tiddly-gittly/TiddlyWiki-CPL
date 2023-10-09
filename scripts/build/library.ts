@@ -109,9 +109,11 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           copyFileSync(downloadFileMap[url.href], filePath);
         } else {
           try {
-            shell(`wget "${url.href}" --non-verbose --force-directories --no-check-certificate -O "${filePath}"`);
+            shell(
+              `wget "${url.href}" --non-verbose --force-directories --no-check-certificate -O "${filePath}"`,
+            );
             downloadFileMap[url.href] = filePath;
-          } catch {
+          } catch (e) {
             console.error(chalk.red.bold(e));
           }
         }
