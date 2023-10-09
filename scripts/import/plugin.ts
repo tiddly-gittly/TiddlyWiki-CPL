@@ -86,7 +86,7 @@ export const importPlugin = async (
     // 文件不存在，尝试下载
     if (!pluginFile) {
       shellI(
-        `wget "${downloadUri}" --non-verbose --force-directories --no-check-certificate -O "${tmpTiddlerPath}"`,
+        `wget "${downloadUri}" --no-verbose --force-directories --no-check-certificate -O "${tmpTiddlerPath}"`,
       );
     }
     findFile();

@@ -110,7 +110,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
         } else {
           try {
             shell(
-              `wget "${url.href}" --non-verbose --force-directories --no-check-certificate -O "${filePath}"`,
+              `wget "${url.href}" --no-verbose --force-directories --no-check-certificate -O "${filePath}"`,
             );
             downloadFileMap[url.href] = filePath;
           } catch (e) {

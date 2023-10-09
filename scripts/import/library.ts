@@ -49,7 +49,7 @@ export const importLibrary = async (
     mkdirsForFileSync(tmpLibraryJsonPath);
     u.pathname = `${basePathname}/recipes/library/tiddlers.json`;
     shellI(
-      `wget "${u.href}" --non-verbose --force-directories --no-check-certificate -O "${tmpLibraryJsonPath}"`,
+      `wget "${u.href}" --no-verbose --force-directories --no-check-certificate -O "${tmpLibraryJsonPath}"`,
     );
     const pluginsJson = JSON.parse(
       readFileSync(tmpLibraryJsonPath, 'utf-8'),
