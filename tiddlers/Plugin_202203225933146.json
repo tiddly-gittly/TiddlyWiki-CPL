@@ -3,7 +3,7 @@
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "Markdown support for Relink.\n\n...or Relink support for Markdown.\n\nThis supplimental plugin allows ''text/x-markdown'' files to be relinked. This means markdown linking syntax like `[Caption](#MyTiddler)` is supported. If your markdown supports wikitext markup as well, this will handle that too.\n\nThis plugin is designed for `tiddlywiki/markdown`, but it will also work for `anstosa/tw5-markdown` and others.\n",
-        "cpl.uri": "https://flibbles.github.io/tw5-relink/library/recipes/library/tiddlers/%24%3A%2Fplugins%2Fflibbles%2Frelink-markdown.json",
+        "cpl.uri": "https://flibbles.github.io/tw5-relink/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fflibbles%252Frelink-markdown.json",
         "cpl.title": "$:/plugins/flibbles/relink-markdown",
         "cpl.author": "Flibbles",
         "cpl.name": "Relink Markdown",

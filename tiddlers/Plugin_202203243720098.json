@@ -3,7 +3,7 @@
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds a little link icon to every tab.\n\n''Important:'' This plugin changes the core tabs macro.\n\n! Link-to-Tabs Settings\n\n{{$:/core/ui/ControlPanel/Settings/edit-tabs}}",
-        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%24%3A%2Fplugins%2Fwikilabs%2Fedit-tabs.json",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fedit-tabs.json",
         "cpl.title": "$:/plugins/wikilabs/edit-tabs",
         "cpl.author": "Mario Pietsch",
         "cpl.name": "Edit Tabs",

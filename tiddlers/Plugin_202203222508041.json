@@ -4,7 +4,7 @@
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "; Pinboard\nPinboard creates a bulletin board (pinboard, pin board, noticeboard, or notice board in British English) which is a surface intended for the posting of public messages, for example, to announce events, or provide information.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Pinboard/\n* Code: https://github.com/kookma/TW-Pinboard\n",
-        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%24%3A%2Fplugins%2Fkookma%2Fpinboard.json",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fpinboard.json",
         "cpl.title": "$:/plugins/kookma/pinboard",
         "cpl.author": "Mohammad Rahmani",
         "cpl.description": "Create a board to pin messages and pictures",
