@@ -32,10 +32,9 @@
           var http = new XMLHttpRequest();
           http.open('GET', url, true);
           http.onreadystatechange = function () {
-            if (http.readyState == 4 && http.status == 200) {
-              callback(undefined, http.responseText);
-            } else {
-              callback(http.statusText || 'Not found', undefined);
+            if (http.readyState == 4) {
+              if (http.status == 200) callback(undefined, http.responseText);
+              else callback(http.statusText || (http.status + 'Not found'), undefined);
             }
           };
           http.send();
