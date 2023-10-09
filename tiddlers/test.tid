@@ -1,0 +1,41 @@
+created: 20231009065534242
+modified: 20231009074649936
+tags: 
+title: test
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
+<$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn">
+<$action-sendmessage $message="cpl-get-plugins-index" />
+{{$:/core/images/download-button}}
+&#32;
+<$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新 CPL]else[Refresh CPL]] :else[<chinese>match[yes]then[打开 CPL]else[Open CPL]] }}} />
+</$button>
+
+<!-- 错误提示 -->
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]!field:text[yes]]">
+<div style="background:#e91e3db0;color:white;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
+	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
+</div>
+</$list>
+
+<!-- 加载中提示 -->
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]]">
+<div style="background:#0005;color:#aaa;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/plugins-index]is[tiddler]]" variable="ready">
+<div>
+<$list filter="[{$:/temp/CPL-Repo/plugins-index}jsonindexes[]]" variable="plugin">
+
+* <$text text=<<plugin>>/>
+
+</$list>
+</div>
+</$list>
+
+</$list>

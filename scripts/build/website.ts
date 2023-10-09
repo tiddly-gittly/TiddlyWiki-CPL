@@ -103,6 +103,12 @@ export const buildOnlineHTML = async (
   const cplPlugin = buildCPLPlugin($tw);
   tiddlers.set(cplPlugin.title, cplPlugin);
 
+  // 停用自动更新
+  tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes', {
+    title: '$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes',
+    text: '-1',
+  } as any);
+
   // 构建
   console.log(
     chalk.bgCyan.black.bold('\nBuilding up TiddlyWiki online website...'),

@@ -63,7 +63,10 @@ export const mergePluginInfo = (
     'parent-plugin': infoTiddler['cpl.parent-plugin'] as string | undefined,
     'core-version': infoTiddler['cpl.core-version'] as string | undefined,
     'requires-reload': ifPluginRequiresReload(pluginTiddler),
-    category: (infoTiddler['cpl.category'] || 'Unknown') as string,
+    category:
+      infoTiddler['cpl.plugin-type'] === 'language'
+        ? 'Language'
+        : ((infoTiddler['cpl.category'] || 'Unknown') as string),
     tags: (infoTiddler['cpl.tags'] || '') as string,
     type: 'application/json',
   };

@@ -1,11 +1,11 @@
 [
   {
-    "name": "TiddlySeq (Sttot)",
-    "uri": "https://gk0wk.github.io/TiddlySeq/library"
-  },
-  {
     "name": "KooKma",
     "uri": "https://kookma.github.io/TW-PluginLibrary/library/index.html"
+  },
+  {
+    "name": "TiddlySeq (Sttot)",
+    "uri": "https://gk0wk.github.io/TiddlySeq/library"
   },
   {
     "name": "Wikilabs",

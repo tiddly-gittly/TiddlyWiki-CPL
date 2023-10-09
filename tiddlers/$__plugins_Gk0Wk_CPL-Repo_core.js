@@ -146,10 +146,12 @@ exports.startup = function () {
 	// 最初启用
 	autoTimeout = setTimeout(function () {
         var time = getAutoUpdateTime();
-		update();
-		autoUpdateInterval = setInterval(function () {
-			update();
-		}, time * 60_000);
+		if (time > 0) {
+            update();
+            autoUpdateInterval = setInterval(function () {
+                update();
+            }, time * 60_000);
+        }
 	}, 3_000);
 
 
@@ -180,7 +182,19 @@ exports.startup = function () {
         getPluginsIndexLock = true;
         $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/getting-plugins-index', text: 'yes' });
         cpl('Index').then(function (text) {
-            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugins-index', text: text });
+            var data = JSON.parse(text);
+            var pluginMap = {};
+            var categories = {};
+            for (var p of data) {
+                pluginMap[p.title] = p;
+                if (p.category && p.category !== 'Unknown') {
+                    if (categories[p.category] === undefined) categories[p.category] = [];
+                    categories[p.category].push(p.title);
+                }
+            }
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugins-index', text: JSON.stringify(pluginMap), type: 'application/json' });
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/categories', text: JSON.stringify(categories), type: 'application/json' });
+            $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/getting-plugins-index');
         }).catch(function (err) {
             console.error(err);
             $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/getting-plugins-index', text: err });
@@ -197,7 +211,8 @@ exports.startup = function () {
         queryPluginLocks.add(title);
         $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/querying-plugin', text: 'yes', 'plugin-title': title });
         cpl('Query', { plugin: title }).then(function (text) {
-            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugin-info/' + title, text: text });
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugin-info/' + title, text: text, type: 'application/json' });
+            $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/querying-plugin');
         }).catch(function (err) {
             console.error(err);
             $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/querying-plugin', text: err, 'plugin-title': title });

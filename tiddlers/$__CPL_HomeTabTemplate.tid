@@ -1,6 +1,6 @@
 code-body: yes
 created: 20231007150846632
-modified: 20231007163114179
+modified: 20231009075737169
 tags: TW5CPL
 title: $:/CPL/HomeTabTemplate
 type: text/vnd.tiddlywiki
@@ -16,7 +16,7 @@ type: text/vnd.tiddlywiki
 <!-- 呈现 -->
 <$set value={{$:/tmp/searchplugin/input!!text}} name="search">
 <div style="margin-top: 10px;display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
-<$list filter="[<search>trim[]length[]!compare:integer:gteq[3]] :then[all[tiddlers]tag[$:/tags/PluginWiki]!is[draft]shuffle[12]] :else[all[tiddlers]tag[$:/tags/PluginWiki]!is[draft]search:cpl.title,cpl.name,cpl.author<search>]" variable="plugin">
+<$list filter="[<search>trim[]length[]!compare:integer:gteq[3]] :then[all[tiddlers]tag[$:/tags/PluginWiki]!field:cpl.category[Language]!field:cpl.plugin-type[language]!is[draft]shuffle[12]] :else[all[tiddlers]tag[$:/tags/PluginWiki]!is[draft]search:cpl.title,cpl.name,cpl.author<search>]" variable="plugin">
 <$macrocall $name="plugin-item" title=<<plugin>> />
 </$list>
 </div>
@@ -24,8 +24,15 @@ type: text/vnd.tiddlywiki
 </$list>
 <$list filter="[<currentTab>!match[Home]]">
 <div style="margin-top: 10px;display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px;">
+<$list filter="[<currentTab>match[Language]]">
+<$list filter="[all[tiddlers]tag[$:/tags/PluginWiki]field:cpl.category<currentTab>] [all[tiddlers]tag[$:/tags/PluginWiki]field:cpl.plugin-type[language]] +[unique[]]" variable="plugin">
+<$macrocall $name="plugin-item" title=<<plugin>> />
+</$list>
+</$list>
+<$list filter="[<currentTab>!match[Language]]">
 <$list filter="[all[tiddlers]tag[$:/tags/PluginWiki]field:cpl.category<currentTab>]" variable="plugin">
 <$macrocall $name="plugin-item" title=<<plugin>> />
+</$list>
 </$list>
 </div>
 </$list>
