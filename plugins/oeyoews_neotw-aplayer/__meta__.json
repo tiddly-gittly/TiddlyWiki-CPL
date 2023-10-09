@@ -1,1 +1,1 @@
-{"latest":"0.0.1","versions":["0.0.1"]}
+{"title":"$:/plugins/oeyoews/neotw-aplayer","author":"oeyoews","name":"Neotw Aplayer","description":"Neotw Aplayer","readme":"<div class=\"prose max-w-none prose-indigo\">\n\n@[toc]\n\n## Aplayer\n\n<$aplayer />\n\n<div>\n","version":"0.0.1","plugin-type":"plugin","dependents":"$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus","core-version":">=5.2.7","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.0.1","versions":["0.0.1"]}

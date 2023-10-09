@@ -1,1 +1,1 @@
-{"latest":"0.0.1","versions":["0.0.1"]}
+{"title":"$:/plugins/oeyoews/tiddlywiki-keyboard-hint","author":"oeyoews","name":"Tiddlywiki Keyboard Hint","description":"Tiddlywiki Keyboard Hint","readme":"!! Tiddlywiki Keyboard Hint\n\n* if your computer installed some vim extensions, such as surfing-keys or vimium, this plugin maybe not work\nsites, this plugin will be not work normally\n","version":"0.0.1","plugin-type":"plugin","core-version":">=5.2.5","requires-reload":false,"category":"Unknown","type":"application/json","latest":"0.0.1","versions":["0.0.1"]}
