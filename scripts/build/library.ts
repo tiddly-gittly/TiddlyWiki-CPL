@@ -1,3 +1,5 @@
+/* eslint-disable max-depth */
+/* eslint-disable complexity */
 import { URL } from 'url';
 import { resolve, extname } from 'path';
 import {
@@ -97,20 +99,8 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           );
           continue;
         }
-        // 尝试从缓存中加载
         const formatedTitle = formatTitle(title_);
         const filePath = resolve(tmpDir, `${formatedTitle}${ext}`);
-        const cachePluginFolderPath = resolve(cachePluginsDir, formatedTitle);
-        const latestCachePluginPath = resolve(
-          cachePluginFolderPath,
-          'latest.json',
-        );
-        if (
-          existsSync(latestCachePluginPath) &&
-          statSync(latestCachePluginPath).isFile()
-        ) {
-          copyFileSync(latestCachePluginPath, filePath);
-        }
 
         // 下载
         console.log(chalk.cyan(`  Downloading ${chalk.bold(title_)}...`));
@@ -118,9 +108,29 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           // 这种情况是，一些作者直接将 wiki 的 HTML 上传，里面有很多插件
           copyFileSync(downloadFileMap[url.href], filePath);
         } else {
-          shell(`wget "${url.href}" --no-check-certificate -O "${filePath}"`);
-          downloadFileMap[url.href] = filePath;
+          try {
+            shell(`wget "${url.href}" --non-verbose --force-directories --no-check-certificate -O "${filePath}"`);
+            downloadFileMap[url.href] = filePath;
+          } catch {
+            console.error(chalk.red.bold(e));
+          }
         }
+
+        // 尝试从缓存中加载
+        if (cache && existsSync(filePath) && statSync(filePath).isFile()) {
+          const cachePluginFolderPath = resolve(cachePluginsDir, formatedTitle);
+          const latestCachePluginPath = resolve(
+            cachePluginFolderPath,
+            'latest.json',
+          );
+          if (
+            existsSync(latestCachePluginPath) &&
+            statSync(latestCachePluginPath).isFile()
+          ) {
+            copyFileSync(latestCachePluginPath, filePath);
+          }
+        }
+
         cplMetas.push(tiddler);
         if (process.env.NODE_ENV === 'development') {
           // only download one plugin for test on development.

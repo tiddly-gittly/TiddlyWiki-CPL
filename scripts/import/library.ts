@@ -24,7 +24,11 @@ const forbiddenOfficialLibraryPlugins = [
  *  yes: 是否自动确认
  * @returns
  */
-export const importLibrary = async (uri: string, options: IImportOption, $tw = tiddlywiki()) => {
+export const importLibrary = async (
+  uri: string,
+  options: IImportOption,
+  $tw = tiddlywiki(),
+) => {
   const tmpDir = getTmpDir();
 
   try {
@@ -45,7 +49,7 @@ export const importLibrary = async (uri: string, options: IImportOption, $tw = t
     mkdirsForFileSync(tmpLibraryJsonPath);
     u.pathname = `${basePathname}/recipes/library/tiddlers.json`;
     shellI(
-      `wget "${u.href}" --no-check-certificate -O "${tmpLibraryJsonPath}"`,
+      `wget "${u.href}" --non-verbose --force-directories --no-check-certificate -O "${tmpLibraryJsonPath}"`,
     );
     const pluginsJson = JSON.parse(
       readFileSync(tmpLibraryJsonPath, 'utf-8'),
