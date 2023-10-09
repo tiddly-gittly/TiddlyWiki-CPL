@@ -1,8 +1,10 @@
 created: 20231009065534242
-modified: 20231009074649936
+modified: 20231009145425586
 tags: 
-title: test
+title: $:/plugins/Gk0Wk/CPL-Repo/panel-body
 type: text/vnd.tiddlywiki
+
+\import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 
@@ -12,6 +14,8 @@ type: text/vnd.tiddlywiki
 &#32;
 <$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新 CPL]else[Refresh CPL]] :else[<chinese>match[yes]then[打开 CPL]else[Open CPL]] }}} />
 </$button>
+
+<span style="opacity:0.5;"><$text text={{{ [<chinese>match[yes]then[当前镜像]else[Current mirror]] }}}/>: <$text text={{{ [{$:/plugins/Gk0Wk/CPL-Repo/core-entry}!is[blank]else[https://tiddly-gittly.github.io/TiddlyWiki-CPL/library/all]] }}} /></span>
 
 <!-- 错误提示 -->
 <$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]!field:text[yes]]">
@@ -30,10 +34,8 @@ type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/temp/CPL-Repo/plugins-index]is[tiddler]]" variable="ready">
 <div>
-<$list filter="[{$:/temp/CPL-Repo/plugins-index}jsonindexes[]]" variable="plugin">
-
-* <$text text=<<plugin>>/>
-
+<$list filter="[{$:/temp/CPL-Repo/plugins-index}jsonindexes[]!prefix[$:/language]first[10]]" variable="plugin">
+<$macrocall $name="plugin-list-item" json={{{ [{$:/temp/CPL-Repo/plugins-index}jsonextract<plugin>] }}} field="gallery-home" class="cpl-plugin-info-box" />
 </$list>
 </div>
 </$list>

@@ -1,0 +1,8 @@
+code-body: yes
+created: 20231009195600567
+modified: 20231009195712140
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/install-plugin-query-notify
+type: text/vnd.tiddlywiki
+
+<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[获取安装信息中，请稍候]else[Getting installation information, please wait]] }}} />

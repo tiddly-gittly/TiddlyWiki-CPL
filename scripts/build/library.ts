@@ -148,7 +148,6 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     }
 
     // 接下来从tmpDir处理所有的插件
-    const pluginCallbackInfo: Record<string, string> = {};
     const pluginTitlePathMap: Record<string, string> = {};
     const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] =
       [];
@@ -228,16 +227,17 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           meta.versions = Array.from(versions);
           writeFileSync(
             metaPath,
-            JSON.stringify({ ...newInfoTiddler, ...meta }),
+            JSON.stringify({
+              ...newInfoTiddler,
+              latest: meta.latest,
+              versions,
+            }),
           );
           pluginTitlePathMap[newInfoTiddler.title] = formatedTitle;
         }
 
         // 登记插件
         pluginInfos.push(newInfoTiddler);
-        pluginCallbackInfo[newInfoTiddler.title] = `${
-          newInfoTiddler['requires-reload'] === true ? 'true' : 'false'
-        }|${newInfoTiddler.version}`;
       } catch (e: any) {
         console.error(`  ${chalk.red(e)}`);
       }
@@ -275,9 +275,6 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       category: 'Functional',
       tags: '',
     });
-    pluginCallbackInfo[
-      '$:/plugins/Gk0Wk/CPL-Repo'
-    ] = `false|${$tw.wiki.getTiddlerText('CPL-Repo-Version')}`;
 
     if (cache) {
       // 生成插件索引
@@ -295,6 +292,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
             type: i['plugin-type'],
             version: i.version,
             core: i['core-version'],
+            description: i.description,
           })),
         ),
       );

@@ -5,4 +5,4 @@ tags: TW5CPL
 title: $:/CPL/HomeTabButtonTemplate
 type: text/vnd.tiddlywiki
 
-<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[<currentTab>addprefix[$:/CPL/PluginCategory/]get[text]else[首页]] :else[<currentTab>else[Unknown]else[Home]] }}} />
+<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[<currentTab>addprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]get[text]else[首页]] :else[<currentTab>else[Unknown]else[Home]] }}} />

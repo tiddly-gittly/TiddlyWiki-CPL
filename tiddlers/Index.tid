@@ -26,7 +26,7 @@ type: text/vnd.tiddlywiki
 <div class="tc-more-sidebar home-tabbar">
     <$macrocall
         $name="tabs"
-        tabsList="[[Home]] [prefix[$:/CPL/PluginCategory/]removeprefix[$:/CPL/PluginCategory/]] -[[Unknown]]"
+        tabsList="[[Home]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]removeprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]] -[[Unknown]]"
         default="Home"
         class="tc-vertical"
         template="$:/CPL/HomeTabTemplate"

@@ -21,7 +21,7 @@ type: text/vnd.tiddlywiki
 |!标题 |<$edit-text field="cpl.title" tag=input placeholder="插件的标题，以$:/plugins/开头" }}}/> |
 |!版本 |<$edit-text field="cpl.version" tag=input placeholder="当插件文件不包含版本号时，会用此版本号替代"/> |
 |!名称 |<$edit-text field="cpl.name" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[1]addprefix[可能是：]] }}}/> |
-|!类别 |<$select field="cpl.category" default="Unknown"><$list filter="[prefix[$:/CPL/PluginCategory/]]" variable="category"><option value={{{ [<category>removeprefix[$:/CPL/PluginCategory/]] }}}><$text text={{{ [<category>get[text]] }}}/></option></$list></$select> |
+|!类别 |<$select field="cpl.category" default="Unknown"><$list filter="[prefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]]" variable="category"><option value={{{ [<category>removeprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]] }}}><$text text={{{ [<category>get[text]] }}}/></option></$list></$select> |
 |!简介 |<$edit-text field="cpl.description" tag=textarea class="tc-edit-texteditor" placeholder="为插件添加简短的介绍"/> |
 |!作者 |<$edit-text field="cpl.author" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[2]first[1]addprefix[可能是：]] }}}/> |
 |!URI |<$edit-text field="cpl.uri" tag=textarea placeholder={{{ [<currentTiddler>get[cpl.title]removeprefix[$:/plugins/]search-replace:gim:regexp<illegalcharexp>,[_]encodeuricomponent[]addprefix[从哪里可以找到这个插件(.json, .tid 或者 .html等)。如果插件的json文件在网络上，请填写下载地址；如果插件没有下载地址，需要手动下载或者编译，请将json插件文件放在本项目的本地文件夹的plugin_files/路径下，并命名为 ]addsuffix[.json]] }}}/> |
@@ -40,7 +40,7 @@ type: text/vnd.tiddlywiki
 |!Title |<$edit-text field="cpl.title" tag=input placeholder="Title of the plugin, starting with $:/plugins/" }}}/> |
 |!Version |<$edit-text field="cpl.version" tag=input placeholder="When the plugin file does not contain a version number, this version number will be used instead."/> |
 |!Name |<$edit-text field="cpl.name" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[1]addprefix[Shall be: ]] }}}/> |
-|!Category |<$select field="cpl.category" default="Unknown"><$list filter="[prefix[$:/CPL/PluginCategory/]removeprefix[$:/CPL/PluginCategory/]]" variable="category"><option value=<<category>>><$text text=<<category>>/></option></$list></$select> |
+|!Category |<$select field="cpl.category" default="Unknown"><$list filter="[prefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]removeprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]]" variable="category"><option value=<<category>>><$text text=<<category>>/></option></$list></$select> |
 |!Description |<$edit-text field="cpl.description" tag=textarea class="tc-edit-texteditor" placeholder="Add brief description for this plugin."/> |
 |!Author |<$edit-text field="cpl.author" tag=input placeholder={{{ [<currentTiddler>get[cpl.title]split[/]last[2]first[1]addprefix[Shall be: ]] }}}/> |
 |!URI |<$edit-text field="cpl.uri" tag=textarea placeholder={{{ [<currentTiddler>get[cpl.title]removeprefix[$:/plugins/]search-replace:gim:regexp<illegalcharexp>,[_]encodeuricomponent[]addprefix[Where to find this plugin(.json, .tid or .html, etc.). Fill with uri if json file can be download from internet. If the plugin does not have a download address and needs to be downloaded or compiled manually, please place the json plugin file under the plugin_files/ path in the local folder of this project and name it to ]addsuffix[.json]] }}}/> |

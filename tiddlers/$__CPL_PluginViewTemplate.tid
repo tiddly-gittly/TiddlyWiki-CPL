@@ -13,7 +13,7 @@ type: text/vnd.tiddlywiki
 <<<
 @@line-height:2rem;
 <$text text={{{ [<chinese>match[yes]then[作者]else[Author]] }}} />: <$text text={{!!cpl.author}}/><br/>
-<$text text={{{ [<chinese>match[yes]] :then[all[current]get[cpl.category]else[Unknown]addprefix[$:/CPL/PluginCategory/]get[text]addprefix[类别: ]] :else[all[current]get[cpl.category]else[Unknown]addprefix[Category: ]] }}}/><br/>
+<$text text={{{ [<chinese>match[yes]] :then[all[current]get[cpl.category]else[Unknown]addprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]get[text]addprefix[类别: ]] :else[all[current]get[cpl.category]else[Unknown]addprefix[Category: ]] }}}/><br/>
 <$list filter="[<currentTiddler>get[cpl.documentation]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/home-button}} <$text text={{{ [<chinese>match[yes]then[文档]else[Documentation]] }}} />:&nbsp;<$text text=<<url>>/></$button><br/></$list>
 <$list filter="[<currentTiddler>get[cpl.source]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text={{{ [<chinese>match[yes]then[源码]else[Source Code]] }}} />:&nbsp;<$text text=<<url>>/></$button><br/></$list>
 @@
@@ -23,15 +23,15 @@ type: text/vnd.tiddlywiki
 <$transclude tiddler=<<currentTiddler>> field="cpl.readme" mode="block"/>
 
 <div
-    style="width: 100%; 
-           padding: 0px 0 10px 30px; 
-           background: #0003; 
-           opacity: 0.8; 
-           font-size: 80%; 
-           border-radius: 6px; 
-           overflow: hidden; 
-           margin: 40px 0 0 0; 
-           border-top: 1px #03A9F4 dashed; 
+    style="width: 100%;
+           padding: 0px 0 10px 30px;
+           background: #0003;
+           opacity: 0.8;
+           font-size: 80%;
+           border-radius: 6px;
+           overflow: hidden;
+           margin: 40px 0 0 0;
+           border-top: 1px #03A9F4 dashed;
            border-bottom: 1px #FFC107 dashed;">
     <h2 style="border-left: 3px #e91e63 solid; padding-left: 4px;">
         <$text text={{{ [<chinese>match[yes]then[特别鸣谢]else[Specially thanks to]] }}}/>
