@@ -1,14 +1,14 @@
 cpl.author: Gk0Wk
-cpl.dependents: 
+cpl.dependents:
 cpl.description: Add notion-like backlink button under tiddler's subtitle
 cpl.documentation: https://gk0wk.github.io/TiddlySeq/#Notion-like%20backlinks%20box
 cpl.name: Notion Page(Backlink)
 cpl.plugin-type: plugin
-cpl.readme: 
+cpl.readme:
 cpl.source: https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/notionpage-backlink
 cpl.title: $:/plugins/Gk0Wk/notionpage-backlink
-cpl.uri: https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%252524%25253A%25252Fplugins%25252FGk0Wk%25252Fnotionpage-backlink.json
-cpl.version: 
+cpl.uri: https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fnotionpage-backlink.json
+cpl.version:
 created: 20211204083538367
 creator: Sttot
 icon: 🔗

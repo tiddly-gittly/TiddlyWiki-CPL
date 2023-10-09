@@ -38,6 +38,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
   const cachePluginsDir = resolve(cacheDir, 'plugins');
   const tmpDir = getTmpDir(); // 临时的插件目录
   const pluginsDir = resolve(distDir, 'plugins'); // 插件目标目录
+  const failedPlugins: Record<string, string> = {};
   try {
     mkdirsForFileSync(resolve(tmpDir, 'foo'));
     mkdirsForFileSync(resolve(pluginsDir, 'foo'));
@@ -60,7 +61,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     // 遍历、下载所有插件
     const downloadFileMap: Record<string, string> = {};
     const pluginInfoTiddlerTitles = $tw.wiki.filterTiddlers(
-      '[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]]',
+      '[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]has[cpl.title]sort[cpl.title]]',
     );
     const cplMetas: ITiddlerFields[] = [];
     console.log(chalk.bgCyan.black.bold('Downloading plugins...'));
@@ -86,6 +87,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           console.warn(
             chalk.yellow(`  ${title_} missed plugin uri, skip this plugin.`),
           );
+          failedPlugins[title_] = 'No uri';
           continue;
         }
         // 排除不受支持的格式
@@ -114,12 +116,13 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
             );
             downloadFileMap[url.href] = filePath;
           } catch (e) {
+            failedPlugins[title_] = `404 not found: ${url.href}`;
             console.error(chalk.red.bold(e));
           }
         }
 
         // 尝试从缓存中加载
-        if (cache && existsSync(filePath) && statSync(filePath).isFile()) {
+        if ((cache && !existsSync(filePath)) || !statSync(filePath).isFile()) {
           const cachePluginFolderPath = resolve(cachePluginsDir, formatedTitle);
           const latestCachePluginPath = resolve(
             cachePluginFolderPath,
@@ -130,6 +133,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
             statSync(latestCachePluginPath).isFile()
           ) {
             copyFileSync(latestCachePluginPath, filePath);
+            console.log(``);
           }
         }
 
@@ -329,6 +333,12 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     rmSync(tmpDir, { recursive: true, force: true });
 
     console.log(chalk.green.bold('CPL generated'));
+
+    console.log('\n\n');
+    console.log(chalk.bgRed.black.bold('Failed plugins'));
+    for (const t in failedPlugins) {
+      console.log(`${t}: ${failedPlugins[t]}`);
+    }
   } catch (e: any) {
     rmSync(tmpDir, { recursive: true, force: true });
     throw e;
