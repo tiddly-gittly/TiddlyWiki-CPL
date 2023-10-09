@@ -24,7 +24,7 @@ const forbiddenOfficialLibraryPlugins = [
  *  yes: 是否自动确认
  * @returns
  */
-export const importLibrary = async (uri: string, options: IImportOption) => {
+export const importLibrary = async (uri: string, options: IImportOption, $tw = tiddlywiki()) => {
   const tmpDir = getTmpDir();
 
   try {
@@ -57,11 +57,6 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
         `准备导入 ${pluginsJson.length} 个插件  -  Importing ${pluginsJson.length} plugins...`,
       ),
     );
-    const $tw = tiddlywiki(
-      process.env.GITHUB_ACTIONS === 'true'
-        ? [{ title: '$:/status/UserName', text: 'GitHub Action' }]
-        : [],
-    );
     for (const plugin of pluginsJson) {
       const { title } = plugin;
       if (!title || title.trim() === '') {
@@ -79,11 +74,11 @@ export const importLibrary = async (uri: string, options: IImportOption) => {
         encodeURIComponent(plugin.title),
       )}.json`;
       const url1 = u.href;
-      u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
-        plugin.title,
-      )}.json`;
-      const url2 = u.href;
-      await importPlugin(url2, plugin.title, options, $tw, url1);
+      //   u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
+      //     plugin.title,
+      //   )}.json`;
+      //   const url2 = u.href;
+      await importPlugin(url1, plugin.title, options, $tw);
     }
   } catch (e) {
     console.error(chalk.red.bold(e));

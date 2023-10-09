@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { program } from 'commander';
+import { tiddlywiki } from './utils';
 import { importPlugin } from './import/plugin';
 import { importLibrary } from './import/library';
 import { buildLibrary } from './build/library';
@@ -84,10 +85,15 @@ importCommand
           `即将更新 ${registeredLibraries.length} 个插件源  Importing ${registeredLibraries.length} libraries...`,
         ),
       );
+      const $tw = tiddlywiki(
+        process.env.GITHUB_ACTIONS === 'true'
+          ? [{ title: '$:/status/UserName', text: 'GitHub Action' }]
+          : [],
+      );
       for (const { uri, name } of registeredLibraries) {
         console.log(chalk.cyan(`导入 Importing  ${chalk.bold(name)}...`));
         try {
-          await importLibrary(uri, { yes: true, includeOfficial: false });
+          await importLibrary(uri, { yes: true, includeOfficial: false }, $tw);
         } catch (e: any) {
           console.log(chalk.red.bold(`失败 Error: ${e}`));
         }
@@ -100,11 +106,20 @@ importCommand
         .toString()
         .trim();
       console.log(`版本(Version): ${chalk.green(latestVersion)}`);
+      const $tw = tiddlywiki(
+        process.env.GITHUB_ACTIONS === 'true'
+          ? [{ title: '$:/status/UserName', text: 'GitHub Action' }]
+          : [],
+      );
       // https://tiddlywiki.com/library/v5.2.7
-      await importLibrary(`https://tiddlywiki.com/library/${latestVersion}`, {
-        yes: true,
-        includeOfficial: official,
-      });
+      await importLibrary(
+        `https://tiddlywiki.com/library/${latestVersion}`,
+        {
+          yes: true,
+          includeOfficial: official,
+        },
+        $tw,
+      );
     } else {
       const { url } = await inquirer.prompt([
         {
