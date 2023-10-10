@@ -6,7 +6,7 @@ cpl.plugin-type: plugin
 cpl.readme: 
 cpl.source: http://ooktech.com/iconmenus/
 cpl.title: $:/plugins/inmysocks/IconMenus
-cpl.uri: https://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FIconMenus.json
+cpl.uri: http://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FIconMenus.json
 tags: $:/tags/PluginWiki
 title: Plugin_202203220359450
 type: application/json

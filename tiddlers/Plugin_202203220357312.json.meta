@@ -6,7 +6,7 @@ cpl.plugin-type: plugin
 cpl.readme: 
 cpl.source: https://github.com/inmysocks/TW5-contactsdb
 cpl.title: $:/plugins/inmysocks/Contacts
-cpl.uri: https://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FContacts.json
+cpl.uri: http://ooktech.com/jed/pluginlibrary/stable/recipes/library/tiddlers/%2524%253A%252Fplugins%252Finmysocks%252FContacts.json
 tags: $:/tags/PluginWiki
 title: Plugin_202203220357312
 type: application/json
