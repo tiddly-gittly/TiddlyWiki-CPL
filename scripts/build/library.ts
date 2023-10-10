@@ -1,7 +1,7 @@
 /* eslint-disable max-depth */
 /* eslint-disable complexity */
 import { URL } from 'url';
-import { resolve, extname } from 'path';
+import { resolve, extname, basename } from 'path';
 import {
   readdirSync,
   copyFileSync,
@@ -217,20 +217,19 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           mkdirsForFileSync(metaPath);
           writeFileSync(latestCachePluginPath, pluginJson);
           writeFileSync(currentCachePluginPath, pluginJson);
-          let meta: Record<string, any> = {};
-          try {
-            meta = JSON.parse(readFileSync(metaPath, 'utf-8'));
-          } catch {}
-          meta.latest = pluginTiddler.version;
-          const versions = new Set(meta.versions ?? []);
-          versions.add(pluginTiddler.version);
-          meta.versions = Array.from(versions);
+          const versions = new Set<string>(
+            readdirSync(cachePluginFolderPath)
+              .filter(t => t.endsWith('.json'))
+              .filter(t => statSync(resolve(cachePluginFolderPath, t)).isFile())
+              .filter(t => t !== 'latest.json' && t !== '__meta__.json')
+              .map(t => t.replace(/\.json$/, '')),
+          );
           writeFileSync(
             metaPath,
             JSON.stringify({
               ...newInfoTiddler,
-              latest: meta.latest,
-              versions,
+              latest: pluginTiddler.version,
+              versions: Array.from(versions),
             }),
           );
           pluginTitlePathMap[newInfoTiddler.title] = formatedTitle;
@@ -239,7 +238,11 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
         // 登记插件
         pluginInfos.push(newInfoTiddler);
       } catch (e: any) {
-        console.error(`  ${chalk.red(e)}`);
+        const t = ((e?.stack ?? String(e)) as string)
+          .split('\n')
+          .map(t => `  ${t}`)
+          .join('\n');
+        console.error(chalk.red(t));
       }
     }
 
