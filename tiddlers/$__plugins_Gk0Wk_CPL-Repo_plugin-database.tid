@@ -1,6 +1,6 @@
 caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[插件数据库]else[Plugin Database]] }}} />
 created: 20231009065534242
-modified: 20231010200008748
+modified: 20231010201814330
 tags: 
 title: $:/plugins/Gk0Wk/CPL-Repo/plugin-database
 type: text/vnd.tiddlywiki
@@ -11,10 +11,10 @@ type: text/vnd.tiddlywiki
 <$action-sendmessage $message="cpl-get-plugins-index" />
 {{$:/core/images/download-button}}
 &#32;
-<$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新 CPL]else[Refresh CPL]] :else[<chinese>match[yes]then[打开 CPL]else[Open CPL]] }}} />
+<$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />
 </$button>
 
-<span style="opacity:0.5;"><$text text={{{ [<chinese>match[yes]then[当前镜像]else[Current mirror]] }}}/>: <$text text={{{ [{$:/plugins/Gk0Wk/CPL-Repo/core-entry}!is[blank]else[https://tiddly-gittly.github.io/TiddlyWiki-CPL/library/all]] }}} /></span>
+<span style="opacity:0.5;"><$text text={{{ [<chinese>match[yes]then[当前镜像]else[Current mirror]] }}}/>: <$text text={{{ [{$:/plugins/Gk0Wk/CPL-Repo/config/current-repo}!is[blank]else[https://tiddly-gittly.github.io/TiddlyWiki-CPL/library/all]] }}} /></span>
 
 <!-- 错误提示 -->
 <$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]!field:text[yes]]">

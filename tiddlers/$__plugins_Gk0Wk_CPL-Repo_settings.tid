@@ -1,0 +1,75 @@
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[设置]else[Settings]] }}}/>
+created: 20231010201844662
+modified: 20231010204310339
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL 设置]else[CPL Settings]] }}}/>
+tags:
+title: $:/plugins/Gk0Wk/CPL-Repo/settings
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
+<$list filter="[<chinese>match[yes]]">
+
+在该页面内您可以对 CPL 插件的行为进行设定。
+
+; CPL 数据库镜像入口 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
+</$list>
+</$select>
+
+<<<
+当 CPL 获取数据经常失败时，你可以尝试切换到其他镜像，目前国内推荐使用 netlify 镜像，
+
+欢迎各位大佬部署国内镜像，详情请咨询QQ交流群或在[[GitHub Issue|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]提问
+
+你可以手动更改数据库镜像入口：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-repo]]
+<<<
+
+; 自动更新检查间隔 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes" tag="input" default="-1" /> (分钟/次)
+
+<<<
+自动更新检查会在 Wiki 刚打开时进行，并每隔指定间隔进行一次检查
+
+显然自动检查需要联网，每次所消耗的流量很小，大概10KB。如果发现有插件可以更新会在右上角弹窗提醒。
+
+当值小于等于0，则关闭自动更新，也包括刚打开 Wiki 的那一次。
+
+关闭后可以手动在 [[$:/ControlPanel]] 的 [CPL] 中进行检查。
+<<<
+
+</$list>
+
+<$list filter="[<chinese>match[no]]">
+
+In this page you can set the behavior of the CPL plugin.
+
+; CPL Database Mirror Entry <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
+</$list>
+</$select>
+
+<<<
+When the CPL fails to fetch the data often, you can try to switch to another mirror.
+
+If you'd like to deploy your own mirrors, feel free to ask questions in the [[GitHub Issue|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]!
+
+You can manually change the database mirror entry: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-repo]]
+<<<
+
+; Automatic update of check intervals <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes" tag="input" default="-1" /> (minute(s) per time)
+
+<<<
+The automatic update check is performed when the Wiki is first opened, and at specified intervals
+
+Obviously auto-checking requires an internet connection and consumes very little traffic each time, about 10KB. If a plugin is found to be updatable, a pop-up window will alert you in the upper right corner.
+
+When the value is less than or equal to 0, auto-update is turned off, also when the Wiki is just opened.
+
+After closing it can be checked manually in [CPL] of [[$:/ControlPanel]].
+<<<
+
+</$list>
+
+</$list>

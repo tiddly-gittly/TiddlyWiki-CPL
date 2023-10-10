@@ -1,7 +1,7 @@
 caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[标签]else[Tags]] }}} />
 created: 20231010182024353
 modified: 20231010200036469
-tags: 
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/tags-gallery
 type: text/vnd.tiddlywiki
 
@@ -25,7 +25,7 @@ type: text/vnd.tiddlywiki
 </span>
 \end
 
-<$let bg={{{ [{$:/palette}getindex[tag-background]] }}} color={{{ [{$:/palette}getindex[foreground]] }}} saveTiddler="$:/temp/CPL-Repo/$:/temp/CPL-Repo/search-tag-input">
+<$let bg={{{ [{$:/palette}getindex[tag-background]] }}} color={{{ [{$:/palette}getindex[foreground]] }}} saveTiddler="$:/temp/CPL-Repo/search-tag-input">
 <!-- 展示待检索的标签，以及搜索按钮 -->
 <div style="width:100%;display:flex;backdrop-filter:contrast(1.3);">
     <div class="cpl-search-tags" style="flex-grow:1;width:0;display:flex;align-items:center;padding:4px 8px;flex-wrap:wrap;">
@@ -53,7 +53,7 @@ type: text/vnd.tiddlywiki
                 <$list filter="[{$:/temp/CPL-Repo/tags}jsonget[]search{$:/temp/CPL-Repo/add-search-tag-input}]" variable="tag">
                 <$button class="tc-btn-invisible" tag="a" tooltip={{$:/language/EditTemplate/Tags/Add/Button/Hint}}>
                     <$macrocall $name="tag-plain" text=<<tag>> icon="$:/core/images/tag-button" bg=<<bg>> color=<<color>> />
-                    <$action-listops $tiddler=<<saveTiddler>> $field="text" $subfilter="+[<tag>]"/>
+                    <$action-listops $tiddler=<<saveTiddler>> $field="text" $subfilter="[<tag>]"/>
                 </$button>
                 </$list>
             </div>
@@ -63,11 +63,11 @@ type: text/vnd.tiddlywiki
     <!-- 搜索按钮 -->
     <$button class="tc-primary-btn tc-btn-big-green cpl-plugin-search-go" disabled={{$:/temp/CPL-Repo/searching-plugin}}>
         <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[{$:/temp/CPL-Repo/searching-plugin}match[yes]then[搜索中...]else[搜索]] :else[{$:/temp/CPL-Repo/searching-plugin}match[yes]then[Searching...]else[Search]] }}} />
-        <$action-sendmessage 
+        <$action-sendmessage
             $message="cpl-search-plugins"
             mode="tags"
             text={{{ [<saveTiddler>get[text]] }}}
-            saveTo="$:/tmp/CPL-Repo/searchplugin-tags/result"
+            saveTo="$:/temp/CPL-Repo/searchplugin-tags/result"
         />
     </$button>
 </div>
@@ -76,10 +76,10 @@ type: text/vnd.tiddlywiki
 	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
 </div>
 </$list>
-<$list filter="[[$:/tmp/CPL-Repo/searchplugin-tags/result]is[tiddler]then[yes]else[no]]" variable="go">
+<$list filter="[[$:/temp/CPL-Repo/searchplugin-tags/result]is[tiddler]then[yes]else[no]]" variable="go">
 <!-- 有搜索结果 -->
 <$list filter="[<go>match[yes]]" variable="t">
-<<paged-plugin-list filter:"[{$:/tmp/CPL-Repo/searchplugin-tags/result}jsonget[]]" field:"tag-gallery" class1:"cpl-plugin-info-box" class2:"cpl-paged-plugin-list-control">>
+<<paged-plugin-list filter:"[{$:/temp/CPL-Repo/searchplugin-tags/result}jsonget[]]" field:"tag-gallery" class1:"cpl-plugin-info-box" class2:"cpl-paged-plugin-list-control">>
 </$list>
 <!-- 没有搜索结果，展示全部 -->
 <$list filter="[<go>match[no]]" variable="t">

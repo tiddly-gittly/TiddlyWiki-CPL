@@ -78,7 +78,7 @@ It is up to you to choose which plugins to install and select their versions. Th
 * Wiki 系统受损或数据丢失;
 * 插件内含恶意脚本的执行造成隐私泄露或系统损坏；
 
-CPL 接受恶意插件举报并将下架这类插件，但 CPL 不能保证其中收录的所有插件均安全可用。如您在安装后出现任何问题造成损失，CPL 无法负责。
+CPL [[接受恶意插件举报|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]并将下架这类插件，但 CPL 不能保证其中收录的所有插件均安全可用。如您在安装后出现任何问题造成损失，CPL 无法负责。
 
 @@background:#e91e3db0;color:white;padding:4px;''因此，在安装任何插件前，请备份您的Wiki！''@@
 
@@ -94,7 +94,7 @@ Note: Although the CPL has some rollback measures for failed installations, it i
 * Damage to the Wiki system or loss of data;
 * Privacy leakage or system damage caused by the execution of malicious scripts contained in the plugin;
 
-CPL accepts reports of malicious plugins and will take down such plugins, but CPL cannot guarantee that all plugins included are safe and available. However, CPL cannot guarantee that all plugins are safe and available. CPL cannot be held responsible for any damage caused by any problem that occurs after you have installed the plugin.
+CPL [[accepts reports of malicious plugins|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]] and will take down such plugins, but CPL cannot guarantee that all plugins included are safe and available. However, CPL cannot guarantee that all plugins are safe and available. CPL cannot be held responsible for any damage caused by any problem that occurs after you have installed the plugin.
 
 @@background:#e91e3db0;color:white;width:100%;padding:4px;''Therefore, please back up your wiki before installing any plugins!''@@
 

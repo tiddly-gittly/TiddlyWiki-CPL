@@ -1,0 +1,5 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/config/
+
+repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo
+current-repo: https://tw-cpl.netlify.app/repo
+popup-readme-at-startup-threshold: 1

@@ -1,0 +1,9 @@
+created: 20231010221500310
+modified: 20231010222514096
+tags: $:/tags/StartupAction/PostRender
+title: $:/plugins/Gk0WK/CPL-Repo/popup-readme-at-startup
+type: text/vnd.tiddlywiki
+
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup}!is[blank]else[0]compare:integer:lt{$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup-threshold}]">
+<$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0WK/CPL-Repo/popup-readme" />
+</$list>

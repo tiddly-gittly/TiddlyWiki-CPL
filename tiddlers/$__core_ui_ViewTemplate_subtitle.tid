@@ -1,5 +1,5 @@
 created: 20231006115812787
-modified: 20231008162447403
+modified: 20231010214115593
 tags: $:/tags/ViewTemplate TW5CPL
 title: $:/core/ui/ViewTemplate/subtitle
 type: text/vnd.tiddlywiki
@@ -35,8 +35,6 @@ type: text/vnd.tiddlywiki
 <$text text={{{ [{!!cpl.title}] }}} />
 <!-- 最新版本 -->
 &nbsp;&nbsp;&nbsp;<em style="font-weight: 800;"><$text text={{{ [<chinese>match[yes]then[最新版本: ]else[Latest version: ]] }}}/><$text text={{{ [{$:/temp/CPL/plugin-infos.json}jsonget{!!cpl.title}else{!!cpl.version}else[?]] }}}/></em>
-
-{{!!cpl.title}}
 
 <!-- 依赖插件 -->
 <$list filter="[enlist{!!cpl.dependents}] [<currentTiddler>get[cpl.parent-plugin]] +[!is[tiddler]limit[1]]" variable="ignore">

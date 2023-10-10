@@ -1,12 +1,17 @@
 code-body: yes
 created: 20231006080749205
-modified: 20231008161958625
+modified: 20231010213737515
 tags: TW5CPL
 title: $:/CPL/PluginViewTemplate
 type: text/vnd.tiddlywiki
 
 \import $:/CPL/PluginGalleryItem
 \import $:/plugins/Gk0Wk/notionpage-covericon/body
+\import $:/CPL/tag-picker
+
+<$list filter="[[IfEditorMode]get[text]match[yes]]" variable="edit">
+<$macrocall $name="cpl-tag-picker" title=<<currentTiddler>> tagField="cpl.tags"/>
+</$list>
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 

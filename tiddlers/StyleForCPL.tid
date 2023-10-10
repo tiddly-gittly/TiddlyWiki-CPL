@@ -58,3 +58,9 @@ type: text/vnd.tiddlywiki
 blockquote {
     border-left: 5px solid #84b9eea6 !important;
 }
+
+@media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
+  .tc-story-river {
+    padding-top: 0 !important;
+  }
+}

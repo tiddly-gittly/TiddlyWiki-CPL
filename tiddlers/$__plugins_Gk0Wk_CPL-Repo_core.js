@@ -13,7 +13,7 @@ exports.synchronous = true;
 var messagerPromise;
 var previousEntry;
 var cpl = function (type, payload) {
-	var entry = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/core-entry', 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo');
+	var entry = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo');
 	if (previousEntry !== entry && globalThis.__tiddlywiki_cpl__reset__ !== undefined) globalThis.__tiddlywiki_cpl__reset__();
 	previousEntry = entry;
     if (messagerPromise === undefined) messagerPromise = new Promise(function (rrr) {
@@ -77,7 +77,7 @@ var cpl = function (type, payload) {
 };
 
 function getAutoUpdateTime() {
-	return parseInt($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes', '-1')) || -1;
+	return parseInt($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes', '-1')) || -1;
 }
 
 // 自动更新服务、各种消息通信
@@ -136,7 +136,7 @@ exports.startup = function () {
 	var autoUpdateInterval;
 	var autoTimeout;
 	$tw.wiki.addEventListener("change", function (changes) {
-		if($tw.utils.hop(changes, '$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes')) {
+		if($tw.utils.hop(changes, '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes')) {
             var time = getAutoUpdateTime();
 			if (autoUpdateInterval !== undefined) clearInterval(autoUpdateInterval);
 			if (autoTimeout !== undefined) clearTimeout(autoTimeout);

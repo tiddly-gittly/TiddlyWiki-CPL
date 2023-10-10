@@ -1,0 +1,14 @@
+caption: CPL
+created: 20231010204556042
+list-after: $:/core/ui/ControlPanel/Plugins
+modified: 20231010205240904
+tags: $:/tags/MoreSideBar $:/tags/ControlPanel
+title: $:/plugins/Gk0Wk/CPL-Repo/panel
+type: text/vnd.tiddlywiki
+
+<$macrocall
+	$name="tabs"
+	state="$:/temp/CPL-Repo/panel-tab-state"
+	tabsList="plugin-database settings +[addprefix[$:/plugins/Gk0Wk/CPL-Repo/]]"
+	default="$:/plugins/Gk0Wk/CPL-Repo/plugin-database"
+/>
