@@ -1,7 +1,7 @@
 code-body: yes
 created: 20231009081025598
-modified: 20231009193828932
-tags: 
+modified: 20231010113040143
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
 type: text/vnd.tiddlywiki
 
@@ -18,17 +18,19 @@ type: text/vnd.tiddlywiki
 <div>
     <$let libraryVersion=<<__libraryVersion__>> installedVersion=<<__installedVersion__>> plugin=<<__plugin__>>>
     <$set name="reinstall-type" value={{{ [<libraryVersion>compare:version:eq<installedVersion>then[tc-reinstall]] [<libraryVersion>compare:version:gt<installedVersion>then[tc-reinstall-upgrade]] [<libraryVersion>compare:version:lt<installedVersion>then[tc-reinstall-downgrade]] }}}>
-    <$button actions=<<install-plugin-actions>> class={{{ [<installedVersion>!is[blank]then<reinstall-type>] tc-btn-invisible tc-install-plugin +[join[ ]] }}} disabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]] }}}>
+    <$button class={{{ [<installedVersion>!is[blank]then<reinstall-type>] tc-btn-invisible tc-install-plugin +[join[ ]] }}} disabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]else[]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]else[]] +[unique[]match[yes]limit[1]else[no]] }}}>
     <$action-sendmessage $message="cpl-install-plugin-request" title=<<plugin>> version=<<libraryVersion>>/>
     <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]field:plugin-title<plugin>]">{{$:/core/images/timestamp-on}}</$list>
-    <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]!field:plugin-title<plugin>]">{{$:/core/images/download-button}}</$list>
-    &#32;
-    <!-- 根据版本判断安装/升级/降级/重装 -->
-    <$list filter="[<installedVersion>is[blank]]">{{$:/language/ControlPanel/Plugins/Install/Caption}}</$list>
-    <$list filter="[<installedVersion>!is[blank]]">
-        <$list filter="[<libraryVersion>compare:version:gt<installedVersion>]">{{$:/language/ControlPanel/Plugins/Update/Caption}}</$list>
-        <$list filter="[<libraryVersion>compare:version:lt<installedVersion>]">{{$:/language/ControlPanel/Plugins/Downgrade/Caption}}</$list>
-        <$list filter="[<libraryVersion>compare:version:eq<installedVersion>]">{{$:/language/ControlPanel/Plugins/Reinstall/Caption}}</$list>
+    <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]!field:plugin-title<plugin>]">
+        {{$:/core/images/download-button}}
+        &#32;
+        <!-- 根据版本判断安装/升级/降级/重装 -->
+        <$list filter="[<installedVersion>is[blank]]">{{$:/language/ControlPanel/Plugins/Install/Caption}}</$list>
+        <$list filter="[<installedVersion>!is[blank]]">
+            <$list filter="[<libraryVersion>compare:version:gt<installedVersion>]">{{$:/language/ControlPanel/Plugins/Update/Caption}}</$list>
+            <$list filter="[<libraryVersion>compare:version:lt<installedVersion>]">{{$:/language/ControlPanel/Plugins/Downgrade/Caption}}</$list>
+            <$list filter="[<libraryVersion>compare:version:eq<installedVersion>]">{{$:/language/ControlPanel/Plugins/Reinstall/Caption}}</$list>
+        </$list>
     </$list>
     </$button>
     </$set>
@@ -36,7 +38,7 @@ type: text/vnd.tiddlywiki
 </div>
 \end
 
-\define plugin-list-item(json,field,class:"")
+\define plugin-list-item(json,field,show-suggestion:"yes",class:"")
 \whitespace trim
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 <div class="$class$">
@@ -96,6 +98,22 @@ type: text/vnd.tiddlywiki
         <$list filter="[<installedVersion>!is[blank]]" variable="t">
             <div><em>{{$:/language/ControlPanel/Plugins/AlreadyInstalled/Hint}}</em></div>
         </$list>
+        <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]is[tiddler]field:plugin-title<plugin>]">
+            <$list filter="[{$:/temp/CPL-Repo/instal-plugin-requesting}match[yes]]">
+                <span style="color:#3ed044;font-weight:800;"><$text text={{{ [<chinese>match[yes]then[安装准备中...]else[Preparing installation...]] }}}/></span>
+            </$list>
+            <$list filter="[{$:/temp/CPL-Repo/instal-plugin-requesting}!match[yes]]">
+                <span style="color:#fd160e;font-weight:800;"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/instal-plugin-requesting}] }}}/></span>
+            </$list>
+        </$list>
+        <$list filter="[[$:/temp/CPL-Repo/installing-plugin]is[tiddler]field:plugin-title<plugin>]">
+            <$list filter="[{$:/temp/CPL-Repo/installing-plugin}match[yes]]">
+                <span style="color:#3ed044;font-weight:800;"><$text text={{{ [<chinese>match[yes]then[安装中...]else[Installing...]] }}}/></span>
+            </$list>
+            <$list filter="[{$:/temp/CPL-Repo/installing-plugin}!match[yes]]">
+                <span style="color:#fd160e;font-weight:800;"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/installing-plugin}] }}}/></span>
+            </$list>
+        </$list>
     </div>
     <!-- 安装按钮 -->
     <div class="tc-plugin-info-chunk tc-plugin-info-buttons">
@@ -127,6 +145,8 @@ type: text/vnd.tiddlywiki
         parent-plugin={{{ [<json>jsonget[parent-plugin]] }}}
         dependents={{{ [<json>jsonget[dependents]] }}}
         latest={{{ [<json>jsonget[latest]] }}}
+        author={{{ [<json>jsonget[author]] }}}
+        suggestions={{{ [<json>jsonget[suggestions]] }}}
     >
     <!-- 依赖 -->
     <$list filter="[enlist<dependents>!is[blank]] [<parent-plugin>!is[blank]] +[limit[1]] ~[<title>!is[tiddler]]" variable="ignore">
@@ -135,8 +155,8 @@ type: text/vnd.tiddlywiki
         <$list filter="[enlist<dependents>!is[blank]] [<parent-plugin>!is[blank]] +[limit[1]]" variable="ignore">
         <div>
             {{$:/language/ControlPanel/Plugins/AlsoRequires}}&#32;
-            <$list filter="[enlist<dependents>] [<parent-plugin>] +[unique[]sort[name]]" variable="dependency">
-            <$text text=<<dependency>>/>&#32;
+            <$list filter="[enlist<dependents>] [<parent-plugin>] +[unique[]sort[name]!is[blank]]" variable="dependency">
+                <span style="border-radius:12px;padding:3px 8px;background:#1c3b40c2;font-size:12px;line-height:24px"><$text text=<<dependency>>/></span>&#32;
             </$list>
         </div>
         </$list>
@@ -164,6 +184,49 @@ type: text/vnd.tiddlywiki
     <div class="tc-plugin-info-dropdown-body">
         <$wikify name="rendered" text=<<readme>> output="html"><<rendered>></$wikify>
     </div>
+    <!-- 推荐 -->
+    <$list filter="[<__show-suggestion__>match[yes]]" variable="t">
+    <div style="padding:10px 20px;backdrop-filter:contrast(1.1);">
+        <!-- 作者的其他插件 -->
+        <$list filter="[{$:/temp/CPL-Repo/authors}jsonget<author>count[]compare:integer:gt[1]]" variable="t">
+        <details>
+            <summary style="padding:10px 0;">
+                <$text text={{{ [<chinese>match[yes]then[作者的其他插件]else[Other plugins of Author]] }}} />
+            </summary>
+            <div style="padding:6px;display:flex;flex-direction:column;">
+            <$list filter="[{$:/temp/CPL-Repo/authors}jsonget<author>] -[<title>]" variable="plugin">
+                <$macrocall
+                    $name="plugin-list-item"
+                    json={{{ [{$:/temp/CPL-Repo/plugins-index}jsonextract<plugin>] }}}
+                    field="$field$-author-suggestion"
+                    show-suggestion="no"
+                    class="cpl-plugin-info-box"
+                />
+            </$list>
+            </div>
+        </details>
+        </$list>
+        <!-- 插件推荐 -->
+        <$list filter="[enlist<suggestions>count[]compare:integer:gt[1]]" variable="t">
+        <details>
+            <summary style="padding:10px 0;">
+                <$text text={{{ [<chinese>match[yes]then[你可能感兴趣的插件]else[Plugins you may be interested in]] }}} />
+            </summary>
+            <div style="padding:6px;display:flex;flex-direction:column;">
+            <$list filter="[enlist<suggestions>]" variable="plugin">
+                <$macrocall
+                    $name="plugin-list-item"
+                    json={{{ [{$:/temp/CPL-Repo/plugins-index}jsonextract<plugin>] }}}
+                    field="$field$-author-suggestion"
+                    show-suggestion="no"
+                    class="cpl-plugin-info-box"
+                />
+            </$list>
+            </div>
+        </details>
+        </$list>
+    </div>
+    </$list>
     </$let>
     </$let>
     </$list>

@@ -1,0 +1,8 @@
+code-body: yes
+created: 20231010180137135
+modified: 20231010180308772
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/category-tab-button-template
+type: text/vnd.tiddlywiki
+
+<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[<currentTab>addprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]get[text]else[?]] :else[<currentTab>else[Unknown]else[?]] }}} />

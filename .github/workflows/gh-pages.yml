@@ -58,8 +58,8 @@ jobs:
 
       - name: Add history version from cache to library
         run: |
-          cp -r cache/plugins dist/library/all
           rm -rf cache/.git
+          cp -r cache/plugins dist/repo
 
       - name: Save Plugin Cache
         uses: s0/git-publish-subdir-action@develop

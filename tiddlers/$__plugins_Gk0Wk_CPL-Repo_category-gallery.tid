@@ -1,0 +1,15 @@
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[分类]else[Categories]] }}} />
+created: 20231010175848637
+modified: 20231010200136257
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/category-gallery
+type: text/vnd.tiddlywiki
+
+<$macrocall
+	$name="tabs"
+	state="$:/temp/CPL-Repo/category-gallery-tab-state"
+	tabsList="[{$:/temp/CPL-Repo/categories}jsonindexes[]]"
+	default={{{ [{$:/temp/CPL-Repo/categories}jsonindexes[]first[]] }}}
+	template="$:/plugins/Gk0Wk/CPL-Repo/category-tab-container-template"
+	buttonTemplate="$:/plugins/Gk0Wk/CPL-Repo/category-tab-button-template"
+/>

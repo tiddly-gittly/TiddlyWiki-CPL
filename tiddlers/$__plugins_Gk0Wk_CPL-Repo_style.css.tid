@@ -1,5 +1,5 @@
 created: 20231009122025301
-modified: 20231009172034255
+modified: 20231010160830280
 tags: $:/tags/Stylesheet
 title: $:/plugins/Gk0Wk/CPL-Repo/style.css
 type: text/vnd.tiddlywiki
@@ -48,4 +48,57 @@ type: text/vnd.tiddlywiki
 .cpl-installed-version-icon > svg {
   color: #3ccb0f;
   fill: #3ccb0f;
+}
+
+.cpl-plugin-install-request-dependents-tree {
+  border-left:2px dotted <<colour very-muted-foreground>>;
+  background: #0002;
+}
+
+.cpl-plugin-search {
+  flex-grow: 1;
+  width: 0;
+  margin: 0 !important;
+}
+
+.cpl-plugin-search-go {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 10px 20px !important;
+  word-break: keep-all;
+}
+
+.cpl-paged-plugin-list-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 2px solid <<colour tiddler-info-border>>;
+  background-color: <<colour tiddler-info-background>>;
+}
+
+.cpl-paged-plugin-list-control > div {
+  flex-grow: 1;
+  width: 0;
+  height: 100%;
+}
+
+.cpl-paged-plugin-list-control > div > button {
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+}
+
+.cpl-paged-plugin-list-control > div > button:hover {
+  backdrop-filter: contrast(0.75);
+}
+
+.cpl-paged-plugin-list-control > span {
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  user-select: none;
 }

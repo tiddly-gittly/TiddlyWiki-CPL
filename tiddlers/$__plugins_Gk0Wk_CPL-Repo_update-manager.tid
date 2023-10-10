@@ -1,0 +1,17 @@
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[更新]else[Updates]] }}} />
+created: 20231010174423870
+modified: 20231010200158827
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/update-manager
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+<$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn">
+<$action-sendmessage $message="cpl-update-check" />
+{{$:/core/images/refresh-button}}
+&#32;
+<$text text={{{ [[$:/temp/CPL-Repo/update-plugins]is[tiddler]] :then[<chinese>match[yes]then[重新获取更新]else[Refetch CPL]] :else[<chinese>match[yes]then[获取更新]else[Fetch update]] }}} />
+</$button>
+</$list>
+
+{{$:/plugins/Gk0Wk/CPL-Repo/update-body}}

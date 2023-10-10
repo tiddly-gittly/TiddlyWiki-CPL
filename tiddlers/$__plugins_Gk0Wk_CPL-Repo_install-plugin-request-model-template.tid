@@ -1,0 +1,113 @@
+code-body: yes
+created: 20231010044719404
+modified: 20231010075107804
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[请确认安装]else[Please Confirm to Install]] }}} />
+tags:
+title: $:/plugins/Gk0Wk/CPL-Repo/install-plugin-request-model-template
+type: text/vnd.tiddlywiki
+
+\define dependents-tree(json,checked-title,versions)
+<$list filter="[<__json__>jsonindexes[]]" variable="plugin">
+<div style="margin-left:1.25em;" class="cpl-plugin-install-request-dependents-tree">
+<$let install-field={{{ [[cpl-plugin#install#]addsuffix<plugin>] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<plugin>] }}}>
+<div style="padding:6px 8px 6px 0;display:flex;align-items:center;justify-content:space-between;">
+<span style="flex-grow:1;padding-left:1em">''<$text text=<<plugin>>/>''</span>
+<span>
+<$checkbox tiddler=<<__checked-title__>> field=<<install-field>> checked="yes" unchecked="no" default="no">
+    <$text text={{{ [<__checked-title__>get<install-field>match[yes]] :then[<chinese>match[yes]then[即将安装:]else[Will be installed:]] :else[<chinese>match[yes]then[不会安装]else[Will not be installed]] }}} />
+</$checkbox>
+<$list filter="[<__checked-title__>get<install-field>match[yes]]" variable="t">
+&nbsp;
+<$select tiddler=<<__checked-title__>> field=<<version-field>>>
+<$list filter="[<__versions__>jsonget<plugin>]" variable="version">
+<option value=<<version>>><$text text=<<version>>/></option>
+</$list>
+</$select>
+</$list>
+</span>
+</div>
+<$macrocall $name="dependents-tree" json={{{ [<__json__>jsonextract<plugin>] }}} checked-title=<<__checked-title__>> versions=<<__versions__>> />
+</$let>
+</div>
+</$list>
+\end
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+<$let json={{{ [<requestTiddler>get[text]] }}}>
+
+<<<
+<$let title={{{ [<json>jsonget[title]] }}}>
+''<$text text={{{ [<chinese>match[yes]then[即将安装:]else[To be installed:]] }}}/>''
+<$text text=<<title>>/>&nbsp;&nbsp;&nbsp;
+''<$text text={{{ [<chinese>match[yes]then[选择版本:]else[Select version:]] }}}/>''
+<$select tiddler=<<requestTiddler>> field={{{ [[cpl-plugin#version#]addsuffix<title>] }}}>
+<$list filter="[<json>jsonget[versions],<title>]" variable="version">
+<option value=<<version>>><$text text=<<version>>/></option>
+</$list>
+</$select>
+</$let>
+<<<
+
+<!-- 依赖树 -->
+<$list filter="[<json>jsonextract[tree]jsonindexes[]count[]compare:integer:gt[0]]" variable="t">
+<$list filter="[<chinese>match[yes]]" variable="t">
+
+这个插件有一些依赖项，在安装插件之前，将会递归地安装这些插件，如果这些插件没有被成功安装，将会回滚所有安装动作。
+
+你可以自行选择安装哪些插件并选择其版本。插件依赖树如下：
+
+</$list>
+<$list filter="[<chinese>!match[yes]]" variable="t">
+
+This plugin has some dependencies that will be installed recursively before installing the plugin, and if these plugins are not installed successfully, all installation actions will be rolled back.
+
+It is up to you to choose which plugins to install and select their versions. The plugin dependency tree is as follows:
+
+</$list>
+<div style="margin-left:-1em;margin-right:6px;">
+    <$macrocall $name="dependents-tree" json={{{ [<json>jsonextract[tree]] }}} checked-title=<<requestTiddler>> versions={{{ [<json>jsonextract[versions]] }}} />
+</div>
+<hr/>
+</$list>
+
+<$list filter="[<chinese>match[yes]]" variable="t">
+
+注意：虽然 CPL 对安装失败有一定的回滚措施，但是无法避免因插件自身以及插件间相互作用所产生的潜在风险，包括但不限于
+
+* 浏览器崩溃；
+* Wiki 系统受损或数据丢失;
+* 插件内含恶意脚本的执行造成隐私泄露或系统损坏；
+
+CPL 接受恶意插件举报并将下架这类插件，但 CPL 不能保证其中收录的所有插件均安全可用。如您在安装后出现任何问题造成损失，CPL 无法负责。
+
+@@background:#e91e3db0;color:white;padding:4px;''因此，在安装任何插件前，请备份您的Wiki！''@@
+
+即便如此，您依然要安装吗？
+
+</$list>
+
+<$list filter="[<chinese>!match[yes]]" variable="t">
+
+Note: Although the CPL has some rollback measures for failed installations, it is not immune to the potential risks arising from the plugins themselves and from interactions between plugins, including but not limited to
+
+* Browser crashes;
+* Damage to the Wiki system or loss of data;
+* Privacy leakage or system damage caused by the execution of malicious scripts contained in the plugin;
+
+CPL accepts reports of malicious plugins and will take down such plugins, but CPL cannot guarantee that all plugins included are safe and available. However, CPL cannot guarantee that all plugins are safe and available. CPL cannot be held responsible for any damage caused by any problem that occurs after you have installed the plugin.
+
+@@background:#e91e3db0;color:white;width:100%;padding:4px;''Therefore, please back up your wiki before installing any plugins!''@@
+
+Even so, do you still want to install it?
+
+</$list>
+
+<$button class="tc-btn-big-green tc-primary-btn" message="tm-close-tiddler">
+<$action-sendmessage $message="cpl-install-plugin" response=<<requestTiddler>> />
+{{$:/core/images/done-button}}
+&#32;
+<$text text={{{ [<chinese>match[yes]then[确认安装]else[Confirm to Install]] }}} />
+</$button>
+
+</$let>
+</$list>

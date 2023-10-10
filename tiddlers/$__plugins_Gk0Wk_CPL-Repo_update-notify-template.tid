@@ -1,11 +1,38 @@
 created: 20231008081456278
 modified: 20231008082458268
-tags: 
 title: $:/plugins/Gk0Wk/CPL-Repo/update-notify-template
 type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
+<$list filter="[<chinese>match[yes]]">
 
 !! CPL 更新提醒
 
 您的 Wiki 中有 <<updateCount>> 款插件在 CPL 中有更新版本, 快来更新吧!
 
-<$button>更新</$button> <$button>修改更新策略</$button>
+<$button>
+更新
+<$action-sendmessage $message="cpl-get-plugins-index" />
+<$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/update-body" />
+</$button>
+<$button>设置</$button>
+
+</$list>
+
+<$list filter="[<chinese>!match[yes]]">
+
+!! CPL Update Alert
+
+There are <<updateCount>> plugins in your Wiki that have newer versions in CPL, so update them now!
+
+<$button>
+Update
+<$action-sendmessage $message="cpl-get-plugins-index" />
+<$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/update-body" />
+</$button>
+<$button>Settings</$button>
+
+</$list>
+
+</$list>

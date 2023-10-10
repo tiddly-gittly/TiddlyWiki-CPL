@@ -1,0 +1,11 @@
+code-body: yes
+created: 20231010180334553
+modified: 20231010180808809
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/category-tab-container-template
+type: text/vnd.tiddlywiki
+
+\import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
+\import $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
+
+<<paged-plugin-list filter:"[{$:/temp/CPL-Repo/categories}jsonget<currentTab>]" field:"category-gallery" class1:"cpl-plugin-info-box" class2:"cpl-paged-plugin-list-control">>
