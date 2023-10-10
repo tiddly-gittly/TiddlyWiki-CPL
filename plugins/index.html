@@ -34,7 +34,7 @@
           http.onreadystatechange = function () {
             if (http.readyState == 4) {
               if (http.status == 200) callback(undefined, http.responseText);
-              else callback(http.status + ' ' + http.statusText, undefined);
+              else callback(http.status + ' ' + http.statusText + ' (' + url + ')', undefined);
             }
           };
           http.send();
