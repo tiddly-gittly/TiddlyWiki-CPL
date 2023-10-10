@@ -16,6 +16,14 @@
     "uri": "https://tiddlymemo.org/library/"
   },
   {
+    "name": "Tidme",
+    "uri": "https://oflg.github.io/Tidme/library/"
+  },
+  {
+    "name": "Tidme decks",
+    "uri": "https://oflg.github.io/Tidme-decks/library/"
+  },
+  {
     "name": "Relink (flibbles)",
     "uri": "https://flibbles.github.io/tw5-relink/library/index.html"
   },
