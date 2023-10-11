@@ -7,7 +7,7 @@
         "modifier": "oflg",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "cpl.author": "Tidme",
+        "cpl.author": "oflg",
         "cpl.title": "$:/plugins/tidme/fsrs4tw",
         "cpl.name": "Tidme Core",
         "cpl.description": "TiddlyWiki-based memory programme using advanced FSRS algorithm",
