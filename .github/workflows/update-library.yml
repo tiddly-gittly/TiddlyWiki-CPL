@@ -52,10 +52,9 @@ jobs:
         run: pnpm run importlibraryofficial
 
       # Commit all changed files back to the repository
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Update all Library in libraries.json
-
           file_pattern: 'tiddlers/*'
 
           # commit_user_name: My GitHub Actions Bot # defaults to "github-actions[bot]"
