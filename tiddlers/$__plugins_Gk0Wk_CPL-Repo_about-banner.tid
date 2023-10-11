@@ -1,6 +1,6 @@
 created: 20231011064720642
 modified: 20231011074141434
-tags: 
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/about-banner
 type: text/vnd.tiddlywiki
 
@@ -20,7 +20,7 @@ type: text/vnd.tiddlywiki
   justify-content: flex-start;
   flex-wrap: wrap;
 ">
-<a href="tw-cpl.netlify.app" target="_blank" style="
+<a href="https://tw-cpl.netlify.app" target="_blank" style="
   text-decoration: none;
   color: white;
   fill: white;
@@ -65,7 +65,7 @@ type: text/vnd.tiddlywiki
   align-items: center;
   margin-right: 4px;
 ">{{$:/core/images/plugin-generic-language}}&nbsp;QQ交流群: 946052860</span>
-<a href="tw-cn.netlify.app" target="_blank" style="
+<a href="https://tw-cn.netlify.app" target="_blank" style="
   text-decoration: none;
   color: white;
   fill: white;
