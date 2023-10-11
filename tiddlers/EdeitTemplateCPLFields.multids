@@ -14,4 +14,5 @@ cpl.icon: hide
 cpl.dependents: hide
 cpl.parent-plugin: hide
 cpl.core-version: hide
-cpl.catregory: hide
+cpl.category: hide
+cpl.tags: hide
