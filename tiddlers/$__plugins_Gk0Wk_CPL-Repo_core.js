@@ -529,4 +529,20 @@ exports.startup = function () {
         }
     });
 };
+
+/*
+安装插件
+<$action-sendmessage $message="cpl-install-plugin" title="xxx" version="latest"/>
+$:/temp/CPL-Repo/installing-plugin 如果为 yes 说明正在安装，请勿进行其他操作 如果不是yes，如果非空说明是错误信息   plugin-title字段是正在安装的插件
+
+获取所有插件的索引
+<$action-sendmessage $message="cpl-get-plugins-index"/>
+$:/temp/CPL-Repo/plugins-index 所有信息
+$:/temp/CPL-Repo/getting-plugins-index 同上
+
+查询某个插件的信息
+<$action-sendmessage $message="cpl-query-plugin" title="xxx"/>
+$:/temp/CPL-Repo/plugin-info/<插件title> 插件的相关信息
+$:/temp/CPL-Repo/querying-plugin/<插件title> 同上
+*/
 })();
