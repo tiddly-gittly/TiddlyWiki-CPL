@@ -94,7 +94,7 @@ exports.startup = function () {
             // filter 和 网络请求并发一下
             var updateP = cpl('Update');
             // 根据条件筛选插件
-            var plugins = $tw.wiki.filterTiddlers($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/auto-update-filter'));
+            var plugins = $tw.wiki.filterTiddlers($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/update-filter'));
             var t = [];
             updateP.then(function (text) {
                 // 统计需要更新的插件

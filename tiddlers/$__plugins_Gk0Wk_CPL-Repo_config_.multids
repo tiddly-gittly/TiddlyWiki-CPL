@@ -1,5 +1,6 @@
 title: $:/plugins/Gk0Wk/CPL-Repo/config/
 
+update-filter: [has[plugin-type]] -[prefix[$:/plugins/tiddlywiki/]] -[prefix[$:/themes/tiddlywiki/]] -[prefix[$:/languages/]] -[prefix[$:/temp/]] -[[$:/core]]
 repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo
 current-repo: https://tw-cpl.netlify.app/repo
 popup-readme-at-startup-threshold: 1

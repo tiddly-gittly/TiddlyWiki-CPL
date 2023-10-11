@@ -1,5 +1,5 @@
 created: 20220118143905182
-modified: 20221228055030644
+modified: 20231011064716106
 title: Welcome_EN
 type: text/vnd.tiddlywiki
 
@@ -13,7 +13,7 @@ To add this plugin library to your Wiki, simply drag the link below to your Wiki
 
 <center>
 <$link to="$:/plugins/Gk0Wk/CPL-Repo">
-<div style="display:flex;color:white;font-weight:700;font-size:15px;background:#0A84FF;border-radius:3px;width:260px;justify-content:space-around;align-items:center;height:50px;padding:0 10px;" href="./offline.html">Drag me to your Wiki page {{$:/core/images/save-button}}</div>
+<div style="display:flex;color:white;font-weight:700;font-size:15px;background:#0A84FF;border-radius:3px;width:260px;justify-content:space-around;align-items:center;height:50px;padding:0 10px;">Drag me to your Wiki page {{$:/core/images/save-button}}</div>
 </$link>
 </center>
 

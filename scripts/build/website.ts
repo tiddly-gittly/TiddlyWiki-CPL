@@ -100,13 +100,21 @@ export const buildOnlineHTML = async (
 
   // CPL 插件
   console.log(chalk.bgCyan.black.bold('\nGenerating CPL plugin...'));
-  const cplPlugin = buildCPLPlugin($tw);
-  tiddlers.set(cplPlugin.title, cplPlugin);
+  const cplPlugin = buildCPLPlugin($tw)[0];
+  tiddlers.set(cplPlugin.title, cplPlugin as any);
 
   // 停用自动更新
-  tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes', {
-    title: '$:/plugins/Gk0Wk/CPL-Repo/auto-update-intervals-minutes',
-    text: '-1',
+  tiddlers.set(
+    '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+    {
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+      text: '-1',
+    } as any,
+  );
+  // 不要弹窗
+  tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup', {
+    title: '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
+    text: '1',
   } as any);
 
   // 构建

@@ -1,5 +1,5 @@
 created: 20231009122025301
-modified: 20231010160830280
+modified: 20231011071732554
 tags: $:/tags/Stylesheet
 title: $:/plugins/Gk0Wk/CPL-Repo/style.css
 type: text/vnd.tiddlywiki
@@ -101,4 +101,9 @@ type: text/vnd.tiddlywiki
   display: flex;
   align-items: center;
   user-select: none;
+}
+
+.cpl-banner-button-group svg {
+  height: 1em;
+  width: 1em;
 }

@@ -1,8 +1,0 @@
-code-body: yes
-created: 20231008085531333
-modified: 20231008125835052
-tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/auto-update-filter
-type: text/vnd.tiddlywiki
-
-[has[plugin-type]] -[prefix[$:/plugins/tiddlywiki/]] -[prefix[$:/themes/tiddlywiki/]] -[prefix[$:/languages/]] -[prefix[$:/temp/]] -[[$:/core]]

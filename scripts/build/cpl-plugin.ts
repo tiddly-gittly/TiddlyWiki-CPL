@@ -1,9 +1,17 @@
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
+import { mergePluginInfo } from './merge';
 
-export const buildCPLPlugin = ($tw: ITiddlyWiki): ITiddlerFields => {
+export const buildCPLPlugin = (
+  $tw: ITiddlyWiki,
+): [
+  Record<string, string>,
+  ReturnType<typeof mergePluginInfo>['newInfoTiddler'],
+] => {
   const cplPluginTiddlers: Record<string, ITiddlerFields> = {};
   $tw.wiki
-    .filterTiddlers('[tag[$:/tags/PluginLibrary/CPL]]')
+    .filterTiddlers(
+      '[tag[$:/tags/PluginLibrary/CPL]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/]] -$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup -$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+    )
     .map(title => ({
       ...$tw.wiki.getTiddler(title)!.fields,
       created: undefined,
@@ -16,14 +24,34 @@ export const buildCPLPlugin = ($tw: ITiddlyWiki): ITiddlerFields => {
     .forEach(tiddler => {
       cplPluginTiddlers[tiddler.title] = tiddler as any;
     });
-  return {
-    version: $tw.wiki.getTiddlerText('CPL-Repo-Version'),
+  const plugin = {
+    version: $tw.wiki.getTiddlerText('CPL-Repo-Version')!,
     type: 'application/json',
     title: '$:/plugins/Gk0Wk/CPL-Repo',
     'plugin-type': 'plugin',
     name: 'CPL Repo',
-    description: 'Repos for CPL',
+    description: 'Essential and powerful plugin manager and library',
     author: 'Gk0Wk',
+    list: 'readme',
     text: JSON.stringify({ tiddlers: cplPluginTiddlers }),
-  } as any;
+  };
+  return [
+    plugin,
+    {
+      title: plugin.title,
+      name: plugin.name,
+      author: plugin.author,
+      version: plugin.version,
+      'plugin-type': plugin['plugin-type'],
+      icon: '',
+      'core-version': '>=5.2.1',
+      dependents: '',
+      'parent-plugin': '',
+      'requires-reload': true,
+      category: 'Functional',
+      tags: 'CPL [[Plugin Libaray]] Network Essential',
+      description: plugin.description,
+      readme: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/readme')!,
+    },
+  ];
 };

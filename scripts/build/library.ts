@@ -1,7 +1,7 @@
 /* eslint-disable max-depth */
 /* eslint-disable complexity */
 import { URL } from 'url';
-import { resolve, extname, basename } from 'path';
+import { resolve, extname } from 'path';
 import {
   readdirSync,
   copyFileSync,
@@ -147,6 +147,44 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       }
     }
 
+    const cachePlugin = (
+      formatted: string,
+      json: string,
+      plugin: ReturnType<typeof mergePluginInfo>['pluginTiddler'],
+      info: ReturnType<typeof mergePluginInfo>['newInfoTiddler'],
+    ) => {
+      const cachePluginFolderPath = resolve(cachePluginsDir, formatted);
+      const latestCachePluginPath = resolve(
+        cachePluginFolderPath,
+        'latest.json',
+      );
+      const currentCachePluginPath = resolve(
+        cachePluginFolderPath,
+        `${plugin.version}.json`,
+      );
+      const metaPath = resolve(cachePluginFolderPath, '__meta__.json');
+      mkdirsForFileSync(metaPath);
+      writeFileSync(latestCachePluginPath, json);
+      writeFileSync(currentCachePluginPath, json);
+      const versions = new Set<string>(
+        readdirSync(cachePluginFolderPath)
+          .filter(t => t.endsWith('.json'))
+          .filter(t => statSync(resolve(cachePluginFolderPath, t)).isFile())
+          .filter(t => t !== 'latest.json' && t !== '__meta__.json')
+          .map(t => t.replace(/\.json$/, '')),
+      );
+      writeFileSync(
+        metaPath,
+        JSON.stringify({
+          ...info,
+          latest: plugin.version,
+          versions: Array.from(versions).sort((a, b) =>
+            $tw.utils.compareVersions(a, b),
+          ),
+        }),
+      );
+    };
+
     // 接下来从tmpDir处理所有的插件
     const pluginTitlePathMap: Record<string, string> = {};
     const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] =
@@ -204,34 +242,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
         const pluginJson = JSON.stringify(pluginTiddler);
         writeFileSync(distPluginPath, pluginJson);
         if (cache) {
-          const cachePluginFolderPath = resolve(cachePluginsDir, formatedTitle);
-          const latestCachePluginPath = resolve(
-            cachePluginFolderPath,
-            'latest.json',
-          );
-          const currentCachePluginPath = resolve(
-            cachePluginFolderPath,
-            `${pluginTiddler.version}.json`,
-          );
-          const metaPath = resolve(cachePluginFolderPath, '__meta__.json');
-          mkdirsForFileSync(metaPath);
-          writeFileSync(latestCachePluginPath, pluginJson);
-          writeFileSync(currentCachePluginPath, pluginJson);
-          const versions = new Set<string>(
-            readdirSync(cachePluginFolderPath)
-              .filter(t => t.endsWith('.json'))
-              .filter(t => statSync(resolve(cachePluginFolderPath, t)).isFile())
-              .filter(t => t !== 'latest.json' && t !== '__meta__.json')
-              .map(t => t.replace(/\.json$/, '')),
-          );
-          writeFileSync(
-            metaPath,
-            JSON.stringify({
-              ...newInfoTiddler,
-              latest: pluginTiddler.version,
-              versions: Array.from(versions),
-            }),
-          );
+          cachePlugin(formatedTitle, pluginJson, pluginTiddler, newInfoTiddler);
           pluginTitlePathMap[newInfoTiddler.title] = formatedTitle;
         }
 
@@ -247,37 +258,18 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     }
 
     // 生成 CPL 插件
-    console.log(chalk.cyan(`  Exporting plugin $:/tags/PluginLibrary/CPL`));
-    writeFileSync(
-      `${resolve(pluginsDir, formatTitle('$:/plugins/Gk0Wk/CPL-Repo'))}.json`,
-      JSON.stringify({
-        version: $tw.wiki.getTiddlerText('CPL-Repo-Version'),
-        type: 'application/json',
-        title: '$:/plugins/Gk0Wk/CPL-Repo',
-        'plugin-type': 'plugin',
-        name: 'CPL Repo',
-        description: 'Repos for CPL',
-        author: 'Gk0Wk',
-        text: JSON.stringify({ tiddlers: buildCPLPlugin($tw) }),
-      }),
-    );
-    pluginInfos.push({
-      title: '$:/plugins/Gk0Wk/CPL-Repo',
-      author: 'Gk0Wk',
-      name: 'CPL Repo',
-      description: 'Repos for CPL',
-      version: $tw.wiki.getTiddlerText('CPL-Repo-Version')!,
-      'plugin-type': 'plugin',
-      'requires-reload': false,
-      type: 'application/json',
-      readme: '',
-      icon: undefined,
-      dependents: undefined,
-      'parent-plugin': undefined,
-      'core-version': undefined,
-      category: 'Functional',
-      tags: '',
-    });
+    console.log(chalk.cyan(`  Exporting plugin $:/plugins/Gk0Wk/CPL-Repo`));
+    {
+      const [cplPlugin, cplPluginInfo] = buildCPLPlugin($tw);
+      const formatedTitle = formatTitle(cplPlugin.title);
+      const distPluginPath = resolve(pluginsDir, `${formatedTitle}.json`);
+      const pluginJson = JSON.stringify(cplPlugin);
+      writeFileSync(distPluginPath, pluginJson);
+      pluginInfos.push(cplPluginInfo);
+      if (cache) {
+        cachePlugin(formatedTitle, pluginJson, cplPlugin as any, cplPluginInfo);
+      }
+    }
 
     if (cache) {
       // 生成插件索引

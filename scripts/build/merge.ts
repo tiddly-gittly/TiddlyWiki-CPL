@@ -68,7 +68,6 @@ export const mergePluginInfo = (
         ? 'Language'
         : ((infoTiddler['cpl.category'] || 'Unknown') as string),
     tags: (infoTiddler['cpl.tags'] || '') as string,
-    type: 'application/json',
   };
   mergeField('version', pluginTiddler, newInfoTiddler, $tw.version);
   mergeField('type', pluginTiddler, newInfoTiddler, 'application/json');
@@ -88,10 +87,7 @@ export const mergePluginInfo = (
   $tw.utils.each(mergingFields, function (fieldName) {
     mergeField(fieldName, pluginTiddler, newInfoTiddler);
   });
-  if (
-    !newInfoTiddler.readme ||
-    (newInfoTiddler.readme as string).trim() === ''
-  ) {
+  if (!newInfoTiddler.readme || newInfoTiddler.readme.trim() === '') {
     newInfoTiddler.readme = getReadmeFromPlugin(pluginTiddler);
   }
   if (

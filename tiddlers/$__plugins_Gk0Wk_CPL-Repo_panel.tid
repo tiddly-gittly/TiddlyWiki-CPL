@@ -1,10 +1,15 @@
 caption: CPL
 created: 20231010204556042
 list-after: $:/core/ui/ControlPanel/Plugins
-modified: 20231010205240904
+modified: 20231011074702518
 tags: $:/tags/MoreSideBar $:/tags/ControlPanel
 title: $:/plugins/Gk0Wk/CPL-Repo/panel
 type: text/vnd.tiddlywiki
+
+<!-- 在侧栏不显示 -->
+<$list filter="[<listItem>!match[$:/core/ui/SideBarSegments/tabs]]">
+{{$:/plugins/Gk0Wk/CPL-Repo/about-banner}}
+</$list>
 
 <$macrocall
 	$name="tabs"

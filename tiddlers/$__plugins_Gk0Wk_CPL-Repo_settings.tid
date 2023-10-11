@@ -38,6 +38,12 @@ type: text/vnd.tiddlywiki
 关闭后可以手动在 [[$:/ControlPanel]] 的 [CPL] 中进行检查。
 <<<
 
+; 插件更新筛选器 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/update-filter" tag="input" default="" />
+
+<<<
+插件更新是有选择的，你可以通过修改筛选器来排除一些插件。
+<<<
+
 </$list>
 
 <$list filter="[<chinese>match[no]]">
@@ -68,6 +74,12 @@ Obviously auto-checking requires an internet connection and consumes very little
 When the value is less than or equal to 0, auto-update is turned off, also when the Wiki is just opened.
 
 After closing it can be checked manually in [CPL] of [[$:/ControlPanel]].
+<<<
+
+; Plugin Update Filter <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/update-filter" tag="input" default="" />
+
+<<<
+Plugin updates are selective and you can exclude some plugins by modifying the filter.
 <<<
 
 </$list>

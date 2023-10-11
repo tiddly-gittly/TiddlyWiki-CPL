@@ -1,8 +1,8 @@
 created: 20231010221020621
-modified: 20231010222520893
+modified: 20231011081955396
 subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL 使用须知]else[Note to use CPL]] }}}/>
 tags: 
-title: $:/plugins/Gk0WK/CPL-Repo/popup-readme
+title: $:/plugins/Gk0Wk/CPL-Repo/popup-readme
 type: text/vnd.tiddlywiki
 
 {{$:/plugins/Gk0Wk/CPL-Repo/readme}}
