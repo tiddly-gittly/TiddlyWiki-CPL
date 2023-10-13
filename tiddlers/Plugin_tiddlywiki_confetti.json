@@ -1,0 +1,13 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "",
+        "cpl.uri": "https://tiddlywiki5-git-confetti-plugin-jermolene.vercel.app/tour.html",
+        "cpl.title": "$:/plugins/tiddlywiki/confetti",
+        "cpl.name": "Confetti",
+        "cpl.description": "This plugin adds a programmable confetti cannon to your TiddlyWiki. It is based on https://www.kirilv.com/canvas-confetti/ by Kiril Vatev.",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_tiddlywiki_confetti"
+    }
+]
