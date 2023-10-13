@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20220216120815803",
+        "creator": "林一二",
+        "text": "",
+        "title": "TWaddle_ListTree",
+        "modified": "202301013101804539",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.title": "$:/plugins/TWaddle/ListTree",
+        "cpl.author": "",
+        "cpl.name": "ListTree",
+        "cpl.description": "ListTree is a stylesheet plugin to reshape common TW asterisk/bullet lists into list trees. You just apply a style to the bullet list.",
+        "cpl.uri": "http://listtree.tiddlyspot.com/",
+        "cpl.readme": "",
+        "cpl.source": "",
+        "cpl.documentation": "http://listtree.tiddlyspot.com/",
+        "cpl.plugin-type": "plugin",
+        "page-cover": ""
+    }
+]
