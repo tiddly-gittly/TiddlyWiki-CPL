@@ -67,12 +67,12 @@ jobs:
           # See https://git-scm.com/docs/git-add#_options
           add_options: '-u'
 
-          # Optional. Disable dirty check and always try to create a commit and push
-          skip_dirty_check: true
-          # Optional. Skip internal call to `git fetch`
-          skip_fetch: true
-          # Optional. Skip internal call to `git checkout`
-          skip_checkout: true
+          # # Optional. Disable dirty check and always try to create a commit and push
+          # skip_dirty_check: true
+          # # Optional. Skip internal call to `git fetch`
+          # skip_fetch: true
+          # # Optional. Skip internal call to `git checkout`
+          # skip_checkout: true
           # Optional. Prevents the shell from expanding filenames.
           # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
-          disable_globbing: true
+          # disable_globbing: true
