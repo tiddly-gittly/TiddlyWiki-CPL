@@ -166,12 +166,19 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       mkdirsForFileSync(metaPath);
       writeFileSync(latestCachePluginPath, json);
       writeFileSync(currentCachePluginPath, json);
+      const versionsSize: Record<string, number> = {};
       const versions = new Set<string>(
         readdirSync(cachePluginFolderPath)
           .filter(t => t.endsWith('.json'))
           .filter(t => statSync(resolve(cachePluginFolderPath, t)).isFile())
           .filter(t => t !== 'latest.json' && t !== '__meta__.json')
-          .map(t => t.replace(/\.json$/, '')),
+          .map(t => {
+            const versionText = t.replace(/\.json$/, '');
+            versionsSize[versionText] = statSync(
+              resolve(cachePluginFolderPath, t),
+            ).size;
+            return versionText;
+          }),
       );
       writeFileSync(
         metaPath,
@@ -181,6 +188,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           versions: Array.from(versions).sort((a, b) =>
             $tw.utils.compareVersions(a, b),
           ),
+          'versions-size': versionsSize,
         }),
       );
     };

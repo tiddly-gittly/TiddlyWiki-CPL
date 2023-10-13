@@ -33,7 +33,6 @@ type: text/vnd.tiddlywiki
   user-select: none;
   display: flex;
   align-items: center;
-  margin-right: 4px;
 ">{{$:/core/images/link}}&nbsp;<$text text={{{ [<chinese>match[yes]then[CPL 官网]else[CPL website]] }}}/></a>
 <a href="https://github.com/tiddly-gittly/TiddlyWiki-CPL" target="_blank" style="
   text-decoration: none;
@@ -48,7 +47,7 @@ type: text/vnd.tiddlywiki
   user-select: none;
   display: flex;
   align-items: center;
-  margin-right: 4px;
+  margin-left: 4px;
 ">{{$:/core/images/github}}&nbsp;<$text text={{{ [<chinese>match[yes]then[CPL 仓库源码]else[CPL repository]] }}}/></a>
 <$list filter="[<chinese>match[yes]]">
 <span style="
@@ -63,7 +62,7 @@ type: text/vnd.tiddlywiki
   font-weight: 600;
   display: flex;
   align-items: center;
-  margin-right: 4px;
+  margin-left: 4px;
 ">{{$:/core/images/plugin-generic-language}}&nbsp;QQ交流群: 946052860</span>
 <a href="https://tw-cn.netlify.app" target="_blank" style="
   text-decoration: none;
@@ -78,9 +77,10 @@ type: text/vnd.tiddlywiki
   user-select: none;
   display: flex;
   align-items: center;
+  margin-left: 4px;
 ">{{$:/core/images/home-button}}&nbsp;更多精彩,尽在太微中文</a>
 </$list>
 </div>
-<div style="margin-top: 10px;font-weight: 700;user-select: none;"><$text text={{{ [<chinese>match[yes]then[欢迎任何人在CPL仓库贡献更多插件!]else[Anyone is welcome to contribute more plugins to the CPL repository!]] }}}/></div>
+<div style="margin-top: 10px;font-weight: 700;user-select: none; color: whire; opacity: 0.85;"><$text text={{{ [<chinese>match[yes]then[欢迎任何人在CPL仓库贡献更多插件!]else[Anyone is welcome to contribute more plugins to the CPL repository!]] }}}/></div>
 </div>
 </$list>

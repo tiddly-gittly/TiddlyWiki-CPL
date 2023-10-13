@@ -1,11 +1,12 @@
 created: 20231010091633120
 modified: 20231010161252442
 subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[更新列表]else[Update List]] }}}/>
-tags: 
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/update-body
 type: text/vnd.tiddlywiki
 
 \import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
+\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
 \import $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">

@@ -6,6 +6,7 @@ title: $:/plugins/Gk0Wk/CPL-Repo/home-gallery
 type: text/vnd.tiddlywiki
 
 \import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
+\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
 \import $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
 
 <div style="width:100%;display:flex">

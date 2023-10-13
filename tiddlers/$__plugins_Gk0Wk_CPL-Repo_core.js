@@ -184,6 +184,7 @@ exports.startup = function () {
             var existingTitle = new Set(); // 避免环
             var versionsMap = {};
             var versionsMapLatest = {};
+            var sizesMap = {};
             // 递归检查依赖
             var title_ = title;
             function recursiveInstallCheck(title) {
@@ -194,6 +195,7 @@ exports.startup = function () {
                         if (title === title_ && data.versions.indexOf(version) < 0) version = data.latest;
                         versionsMap[title] = data.versions;
                         versionsMapLatest[title] = data.latest;
+                        sizesMap[title] = data['versions-size'] || {};
                         var t = new Set();
                         var promisese = [];
                         var subtree = {};
@@ -235,7 +237,7 @@ exports.startup = function () {
                 $tw.wiki.addTiddler({
                     title: '$:/temp/CPL-Repo/instal-plugin-request-tree/' + title,
                     type: 'application/json',
-                    text: JSON.stringify({ title: title, versions: versionsMap, tree: tree }),
+                    text: JSON.stringify({ title: title, versions: versionsMap, sizes: sizesMap, tree: tree }),
                     ...f,
                 });
                 $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/instal-plugin-requesting');
