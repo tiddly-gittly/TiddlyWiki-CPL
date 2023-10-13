@@ -7,6 +7,7 @@ on:
     paths:
       - libraries.json
       - scripts
+      - '.github/workflows/update-library.yml'
   schedule:
     - cron: '0 1 * * *'
 
