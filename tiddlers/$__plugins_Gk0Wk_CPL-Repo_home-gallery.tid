@@ -18,6 +18,7 @@ type: text/vnd.tiddlywiki
 \end
 
 <div style="width:100%;display:flex">
+<div class="cpl-plugin-search">
 <$macrocall
     $name="keyboard-driven-input"
     tiddler="$:/temp/CPL-Repo/searchplugin-home/input"
@@ -27,8 +28,9 @@ type: text/vnd.tiddlywiki
     filterMinLength="2"
     placeholder={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[搜索插件...]else[Search for plugin...]] }}}
     inputAcceptActions=<<go-search>>
-    class="tc-titlebar tc-edit-texteditor cpl-plugin-search"
+    class="tc-titlebar tc-edit-texteditor"
 />
+</div>
 <$button class="tc-primary-btn tc-btn-big-green cpl-plugin-search-go" disabled={{$:/temp/CPL-Repo/searching-plugin}}>
     <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[{$:/temp/CPL-Repo/searching-plugin}match[yes]then[搜索中...]else[搜索]] :else[{$:/temp/CPL-Repo/searching-plugin}match[yes]then[Searching...]else[Search]] }}} />
     <<go-search>>
