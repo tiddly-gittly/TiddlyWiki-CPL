@@ -24,8 +24,15 @@ type: text/vnd.tiddlywiki
 	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
 </div>
 </$list>
+<!-- 错误提示 -->
+<$list filter="[[$:/temp/CPL-Repo/updaing]is[tiddler]!field:text[yes]]">
+<div style="background:#e91e3db0;color:white;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
+	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
+</div>
+</$list>
 <!-- 加载中提示 -->
-<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]]">
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updaing]is[tiddler]field:text[yes]] +[limit[1]]">
 <div style="background:#0005;color:#aaa;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
 	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
 </div>

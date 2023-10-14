@@ -5,6 +5,10 @@ tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/popup-readme
 type: text/vnd.tiddlywiki
 
+{{$:/plugins/Gk0Wk/CPL-Repo/readme}}
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
 <$checkbox
     tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup"
     field="text"
@@ -13,10 +17,6 @@ type: text/vnd.tiddlywiki
     default="0">
     <$text text={{{ [<chinese>match[yes]then[不再弹出该消息]else[No longer pops up this message]] }}}/>
 </$checkbox>
-
-{{$:/plugins/Gk0Wk/CPL-Repo/readme}}
-
-<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 
 <$list filter="[<chinese>match[yes]]">
 

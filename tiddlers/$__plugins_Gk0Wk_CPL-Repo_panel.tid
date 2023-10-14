@@ -14,6 +14,6 @@ type: text/vnd.tiddlywiki
 <$macrocall
 	$name="tabs"
 	state="$:/temp/CPL-Repo/panel-tab-state"
-	tabsList="plugin-database settings +[addprefix[$:/plugins/Gk0Wk/CPL-Repo/]]"
+	tabsList="plugin-database uninstall-manager settings +[addprefix[$:/plugins/Gk0Wk/CPL-Repo/]]"
 	default="$:/plugins/Gk0Wk/CPL-Repo/plugin-database"
 />

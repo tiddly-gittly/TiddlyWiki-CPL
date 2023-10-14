@@ -11,30 +11,30 @@ type: text/vnd.tiddlywiki
 \define dependents-tree(json,checked-title,versions,sizes)
 <$list filter="[<__json__>jsonindexes[]]" variable="plugin">
 <div style="margin-left:1.25em;" class="cpl-plugin-install-request-dependents-tree">
-<$let install-field={{{ [[cpl-plugin#install#]addsuffix<plugin>] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<plugin>] }}}>
-<div style="padding:6px 8px 6px 0;display:flex;align-items:center;justify-content:space-between;">
-<span style="flex-grow:1;padding-left:1em">
-    ''<$text text=<<plugin>>/>''&nbsp;
-    <$let v={{{ [<__checked-title__>get<version-field>] }}}>
-    <$macrocall name="plugin-size" size={{{ [<__sizes__>jsonget<plugin>,<v>else[0]] }}} />
+    <$let install-field={{{ [[cpl-plugin#install#]addsuffix<plugin>] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<plugin>] }}}>
+    <div style="padding:6px 8px 6px 0;display:flex;align-items:center;justify-content:space-between;">
+        <span style="flex-grow:1;padding-left:1em">
+            ''<$text text=<<plugin>>/>''&nbsp;
+            <$let v={{{ [<__checked-title__>get<version-field>] }}}>
+            <$macrocall $name="plugin-size" size={{{ [<__sizes__>jsonget<plugin>,<v>else[0]] }}} />
+            </$let>
+        </span>
+        <span>
+            <$checkbox tiddler=<<__checked-title__>> field=<<install-field>> checked="yes" unchecked="no" default="no">
+                <$text text={{{ [<__checked-title__>get<install-field>match[yes]] :then[<chinese>match[yes]then[即将安装:]else[Will be installed:]] :else[<chinese>match[yes]then[不会安装]else[Will not be installed]] }}} />
+            </$checkbox>
+            <$list filter="[<__checked-title__>get<install-field>match[yes]]" variable="t">
+            &nbsp;
+            <$select tiddler=<<__checked-title__>> field=<<version-field>>>
+                <$list filter="[<__versions__>jsonget<plugin>]" variable="version">
+                <option value=<<version>>><$text text=<<version>>/></option>
+                </$list>
+            </$select>
+            </$list>
+        </span>
+    </div>
+    <$macrocall $name="dependents-tree" json={{{ [<__json__>jsonextract<plugin>] }}} checked-title=<<__checked-title__>> versions=<<__versions__>> sizes=<<__sizes__>> />
     </$let>
-</span>
-<span>
-<$checkbox tiddler=<<__checked-title__>> field=<<install-field>> checked="yes" unchecked="no" default="no">
-    <$text text={{{ [<__checked-title__>get<install-field>match[yes]] :then[<chinese>match[yes]then[即将安装:]else[Will be installed:]] :else[<chinese>match[yes]then[不会安装]else[Will not be installed]] }}} />
-</$checkbox>
-<$list filter="[<__checked-title__>get<install-field>match[yes]]" variable="t">
-&nbsp;
-<$select tiddler=<<__checked-title__>> field=<<version-field>>>
-<$list filter="[<__versions__>jsonget<plugin>]" variable="version">
-<option value=<<version>>><$text text=<<version>>/></option>
-</$list>
-</$select>
-</$list>
-</span>
-</div>
-<$macrocall $name="dependents-tree" json={{{ [<__json__>jsonextract<plugin>] }}} checked-title=<<__checked-title__>> versions=<<__versions__>> sizes=<<__sizes__>> />
-</$let>
 </div>
 </$list>
 \end
@@ -71,6 +71,7 @@ This plugin has some dependencies that will be installed recursively before inst
 It is up to you to choose which plugins to install and select their versions. The plugin dependency tree is as follows:
 
 </$list>
+</$list>
 <div style="margin-left:-1em;margin-right:6px;">
     <$macrocall
         $name="dependents-tree"
@@ -81,7 +82,6 @@ It is up to you to choose which plugins to install and select their versions. Th
     />
 </div>
 <hr/>
-</$list>
 
 <$list filter="[<chinese>match[yes]]" variable="t">
 

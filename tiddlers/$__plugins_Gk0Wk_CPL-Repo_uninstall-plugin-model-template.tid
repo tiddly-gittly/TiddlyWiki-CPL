@@ -1,0 +1,60 @@
+code-body: yes
+created: 20231014134149357
+modified: 20231014134157759
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[请确认卸载]else[Please Confirm to Uninstall]] }}} />
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/uninstall-plugin-model-template
+type: text/vnd.tiddlywiki
+
+\define checkShadow() <$action-listops $tiddler=<<tiddler>> $field=<<field>> $subfilter="[<shadow>]"/>
+\define uncheckShadow() <$action-listops $tiddler=<<tiddler>> $field=<<field>> $subfilter="-[<shadow>]"/>
+
+<$let chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}>
+
+<$list filter="[<chinese>match[yes]]">
+
+!! 即将卸载 <<plugin>>
+
+该插件中，有一些条目已不是默认值(有一个同名的非影子条目)，因此这些条目在删除插件后仍将保留。这可能会为你的 Wiki 增添一些额外的垃圾条目，或者为下一次安装插件或升级插件带来困扰。所以在删除插件时，是否该同时清理这些条目？请选择要删除或者保留的条目，或者点击其标题来产看它的内容来决定。
+
+在决定之后，点击下方的按钮，卸载插件并同时删除勾选的条目。
+
+</$list>
+<$list filter="[<chinese>match[no]]">
+
+!! To uninstall <<plugin>>
+
+The plugin has some entries that are no longer default (there is a non-shadow entry with the same name), so these entries will remain after removing the plugin. This may add some extra junk entries to your Wiki, or cause problems for the next time you install the plugin or upgrade it. So when deleting a plugin, should you clean up these entries at the same time? Please select the entry you want to delete or keep, or click on its title to see what it says to decide.
+
+After deciding, click the button below to uninstall the plugin and remove the checked entries at the same time.
+</$list>
+
+<$button class="tc-btn-big-green tc-primary-btn" message="tm-close-tiddler">
+{{$:/core/images/delete-button}}
+&#32;
+<$text text={{{ [<chinese>match[yes]then[确认卸载]else[Confirm to Uninstall]] }}} />
+<$action-deletetiddler $filter="[<tiddler>get[text]enlist-input[]] [<plugin>]" />
+</$button>
+
+<$let keep={{{ [<chinese>match[yes]then[保留]else[Keep]] }}} nokeep={{{ [<chinese>match[yes]then[删除]else[Delete]] }}}>
+<$let tiddler=<<qualify "$:/temp/CPL-Repo/deleting-plugin-shadows">> field="text">
+
+---
+
+!! <$text text={{{ [<chinese>match[yes]then[已被修改的影子条目:]else[Modified shadow tiddlers:]] }}} />
+
+<div style="display:flex;flex-direction:column;">
+<$list filter="[<plugin>get[text]jsonindexes[tiddlers]is[tiddler]]" variable="shadow" emptyMessage="<$text text={{{ [<chinese>match[yes]then[无]else[]] }}} />">
+<$let is-keep={{{ [<tiddler>get[text]enlist-input[]match<shadow>limit[1]then[no]else[yes]] }}}>
+<div style={{{ [[background:]] [<is-keep>match[yes]then[#00ff2d1d]else[#fd004748]] [[;display:flex;justify-content:space-between;padding:4px 6px;border:1px solid #7774]] +[join[]] }}}>
+<span><<shadow>></span>
+<span>
+<$checkbox filter="[<tiddler>get[text]enlist-input[]]" checked=<<shadow>> checkactions=<<checkShadow>> uncheckactions=<<uncheckShadow>>>&nbsp;''<$text text={{{ [<is-keep>match[yes]then<keep>else<nokeep>] }}}/>''</$checkbox>
+</span>
+</div>
+</$let>
+</$list>
+</div>
+
+</$let>
+</$let>

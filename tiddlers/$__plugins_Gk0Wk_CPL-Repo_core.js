@@ -91,6 +91,7 @@ exports.startup = function () {
             if (updateLock) return;
             updateLock = true;
             lastUpdateTime = Date.now();
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: 'yes' });
             // filter 和 网络请求并发一下
             var updateP = cpl('Update');
             // 根据条件筛选插件
@@ -110,6 +111,7 @@ exports.startup = function () {
                 if (t.length > 0) {
                     // 写入临时信息
                     $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(t) });
+                    $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
                     if (notify !== false) {
                         // 暂时修改通知停留时间为 10s
                         var tt = $tw.config.preferences.notificationDuration;
@@ -124,10 +126,12 @@ exports.startup = function () {
                 updateLock = false;
             }).catch(function (err) {
                 console.error(err);
+                $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: String(err) });
                 updateLock = false;
             });
         } catch (err) {
             console.error(err);
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: String(err) });
             updateLock = false;
         }
 	}
@@ -222,7 +226,10 @@ exports.startup = function () {
                         Promise.all(promisese).then(function () {
                             resolve(subtree);
                         });
-                    }).catch(function (err) { reject(err); });
+                    }).catch(function (err) {
+                        if (err.startsWith('404')) err = '[404] Cannot find plugin '+ title;
+                        reject(err);
+                    });
                 });
             }
 
