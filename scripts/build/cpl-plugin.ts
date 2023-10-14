@@ -25,7 +25,7 @@ export const buildCPLPlugin = (
       cplPluginTiddlers[tiddler.title] = tiddler as any;
     });
   const plugin = {
-    version: $tw.wiki.getTiddlerText('CPL-Repo-Version')!,
+    version: $tw.wiki.getTiddlerText('CPL-Repo-Version')!.trim(),
     type: 'application/json',
     title: '$:/plugins/Gk0Wk/CPL-Repo',
     'plugin-type': 'plugin',

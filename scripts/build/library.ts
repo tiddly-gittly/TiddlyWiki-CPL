@@ -173,7 +173,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           .filter(t => statSync(resolve(cachePluginFolderPath, t)).isFile())
           .filter(t => t !== 'latest.json' && t !== '__meta__.json')
           .map(t => {
-            const versionText = t.replace(/\.json$/, '');
+            const versionText = t.replace(/\.json$/, '').trim();
             versionsSize[versionText] = statSync(
               resolve(cachePluginFolderPath, t),
             ).size;

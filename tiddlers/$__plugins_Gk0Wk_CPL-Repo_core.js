@@ -103,9 +103,9 @@ exports.startup = function () {
                 for (var title of plugins) {
                     var lastestVersion = updatePlugins[title]; // [version, coreVersion]
                     if (lastestVersion === undefined) continue; // 不存在该插件
-                    if (lastestVersion[1] && $tw.utils.compareVersions($tw.version, lastestVersion[1]) < 0) continue; // 插件兼容性检查
+                    if (lastestVersion[1] && $tw.utils.compareVersions($tw.version, lastestVersion[1].trim()) < 0) continue; // 插件兼容性检查
                     var version = $tw.wiki.getTiddler(title).fields.version;
-                    if (version && $tw.utils.compareVersions(version, lastestVersion[0]) >= 0) continue; // 插件是否更新
+                    if (version && lastestVersion[0] && $tw.utils.compareVersions(version.trim(), lastestVersion[0].trim()) >= 0) continue; // 插件是否更新
                     t.push(title);
                 }
                 if (t.length > 0) {
