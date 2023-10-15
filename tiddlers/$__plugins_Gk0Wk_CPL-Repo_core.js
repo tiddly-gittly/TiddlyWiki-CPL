@@ -65,12 +65,13 @@ var cpl = function (type, payload) {
         window.addEventListener("message", ccc);
         document.body.appendChild(iframe);
         globalThis.__tiddlywiki_cpl__reset__ = function () {
-        delete globalThis.__tiddlywiki_cpl__reset__;
-        window.removeEventListener("message", ccc);
-        iframe.parentNode.removeChild(iframe);
-        callbackMap.forEach((r) => {
-            r[1]();
-        });
+            delete globalThis.__tiddlywiki_cpl__reset__;
+            messagerPromise = undefined;
+            window.removeEventListener("message", ccc);
+            iframe.parentNode.removeChild(iframe);
+            callbackMap.forEach((r) => {
+                r[1]();
+            });
         };
     });
   return messagerPromise.then(function (r) { return r(type, payload) });
