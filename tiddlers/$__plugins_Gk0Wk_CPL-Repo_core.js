@@ -111,7 +111,6 @@ exports.startup = function () {
                 if (t.length > 0) {
                     // 写入临时信息
                     $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(t) });
-                    $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
                     if (notify !== false) {
                         // 暂时修改通知停留时间为 10s
                         var tt = $tw.config.preferences.notificationDuration;
@@ -123,6 +122,7 @@ exports.startup = function () {
                         $tw.config.preferences.notificationDuration = tt;
                     }
                 }
+                $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
                 updateLock = false;
             }).catch(function (err) {
                 console.error(err);
