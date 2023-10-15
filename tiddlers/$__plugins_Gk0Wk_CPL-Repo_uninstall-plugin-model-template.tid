@@ -2,7 +2,7 @@ code-body: yes
 created: 20231014134149357
 modified: 20231014134157759
 subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[请确认卸载]else[Please Confirm to Uninstall]] }}} />
-tags: 
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/uninstall-plugin-model-template
 type: text/vnd.tiddlywiki
 
@@ -13,7 +13,26 @@ type: text/vnd.tiddlywiki
 
 <$list filter="[<chinese>match[yes]]">
 
-!! 即将卸载 <<plugin>>
+> 即将卸载 <<plugin>>
+
+<$list filter="[!field:plugin-type[]search:parent-plugin<plugin>] [!field:plugin-type[]search:dependent<plugin>] +[limit[1]]" variable="t">
+
+---
+
+!! 注意：插件被依赖
+
+该插件仍然被如下插件依赖，是否继续卸载？
+
+<$list filter="[!field:plugin-type[]search:parent-plugin<plugin>] [!field:plugin-type[]search:dependent<plugin>] +[unique[]sort[title]]" variable="other-plugin">
+
+: <<other-plugin>>
+
+</$list>
+</$list>
+
+---
+
+!! 注意：残留条目
 
 该插件中，有一些条目已不是默认值(有一个同名的非影子条目)，因此这些条目在删除插件后仍将保留。这可能会为你的 Wiki 增添一些额外的垃圾条目，或者为下一次安装插件或升级插件带来困扰。所以在删除插件时，是否该同时清理这些条目？请选择要删除或者保留的条目，或者点击其标题来产看它的内容来决定。
 
@@ -22,7 +41,26 @@ type: text/vnd.tiddlywiki
 </$list>
 <$list filter="[<chinese>match[no]]">
 
-!! To uninstall <<plugin>>
+> To uninstall <<plugin>>
+
+<$list filter="[!field:plugin-type[]search:parent-plugin<plugin>] [!field:plugin-type[]search:dependent<plugin>] +[limit[1]]" variable="t">
+
+---
+
+!! Note: Plugin is Dependent
+
+The plugin is still dependent on the following plugins, do you continue to uninstall?
+
+<$list filter="[!field:plugin-type[]search:parent-plugin<plugin>] [!field:plugin-type[]search:dependent<plugin>] +[unique[]sort[title]]" variable="other-plugin">
+
+: <<other-plugin>>
+
+</$list>
+</$list>
+
+---
+
+!! Note: Left tiddlers
 
 The plugin has some entries that are no longer default (there is a non-shadow entry with the same name), so these entries will remain after removing the plugin. This may add some extra junk entries to your Wiki, or cause problems for the next time you install the plugin or upgrade it. So when deleting a plugin, should you clean up these entries at the same time? Please select the entry you want to delete or keep, or click on its title to see what it says to decide.
 
@@ -38,10 +76,6 @@ After deciding, click the button below to uninstall the plugin and remove the ch
 
 <$let keep={{{ [<chinese>match[yes]then[保留]else[Keep]] }}} nokeep={{{ [<chinese>match[yes]then[删除]else[Delete]] }}}>
 <$let tiddler=<<qualify "$:/temp/CPL-Repo/deleting-plugin-shadows">> field="text">
-
----
-
-!! <$text text={{{ [<chinese>match[yes]then[已被修改的影子条目:]else[Modified shadow tiddlers:]] }}} />
 
 <div style="display:flex;flex-direction:column;">
 <$list filter="[<plugin>get[text]jsonindexes[tiddlers]is[tiddler]]" variable="shadow" emptyMessage="<$text text={{{ [<chinese>match[yes]then[无]else[]] }}} />">
