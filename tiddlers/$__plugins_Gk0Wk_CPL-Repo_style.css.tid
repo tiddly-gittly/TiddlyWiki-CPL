@@ -58,7 +58,16 @@ type: text/vnd.tiddlywiki
 .cpl-plugin-search {
   flex-grow: 1;
   width: 0;
+}
+
+.cpl-plugin-search span {
+  display: inline-block;
+  width: 100%;
+}
+
+.cpl-plugin-search span input {
   margin: 0 !important;
+  width: 100%;
 }
 
 .cpl-plugin-search-go {

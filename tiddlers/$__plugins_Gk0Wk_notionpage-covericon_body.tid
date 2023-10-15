@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
 <$let currentTiddler={{{ [<__cover__>!is[blank]then<__cover__>else<__default__>] }}}>
 <$let imguri={{{ [<currentTiddler>is[image]!has[_canonical_uri]] :then[subfilter<imagetobase64>] :else[<currentTiddler>get[_canonical_uri]else<currentTiddler>] }}}>
 <div class="$class$" style="$style$;display:flex;position:relative;overflow:hidden;align-items:center;justify-content:center;" >
-<div class="$class$" style={{{ [[background-image:url(]] [<imguri>] [[);background-size:cover;background-position:center;position:absolute;top:-10px;left:-10px;filter:blur(8px);height:calc(100% + 20px);width:calc(100% + 20px);]] [<__style1__>] :and[join[]] }}} />
+<div class="$class1$" style={{{ [[background-image:url(]] [<imguri>] [[);background-size:cover;background-position:center;position:absolute;top:-10px;left:-10px;filter:blur(8px);height:calc(100% + 20px);width:calc(100% + 20px);]] [<__style1__>] :and[join[]] }}} />
 <img class="$class2$" style="$style2$;height:100%;position:relative;margin:0 auto;object-fit:contain;" src=<<imguri>> loading="lazy" />
 </div>
 </$let>

@@ -1,11 +1,12 @@
 created: 20231010091633120
 modified: 20231010161252442
 subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[更新列表]else[Update List]] }}}/>
-tags: 
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/update-body
 type: text/vnd.tiddlywiki
 
 \import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
+\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
 \import $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
@@ -23,8 +24,15 @@ type: text/vnd.tiddlywiki
 	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
 </div>
 </$list>
+<!-- 错误提示 -->
+<$list filter="[[$:/temp/CPL-Repo/updaing]is[tiddler]!field:text[yes]]">
+<div style="background:#e91e3db0;color:white;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
+	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
+</div>
+</$list>
 <!-- 加载中提示 -->
-<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]]">
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updaing]is[tiddler]field:text[yes]] +[limit[1]]">
 <div style="background:#0005;color:#aaa;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
 	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
 </div>

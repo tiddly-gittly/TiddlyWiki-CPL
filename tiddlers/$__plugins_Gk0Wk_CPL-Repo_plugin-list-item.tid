@@ -1,7 +1,7 @@
 code-body: yes
 created: 20231009081025598
-modified: 20231010113040143
-tags:
+modified: 20231013171005230
+tags: 
 title: $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
 type: text/vnd.tiddlywiki
 
@@ -40,6 +40,7 @@ type: text/vnd.tiddlywiki
 
 \define plugin-list-item(json,field,show-suggestion:"yes",class:"")
 \whitespace trim
+\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 <div class="$class$">
 <$let json=<<__json__>>>
@@ -172,6 +173,7 @@ type: text/vnd.tiddlywiki
         <div style="background:#1a4655;padding:4px 12px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;border-top:1px solid #15333c;">
             <span>
                 <<version>>
+                <span style="opacity: 0.8;">&nbsp;(<$macrocall $name="plugin-size" size={{{ [<json>jsonget[versions-size],<version>else[0]] }}} />)</span>
                 <$list filter="[<latest>compare:version:eq<version>]">&nbsp;<span class="cpl-latest-version-icon">{{$:/core/images/star-filled}}</span></$list>
                 <$list filter="[<installedVersion>compare:version:eq<version>]">&nbsp;<span class="cpl-installed-version-icon">{{$:/core/images/done-button}}</span></$list>
             </span>

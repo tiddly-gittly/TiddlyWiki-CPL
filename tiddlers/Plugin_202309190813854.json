@@ -8,7 +8,7 @@
         "cpl.description": "Command palette",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.7",
+        "cpl.core-version": ">=5.3.0",
         "title": "Plugin_202309190813854"
     }
 ]

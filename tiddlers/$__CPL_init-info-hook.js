@@ -3,7 +3,7 @@
 
 exports.name = "cpl-info-hook";
 exports.platforms = ["browser"];
-exports.after = ["cpl-repo-init"];
+exports.after = ["render", "cpl-repo-init"];
 exports.synchronous = true;
 exports.startup = function () {
     globalThis.__tiddlywiki_cpl__('Update').then(function (text) {

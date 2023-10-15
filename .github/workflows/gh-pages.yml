@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths-ignore: 
+      - '.github/workflows/update-library.yml'
+      - libraries.json
   schedule:
     - cron: '0 * * * *'
 

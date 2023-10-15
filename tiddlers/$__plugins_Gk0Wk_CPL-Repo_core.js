@@ -91,6 +91,7 @@ exports.startup = function () {
             if (updateLock) return;
             updateLock = true;
             lastUpdateTime = Date.now();
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: 'yes' });
             // filter 和 网络请求并发一下
             var updateP = cpl('Update');
             // 根据条件筛选插件
@@ -102,14 +103,15 @@ exports.startup = function () {
                 for (var title of plugins) {
                     var lastestVersion = updatePlugins[title]; // [version, coreVersion]
                     if (lastestVersion === undefined) continue; // 不存在该插件
-                    if (lastestVersion[1] && $tw.utils.compareVersions($tw.version, lastestVersion[1]) < 0) continue; // 插件兼容性检查
+                    if (lastestVersion[1] && $tw.utils.compareVersions($tw.version, lastestVersion[1].trim()) < 0) continue; // 插件兼容性检查
                     var version = $tw.wiki.getTiddler(title).fields.version;
-                    if (version && $tw.utils.compareVersions(version, lastestVersion[0]) >= 0) continue; // 插件是否更新
+                    if (version && lastestVersion[0] && $tw.utils.compareVersions(version.trim(), lastestVersion[0].trim()) >= 0) continue; // 插件是否更新
                     t.push(title);
                 }
                 if (t.length > 0) {
                     // 写入临时信息
                     $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(t) });
+                    $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
                     if (notify !== false) {
                         // 暂时修改通知停留时间为 10s
                         var tt = $tw.config.preferences.notificationDuration;
@@ -124,10 +126,12 @@ exports.startup = function () {
                 updateLock = false;
             }).catch(function (err) {
                 console.error(err);
+                $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: String(err) });
                 updateLock = false;
             });
         } catch (err) {
             console.error(err);
+            $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: String(err) });
             updateLock = false;
         }
 	}
@@ -184,6 +188,7 @@ exports.startup = function () {
             var existingTitle = new Set(); // 避免环
             var versionsMap = {};
             var versionsMapLatest = {};
+            var sizesMap = {};
             // 递归检查依赖
             var title_ = title;
             function recursiveInstallCheck(title) {
@@ -194,6 +199,7 @@ exports.startup = function () {
                         if (title === title_ && data.versions.indexOf(version) < 0) version = data.latest;
                         versionsMap[title] = data.versions;
                         versionsMapLatest[title] = data.latest;
+                        sizesMap[title] = data['versions-size'] || {};
                         var t = new Set();
                         var promisese = [];
                         var subtree = {};
@@ -220,7 +226,10 @@ exports.startup = function () {
                         Promise.all(promisese).then(function () {
                             resolve(subtree);
                         });
-                    }).catch(function (err) { reject(err); });
+                    }).catch(function (err) {
+                        if (err.startsWith('404')) err = '[404] Cannot find plugin '+ title;
+                        reject(err);
+                    });
                 });
             }
 
@@ -235,7 +244,7 @@ exports.startup = function () {
                 $tw.wiki.addTiddler({
                     title: '$:/temp/CPL-Repo/instal-plugin-request-tree/' + title,
                     type: 'application/json',
-                    text: JSON.stringify({ title: title, versions: versionsMap, tree: tree }),
+                    text: JSON.stringify({ title: title, versions: versionsMap, sizes: sizesMap, tree: tree }),
                     ...f,
                 });
                 $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/instal-plugin-requesting');
