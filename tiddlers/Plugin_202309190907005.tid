@@ -7,6 +7,6 @@ cpl.plugin-type: plugin
 cpl.readme: 
 cpl.source: https://github.com/oeyoews/neotw/plugins/tiddlywiki-motion
 cpl.title: $:/plugins/oeyoews/motion
-cpl.uri: https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmotion.json
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmotion.json
 tags: $:/tags/PluginWiki
 title: Plugin_202309190907005
