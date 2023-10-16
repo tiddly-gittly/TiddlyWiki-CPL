@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "!! Npl\n",
+        "cpl.readme": "!! Npl\n\n已修复: https://github.com/oeyoews/tiddlywiki-starter-kit/issues/104",
         "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252FNPL.json",
         "cpl.title": "$:/plugins/oeyoews/NPL",
         "cpl.author": "oeyoews",
