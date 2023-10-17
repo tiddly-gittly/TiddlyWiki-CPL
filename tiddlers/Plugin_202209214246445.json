@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n* support `jk`, H L replace 0 $\n\n> vim 不能没有jk, 就像西方不能没有耶路撒冷\n\n* 需要等宽字体(安装字体需要重启)\n\n</div>\n",
+        "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n* support `jk`, H L replace 0 $\n\n> vim 不能失去jk, 就像Linux不能失去terminal\n\n* 需要等宽字体(安装字体需要重启)\n\n</div>\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fcodemirror-keymap-vimjk.json",
         "cpl.title": "$:/plugins/oeyoews/codemirror-keymap-vimjk",
         "cpl.author": "oeyoews",
