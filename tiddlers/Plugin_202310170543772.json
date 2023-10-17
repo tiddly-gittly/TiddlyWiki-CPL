@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_BEC_2.jpg]]\n\n此学习包共有 2753个来源于有道词典的单词。精选商务英语初级、中级、高级考试及实际应用词汇。通过科学频率算法筛选高频核心词汇，专业团队把关，帮助用户节约时间、高效学习。精选例句和词组短语，帮助用户准确把握用词含义，快速掌握真实场景的运用。结合背单词科学记忆方法，有利于用户迅速掌握商务词汇，有效扩大词汇量，提高考试成绩。适用于备战考试，有意丰富自身商务英语词汇的用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-BEC_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-BEC_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "商务英语词汇",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170543772"
+    }
+]

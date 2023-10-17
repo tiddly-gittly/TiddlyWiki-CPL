@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_CET4_2.jpg]]\n\n此学习包共有 3739个来源于有道词典的单词。据教育部最新颁发大学英语课程教学要求制作，四级备考用户基础经典必背词书。整合收录中学基础词汇、四级大纲要求词汇、真题高频词汇、超纲词汇。有道词典提供正版权威词库，名师校编给你最需要的单词释义和例句，配合背单词科学记忆方法，简单有效搞定四级，此书在手，天下我有！适合所有四级备考用户或想夯实英语基础能力的用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-CET4_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-CET4_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "四级英语词汇（正序版）",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170544023"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_GRE_2.jpg]]\n\n此学习包共有 7199个来源于有道词典的单词。全面收录GRE考试词汇7199个。有道词典提供正版权威词库，根据教育测试中心ETS出题常用的权威辞典给出单词释意和例句，帮助用户掌握最有针对性的学习内容，加深对单词本身含义的理解和记忆。每个单词均列出短语和多项近义词，有效扩展词汇量并提高记忆效率，帮助用户从容应对词汇难度和用法都更具挑战性的GRE考试。适合准备GRE考试，想要提高英语能力的用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-GRE_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-GRE_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "GRE词汇",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170612751"
+    }
+]
