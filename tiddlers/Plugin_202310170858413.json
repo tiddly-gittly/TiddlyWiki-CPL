@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_Level8_2.jpg]]\n\n此学习包共有 12197个来源于有道词典的单词。根据最新英语专业教学大纲制作，专八备考用户基础经典必背词书。整合教学大纲词汇表的要求词汇、历年专八真题的考试词汇、相关重要派生词汇，更加符合考试需求。有道词典提供正版权威词库，名师校编给你最需要的单词释义和例句，配合背单词科学记忆方法，简单高效搞定专八核心词汇。背完这本，心里踏实！适合备考专八考试以及想大量提高英语词汇量的用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-Level8luan_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-Level8luan_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "专八核心词汇",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170858413"
+    }
+]

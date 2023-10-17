@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/1491037703359Level8_1.jpg]]\n\n此学习包共有 684个来源于有道考神团队的单词。整合历年专八真题考试中的所有词汇，通过深入研究改革前后历年真题命题规律，对专八真题词汇进行深入分析和研究，统计真实考试场景下必背684个高频词汇。搭配英文释意，帮助考生准确理解词义，满足专八更高需求。用最短的时间考最高的分数，背单词带你搞定专八，快、准、狠！适用于高效学习、基础备考。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-Level8_1.json",
+        "cpl.title": "$:/plugins/tidme/decks-Level8_1",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "专八真题高频词",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170824699"
+    }
+]

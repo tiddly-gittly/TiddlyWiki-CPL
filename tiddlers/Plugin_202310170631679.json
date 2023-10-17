@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_GaoZhong_2.jpg]]\n\n此学习包共有 3668个来源于有道词典的单词。依据教育部最新颁布的高考英语大纲及高中英语课程标准，整合收录3668个高中教材词汇、高考真题词汇、超纲词汇。有道词典提供权威正版词库，名师校编融合考点难点，有针对性地给出释意、例句、词组短语，结合背单词科学记忆方法，帮助考生高效学习，决胜高考！适合备战高考以及高中阶段学习英语的所有用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-GaoZhong_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-GaoZhong_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "高中英语词汇（正序版）",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170631679"
+    }
+]

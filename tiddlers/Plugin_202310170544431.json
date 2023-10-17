@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_ChuZhong_2.jpg]]\n\n此学习包共有 1420个来源于有道词典的单词。依据教育部最新颁布的英语课程标准，初中英语考试常考点和必考点，整合收录初中英语核心词汇及基础词汇。有道词典提供权威正版词库，名师校编给你最需要的单词释意，搭配例句给你完整的语境理解单词含义，加深学习印象。词组短语教你如何实际运用，必考搭配一网打尽。适合备战中考以及初中阶段学习英语的所有用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-ChuZhongluan_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-ChuZhongluan_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "中考必备词汇",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170544431"
+    }
+]

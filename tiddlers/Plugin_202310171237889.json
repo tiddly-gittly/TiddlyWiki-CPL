@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/reciteWord_1545032534804_WaiYanSheChuZhong_5.png]]\n\n此学习包共有 381个来源于外研社初中教材的单词。外研社初中英语教材是由外语教学与研究出版社与英国麦克米伦出版（中国）有限公司依据国家《义务教育 英语课程标准（实验稿）》共同组织开发的。本套教材由日常生活中涉及的语言开始，从学生英语学习的实际出发，设计了丰富科学的学习内容，全方面锻炼学生的听说读写能力。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-WaiYanSheChuZhong_5.json",
+        "cpl.title": "$:/plugins/tidme/decks-WaiYanSheChuZhong_5",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "外研社版初中英语-九年级上册",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310171237889"
+    }
+]
