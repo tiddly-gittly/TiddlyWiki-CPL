@@ -3,7 +3,7 @@
         "created": "20230923051017698",
         "creator": "oflg",
         "title": "Plugin_202309231017698",
-        "modified": "20230923051745832",
+        "modified": "20231017031112593",
         "modifier": "oflg",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -17,6 +17,7 @@
         "cpl.readme": "Installation and usage tutorial is available at [[Tidme Manual|https://oflg.github.io/Tidme/manual/#Included%20plugins]].\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#相关插件]] 查看安装使用教程。",
         "cpl.core-version": ">=5.3.0",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "$:/plugins/tidme/fsrs4tw"
+        "cpl.dependents": "$:/plugins/tidme/fsrs4tw",
+        "cpl.tags": "supermemo anki lingq srs flashcards [[spaced repetition]] memory [[incremental learning]] [[incremental reading]]"
     }
 ]
