@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
+cpl.description: neotw-cli-info
+cpl.name: neotw-cli-info
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/neotw-cli-info
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-cli-info.json
+tags: $:/tags/PluginWiki
+title: Plugin_202310181531453
