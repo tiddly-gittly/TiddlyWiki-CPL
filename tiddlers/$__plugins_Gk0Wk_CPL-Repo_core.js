@@ -65,12 +65,13 @@ var cpl = function (type, payload) {
         window.addEventListener("message", ccc);
         document.body.appendChild(iframe);
         globalThis.__tiddlywiki_cpl__reset__ = function () {
-        delete globalThis.__tiddlywiki_cpl__reset__;
-        window.removeEventListener("message", ccc);
-        iframe.parentNode.removeChild(iframe);
-        callbackMap.forEach((r) => {
-            r[1]();
-        });
+            delete globalThis.__tiddlywiki_cpl__reset__;
+            messagerPromise = undefined;
+            window.removeEventListener("message", ccc);
+            iframe.parentNode.removeChild(iframe);
+            callbackMap.forEach((r) => {
+                r[1]();
+            });
         };
     });
   return messagerPromise.then(function (r) { return r(type, payload) });
@@ -111,7 +112,6 @@ exports.startup = function () {
                 if (t.length > 0) {
                     // 写入临时信息
                     $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(t) });
-                    $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
                     if (notify !== false) {
                         // 暂时修改通知停留时间为 10s
                         var tt = $tw.config.preferences.notificationDuration;
@@ -123,6 +123,7 @@ exports.startup = function () {
                         $tw.config.preferences.notificationDuration = tt;
                     }
                 }
+                $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
                 updateLock = false;
             }).catch(function (err) {
                 console.error(err);

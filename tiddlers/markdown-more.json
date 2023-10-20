@@ -1,0 +1,17 @@
+[
+	{
+		"title": "Markdown More",
+		"tags": "$:/tags/PluginWiki",
+		"type": "text/vnd.tiddlywiki",
+		"cpl.title": "$:/plugins/cdr/markdown-more",
+		"cpl.author": "cdr",
+		"cpl.name": "Markdown More",
+		"cpl.description": "Markdown More",
+		"cpl.uri": "https://cdruan.github.io/tw-markdown-more/",
+		"cpl.readme": "Markdown More",
+		"cpl.source": "https://github.com/cdruan/tw-markdown-more",
+		"cpl.documentation": "",
+		"cpl.plugin-type": "plugin",
+		"page-cover": ""
+	}
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/3_youdao_PEPChuZhong8_1.jpg]]\n\n此学习包共有 419个来源于人教版教材的单词。人教版义务教育课程标准初中教科书，同步收录教科书中所有课程词汇。官方权威词库来源，有针对性地搭配合适的中英释意、英文例句、词组短语、同近义词，丰富学习内容。结合背单词科学记忆方法，帮助用户在语境中学习词汇，系统地训练加深理解，拓展思维。适用于正在学习本书的用户同步课堂学习内容，课前预习，课后复习等用途。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-PEPChuZhong8_1.json",
+        "cpl.title": "$:/plugins/tidme/decks-PEPChuZhong8_1",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "人教版初中英语-八年级上册",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170920041"
+    }
+]

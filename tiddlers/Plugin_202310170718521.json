@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/1491037662208KaoYan_1.jpg]]\n\n此学习包共有 1341个来源于有道考神团队的单词。有道超强词频统计，考神团队精心制作。严格按照考研英语最新大纲要求，运用科学的统计算法，考神团队深入研究历年真题及考研英语命题规律，对考研英语词汇进行深入地分析和研究，统计真实考试场景下的必背词汇，名师把关剔除简单词汇，将4533个考研词汇通过严格科学的方法筛选至1341个核心词，帮助考生省时省力完成备考，快速高效！\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-KaoYan_1.json",
+        "cpl.title": "$:/plugins/tidme/decks-KaoYan_1",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "考研必考词汇（正序版）",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202310170718521"
+    }
+]

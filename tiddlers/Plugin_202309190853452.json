@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "!! Tiddlywiki Back To Top\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/tiddlywiki-back-to-top]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n\n!! TOOD\n\n* 固定滚动到顶部的时间\n* background with palette primary\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-back-to-top.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-back-to-top.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-back-to-top",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Back To Top",

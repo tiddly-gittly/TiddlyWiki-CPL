@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20230923051017698",
+        "creator": "oflg",
+        "title": "Plugin_202310161017698",
+        "modified": "20231017031154330",
+        "modifier": "oflg",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "oflg",
+        "cpl.title": "$:/plugins/tidme/read",
+        "cpl.type": "plugin",
+        "cpl.uri": "https://oflg.github.io/Tidme/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fread.json",
+        "cpl.name": "Tidme Read",
+        "cpl.description": "Incremental Reading for Tidme",
+        "cpl.source": "https://github.com/oflg/Tidme-read",
+        "cpl.dependents": "$:/plugins/tidme/fsrs4tw $:/plugins/tiddlywiki/dynaview $:/plugins/tiddlywiki/dynannotate",
+        "cpl.documentation": "https://oflg.github.io/Tidme",
+        "cpl.readme": "Installation and usage tutorial is available at [[Tidme Manual|https://oflg.github.io/Tidme/manual/#Included%20plugins]].\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#相关插件]] 查看安装使用教程。",
+        "cpl.core-version": ">=5.2.3",
+        "cpl.plugin-type": "plugin",
+        "cpl.tags": "anki supermemo lingq srs flashcards [[spaced repetition]] memory [[incremental learning]] [[incremental reading]]"
+    }
+]

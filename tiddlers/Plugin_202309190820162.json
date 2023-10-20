@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "!! Neotw Fetch\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/oeyoews/neotw-fetch]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-fetch.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-fetch.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-fetch",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Fetch",

@@ -3,7 +3,7 @@
         "created": "20230923050301820",
         "creator": "Sttot",
         "title": "Plugin_202309230301820",
-        "modified": "20230923051542799",
+        "modified": "20231017031033898",
         "modifier": "oflg",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -17,6 +17,7 @@
         "cpl.dependents": "$:/plugins/tiddlywiki/confetti $:/plugins/tiddlywiki/browser-sniff",
         "cpl.core-version": ">=5.3.0",
         "cpl.documentation": "https://oflg.github.io/Tidme",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "cpl.tags": "supermemo anki lingq srs flashcards [[spaced repetition]] memory [[incremental reading]] [[incremental learning]]"
     }
 ]

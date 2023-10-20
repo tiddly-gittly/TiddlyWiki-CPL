@@ -1,0 +1,12 @@
+cpl.author: Dyllon Gagnier
+cpl.core-version: >=5.2.1
+cpl.dependents: 
+cpl.description: TW saver which saves to the file system using the File System Access API.
+cpl.name: HTML Native File System Saver
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/slaymaker1907/TW5-fsa-saver
+cpl.title: $:/plugins/slaymaker1907/browser-nativesaver
+cpl.uri: https://slaymaker1907.github.io/tiddlywiki/plugin-library.html
+tags: $:/tags/PluginWiki
+title: Plugin_202310151339719

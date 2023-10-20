@@ -37,6 +37,11 @@ type: text/vnd.tiddlywiki
 	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
 </div>
 </$list>
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updaing]is[tiddler]field:text[yes]] +[limit[1]]">
+<div style="background:#0005;color:#aaa;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);min-height:100px;display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
+</div>
+</$list>
 </$list>
 
 </$list>
