@@ -44,7 +44,7 @@ export const buildCPLPlugin = (
       version: plugin.version,
       'plugin-type': plugin['plugin-type'],
       icon: '',
-      'core-version': '>=5.2.1',
+      'core-version': '>=5.3.0',
       dependents: '',
       'parent-plugin': '',
       'requires-reload': true,
