@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "!! Tiddlywiki Videos\n\n!! Usage\n\n\r\n```wikitext\r\n<$youtube youtubeId=\"o7GyFa90klg\" />\r\n<$youtube youtubeId=\"PLjNhkoz3yGwG9ISeHEYsdUSQdQarKJ8u3\" playlist/>\r\n<$youtube url='' />\r\n// support url, such as bilibili\r\n```\n\n<$youtube youtubeId=\"o7GyFa90klg\" />\r\n<$youtube youtubeId=\"PLjNhkoz3yGwG9ISeHEYsdUSQdQarKJ8u3\" playlist/>\n\n!! Ref\n\n* https://developers.google.com/youtube/player_parameters?hl=zh-cn\r\n",
+        "cpl.readme": "!! Tiddlywiki Videos\n\n!! Usage\n\n```wikitext\r\n<$video yid=\"o7GyFa90klg\" />\r\n<$video bid='' />\r\n<$video url='' />\r\n```\n\n!! Ref\n\n* https://developers.google.com/youtube/player_parameters?hl=zh-cn\r\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-videos.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-videos",
         "cpl.author": "oeyoews",
