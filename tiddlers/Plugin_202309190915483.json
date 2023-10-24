@@ -1,8 +1,8 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<div class=\"prose max-w-none\">\n\n> Allow export single tiddler as image\n> 允许导出单个 tiddler 为图片\n\n!! optional plugins dependencies\n\n* neotw-swal2: preview exported png\n* neotw-back-to-top(nprogress): progress bar for export png\n\n!! Tip\n\n* if yout want to reduce image size, you can remove the cover provided by Notion page plugins, because these images will be converted into binary, and each image will take up a large size\n* 如果想要减小图片大小, 可以移除 Notion page 插件 提供的cover, 因为这些图片会被转换成二进制, 每张图片都会占用很大的尺寸\n\n</div>\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tid2png.json",
+        "cpl.readme": "<div class=\"prose max-w-none\">\n\n支持导出图片, 包括指定tiddler, 固定区域, 甚至直接当作窗口截图工具\n\n!! optional plugins dependencies\n\n* neotw-swal2: preview exported png\n* nprogress: progress bar for export png\n\n!! usage\n\n```html\n<$tid2png text='use id' customSelector=\"#export\" />\n<$tid2png text='use class' customSelector=\".export\" />\n<$tid2png text='use data' customSelector=\"[data-export]\" />\n\n<div id=\"export\" data-export class='export'> export area </div>\n```\n\n<$tid2png text='use id' customSelector=\"#export\" />\n<$tid2png text='use class' customSelector=\".export\" />\n<$tid2png text='use data' customSelector=\"[data-export]\" />\n\n<div id=\"export\" data-export class='export'> export area </div>\n\n</div>\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tid2png.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-tid2png",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Tid2png",

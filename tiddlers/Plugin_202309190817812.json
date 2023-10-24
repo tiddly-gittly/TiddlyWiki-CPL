@@ -8,8 +8,8 @@
         "cpl.name": "Neotw Copy Code",
         "cpl.description": "Neotw Copy Code",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/neotw-icons",
-        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/neotw-icons $:/plugins/oeyoews/notify",
+        "cpl.core-version": ">=5.3.1",
         "title": "Plugin_202309190817812"
     }
 ]
