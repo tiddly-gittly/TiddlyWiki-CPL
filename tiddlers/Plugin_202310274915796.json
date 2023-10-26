@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20231026164915796",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202310274915796",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Static Page Switch Button",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/switch-static-and-dynamic-page",
+        "modified": "20231026165201443",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "# Allow you copy static page url using a view template button.\n# Allow viewer of your static page to switch to dynamic page using a button show on the card.\n\n# 允许使用页面工具栏上的一个新按钮复制静态页面网址。\n# 允许静态页面的浏览者使用卡片上的一个新按钮切换到动态页面。",
+        "cpl.uri": "https://github.com/tiddly-gittly/switch-static-and-dynamic-page/releases/latest/download/__plugins_linonetwo_switch-static-and-dynamic-page.json",
+        "cpl.source": "https://github.com/tiddly-gittly/switch-static-and-dynamic-page",
+        "cpl.documentation": "https://tiddly-gittly.github.io/switch-static-and-dynamic-page/",
+        "cpl.core-version": ">=5.3.0"
+    }
+]
