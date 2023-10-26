@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20231026111631806",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202310261631806",
+        "cpl.author": "Lin Onetwo",
+        "cpl.name": "Sitemap for server",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/tw-server-sitemap",
+        "modified": "20231026111936611",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Generate Sitemap for your Nodejs based server.\n\nUse this with your NodeJS based wiki server, or your [[blog served with TidGi|https://tidgi.fun/#TidGi%20Feature%20Handbook%2FBlogging%20With%20NAT%20Traversal]].",
+        "cpl.uri": "https://github.com/tiddly-gittly/tw-server-sitemap/releases/latest/download/__plugins_linonetwo_tw-server-sitemap.json",
+        "cpl.readme": "Generate Contents Links Like:\n\nSitemap: https://tidgi.fun/sitemap.xml\n\nRobots: https://tidgi.fun/robots.txt",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-server-sitemap",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tw-server-sitemap/",
+        "cpl.core-version": ">=5.3.0"
+    }
+]
