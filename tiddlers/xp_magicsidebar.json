@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "kl",
+        "cpl.category": "Functional",
+        "cpl.core-version": "",
+        "cpl.dependents": "",
+        "cpl.description": "Show right sidebar on mouse hover",
+        "cpl.documentation": "",
+        "cpl.name": "Magic Sidebar",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "\\define dropdown-sidebar-animation()\n<$select tiddler=\"$:/config/MagicSidebar/animation\">\n<option value=\"<<fadeInRight>>\">从右到左</option>\n<option value=\"<<toShow>>\">逐渐显示</option>\n</$select>\n\\end\n\n当侧边栏处于隐藏状态时，您可以将鼠标指针移到右侧热点区以显示侧边栏。\n\n: <$checkbox tiddler=\"$:/config/MagicSidebar/display\" field=\"text\" checked=\"block\" unchecked=\"none\" checkactions=\"<$action-deletetiddler $tiddler='$:/config/MagicSidebar/display'/>\"> [[Turn on Magic Sidebar|$:/config/MagicSidebar/display]]</$checkbox>\n\n<div style=\"margin-left:2em\">\n\n设置右侧顶部热区的宽度和高度：\n\n| ''Width''|^<$edit-text tiddler=\"$:/xp/magicsidebar/metrics/width\" default=\"25px\" tag=\"input\" size=6/> <$button set=\"$:/xp/magicsidebar/metrics/width\" setTo=\"25px\" tooltip=\"Reset to default\">Reset</$button> |\n| ''Height''|^<$edit-text tiddler=\"$:/xp/magicsidebar/metrics/height\" default=\"350px\" tag=\"input\" size=6/> <$button set=\"$:/xp/magicsidebar/metrics/height\" setTo=\"350px\" tooltip=\"Reset to default\">Reset</$button> |\n\n设置显示动画：<<dropdown-sidebar-animation>>\n\n在原有基础上增加边栏显示宽度：\n\n| Increase width|^<$edit-text tiddler=\"$:/xp/magicsidebar/metrics/increasewidth\" default=\"50px\" tag=\"input\" size=6/> <$button set=\"$:/xp/magicsidebar/metrics/increasewidth\" setTo=\"50px\" tooltip=\"Reset to default\">Reset</$button> |\n\n</div>\n\nSee also: [[Whitespace Theme|http://j.d.whitespace.tiddlyspot.com/]]",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/magicsidebar",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "",
+        "modifier": "",
+        "title": "xp/magicsidebar"
+    }
+]

@@ -1,11 +1,18 @@
 cpl.author: kl
+cpl.category: Functional
+cpl.core-version: 
 cpl.dependents: 
 cpl.description: Map of Knowledge System
+cpl.documentation: 
 cpl.name: Knowledge System
 cpl.parent-plugin: $:/plugins/xp/aggregation
 cpl.plugin-type: plugin
 cpl.readme: 
+cpl.source: 
+cpl.tags: 
 cpl.title: $:/plugins/xp/aggregation-knowledge-system
 cpl.uri: https://keatonlao.github.io/tiddlywiki-xp/index.html
+icon: 
+modifier: 
 tags: $:/tags/PluginWiki
-title: Plugin_202207204711805
+title: xp/aggregation-knowledge-system

@@ -1,10 +1,18 @@
 cpl.author: kl
+cpl.category: Beautify
+cpl.core-version: 
 cpl.dependents: $:/themes/tiddlywiki/vanilla
 cpl.description: Jeremy - simple and firm style
+cpl.documentation: 
 cpl.name: XP-J
+cpl.parent-plugin: 
 cpl.plugin-type: theme
 cpl.readme: 
+cpl.source: 
+cpl.tags: 
 cpl.title: $:/themes/xp-j
 cpl.uri: https://keatonlao.github.io/tiddlywiki-xp/index.html
+icon: 
+modifier: 
 tags: $:/tags/PluginWiki
-title: Plugin_202207204954286
+title: themes/xp-j

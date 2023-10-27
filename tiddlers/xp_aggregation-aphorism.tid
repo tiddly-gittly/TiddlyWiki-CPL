@@ -1,11 +1,18 @@
 cpl.author: kl
+cpl.category: Functional
+cpl.core-version: 
 cpl.dependents: $:/plugins/xp/aggregation
 cpl.description: Collection of aphorisms
+cpl.documentation: 
 cpl.name: Aphorism
 cpl.parent-plugin: $:/plugins/xp/aggregation
 cpl.plugin-type: plugin
 cpl.readme: 
+cpl.source: 
+cpl.tags: 
 cpl.title: $:/plugins/xp/aggregation-aphorism
 cpl.uri: https://keatonlao.github.io/tiddlywiki-xp/index.html
+icon: 
+modifier: 
 tags: $:/tags/PluginWiki
-title: Plugin_202207204630280
+title: xp/aggregation-aphorism

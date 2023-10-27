@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "kl",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "",
+        "cpl.description": "Insert a html code",
+        "cpl.documentation": "",
+        "cpl.name": "HTML Button",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "A button ({{$:/xp/images/html}}) for inserting html codes.\n\n!! See also\n\n* https://www.runoob.com/html/html-quicklist.html\n* https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/html-button",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "",
+        "modifier": "",
+        "title": "xp/html-button"
+    }
+]
