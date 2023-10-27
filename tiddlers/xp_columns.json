@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "kl",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "",
+        "cpl.description": "Display content in multiple columns using CSS",
+        "cpl.documentation": "",
+        "cpl.name": "Columns",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "多栏（{{$:/xp/images/columns}} Columns）是一个编辑器工具栏按钮，提供的 CSS 代码可以将文本内容显示为多栏。请查看[[示例|$:/xp/columns/preview]]。\n\nAssigned shortcut: {{$:/config/shortcuts/columns}}",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/columns",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "",
+        "modifier": "",
+        "title": "xp/columns"
+    }
+]

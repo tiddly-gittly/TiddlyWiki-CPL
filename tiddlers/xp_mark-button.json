@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "kl",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "",
+        "cpl.description": "Mark selected text",
+        "cpl.documentation": "",
+        "cpl.name": "Mark Button",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "A button ({{$:/xp/images/marker}}) for the Editor toolbar that applies coloring or highlighting  to the selected text<br>\nAssigned shortcut: {{$:/config/shortcuts/mark}}\n\n> See also: [[$:/plugins/tg/mark-button|http://tw5custom.tiddlyspot.com/#%24%3A%2Fplugins%2Ftg%2Fmark-button]]\n\n!! Issues\n\nYou can use `@@color:red;WORD@@` for color marking in English sentences, but it does not apply to Chinese sentences:\n\n```\n欢迎来到 TiddlyWiki，这是一款独特的@@color:red;非线性@@笔记本，用于@@color:red;捕获@@、@@color:red;组织@@和@@color:red;分享@@复杂信息。\n```\n\n欢迎来到 TiddlyWiki，这是一款独特的@@color:red;非线性@@笔记本，用于@@color:red;捕获@@、@@color:red;组织@@和@@color:red;分享@@复杂信息。\n\n> See also: $:/core/modules/parsers/wikiparser/rules/styleinline.js",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/mark-button",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "",
+        "modifier": "",
+        "title": "xp/mark-button"
+    }
+]

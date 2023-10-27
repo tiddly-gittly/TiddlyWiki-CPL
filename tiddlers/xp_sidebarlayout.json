@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "kl",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "",
+        "cpl.description": "Switch sidebar layout",
+        "cpl.documentation": "",
+        "cpl.name": "Sidebar Layout",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": ";切换侧边栏布局\n:在 `固定故事` {{$:/xp/sidebarlayout/images/left-arrow}} 和 `固定侧边栏` {{$:/xp/sidebarlayout/images/right-arrow}} 之间切换。默认快捷键为 <kbd>shift-alt-Down</kbd>。\n",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/sidebarlayout",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "",
+        "modifier": "",
+        "title": "xp/sidebarlayout"
+    }
+]

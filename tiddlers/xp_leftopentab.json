@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "kl",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "$:/plugins/Gk0Wk/focused-tiddler $:/plugins/xp/rivers",
+        "cpl.description": "A button to put the open tab to the left",
+        "cpl.documentation": "",
+        "cpl.name": "LeftOpenTab",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "!! 左置开启标签页\n\nA button to put the [[Open|$:/core/ui/SideBar/Open]] tab to the left. Click the button again to restore to the default position.\n\n!! Settings\n\n{{$:/plugins/xp/leftopentab/settings}}\n\n!! See also\n\nTWaddle's  [[LeftBar|http://leftbar.tiddlyspot.com/]] plugin",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/leftopentab",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "",
+        "modifier": "",
+        "title": "xp/leftopentab"
+    }
+]

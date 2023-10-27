@@ -1,0 +1,22 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.author": "Mario Pietsch",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.1.15",
+        "cpl.dependents": "",
+        "cpl.description": "Internal links are added to tabs if selected",
+        "cpl.documentation": "",
+        "cpl.name": "Link to Tabs",
+        "cpl.parent-plugin": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "<style>.box-styles { background-color: <<colour pre-background>>; padding: 8px 8px 4px 20px; width: 95%; border-radius: 40px / 8px; font-size: .9em; }</style>\n\n<div class=\"box-styles\">\n\nThis is a custom modification of the [[Link to Tabs(v2.3.0)|https://wikilabs.github.io/editions/link-to-tabs/]] plugin. Changed the plugin name to differentiate.\n\n* Functionality freezes to avoid environmental anomalies caused by upgrading plugins\n* You can open the tab by holding down the Ctrl key and clicking on it. so you can leave the icon off.\n* Hold down the Alt key and click to divert the tab to another column.\n\n</div>\n\n\nThis plugin adds a little link icon to every tab.\n\n! Link-to-Tabs Settings\n\n{{$:/core/ui/ControlPanel/Settings/link-to-tabs}}\n\n''Important:'' This plugin modifies a core module and templates\n\n<ul><$list filter=\"[[$:/plugins/xp/link-to-tabs]plugintiddlers[]prefix[$:/core/]]\"><li><$link>{{!!title}}<br></$link></li></$list></ul>",
+        "cpl.source": "",
+        "cpl.tags": "",
+        "cpl.title": "$:/plugins/xp/link-to-tabs",
+        "cpl.uri": "https://keatonlao.github.io/tiddlywiki-xp/index.html",
+        "icon": "$:/plugins/xp/link-to-tabs/icon",
+        "modifier": "kl",
+        "title": "xp/link-to-tabs"
+    }
+]
