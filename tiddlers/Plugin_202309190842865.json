@@ -1,8 +1,8 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "{{$:/languages/neotw-tour/readme}}\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-tour.json",
+        "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n!! Driver.js TiddlyWiki Plugin\n\nThis is a plugin designed to add guided tutorial functionality to TiddlyWiki. It utilizes the https://github.com/kamranahmedse/driver.js library to highlight page elements and display pop-up windows.\n\n!! 示例\n\n<h1 id=\"h1\">H1</h1>\n<h2 id='h2'>H2</h2>\n\n<$tour class=\"p-2\"/>\n\n!! 使用\n\n* 可以使用键盘上的方向键\n\n!! TODO\n\n* update to 1.2.0\n\n</div>",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-tour.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-tour",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Tour",
