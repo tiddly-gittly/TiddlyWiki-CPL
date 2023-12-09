@@ -1,7 +1,7 @@
 code-body: yes
 created: 20231009081025598
 modified: 20231013171005230
-tags: 
+tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
 type: text/vnd.tiddlywiki
 
@@ -150,13 +150,13 @@ type: text/vnd.tiddlywiki
         suggestions={{{ [<json>jsonget[suggestions]] }}}
     >
     <!-- 依赖 -->
-    <$list filter="[enlist<dependents>!is[blank]] [<parent-plugin>!is[blank]] +[limit[1]] ~[<title>!is[tiddler]]" variable="ignore">
+    <$list filter="[<title>!is[tiddler]]" variable="ignore">
     <div style="background:#e91e3db0;color:white;padding:6px;" class="cpl-plugin-dependencies">
-        <$list filter="[<title>!is[tiddler]]">{{$:/language/ControlPanel/Plugins/NotInstalled/Hint}}</$list>
-        <$list filter="[enlist<dependents>!is[blank]] [<parent-plugin>!is[blank]] +[limit[1]]" variable="ignore">
+        {{$:/language/ControlPanel/Plugins/NotInstalled/Hint}}&nbsp;
+        <$list filter="[enlist<dependents>] [<parent-plugin>] +[unique[]!is[blank]!is[tiddler]limit[1]]" variable="ignore">
         <div>
             {{$:/language/ControlPanel/Plugins/AlsoRequires}}&#32;
-            <$list filter="[enlist<dependents>] [<parent-plugin>] +[unique[]sort[name]!is[blank]]" variable="dependency">
+            <$list filter="[enlist<dependents>] [<parent-plugin>] +[unique[]!is[blank]!is[tiddler]sort[name]]" variable="dependency">
                 <span style="border-radius:12px;padding:3px 8px;background:#1c3b40c2;font-size:12px;line-height:24px"><$text text=<<dependency>>/></span>&#32;
             </$list>
         </div>
@@ -172,7 +172,7 @@ type: text/vnd.tiddlywiki
         <$list filter="[<json>jsonget[versions]reverse[]]" variable="version">
         <div style="background:#1a4655;padding:4px 12px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;border-top:1px solid #15333c;">
             <span>
-                <<version>>
+                <span style="color: white;"><<version>></span>
                 <span style="opacity: 0.8;">&nbsp;(<$macrocall $name="plugin-size" size={{{ [<json>jsonget[versions-size],<version>else[0]] }}} />)</span>
                 <$list filter="[<latest>compare:version:eq<version>]">&nbsp;<span class="cpl-latest-version-icon">{{$:/core/images/star-filled}}</span></$list>
                 <$list filter="[<installedVersion>compare:version:eq<version>]">&nbsp;<span class="cpl-installed-version-icon">{{$:/core/images/done-button}}</span></$list>

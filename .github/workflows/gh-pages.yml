@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths-ignore: 
+    paths-ignore:
       - '.github/workflows/update-library.yml'
       - libraries.json
   schedule:
@@ -20,19 +20,25 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3.8.1
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
-      - uses: pnpm/action-setup@v2
+          node-version: 18
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 'latest'
           run_install: false
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
       - uses: actions/cache@v3
         name: Setup pnpm cache
         with:
@@ -54,10 +60,10 @@ jobs:
       - name: Build Library
         run: pnpm run build
 
-      - name: Minify Front Page HTML (also check if it exists)
-        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
-      - name: Minify Library HTML (also check if it exists)
-        run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/library/index.html dist/library/index.html
+    #   - name: Minify Front Page HTML (also check if it exists)
+    #     run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
+    #   - name: Minify Library HTML (also check if it exists)
+    #     run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/library/index.html dist/library/index.html
 
       - name: Add history version from cache to library
         run: |

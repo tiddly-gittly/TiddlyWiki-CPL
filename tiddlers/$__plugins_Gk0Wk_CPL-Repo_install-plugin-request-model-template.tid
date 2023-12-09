@@ -43,15 +43,19 @@ type: text/vnd.tiddlywiki
 <$let json={{{ [<requestTiddler>get[text]] }}}>
 
 <<<
-<$let title={{{ [<json>jsonget[title]] }}}>
+<$let title={{{ [<json>jsonget[title]] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<title>] }}}>
 ''<$text text={{{ [<chinese>match[yes]then[即将安装:]else[To be installed:]] }}}/>''
 <$text text=<<title>>/>&nbsp;&nbsp;&nbsp;
 ''<$text text={{{ [<chinese>match[yes]then[选择版本:]else[Select version:]] }}}/>''
-<$select tiddler=<<requestTiddler>> field={{{ [[cpl-plugin#version#]addsuffix<title>] }}}>
+<$select tiddler=<<requestTiddler>> field=<<version-field>>>
 <$list filter="[<json>jsonget[versions],<title>]" variable="version">
 <option value=<<version>>><$text text=<<version>>/></option>
 </$list>
 </$select>
+&nbsp;
+<$let v={{{ [<requestTiddler>get<version-field>] }}}>
+<$macrocall $name="plugin-size" size={{{ [<json>jsonget[sizes],<title>,<v>else[0]] }}} />
+</$let>
 </$let>
 <<<
 

@@ -11,12 +11,12 @@ type: text/vnd.tiddlywiki
 
 您的 Wiki 中有 <<updateCount>> 款插件在 CPL 中有更新版本, 快来更新吧!
 
-<$button>
+<$button class="cpl-normal-button">
     更新
     <$action-sendmessage $message="cpl-get-plugins-index" />
     <$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/update-body" />
 </$button>
-<$button>
+<$button class="cpl-normal-button">
     设置
     <$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/settings" />
 </$button>
@@ -29,12 +29,12 @@ type: text/vnd.tiddlywiki
 
 There are <<updateCount>> plugins in your Wiki that have newer versions in CPL, so update them now!
 
-<$button>
+<$button class="cpl-normal-button">
     Update
     <$action-sendmessage $message="cpl-get-plugins-index" />
     <$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/update-body" />
 </$button>
-<$button>
+<$button class="cpl-normal-button">
     Settings
     <$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/settings" />
 </$button>

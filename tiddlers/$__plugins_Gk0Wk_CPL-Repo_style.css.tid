@@ -4,6 +4,11 @@ tags: $:/tags/Stylesheet
 title: $:/plugins/Gk0Wk/CPL-Repo/style.css
 type: text/vnd.tiddlywiki
 
+.cpl-normal-button {
+  color: <<colour foreground>>;
+  fill: color: <<colour foreground>>;
+}
+
 .cpl-plugin-info-box {
   overflow: hidden;
   border: 1px solid <<colour tiddler-info-border>>;
