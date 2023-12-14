@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin packages [[xmldom|https://github.com/jindw/xmldom]] for use by other plugins. It does not provide any end-user visible features.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fxmldom.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fxmldom.json",
         "cpl.title": "$:/plugins/tiddlywiki/xmldom",
         "cpl.name": "xmldom",
         "cpl.description": "xmldom library",

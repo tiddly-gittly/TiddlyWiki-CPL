@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This is a TiddlyWiki plugin for parsing Markdown text, using the [[Remarkable|https://github.com/jonschlinkert/remarkable]] library. If the KaTeX TiddlyWiki plugin is installed, KaTeX support is enabled using the [[remarkable-katex|https://github.com/bradhowes/remarkable-katex]] Remarkable plugin.\n\nIt is completely self-contained, and doesn't need an Internet connection in order to work. It works both in the browser and under Node.js.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/markdown-legacy]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fmarkdown-legacy.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fmarkdown-legacy.json",
         "cpl.title": "$:/plugins/tiddlywiki/markdown-legacy",
         "cpl.name": "Markdown (Legacy)",
         "cpl.description": "Markdown parser based on remarkable by Jon Schlinkert and remarkable-katex by Brad Howes",

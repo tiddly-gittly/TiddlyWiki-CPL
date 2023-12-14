@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "! Introduction\n\nThis plugin provides support for importing tiddlers as external attachments. That means that instead of importing binary files as self-contained tiddlers, they are imported as \"skinny\" tiddlers that reference the original file via the ''_canonical_uri'' field. This reduces the size of the wiki and thus improves performance. However, it does mean that the wiki is no longer fully self-contained.\n\n! Compatibility\n\nThis plugin only works when using TiddlyWiki with platforms such as TiddlyDesktop that support the ''path'' attribute for imported/dragged files.\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fexternal-attachments.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fexternal-attachments.json",
         "cpl.title": "$:/plugins/tiddlywiki/external-attachments",
         "cpl.name": "External Attachments",
         "cpl.description": "External attachments for TiddlyDesktop",

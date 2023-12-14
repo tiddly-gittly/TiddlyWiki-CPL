@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin packages [[HammerJS|https://hammerjs.github.io]] for use by other plugins. It does not provide any end-user visible features.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fhammerjs.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fhammerjs.json",
         "cpl.title": "$:/plugins/tiddlywiki/hammerjs",
         "cpl.author": "Jorik Tangelder (Eight Media)",
         "cpl.name": "HammerJS",

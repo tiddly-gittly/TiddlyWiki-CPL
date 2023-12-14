@@ -6,6 +6,6 @@ cpl.name: ReadOnly
 cpl.plugin-type: theme
 cpl.readme: 
 cpl.title: $:/themes/tiddlywiki/readonly
-cpl.uri: https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fthemes%252Ftiddlywiki%252Freadonly.json
+cpl.uri: https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fthemes%252Ftiddlywiki%252Freadonly.json
 tags: $:/tags/PluginWiki
 title: Plugin_202303171228539

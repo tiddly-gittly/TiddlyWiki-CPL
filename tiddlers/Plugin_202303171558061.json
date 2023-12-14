@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds a ''Keymap'' with some of the most important ''Emacs'' keyboard shortcuts\n\nFor more information about available ''keyboard shortcuts'' see the [ext[CodeMirror emacs demo|https://codemirror.net/demo/emacs.html]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-keymap-emacs.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-keymap-emacs.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-keymap-emacs",
         "cpl.name": "CodeMirror Keymap Emacs",
         "cpl.description": "Keymap compatible with Emacs for CodeMirror",

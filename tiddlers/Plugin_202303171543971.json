@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin contains tools to help publish blogs:\n\n* Templates and tools for building static HTML pages and posts\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fblog.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fblog.json",
         "cpl.title": "$:/plugins/tiddlywiki/blog",
         "cpl.name": "Blog",
         "cpl.description": "Blog publishing tools",

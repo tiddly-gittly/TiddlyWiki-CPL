@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This experimental plugin provides a new story visualisation that displays individual tiddlers as resizable tiles on an infinite canvas.\n\nCecily is based on an earlier plugin for TiddlyWiki Classic: http://jermolene.com/cecily\n\nCecily is currently in the early stages of development with little functionality yet implemented.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/cecily]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcecily.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcecily.json",
         "cpl.title": "$:/plugins/tiddlywiki/cecily",
         "cpl.name": "Cecily",
         "cpl.description": "Zoomable storyview (Cecily)",

@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin provides a ''saver'' module for saving changes under the [[Tahoe Least Authority File System|https://tahoe-lafs.org/]].\n\nAt this point it is largely for experimentation by @zooko.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/tahoelafs]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftahoelafs.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftahoelafs.json",
         "cpl.title": "$:/plugins/tiddlywiki/tahoelafs",
         "cpl.name": "TahoeLAFS",
         "cpl.description": "Tahoe-LAFS saver",

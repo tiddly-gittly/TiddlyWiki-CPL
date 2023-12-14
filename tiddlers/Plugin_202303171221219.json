@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin provides a ''saver'' module for saving changes when using TiddlyWiki directly under NW.js (previously known as node-webkit).\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/nodewebkitsaver]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fnodewebkitsaver.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fnodewebkitsaver.json",
         "cpl.title": "$:/plugins/tiddlywiki/nodewebkitsaver",
         "cpl.name": "nw.js Saver",
         "cpl.description": "Saver for nw.js",

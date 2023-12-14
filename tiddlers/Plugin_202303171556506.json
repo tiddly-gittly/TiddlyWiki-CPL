@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds the ability to ''automatically close Tags''. It needs the latest [[CodeMirror plugin|$:/plugins/tiddlywiki/codemirror]] to be installed\n\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-closetag.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-closetag.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-closetag",
         "cpl.name": "CodeMirror Close Tag",
         "cpl.description": "Close tags automatically for CodeMirror",

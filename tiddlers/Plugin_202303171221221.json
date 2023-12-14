@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds a \"Powered by ~TiddlyWiki\" banner that links back to https://tiddlywiki.com\n\nIt's very basic at the moment, but the plan is to improve it by making it more customisable.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fpowered-by-tiddlywiki.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fpowered-by-tiddlywiki.json",
         "cpl.title": "$:/plugins/tiddlywiki/powered-by-tiddlywiki",
         "cpl.name": "Powered By TiddlyWiki",
         "cpl.description": "Powered by TiddlyWiki banner",

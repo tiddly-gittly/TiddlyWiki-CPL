@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin contains tools to help slice up long texts into individual tiddlers. It currently works directly with XHTML documents and with Microsoft Word compatible DOCX documents via conversion to HTML.\n\nIt is an expression of the philosophy of TiddlyWiki: that text is easier to re-use and work with if it is sliced up into separate chunks that can be independently manipulated, and then woven back together to make up stories and narratives for publication.\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.1/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftext-slicer.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftext-slicer.json",
         "cpl.title": "$:/plugins/tiddlywiki/text-slicer",
         "cpl.name": "Text Slicer",
         "cpl.description": "Tools for slicing text into tiddlers",
