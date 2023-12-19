@@ -15,7 +15,7 @@
         "cpl.uri": "https://oflg.github.io/Tidme/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Ffsrs4tw.json",
         "cpl.source": "https://github.com/oflg/Tidme",
         "cpl.dependents": "$:/plugins/tiddlywiki/confetti $:/plugins/tiddlywiki/browser-sniff",
-        "cpl.core-version": ">=5.3.0",
+        "cpl.core-version": ">=5.3.2",
         "cpl.documentation": "https://oflg.github.io/Tidme",
         "cpl.plugin-type": "plugin",
         "cpl.tags": "supermemo anki lingq srs flashcards [[spaced repetition]] memory [[incremental reading]] [[incremental learning]]"
