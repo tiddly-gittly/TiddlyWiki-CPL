@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds features to help explore the internals of TiddlyWiki:\n\n* New preview panes showing:\n** the parse tree\n** the widget tree\n** the raw HTML output\n\nThe first two include a dropdown for choosing block vs. inline parsing mode.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Finternals.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Finternals.json",
         "cpl.title": "$:/plugins/tiddlywiki/internals",
         "cpl.name": "Internals",
         "cpl.description": "Tools for exploring the internals of TiddlyWiki",

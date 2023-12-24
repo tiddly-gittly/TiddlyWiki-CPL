@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin packages [[sax.js|https://github.com/isaacs/sax-js]] for use by other plugins. It does not provide any end-user visible features.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fsax.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fsax.json",
         "cpl.title": "$:/plugins/tiddlywiki/sax",
         "cpl.author": "Isaac Z. Schlueter",
         "cpl.name": "sax js",

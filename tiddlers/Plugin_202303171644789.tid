@@ -4,6 +4,6 @@ cpl.name: TW5.com Docs
 cpl.plugin-type: plugin
 cpl.readme: 
 cpl.title: $:/plugins/tiddlywiki/tw5.com-docs
-cpl.uri: https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftw5.com-docs.json
+cpl.uri: https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftw5.com-docs.json
 tags: $:/tags/PluginWiki
 title: Plugin_202303171644789

@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin provides a new story visualisation that displays individual tiddlers as a stack of cards. It is currently experimental and incomplete.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/stacked-view]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fstacked-view.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fstacked-view.json",
         "cpl.title": "$:/plugins/tiddlywiki/stacked-view",
         "cpl.name": "Stacked View",
         "cpl.description": "Stacked card storyview",

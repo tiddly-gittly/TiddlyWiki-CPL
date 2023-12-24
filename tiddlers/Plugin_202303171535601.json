@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin provides several tools for working with Amazon Web Services:\n\n* Templates for saving a TiddlyWiki as a single JavaScript file in a ZIP file that can be executed as an AWS Lambda function. In this form, TiddlyWiki is a self contained single file containing both code and data, just like the standalone HTML file configuration\n* Commands that can be used to interact with AWS services, under both the Node.js and Lambda configurations of TiddlyWiki\n* A new \"aws-encodeuricomponent\" filter that acts like the core \"encodeuricomponent\" filter except it additionally encodes the single quote character",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Faws.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Faws.json",
         "cpl.title": "$:/plugins/tiddlywiki/aws",
         "cpl.name": "AWS",
         "cpl.description": "Amazon Web Services extensions and tools",

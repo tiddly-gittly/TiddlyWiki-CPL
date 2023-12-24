@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin enables you to use Google Analytics to track access to your online TiddlyWiki document.\n\nBy default, the user is not asked for permission before initialising Google Analytics. This plugin also optionally integrates with the \"Consent Banner\" plugin (also found in the official plugin library) so that Google Analytics is not initialised until the user grants explicit permission.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/googleanalytics]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fgoogleanalytics.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fgoogleanalytics.json",
         "cpl.title": "$:/plugins/tiddlywiki/googleanalytics",
         "cpl.name": "Google Analytics",
         "cpl.description": "Website visitor statistics from Google",

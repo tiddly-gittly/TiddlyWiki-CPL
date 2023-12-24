@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds a ''Keymap'' with some of the most important ''Vim'' keyboard shortcuts\n\nFor information about available ''keyboard shortcuts'' see the [ext[CodeMirror vim demo|https://codemirror.net/demo/vim.html]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-keymap-vim.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-keymap-vim.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-keymap-vim",
         "cpl.name": "CodeMirror Keymap Vim",
         "cpl.description": "Keymap compatible with Vim for CodeMirror",

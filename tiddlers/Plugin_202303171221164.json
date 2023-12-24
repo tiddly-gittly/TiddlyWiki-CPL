@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin enhances the [[CodeMirror|http://codemirror.net]] text editor with Search and Replace functionality. It needs the latest [[CodeMirror plugin|$:/plugins/tiddlywiki/codemirror]] to be installed\n\nIt adds these Keyboard Shortcuts to ~CodeMirror:\n\n|Shortcut |Function |h\n|Ctrl-F / Cmd-F |Start searching |\n|Ctrl-G / Cmd-G / Shift-F3 |Find next |\n|Shift-Ctrl-G / Shift-Cmd-G / F3 |Find previous |\n|Shift-Ctrl-F / Cmd-Option-F |Replace |\n|Shift-Ctrl-R / Shift-Cmd-Option-F |Replace all |\n|Alt-F |Persistent search (dialog doesn't autoclose, enter to find next, Shift-Enter to find previous) |\n|Alt-G |Jump to line |\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-search-replace.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-search-replace.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-search-replace",
         "cpl.name": "CodeMirror Search and Replace",
         "cpl.description": "Search and replace for CodeMirror",

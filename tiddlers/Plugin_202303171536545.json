@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "The BibTeX plugin provides a deserializer that can convert bibliographic entries in `.bib` files into individual tiddlers.\n\nYou can use it in the browser by dragging and dropping a `.bib` file into the TiddlyWiki window. Under Node.js, use the `--load` command to load a `.bib` file.\n\nThe conversion is as follows:\n\n* `title` comes from citationKey\n* `bibtex-entry-type` comes from entryType\n* all `entryTags` are assigned to fields with the prefix `bibtex-`\n\nThe BibTeX plugin is based on the library [[bibtexParseJs by Henrik Muehe and Mikola Lysenko|https://github.com/ORCID/bibtexParseJs]].\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.2/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fbibtex.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fbibtex.json",
         "cpl.title": "$:/plugins/tiddlywiki/bibtex",
         "cpl.author": "Henrik Muehe and Mikola Lysenko",
         "cpl.name": "BibTeX",
