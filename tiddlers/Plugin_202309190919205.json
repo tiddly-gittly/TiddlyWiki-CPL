@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "!! Tiddlywiki Videos\n\n> 对youtube, bilibili 等视频平台的嵌入提供了一个快捷可定制的方法, 免去手动复制iframe的操作, 仅仅需要粘贴id即可\n\n!! Usage\n\n```wikitext\r\n<$video yid=\"o7GyFa90klg\" />\r\n<$video bvid='BV1F14y1f7qp' />\r\n<$video url='' />\r\n```\n\n<$video yid=\"o7GyFa90klg\" />\r\n<$video bvid='BV1F14y1f7qp' />\n\n!! Ref\n\n* https://developers.google.com/youtube/player_parameters?hl=zh-cn\n\n<!-- !! See Also -->\n\n<!-- artplayer 是支持直接嵌入mp4文件的tiddlywiki 插件 -->",
+        "cpl.readme": "!! Tiddlywiki Videos\n\n> 对 youtube, bilibili 等视频平台的嵌入提供了一个快捷可定制的方法，免去手动复制 iframe 的操作，仅仅需要粘贴 id 即可\n\n!! Usage\n\n```wikitext\r\n<$video yid=\"o7GyFa90klg\" />\r\n<$video bvid='BV1F14y1f7qp' />\r\n<$video url='' />\r\n```\n\n<$video yid=\"o7GyFa90klg\" />\r\n<$video bvid='BV1F14y1f7qp' />\n\n!! Ref\n\n* https://developers.google.com/youtube/player_parameters?hl=zh-cn\n\n<!-- !! See Also -->\n\n<!-- artplayer 是支持直接嵌入 mp4 文件的 tiddlywiki 插件 -->",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-videos.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-videos",
         "cpl.author": "oeyoews",

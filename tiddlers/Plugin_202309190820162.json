@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "!! Getfile\n\n\n!! TODO\n\n* [ ] 借鉴tw的tm-http\n* [ ] markdown img语法会残留tc-imag-loading",
+        "cpl.readme": "!! Getfile\n\n\n!! TODO\n\n* [ ] 借鉴 tw 的 tm-http\n* [ ] markdown img 语法会残留 tc-imag-loading",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-fetch.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-fetch",
         "cpl.author": "oeyoews",
