@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<div class=\"prose max-w-none\">\n\n* Github Share Button\n* compatiable font-awesome plugin\n\n!! TODO\n\n* add macro to embed single tid, not copy tid\n\n<!-- * if you use tiddlywiki menu plugin, this share button maybe  -->\n\n</div>\n",
+        "cpl.readme": "<div class=\"prose max-w-none\">\n\n* GitHub Share Button\n* compatiable font-awesome plugin\n\n!! TODO\n\n* add macro to embed single tid, not copy tid\n\n<!-- * if you use tiddlywiki menu plugin, this share button maybe  -->\n\n</div>\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-github-share.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-github-share",
         "cpl.author": "oeyoews",
