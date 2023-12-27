@@ -9,7 +9,7 @@
         "cpl.description": "Tiddlywiki Daylight",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/neotw-back-to-top",
-        "cpl.core-version": ">=5.3.1",
+        "cpl.core-version": ">=5.3.0",
         "title": "Plugin_202309190854987"
     }
 ]
