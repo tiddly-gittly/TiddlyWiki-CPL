@@ -10,7 +10,7 @@
         "cpl.description": "Internal links are added to tabs if selected",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.1.15",
+        "cpl.core-version": ">=5.2.0",
         "title": "Plugin_202203243727508"
     }
 ]
