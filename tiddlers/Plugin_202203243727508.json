@@ -2,7 +2,7 @@
     {
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "This plugin adds a little link icon to every tab.\n\n! Link-to-Tabs Settings\n\n{{$:/core/ui/ControlPanel/Settings/link-to-tabs}}\n\n''Important:'' This plugin modifies a core module and templates\n\n<ul><$list filter=\"[[$:/plugins/wikilabs/link-to-tabs]plugintiddlers[]prefix[$:/core/]] \"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>",
+        "cpl.readme": "This plugin adds a little link icon to every tab.\n\n!! Settings\n\n* Have a closer look at the \"settings-tab\" here or\n* Open the ''$:/ControlPanel -> Settings -> WikiLabs'' tab\n\n''Important:'' This plugin modifies a core module and templates\n\n<ul><$list filter=\"[[$:/plugins/wikilabs/link-to-tabs]plugintiddlers[]prefix[$:/core/]] \"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>",
         "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Flink-to-tabs.json",
         "cpl.title": "$:/plugins/wikilabs/link-to-tabs",
         "cpl.author": "Mario Pietsch",
@@ -10,7 +10,7 @@
         "cpl.description": "Internal links are added to tabs if selected",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.0",
+        "cpl.core-version": ">=5.3.3",
         "title": "Plugin_202203243727508"
     }
 ]
