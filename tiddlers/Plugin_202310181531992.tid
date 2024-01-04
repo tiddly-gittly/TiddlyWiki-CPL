@@ -1,6 +1,6 @@
 cpl.author: oeyoews
 cpl.core-version: >=5.3.1
-cpl.dependents: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
+cpl.dependents: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/ejs
 cpl.description: neotw-info
 cpl.name: neotw-info
 cpl.plugin-type: plugin
