@@ -5,11 +5,11 @@ cpl.name: pinyin-fuzzy-search
 cpl.plugin-type: plugin
 cpl.source: https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/src/pinyin-fuzzy-search
 cpl.title: $:/plugins/linonetwo/pinyin-fuzzy-search
-cpl.uri: https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/24.3A.2Fplugins.2Flinonetwo.2Fpinyin-fuzzy-search.json
+cpl.uri: https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_pinyin-fuzzy-search.json
 created: 20211209170052386
 creator: 林一二
-modified: 20211209170416656
-modifier: 林一二
+modified: 20240106175538851
+modifier: lin onetwo
 page-cover: https://images.unsplash.com/photo-1636968292468-d57f580abdc0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYzOTA2OTQ1Mg&ixlib=rb-1.2.1&q=80&w=1080
 tags: $:/tags/PluginWiki
 title: linonetwo/pinyin-fuzzy-search
