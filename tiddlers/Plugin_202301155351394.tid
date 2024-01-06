@@ -4,8 +4,11 @@ cpl.description: Generate custom highlight.js tiddler
 cpl.name: Highlight.js Generator
 cpl.plugin-type: plugin
 cpl.readme: 
-cpl.source: https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/highlightjs-generator
+cpl.source: https://github.com/Gk0Wk/TiddlySeq/tree/master/src/highlightjs-generator
 cpl.title: $:/plugins/Gk0Wk/highlight-generator
-cpl.uri: https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fhighlight-generator.json
+cpl.uri: https://gk0wk.github.io/TiddlySeq/index.html
+created: 20240106034051517
+modified: 20240106034718993
 tags: $:/tags/PluginWiki
 title: Plugin_202301155351394
+type: text/vnd.tiddlywiki
