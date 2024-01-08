@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "## oimg\n\n<$oimg src=\"\"/>",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-image-better.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-image-better",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-image-better",
+        "cpl.description": "neotw-image-better",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202401082755784"
+    }
+]

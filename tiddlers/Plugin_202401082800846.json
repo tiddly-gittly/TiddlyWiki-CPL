@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "> nprogress tiddlywiki 版本\n\n```js\n$tw.NProgress.start()\n$tw.NProgress.done()\n\n// widget\nthis.parentWidget.dispatchEvent({\n\ttype: 'om-nprogress',\n});\n```\n\n```html\n<$button message=\"om-nprogress\">\nstart\n</$button >\n\n<$button >\n<$action-sendmessage $message=\"om-nprogress\" type=\"start\" />\nstart\n</$button>\n```",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fnprogress.json",
+        "cpl.title": "$:/plugins/oeyoews/nprogress",
+        "cpl.author": "oeyoews",
+        "cpl.name": "nprogress",
+        "cpl.description": "nprogress",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/confetti",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202401082800846"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "- ui 参考 https://innei.in/says\n\n## TODO\n\n- 适配 darkmode\n",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fhitokoto.json",
+        "cpl.title": "$:/plugins/oeyoews/hitokoto",
+        "cpl.author": "oeyoews",
+        "cpl.name": "hitokoto",
+        "cpl.description": "hitokoto",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202401082749709"
+    }
+]
