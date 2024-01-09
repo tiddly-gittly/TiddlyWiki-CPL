@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "## oimg\n\n<$oimg src=\"\"/>",
-        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-image-better.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-image-better.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-image-better",
         "cpl.author": "oeyoews",
         "cpl.name": "neotw-image-better",

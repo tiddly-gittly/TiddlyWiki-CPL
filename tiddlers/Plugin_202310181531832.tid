@@ -6,6 +6,6 @@ cpl.name: Neotw Icons
 cpl.plugin-type: plugin
 cpl.readme: {{$:/languages/neotw-icons/readme}}
 cpl.title: $:/plugins/oeyoews/neotw-icons
-cpl.uri: https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-icons.json
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-icons.json
 tags: $:/tags/PluginWiki
 title: Plugin_202310181531832

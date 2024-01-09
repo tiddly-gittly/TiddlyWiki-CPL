@@ -6,6 +6,6 @@ cpl.name: Tiddlywiki Readonly
 cpl.plugin-type: plugin
 cpl.readme: 
 cpl.title: $:/plugins/oeyoews/tiddlywiki-readonly
-cpl.uri: https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-readonly.json
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-readonly.json
 tags: $:/tags/PluginWiki
 title: Plugin_202309190912806
