@@ -7,10 +7,12 @@
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fsearchwikis.json",
         "cpl.title": "$:/plugins/kookma/searchwikis",
         "cpl.author": "Mohammad Rahmani",
-        "cpl.description": "Searchwikis",
+        "cpl.description": "Search multiple wikis",
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Searchwikis",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.1.22"
+        "cpl.core-version": ">=5.1.22",
+        "cpl.name": "SearchWikis",
+        "cpl.parent-plugin": ""
     }
 ]
