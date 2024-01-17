@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n!! Neotw Type\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/oeyoews/neotw-type]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n* [[typed|https://github.com/mattboldt/typed.js]]\n\n!! TODO\n\nhttps://github.com/coffeedeveloper/typing.js\n\n</div>\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-type.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-type.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-type",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Type",

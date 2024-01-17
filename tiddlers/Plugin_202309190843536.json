@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "{{$:/languages/neotw-tw-bot/readme}}\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-tw-bot.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-tw-bot.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-tw-bot",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Tw Bot",

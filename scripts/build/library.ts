@@ -129,8 +129,10 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
+              })
+              .catch(e => {
+                console.log(e);
               });
-
             downloadFileMap[url.href] = filePath;
           } catch (e) {
             failedPlugins[title_] = `404 not found: ${url.href}`;

@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "<div class=\"prose max-w-none\">\n\n!! 改于 $:/plugins/linonetwo/opened-tiddlers\n\n* 支持固定\n* 卡顿问题\n* max-width no selected\n<!-- * hover to show -->\n<!-- * no selected text color -->\n<!-- * 动画 -->\n\n</div>\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-opened-tiddlers.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-opened-tiddlers.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-opened-tiddlers",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Opened Tiddlers",
