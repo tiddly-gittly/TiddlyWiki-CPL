@@ -1,0 +1,19 @@
+[
+    {
+        "created": "20240111011111025",
+        "text": "",
+        "title": "Plugin_202401101111025",
+        "modified": "20240111012026796",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Speff",
+        "cpl.name": "typograms-tw5",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/Speff/typograms-tw5",
+        "cpl.description": "Wrapper for Google's Typograms.js - a javascript library which can render ASCII diagrams into simple diagrams. \n\nTypograms (typographic diagrams) is a lightweight image format (text/typogram) useful for defining simple diagrams in technical documentation. Typograms optimizes for editability and portability (e.g. plain text is easy to maintain, change, store and transmit), at the cost of expressivity (e.g. SVG is more expressive) and ergonomics (e.g. higher level tools produce diagrams faster).",
+        "cpl.uri": "https://github.com/Speff/typograms-tw5/releases/download/v1.0.6/__plugins_Speff_typograms-tw5.json",
+        "cpl.documentation": "https://speff.github.io/typograms-tw5/",
+        "cpl.source": "https://github.com/Speff/typograms-tw5",
+        "cpl.category": "Visualization"
+    }
+]
