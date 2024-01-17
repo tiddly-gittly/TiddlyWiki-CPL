@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "! tiddlywiki-codemirror-6-languages-zh\n\nchinese for tiddlywiki-codemirror-6(WIP)",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-codemirror6/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-codemirror-6-languages-zh.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-codemirror-6-languages-zh",
+        "cpl.author": "oeyoews",
+        "cpl.name": "tiddlywiki-codemirror-6-languages-zh",
+        "cpl.description": "chinese for tiddlywiki-codemirror-6",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202401171038875"
+    }
+]
