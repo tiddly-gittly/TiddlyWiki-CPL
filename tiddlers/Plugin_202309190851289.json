@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "!! zen-mode\n",
-        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-zen-mode.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-zen-mode.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-zen-mode",
         "cpl.author": "oeyoews",
         "cpl.name": "neotw-zen-mode",

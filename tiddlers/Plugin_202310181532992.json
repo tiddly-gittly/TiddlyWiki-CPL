@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "```wiki\r\nclass: o-tm\r\nmask-closable: yes\r\ncaption: subtitle content\r\nsubtitle: {{||$:/esc}}\r\n```",
-        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-modal-ui.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-modal-ui.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-modal-ui",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Modal Ui",
