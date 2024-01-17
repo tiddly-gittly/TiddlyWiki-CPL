@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-loop-func */
 /* eslint-disable max-depth */
 /* eslint-disable complexity */
 import { URL } from 'url';
@@ -16,6 +15,7 @@ import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
 import {
+  shell,
   tiddlywiki,
   mkdirsForFileSync,
   findFirstOne,
@@ -111,28 +111,9 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           copyFileSync(downloadFileMap[url.href], filePath);
         } else {
           try {
-            fetch(url.href)
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error(
-                    `Network response was not ok: ${response.statusText}`,
-                  );
-                }
-                return response.arrayBuffer();
-              })
-              .then(data => {
-                // 处理获取的数据，这里的例子是保存到文件
-                const blob = new Blob([data]);
-                const a = document.createElement('a');
-                a.href = window.URL.createObjectURL(blob);
-                a.download = filePath;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-              })
-              .catch(e => {
-                console.log(e);
-              });
+            shell(
+              `wget "${url.href}" --no-verbose --force-directories --no-check-certificate -O "${filePath}"`,
+            );
             downloadFileMap[url.href] = filePath;
           } catch (e) {
             failedPlugins[title_] = `404 not found: ${url.href}`;
