@@ -32,7 +32,7 @@ export const buildCPLPlugin = (
     name: 'CPL Repo',
     description: 'Essential and powerful plugin manager and library',
     author: 'Gk0Wk',
-    list: 'readme',
+    list: 'readme tree',
     text: JSON.stringify({ tiddlers: cplPluginTiddlers }),
   };
   return [
