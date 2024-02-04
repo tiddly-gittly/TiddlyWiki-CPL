@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "* Show Tiddler Info\n* note: reoverwrite [[$:/core/ui/ViewTemplate/subtitle]] tiddler",
-        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tiddler-info.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tiddler-info.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-tiddler-info",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Tiddler Info",

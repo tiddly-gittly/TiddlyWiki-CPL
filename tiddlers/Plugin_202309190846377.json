@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "<div class=\"prose max-w-none prose-indigo\">\n\n!! Neotw Unsplash\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/oeyoews/neotw-unsplash]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n\n!! TODO\n\n* use other image api <19-05-23, oeyoews>\n* use tm-notify or others notify\n* hover style bug\n<!-- * add tm-modal on edittoolbar to call unsplash <19-05-23, oeyoews> -->\n\n!! Video\n\n<!-- <iframe src=\"https://player.bilibili.com/player.html?aid=614007063&bvid=BV19h4y1x7kg&cid=1141229148&page=1\" width=\"100%\" height=\"500\" scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\" sandbox=\"allow-top-navigation allow-same-origin allow-forms allow-scripts\"> </iframe> -->\n\n!! UnsplashAPI\n\n<!-- UnsplashAPI: <$UnsplashAPI /> -->\n\n</div>\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-unsplash.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-unsplash.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-unsplash",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Unsplash",

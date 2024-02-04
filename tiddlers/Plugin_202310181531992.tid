@@ -6,6 +6,6 @@ cpl.name: neotw-info
 cpl.plugin-type: plugin
 cpl.readme: 
 cpl.title: $:/plugins/oeyoews/neotw-info
-cpl.uri: https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-info.json
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-info.json
 tags: $:/tags/PluginWiki
 title: Plugin_202310181531992

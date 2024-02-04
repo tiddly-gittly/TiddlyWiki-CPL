@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "!! Tiddlywiki Keyboard Hint\n\n* if your computer installed some vim extensions, such as surfing-keys or vimium, this plugin maybe not work\nsites, this plugin will be not work normally\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-keyboard-hint.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-keyboard-hint.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-keyboard-hint",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Keyboard Hint",

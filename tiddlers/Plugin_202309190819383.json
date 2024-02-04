@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "{{$:/language/neotw-emoji-picker/readme}}\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-emoji-picker.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-emoji-picker.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-emoji-picker",
         "cpl.author": "oeyoews",
         "cpl.name": "Neotw Emoji Picker",

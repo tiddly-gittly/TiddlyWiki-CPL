@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.1
+cpl.dependents: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
+cpl.description: tiddlywiki-banners
+cpl.name: tiddlywiki-banners
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/tiddlywiki-banners
+cpl.uri: https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-banners.json
+tags: $:/tags/PluginWiki
+title: Plugin_202401174215981

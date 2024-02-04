@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "## TODO\n\n- add quickadd links button on widget\n\n* [ ] add description links order for table\n* [ ] support revese\n",
-        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-links-gallery.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-links-gallery.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-links-gallery",
         "cpl.author": "oeyoews",
         "cpl.name": "neotw-links-gallery",

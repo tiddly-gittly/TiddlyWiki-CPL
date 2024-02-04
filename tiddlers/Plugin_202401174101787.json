@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\n- https://github.com/Agezao/confetti-js\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fconfetti-background.json",
+        "cpl.title": "$:/plugins/oeyoews/confetti-background",
+        "cpl.author": "oeyoews",
+        "cpl.name": "confetti-background",
+        "cpl.description": "confetti-background",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202401174101787"
+    }
+]

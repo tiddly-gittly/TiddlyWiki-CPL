@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\n- https://github.com/antfu/antfu.me/blob/eb52c0f20a2673ea5af15a4c9154e4181fe177d5/src/components/Plum.vue#L19\n- https://github.com/antfu/plum-demo\n- https://www.bilibili.com/video/BV1wY411n7er/?spm_id_from=333.999.0.0&vd_source=d6afd7eedd9f9c940321c63f0a1539e3\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fplum-blosssom.json",
+        "cpl.title": "$:/plugins/oeyoews/plum-blosssom",
+        "cpl.author": "oeyoews",
+        "cpl.name": "plum-blosssom",
+        "cpl.description": "plum-blosssom",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202401174211918"
+    }
+]
