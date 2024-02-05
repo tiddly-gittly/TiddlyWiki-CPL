@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "<!-- plugin template readme -->\n\n## 9.3.0\n\n## 9.4.0\n\n## tiny\n\n## latest\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
-        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid-cdn.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid-cdn.json",
         "cpl.title": "$:/plugins/oeyoews/mermaid-cdn",
         "cpl.author": "oeyoews",
         "cpl.name": "mermaid-cdn",

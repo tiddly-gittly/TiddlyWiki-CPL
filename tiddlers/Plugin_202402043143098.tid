@@ -6,6 +6,6 @@ cpl.name: tiddlywiki-prettier-lib
 cpl.plugin-type: plugin
 cpl.readme: ## Prettier library instead of cdn
 cpl.title: $:/plugins/oeyoews/tiddlywiki-prettier-lib
-cpl.uri: https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-prettier-lib.json
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-prettier-lib.json
 tags: $:/tags/PluginWiki
 title: Plugin_202402043143098

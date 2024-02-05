@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "!! Medium Zoom Plugin\n\n* 拥有 medium 上 放大图片的相同丝滑体验.",
-        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmedium-zoom.json",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmedium-zoom.json",
         "cpl.title": "$:/plugins/oeyoews/medium-zoom",
         "cpl.author": "oeyoews",
         "cpl.name": "medium-zoom",
