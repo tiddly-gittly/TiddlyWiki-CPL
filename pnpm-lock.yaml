@@ -9,8 +9,8 @@ dependencies:
     specifier: ^4.1.2
     version: 4.1.2
   commander:
-    specifier: ^11.0.0
-    version: 11.0.0
+    specifier: ^12.0.0
+    version: 12.0.0
   inquirer:
     specifier: ^8.1.3
     version: 8.2.6
@@ -3650,9 +3650,9 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /commander@11.0.0:
-    resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
-    engines: {node: '>=16'}
+  /commander@12.0.0:
+    resolution: {integrity: sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==}
+    engines: {node: '>=18'}
     dev: false
 
   /commander@2.20.3:
