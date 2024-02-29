@@ -4,10 +4,10 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/source-control-management",
-        "modified": "20240106175623412",
+        "modified": "20240229101904025",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "modifier": "lin onetwo",
+        "modifier": "林一二",
         "cpl.title": "$:/plugins/linonetwo/source-control-management",
         "cpl.author": "LinOnetwo",
         "cpl.name": "SCM",
@@ -15,6 +15,8 @@
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_source-control-management.json",
         "cpl.readme": "!! 功能\n\n[[WebCatalog|https://webcatalogapp.com/]] 除了[[能将 TiddlyWiki 包装成桌面应用|https://onetwo.ren/%E7%94%A8tiddlywiki%E6%9B%BF%E4%BB%A3notion%E5%92%8Cevernote%E7%AE%A1%E7%90%86%E7%9F%A5%E8%AF%86/]]以外，还提供了自定义 API 并暴露给网页的功能，让我们可以在 Wiki 网页里使用一些高级功能。\n\n本插件利用暴露的自定义 API 实现：\n\n# 查看本地 NodeJS 版 TiddlyWiki 是否完全与 Github 备份云同步了\n# 一键同步本地和云端\n\n!! 用法\n\n当点开 SCM 标签页的时候，会进行一次 git 环境检查，因为使用的 git 库 dugite 比较卡，所以只进行一次检查，如果需要刷新，需要来回切换一下 tab。\n",
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/source-control-management",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "cpl.category": "Functional",
+        "cpl.tags": "Backup"
     }
 ]
