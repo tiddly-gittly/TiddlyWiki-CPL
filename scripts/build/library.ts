@@ -46,10 +46,10 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       mkdirsForFileSync(resolve(cachePluginsDir, 'foo'));
     }
 
-    // 启动TW
+    // 启动 TW
     const $tw = tiddlywiki();
 
-    // 拷贝本地插件(未在网络上发布的)  cp plugin_files/* ${distDir}/tmp/
+    // 拷贝本地插件 (未在网络上发布的)  cp plugin_files/* ${distDir}/tmp/
     const pluginFilesDir = resolve('plugin_files');
     for (const file of readdirSync(pluginFilesDir)) {
       const p = resolve(pluginFilesDir, file);
@@ -68,7 +68,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     for (const title of pluginInfoTiddlerTitles) {
       try {
         const tiddler = $tw.wiki.getTiddler(title)!.fields;
-        // 应当有title
+        // 应当有 title
         if (
           !tiddler['cpl.title'] ||
           (tiddler['cpl.title'] as string).trim() === ''
@@ -79,7 +79,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           continue;
         }
         const title_ = tiddler['cpl.title'] as string;
-        // 带有uri，需要下载下来，但是需要是tw支持的格式
+        // 带有 uri，需要下载下来，但是需要是 tw 支持的格式
         if (
           !tiddler['cpl.uri'] ||
           (tiddler['cpl.uri'] as string).trim() === ''
@@ -193,7 +193,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       );
     };
 
-    // 接下来从tmpDir处理所有的插件
+    // 接下来从 tmpDir 处理所有的插件
     const pluginTitlePathMap: Record<string, string> = {};
     const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] =
       [];
@@ -318,7 +318,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       );
     }
 
-    // 生成插件源HTML文件
+    // 生成插件源 HTML 文件
     console.log(chalk.bgCyan.black.bold('\nGenerating plugin library file...'));
 
     writeFileSync(

@@ -56,7 +56,11 @@
     "uri": "https://saqimtiaz.github.io/SQPL/library/index.html"
   },
   {
-    "name": "NeoTW (oeyoews)",
+    "name": "TSKPL (oeyoews)",
     "uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/index.html"
+  },
+  {
+    "name": "CM6",
+    "uri": "https://oeyoews.github.io/tiddlywiki-codemirror6/library/index.html"
   }
 ]

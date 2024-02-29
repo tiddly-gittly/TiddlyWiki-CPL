@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "## Geist\n\n- https://vercel.com/font\n- https://github.com/vercel/geist-font/releases/latest\n- https://talk.tiddlywiki.org/t/tw5-re-tw5-how-to-embed-a-font-using-font-face-and-data-url/6318/2",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ffont-geist.json",
+        "cpl.title": "$:/plugins/oeyoews/font-geist",
+        "cpl.author": "oeyoews",
+        "cpl.name": "font-geist",
+        "cpl.description": "font-geist",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.1",
+        "title": "Plugin_202401082749318"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "## TODO\n\n- add quickadd links button on widget\n\n* [ ] add description links order for table\n* [ ] support revese\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-links-gallery.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-links-gallery",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-links-gallery",
+        "cpl.description": "neotw-links-gallery",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/ejs",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202401082756913"
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20240211132237158",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202302034048668 1 1 1 1",
+        "author": "",
+        "cpl.author": "yaisog",
+        "cpl.description": "SingleTiddlerView PageTemplate with minimal StoryView\n",
+        "cpl.documentation": "https://yaisog.tiddlyhost.com/",
+        "cpl.name": "single-tiddler-view",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "* show only a single tiddler at a time in the story\n* no animations when navigating to tiddlers\n* use the `Open` tab of the sidebar to navigate between open tiddlers",
+        "cpl.source": "",
+        "cpl.title": "$:/plugins/yaisog/single-tiddler-view",
+        "cpl.uri": "https://yaisog.tiddlyhost.com",
+        "modified": "20240211132427925",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki"
+    }
+]

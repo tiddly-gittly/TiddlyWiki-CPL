@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "!! Tiddlywiki Axios\n\n* [[Source|https://github.com/oeyoews/neotw/tree/main/plugins/oeyoews/tiddlywiki-axios]]\n* [[Demo|https://oeyoews.github.io/neotw]]\n\n!! Test\n\n<$button message=\"om-axios-test\">\n🎲 Axios test\n</$button>\n",
-        "cpl.uri": "https://neotw.oeyoewl.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-axios.json",
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-axios.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-axios",
         "cpl.author": "oeyoews",
         "cpl.name": "Tiddlywiki Axios",
