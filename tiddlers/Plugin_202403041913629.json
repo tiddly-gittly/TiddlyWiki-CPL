@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "> 愿每一个 tiddlywiki 用户都看不到红色报错弹窗警告\n\n> 众所周知，tiddlywiki 的弹窗报错就像 windows 的蓝屏警告一样，几乎没有有效信息\n\n<div class='tc-error-form relative'>\n\n! JavaScript 内部错误\n\n嗯，这很尴尬。建议您通过刷新浏览器来重新启动 TiddlyWiki\n\n</div>\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-error-better.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-error-better",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-error-better",
+        "cpl.description": "neotw-error-better",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403041913629"
+    }
+]
