@@ -7,7 +7,7 @@
         "cpl.author": "oeyoews",
         "cpl.description": "Command palette",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
         "cpl.core-version": ">=5.3.0",
         "title": "Plugin_202309190813854"
     }
