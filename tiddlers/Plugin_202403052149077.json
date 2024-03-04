@@ -1,0 +1,25 @@
+[
+    {
+        "created": "20240304182149077",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202403052149077",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Ego Store Lite",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/ego-store-lite",
+        "modified": "20240304182736453",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.tags": "game",
+        "cpl.category": "Fun",
+        "cpl.description": "Default game for tw-gamification, a simple store to buy bonus for yourself, and you are the store keeper.",
+        "cpl.uri": "https://github.com/tiddly-gittly/tw-gamification/releases/latest/download/__plugins_linonetwo_ego-store-lite.json\n",
+        "cpl.readme": "Default game for tw-gamification, a simple store to buy bonus for yourself, and you are the store keeper.\n\n「游戏太微」的默认游戏，在一个简单的商店里购买对自己的奖励，而且你自己就是店主",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tw-gamification/",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-gamification/tree/master/src/ego-store-lite",
+        "cpl.dependents": "$:/plugins/linonetwo/tw-gamification $:/plugins/linonetwo/simple-layout-launcher",
+        "cpl.parent-plugin": "$:/plugins/linonetwo/tw-gamification"
+    }
+]
