@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<!-- plugin template readme -->\n\n* https://vant-contrib.gitee.io/vant/#/zh-CN/quickstart\n\n* https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js\n* 更新 lib 注意：替换 require('vue') 为 require('$:/plugins/oeyoews/neotw-vue3/vue.global.prod.js')\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.readme": "<!-- plugin template readme -->\n\n- https://vant-contrib.gitee.io/vant/#/zh-CN/quickstart\n\n- https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js\n- 更新 lib 注意：替换 require('vue') 为 require('$:/plugins/oeyoews/neotw-vue3/vue.global.prod.js')\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue3-vant.json",
         "cpl.title": "$:/plugins/oeyoews/vue3-vant",
         "cpl.author": "oeyoews",

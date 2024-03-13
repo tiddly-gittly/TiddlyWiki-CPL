@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n\n修复 tiddlers 表格溢出的样式问题",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n\n修复 tiddlers 表格溢出的样式问题\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftable-style-fix.json",
         "cpl.title": "$:/plugins/oeyoews/table-style-fix",
         "cpl.author": "oeyoews",
