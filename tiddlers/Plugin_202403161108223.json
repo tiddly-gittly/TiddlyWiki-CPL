@@ -8,7 +8,7 @@
         "cpl.name": "Visualization Dashboard 可视化大屏",
         "cpl.plugin-type": "plugin",
         "cpl.title": "$:/plugins/linonetwo/visualization-dashboard",
-        "modified": "20240316151427040",
+        "modified": "20240317060210626",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "林一二",
@@ -19,6 +19,7 @@
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-calendar/tree/master/src/visualization-dashboard",
         "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-calendar/",
         "cpl.parent-plugin": "$:/plugins/linonetwo/tw-calendar",
-        "cpl.core-version": ">=5.3.0"
+        "cpl.core-version": ">=5.3.0",
+        "cpl.tags": "ECharts layout"
     }
 ]
