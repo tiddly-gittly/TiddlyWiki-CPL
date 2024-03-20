@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-highlight-vue.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-highlight-vue",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-highlight-vue",
+        "cpl.description": "neotw-highlight-vue",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200432784"
+    }
+]
