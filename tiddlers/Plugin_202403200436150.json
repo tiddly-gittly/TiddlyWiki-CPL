@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "\n!! Usage\n\n```js\n// widget.js\nconst ContextMenu = require('vue-context-menu.min.js').default;\n\napp.use(ContextMenu)\n```\n\n!! Links\n\nhttps://imengyu.top/pages/vue3-context-menu-docs/guide/install.html\n",
+        "cpl.readme": "\n!! Usage\n\n```js\n// widget.js\n// https://imengyu.top/pages/vue3-context-menu-docs/guide/useage.html\nconst ContextMenu = require('vue-context-menu.min.js').default;\n\napp.use(ContextMenu)\n```\n\n!! Links\n\nhttps://imengyu.top/pages/vue3-context-menu-docs/guide/install.html\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-context-menu.json",
         "cpl.title": "$:/plugins/oeyoews/vue-context-menu",
         "cpl.author": "oeyoews",
