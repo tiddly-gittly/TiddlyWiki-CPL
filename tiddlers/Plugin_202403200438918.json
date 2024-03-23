@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Usage\n\n```html\n<$vue-pomodoro />\n```\n\n!! NOTE\n\n* this plugin have a pagetemplate defaultly, if you dont need that, please remove it's tag for $:/plugins/oeyoews/vue-pomodoro/modal/PageTemplate tiddler\n\n<!-- plugin template readme -->\n\n<!-- !! Motivation -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-pomodoro.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-pomodoro",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-pomodoro",
+        "cpl.description": "vue-pomodoro",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200438918"
+    }
+]

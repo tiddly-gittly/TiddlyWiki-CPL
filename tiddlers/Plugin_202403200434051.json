@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## TODO\n\n- 支持分頁\n- 支持点击打开\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vue-journal.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-vue-journal",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-vue-journal",
+        "cpl.description": "neotw-vue-journal",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200434051"
+    }
+]

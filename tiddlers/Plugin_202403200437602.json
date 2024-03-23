@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<$vue-kanban />\n\n<!-- plugin template readme -->\n\n<!-- !! Motivation -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-kanban.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-kanban",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-kanban",
+        "cpl.description": "vue-kanban",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200437602"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n<$tskpl url=\"https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo/index.json\"/>\n\n<$tskpl />\n\n## TODO\n\n- 搜索时重置页数\n- 搜索防抖 v-model\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vue-plugins.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-vue-plugins",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-vue-plugins",
+        "cpl.description": "neotw-vue-plugins",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200434537"
+    }
+]

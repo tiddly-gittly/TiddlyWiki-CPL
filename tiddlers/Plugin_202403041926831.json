@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "* https://vue-i18n.intlify.dev/guide/installation.html\n* https://vue-i18n.intlify.dev/guide/essentials/syntax.html\n* https://github.com/LeonWuV/FE-blog-repository/blob/master/vue/vue%20--%20vue-i18n%E5%9B%BD%E9%99%85%E5%8C%96%E4%BD%BF%E7%94%A8%E7%AE%80%E5%8D%95%E6%95%99%E7%A8%8B.md\n\n<!-- jsdelivr 和 unpkg 大小不同，文件较小的有问题 -->",
+        "cpl.readme": "<!-- jsdelivr 和 unpkg 大小不同，文件较小的有问题 -->\n\n!! Usage\n\n```js\n// widget.js\n// $t is enabled default, but you can use t to simplify it\nconst { createI18n } = require('vue-i18n.global.prod.js');\n\nconst en = require('./i18n/en.js');\nconst cn = require('./i18n/zh.js');\nconst messages = {\n  English: en,\n  中文: cn\n};\n\nconst defaultLang = 'English'\nlet locale = localStorage.getItem('lang');\nif (!locale) {\n  locale = defaultLang;\n  localStorage.setItem('lang', locale);\n}\n\nconst i18n = createI18n({\n  legacy: false,\n  locale,\n  fallbackLocale: defaultLang,\n  messages\n});\napp.use(i18n);\n\n// app.js (optional)\nconst { useI18n } = require('vue-i18n.global.prod.js');\nsetup () {\n  const { t } = useI18n();\n  return { t }\n}\n```\n\n!! Links\n* https://vue-i18n.intlify.dev/guide/installation.html\n* https://vue-i18n.intlify.dev/guide/essentials/syntax.html\n* https://github.com/LeonWuV/FE-blog-repository/blob/master/vue/vue%20--%20vue-i18n%E5%9B%BD%E9%99%85%E5%8C%96%E4%BD%BF%E7%94%A8%E7%AE%80%E5%8D%95%E6%95%99%E7%A8%8B.md\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-i18n.json",
         "cpl.title": "$:/plugins/oeyoews/vue-i18n",
         "cpl.author": "oeyoews",

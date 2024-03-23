@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n> 拥有 vscode 的 tabs 的所有功能\n\n<!-- !! TODO\n\n* pin\n* tabs width fix -->\n\n<!-- !! Motivation -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-tabs.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-tabs",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-tabs",
+        "cpl.description": "vue-tabs",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/vue-i18n $:/plugins/oeyoews/vue-draggable-plus $:/plugins/oeyoews/vue-context-menu",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200439621"
+    }
+]
