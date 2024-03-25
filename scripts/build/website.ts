@@ -1,15 +1,9 @@
-import fs from 'fs';
 import path from 'path';
+import fs from 'fs-extra';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import {
-  tiddlywiki,
-  mkdirsForFileSync,
-  waitForFile,
-  shellI,
-  getTmpDir,
-} from '../utils';
+import { tiddlywiki, waitForFile, shellI, getTmpDir } from '../utils';
 import { buildCPLPlugin } from './cpl-plugin';
 
 /** 项目路径 */
@@ -58,7 +52,7 @@ export const buildOnlineHTML = async (
   const $tw = tiddlywiki([], wikiFolder);
   const tiddlers: Map<string, ITiddlerFields> = new Map();
   const assetsPath = path.resolve(distDir, 'assets');
-  mkdirsForFileSync(path.resolve(assetsPath, '1'));
+  fs.ensureFileSync(path.resolve(assetsPath, '1'));
   $tw.wiki.each(({ fields }, title: string) => {
     if (
       bypassTiddlers.has(title) ||

@@ -38,9 +38,11 @@
   "devDependencies": {
     "@modern-js/eslint-config": "^2.35.0",
     "@modern-js/tsconfig": "^2.35.0",
+    "@types/fs-extra": "^11.0.4",
     "@types/inquirer": "^9.0.3",
     "@types/node": "^20.6.3",
     "cross-env": "^7.0.3",
+    "fs-extra": "^11.2.0",
     "html-minifier-terser": "^7.2.0",
     "rimraf": "^5.0.1",
     "tiddlywiki": "5.3.1",

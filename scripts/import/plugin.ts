@@ -1,6 +1,6 @@
 import { URL } from 'url';
-import { readdirSync } from 'fs';
 import { resolve, extname } from 'path';
+import { ensureFileSync, readdirSync } from 'fs-extra';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import type { ITiddlerFields } from 'tiddlywiki';
@@ -13,7 +13,6 @@ import {
   formatTitle,
   getReadmeFromPlugin,
   getTiddlerFromFile,
-  mkdirsForFileSync,
 } from '../utils';
 import { IImportOption } from './options';
 
@@ -65,7 +64,7 @@ export const importPlugin = async (
   // 缓存中不存在
   if (!pluginFilePath) {
     const tmpDir = resolve(getTmpDir(), 'plugins');
-    mkdirsForFileSync(resolve(tmpDir, '1'));
+    ensureFileSync(resolve(tmpDir, '1'));
     const tmpTiddlerPath = resolve(tmpDir, fileName);
     const filePrefix = `${formatedTitle}.`;
     let pluginFile: string | undefined;
