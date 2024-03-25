@@ -1,6 +1,6 @@
 import { URL } from 'url';
-import { readFileSync, ensureFileSync } from 'fs-extra';
 import { resolve, dirname } from 'path';
+import { readFileSync, ensureFileSync } from 'fs-extra';
 import chalk from 'chalk';
 import { ITiddlerFields } from 'tiddlywiki';
 import { shellI, getTmpDir, tiddlywiki } from '../utils';
@@ -64,7 +64,9 @@ export const importLibrary = async (
     for (const plugin of pluginsJson) {
       const { title } = plugin;
       if (!title || title.trim() === '') {
-        console.log(chalk.gray(`跳过无标题 Skip no title ${JSON.stringify(plugin)}`));
+        console.log(
+          chalk.gray(`跳过无标题 Skip no title ${JSON.stringify(plugin)}`),
+        );
         continue;
       }
       if (
@@ -74,7 +76,9 @@ export const importLibrary = async (
         console.log(chalk.gray(`跳过 Skip ${chalk.underline(title)}`));
         continue;
       }
-      console.log(chalk.gray(`导入 Importing ${chalk.underline(title)}`));
+      console.log(
+        chalk.gray(`导入插件 Importing Plugin ${chalk.underline(title)}`),
+      );
       u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
         encodeURIComponent(plugin.title),
       )}.json`;
