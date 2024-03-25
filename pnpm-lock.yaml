@@ -27,7 +27,7 @@ devDependencies:
     version: 11.0.4
   '@types/inquirer':
     specifier: ^9.0.3
-    version: 9.0.3
+    version: 9.0.7
   '@types/node':
     specifier: ^20.6.3
     version: 20.6.3
@@ -2875,10 +2875,10 @@ packages:
       '@types/node': 20.6.3
     dev: true
 
-  /@types/inquirer@9.0.3:
-    resolution: {integrity: sha512-CzNkWqQftcmk2jaCWdBTf9Sm7xSw4rkI1zpU/Udw3HX5//adEZUIm9STtoRP1qgWj0CWQtJ9UTvqmO2NNjhMJw==}
+  /@types/inquirer@9.0.7:
+    resolution: {integrity: sha512-Q0zyBupO6NxGRZut/JdmqYKOnN95Eg5V8Csg3PGKkP+FnvsUZx1jAyK7fztIszxxMuoBA6E3KXWvdZVXIpx60g==}
     dependencies:
-      '@types/through': 0.0.31
+      '@types/through': 0.0.33
       rxjs: 7.8.1
     dev: true
 
@@ -2942,8 +2942,8 @@ packages:
       '@types/estree': 0.0.39
     dev: true
 
-  /@types/through@0.0.31:
-    resolution: {integrity: sha512-LpKpmb7FGevYgXnBXYs6HWnmiFyVG07Pt1cnbgM1IhEacITTiUaBXXvOR3Y50ksaJWGSfhbEvQFivQEFGCC55w==}
+  /@types/through@0.0.33:
+    resolution: {integrity: sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==}
     dependencies:
       '@types/node': 20.6.3
     dev: true
@@ -3891,7 +3891,7 @@ packages:
     resolution: {integrity: sha512-QHTXI/sZQmko1cbDoNAa3mJ5qhWUUNAq3vR0/YiD379fWQrcfuoX1+HW2S0MTt7XmoPLapdaDKUtelUSPic7hQ==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.10
       tapable: 2.2.1
     dev: true
 
@@ -4495,7 +4495,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       at-least-node: 1.0.0
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.0
     dev: true
@@ -5268,7 +5268,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.9
     dev: true
 
   /jsonpointer@5.0.0:
@@ -6817,7 +6817,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.10
     dev: true
 
   /wcwidth@1.0.1:
