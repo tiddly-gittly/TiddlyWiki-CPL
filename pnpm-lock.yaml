@@ -44,8 +44,8 @@ devDependencies:
     specifier: ^5.0.1
     version: 5.0.1
   tiddlywiki:
-    specifier: 5.3.1
-    version: 5.3.1
+    specifier: 5.3.3
+    version: 5.3.3
   ts-node:
     specifier: ^10.9.1
     version: 10.9.1(@types/node@20.6.3)(typescript@5.4.3)
@@ -6623,12 +6623,11 @@ packages:
   /through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
-  /tiddlywiki@5.3.1:
-    resolution: {integrity: sha512-17uoTt8w3wvqaF1fqulHeeR86984N0eC8fgd0Ql1LIKgrHRu1+M3fBW8V/ikofU2s74xr6S1efREHaA2zyhe1w==}
+  /tiddlywiki@5.3.3:
+    resolution: {integrity: sha512-PkgVfZNpFFHyMmfFw91igXOJn8Z7IWg3NGXOX5EBqJwzGNeYYOIUg4FqCNsWoqBece20HxtkDue/vTf2jDtdZQ==}
     engines: {node: '>=0.8.2'}
     hasBin: true
     dev: true
-    bundledDependencies: []
 
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
