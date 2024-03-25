@@ -44,7 +44,7 @@ export const tiddlywiki = (
     text: string,
     fieldsDefault: Record<string, unknown>,
   ) => {
-    let incoming = $tw.utils.parseJSONSafe(text, (err: any) => [
+    let incoming: unknown = $tw.utils.parseJSONSafe(text, (err: any) => [
       { title: `JSON error: ${err}`, text: '' },
     ]);
     if (!$tw.utils.isArray(incoming)) {
