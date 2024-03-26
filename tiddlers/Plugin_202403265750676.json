@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Pikaday\nA date-picker with calendar widget to pick a date and set to `due` field of target tiddler. This is a derived plugin from Projectify by [[Nicolas Petton|https://nicolas.petton.fr]] nicolas@petton.fr\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Pikaday/\n* Code: https://github.com/kookma/TW-Pikaday\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fpikaday.json",
+        "cpl.title": "$:/plugins/kookma/pikaday",
+        "cpl.author": "Nicolas Petton, Mohammad Rahmani",
+        "cpl.name": "Pikaday",
+        "cpl.description": "Date picker from Projectify",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Pikaday",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.3",
+        "title": "Plugin_202403265750676"
+    }
+]

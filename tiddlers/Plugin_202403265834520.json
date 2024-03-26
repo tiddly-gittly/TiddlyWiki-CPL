@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n!! APIKEY\n\n<$edit-text tiddler=\"$:/plugins/oeyoews/vue-gemini/config\" field=\"api\" type=\"password\" />\n\n!! Ref\n\nhttps://ai.google.dev/tutorials/get_started_web?hl=zh-cn\n\n<!-- !! Motivation -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-gemini.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-gemini",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-gemini",
+        "cpl.description": "vue-gemini",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403265834520"
+    }
+]

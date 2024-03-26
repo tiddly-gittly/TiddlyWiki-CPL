@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Kara\nKara is a small in tiddler plain checklist and interstitial journaling. It has a minimal UI and lets you manually add/remove items/notes to your checklist/interstitial journal. Items can be simply searched using standard search. Kara does not use any system or third party tiddlers.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Kara/\n* Code: https://github.com/kookma/TW-Kara\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fkara.json",
+        "cpl.title": "$:/plugins/kookma/kara",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Kara",
+        "cpl.description": "Small plain checklist and interstitial journaling",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Kara",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.2",
+        "title": "Plugin_202403265750466"
+    }
+]
