@@ -60,7 +60,7 @@ jobs:
 
           # commit_user_name: My GitHub Actions Bot # defaults to "github-actions[bot]"
           # commit_user_email: my-github-actions-bot@example.org # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_author: Author <actions@github.com> # defaults to author of the commit that triggered the run
+          commit_author: Github Action <actions@github.com> # defaults to author of the commit that triggered the run
 
 
           # Optional. Options used by `git-add`.
@@ -68,11 +68,12 @@ jobs:
           add_options: '-u'
 
           # # Optional. Disable dirty check and always try to create a commit and push
-          # skip_dirty_check: true
+          skip_dirty_check: true
           # # Optional. Skip internal call to `git fetch`
           # skip_fetch: true
           # # Optional. Skip internal call to `git checkout`
           # skip_checkout: true
           # Optional. Prevents the shell from expanding filenames.
           # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
-          # disable_globbing: true
+          disable_globbing: true
+          push_options: --force
