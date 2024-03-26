@@ -65,7 +65,7 @@ jobs:
 
           # Optional. Options used by `git-add`.
           # See https://git-scm.com/docs/git-add#_options
-          add_options: '-u'
+          # add_options: '-u'
 
           # # Optional. Disable dirty check and always try to create a commit and push
           skip_dirty_check: true
@@ -75,5 +75,5 @@ jobs:
           # skip_checkout: true
           # Optional. Prevents the shell from expanding filenames.
           # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
-          disable_globbing: true
-          push_options: --force
+          # disable_globbing: true
+          # push_options: --force
