@@ -21,7 +21,7 @@ devDependencies:
     version: 2.48.3(typescript@5.4.3)
   '@modern-js/tsconfig':
     specifier: ^2.48.3
-    version: 2.48.3
+    version: 2.48.4
   '@types/fs-extra':
     specifier: ^11.0.4
     version: 11.0.4
@@ -2510,8 +2510,8 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/tsconfig@2.48.3:
-    resolution: {integrity: sha512-S1STfvJHSUPNXUKuFB15t1CQSqsafzw8yKY+PnGsbXGcz1i+TIuO8420fUcrY7zP7miePrx9TfHEXHbloOqJmg==}
+  /@modern-js/tsconfig@2.48.4:
+    resolution: {integrity: sha512-9XESp5lHMVYdZE+BcBN2LhDaQxZ4FWhDZlX4HdBTHHvlosf4lwYoDPc5VlIYXAsXIpdI6xwzKWEHeEKcdcbz9A==}
     dev: true
 
   /@module-federation/runtime-tools@0.0.8:
