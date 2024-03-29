@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<$badge icon=\"tailwindcss\" />\n\n[[在线文档|https://neotw.vercel.app/docs/plugins/tiddlywiki-tailwindcss-plus]]",
+        "cpl.readme": "<!-- <$badge icon=\"tailwindcss\" /> -->\n\n[[在线文档|https://neotw.vercel.app/docs/plugins/tiddlywiki-tailwindcss-plus]]",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tailwindcss-plus.json",
         "cpl.title": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
         "cpl.author": "oeyoews",

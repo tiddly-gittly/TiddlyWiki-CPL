@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "## book status\n\n> https://github.com/oeyoews/reading-books-with-tiddlywiki\n\n记录你读过的每一个笔记 (此插件针对上述链接的项目)\n\n## TODO\n\n- [x] 在每个目录旁边显示是否阅读过，bingo/x\n- [x] 获取目录 json 数据\n- [x] getstorytiddler\n- [x] click event\n- [x] status json\n- [x] 如何获取每个笔记的书名，通过 sourceTiddler, 或者获取 tag, 每本书只有一个 tag\n- [x] viewtemplate(filter: $:/plugins/books/) 也许可以做成 viewtoolbar, 但是不够醒目\n- [x] 也许可以借助 localstorage 当作临时状态 (), 最后结束是，询问是否要保存此次阅读记录，通知阅读时间\n- [x] 支持待看状态\n- [x] 每本书一个配置文件，目前是一个文件\n",
+        "cpl.readme": "[[文档|https://neotw.vercel.app/docs/plugins/book-status]]\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fbook-status.json",
         "cpl.title": "$:/plugins/oeyoews/book-status",
         "cpl.author": "oeyoews",
