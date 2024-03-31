@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: $:/plugins/tiddlywiki/markdown
+cpl.description: markdown-extensions-startup
+cpl.name: markdown-extensions-startup
+cpl.plugin-type: plugin
+cpl.readme: [[文档|https://neotw.vercel.app/docs/plugins/markdown-extensions-startup]]
+cpl.title: $:/plugins/oeyoews/markdown-extensions-startup
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-extensions-startup.json
+tags: $:/tags/PluginWiki
+title: Plugin_202401082750445
