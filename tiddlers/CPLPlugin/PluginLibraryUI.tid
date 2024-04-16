@@ -1,0 +1,6 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/PluginLibraryUI
+caption: CPL
+tags: $:/tags/PluginLibrary $:/tags/PluginLibrary/CPL
+enabled: no
+
+{{$:/plugins/Gk0Wk/CPL-Repo/panel}}
