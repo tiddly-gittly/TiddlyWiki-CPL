@@ -5,7 +5,7 @@
         "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpalette-manager.json",
         "cpl.title": "$:/plugins/wikilabs/palette-manager",
         "cpl.author": "Mario Pietsch",
-        "cpl.name": "Palette Manager - Preview",
+        "cpl.name": "Palette Manager",
         "cpl.description": " - to be included into the TW core",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
