@@ -9,7 +9,7 @@
         "cpl.description": "Show a breadcrumbs trail to visualize the context",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.0",
+        "cpl.core-version": ">=5.2.1",
         "title": "Plugin_202403265754075"
     }
 ]
