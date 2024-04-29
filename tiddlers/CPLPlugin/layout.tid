@@ -1,0 +1,25 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/layout
+name: CPL
+icon: $:/core/images/plugin-generic-plugin
+description: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[太微插件聚合中心]else[TW5 Central Plugin Library]] }}} />
+tags: $:/tags/Layout
+
+\whitespace trim
+\import [subfilter{$:/core/config/GlobalImportFilter}]
+\define containerClasses()
+tc-page-container tc-language-$(languageTitle)$ cpl-layout-container
+\end
+
+<$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
+	<div class=<<containerClasses>>>
+
+		<$button to=<<currentTiddler>> class="cpl-layout-back-button cpl-normal-button">
+			<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[返回标准布局]else[Back to Standard layout]] }}} />
+			{{$:/core/images/default-layout}}
+			<$action-setfield $tiddler="$:/layout" text="" />
+		</$button>
+
+		{{$:/plugins/Gk0Wk/CPL-Repo/panel}}
+
+	</div>
+</$navigator>

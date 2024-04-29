@@ -5,7 +5,7 @@ title: $:/plugins/Gk0Wk/CPL-Repo/about-banner
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
-<div style="padding: 26px 16px;background: #1f5ea3;border-left: 5px solid #acc8d4;display:inline-block;background-image: linear-gradient(45deg, #1f5ea3, #1f71a3);">
+<div class="cpl-banner-container">
 <div style="
   font-size: 24px;
   line-height: 1em;

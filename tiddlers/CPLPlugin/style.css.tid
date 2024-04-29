@@ -117,7 +117,27 @@ type: text/vnd.tiddlywiki
   user-select: none;
 }
 
+.cpl-banner-container {
+  padding: 26px 16px;
+  background: #1f5ea3;
+  border-left: 5px solid #acc8d4;
+  display:inline-block;
+  background-image: linear-gradient(45deg, #1f5ea3, #1f71a3);
+  width: 100%;
+}
 .cpl-banner-button-group svg {
   height: 1em;
   width: 1em;
+}
+
+.cpl-layout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  padding: 0.5em;
+}
+.cpl-layout-back-button {
+  padding: 0.5em;
 }
