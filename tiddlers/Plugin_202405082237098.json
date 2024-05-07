@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20240507182237098",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202405082237098",
+        "cpl.author": "linonetwo",
+        "cpl.name": "High-Dimensional Tables 高维表格",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/hyper-table",
+        "modified": "20240507182605954",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.category": "Showcase",
+        "cpl.description": "Present large amounts of data beautifully and efficiently, generate pivot tables and other advanced table presentations for tiddlers.\n\n美观高效地展示大量数据，为你的条目生成数据透视表等高级表格展示方式。",
+        "cpl.source": "https://github.com/tiddly-gittly/hyper-table/",
+        "cpl.documentation": "https://tiddly-gittly.github.io/hyper-table/",
+        "cpl.readme": "本插件提供几种微件：\n\n# 基本表格\n#* 基本表格是一种常见的可视化数据形式，用于展示和组织数据。它由行和列的网格状结构组成，以清晰、结构化的方式呈现大量数据。基本表格通常提供一些交互和可视化功能，使用户能够对数据进行查找、排序、分页和格式化等操作。\n#* 微件为 `<$basic-table />`\n# 数据透视表\n#* 数据透视表又名多维分析表、交叉表、Pivot Table，指的是可以在行维度和列维度放入一个或多个维度，显示维度之间相互关系的一种表格。用户可以一目了然地分析出各种场景指标以及对比，旨在帮助业务分析推动决策。\n#* 微件为 `<$pivot-table />`\n\n查看文档网站了解用法：https://tiddly-gittly.github.io/hyper-table/\n\nThis plugin provides several widgets:\n\nThis plugin provides several widgets:\n\n# Basic Table\n#* A basic table is a common form of visual data used to present and organize data. It consists of a grid-like structure of rows and columns that presents large amounts of data in a clear, structured manner. Basic tables often provide some interaction and visualization capabilities that enable users to find, sort, paginate, and format data.\n#* widget is `<$basic-table />`\n# Pivot Table\n#* Pivot table, also known as multidimensional analysis table, cross table, Pivot table, refers to a table that can put one or more Dimensions in row Dimensions and column Dimensions to display the relationship between Dimensions. Users can analyze various scenarios at a glance Metirc and comparison, designed to help business analysis drive decision-making.\n#* widget is `<$pivot-table />`\n\nRead the doc: https://tiddly-gittly.github.io/hyper-table/",
+        "cpl.uri": "https://github.com/tiddly-gittly/super-tag/releases/latest/download/__plugins_linonetwo_hyper-table.json",
+        "cpl.tags": "table"
+    }
+]
