@@ -7,6 +7,6 @@ cpl.plugin-type: plugin
 cpl.readme: 
 cpl.source: https://github.com/NicolasPetton/Notebook
 cpl.title: $:/plugins/nico/notebook-mobile
-cpl.uri: https://nicolas.petton.fr/tw/notebook.html
+cpl.uri: https://thaddeusjiang.github.io/Projectify/demo.html
 tags: $:/tags/PluginWiki
 title: Plugin_202207200117231
