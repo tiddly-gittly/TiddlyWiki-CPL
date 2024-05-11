@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<$vue-table />\n\n!! TODO\n\n* 黑暗模式适配\n* add i18n support\n\n!! Links\n\n* https://vxetable.cn/#/table/edit/popupForm\n\n!! Motivation\n\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-table.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-table",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-table",
+        "cpl.description": "vue-table",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403041927212"
+    }
+]

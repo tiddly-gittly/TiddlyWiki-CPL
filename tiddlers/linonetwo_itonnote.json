@@ -4,7 +4,7 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/itonnote",
-        "modified": "20221204085136304",
+        "modified": "20240323130636923",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "林一二",
@@ -18,6 +18,6 @@
         "cpl.source": "https://github.com/tiddly-gittly/itonnote-plugin",
         "cpl.plugin-type": "plugin",
         "cpl.documentation": "https://tiddly-gittly.github.io/itonnote-plugin",
-        "cpl.dependents": "$:/plugins/bimlas/locator"
+        "cpl.dependents": ""
     }
 ]

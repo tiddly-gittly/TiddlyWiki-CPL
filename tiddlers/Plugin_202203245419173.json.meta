@@ -1,9 +1,14 @@
 cpl.author: Stephen Kimmel
-cpl.description: Color Text and Highlight
+cpl.description: Color Text and Highlight 添加文字颜色、马克笔高亮文本
+cpl.documentation: http://skplugins.tiddlyspot.com/index.html
 cpl.plugin-type: plugin
-cpl.readme: 
+cpl.readme: Adds text color or background highlighting to a specified block of text, as editor toolbar buttons. 添加三个编辑器工具栏按钮，可以选择颜色，一键添加文字颜色、添加背景色（马克笔）。
 cpl.title: $:/plugins/sk/ColorText
 cpl.uri: http://skplugins.tiddlyspot.com/index.html
+created: 20240302160147376
+creator: 林一二
+modified: 20240302160227017
+modifier: 林一二
 tags: $:/tags/PluginWiki
 title: Plugin_202203245419173
 type: application/json

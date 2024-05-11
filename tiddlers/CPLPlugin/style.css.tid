@@ -1,0 +1,143 @@
+created: 20231009122025301
+modified: 20231011071732554
+tags: $:/tags/Stylesheet
+title: $:/plugins/Gk0Wk/CPL-Repo/style.css
+type: text/vnd.tiddlywiki
+
+.cpl-normal-button {
+  color: <<colour foreground>>;
+  fill: color: <<colour foreground>>;
+}
+
+.cpl-plugin-info-box {
+  overflow: hidden;
+  border: 1px solid <<colour tiddler-info-border>>;
+  background-color: <<colour tiddler-info-background>>;
+}
+.cpl-plugin-dependencies {
+  border-left: 0.8px solid <<colour tiddler-info-border>>;
+  border-right: 0.8px solid <<colour tiddler-info-border>>;
+}
+
+.cpl-plugin-info-box > .tc-plugin-info {
+  margin: 0 !important;
+  border: none !important;
+}
+
+.cpl-plugin-info-box > .tc-plugin-info-dropdown {
+  margin-top: 0 !important;
+  border: none !important;
+}
+
+.cpl-plugin-info-box > .tc-plugin-info-dropdown,
+.cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-message,
+.cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-body {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-body {
+  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.3);
+}
+
+.cpl-latest-version-icon > svg, .cpl-installed-version-icon > svg {
+  height: 1em;
+  width: 1em;
+}
+
+.cpl-latest-version-icon > svg {
+  color: #FFC107;
+  fill: #FFC107;
+}
+
+.cpl-installed-version-icon > svg {
+  color: #3ccb0f;
+  fill: #3ccb0f;
+}
+
+.cpl-plugin-install-request-dependents-tree {
+  border-left:2px dotted <<colour very-muted-foreground>>;
+  background: #0002;
+}
+
+.cpl-plugin-search {
+  flex-grow: 1;
+  width: 0;
+}
+
+.cpl-plugin-search span {
+  display: inline-block;
+  width: 100%;
+}
+
+.cpl-plugin-search span input {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.cpl-plugin-search-go {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 10px 20px !important;
+  word-break: keep-all;
+}
+
+.cpl-paged-plugin-list-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 2px solid <<colour tiddler-info-border>>;
+  background-color: <<colour tiddler-info-background>>;
+}
+
+.cpl-paged-plugin-list-control > div {
+  flex-grow: 1;
+  width: 0;
+  height: 100%;
+}
+
+.cpl-paged-plugin-list-control > div > button {
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+}
+
+.cpl-paged-plugin-list-control > div > button:hover {
+  backdrop-filter: contrast(0.75);
+}
+
+.cpl-paged-plugin-list-control > span {
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.cpl-banner-container {
+  padding: 26px 16px;
+  background: #1f5ea3;
+  border-left: 5px solid #acc8d4;
+  display:inline-block;
+  background-image: linear-gradient(45deg, #1f5ea3, #1f71a3);
+  width: 100%;
+}
+.cpl-banner-button-group svg {
+  height: 1em;
+  width: 1em;
+}
+
+.cpl-layout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  padding: 0.5em;
+}
+.cpl-layout-back-button {
+  padding: 0.5em;
+}

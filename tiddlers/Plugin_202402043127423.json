@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\nbuiltin tiny https://cdn.jsdelivr.net/npm/mermaid@11.0.0-alpha.4/dist/mermaid.tiny.min.js\n\n<!-- ```html\n<script type=\"module\">\nimport mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.0.0-alpha.4/+esm'\n</script>\n``` -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid-tiny.json",
+        "cpl.title": "$:/plugins/oeyoews/mermaid-tiny",
+        "cpl.author": "oeyoews",
+        "cpl.name": "mermaid-tiny",
+        "cpl.description": "mermaid-tiny",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202402043127423"
+    }
+]

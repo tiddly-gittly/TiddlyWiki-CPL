@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n:rocket: Use twemoji for any envionment.\n\n> Twemoji must use the Internet because they use regular expressions to replace emoji with images, markdown-it-twemoji is no exception\n\n> Twemoji 必须需要使用网络，因为他们使用正则进行替换 emoji 为图片，markdown-it-twemoji 也不例外\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-it-twemoji.json",
+        "cpl.title": "$:/plugins/oeyoews/markdown-it-twemoji",
+        "cpl.author": "oeyoews",
+        "cpl.name": "markdown-it-twemoji",
+        "cpl.description": "markdown-it-twemoji",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202402043125670"
+    }
+]

@@ -1,7 +1,7 @@
-import fs from 'fs';
 import { tmpdir } from 'os';
-import { dirname, resolve } from 'path';
+import { resolve } from 'path';
 import { execSync, ExecSyncOptionsWithStringEncoding } from 'child_process';
+import fs from 'fs-extra';
 import chalk from 'chalk';
 import { ITiddlyWiki, ITiddlerFields, TiddlyWiki } from 'tiddlywiki';
 
@@ -44,7 +44,7 @@ export const tiddlywiki = (
     text: string,
     fieldsDefault: Record<string, unknown>,
   ) => {
-    let incoming = $tw.utils.parseJSONSafe(text, (err: any) => [
+    let incoming: unknown = $tw.utils.parseJSONSafe(text, (err: any) => [
       { title: `JSON error: ${err}`, text: '' },
     ]);
     if (!$tw.utils.isArray(incoming)) {
@@ -73,19 +73,6 @@ export const tiddlywiki = (
     });
   };
   return $tw;
-};
-
-/**
- * 确保某个文件对应的路径存在
- *
- * @param {string} fileName 文件路径
- */
-export const mkdirsForFileSync = (fileName: string) => {
-  const path = dirname(fileName);
-  if (!fs.existsSync(path)) {
-    mkdirsForFileSync(path);
-    fs.mkdirSync(path);
-  }
 };
 
 /**
@@ -187,7 +174,7 @@ export const getTmpDir = () => {
   if (!tmpDir) {
     tmpDir = resolve(tmpdir(), 'tiddlywiki-cpl');
     const tmpTiddlerPath = resolve(tmpDir, '1');
-    mkdirsForFileSync(tmpTiddlerPath);
+    fs.ensureFileSync(tmpTiddlerPath);
   }
   return tmpDir;
 };

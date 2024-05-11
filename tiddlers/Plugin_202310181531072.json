@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<$badge icon=\"echarts\" />\n\n[img[https://i.imgur.com/9BEZnR3.png]]\r\n[img[https://i.imgur.com/myoq7V4.png]]\r\n[img[https://i.imgur.com/Zz1Qe8i.png]]\n\n> 目前支持 clockc, tagpie, sevenday, 三种 addon\n\n* 将 echarts 的 addons 独立出来，使用 js 编写，不依赖外部环境，即使在 tw 里面也能快速修改，方便用户修改\n\n## Usage\n\n> coming ...\n\n## TODO\n\n* update tooltip style to fix darkmode\r\n* support qrcode field to show current tiddler url qrcode\n\n<$qrcode type=url />",
+        "cpl.readme": "<!-- <$badge icon=\"echarts\" /> -->\n\n[img[https://i.imgur.com/9BEZnR3.png]]\r\n[img[https://i.imgur.com/myoq7V4.png]]\r\n[img[https://i.imgur.com/Zz1Qe8i.png]]\n\n> 目前支持 clockc, tagpie, sevenday, 三种 addon\n\n* 将 echarts 的 addons 独立出来，使用 js 编写，不依赖外部环境，即使在 tw 里面也能快速修改，方便用户修改\n\n## Usage\n\n> coming ...\n\n## TODO\n\n* update tooltip style to fix darkmode\r\n* support qrcode field to show current tiddler url qrcode\n\n<$qrcode type=url />",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fecharts-addons.json",
         "cpl.title": "$:/plugins/oeyoews/echarts-addons",
         "cpl.author": "oeyoews",

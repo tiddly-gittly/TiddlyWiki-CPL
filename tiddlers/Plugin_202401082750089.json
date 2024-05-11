@@ -2,7 +2,11 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "## Image Observer\n\n* 用于提供懒加载图片的 lib\n\n## Usage\n\n```js\nconst { observer } = new $tw.ImageObserver();\n```\n\n## Motivation\n",
+<<<<<<< HEAD
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fimage-observer.json",
+=======
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fimage-observer.json",
+>>>>>>> refs/remotes/origin/master
         "cpl.title": "$:/plugins/oeyoews/image-observer",
         "cpl.author": "oeyoews",
         "cpl.name": "image-observer",

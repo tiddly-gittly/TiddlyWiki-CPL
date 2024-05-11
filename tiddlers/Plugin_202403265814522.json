@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\rules except wikilink\n\nSuplemental //Relink// plugins that allows for renaming of both globally defined and local variables through its own TiddlerInfo panel.\n",
+        "cpl.uri": "https://flibbles.github.io/tw5-relink/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fflibbles%252Frelink-variables.json",
+        "cpl.title": "$:/plugins/flibbles/relink-variables",
+        "cpl.author": "Flibbles",
+        "cpl.name": "Relink Variables",
+        "cpl.description": "Reports and renames variables such as `\\procedure` or `\\function`",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/flibbles/tw5-relink",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "$:/plugins/flibbles/relink",
+        "cpl.core-version": ">=5.1.22",
+        "title": "Plugin_202403265814522"
+    }
+]

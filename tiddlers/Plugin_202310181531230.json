@@ -2,9 +2,12 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "<h2 id=\"markdown-kit\">Markdown Kit</h2>\n<blockquote>\n<p>A collection of extensions for Markdown</p>\n</blockquote>\n<h2 id=\"note\">NOTE</h2>\n<ul>\n<li>目前 markdown 有一个比较严重的错误，但是可以规避 <a href=\"https://github.com/Jermolene/TiddlyWiki5/issues/7782\">github issue</a></li>\n<li>不要拖拽此插件，否则插件依赖不会安装，请使用 <a href=\"https://tw-cpl.netlify.app/#Welcome:Index%20Welcome\">CPL</a> 安装</li>\n<li><p>codemirror-mode-markdown 依赖插件 mode-xml</p>\n<h2 id=\"todo\">TODO</h2>\n</li>\n<li><p>给重写的配置加上一个用户开关配置，默认开启</p>\n</li>\n<li>测试依赖</li>\n<li>将 markdown kit 的 readme 借助工具 (比如 pandoc) 转换成 html(假设用户没有安装 markdowns 所以简介只用用 html 写)<ul>\n<li><a href=\"https://markdowntohtml.com/\">https://markdowntohtml.com/</a></li>\n</ul>\n</li>\n</ul>\n\n<!--\n ## Markdown Kit\n\n> A collection of extensions for Markdown\n\n## NOTE\n\n- enable markdown past image: https://github.com/Jermolene/TiddlyWiki5/issues/7924\n- 目前 markdown 有一个比较严重的错误，但是可以规避 [github issue](https://github.com/Jermolene/TiddlyWiki5/issues/7782)\n- 不要拖拽此插件，否则插件依赖不会安装，请使用 [CPL](https://tw-cpl.netlify.app/#Welcome:Index%20Welcome) 安装\n- codemirror-mode-markdown 依赖插件 mode-xml\n## TODO\n\n- 给重写的配置加上一个用户开关配置，默认开启\n- 测试依赖\n- 将 markdown kit 的 readme 借助工具 (比如 pandoc) 转换成 html(假设用户没有安装 markdowns 所以简介只用用 html 写)\n  - https://markdowntohtml.com/\n-->\n",
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-kit.json",
 =======
+>>>>>>> refs/remotes/origin/master
         "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-kit.json",
 >>>>>>> Stashed changes
         "cpl.title": "$:/plugins/oeyoews/markdown-kit",

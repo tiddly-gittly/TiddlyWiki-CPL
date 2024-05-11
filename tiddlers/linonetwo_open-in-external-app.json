@@ -4,8 +4,8 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/open-in-external-app",
-        "modified": "20240106175516635",
-        "modifier": "lin onetwo",
+        "modified": "20240229101929912",
+        "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "cpl.title": "$:/plugins/linonetwo/open-in-external-app",
@@ -15,6 +15,7 @@
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_open-in-external-app.json",
         "cpl.readme": "After you import a PDF or image file into your wiki, you can open that tiddler, and click on the button to open that file in external PDF viewer or image reader.\n\nNote that if you use this to open a `.tid` or `.md` file, and edit it, things won't change in the wiki, because the tiddlywiki currently doesn't reload changed files from the disk.",
         "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/open-in-external-app",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "cpl.tags": "TidGi"
     }
 ]

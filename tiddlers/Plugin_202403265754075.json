@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin allows you to use 3 different responsive trail configurations\n\n!! trail CSS Options\n\nIf the user changes the global font-size and / or line-height in the theme to higher values, it will be needed to adjust the breadcrumb settings accordingly. The following parameters can be used to dynamically calculate the \"arrow shape\". For small screens the graphical arrow shape is replaced by plain text.\n\n* $:/config/wl/trails/height ... Defines the line-height used for the trail arrow elements. Defaults to: 22\n* $:/config/wl/trails/fontSize ... Defines the default CSS font-size setting. Defaults to: 15\n* $:/config/wl/trails/paddingBottom ... Can be used to increase the bottom padding of the arrows. Defaults to: 3\n* $:/config/wl/trails/paddingTop ... Can be used to change the top padding of the arrows. Defaults to: 3\n* $:/config/wl/trails/showArrows ... If set to \"yes\" the trail \"arrows\" are shown. Any other value shows the \"plain text\" version, independent of the screen width. Defaults to: yes\n\n!! Global Mode Setting\n\n    $:/config/wl/trails/filterMode ... defines the default \"mode\" the trail macro uses for the \"filter syntax\" related documentation \n\n!! Usage\n\n```\n<$macrocall $name=\"trail\" stop=\"Filters\" mode={{$:/config/wl/trails/filterMode}}/>\n```\n\n!! Settings\n\n{{$:/plugins/wikilabs/trails/settings}}\n\n\n!! Important\n\n''This plugin modifies a core module and templates''\n\n<ul><$list filter=\"[[$:/plugins/wikilabs/trail]plugintiddlers[]prefix[$:/core/]]\" emptyMessage=\"none\"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ftrails.json",
+        "cpl.title": "$:/plugins/wikilabs/trails",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Trails",
+        "cpl.description": "Show a breadcrumbs trail to visualize the context",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.2.1",
+        "title": "Plugin_202403265754075"
+    }
+]

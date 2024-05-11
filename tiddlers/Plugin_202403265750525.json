@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Narenj\nNarenj is a sidebar tool. It adds a viewtoolbar button to pin a tiddler from story river to a sidebar tab. It also adds a side editor as a sidebar tab, to edit tiddler side by side to opened tiddlers in the story river.\n\n; Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages.\n\n* Demo: https://kookma.github.io/TW-Narenj/\n* Code: https://github.com/kookma/TW-Narenj\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fnarenj.json",
+        "cpl.title": "$:/plugins/kookma/narenj",
+        "cpl.author": "Mohammad rahmani",
+        "cpl.name": "Narenj",
+        "cpl.description": "Sidebar tools for edit and view tiddlers",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Narenj",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": ">= 5.2.7",
+        "title": "Plugin_202403265750525"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n> based on dullroar/sitemap tiddlywiki plugin, fix filter typo, and standard plugin\n\n## Recipes\n\n```html\n<!-- tiddlywiki.info -->\nsitemap: [\n    '--output',\n    'public',\n    '--render',\n    '$:/plugins/oeyoews/neotw-sitemap/sitemap',\n    'sitemap.xml',\n    'text/plain',\n    <!-- optional -->\n    <!-- 'exportFilter',\n    '[!is[system]]' -->\n  ]\n```\n\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-sitemap.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-sitemap",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-sitemap",
+        "cpl.description": "neotw-sitemap",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200433238"
+    }
+]

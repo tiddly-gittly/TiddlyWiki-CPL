@@ -91,7 +91,9 @@ importCommand
           : [],
       );
       for (const { uri, name } of registeredLibraries) {
-        console.log(chalk.cyan(`导入 Importing  ${chalk.bold(name)}...`));
+        console.log(
+          chalk.cyan(`导入插件库 Importing Library ${chalk.bold(name)}...`),
+        );
         try {
           await importLibrary(uri, { yes: true, includeOfficial: false }, $tw);
         } catch (e: any) {

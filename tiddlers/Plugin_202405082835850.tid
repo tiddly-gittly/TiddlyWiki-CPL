@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: 
+cpl.description: neotw-vtable
+cpl.name: neotw-vtable
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/neotw-vtable
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vtable.json
+tags: $:/tags/PluginWiki
+title: Plugin_202405082835850

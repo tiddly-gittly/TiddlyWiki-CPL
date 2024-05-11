@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Installation and usage tutorial is available at [[Tidme Manual|https://oflg.github.io/Tidme/manual/#Included%20plugins]].\n\nUn tutoriel est disponible à l'adresse suivante : [[Tidme Manual|https://oflg.github.io/Tidme/manual/fr-FR]] pour des tutoriels d'installation et d'utilisation.\n",
+        "cpl.uri": "https://oflg.github.io/Tidme/library/recipes/library/tiddlers/%2524%253A%252Ftidme%252Flanguages%252Ffr-FR.json",
+        "cpl.title": "$:/tidme/languages/fr-FR",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Languages",
+        "cpl.description": "Français",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.dependents": "$:/plugins/tidme/fsrs4tw",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403265755831"
+    }
+]

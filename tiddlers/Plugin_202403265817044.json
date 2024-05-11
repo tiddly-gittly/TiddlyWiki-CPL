@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[SoundCite|https://soundcite.knightlab.com/]] is an inline audio player embedded behind text. This plugin makes SoundCite v0.5.1 (2017-07-10) available as a macro.\n",
+        "cpl.uri": "https://fkohrt.gitlab.io/tw5-soundcite/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ffk%252Fsoundcite.json",
+        "cpl.title": "$:/plugins/fk/soundcite",
+        "cpl.author": "Florian Kohrt",
+        "cpl.name": "Soundcite",
+        "cpl.description": "Seamless inline audio",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://gitlab.com/fkohrt/tw5-soundcite",
+        "cpl.dependents": "",
+        "title": "Plugin_202403265817044"
+    }
+]

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "```wiki\r\nclass: o-tm\r\nmask-closable: yes\r\ncaption: subtitle content\r\nsubtitle: {{||$:/esc}}\r\n```\n\n<!-- tc-modal-centered  -->",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-modal-ui.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-modal-ui",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Tiddlywiki Modal Ui",
+        "cpl.description": "Tiddlywiki Modal Ui",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.1",
+        "title": "Plugin_202403041923667"
+    }
+]

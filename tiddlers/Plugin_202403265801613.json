@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[img height=150 [https://nos.netease.com/ydschool-online/youdao_GMAT_2.jpg]]\n\n此学习包共有 3254个来源于有道词典的单词。全面整合收录GMAT官方指南、真题实战中的考试词汇。有道词典提供正版权威词库，从考点出发，以真题为基础，剔除简单词汇，国外权威辞典给出释意和例句，加深用户对单词本身含义的理解和记忆，帮助用户高效学习。每个单词均列出短语和多项近义词，有效扩展词汇量并提高记忆效率，帮助用户从容应对词汇难度和用法都更具挑战性的GMAT考试。适合准备GMAT考试，想要提高英语能力的用户。\n\n可在 [[墨屉手册|https://oflg.github.io/Tidme/manual/zh-Hans#共享牌组插件]] 查看安装使用教程。",
+        "cpl.uri": "https://oflg.github.io/Tidme-decks/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftidme%252Fdecks-GMAT_2.json",
+        "cpl.title": "$:/plugins/tidme/decks-GMAT_2",
+        "cpl.author": "oflg",
+        "cpl.name": "Tidme Decks",
+        "cpl.description": "GMAT词汇（正序版）",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/oflg/Tidme",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403265801613"
+    }
+]

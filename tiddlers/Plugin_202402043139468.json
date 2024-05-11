@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "## Tiddler Fullscreen\n\n> Tiddler fullscreen plugin support single tiddler enter fullscreen(include editing tiddler)\n\n> 方便全屏展示 tiddler, 不用在受限于条目的宽度, 免去手动调整宽度的等不必要的步骤\n\n![img](https://talk.tiddlywiki.org/uploads/default/original/2X/1/1ab760585501cd791ac9c3655621bfb31134e0ed.gif)\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n\nThis tiddler fullscreen plugin Inspired by this [post](https://talk.tiddlywiki.org/t/apply-style-by-data-tiddler-title-view-field-title-transcluded-from-a-temp-tiddler-to-make-another-fullscreen-button/8927?u=oeyoews)\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddler-fullscreen.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddler-fullscreen",
+        "cpl.author": "oeyoews",
+        "cpl.name": "tiddler-fullscreen",
+        "cpl.description": "tiddler-fullscreen",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202402043139468"
+    }
+]

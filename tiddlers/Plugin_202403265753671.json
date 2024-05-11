@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Video\n\nYoutube will start collecting user-info, if you play the video!\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube-nocookie.com/embed/20mQwPuMv6w\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n!! Feedback\n\nFeedback will be welcome at: [[to get feedback at Talk-TiddlyWiki|https://talk.tiddlywiki.org/t/palette-manager-feature-complete-preview/5095]]\n\n! Overview\n\nThis plugin is an ''preview'' plugin, that should be implemented into the TW core in the future.\n\n* You can open it using the [[$:/PaletteManager]] ... where the previews look a bit different as if you open it with the \n* $:/ControlPanel --> Appearence --> Palette -> <kbd>show editor</kbd> button\n\n! Important\n\nThis plugin overwrites and adds the following system tiddlers:\n\n|Shadow Tiddler |Reason to change it atm |h\n|$:/PaletteManager |This is needed to get the new UI as shown in the image below |\n\n|New |Description |h\n|$:/PaletteManager/preview |Contains the whole preview code, which is `\\import`ed to $:/PaletteManager |\n|$:/plugins/wikilabs/palette-manager/styles |Some specific adjustments needed - The goal is to implement most of them in vanilla/base |\n\nThe full list of plugin tiddlers can be seen at: $:/plugins/wikilabs/palette-manager -> content tab\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpalette-manager.json",
+        "cpl.title": "$:/plugins/wikilabs/palette-manager",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Palette Manager",
+        "cpl.description": " - to be included into the TW core",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.14",
+        "title": "Plugin_202403265753671"
+    }
+]

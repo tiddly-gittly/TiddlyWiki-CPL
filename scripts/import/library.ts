@@ -1,9 +1,9 @@
 import { URL } from 'url';
-import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
+import { readFileSync, ensureFileSync } from 'fs-extra';
 import chalk from 'chalk';
 import { ITiddlerFields } from 'tiddlywiki';
-import { mkdirsForFileSync, shellI, getTmpDir, tiddlywiki } from '../utils';
+import { shellI, getTmpDir, tiddlywiki } from '../utils';
 import { IImportOption } from './options';
 import { importPlugin } from './plugin';
 
@@ -46,7 +46,7 @@ export const importLibrary = async (
     // 下载JSON文件，包含插件的信息
     console.log(chalk.cyan('获取插件源信息 - Fetching library...'));
     const tmpLibraryJsonPath = resolve(tmpDir, 'library-json', 'tiddlers.json');
-    mkdirsForFileSync(tmpLibraryJsonPath);
+    ensureFileSync(tmpLibraryJsonPath);
     u.pathname = `${basePathname}/recipes/library/tiddlers.json`;
     shellI(
       `wget "${u.href}" --no-verbose --force-directories --no-check-certificate -O "${tmpLibraryJsonPath}"`,
@@ -64,6 +64,9 @@ export const importLibrary = async (
     for (const plugin of pluginsJson) {
       const { title } = plugin;
       if (!title || title.trim() === '') {
+        console.log(
+          chalk.gray(`跳过无标题 Skip no title ${JSON.stringify(plugin)}`),
+        );
         continue;
       }
       if (
@@ -73,7 +76,9 @@ export const importLibrary = async (
         console.log(chalk.gray(`跳过 Skip ${chalk.underline(title)}`));
         continue;
       }
-      console.log(chalk.gray(`导入 Importing ${chalk.underline(title)}`));
+      console.log(
+        chalk.gray(`导入插件 Importing Plugin ${chalk.underline(title)}`),
+      );
       u.pathname = `${basePathname}/recipes/library/tiddlers/${encodeURIComponent(
         encodeURIComponent(plugin.title),
       )}.json`;

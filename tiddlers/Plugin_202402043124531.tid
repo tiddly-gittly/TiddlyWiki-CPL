@@ -1,0 +1,12 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: 
+cpl.description: markdown-it-mermaid
+cpl.name: markdown-it-mermaid
+cpl.parent-plugin: $:/plugins/oeyoews/markdown-extensions-startup
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/markdown-it-mermaid
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-it-mermaid.json
+tags: $:/tags/PluginWiki
+title: Plugin_202402043124531

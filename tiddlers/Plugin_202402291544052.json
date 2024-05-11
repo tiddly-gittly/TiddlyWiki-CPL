@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20240229101544053",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202402291544052",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "auto-switch-language",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/auto-switch-language",
+        "modified": "20240229101845438",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Use browser info to auto switch language",
+        "cpl.readme": "Use browser info to auto switch language\n\nCopy from https://github.com/tiddly-gittly/Modern.TiddlyDev/blob/2d784fa1da0fc197ad31f61f87d9a0f3dfb7413b/wiki/tiddlers/%24__Modern.TiddlyDev_Startup.tid\n\nOnly support zh-Hans and en-GB now. PR is welcome.\n",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_auto-switch-language.json",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/auto-switch-language",
+        "cpl.category": "Language"
+    }
+]

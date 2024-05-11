@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "@@color:red;''Experimental plugin - no support available. Use at your own risk.''@@\n\n* Improved ~WebDAV saver that creates backups\n** Recommend disabling ~AutoSave when backups are enabled\n* ~FileUploads plugin support for ~WebDAV\n** supports a path filter cascade to customize the upload path\n** See settings for ~FileUploads to determine which tiddlers are uploaded\n* A file explorer showing what files are present on the server $:/FileExplorer\n** affordances to retrieve the list of contents of folders on the server via the widget message `tm-webdav-ls`\n",
+        "cpl.uri": "https://saqimtiaz.github.io/SQPL/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fsq%252Fwebdav-utils.json",
+        "cpl.title": "$:/plugins/sq/webdav-utils",
+        "cpl.author": "Saq Imtiaz",
+        "cpl.name": "WebDAV Utilities for a wiki farm",
+        "cpl.description": "Saver, FileUploader & FileExplorer",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/commons/file-uploads",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403265829675"
+    }
+]

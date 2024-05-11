@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20240304181927669",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202403051927669",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Simple Layout Launcher",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/simple-layout-launcher",
+        "modified": "20240304182132381",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Vanilla style launcher, with Metro style square button and large icon.",
+        "cpl.readme": "!! Procedure\n\nThis plugin provides a simple layout switcher which can be used with this procedure call:\n\n```tid\n<<simple-layout-launcher>>\n```\n\n<<simple-layout-launcher>>\n\n---\n\n!! 过程\n\n本插件提供了一个简单的布局切换器，它可以通过这个过程调用来使用：\n\n```tid\n<<simple-layout-launcher>>\n```\n\n<<simple-layout-launcher>>",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-gamification/tree/master/src/simple-layout-launcher",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tw-gamification/",
+        "cpl.uri": "https://github.com/tiddly-gittly/tw-gamification/releases/latest/download/__plugins_linonetwo_simple-layout-launcher.json\n",
+        "cpl.category": "Functional",
+        "cpl.tags": "layout"
+    }
+]

@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: 
+cpl.description: element-plus
+cpl.name: element-plus
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/element-plus
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Felement-plus.json
+tags: $:/tags/PluginWiki
+title: Plugin_202403265830561

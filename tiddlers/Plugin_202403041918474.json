@@ -1,0 +1,16 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<$vue-todo />\n\n!! Usage\n\n```html\n<$vue-todo json=\"todo.json\"/>\n```\n\n!! Features\n\n* 多语言支持\n* 任务进度\n* 任务编辑\n* 任务拖动\n* 任务通知\n\n!! TODO\n\n* 支持 undo 操作，类似 gmail(base watch new old value)\n* 处理移动端样式优化\n\n!! Roadmap\n\n* projectify",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vue-todo.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-vue-todo",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-vue-todo",
+        "cpl.description": "neotw-vue-todo",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus $:/plugins/oeyoews/vue-i18n $:/plugins/oeyoews/vue-dragable",
+        "cpl.parent-plugin": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403041918474"
+    }
+]

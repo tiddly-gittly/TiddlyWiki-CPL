@@ -21,8 +21,8 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.7.0
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.2
         with:
           node-version: '18'
       - uses: pnpm/action-setup@v2
@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -60,15 +60,15 @@ jobs:
 
           # commit_user_name: My GitHub Actions Bot # defaults to "github-actions[bot]"
           # commit_user_email: my-github-actions-bot@example.org # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_author: Author <actions@github.com> # defaults to author of the commit that triggered the run
+          commit_author: Github Action <actions@github.com> # defaults to author of the commit that triggered the run
 
 
           # Optional. Options used by `git-add`.
           # See https://git-scm.com/docs/git-add#_options
-          add_options: '-u'
+          # add_options: '-u'
 
           # # Optional. Disable dirty check and always try to create a commit and push
-          # skip_dirty_check: true
+          skip_dirty_check: true
           # # Optional. Skip internal call to `git fetch`
           # skip_fetch: true
           # # Optional. Skip internal call to `git checkout`
@@ -76,3 +76,4 @@ jobs:
           # Optional. Prevents the shell from expanding filenames.
           # Details: https://www.gnu.org/software/bash/manual/html_node/Filename-Expansion.html
           # disable_globbing: true
+          # push_options: --force

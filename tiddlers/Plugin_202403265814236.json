@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\\whitespace trim\n\nEnables Relink to relink field names associated with renamed tiddlers. The following fields cannot be interacted with in this way:\n\n<<<\n<$set name=blacklisted filter={{$:/config/flibbles/relink-fieldnames/blacklist!!filter}}>\n''<$list counter=counter filter=\"[enlist<blacklisted>sort[]]\">\n<<currentTiddler>><br>\n</$list>''\n</$set>\n<<<\n\nSee&#32;<a href={{$:/plugins/flibbles/relink-fieldnames!!source}} class=\"tc-tiddlylink-external\">the tw5-relink website</a>&#32;for more details and examples.\n",
+        "cpl.uri": "https://flibbles.github.io/tw5-relink/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fflibbles%252Frelink-fieldnames.json",
+        "cpl.title": "$:/plugins/flibbles/relink-fieldnames",
+        "cpl.author": "Flibbles",
+        "cpl.name": "Relink Field Names",
+        "cpl.description": "Renames field names with titles matching Relinked tiddlers",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/flibbles/tw5-relink",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "$:/plugins/flibbles/relink",
+        "cpl.core-version": ">=5.1.22",
+        "title": "Plugin_202403265814236"
+    }
+]

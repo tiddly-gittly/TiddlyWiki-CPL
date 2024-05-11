@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20240303111555730",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/tw-html-nodejs-sync",
+        "modified": "20240303112001379",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "author": "",
+        "cpl.title": "$:/plugins/linonetwo/tw-html-nodejs-sync",
+        "cpl.name": "Mobile HTML NodeJS Sync",
+        "cpl.description": "Sync data between Tiddloid & Quine2 (HTML) <-> Desktop NodeJS App (TidGi)",
+        "cpl.author": "linonetwo",
+        "cpl.uri": "https://github.com/tiddly-gittly/tw-mobile-sync/releases/latest/download/__plugins_linonetwo_tw-html-nodejs-sync.json",
+        "cpl.readme": "! Sync Between NodeJS and Mobile HTML 在桌面端（NodeJS）和移动端（HTML文件）之间同步\n\n本插件可以让你在基于NodeJS技术的桌面应用（例如太记）和基于HTML文件的手机端（例如Tiddloid安卓应用）之间同步数据。\n\n手机应用 ↔ 桌面应用 ↔ 云端\n\nThis plugin enables you sync date between NodeJS server App (e.g. TidGi App) and HTML file based mobile App (e.g. Tiddloid Android App).\n\nMobile App ↔ Desktop App ↔ Cloud\n\n!! How to use\n\n首先在手机端扫码，打开当前这个知识库的网页，然后保存出 HTML 文件后（详见中文教程的[[如何保存|https://tw-cn.netlify.app/#TiddlyGit%E5%A4%AA%E8%AE%B0]]章节），在 Tiddloid 里打开保存的 HTML 文件（可能需要先将文件移出下载目录不然Tiddloid无权限访问，详见其[[说明书|https://github.com/donmor/Tiddloid]]）。\n\n然后打开[[服务器列表|$:/plugins/linonetwo/tw-html-nodejs-sync/ui/ServerList]]，录入一下服务器地址：\n\n# 将上面扫码得到的 URL 复制一下，填入[[服务器列表|$:/plugins/linonetwo/tw-html-nodejs-sync/ui/ServerList]]里的「智能识别黏贴框」，然后点击「智能识别」按钮，会自动将 URL 解析后填入相应框内。你也可以点击「扫二维码」按钮开始扫码，扫码结果会自动填入「智能识别黏贴框」内\n# 此时，「服务器IP」和「服务器端口」框里应该要已经填好了 ip 和端口号\n# 你需要填写一下「服务器名」这个框\n# 点击「新增服务器」，会新建一个服务器信息条目，请确认创建此条目\n# 这时新的服务器应该就出现在服务器列表里了，你可以点击「启用同步并立即同步」按钮，这样就可以在桌面端和手机端同步数据了\n# 之后会每五分钟自动同步一次用户创建的条目（不包含插件），如果需要从桌面端同步插件到手机端，需要使用「[[拉取并覆盖|$:/plugins/linonetwo/tw-html-nodejs-sync/ui/DownloadFullHtml]]」功能\n\nFirst scan the code on your cell phone, open the current knowledge base page, then save the HTML file (see the [[How to save|https://tw-cn.netlify.app/#TiddlyGit%E5%A4%AA%E8%AE%B0]] section of the Chinese tutorial for more details) and open the saved HTML file in Tiddloid (You may need to move the file out of the download directory first or Tiddloid will not have access to it, see its [[Instructions|https://github.com/donmor/Tiddloid]] for details).\n\nThen open the [[Server List|$:/plugins/linonetwo/tw-html-nodejs-sync/ui/ServerList]] and enter the following server address.\n\n# Copy the URL you got from the code above and fill in the \"Smart Identify Sticky Box\" in [[Server List|$:/plugins/linonetwo/tw-html-nodejs-sync/ui/ServerList]], then click the \"Smart Identify\" button, the URL will be automatically parsed and filled in the corresponding box. You can also click the \"Scan QR Code\" button to start scanning the code, and the result will be automatically filled into the \"Smart Identify Sticky Box\".\n# At this point, the \"Server IP\" and \"Server Port\" boxes should already be filled with the ip and port numbers.\n# You need to fill in the \"server name\" box\n# Click on \"Add Server\", a new server information entry will be created, please confirm to create this entry\n# The new server should now appear in the server list, you can click the \"Enable sync and sync now\" button to sync data between desktop and mobile.\n# If you need to sync the plugin from desktop to mobile, you need to use the \"[[pull and overwrite|$:/plugins/linonetwo/tw-html-nodejs-sync/ui/DownloadFullHtml]]\" function.\n\nTranslated with www.DeepL.com/Translator (free version)",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-mobile-sync",
+        "cpl.documentation": "http://tiddly-gittly.github.io/tw-mobile-sync/",
+        "page-cover": "https://img1.imgtp.com/2023/05/25/48p2ihMk.png",
+        "cpl.plugin-type": "plugin"
+    }
+]

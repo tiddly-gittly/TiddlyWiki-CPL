@@ -2,7 +2,11 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "## spotlight\n",
+<<<<<<< HEAD
+        "cpl.uri": "https://tiddlywiki-starter-kit.oeyoews.top/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-spotlight.json",
+=======
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-spotlight.json",
+>>>>>>> refs/remotes/origin/master
         "cpl.title": "$:/plugins/oeyoews/neotw-spotlight",
         "cpl.author": "oeyoews",
         "cpl.name": "neotw-spotlight",

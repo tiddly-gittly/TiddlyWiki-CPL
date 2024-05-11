@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin \"Trim Whitespace\" adds a new button to the edit toolbar\n\n!! Trim Whitespace Settings\n\n{{$:/plugins/wikilabs/trim-whitespace/settings}}",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ftrim-whitespace.json",
+        "cpl.title": "$:/plugins/wikilabs/trim-whitespace",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Trim Whitespace",
+        "cpl.description": "New Editor Button to Trim Whitespace from Selections",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.15",
+        "title": "Plugin_202403265754168"
+    }
+]

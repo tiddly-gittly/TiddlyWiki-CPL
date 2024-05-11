@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<center>\n<video width=\"300\" controls style=\"border-radius:8px;\">\n  <source src=\"https://github.com/oeyoews/tiddlywiki-starter-kit/assets/72405338/0733a637-c606-4df5-b505-34ea614b22ef\" type=\"video/mp4\">\n</video>\n</center>\n\n## Tiddlywiki Prettier\n\n- support markdown\n\n## Option\n\n<$checkbox tag=\"$:/tags/RawMarkup\" tiddler=\"$:/plugins/oeyoews/tiddlywiki-prettier/scripts\">\nUse Prettier CDN\n</$checkbox>\n\n## TODO\n\n- support css, html, js with prettier plugins\n- support markdown-it-prettier(markdownit not support async, must use prettier 2.8.0)\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-prettier.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-prettier",
+        "cpl.author": "oeyoews",
+        "cpl.name": "tiddlywiki-prettier",
+        "cpl.description": "tiddlywiki-prettier",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202402043142467"
+    }
+]

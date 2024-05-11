@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "## Mermaid widget\n\n> 提供 mermaid widget.\n\n```html\n<$mermaid2 rendertype=\"png\" theme=\"forest\">\ngraph LR;\na[Another mermaid widget] -.-> b[[mermaid-widget]]\n</$mermaid2>\n```\n\n<$mermaid2 rendertype=\"png\" theme=\"forest\">\ngraph LR;\na[Another mermaid widget] -.-> b[[mermaid-widget]]\n</$mermaid2>\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid-widget.json",
+        "cpl.title": "$:/plugins/oeyoews/mermaid-widget",
+        "cpl.author": "oeyoews",
+        "cpl.name": "mermaid-widget",
+        "cpl.description": "mermaid-widget",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202402043127789"
+    }
+]

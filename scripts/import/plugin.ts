@@ -1,6 +1,6 @@
 import { URL } from 'url';
-import { readdirSync } from 'fs';
 import { resolve, extname } from 'path';
+import { ensureFileSync, readdirSync } from 'fs-extra';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import type { ITiddlerFields } from 'tiddlywiki';
@@ -13,7 +13,6 @@ import {
   formatTitle,
   getReadmeFromPlugin,
   getTiddlerFromFile,
-  mkdirsForFileSync,
 } from '../utils';
 import { IImportOption } from './options';
 
@@ -65,7 +64,7 @@ export const importPlugin = async (
   // 缓存中不存在
   if (!pluginFilePath) {
     const tmpDir = resolve(getTmpDir(), 'plugins');
-    mkdirsForFileSync(resolve(tmpDir, '1'));
+    ensureFileSync(resolve(tmpDir, '1'));
     const tmpTiddlerPath = resolve(tmpDir, fileName);
     const filePrefix = `${formatedTitle}.`;
     let pluginFile: string | undefined;
@@ -149,7 +148,7 @@ export const importPlugin = async (
 
   // 覆盖(合并)
   const old: Record<string, any> = tmp
-    ? JSON.parse(($tw.wiki as any).getTiddlerAsJson(tmp))
+    ? JSON.parse($tw.wiki.getTiddlerAsJson(tmp))
     : {};
   for (const field in old) {
     if (field.startsWith('cpl.')) {
@@ -157,7 +156,7 @@ export const importPlugin = async (
     }
   }
   pluginInfo = {
-    ...(tmp ? JSON.parse(($tw.wiki as any).getTiddlerAsJson(tmp)) : {}),
+    ...(tmp ? JSON.parse($tw.wiki.getTiddlerAsJson(tmp)) : {}),
     ...pluginInfo,
     title:
       tmp ??
@@ -170,8 +169,8 @@ export const importPlugin = async (
     chalk.green(
       `${
         tmp
-          ? chalk.yellow.bold.underline('✔️')
-          : chalk.green.bold.underline('✔️')
+          ? chalk.yellow.bold.underline('✔️(Update)')
+          : chalk.green.bold.underline('✔️(New)')
       } ${pluginInfo.title}(${chalk.grey(pluginInfo['cpl.title'])})`,
     ),
   );

@@ -10,14 +10,14 @@ import {
   readFileSync,
   writeFileSync,
   existsSync,
-} from 'fs';
+  ensureFileSync
+} from 'fs-extra';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
 import {
   shell,
   tiddlywiki,
-  mkdirsForFileSync,
   findFirstOne,
   formatTitle,
   getTiddlerFromFile,
@@ -40,10 +40,10 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
   const pluginsDir = resolve(distDir, 'plugins'); // 插件目标目录
   const failedPlugins: Record<string, string> = {};
   try {
-    mkdirsForFileSync(resolve(tmpDir, 'foo'));
-    mkdirsForFileSync(resolve(pluginsDir, 'foo'));
+    ensureFileSync(resolve(tmpDir, 'foo'));
+    ensureFileSync(resolve(pluginsDir, 'foo'));
     if (cache) {
-      mkdirsForFileSync(resolve(cachePluginsDir, 'foo'));
+      ensureFileSync(resolve(cachePluginsDir, 'foo'));
     }
 
     // 启动 TW
@@ -163,7 +163,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
         `${plugin.version}.json`,
       );
       const metaPath = resolve(cachePluginFolderPath, '__meta__.json');
-      mkdirsForFileSync(metaPath);
+      ensureFileSync(metaPath);
       writeFileSync(latestCachePluginPath, json);
       writeFileSync(currentCachePluginPath, json);
       const versionsSize: Record<string, number> = {};
@@ -282,7 +282,7 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     if (cache) {
       // 生成插件索引
       const pluginIndexPath = resolve(cachePluginsDir, 'index.json');
-      mkdirsForFileSync(pluginIndexPath);
+      ensureFileSync(pluginIndexPath);
       writeFileSync(
         pluginIndexPath,
         JSON.stringify(

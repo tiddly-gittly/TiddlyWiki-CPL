@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\nWIP\n\n## TODO\n\n- use minisearch rewrite directly.\n\n## Motivation\n\n- 原插件没有加上节流和缓存机制，100% 会导致搜索过程中页面卡死\n\n<!-- your plugin motivation, or why you write this plugin -->\n\n## Credit\n\n- https://github.com/danielo515/TW5-contextPlugin\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-full-text-search.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-full-text-search",
+        "cpl.author": "oeyoews",
+        "cpl.name": "tiddlywiki-full-text-search",
+        "cpl.description": "tiddlywiki-full-text-search",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202402043140610"
+    }
+]

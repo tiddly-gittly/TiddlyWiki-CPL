@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-links-gallery.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-links-gallery",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-links-gallery",
+        "cpl.description": "vue-links-gallery",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200437836"
+    }
+]

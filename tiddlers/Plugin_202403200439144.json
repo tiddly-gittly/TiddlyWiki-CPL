@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- plugin template readme -->\n\n## Example\n\n<$vue-random-cards />\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-random-cards.json",
+        "cpl.title": "$:/plugins/oeyoews/vue-random-cards",
+        "cpl.author": "oeyoews",
+        "cpl.name": "vue-random-cards",
+        "cpl.description": "vue-random-cards",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202403200439144"
+    }
+]

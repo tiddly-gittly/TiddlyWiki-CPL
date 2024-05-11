@@ -2,22 +2,25 @@
     {
         "created": "20230219090734327",
         "creator": "林一二",
+        "text": "",
         "title": "Plugin_202302190734327",
-        "modified": "20230219104237299",
+        "modified": "20240506173628230",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "author": "",
         "cpl.title": "$:/plugins/linonetwo/super-tag",
-        "cpl.name": "SuperTag",
-        "cpl.description": "Auto generate input form on a tiddler by simply adding a SuperTag to it. Create a SuperTag by compositing existing TraitTags.",
+        "cpl.name": "SuperTag 超级标签",
+        "cpl.description": "Auto generate input form on a tiddler by simply adding a SuperTag to it. Create a SuperTag by compositing existing TraitTags.\n\n只需在条目上添加一个超级标签，就能自动生成输入表单。通过合成现有的特性标签来创建超级标签。",
         "cpl.author": "LinOnetwo",
         "cpl.uri": "https://github.com/tiddly-gittly/super-tag/releases/latest/download/__plugins_linonetwo_super-tag.json",
         "cpl.readme": "!! Why SuperTag\n\nProvide template for user to create form by simply adding a tag, so putting structure data into tw is much easier. User don't need to design field name, and easy to use WYSIWYG form make it happier to use these fields.\n\nAlso allows developers to use the same set of fields, so their plugins works together seamlessly. For example, two TODO plugin can read each others' task data, makes TiddlyWiki community interoperate deeply.\n\n!! How to use\n\n!!! Normal user - use SuperTag\n\nSome of plugins will provide SuperTag that you can already use, just add these tag to a tiddler, a form will automatically generate on the tiddler view mode.\n\nSee [[Examples]] in this demo site to play around with the auto generated form.\n\n!!! Advanced user - use TraitTag create SuperTag\n\nSome of plugins will provide TraitTag that can be used to create your own SuperTag. Just add one or more TraitTag on a tiddler, this tiddler will become a SuperTag.\n\n!!! TraitTag developer - create TraitTag \n\nAs a developer, you will want to create your own TraitTag.\n\nA TraitTag has two important fields, `\"schema\"` and `\"uiSchema\"`.\n\n* schema: a [[JSON Schema|https://json-schema.org/]] that describe what data a form will receive.\n** You may refer to [[JSON Editor Doc#JSON Schema Support|https://github.com/json-editor/json-editor#json-schema-support]] for advanced features in the form\n** A basic assumption is that the JSON Schema are `type: \"object\"` and has only 1 level of properties.\n** All properties provided by all trait tags are merged into a single JSON Schema, and then is used to display the SuperTag Form\n\nSee links above to learn how to write them. You can also learn from some existed [[TraitTag Examples|$:/SuperTag/TraitTag]].\n\n!!! Plugin developer\n\nIf you are creating a plugin that heavily make use of tiddler fields, You'd better search for existed supertag sub-plugins that provides trait tags, or search in [[tiddlywiki forum|https://talk.tiddlywiki.org]] for it.\n\nSo you can reuse existed TraitTags. In this way, plugins in our community can work together, make users' tiddlywiki a real unified database.\n\n!! Develop\n\nThis is how SuperTag plugin works:\n\n# Auto generated form is displayed in a ViewTemplate that will show on the bottom of the tiddler\n## This ViewTemplate have a `<$list>` widget that conditionally shows the content\n## It shows if the tiddler has a SuperTag, and SuperTag has a TraitTag that tagged with `$:/SuperTag/TraitTag`.\n# A `<$supertag-form />` widget on this ViewTemplate\n## This widget will gather `schema` and `uiSchema` on these TraitTags upon running\n## It uses [[eclipsesource/jsonforms|https://github.com/eclipsesource/jsonforms]] open source library to build the form\n## Fill in the form using tiddler's existed data",
-        "cpl.source": "https://github.com/tiddly-gittly/super-tag",
+        "cpl.source": "https://github.com/tiddly-gittly/super-tag/",
         "cpl.documentation": "https://tiddly-gittly.github.io/super-tag/",
         "cpl.icon": "",
         "page-cover": "https://talk.tiddlywiki.org/uploads/default/optimized/2X/1/187e4fb88404427a4f2704e4d1ea07bda6b69653_2_832x750.png",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "cpl.category": "Functional",
+        "cpl.tags": "Field Widget"
     }
 ]
