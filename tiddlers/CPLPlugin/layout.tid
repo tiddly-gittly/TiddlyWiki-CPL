@@ -9,19 +9,27 @@ tags: $:/tags/Layout
 \define containerClasses()
 tc-page-container tc-language-$(languageTitle)$ cpl-layout-container
 \end
+\procedure tv-config-toolbar-icons() yes
+\procedure tv-config-toolbar-text() yes
+\procedure redirected-navigate-actions()
+  <$action-setfield $tiddler="$:/layout" text="" />
+  <$action-navigate $to=<<event-navigateTo>> />
+\end
 
 <$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
-	<div class=<<containerClasses>>>
+	<$messagecatcher $tm-navigate=<<redirected-navigate-actions>>>
+		<div class=<<containerClasses>>>
 
-		{{$:/core/ui/PageTemplate/pluginreloadwarning}}
+			{{$:/core/ui/PageTemplate/pluginreloadwarning}}
 
-		<$button to=<<currentTiddler>> class="cpl-layout-back-button cpl-normal-button">
-			<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[返回标准布局]else[Back to Standard layout]] }}} />
-			{{$:/core/images/default-layout}}
-			<$action-setfield $tiddler="$:/layout" text="" />
-		</$button>
+			<$button to=<<currentTiddler>> class="cpl-layout-back-button cpl-normal-button">
+				<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[返回标准布局]else[Back to Standard layout]] }}} />
+				{{$:/core/images/default-layout}}
+				<$action-setfield $tiddler="$:/layout" text="" />
+			</$button>
 
-		{{$:/plugins/Gk0Wk/CPL-Repo/panel}}
+			{{$:/plugins/Gk0Wk/CPL-Repo/panel}}
 
-	</div>
+		</div>
+	</$messagecatcher>
 </$navigator>
