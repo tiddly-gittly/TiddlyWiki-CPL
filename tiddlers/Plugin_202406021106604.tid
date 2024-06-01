@@ -1,0 +1,17 @@
+cpl.author: linonetwo
+cpl.core-version: >=5.3.0
+cpl.description: Play GalGame (Girl And Love) on your note system! 在太微笔记系统里玩 GalGame（美少女恋爱游戏）！记你太美！
+cpl.documentation: https://tiddly-gittly.github.io/TidGal/
+cpl.name: Tiddlywiki Galgame
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.source: https://github.com/tiddly-gittly/TidGal
+cpl.title: $:/plugins/linonetwo/tidgal
+cpl.uri: https://github.com/tiddly-gittly/TidGAL/releases/latest/download/__plugins_linonetwo_tidgal.json
+created: 20240601161106605
+creator: 林一二
+modified: 20240601161458856
+modifier: 林一二
+tags: $:/tags/PluginWiki
+title: Plugin_202406021106604
+type: text/vnd.tiddlywiki
