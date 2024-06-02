@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20240602161424809",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202406031424809",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "date-filters 日期筛选器",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/date-filters",
+        "modified": "20240602161649346",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Filters for getting week range and preparing visualization data.",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-calendar/releases/latest/download/__plugins_linonetwo_date-filters.json\n",
+        "cpl.readme": "Filters for getting week range and preparing visualization data.\n",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-calendar/tree/master/src/date-filters",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-calendar/"
+    }
+]
