@@ -16,7 +16,7 @@
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Shiraz",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.2",
+        "cpl.core-version": ">=5.3.0",
         "cpl.documentation": "https://kookma.github.io/TW-Shiraz/",
         "page-cover": "https://img1.imgtp.com/2023/05/25/pFT3jEjX.png"
     }
