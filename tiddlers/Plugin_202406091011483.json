@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20240608191011483",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202406091011483",
+        "cpl.author": "LInOnetwo",
+        "cpl.name": "TiddlyWiki Metadata Ontology 太微元信息本体",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/wmo",
+        "modified": "20240608191627013",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "TiddlyWiki Common/Consensus Metadata Ontology. I18n for fields like `title` `caption` `modified`. 太微通用的/有共识的元数据本体。翻译了 `title` `caption` `modified` 等字段。",
+        "cpl.uri": "https://github.com/tiddly-gittly/super-tag/releases/latest/download/__plugins_linonetwo_wmo.json\n",
+        "cpl.readme": "配合超级标签插件使用，或为动态表格插件提供太微字段的翻译。\n\nUsed in conjunction with the Super Tags plugin, or to provide translations of Tiddlywiki fields for the Dynamic Table plugin.",
+        "cpl.source": "https://github.com/tiddly-gittly/super-tag/tree/master/src/wmo",
+        "cpl.documentation": "https://tiddly-gittly.github.io/super-tag/#%24%3A%2Fplugins%2Flinonetwo%2Fwmo",
+        "cpl.tags": "Ontology"
+    }
+]
