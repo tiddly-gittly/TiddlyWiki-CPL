@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-ai]]\n\n<$neotw-ai />\n\n!! Usage\n\n```html\n<$neotw-ai /> // or add gemini:yes to your tiddler field\n```\n\n!! Gemini APIKEY\n\n<$edit-text tiddler=\"$:/plugins/oeyoews/neotw-ai/config\" field=\"api\" type=\"password\" />\n\n<!-- !! TODO -->\n\n<!-- * support neotw-ai-translate widget -->\n<!-- * 限制 过大的 token https://ai.google.dev/tutorials/get_started_web#count-tokens -->\n\n<!-- !! Ref\n\nhttps://ai.google.dev/tutorials/get_started_web?hl=zh-cn -->",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-ai]]\n\n<$neotw-ai />\n\n!! Usage\n\n```html\n<$neotw-ai /> // or add gemini:yes to your tiddler field\n```\n\n!! Gemini APIKEY\n\n<$edit-text tiddler=\"$:/plugins/oeyoews/neotw-ai/config\" field=\"api\" type=\"password\" />\n\n!! siliconflow\n\n* 有缓存, 不建议用\n\n<!-- !! TODO -->\n\n<!-- * support neotw-ai-translate widget -->\n<!-- * 限制 过大的 token https://ai.google.dev/tutorials/get_started_web#count-tokens -->\n\n<!-- !! Ref\n\nhttps://ai.google.dev/tutorials/get_started_web?hl=zh-cn -->",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-ai.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-ai",
         "cpl.author": "oeyoews",
