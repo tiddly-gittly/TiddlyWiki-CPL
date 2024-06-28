@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "The D3 plugin is a proof-of-concept demo of integration with the D3.js data visualisation framework (http://d3js.org).\n\nIt is not currently in a state where it can be used for anything useful.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/d3]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fd3.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fd3.json",
         "cpl.title": "$:/plugins/tiddlywiki/d3",
         "cpl.name": "D3",
         "cpl.description": "D3 data visualisation demo",

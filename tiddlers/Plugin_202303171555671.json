@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin adds the ability to automatically insert the closing brackets when you type an opening bracket.\nAlso enables highlighting of matching brackets.\n\nIt needs the latest [[CodeMirror plugin|$:/plugins/tiddlywiki/codemirror]] to be installed\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-closebrackets.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-closebrackets.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-closebrackets",
         "cpl.name": "CodeMirror Close Brackets",
         "cpl.description": "Close brackets for CodeMirror",

@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "\\define highlightVersion() 11.4.0\n\nThis plugin provides syntax highlighting of code blocks using version <<highlightVersion>> of [[highlight.js|https://github.com/isagalaev/highlight.js]] from Ivan Sagalaev. This plugin does not work on browsers that do not fully support ~JavaScript ES6 (2015). If you need highlight.js running on those legacy browsers, you would need to install the \"Highlight (Legacy)\" plugin instead. Here's a [[ES6 compatibility table|https://caniuse.com/?search=es6]].\n\n! Built-in Language Brushes\n\nThe plugin includes support for the following common languages (referred to as \"brushes\" by highlight.js):\n\n* bash\n* c\n* cpp\n* csharp\n* css\n* diff\n* go\n* html, xml\n* java\n* javascript\n* json\n* kotlin\n* less\n* lua\n* makefile\n* markdown\n* objectivec\n* perl\n* php\n* plaintext\n* python\n* R\n* ruby\n* rust\n* scss\n* sql\n* shell session\n* swift\n* toml, ini\n* typescript\n* visual basic .net\n* yaml\n\nAnd these additional ones:\n\n* apache config\n* dockerfile\n* fortran\n* latex\n* nginx config\n\nThe mapping between a MIME type and a highlight.js language specifier is accomplished via mapping tiddlers whose titles start with `$:/config/HighlightPlugin/TypeMappings/`.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fhighlight.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fhighlight.json",
         "cpl.title": "$:/plugins/tiddlywiki/highlight",
         "cpl.author": "Joao Bolila",
         "cpl.name": "Highlight",

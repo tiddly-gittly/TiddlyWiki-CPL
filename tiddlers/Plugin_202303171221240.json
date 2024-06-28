@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This experimental plugin provides support for parsing and rendering tiddlers written in TiddlyWiki Classic format (`text/x-tiddlywiki`).\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/tw2parser]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftw2parser.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftw2parser.json",
         "cpl.title": "$:/plugins/tiddlywiki/tw2parser",
         "cpl.author": "Jeffrey Wilkinson",
         "cpl.name": "TW2 Parser",

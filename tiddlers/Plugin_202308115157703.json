@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin contains the [[trailingspace|https://codemirror.net/5/doc/manual.html#addon_trailingspace]]\naddon for CodeMirror, and provides a default style (red squiggles).\n\nFirst install the [[CodeMirror plugin|$:/plugins/tiddlywiki/codemirror]].\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-trailingspace.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-trailingspace.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-trailingspace",
         "cpl.name": "CodeMirror Show Trailing Space",
         "cpl.description": "Show trailing space in CodeMirror",

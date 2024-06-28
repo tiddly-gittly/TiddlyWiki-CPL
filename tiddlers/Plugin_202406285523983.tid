@@ -1,0 +1,11 @@
+cpl.author: Nikola Dio Petkovski
+cpl.core-version: >=5.1.4
+cpl.dependents: 
+cpl.description: Macedonian (North Macedonia)
+cpl.name: mk-MK
+cpl.plugin-type: language
+cpl.readme: 
+cpl.title: $:/languages/mk-MK
+cpl.uri: https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fmk-MK.json
+tags: $:/tags/PluginWiki
+title: Plugin_202406285523983

@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "<div class=\"tc-message-box\">Do not install this plugin unless you understand exactly what it does</div>\n\nThis experimental plugin provides tools to share tiddlers via URLs, comprising:\n\n* The ability to load a group of tiddlers from the browser location hash at startup\n* Wizard and templates to create URLs from group of tiddlers\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fshare.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fshare.json",
         "cpl.title": "$:/plugins/tiddlywiki/share",
         "cpl.name": "Share",
         "cpl.description": "Sharing tiddlers via URLs",

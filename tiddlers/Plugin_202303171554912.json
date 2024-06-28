@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin enhances the [[CodeMirror|http://codemirror.net]] text editor with Autocompletion functionality. It needs the latest [[CodeMirror plugin|$:/plugins/tiddlywiki/codemirror]] to be installed\n\nIt adds Autocompletion for ''html'', ''javascript'' and ''xml'' and also for ''already present words'' within a text-editor instance\n\nThe ''Keyboard Shortcut'' for autocompletion is `Ctrl+Space`\n\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-autocomplete.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror-autocomplete.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror-autocomplete",
         "cpl.name": "CodeMirror Autocomplete",
         "cpl.description": "Autocompletion for CodeMirror",
