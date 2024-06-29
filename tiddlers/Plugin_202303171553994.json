@@ -8,7 +8,7 @@
         "modifier": "WhiteFall",
         "type": "text/vnd.tiddlywiki",
         "cpl.readme": "This plugin provides an enhanced text editor component based on [[CodeMirror|http://codemirror.net]]. The basic configuration is designed to be as lightweight as possible and is just around 235kb of size. Additional features can be installed with ~CodeMirror ~AddOns from the plugin library.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/codemirror]]\n\nBased on ~CodeMirror version 5.58.3\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fcodemirror.json",
         "cpl.title": "$:/plugins/tiddlywiki/codemirror",
         "cpl.name": "CodeMirror",
         "cpl.description": "CodeMirror editor",

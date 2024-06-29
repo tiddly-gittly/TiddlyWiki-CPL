@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin packages [[async.js|https://github.com/caolan/async]] for use by other plugins. It does not provide any end-user visible features.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fasync.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fasync.json",
         "cpl.title": "$:/plugins/tiddlywiki/async",
         "cpl.author": "Caolan McMahon",
         "cpl.name": "Async",

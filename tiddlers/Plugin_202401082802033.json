@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "! QRCode svg format\n\n<$qrcode />\n\n!! Params\n\n* `renderType`: {url} 当前条目地址\n* `text`: string\n* `width`: number\n\n!! TODO\n\n* viewtoolbar\n* support icon(logo), color https://github.com/soldair/node-qrcode/issues/240, https://github.com/ushelp/EasyQRCodeJS-NodeJS\n\n!! Credits\n\n* https://github.com/soldair/node-qrcode\n\n<!-- > qrcode-node 似乎最近不再维护，1.5.1 后有一个打包错误，umd  -->\n<!-- * title -->",
+        "cpl.readme": "! QRCode svg format\n\n<$qrcode />\n\n<$qrcode renderType=\"text\" text=\"这是一个二维码\" avatarSrc=\"https://avatars.githubusercontent.com/u/72405338?v=4\" />\n\n!! Params\n\n* `renderType`: {'url'|'text'} 当前条目地址\n* `text`: string\n* `width`: number\n\n!! TODO\n\n* viewtoolbar\n* support icon(logo), color https://github.com/soldair/node-qrcode/issues/240, https://github.com/ushelp/EasyQRCodeJS-NodeJS\n\n!! Credits\n\n* https://github.com/soldair/node-qrcode\n\n<!-- > qrcode-node 似乎最近不再维护，1.5.1 后有一个打包错误，umd  -->\n<!-- * title -->",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fqrcode.json",
         "cpl.title": "$:/plugins/oeyoews/qrcode",
         "cpl.author": "oeyoews",

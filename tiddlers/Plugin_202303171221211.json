@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This is a TiddlyWiki plugin for mathematical and chemical typesetting based on [ext[KaTeX from Khan Academy|https://katex.org/]] (v0.16) and [ext[mhchem|https://github.com/mhchem/MathJax-mhchem]] through a [ext[Katex extension|https://github.com/KaTeX/KaTeX/tree/master/contrib/mhchem]].\n\nIt is completely self-contained, and doesn't need an Internet connection in order to work. It works both in the browser and under Node.js.\n\n[[Source code|https://github.com/Jermolene/TiddlyWiki5/blob/master/plugins/tiddlywiki/katex]]\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fkatex.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fkatex.json",
         "cpl.title": "$:/plugins/tiddlywiki/katex",
         "cpl.name": "KaTeX",
         "cpl.description": "KaTeX library for mathematical typography",

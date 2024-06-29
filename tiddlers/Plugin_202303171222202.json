@@ -2,7 +2,7 @@
     {
         "tags": "$:/tags/PluginWiki",
         "cpl.readme": "This plugin provides a `<$twitter>` widget that can embed various entities from Twitter's service:\n\n* Individual tweets and conversations\n* Buttons for tweeting/mentioning, sharing, following\n* Various types of timeline: profile, likes, list, collection, url and widget\n\nThe widget only works in the browser, and not in generated static HTML pages.\n",
-        "cpl.uri": "https://tiddlywiki.com/library/v5.3.3/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftwitter.json",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.3.4/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftwitter.json",
         "cpl.title": "$:/plugins/tiddlywiki/twitter",
         "cpl.name": "Twitter",
         "cpl.description": "Twitter embedding tools",
