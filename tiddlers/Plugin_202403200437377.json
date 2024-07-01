@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<!-- plugin template readme -->\n\n<$vue-neotw-info />\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.readme": "<!-- plugin template readme -->\n\n<$vue-neotw-info />\n\n* 显示 tiddlywiki 的信息\n\n## Motivation\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-info.json",
         "cpl.title": "$:/plugins/oeyoews/vue-info",
         "cpl.author": "oeyoews",
