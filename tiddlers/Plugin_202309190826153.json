@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "{{$:/config/EmptyStoryMessage}}\n\n<!-- !! Not Have Div Tag -->\n<!---->\n<!-- Just vanilla text -->\n<!---->\n<!-- <div class=\"prose max-w-none prose-indigo\"> -->\n<!---->\n<!-- ``` -->\n<!-- {{{ [[index]] ||$:/core/ui/ViewTemplate }}} -->\n<!-- ``` -->\n<!---->\n<!-- * if use viewtemplate on Layout, 页面会崩溃 -->\n<!---->\n<!-- !! Tiddlywiki Empty Story -->\n<!---->\n<!-- </div> -->\n",
+        "cpl.readme": "> 定制你的TiddlyWiki主页(customize your tiddlywiki homepage)\n\n{{$:/config/EmptyStoryMessage}}\n\n<!-- !! Not Have Div Tag -->\n<!---->\n<!-- Just vanilla text -->\n<!---->\n<!-- <div class=\"prose max-w-none prose-indigo\"> -->\n<!---->\n<!-- ``` -->\n<!-- {{{ [[index]] ||$:/core/ui/ViewTemplate }}} -->\n<!-- ``` -->\n<!---->\n<!-- * if use viewtemplate on Layout, 页面会崩溃 -->\n<!---->\n<!-- !! Tiddlywiki Empty Story -->\n<!---->\n<!-- </div> -->\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-homepage.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-homepage",
         "cpl.author": "oeyoews",
