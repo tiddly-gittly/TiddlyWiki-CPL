@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: 
+cpl.description: neotw-progressbar
+cpl.name: neotw-progressbar
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/neotw-progressbar
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-progressbar.json
+tags: $:/tags/PluginWiki
+title: Plugin_202407070115404
