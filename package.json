@@ -48,7 +48,7 @@
     "tiddlywiki": "5.3.3",
     "ts-node": "^10.9.2",
     "tw5-typed": "0.5.7",
-    "workbox-cli": "7.0.0"
+    "workbox-cli": "7.1.0"
   },
   "dependencies": {
     "chalk": "^4.1.2",
