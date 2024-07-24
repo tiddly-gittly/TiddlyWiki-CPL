@@ -1,0 +1,20 @@
+[
+    {
+        "created": "20240724113931446",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202407243931446",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Title -> Caption",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/title-caption",
+        "modified": "20240724114149583",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Display caption in title area.\n\n将 Caption 字段显示为标题",
+        "cpl.uri": "https://github.com/tiddly-gittly/title-caption/releases/latest/download/__plugins_linonetwo_title-caption.json",
+        "cpl.source": "https://github.com/tiddly-gittly/title-caption/",
+        "cpl.documentation": "https://tiddly-gittly.github.io/title-caption/"
+    }
+]
