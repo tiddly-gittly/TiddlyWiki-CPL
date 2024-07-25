@@ -8,13 +8,14 @@
         "cpl.name": "Title -> Caption",
         "cpl.plugin-type": "plugin",
         "cpl.title": "$:/plugins/linonetwo/title-caption",
-        "modified": "20240724114149583",
+        "modified": "20240725144320718",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "林一二",
         "cpl.description": "Display caption in title area.\n\n将 Caption 字段显示为标题",
         "cpl.uri": "https://github.com/tiddly-gittly/title-caption/releases/latest/download/__plugins_linonetwo_title-caption.json",
         "cpl.source": "https://github.com/tiddly-gittly/title-caption/",
-        "cpl.documentation": "https://tiddly-gittly.github.io/title-caption/"
+        "cpl.documentation": "https://tiddly-gittly.github.io/title-caption/",
+        "cpl.readme": "Github: https://github.com/tiddly-gittly/title-caption\n\n!! Tryout\n\n!!! Auto generation\n\nWith the following i-message layout, you can create entries where the `title` field is a random ID and the `caption` field is the real title.\n\n<<simple-layout-launcher>>\n\n!!! Manual creation\n\nCreate a new tiddler, then add the `caption` field, or the `_is_titleless` field.\n\nOnce added, you'll notice that the old \"title\" edit box becomes an edit box for the `caption` field, and the edit box for the `title` field is now a smaller, secondary input box.\n\n!!! 自动生成\n\n用下面的 i信息 布局，可以创建出 `title` 字段是随机 ID，`caption` 字段是真正标题的条目。\n\n<<simple-layout-launcher>>\n\n!!! 手动创建\n\n创建新条目，然后添加 `caption` 字段，或 `_is_titleless` 字段。\n\n添加后，你会发现标题编辑框会变成编辑 `caption` 字段的内容，对 `title` 字段的编辑框则变成了一个较小的、次要的输入框。\n"
     }
 ]
