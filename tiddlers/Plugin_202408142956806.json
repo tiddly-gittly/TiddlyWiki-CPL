@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-calendar]]\n<!-- https://antoniandre.github.io/vue-cal/#installation -->",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-calendar.json",
+        "cpl.title": "$:/plugins/oeyoews/neotw-calendar",
+        "cpl.author": "oeyoews",
+        "cpl.name": "neotw-calendar",
+        "cpl.description": "neotw-calendar",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202408142956806"
+    }
+]

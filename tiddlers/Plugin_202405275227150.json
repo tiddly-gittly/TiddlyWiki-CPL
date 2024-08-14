@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Plugin_202405275227150",
+        "cpl.author": "oeyoews",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "",
+        "cpl.description": "neotw-cmp",
+        "cpl.name": "neotw-cmp",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-cmp]]\n\n!! TODO\n\n* [ ] esc\n* [ ] https://github.com/tiddly-gittly/tw-command-palette/blob/0c6da53a88f6188455f17297547ff02e2c670335/src/commandpalette/widgets/build-in-sub-plugins/search-story-history.ts#L39\n* [ ] https://github.com/algolia/autocomplete/issues/1199\n* [ ] 空白搜索结果提示操作\n* [ ] 最近搜索历史\n* [ ] filterCache 缓存\n* [ ] 不支持中文搜索\n* [x] 快捷键 全屏\n* [x] 弹窗不消失\n* [x] 加上命令\n* [x] masklayer\n* [x] 宽度\n* [x] 搜索结果仅仅显示title matched\n* [x] 输入框内容重置\n* [x] 加上debounce\n\n## Next\n\n* 搜索结果highlight\n* 双栏预览\n* 基于http api 搜索\n* neotw 黑暗模式适配",
+        "cpl.title": "$:/plugins/oeyoews/neotw-cmp",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-cmp.json",
+        "tags": "$:/tags/PluginWiki"
+    }
+]
