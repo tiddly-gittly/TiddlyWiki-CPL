@@ -103,7 +103,7 @@ importCommand
     } else if (official) {
       console.log(chalk.cyan('导入官方插件源 - Importing official library...'));
       const latestVersion = execSync(
-        `curl https://api.github.com/repos/Jermolene/TiddlyWiki5/tags -s | jq -r '.[0].name'`,
+        `curl https://api.github.com/repos/TiddlyWiki/TiddlyWiki5/tags -s | jq -r '.[0].name'`,
       )
         .toString()
         .trim();
