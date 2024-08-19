@@ -7,5 +7,5 @@
     "types": ["node", "tw5-typed"],
     "lib": ["DOM", "ESNext"]
   },
-  "include": ["./scripts/**/*.ts"],
+  "include": ["./scripts/**/*.ts", "scripts/index.ts"]
 }

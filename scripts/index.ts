@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
+// Don't use 5.x which is ESM. Tw only run under not esm.
 import chalk from 'chalk';
 import { input, confirm } from '@inquirer/prompts';
 import { program } from 'commander';

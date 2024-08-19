@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@inquirer/prompts": "^5.3.8",
-    "chalk": "^5.3.0",
+    "chalk": "^4.1.2",
     "commander": "^12.1.0"
   }
 }
