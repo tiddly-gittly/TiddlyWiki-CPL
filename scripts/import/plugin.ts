@@ -2,7 +2,7 @@ import { URL } from 'url';
 import { resolve, extname } from 'path';
 import { ensureFileSync, readdirSync } from 'fs-extra';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import { confirm } from '@inquirer/prompts';
 import type { ITiddlerFields } from 'tiddlywiki';
 
 import {
@@ -125,22 +125,16 @@ export const importPlugin = async (
     `[tag[$:/tags/PluginWiki]cpl.title[${pluginInfo['cpl.title']}]]`,
   )[0] as string | undefined;
   if (tmp && !options?.yes) {
-    const { overwrite } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'overwrite',
-        message: chalk.blue(
-          `插件 ${chalk.bold(pluginInfo['cpl.title'])} 已存在 ${chalk.grey(
-            `(as ${tmp})`,
-          )}, 是否将其替换?\nPlugin ${chalk.bold(
-            pluginInfo['cpl.title'],
-          )} already exists ${chalk.grey(
-            `(as ${tmp})`,
-          )}, should I overwrite it?`,
-        ),
-        default: true,
-      },
-    ]);
+    const overwrite = await confirm({
+      message: chalk.blue(
+        `插件 ${chalk.bold(pluginInfo['cpl.title'])} 已存在 ${chalk.grey(
+          `(as ${tmp})`,
+        )}, 是否将其替换?\nPlugin ${chalk.bold(
+          pluginInfo['cpl.title'],
+        )} already exists ${chalk.grey(`(as ${tmp})`)}, should I overwrite it?`,
+      ),
+      default: true,
+    });
     if (!overwrite) {
       return false;
     }
