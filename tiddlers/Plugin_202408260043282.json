@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "!! Important\n\nThis plugin \"Palette Switcher\" replaces the ''ControlPanel -> Appearence -> Palette'' tab\n\nThere is a new page-control buttion in the ''right sidebar'': {{$:/plugins/wikilabs/palette-switcher/ui/images/moon|2em}}, which allows you to fast switch between 2 predefined palettes.\n\nThis plugin modifies a core module and / or templates\n\n<ul><$list filter=\"[[$:/plugins/wikilabs/palette-switcher]plugintiddlers[]prefix[$:/core/]]\"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>\n\n---\n\n{{$:/plugins/wikilabs/palette-switcher/DarkLightStartup}}\n\n---\n\n{{$:/plugins/wikilabs/palette-switcher/DarkLightStartup (Examples)}}\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpalette-switcher.json",
+        "cpl.title": "$:/plugins/wikilabs/palette-switcher",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Palette Switcher",
+        "cpl.description": "Advanced Palette Switcher",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.1",
+        "title": "Plugin_202408260043282"
+    }
+]
