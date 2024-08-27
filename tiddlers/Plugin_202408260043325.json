@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "This plugin \"Palette Watch\" adds the ''ControlPanel -> Settings -> WikiLabs -> Palette Watch'' tab\n\n----\n\n{{$:/plugins/wikilabs/palette-watch/docs/DarkLightChangeActions}}\n\n----\n\n{{$:/plugins/wikilabs/palette-watch/docs/DarkLightChangeActions-examples}}\n\n----\n\n!! Important\n\nThis plugin modifies the following core modules and / or templates\n\n<ul><$list filter=\"[[$:/plugins/wikilabs/palette-watch]plugintiddlers[]prefix[$:/core/]]\" emptyMessage=\"none\"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fpalette-watch.json",
+        "cpl.title": "$:/plugins/wikilabs/palette-watch",
+        "cpl.author": "Mario Pietsch",
+        "cpl.name": "Palette Watch",
+        "cpl.description": "Advanced Palette Watch",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.1",
+        "title": "Plugin_202408260043325"
+    }
+]

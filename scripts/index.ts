@@ -1,8 +1,9 @@
 import { resolve } from 'path';
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
+// Don't use 5.x which is ESM. Tw only run under not esm.
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import { input, confirm } from '@inquirer/prompts';
 import { program } from 'commander';
 import { tiddlywiki } from './utils';
 import { importPlugin } from './import/plugin';
@@ -30,24 +31,18 @@ importCommand
   .description('导入一个插件 - Import a plugin')
   .action(async () => {
     // 处理输入
-    const { url, title } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'url',
-        message: chalk.bold(
-          `请输入插件的URL链接 - Input URL of plugin (.tid, .json, .html, etc.)`,
-        ),
-      },
-      {
-        type: 'input',
-        name: 'title',
-        message: chalk.bold(
-          `请输入插件的标题 - Input title of plugin tiddler  ${chalk.grey(
-            `(e.g. $:/plugins/tiddlywiki/codemirror)`,
-          )}`,
-        ),
-      },
-    ]);
+    const url = await input({
+      message: chalk.bold(
+        `请输入插件的URL链接 - Input URL of plugin (.tid, .json, .html, etc.)`,
+      ),
+    });
+    const title = await input({
+      message: chalk.bold(
+        `请输入插件的标题 - Input title of plugin tiddler  ${chalk.grey(
+          `(e.g. $:/plugins/tiddlywiki/codemirror)`,
+        )}`,
+      ),
+    });
     // 导入插件
     await importPlugin(url.trim(), title.trim(), {
       yes: true,
@@ -123,19 +118,15 @@ importCommand
         $tw,
       );
     } else {
-      const { url } = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'url',
-          message: chalk.bold(
-            `请输入插件源的链接${chalk.gray(
-              '(可从插件源条目的url字段找到)',
-            )}\nInput libaray url${chalk.gray(
-              '(can find in url field of the plugin library tiddler)',
-            )}`,
-          ),
-        },
-      ]);
+      const url = await input({
+        message: chalk.bold(
+          `请输入插件源的链接${chalk.gray(
+            '(可从插件源条目的url字段找到)',
+          )}\nInput libaray url${chalk.gray(
+            '(can find in url field of the plugin library tiddler)',
+          )}`,
+        ),
+      });
       await importLibrary(url, { yes: true, includeOfficial: false });
       const registeredLibrariesPath = resolve('libraries.json');
       let registeredLibraries: IRegisteredLibrary[] = [];
@@ -148,29 +139,21 @@ importCommand
         process.env.GITHUB_ACTIONS !== 'true' &&
         !registeredLibraries.find(({ uri }) => uri === url)
       ) {
-        const { register } = await inquirer.prompt([
-          {
-            type: 'confirm',
-            name: 'register',
-            message: chalk.bold(
-              `是否要将该插件源注册? 下次只需 ${chalk.blue(
-                'import --all',
-              )} 即可更新所有插件源!\nRegister this library? Then just ${chalk.blue(
-                'import --all',
-              )} next time!`,
-            ),
-          },
-        ]);
+        const register = await confirm({
+          message: chalk.bold(
+            `是否要将该插件源注册? 下次只需 ${chalk.blue(
+              'import --all',
+            )} 即可更新所有插件源!\nRegister this library? Then just ${chalk.blue(
+              'import --all',
+            )} next time!`,
+          ),
+        });
         if (!register) {
           return;
         }
-        const { name } = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'name',
-            message: '给插件源起一个名字 - Name the library',
-          },
-        ]);
+        const name = await input({
+          message: '给插件源起一个名字 - Name the library',
+        });
         registeredLibraries.push({
           uri: url,
           name,

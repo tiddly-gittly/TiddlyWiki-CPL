@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "\n```mermaid\ninfo\n```\n\n!! NOTE\n\nzenuml is not supported here: https://github.com/mermaid-js/mermaid-cli/issues/564",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid.json",
+        "cpl.title": "$:/plugins/oeyoews/mermaid",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Mermaid",
+        "cpl.description": "mermaid",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202408260116899"
+    }
+]

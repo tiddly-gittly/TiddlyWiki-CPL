@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.0
+cpl.dependents: 
+cpl.description: mermaid-lib
+cpl.name: Mermaid library
+cpl.plugin-type: plugin
+cpl.readme: > Mermaid library V11
+cpl.title: $:/plugins/oeyoews/mermaid-lib
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid-lib.json
+tags: $:/tags/PluginWiki
+title: Plugin_202408250541169
