@@ -7,17 +7,18 @@
         "tags": "$:/tags/PluginWiki",
         "modified": "20230525112735906",
         "modifier": "WhiteFall",
-        "cpl.readme": "; Shiraz\nShiraz is a small framework of stylesheets, templates and macros to create stylish contents in Tiddlywiki.  Shiraz has customized elements like alerts, cards, panels, images, static tables, dynamic tables, quick table, badges, texts, etc. Shiraz uses some modified CSS classes from [[Bootstrap|https://getbootstrap.com/]] 4.3.1.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Shiraz/\n* Code: https://github.com/kookma/TW-Shiraz\n",
+        "cpl.readme": "; Shiraz\nShiraz is a small framework of stylesheets, templates and macros to create stylish contents in Tiddlywiki.  Shiraz has customized elements like alerts, cards, panels, images, static tables, dynamic tables, quick table, badges, texts, etc. Shiraz uses some modified CSS classes from [[Bootstrap|https://getbootstrap.com/]] 5.3.3.\n\nThis version is based on TiddlyWiki 5.3.5 and is not totally backward compatible. For backward compatibility use Shiraz 2.x.x like (2.9.5) and earlier.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Shiraz/\n* Code: https://github.com/kookma/TW-Shiraz\n",
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fshiraz.json",
         "cpl.title": "$:/plugins/kookma/shiraz",
         "cpl.author": "Mohammad Rahmani",
         "cpl.name": "Shiraz",
-        "cpl.description": "extended markups, styles, images, tables, and macros",
+        "cpl.description": "Extended markups, tables, images, styles, and procedures",
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Shiraz",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.7",
+        "cpl.core-version": ">=5.3.5",
         "cpl.documentation": "https://kookma.github.io/TW-Shiraz/",
-        "page-cover": "https://img1.imgtp.com/2023/05/25/pFT3jEjX.png"
+        "page-cover": "https://img1.imgtp.com/2023/05/25/pFT3jEjX.png",
+        "cpl.parent-plugin": ""
     }
 ]
