@@ -16,7 +16,7 @@
         "cpl.description": "Creating and distributing plugins, editions, contents in browser",
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Gatha",
-        "cpl.dependents": "$:/plugins/tiddlywiki/jszip",
+        "cpl.dependents": "",
         "cpl.core-version": ">=5.3.5",
         "cpl.documentation": "https://kookma.github.io/TW-Gatha/",
         "page-cover": "https://img1.imgtp.com/2023/05/25/nkzRWA5x.png",
