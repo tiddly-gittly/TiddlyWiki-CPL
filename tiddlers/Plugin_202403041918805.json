@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Plugin_202403041918805",
+        "cpl.author": "oeyoews",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.dependents": "",
+        "cpl.description": "neotw-vue3",
+        "cpl.name": "neotw-vue3",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-vue3]]\n<!-- suffix 方式有bug, 怀疑是eval 导致了解析速度变慢， 导致Vue加载过慢， 别的模块找不到vue, 本地加载不会有这种问题， 本地构建打包也没问题 -->",
+        "cpl.title": "$:/plugins/oeyoews/neotw-vue3",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vue3.json",
+        "tags": "$:/tags/PluginWiki"
+    }
+]

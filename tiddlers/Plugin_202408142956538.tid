@@ -1,7 +1,7 @@
 cpl.author: oeyoews
 cpl.core-version: >=5.3.0
 cpl.dependents: $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
-cpl.description: neotw-bot
+cpl.description: 向Telegram bot 发送消息
 cpl.name: neotw-bot
 cpl.plugin-type: plugin
 cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-bot]]
