@@ -5,12 +5,12 @@
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftweaks.json",
         "cpl.title": "$:/plugins/kookma/tweaks",
         "cpl.author": "Mohammad Rahmani",
-        "cpl.name": "Kookma TiddlyWiki Tweaks",
+        "cpl.name": "Tweaks",
         "cpl.description": "Improvements, customizations, and fixes for TiddlyWiki",
         "cpl.plugin-type": "plugin",
-        "cpl.source": "",
+        "cpl.source": "https://github.com/kookma/TW-Tweaks",
         "cpl.dependents": "",
-        "cpl.parent-plugin": "https://github.com/kookma/TW-Tweaks",
+        "cpl.parent-plugin": "",
         "cpl.core-version": ">=5.3.5",
         "title": "Plugin_202408142853427"
     }
