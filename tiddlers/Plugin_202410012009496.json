@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-play-sound]]\n\n> sounds from https://github.com/joshwcomeau/use-sound/tree/main/stories/sounds\n\n!! 使用\n\n```html\n<$button message=\"neotw-play-sound\"> play sound </$button>\n<$button>\nPlay pop sound\n<$action-sendmessage $message=\"neotw-play-sound\" audioTiddler=\"$:/plugins/oeyoews/neotw-play-sound/sounds/pop.mp3\" />\n</$button>\n```\n\n<$button message=\"neotw-play-sound\"> play sound </$button>\n<$button>\nPlay pop sound\n<$action-sendmessage $message=\"neotw-play-sound\" audioTiddler=\"$:/plugins/oeyoews/neotw-play-sound/sounds/pop.mp3\" />\n</$button>",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-play-sound]]\n\n> sounds from https://github.com/joshwcomeau/use-sound/tree/main/stories/sounds\n\n!! 使用\n\n```html\n<$button message=\"neotw-play-sound\"> play sound </$button>\n<$button>\nPlay pop sound\n<$action-sendmessage $message=\"neotw-play-sound\" audioTiddler=\"$:/plugins/oeyoews/neotw-play-sound/sounds/pop.mp3\" />\n</$button>\n```\n\n<$button message=\"neotw-play-sound\"> play sound </$button>\n<$button>\nPlay pop sound\n<$action-sendmessage $message=\"neotw-play-sound\" audioTiddler=\"$:/plugins/oeyoews/neotw-play-sound/sounds/pop.mp3\" />\n</$button>\n\n!! TODO\n\n* 添加配置checkbox\n* 支持设置音量",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-play-sound.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-play-sound",
         "cpl.author": "oeyoews",
