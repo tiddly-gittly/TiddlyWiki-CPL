@@ -50,7 +50,7 @@
     "workbox-cli": "7.1.0"
   },
   "dependencies": {
-    "@inquirer/prompts": "^5.3.8",
+    "@inquirer/prompts": "^7.0.0",
     "chalk": "^4.1.2",
     "commander": "^12.1.0"
   }
