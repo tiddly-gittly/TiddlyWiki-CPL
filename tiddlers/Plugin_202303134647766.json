@@ -10,7 +10,7 @@
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/EvidentlyCube/TW5-AutoComplete",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.3",
+        "cpl.core-version": ">=5.2.2",
         "title": "Plugin_202303134647766"
     }
 ]

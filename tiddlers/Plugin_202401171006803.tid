@@ -4,7 +4,7 @@ cpl.dependents: $:/plugins/oeyoews/tiddlywiki-codemirror-6
 cpl.description: tiddlywiki-cmp-emoji
 cpl.name: tiddlywiki-cmp-emoji
 cpl.plugin-type: plugin
-cpl.readme: 
+cpl.readme: > https://github.com/markdown-it/markdown-it-emoji/blob/master/support/update.mjs
 cpl.title: $:/plugins/oeyoews/tiddlywiki-cmp-emoji
 cpl.uri: https://oeyoews.github.io/tiddlywiki-codemirror6/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-cmp-emoji.json
 tags: $:/tags/PluginWiki

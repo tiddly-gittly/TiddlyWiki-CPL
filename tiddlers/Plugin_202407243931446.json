@@ -8,7 +8,7 @@
         "cpl.name": "Title -> Caption",
         "cpl.plugin-type": "plugin",
         "cpl.title": "$:/plugins/linonetwo/title-caption",
-        "modified": "20240725144601381",
+        "modified": "20240929110728311",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "林一二",
@@ -16,6 +16,7 @@
         "cpl.uri": "https://github.com/tiddly-gittly/title-caption/releases/latest/download/__plugins_linonetwo_title-caption.json",
         "cpl.source": "https://github.com/tiddly-gittly/title-caption/",
         "cpl.documentation": "https://tiddly-gittly.github.io/title-caption/",
-        "cpl.readme": "!! Feature\n\nDisplays the contents of the `caption` field as a title for tiddlers containing a `caption` field, or a `_is_titleless` field.\n\nWhen editing, the edit box for the title of said tiddler becomes an edit box for the contents of the `caption` field, and the edit box for the `title` field becomes a smaller, secondary input box.\n\n!! 功能\n\n为包含 `caption` 字段，或 `_is_titleless` 字段的条目，显示 `caption` 字段的内容作为标题。\n\n在编辑时，上述条目的标题编辑框会变成编辑 `caption` 字段的内容，对 `title` 字段的编辑框则变成了一个较小的、次要的输入框。"
+        "cpl.readme": "!! Feature\n\nDisplays the contents of the `caption` field as a title for tiddlers containing a `caption` field, or a `_is_titleless` field.\n\nWhen editing, the edit box for the title of said tiddler becomes an edit box for the contents of the `caption` field, and the edit box for the `title` field becomes a smaller, secondary input box.\n\n!! 功能\n\n为包含 `caption` 字段，或 `_is_titleless` 字段的条目，显示 `caption` 字段的内容作为标题。\n\n在编辑时，上述条目的标题编辑框会变成编辑 `caption` 字段的内容，对 `title` 字段的编辑框则变成了一个较小的、次要的输入框。",
+        "cpl.category": "Functional"
     }
 ]

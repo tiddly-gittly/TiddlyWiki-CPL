@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "<!-- plugin template readme -->\n\n<!-- !! Motivation -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n",
+        "cpl.readme": "<!-- plugin template readme -->\n\n<!-- !! Motivation -->\n\n<!-- your plugin motivation, or why you write this plugin -->\n\n>",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fvue-plugin-template.json",
         "cpl.title": "$:/plugins/oeyoews/vue-plugin-template",
         "cpl.author": "oeyoews",

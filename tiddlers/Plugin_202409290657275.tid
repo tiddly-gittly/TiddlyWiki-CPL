@@ -1,0 +1,15 @@
+cpl.author: LinOnetwo
+cpl.category: Developing
+cpl.documentation: https://tiddly-gittly.github.io/tw-contacts/
+cpl.name: Person Ontology
+cpl.plugin-type: plugin
+cpl.source: https://github.com/tiddly-gittly/tw-contacts/
+cpl.title: $:/plugins/linonetwo/person
+cpl.uri: https://github.com/tiddly-gittly/tw-contacts/releases/latest/download/__plugins_linonetwo_person.json
+created: 20240929110657275
+creator: 林一二
+modified: 20240929110824706
+modifier: 林一二
+tags: $:/tags/PluginWiki
+title: Plugin_202409290657275
+type: text/vnd.tiddlywiki

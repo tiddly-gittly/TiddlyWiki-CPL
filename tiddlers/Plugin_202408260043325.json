@@ -8,7 +8,7 @@
         "cpl.name": "Palette Watch",
         "cpl.description": "Advanced Palette Watch",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "",
+        "cpl.dependents": "$:/plugins/wikilabs/palette-switcher",
         "cpl.core-version": ">=5.3.1",
         "title": "Plugin_202408260043325"
     }

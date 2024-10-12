@@ -1,0 +1,16 @@
+cpl.author: LinOnetwo
+cpl.dependents: 
+cpl.description: Record and know about people you know 记录并深入认识你认识的人
+cpl.documentation: https://tiddly-gittly.github.io/tw-contacts/
+cpl.name: contacts management 联系人人脉管理
+cpl.plugin-type: plugin
+cpl.source: https://github.com/tiddly-gittly/tw-contacts/
+cpl.title: $:/plugins/linonetwo/contacts
+cpl.uri: https://github.com/tiddly-gittly/tw-contacts/releases/latest/download/__plugins_linonetwo_contacts.json
+created: 20240929110254728
+creator: 林一二
+modified: 20240929110655264
+modifier: 林一二
+tags: $:/tags/PluginWiki
+title: Plugin_202409290254727
+type: text/vnd.tiddlywiki

@@ -8,11 +8,11 @@
         "cpl.title": "$:/plugins/kookma/commander",
         "cpl.author": "Mohammad Rahmani",
         "cpl.name": "Tiddler Commander",
-        "cpl.description": "Tiddler Commander",
+        "cpl.description": "Streamline tiddler management: bulk operations for titles, tags, and fields",
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Commander",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.0",
+        "cpl.core-version": ">=5.3.5",
         "cpl.parent-plugin": ""
     }
 ]
