@@ -46,7 +46,7 @@
     "rimraf": "^6.0.1",
     "tiddlywiki": "5.3.5",
     "ts-node": "^10.9.2",
-    "tw5-typed": "0.5.12",
+    "tw5-typed": "0.5.14",
     "workbox-cli": "7.1.0"
   },
   "dependencies": {
