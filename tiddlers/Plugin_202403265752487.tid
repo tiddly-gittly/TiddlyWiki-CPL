@@ -4,7 +4,12 @@ cpl.description: Section editor for TiddlyWiki5
 cpl.name: sections
 cpl.plugin-type: plugin
 cpl.readme: 
+cpl.source: https://github.com/Gk0Wk/TiddlySeq/tree/master/src/sections
 cpl.title: $:/plugins/Gk0Wk/sections
 cpl.uri: https://gk0wk.github.io/TiddlySeq/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252FGk0Wk%252Fsections.json
+created: 20241012175153691
+creator: 林一二
+modified: 20241012175154661
+modifier: 林一二
 tags: $:/tags/PluginWiki
 title: Plugin_202403265752487

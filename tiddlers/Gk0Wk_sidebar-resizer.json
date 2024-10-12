@@ -4,10 +4,10 @@
         "creator": "Sttot",
         "text": "",
         "title": "Gk0Wk/sidebar-resizer",
-        "modified": "20211214150556438",
+        "modified": "20241012175227421",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
-        "modifier": "Sttot",
+        "modifier": "林一二",
         "page-cover": "https://unsplash.com/photos/zF_pTLx_Dkg/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjM4NTQzODI4&force=true&w=1920",
         "icon": "↔️",
         "cpl.title": "$:/plugins/Gk0Wk/sidebar-resizer",
@@ -20,6 +20,7 @@
         "cpl.source": "https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/sidebar-resizer",
         "cpl.documentation": "https://gk0wk.github.io/TiddlySeq/#Resizable%20Sidebar",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": ""
+        "cpl.dependents": "",
+        "cpl.category": "Functional"
     }
 ]
