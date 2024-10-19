@@ -6,11 +6,12 @@ cpl.documentation: https://context-menu-plugin.tiddlyhost.com/
 cpl.name: context-menu-plugin
 cpl.plugin-type: plugin
 cpl.readme: Configurable context menus for tiddlers
+cpl.source: https://github.com/ahanniga/tiddlywiki-context-menu-plugin
 cpl.title: $:/plugins/ahanniga/context-menu-plugin
 cpl.uri: https://context-menu-plugin.tiddlyhost.com/
 created: 20241019005359509
 creator: 马不前
-modified: 20241019005811477
+modified: 20241019010056208
 modifier: 马不前
 tags: $:/tags/PluginWiki
 title: Plugin_202410195359509
