@@ -1,0 +1,18 @@
+cpl.author: mabuqian
+cpl.category: Beautify
+cpl.core-version: >='5.2.0'
+cpl.description: Some palettes
+cpl.documentation: https://dongrentianyu.github.io/mabuqian-customisation/
+cpl.name: GuMo-Palettes
+cpl.plugin-type: plugin
+cpl.readme: Some palettes
+cpl.source: https://github.com/dongrentianyu/mabuqian-customisation
+cpl.title: $:/plugins/mabuqian/GuMo-Palettes
+cpl.uri: https://github.com/dongrentianyu/mabuqian-customisation/releases
+created: 20241019153413920
+creator: 马不前
+modified: 20241019153818567
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: Plugin_202410193413920
+type: text/vnd.tiddlywiki
