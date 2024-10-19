@@ -1,0 +1,17 @@
+cpl.author: ahanniga
+cpl.core-version: >=5.2.0
+cpl.dependents: 
+cpl.description: Configurable context menus for tiddlers
+cpl.documentation: https://context-menu-plugin.tiddlyhost.com/
+cpl.name: context-menu-plugin
+cpl.plugin-type: plugin
+cpl.readme: Configurable context menus for tiddlers
+cpl.title: $:/plugins/ahanniga/context-menu-plugin
+cpl.uri: https://context-menu-plugin.tiddlyhost.com/
+created: 20241019005359509
+creator: 马不前
+modified: 20241019005811477
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: Plugin_202410195359509
+type: text/vnd.tiddlywiki
