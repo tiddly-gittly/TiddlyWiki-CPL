@@ -8,10 +8,10 @@ cpl.plugin-type: plugin
 cpl.readme: Some palettes
 cpl.source: https://github.com/dongrentianyu/mabuqian-customisation
 cpl.title: $:/plugins/mabuqian/GuMo-Palettes
-cpl.uri: https://github.com/dongrentianyu/mabuqian-customisation/releases
+cpl.uri: https://github.com/dongrentianyu/mabuqian-customisation/releases/latest/download/__plugins_mabuqian_GuMo-Palettes.json
 created: 20241019153413920
 creator: 马不前
-modified: 20241019153818567
+modified: 20241020170458255
 modifier: 马不前
 tags: $:/tags/PluginWiki
 title: Plugin_202410193413920
