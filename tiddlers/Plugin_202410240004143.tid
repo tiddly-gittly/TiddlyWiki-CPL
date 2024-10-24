@@ -1,0 +1,16 @@
+cpl.author: odin
+cpl.description: A clean and soft theme for TiddlyWiki
+cpl.documentation: https://odinjorna.github.io/zacht-theme/
+cpl.name: zacht
+cpl.plugin-type: theme
+cpl.readme: A clean and soft theme for TiddlyWiki
+cpl.source: https://github.com/OdinJorna/zacht-theme
+cpl.title: $:/themes/odin/zacht
+cpl.uri: https://odinjorna.github.io/zacht-theme/
+created: 20241024140004143
+creator: 马不前
+modified: 20241024140130114
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: Plugin_202410240004143
+type: text/vnd.tiddlywiki
