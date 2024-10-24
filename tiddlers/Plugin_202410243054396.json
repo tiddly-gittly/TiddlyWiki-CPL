@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20241024133054396",
+        "creator": "马不前",
+        "text": "",
+        "title": "Plugin_202410243054396",
+        "cpl.author": "nico",
+        "cpl.name": "notebook",
+        "cpl.plugin-type": "theme",
+        "cpl.title": "$:/themes/nico/notebook",
+        "modified": "20241024133451164",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "马不前",
+        "cpl.description": "A clean, uncluttered TiddlyWiki theme\n\nThe original document URL can not be opened, using the forum backup URL",
+        "cpl.readme": "A clean, uncluttered TiddlyWiki theme",
+        "cpl.source": "https://github.com/NicolasPetton/Notebook",
+        "cpl.uri": "https://saqimtiaz.github.io/sq-tw/notebook.html",
+        "cpl.documentation": "https://saqimtiaz.github.io/sq-tw/notebook.html"
+    }
+]
