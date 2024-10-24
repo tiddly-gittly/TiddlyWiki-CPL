@@ -1,0 +1,17 @@
+cpl.author: cdr
+cpl.description: Markdown More
+cpl.documentation: https://cdruan.github.io/tw-markdown-more/
+cpl.name: Markdown More
+cpl.plugin-type: plugin
+cpl.readme: Markdown More
+cpl.source: https://github.com/cdruan/tw-markdown-more
+cpl.title: $:/plugins/cdr/markdown-more
+cpl.uri: https://cdruan.github.io/tw-markdown-more/
+created: 20241024142825772
+creator: 马不前
+modified: 20241024142835050
+modifier: 马不前
+page-cover: 
+tags: $:/tags/PluginWiki
+title: Markdown More
+type: text/vnd.tiddlywiki

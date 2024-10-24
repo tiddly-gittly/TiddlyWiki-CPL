@@ -1,0 +1,17 @@
+cpl.author: cdr
+cpl.description: Color manipulation library
+cpl.documentation: https://cdruan.github.io/tw5-captivate/
+cpl.name: colorlab
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: Color manipulation library,need `$:/themes/cdr/captivate`
+cpl.source: https://github.com/cdruan/tw5-captivate
+cpl.title: $:/plugins/cdr/colorlab
+cpl.uri: https://cdruan.github.io/tw5-captivate/
+created: 20241024143050741
+creator: 马不前
+modified: 20241024143343002
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: Plugin_202410243050740
+type: text/vnd.tiddlywiki

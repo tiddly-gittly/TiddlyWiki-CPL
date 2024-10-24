@@ -1,0 +1,16 @@
+cpl.author: cdr
+cpl.description: Switchable layouts with custom palettes
+cpl.documentation: https://cdruan.github.io/tw5-captivate/
+cpl.name: captivate
+cpl.plugin-type: theme
+cpl.readme: This theme aims to provide another clean and functional layout for TiddlyWiki.
+cpl.source: https://github.com/cdruan/tw5-captivate
+cpl.title: $:/themes/cdr/captivate
+cpl.uri: https://cdruan.github.io/tw5-captivate/
+created: 20241024142140071
+creator: 马不前
+modified: 20241024142656218
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: Plugin_202410242140070
+type: text/vnd.tiddlywiki
