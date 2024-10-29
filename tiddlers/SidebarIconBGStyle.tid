@@ -8,11 +8,12 @@ type: text/vnd.tiddlywiki
 	fill: <<colour primary>>;
 }
 
-.gk0wk-rotate-infinite {
+<!-- 有人反馈动画导致电脑卡顿 https://talk.tiddlywiki.org/t/tiddlywiki-cpl-tiddlywiki-world-of-google-app-store/2140/28?u=linonetwo -->
+<!-- .gk0wk-rotate-infinite {
 	animation: rotate 10s linear infinite;
 }
 
 @keyframes rotate{
 	from{transform: rotate(0deg)}
 	to{transform: rotate(360deg)}
-}
+} -->
