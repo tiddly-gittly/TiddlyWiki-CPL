@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20241029115301678",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202410295301678",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Principles 原则",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/principles",
+        "modified": "20241029115824522",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Record life principles as tiddlers and review them 记人生原则为诸条目，时习之",
+        "cpl.uri": "https://github.com/tiddly-gittly/principles/releases/latest/download/__plugins_linonetwo_principles.json",
+        "cpl.source": "https://github.com/tiddly-gittly/principles/",
+        "cpl.documentation": "https://tiddly-gittly.github.io/principles/",
+        "cpl.readme": "This plugin allows you to record your life principles in the form of an outline, and engrave them in your brain like a mental steel stamp through spaced repetition technique, so that you can program yourself, learn from mistakes, and keep improving.\n\n这个插件让你可以以大纲的形式记录你的人生原则，并通过间隔重复技术将它们像思想钢印一样铭刻在你的大脑中，从而能对自己编程，从错误中学习，不断进步。"
+    }
+]
