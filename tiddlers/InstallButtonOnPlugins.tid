@@ -1,0 +1,14 @@
+list-after: $:/core/ui/ViewTemplate/tags
+tags: ExcludeFromEmpty $:/tags/ViewTemplate
+title: InstallButtonOnPlugins
+
+<%if [<currentTiddler>has[cpl.uri]] %>
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<%if [<lang>search[zh]] %>
+<$button set="$:/language" setTo="$:/languages/en-GB" style="">[[📦 Install|Welcome]]</$button>
+<%endif%>
+<%if [<lang>!search[zh]] %>
+<$button set="$:/language" setTo="$:/languages/zh-Hans" style="">[[📦 安装|Welcome]]</$button>
+<%endif%>
+</$list>
+<%endif%>
