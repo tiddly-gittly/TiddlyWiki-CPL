@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20241107114511426",
+        "creator": "马不前",
+        "text": "",
+        "title": "Plugin_202411074511425",
+        "cpl.author": "mabuqian",
+        "cpl.name": "xnote",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/mabuqian/xnote",
+        "modified": "20241107114909975",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "马不前",
+        "cpl.source": "https://github.com/dongrentianyu/sin",
+        "cpl.documentation": "https://dongrentianyu.github.io/sin/",
+        "cpl.description": "A modified version of the notebook theme plugin\n",
+        "cpl.readme": "A modified version of the notebook theme plugin",
+        "cpl.uri": "https://github.com/dongrentianyu/sin/releases/latest/download/__plugins_mabuqian_xnote.json"
+    }
+]
