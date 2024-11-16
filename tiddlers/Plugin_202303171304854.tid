@@ -1,11 +1,11 @@
 cpl.author: BramChen
 cpl.core-version: >=5.0.8
 cpl.dependents: $:/languages/zh-Hans
-cpl.description: Chinese (China)
+cpl.description: 简体中文 (中国)
 cpl.name: zh-CN
 cpl.plugin-type: language
 cpl.readme: 
 cpl.title: $:/languages/zh-CN
-cpl.uri: https://tiddlywiki.com/library/v5.3.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fzh-CN.json
+cpl.uri: https://tiddlywiki.com/library/v5.3.6/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fzh-CN.json
 tags: $:/tags/PluginWiki
 title: Plugin_202303171304854

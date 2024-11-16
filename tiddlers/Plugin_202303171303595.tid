@@ -1,11 +1,11 @@
 cpl.author: SuperDOS
 cpl.core-version: >=5.1.0
 cpl.dependents: 
-cpl.description: Swedish (Sweden)
+cpl.description: Svenska (Sverige)
 cpl.name: sv-SE
 cpl.plugin-type: language
 cpl.readme: 
 cpl.title: $:/languages/sv-SE
-cpl.uri: https://tiddlywiki.com/library/v5.3.5/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fsv-SE.json
+cpl.uri: https://tiddlywiki.com/library/v5.3.6/recipes/library/tiddlers/%2524%253A%252Flanguages%252Fsv-SE.json
 tags: $:/tags/PluginWiki
 title: Plugin_202303171303595
