@@ -11,7 +11,7 @@
         "cpl.source": "https://github.com/kookma/TW-Narenj",
         "cpl.dependents": "",
         "cpl.parent-plugin": "",
-        "cpl.core-version": ">= 5.2.7",
+        "cpl.core-version": ">= 5.3.5",
         "title": "Plugin_202403265750525"
     }
 ]
