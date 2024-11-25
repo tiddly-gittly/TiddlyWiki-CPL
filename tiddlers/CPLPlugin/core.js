@@ -97,7 +97,7 @@ exports.startup = function () {
             var updateP = cpl('Update');
             // 根据条件筛选插件
             var plugins = $tw.wiki.filterTiddlers($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/update-filter'));
-            var t = [];
+            var pluginsToShow = [];
             updateP.then(function (text) {
                 // 统计需要更新的插件
                 var updatePlugins = JSON.parse(text);
@@ -107,18 +107,18 @@ exports.startup = function () {
                     if (lastestVersion[1] && $tw.utils.compareVersions($tw.version, lastestVersion[1].trim()) < 0) continue; // 插件兼容性检查
                     var version = $tw.wiki.getTiddler(title).fields.version;
                     if (version && lastestVersion[0] && $tw.utils.compareVersions(version.trim(), lastestVersion[0].trim()) >= 0) continue; // 插件是否更新
-                    t.push(title);
+                    pluginsToShow.push(title);
                 }
-                if (t.length > 0) {
+                if (pluginsToShow.length > 0) {
                     // 写入临时信息
-                    $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(t) });
+                    $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/update-plugins', type: 'application/json', text: JSON.stringify(pluginsToShow) });
                     if (notify !== false) {
                         // 暂时修改通知停留时间为 10s
                         var tt = $tw.config.preferences.notificationDuration;
                         $tw.config.preferences.notificationDuration = 10_000;
                         // 弹出通知框
                         $tw.notifier.display("$:/plugins/Gk0Wk/CPL-Repo/update-notify-template", {
-                            variables: { updateCount: t.length },
+                            variables: { updateCount: pluginsToShow.length },
                         });
                         $tw.config.preferences.notificationDuration = tt;
                     }
