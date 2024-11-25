@@ -11,7 +11,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[<currentTab>match[Home]]">
 <!-- 搜索 -->
 <center>
-<$edit-text tiddler="$:/temp/searchplugin/input" default="" placeholder={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[搜索插件]else[Search for plugin]] }}} focus="true" tag=input class="tc-titlebar tc-edit-texteditor"/>
+<$edit-text tiddler="$:/temp/searchplugin/input" default="" placeholder={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[搜索插件]else[Search for plugin]] }}} focus="true" tag=input class="tc-titlebar tc-edit-texteditor cpl-website-mainpage-search-bar"/>
 </center>
 <!-- 呈现 -->
 <$set value={{$:/temp/searchplugin/input!!text}} name="search">
