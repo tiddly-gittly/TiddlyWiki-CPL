@@ -141,3 +141,16 @@ type: text/vnd.tiddlywiki
 .cpl-layout-back-button {
   padding: 0.5em;
 }
+
+.cpl-website-mainpage-search-bar {
+  animation: breath-glow 1.5s infinite alternate;
+}
+
+@keyframes breath-glow {
+  from {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 1);
+  }
+}
