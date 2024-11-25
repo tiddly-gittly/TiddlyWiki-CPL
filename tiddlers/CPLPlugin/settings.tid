@@ -44,6 +44,15 @@ type: text/vnd.tiddlywiki
 插件更新是有选择的，你可以通过修改筛选器来排除一些插件。
 <<<
 
+<$checkbox
+    tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup"
+    field="text"
+    checked={{$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup-threshold}}
+    unchecked="0"
+    default="0">
+    不再弹出启动欢迎消息
+</$checkbox>
+
 </$list>
 
 <$list filter="[<chinese>match[no]]">
@@ -81,6 +90,15 @@ After closing it can be checked manually in [CPL] of [[$:/ControlPanel]].
 <<<
 Plugin updates are selective and you can exclude some plugins by modifying the filter.
 <<<
+
+<$checkbox
+  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup"
+  field="text"
+  checked={{$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup-threshold}}
+  unchecked="0"
+  default="0">
+  No longer pops up the welcome message at startup
+</$checkbox>
 
 </$list>
 
