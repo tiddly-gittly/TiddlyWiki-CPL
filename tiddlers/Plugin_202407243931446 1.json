@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20241202144425324",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202407243931446 1",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Edit Tags On View Mode",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/edit-tags-on-view-mode",
+        "modified": "20241202145052459",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Allow edit tags without enter edit mode.",
+        "cpl.uri": "https://github.com/tiddly-gittly/title-caption/releases/latest/download/__plugins_linonetwo_edit-tags-on-view-mode.json",
+        "cpl.source": "https://github.com/tiddly-gittly/title-caption/tree/master/src/edit-tags-on-view-mode",
+        "cpl.documentation": "https://tiddly-gittly.github.io/title-caption/",
+        "cpl.readme": "!! Feature\n\nAllow edit tags without enter edit mode.\n\nForum: https://talk.tiddlywiki.org/t/any-plugin-to-edit-tag-on-view-mode/10313/7\n\n!! 功能\n\n允许在不进入编辑模式的情况下编辑标签。\n\n论坛：https://talk.tiddlywiki.org/t/any-plugin-to-edit-tag-on-view-mode/10313/7",
+        "cpl.category": "Functional",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.6"
+    }
+]
