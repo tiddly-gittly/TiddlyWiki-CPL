@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20241204110132857",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202412040132857",
+        "cpl.author": "NoteStreams",
+        "cpl.name": "WikiSage",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/NoteStreams/WikiSage",
+        "modified": "20241204110354843",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "AI companion plugin that leverages multiple language models (OpenAI's GPT and O1 models and Anthropic's Claude) to enhance your wiki experience.",
+        "cpl.uri": "https://well-noted.github.io/WikiSage/index.html",
+        "cpl.readme": "!! Features\n\n* Multi-model support (ChatGPT and Claude)\n* PDF analysis and processing (requires anthropic)\n* Image generation (DALL-E 3) and handling\n* Voice interaction (speech-to-text and text-to-speech)\n* Smart content editing with macros\n* Context-aware wiki operations\n* Conversation history management\n* Intelligent search and navigation\n\n!! Installation\n\n* Install the plugin in your TiddlyWiki\n* Add your API keys:\n** OpenAI API key in $:/plugins/NoteStreams/WikiSage/openai-api-key\n** Anthropic API key in $:/plugins/NoteStreams/WikiSage/anthropic-api-key\n",
+        "cpl.source": "https://github.com/well-noted/WikiSage/",
+        "cpl.documentation": "https://well-noted.github.io/WikiSage/",
+        "cpl.tags": "AI"
+    }
+]
