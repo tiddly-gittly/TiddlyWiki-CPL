@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Quickview\nThis is a repack of Preview and Appear plugins from Tobias Beer\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Quickview/\n* Code: https://github.com/kookma/TW-Quickview\n\n!! Preview\n><$transclude $tiddler=\"$:/plugins/tobibeer/preview/readme\" $mode=block/>\n\n!! Appear\n><$transclude $tiddler=\"$:/plugins/tobibeer/appear/readme\" $mode=block/>\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fquickview.json",
+        "cpl.title": "$:/plugins/kookma/quickview",
+        "cpl.author": "Tobias Beer - Mohammad Rahmani",
+        "cpl.name": "Quick View",
+        "cpl.description": "Display preview on mouse hovering a tiddler internal link",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Quickview",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": ">=5.3.5",
+        "title": "Plugin_202412122047395"
+    }
+]
