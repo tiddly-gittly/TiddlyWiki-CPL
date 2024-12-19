@@ -23,7 +23,7 @@ importers:
         version: 2.58.1(typescript@5.4.3)
       '@modern-js/tsconfig':
         specifier: ^2.58.1
-        version: 2.58.1
+        version: 2.58.2
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -1319,8 +1319,8 @@ packages:
   '@modern-js/eslint-config@2.58.1':
     resolution: {integrity: sha512-LwQBZefQkkLZRCZDw9NKyQPRF7Cf/FfnsJS+j8hn3R+Eik0+2zqS3DazVM+/vc00fKjao4jypmIrOxiPffGCxg==}
 
-  '@modern-js/tsconfig@2.58.1':
-    resolution: {integrity: sha512-zXOKaUVFUXJuTrB/ZEDj36bqWMUHMXrnj5cs7fZMtJ+tSNMoOPP4BgqzpSh2o/1O+3qV8GN2z38LbCqlaz8xkg==}
+  '@modern-js/tsconfig@2.58.2':
+    resolution: {integrity: sha512-kS6ava7qkojO/JL4imNd6K9BxhQ66sTbNsmrHRfcw4dh8ze+tkdSF0lOQoItJ1S9l4zAsLx81Uks/qddqYXP5w==}
 
   '@module-federation/runtime-tools@0.2.3':
     resolution: {integrity: sha512-capN8CVTCEqNAjnl102girrkevczoQfnQYyiYC4WuyKsg7+LUqfirIe1Eiyv6VSE2UgvOTZDnqvervA6rBOlmg==}
@@ -3489,7 +3489,6 @@ packages:
     resolution: {integrity: sha512-8pTmnQdkcHbol9D86Op7OGK4sGDqm19HWT2qgpSxPHfDG0yJ2rSBUTRuOMuh9GoPP0Tcz9+1Pe8A1m6pvd/zYQ==}
     engines: {node: '>=0.8.2'}
     hasBin: true
-    bundledDependencies: []
 
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -5464,7 +5463,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@modern-js/tsconfig@2.58.1': {}
+  '@modern-js/tsconfig@2.58.2': {}
 
   '@module-federation/runtime-tools@0.2.3':
     dependencies:
