@@ -1,0 +1,1 @@
+{"title":"$:/plugins/twcloud/tiddlyweb-sse","name":"TiddlyWeb SSE","description":"Sync changes immediately from the browser to TW5 (node.js) using SSE","list":"readme","license":"MIT - Copyright Arlen Beiler 2021","version":"1.0.3","plugin-type":"plugin","dependents":"","type":"application/json","author":"Arlen22"}
