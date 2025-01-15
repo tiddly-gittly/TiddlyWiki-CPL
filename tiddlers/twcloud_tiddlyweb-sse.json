@@ -4,7 +4,7 @@
         "creator": "林一二",
         "text": "",
         "title": "twcloud/tiddlyweb-sse",
-        "modified": "20230611075059960",
+        "modified": "20250115125507422",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -15,6 +15,7 @@
         "cpl.title": "$:/plugins/twcloud/tiddlyweb-sse",
         "cpl.source": "https://github.com/twcloud/tiddlyweb-sse",
         "cpl.author": "Arlen22",
-        "cpl.plugin-type": "plugin"
+        "cpl.plugin-type": "plugin",
+        "cpl.uri": "https://github.com/twcloud/tiddlyweb-sse/releases/latest/download/plugin.json"
     }
 ]
