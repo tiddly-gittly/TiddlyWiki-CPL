@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.4
+cpl.dependents: 
+cpl.description: clean-your-duplicate-storylist
+cpl.name: clean-your-duplicate-storylist
+cpl.plugin-type: plugin
+cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/clean-your-duplicate-storylist]]
+cpl.title: $:/plugins/oeyoews/clean-your-duplicate-storylist
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fclean-your-duplicate-storylist.json
+tags: $:/tags/PluginWiki
+title: Plugin_202501261005256
