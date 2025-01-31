@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/spoiler-text]]\n\nThis is a <$s-t text=\"Spoiler Text Plugin\" />\n\n```html\nThis is a <$s-t text=\"Spoiler Text Plugin\" />\n```",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fspoiler-text.json",
+        "cpl.title": "$:/plugins/oeyoews/spoiler-text",
+        "cpl.author": "oeyoews",
+        "cpl.name": "spoiler-text",
+        "cpl.description": "spoiler-text",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.4",
+        "title": "Plugin_202501310759975"
+    }
+]
