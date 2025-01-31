@@ -26,7 +26,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: lts
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -98,3 +98,5 @@ jobs:
           NETLIFY_SITE_ID: 97bd95f9-9e7e-4259-a883-c19fa3df2d20
           build_directory: ./dist
           NETLIFY_DEPLOY_MESSAGE: "Deployed from GitHub action"
+          install_command: "echo Skipping installing the dependencies"
+          build_command: "echo Skipping building the web files"
