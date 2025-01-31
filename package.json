@@ -43,10 +43,11 @@
     "cross-env": "^7.0.3",
     "fs-extra": "^11.2.0",
     "html-minifier-terser": "^7.2.0",
+    "netlify-cli": "^18.0.3",
     "rimraf": "^6.0.1",
-    "tiddlywiki": "5.3.5",
+    "tiddlywiki": "5.3.6",
     "ts-node": "^10.9.2",
-    "tw5-typed": "0.5.12",
+    "tw5-typed": "0.5.14",
     "workbox-cli": "7.1.0"
   },
   "dependencies": {
