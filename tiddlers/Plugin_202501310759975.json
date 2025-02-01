@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/spoiler-text]]\n\nThis is a <$s-t text=\"Spoiler Text Plugin\" />\n\n```html\nThis is a <$s-t text=\"Spoiler Text Plugin\" />\n```",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/spoiler-text]]\n\n!! Widget Usage\n\nThis is a <$s-t text=\"Spoiler Text Plugin\" />\n\n```html\nThis is a <$s-t text=\"Spoiler Text Plugin\" />\nThis is a <$spoiler-text text=\"Spoiler Text Plugin\" />\n```\n\n!! Web Component Usage\n\nThis is a <s-t text=\"Spoiler Text Plugin(web Component)\" />\n\n```html\nThis is a <s-t text=\"Spoiler Text Plugin(web Component)\" />\nThis is a <s-t >Spoiler Text Plugin(web Component)\" </s-t>\nThis is a <spoiler-text >Spoiler Text Plugin(web Component)\" </spoiler-text>\n```\n\n!! wikitext parser\n\n```html\n<*Spoiler Text Example*>\n```",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fspoiler-text.json",
         "cpl.title": "$:/plugins/oeyoews/spoiler-text",
         "cpl.author": "oeyoews",
