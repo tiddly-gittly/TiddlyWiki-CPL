@@ -142,9 +142,12 @@ type: text/vnd.tiddlywiki
   padding: 0.5em;
 }
 
+/* Disable dut to high GPU usage */
+/**
 .cpl-website-mainpage-search-bar {
   animation: breath-glow 1.5s infinite alternate;
 }
+*/
 
 @keyframes breath-glow {
   from {

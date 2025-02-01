@@ -8,7 +8,6 @@ type: text/vnd.tiddlywiki
 	fill: <<colour primary>>;
 }
 
-<!-- 有人反馈动画导致电脑卡顿，可能需要注释掉这段 https://talk.tiddlywiki.org/t/tiddlywiki-cpl-tiddlywiki-world-of-google-app-store/2140/28?u=linonetwo -->
 .gk0wk-rotate-infinite {
 	will-change: transform
 	animation: rotate 10s linear infinite;
