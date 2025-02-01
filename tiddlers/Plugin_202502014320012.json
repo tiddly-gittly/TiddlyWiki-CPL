@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20250201144320014",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202502014320012",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/fira-code-font",
+        "modified": "20250201144637524",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.category": "Beautify",
+        "cpl.description": "Provides local Fira Code font.",
+        "cpl.readme": "Free monospaced font with programming ligatures\n\nhttps://github.com/tonsky/FiraCode\n\n[img[https://raw.githubusercontent.com/tonsky/FiraCode/master/extras/logo.svg]]",
+        "cpl.documentation": "https://tiddly-gittly.github.io/itonnote-theme/",
+        "cpl.uri": "https://github.com/tiddly-gittly/itonnote-theme/releases/latest/download/__plugins_linonetwo_fira-code-font.json",
+        "cpl.source": "https://github.com/tiddly-gittly/itonnote-theme"
+    }
+]
