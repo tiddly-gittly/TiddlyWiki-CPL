@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "## markdownit spoiler\n\n```html\n!!spoiler text!!\n```\n\n\n!!spoiler text!!",
+        "cpl.readme": "## markdownit spoiler\n\n```html\n!!spoiler text!!\n```\n\n!!spoiler text!!",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-it-spoiler.json",
         "cpl.title": "$:/plugins/oeyoews/markdown-it-spoiler",
         "cpl.author": "oeyoews",
