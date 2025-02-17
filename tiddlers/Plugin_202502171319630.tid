@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.4
+cpl.dependents: 
+cpl.description: neotw-image-card
+cpl.name: neotw-image-card
+cpl.plugin-type: plugin
+cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-image-card]]
+cpl.title: $:/plugins/oeyoews/neotw-image-card
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-image-card.json
+tags: $:/tags/PluginWiki
+title: Plugin_202502171319630
