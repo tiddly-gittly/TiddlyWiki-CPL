@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.4
+cpl.dependents: $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
+cpl.description: neotw-tiddlers-view
+cpl.name: neotw-tiddlers-view
+cpl.plugin-type: plugin
+cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-tiddlers-view]]
+cpl.title: $:/plugins/oeyoews/neotw-tiddlers-view
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-tiddlers-view.json
+tags: $:/tags/PluginWiki
+title: Plugin_202502271401362
