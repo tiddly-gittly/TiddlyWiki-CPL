@@ -1,0 +1,24 @@
+[
+    {
+        "created": "20250228150740402",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202502280740401",
+        "cpl.author": "",
+        "cpl.name": "AI Tools",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": " $:/plugins/tiddlywiki/ai-tools",
+        "modified": "20250228150936321",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.tags": "AI",
+        "cpl.version": "",
+        "cpl.category": "Functional",
+        "cpl.description": "This plugin adds integrated LLM conversations to the TiddlyWiki platform.",
+        "cpl.uri": "https://tiddlywiki5-git-feat-ai-tools-jermolenes-projects.vercel.app/",
+        "cpl.readme": "The plugin allows live conversations within TiddlyWiki and also importing ChatGPT conversation archives.",
+        "cpl.documentation": "https://github.com/TiddlyWiki/TiddlyWiki5/pull/8365",
+        "cpl.source": "https://github.com/TiddlyWiki/TiddlyWiki5/pull/8365"
+    }
+]
