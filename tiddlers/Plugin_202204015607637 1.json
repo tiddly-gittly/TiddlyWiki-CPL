@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20250315175558999",
+        "creator": "林一二",
+        "text": "",
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Horizontal story view for tiddlers. \n\nThis version refactor the horizontal view to a layout, reduce the conflict with other plugins, and allow you switch between Standard layout (card view) and this horizontal view.\n\nYou can additionally install [[linonetwo/inverse-link-and-folder]] to obtain the inverse link function. By default, no features other than the horizontal layout are provided by this plugin, to adapt to as many scenarios as possible and reduce the occurrence of plugin conflicts.\n\n横向手风琴式的故事视图。\n\n此版本将横向视图重构为新的布局，减少了与其他插件的冲突，并允许您在标准布局（卡片视图）和此水平视图之间进行切换。\n\n可以额外安装 [[linonetwo/inverse-link-and-folder]] 来获得反链功能。本插件默认不提供除了横向布局以外的功能，以适配尽可能多的场景，并减少插件冲突的情况。\n\nFork from https://github.com/crazko/krystal Made by [[Roman Veselý|https://romanvesely.com/]] - <span class=\"krystal-icon\">{{$:/core/images/github}}</span> [[@crazko|https://github.com/crazko]], <span class=\"krystal-icon\">{{$:/core/images/twitter}}</span> [[@rmnvsl|https://twitter.com/rmnvsl]]\n",
+        "cpl.uri": "https://github.com/tiddly-gittly/krystal/releases/latest/download/__plugins_linonetwo_krystal.json",
+        "cpl.title": "$:/plugins/linonetwo/krystal",
+        "cpl.author": "Roman Veselý",
+        "cpl.name": "Krystal",
+        "cpl.description": "Horizontal accordion story river (Layout) 横向手风琴式故事河（布局）",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/tiddly-gittly/krystal",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.1.23",
+        "title": "Plugin_202204015607637 1",
+        "modified": "20250315180325512",
+        "modifier": "林一二",
+        "cpl.documentation": "http://tiddly-gittly.github.io/krystal/"
+    }
+]
