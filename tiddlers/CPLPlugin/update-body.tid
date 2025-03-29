@@ -13,7 +13,12 @@ type: text/vnd.tiddlywiki
 <$list filter="[[$:/temp/CPL-Repo/update-plugins]is[tiddler]] [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] +[count[]compare:integer:eq[2]then[yes]else[no]]" variable="ready">
 
 <$list filter="[<ready>match[yes]]">
-<<paged-plugin-list filter:"[{$:/temp/CPL-Repo/update-plugins}jsonget[]]" field:"update-list" class1:"cpl-plugin-info-box" class2:"cpl-paged-plugin-list-control">>
+	<$button class="tc-btn-big-green tc-primary-btn">
+		<$action-sendmessage $message="cpl-install-plugin-request" titles={{{ [{$:/temp/CPL-Repo/update-plugins}jsonget[]format:titlelist[]join[ ]] }}} version="latest"/>
+			{{$:/core/images/download-button}}
+			<$text text={{{ [<chinese>match[yes]then[更新所有插件]else[Update All]] }}}/>
+	</$button>
+	<<paged-plugin-list filter:"[{$:/temp/CPL-Repo/update-plugins}jsonget[]]" field:"update-list" class1:"cpl-plugin-info-box" class2:"cpl-paged-plugin-list-control">>
 </$list>
 
 <$list filter="[<ready>match[no]]">

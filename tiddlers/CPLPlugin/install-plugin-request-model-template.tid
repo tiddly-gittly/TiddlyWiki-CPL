@@ -29,6 +29,7 @@ type: text/vnd.tiddlywiki
                 <$list filter="[<__versions__>jsonget<plugin>]" variable="version">
                 <option value=<<version>>><$text text=<<version>>/></option>
                 </$list>
+                <option value="latest"><$text text="latest"/></option>
             </$select>
             </$list>
         </span>
@@ -51,6 +52,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[<json>jsonget[versions],<title>]" variable="version">
 <option value=<<version>>><$text text=<<version>>/></option>
 </$list>
+<option value="latest"><$text text="latest"/></option>
 </$select>
 &nbsp;
 <$let v={{{ [<requestTiddler>get<version-field>] }}}>
