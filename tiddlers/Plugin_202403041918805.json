@@ -7,7 +7,7 @@
         "cpl.description": "neotw-vue3",
         "cpl.name": "neotw-vue3",
         "cpl.plugin-type": "plugin",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-vue3]]\n<!-- suffix 方式有bug, 怀疑是eval 导致了解析速度变慢， 导致Vue加载过慢， 别的模块找不到vue, 本地加载不会有这种问题， 本地构建打包也没问题 -->",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-vue3]]\n\n! Neotw Vue3 Plugin\n\n为 TiddlyWiki 提供 Vue 3 集成支持的插件。\n\n!! 功能特性\n\n* 集成 Vue 3.5.13\n* 提供 Vue 组件模板加载机制\n* 支持直接在 TiddlyWiki 中使用 Vue 组件\n* 内置模板解析工具\n\n!! 使用方法\n\n!!! 基本用法\n\n```js\nconst getTemplate = require('$:/plugins/oeyoews/neotw-vue3/getTemplate');\nconst template = getTemplate('your-template.vue');\n```\n\n<!-- suffix 方式有 bug, 怀疑是 eval 导致了解析速度变慢，导致 Vue 加载过慢，别的模块找不到 vue, 本地加载不会有这种问题，本地构建打包也没问题 -->",
         "cpl.title": "$:/plugins/oeyoews/neotw-vue3",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vue3.json",
         "tags": "$:/tags/PluginWiki"

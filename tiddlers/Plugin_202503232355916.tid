@@ -1,0 +1,17 @@
+cpl.author: mabuqian
+cpl.category: Fun
+cpl.description: a new control panel
+cpl.documentation: https://dongrentianyu.github.io/sin/
+cpl.name: Popup Control Panel
+cpl.plugin-type: plugin
+cpl.readme: a new control panel
+cpl.source: https://github.com/dongrentianyu/sin
+cpl.title: $:/plugins/mabuqian/PopControlPanel
+cpl.uri: https://github.com/dongrentianyu/sin/releases/latest/download/__plugins_mabuqian_PopControlPanel.json
+created: 20250323112355916
+creator: 马不前
+modified: 20250323112638833
+modifier: 马不前
+tags: $:/tags/PluginWiki
+title: Plugin_202503232355916
+type: text/vnd.tiddlywiki

@@ -8,7 +8,7 @@
         "cpl.name": "Tiddlywiki Tiddler Info",
         "cpl.description": "Show Tiddler Info",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-ai",
         "cpl.core-version": ">=5.3.1",
         "title": "Plugin_202303073143389"
     }
