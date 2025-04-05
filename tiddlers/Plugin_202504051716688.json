@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/timeline]]\n\nhttps://github.com/NUKnightLab/TimelineJS3\napi: https://github.com/NUKnightLab/TimelineJS3/blob/master/API.md\n<!-- https://cdn.knightlab.com/ -->\n\n<$timeline />\n",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftimeline.json",
+        "cpl.title": "$:/plugins/oeyoews/timeline",
+        "cpl.author": "oeyoews",
+        "cpl.name": "timeline",
+        "cpl.description": "timeline",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.4",
+        "title": "Plugin_202504051716688"
+    }
+]
