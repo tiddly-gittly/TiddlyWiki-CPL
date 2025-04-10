@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "## Geist\n\nhttps://fonts.google.com/specimen/Pacifico",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ffonts-package.json",
+        "cpl.title": "$:/plugins/oeyoews/fonts-package",
+        "cpl.author": "oeyoews",
+        "cpl.name": "fonts-package",
+        "cpl.description": "fonts",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.1",
+        "title": "Plugin_202504102014427"
+    }
+]
