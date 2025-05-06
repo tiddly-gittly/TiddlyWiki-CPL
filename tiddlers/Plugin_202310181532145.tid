@@ -4,7 +4,7 @@ cpl.dependents: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
 cpl.description: neotw-notion-gallery
 cpl.name: neotw-notion-gallery
 cpl.plugin-type: plugin
-cpl.readme: [[文档|https://neotw.vercel.app/docs/plugins/neotw-notion-gallery]]
+cpl.readme: [[文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-notion-gallery]]
 cpl.title: $:/plugins/oeyoews/neotw-notion-gallery
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-notion-gallery.json
 tags: $:/tags/PluginWiki

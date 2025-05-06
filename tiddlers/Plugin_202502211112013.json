@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "!! 在线文档\n\n更多详细信息请访问：[[在线文档|https://neotw.vercel.app/docs/plugins/markdown-importer]]\n\n<$button message=\"th-markdown-importer\" > {{ $:/plugins/oeyoews/markdown-importer/icon }} Markdown Importer</$button>\n",
+        "cpl.readme": "!! 在线文档\n\n更多详细信息请访问：[[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/markdown-importer]]\n\n<$button message=\"th-markdown-importer\" > {{ $:/plugins/oeyoews/markdown-importer/icon }} Markdown Importer</$button>\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmarkdown-importer.json",
         "cpl.title": "$:/plugins/oeyoews/markdown-importer",
         "cpl.author": "oeyoews",

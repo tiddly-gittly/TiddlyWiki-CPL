@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[文档|https://neotw.vercel.app/docs/plugins/book-status]]\n",
+        "cpl.readme": "[[文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/book-status]]\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fbook-status.json",
         "cpl.title": "$:/plugins/oeyoews/book-status",
         "cpl.author": "oeyoews",

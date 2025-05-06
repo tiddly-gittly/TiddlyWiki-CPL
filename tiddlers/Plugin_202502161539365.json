@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-startup-times]]\n\n{{_state-neotw-startup-times}}",
+        "cpl.readme": "[[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-startup-times]]\n\n{{_state-neotw-startup-times}}",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-startup-times.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-startup-times",
         "cpl.author": "oeyoews",

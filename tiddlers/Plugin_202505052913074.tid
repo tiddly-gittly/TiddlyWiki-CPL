@@ -5,7 +5,7 @@ cpl.description: tailwindcss-widgets
 cpl.name: tailwindcss-widgets
 cpl.parent-plugin: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
 cpl.plugin-type: plugin
-cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/tailwindcss-widgets]]
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/tailwindcss-widgets]]
 cpl.title: $:/plugins/oeyoews/tailwindcss-widgets
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftailwindcss-widgets.json
 tags: $:/tags/PluginWiki

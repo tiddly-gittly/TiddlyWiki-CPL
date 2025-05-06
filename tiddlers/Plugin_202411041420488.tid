@@ -4,7 +4,7 @@ cpl.dependents:
 cpl.description: neotw-meteors
 cpl.name: neotw-meteors
 cpl.plugin-type: plugin
-cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-meteors]]
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-meteors]]
 cpl.title: $:/plugins/oeyoews/neotw-meteors
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-meteors.json
 tags: $:/tags/PluginWiki

@@ -4,7 +4,7 @@ cpl.dependents: $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tail
 cpl.description: 向Telegram bot 发送消息
 cpl.name: neotw-bot
 cpl.plugin-type: plugin
-cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-bot]]
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-bot]]
 cpl.title: $:/plugins/oeyoews/neotw-bot
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-bot.json
 tags: $:/tags/PluginWiki

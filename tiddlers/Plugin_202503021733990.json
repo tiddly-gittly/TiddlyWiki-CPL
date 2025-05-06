@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-comments]]\n\n* 不考虑重命名的问题：如果不使用 title, 而是使用其他的字段，在写入的时候还要重新根据字段去查找 title.",
+        "cpl.readme": "[[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-comments]]\n\n* 不考虑重命名的问题：如果不使用 title, 而是使用其他的字段，在写入的时候还要重新根据字段去查找 title.",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-comments.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-comments",
         "cpl.author": "oeyoews",

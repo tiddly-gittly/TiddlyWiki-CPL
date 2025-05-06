@@ -4,7 +4,7 @@ cpl.dependents: $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tail
 cpl.description: neotw-ui
 cpl.name: neotw-ui
 cpl.plugin-type: plugin
-cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-ui]]
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-ui]]
 cpl.title: $:/plugins/oeyoews/neotw-ui
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-ui.json
 tags: $:/tags/PluginWiki

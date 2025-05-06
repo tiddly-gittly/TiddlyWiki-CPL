@@ -4,7 +4,7 @@ cpl.dependents:
 cpl.description: autocorrect-wrapper
 cpl.name: autocorrect-wrapper
 cpl.plugin-type: plugin
-cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/autocorrect-wrapper]]
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/autocorrect-wrapper]]
 cpl.title: $:/plugins/oeyoews/autocorrect-wrapper
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fautocorrect-wrapper.json
 tags: $:/tags/PluginWiki

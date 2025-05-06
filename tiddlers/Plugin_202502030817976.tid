@@ -4,7 +4,7 @@ cpl.dependents:
 cpl.description: neotw-ball
 cpl.name: neotw-ball
 cpl.plugin-type: plugin
-cpl.readme: [[在线文档|https://neotw.vercel.app/docs/plugins/neotw-ball]]
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-ball]]
 cpl.title: $:/plugins/oeyoews/neotw-ball
 cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-ball.json
 tags: $:/tags/PluginWiki

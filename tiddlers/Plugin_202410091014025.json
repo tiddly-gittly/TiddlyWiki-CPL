@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "[[在线文档|https://neotw.vercel.app/docs/plugins/neotw-vconsole]]\n\n<$checkbox field=\"text\" tiddler=\"$:/plugins/oeyoews/neotw-vconsole/config\" checked=\"yes\" unchecked=\"no\" default=\"yes\"> 开启vconsole(need restart)</$checkbox>",
+        "cpl.readme": "[[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-vconsole]]\n\n<$checkbox field=\"text\" tiddler=\"$:/plugins/oeyoews/neotw-vconsole/config\" checked=\"yes\" unchecked=\"no\" default=\"yes\"> 开启vconsole(need restart)</$checkbox>",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-vconsole.json",
         "cpl.title": "$:/plugins/oeyoews/neotw-vconsole",
         "cpl.author": "oeyoews",
