@@ -1,0 +1,10 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 自动添加目录和上下翻页
+cpl.name: Mulu
+cpl.plugin-type: plugin
+cpl.readme: ; 自动添加目录和上下翻页
+cpl.title: $:/plugins/dyp/mulu
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fmulu.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091644110

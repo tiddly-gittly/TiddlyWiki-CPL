@@ -1,0 +1,10 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 复制当前条目标题内容
+cpl.name: copy-title-text
+cpl.plugin-type: plugin
+cpl.readme: ; 两个小按钮，复制当前条目标题内容
+cpl.title: $:/plugins/dyp/copy-title-text
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fcopy-title-text.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091643872

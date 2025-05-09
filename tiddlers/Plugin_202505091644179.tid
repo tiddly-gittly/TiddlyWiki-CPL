@@ -1,0 +1,10 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 粘性编辑器工具栏
+cpl.name: sticky-toolbars
+cpl.plugin-type: plugin
+cpl.readme: 粘性编辑器工具栏，搭配标题吸顶使用
+cpl.title: $:/plugins/dyp/sticky-toolbars
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fsticky-toolbars.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091644179

@@ -1,0 +1,10 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 上下滚动加条目底部编辑按钮
+cpl.name: Button
+cpl.plugin-type: plugin
+cpl.readme: ; 上下滚动加条目底部编辑按钮
+cpl.title: $:/plugins/dyp/Scroll&Edit-button
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252FScroll%2526Edit-button.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091643337

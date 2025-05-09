@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Rider可编辑嵌套引用条目\n\n",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252FRider.json",
+        "cpl.title": "$:/plugins/dyp/Rider",
+        "cpl.author": "dyp",
+        "cpl.name": "Rider",
+        "cpl.description": "可编辑嵌套引用条目",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202505091643085"
+    }
+]

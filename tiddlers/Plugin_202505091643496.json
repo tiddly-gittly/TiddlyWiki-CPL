@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Whitespace布局主题中文预设版\n\nWhitespace布局主题原版网址：\nhttp://j.d.whitespace.tiddlyspot.com/\n\n原作者其他插件：\nhttp://j.d.tiddlyspot.com/",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fthemes%252Fdyp%252FWhitespace.json",
+        "cpl.title": "$:/themes/dyp/Whitespace",
+        "cpl.author": "dyp",
+        "cpl.name": "Whitespace",
+        "cpl.description": "Whitespace布局主题中文预设版",
+        "cpl.plugin-type": "theme",
+        "cpl.dependents": "$:/themes/tiddlywiki/vanilla",
+        "cpl.core-version": ">=5.1.17",
+        "title": "Plugin_202505091643496"
+    }
+]

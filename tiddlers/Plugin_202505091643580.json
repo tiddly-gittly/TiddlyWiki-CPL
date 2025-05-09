@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; wiki语言高亮\n\n\"\"\"\n需要确保先安装了插件\n[[$:/plugins/tiddlywiki/highlight]]\n否则报错\n\"\"\"",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252FWikiText-highlight.json",
+        "cpl.title": "$:/plugins/dyp/WikiText-highlight",
+        "cpl.author": "dyp",
+        "cpl.name": "WikiText-highlight",
+        "cpl.description": "wiki语言高亮",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/tiddlywiki/highlight",
+        "title": "Plugin_202505091643580"
+    }
+]

@@ -1,0 +1,10 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 修改页面字号
+cpl.name: font-size
+cpl.plugin-type: plugin
+cpl.readme: ; 修改页面字号
+cpl.title: $:/plugins/dyp/font-size
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Ffont-size.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091644032

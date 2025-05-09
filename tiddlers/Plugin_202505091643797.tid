@@ -1,0 +1,11 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: Code comment button
+cpl.name: Button
+cpl.plugin-type: plugin
+cpl.readme: 两个快捷输入代码注释符号的小按钮
+cpl.source: 
+cpl.title: $:/plugins/dyp/code-comment-button
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fcode-comment-button.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091643797

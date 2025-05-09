@@ -1,0 +1,10 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 筛选器下拉菜单和历史记录
+cpl.name: filter-pills&history
+cpl.plugin-type: plugin
+cpl.readme: ; 筛选器下拉菜单和历史记录
+cpl.title: $:/plugins/dyp/filter-pills&history
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Ffilter-pills%2526history.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505091643960
