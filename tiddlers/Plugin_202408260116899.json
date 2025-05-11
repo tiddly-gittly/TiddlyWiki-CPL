@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "\n```mermaid\ninfo\n```\n\n!! NOTE\n\nzenuml is not supported here: https://github.com/mermaid-js/mermaid-cli/issues/564",
+        "cpl.readme": "```mermaid\ninfo\n```\n\n```mermaid\ngraph\nHello --> World\n```\n\n!! Usage\n\n{{$:/plugins/oeyoews/mermaid/example}}\n\n```mermaid\n---\nconfig:\n  theme: forest\n  look: handDrawn\n---\nflowchart TD\n    Start([2004 TiddlyWiki 发布<br>作者: Jeremy Ruston]) --> Classic[TiddlyWiki Classic]\n\n    Classic -->|插件系统发展| Plugins[插件/宏生态丰富]\n    Classic -->|局限性显现| Limitations[浏览器兼容性差、扩展困难]\n    Classic --> TiddlyWeb[TiddlyWeb 项目尝试]\n\n    Limitations --> Rewrite[重新架构 TW2013]\n    Rewrite --> TW5[TiddlyWiki5 发布2014]\n\n    TW5 --> Features[模块化架构 + 可扩展核心]\n    Features --> NodeSupport[支持 Node.js环境]\n    Features --> ModernUI[现代化界面 + Markdown 支持]\n\n    TW5 -->|持续迭代| Evolve[增强 Tiddler 引擎、插件与主题（2020+）]\n    Evolve --> Future[未来方向：协作、多端同步、更多集成]\n```\n",
         "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fmermaid.json",
         "cpl.title": "$:/plugins/oeyoews/mermaid",
         "cpl.author": "oeyoews",
