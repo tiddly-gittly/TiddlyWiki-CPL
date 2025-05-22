@@ -1,6 +1,6 @@
 cpl.author: oeyoews
 cpl.core-version: >=5.3.4
-cpl.dependents: $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
+cpl.dependents: $:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-v4
 cpl.description: neotw-tiddlers-view
 cpl.name: neotw-tiddlers-view
 cpl.plugin-type: plugin
