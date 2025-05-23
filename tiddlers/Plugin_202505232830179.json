@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; 正则表达式查找替换\n\n锚点跳转功能需要安装依赖插件 [[$:/plugins/dyp/tiddler-scrollpage]]\n",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fsearch-replace.json",
+        "cpl.title": "$:/plugins/dyp/search-replace",
+        "cpl.author": "dyp",
+        "cpl.name": "search-replace",
+        "cpl.description": "正则表达式查找替换",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "",
+        "cpl.dependents": "$:/plugins/dyp/tiddler-scrollpage",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": "5.3.7-prerelease",
+        "title": "Plugin_202505232830179"
+    }
+]
