@@ -1,0 +1,13 @@
+cpl.author: dyp
+cpl.core-version: 5.3.7-prerelease
+cpl.dependents: 
+cpl.description: 开启关闭引用字体
+cpl.name: open-font-face
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: ; 开启关闭引用字体
+cpl.source: 
+cpl.title: $:/plugins/dyp/open-font-face
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fopen-font-face.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505264025792

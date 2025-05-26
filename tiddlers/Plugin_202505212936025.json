@@ -9,6 +9,7 @@
         "cpl.description": "LXGWNeoZhiSongScreenFull",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "title": "Plugin_202505212936025"
+        "title": "Plugin_202505212936025",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

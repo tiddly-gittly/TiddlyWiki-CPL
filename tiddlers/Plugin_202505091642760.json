@@ -10,7 +10,7 @@
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
         "title": "Plugin_202505091642760",
-        "cpl.source": "",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
         "cpl.parent-plugin": "",
         "cpl.core-version": "5.3.7-prerelease"
     }
