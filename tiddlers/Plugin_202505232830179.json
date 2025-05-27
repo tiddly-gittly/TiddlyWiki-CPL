@@ -8,7 +8,7 @@
         "cpl.name": "search-replace",
         "cpl.description": "正则表达式查找替换",
         "cpl.plugin-type": "plugin",
-        "cpl.source": "",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
         "cpl.dependents": "$:/plugins/dyp/tiddler-scrollpage",
         "cpl.parent-plugin": "",
         "cpl.core-version": "5.3.7-prerelease",

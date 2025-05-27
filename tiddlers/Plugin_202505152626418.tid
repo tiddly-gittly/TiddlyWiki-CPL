@@ -4,6 +4,7 @@ cpl.description: 动态背景-黑夜星空
 cpl.name: page-black-stars
 cpl.plugin-type: plugin
 cpl.readme: ; 动态背景-黑夜星空
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
 cpl.title: $:/plugins/dyp/page-black-stars
 cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fpage-black-stars.json
 tags: $:/tags/PluginWiki

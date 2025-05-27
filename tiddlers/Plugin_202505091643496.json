@@ -10,6 +10,7 @@
         "cpl.plugin-type": "theme",
         "cpl.dependents": "$:/themes/tiddlywiki/vanilla",
         "cpl.core-version": ">=5.1.17",
-        "title": "Plugin_202505091643496"
+        "title": "Plugin_202505091643496",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

@@ -9,6 +9,7 @@
         "cpl.description": "可编辑嵌套引用条目",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "title": "Plugin_202505091643085"
+        "title": "Plugin_202505091643085",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

@@ -9,6 +9,7 @@
         "cpl.description": "折叠复制代码块",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "$:/plugins/kookma/utility, $:/plugins/yaisog/single-tiddler-view",
-        "title": "Plugin_202505132900755"
+        "title": "Plugin_202505132900755",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

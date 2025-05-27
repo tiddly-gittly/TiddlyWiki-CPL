@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.4
+cpl.dependents: 
+cpl.description: neotw-graph
+cpl.name: neotw-graph
+cpl.plugin-type: plugin
+cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/neotw-graph]]
+cpl.title: $:/plugins/oeyoews/neotw-graph
+cpl.uri: https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Fneotw-graph.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505272808843

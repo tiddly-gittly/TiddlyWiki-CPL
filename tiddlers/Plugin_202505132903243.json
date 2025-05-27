@@ -9,6 +9,7 @@
         "cpl.description": "部分编辑美化和快捷按钮",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "$:/plugins/kookma/section",
-        "title": "Plugin_202505132903243"
+        "title": "Plugin_202505132903243",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

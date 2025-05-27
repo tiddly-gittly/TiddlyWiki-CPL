@@ -8,7 +8,7 @@
         "cpl.name": "bookmark",
         "cpl.description": "条目内可跳转书签",
         "cpl.plugin-type": "plugin",
-        "cpl.source": "",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
         "cpl.dependents": "$:/plugins/dyp/tiddler-scrollpage,$:/plugins/dyp/contextmenu-highlight&bookmark",
         "cpl.parent-plugin": "",
         "cpl.core-version": "5.3.7-prerelease",

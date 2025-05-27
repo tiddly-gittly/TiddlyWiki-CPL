@@ -9,6 +9,7 @@
         "cpl.description": "鼠标拖尾特效",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "title": "Plugin_202505152626018"
+        "title": "Plugin_202505152626018",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

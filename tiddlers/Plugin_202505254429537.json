@@ -8,7 +8,7 @@
         "cpl.name": "contextmenu-highlight&bookmark",
         "cpl.description": "右键增强菜单-高亮和书签等",
         "cpl.plugin-type": "plugin",
-        "cpl.source": "",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
         "cpl.dependents": "",
         "cpl.parent-plugin": "",
         "cpl.core-version": "5.3.7-prerelease",

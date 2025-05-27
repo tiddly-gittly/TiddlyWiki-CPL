@@ -9,6 +9,7 @@
         "cpl.description": "条目悬浮大纲",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "$:/plugins/Gk0Wk/page-toc",
-        "title": "Plugin_202505132900678"
+        "title": "Plugin_202505132900678",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]
