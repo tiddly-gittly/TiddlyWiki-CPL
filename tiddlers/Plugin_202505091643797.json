@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Plugin_202505091643797",
+        "cpl.author": "dyp",
+        "cpl.dependents": "",
+        "cpl.description": "Code comment button",
+        "cpl.name": "Button",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "; 3个快捷输入代码注释符号的小按钮\n\n```tw\n/*  */\n<!--  -->\n// \n```\n",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
+        "cpl.title": "$:/plugins/dyp/code-comment-button",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fcode-comment-button.json",
+        "tags": "$:/tags/PluginWiki"
+    }
+]
