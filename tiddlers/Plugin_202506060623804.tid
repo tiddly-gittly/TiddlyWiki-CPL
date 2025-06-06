@@ -1,0 +1,13 @@
+cpl.author: dyp
+cpl.core-version: 5.3.7-prerelease
+cpl.dependents: 
+cpl.description: 条目行间批注
+cpl.name: sidenote&sidelink
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: ; 条目行间批注
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
+cpl.title: $:/plugins/dyp/sidenote&sidelink
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fsidenote%2526sidelink.json
+tags: $:/tags/PluginWiki
+title: Plugin_202506060623804
