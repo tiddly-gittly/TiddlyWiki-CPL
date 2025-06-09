@@ -8,7 +8,7 @@
         "cpl.name": "neotw-ai",
         "cpl.description": "文章摘要自动生成",
         "cpl.plugin-type": "plugin",
-        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus",
+        "cpl.dependents": "$:/plugins/oeyoews/neotw-vue3 $:/plugins/oeyoews/tiddlywiki-tailwindcss-v4",
         "cpl.core-version": ">=5.3.0",
         "title": "Plugin_202404024410201"
     }

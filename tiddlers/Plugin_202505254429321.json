@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; 条目内可跳转书签\n\n需要安装依赖插件 [[条目内滚动翻页|$:/plugins/dyp/tiddler-scrollpage]] (必要)\n\n[[右键增强菜单-高亮和书签等|$:/plugins/dyp/contextmenu-highlight&bookmark]] (可选)",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fbookmark.json",
+        "cpl.title": "$:/plugins/dyp/bookmark",
+        "cpl.author": "dyp",
+        "cpl.name": "bookmark",
+        "cpl.description": "条目内可跳转书签",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
+        "cpl.dependents": "$:/plugins/dyp/tiddler-scrollpage,$:/plugins/dyp/contextmenu-highlight&bookmark",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": "5.3.7-prerelease",
+        "title": "Plugin_202505254429321"
+    }
+]

@@ -9,6 +9,7 @@
         "cpl.description": "MapleMono",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "title": "Plugin_202505091642841"
+        "title": "Plugin_202505091642841",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

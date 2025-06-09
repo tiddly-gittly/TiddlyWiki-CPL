@@ -1,0 +1,13 @@
+cpl.author: dyp
+cpl.core-version: 5.3.7-prerelease
+cpl.dependents: 
+cpl.description: 条目内滚动翻页
+cpl.name: tiddler-scrollpage
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: ; 条目内滚动翻页
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
+cpl.title: $:/plugins/dyp/tiddler-scrollpage
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Ftiddler-scrollpage.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505232830485

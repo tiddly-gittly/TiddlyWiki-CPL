@@ -9,6 +9,7 @@
         "cpl.description": "wiki语言高亮",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "$:/plugins/tiddlywiki/highlight",
-        "title": "Plugin_202505091643580"
+        "title": "Plugin_202505091643580",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

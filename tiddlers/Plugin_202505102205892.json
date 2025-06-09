@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; HYYueGuangWuW / 汉仪月光舞\n\nhttps://www.hanyi.com.cn/productdetail.php?id=7313\n\n''基础信息''\n\n* 设计师：葛斌\n* 发布时间：2020-05-12\n* 字符集：J / F / W / Latin\n* 当前版本：9.00.00\n\n''字体介绍''\n\n''月光下的舞蹈''\n\n“月光舞”取名意为月光下的曼舞。“月光”的光来自于太阳，比喻字体来自复刻，而“舞”字则是表达了这款字体的笔画字形，就像是舞者舞出的动作轨迹。\n汉仪月光舞结合了宋朝的雕版印刷与日本明治时期成熟的木活字印刷，主要参考了两款刻本的字形样式，中国国家图书馆藏《昌黎先生集》南宋廖莹中和世彩堂学院刻本，和日本国立国会图书馆物集高见编的《新撰国文中学読本》。\n\n''空间感''\n\n《昌黎先生集》作为一款木刻字体，在造型方面具有刻刀的硬朗感，而汉仪月光舞在设计时则缓和了这种硬朗感，添加更多柔和的曲线，使得字形能还原出刻刀依照的手抄字形。如果用图形来诠释的话，宋体是正方形，仿宋是平行四边形，而汉仪月光舞则是立方体。\n\n''结构特点''\n\n作为一款复刻字体，汉仪月光舞的字形更加修长，重心偏上，中宫舒展。\n\n''笔画特点''\n\n* 竖弯钩区别于传统铅字楷书，略有欧体特点，钩有着从细到粗的变化。\n* 点画活泼，顺应笔势，像拨片形。\n* 竖钩很有欧体竖钩的特点，有势无形，非常克制，有含苞待放之感。\n* 横画向右上微倾，末端提笔然后向右下切笔。收笔的露锋有一些刀刻的硬朗感。\n\n''粘连感''\n\n在《昌黎先生集》中，相交笔画有着粘连感，如同毛笔写字起笔时墨的晕染感。汉仪月光舞还原了这样的细节，使得在字体大字号下也有足够的看点。这样的粘连感也使得字体整体柔和了很多。\n\n''中西文匹配''\n\n汉仪月光舞的西文整体以衬线体风格为基础，轴线略微右倾，使字体流畅而不失稳重感。在常规衬线体中加入了一些书写特点，以呼应中文的特性。\n\n<center><img src=\"https://www.hanyi.com.cn/adminlte/attached/image/20200515/20200515080640_38589.png\" width=\"80%\" /></center>\n",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252FHYYueGuangWuW.json",
+        "cpl.title": "$:/plugins/dyp/HYYueGuangWuW",
+        "cpl.author": "dyp",
+        "cpl.name": "Font",
+        "cpl.description": "HYYueGuangWuW",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://www.hanyi.com.cn/productdetail.php?id=7313",
+        "cpl.dependents": "",
+        "title": "Plugin_202505102205892"
+    }
+]

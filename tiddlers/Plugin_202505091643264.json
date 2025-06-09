@@ -8,7 +8,7 @@
         "cpl.name": "Font",
         "cpl.description": "上图东观体 STDongGuanTi",
         "cpl.plugin-type": "plugin",
-        "cpl.source": "https://www.library.sh.cn/special/dongguanti/",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
         "cpl.dependents": "",
         "title": "Plugin_202505091643264"
     }

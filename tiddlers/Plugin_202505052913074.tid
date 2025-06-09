@@ -3,7 +3,7 @@ cpl.core-version: >=5.3.4
 cpl.dependents: 
 cpl.description: tailwindcss-widgets
 cpl.name: tailwindcss-widgets
-cpl.parent-plugin: $:/plugins/oeyoews/tiddlywiki-tailwindcss-plus
+cpl.parent-plugin: $:/plugins/oeyoews/tiddlywiki-tailwindcss-v4
 cpl.plugin-type: plugin
 cpl.readme: [[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/tailwindcss-widgets]]
 cpl.title: $:/plugins/oeyoews/tailwindcss-widgets

@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20250601095252295",
+        "text": "",
+        "title": "Plugin_202506015252295",
+        "cpl.author": "",
+        "cpl.name": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/uzvg/tw-twikoo",
+        "modified": "20250601101454197",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.tags": "comment 评论区",
+        "cpl.category": "Functional",
+        "cpl.description": "This plugin integrates ''Twikoo'' (a lightweight commenting system) into your TiddlyWiki, allowing you to add a comment section to specific tiddlers.",
+        "cpl.uri": "https://github.com/uzvg/tw-twikoo/releases/latest/download/__plugins_uzvg_twikoo.json",
+        "cpl.readme": "!! Twikoo Comments for TiddlyWiki:\n\nThis plugin integrates ''Twikoo'' (a lightweight commenting system) into your TiddlyWiki, allowing you to add a comment section to specific tiddlers.\n\n!! Backend Configuration Prerequisites:\n\nBefore using the plugin, ensure you have completed the following steps:\n\n# Follow the official Twikoo documentation 👉 [[Twikoo Quick Start Guide|https://twikoo.js.org/]] to deploy the backend service (e.g., Vercel).\n# Obtain a valid `envId` (environment ID) from your Twikoo backend service.\n\n> Note: The backend service must be properly configured and accessible to ensure the comment system works.\n\n!! Frontend Configuration in TiddlyWiki:\n\nGo to `Settings` tab to configure your twikoo comment plugin in tiddlywiki.\n\n!! Twikoo Config backup:\n\nThe twikoo configs was saved in [[$:/config/tw-twikoo]] tiddler, you can export the tiddler and backup your twikoo config.\n\n!! Source Code & Issue:\n\nThe plugin is open-source and available on GitHub: 🔗 [[GitHub Repository|https://github.com/uzvg/tw-twikoo]]\n\n; Notes:\n* Ensure your Twikoo backend service is running and accessible.\n* Customize the `path` and `filter` expressions carefully to match your TiddlyWiki structure.\n* Report issues or contribute to the plugin via the GitHub repository.\n\n''Happy commenting!'' 🚀",
+        "cpl.source": "https://github.com/uzvg/tw-twikoo",
+        "cpl.documentation": "https://plugins.uzvg.site/",
+        "cpl.core-version": ">=5.3.6"
+    }
+]

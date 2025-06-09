@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Printify\nPrintify transforms your TiddlyWiki experience by bringing seamless, customizable, and professional-grade printing—ensuring every tiddler is beautifully structured and effortlessly formatted for any purpose.\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Printify/\n* Code: https://github.com/kookma/TW-Printify\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fprintify.json",
+        "cpl.title": "$:/plugins/kookma/printify",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Printify",
+        "cpl.description": "Smart, seamless, and customizable printing for TiddlyWiki",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Printify",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": ">=5.3.6",
+        "title": "Plugin_202506072757904"
+    }
+]

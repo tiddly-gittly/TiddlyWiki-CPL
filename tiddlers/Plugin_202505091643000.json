@@ -9,6 +9,7 @@
         "cpl.description": "ResourceHanRoundedCN-Regular",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "title": "Plugin_202505091643000"
+        "title": "Plugin_202505091643000",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
     }
 ]

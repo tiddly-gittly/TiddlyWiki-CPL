@@ -1,0 +1,13 @@
+cpl.author: dyp
+cpl.core-version: 5.3.7-prerelease
+cpl.dependents: 
+cpl.description: 根据字段内容动态应用样式
+cpl.name: text-indent-word-break
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: ; 根据字段内容动态应用样式-段首缩进和换行
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
+cpl.title: $:/plugins/dyp/text-indent-word-break
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Ftext-indent-word-break.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505232830392

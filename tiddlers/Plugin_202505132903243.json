@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; 部分编辑美化和快捷按钮\n\n需要安装部分编辑插件 [[$:/plugins/kookma/section]]",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fsection-edit-style-button.json",
+        "cpl.title": "$:/plugins/dyp/section-edit-style-button",
+        "cpl.author": "dyp",
+        "cpl.name": "section-edit-style-button",
+        "cpl.description": "部分编辑美化和快捷按钮",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "$:/plugins/kookma/section",
+        "title": "Plugin_202505132903243",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
+    }
+]

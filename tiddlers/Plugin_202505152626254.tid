@@ -1,0 +1,11 @@
+cpl.author: dyp
+cpl.dependents: 
+cpl.description: 博客园鼠标点击烟花特效
+cpl.name: mouse-click-fireworks
+cpl.plugin-type: plugin
+cpl.readme: ; 博客园鼠标点击烟花特效
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
+cpl.title: $:/plugins/dyp/mouse-click-fireworks
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fmouse-click-fireworks.json
+tags: $:/tags/PluginWiki
+title: Plugin_202505152626254

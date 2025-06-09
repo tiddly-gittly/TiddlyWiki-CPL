@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; 中文日历\n\n支持添加农历日期、节假日、节气、批注笔记",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fchinese-calendar.json",
+        "cpl.title": "$:/plugins/dyp/chinese-calendar",
+        "cpl.author": "dyp",
+        "cpl.name": "chinese-calendar",
+        "cpl.description": "中文日历",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": "5.3.7-prerelease",
+        "title": "Plugin_202506060622769"
+    }
+]

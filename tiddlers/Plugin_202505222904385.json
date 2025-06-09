@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "<!-- <$badge icon=\"tailwindcss\" /> -->\n<!-- https://cdn.tailwindcss.com/3.4.16?plugins=typography@0.5.15 -->\n\n<!-- https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4 -->\n\n> NOTE: 首次安装后需要刷新/重启tiddlywiki(nodejs)\n\n[[在线文档|https://tiddlywiki-starter-kit.oeyoews.top/docs/plugins/tiddlywiki-tailwindcss-v4]]",
+        "cpl.uri": "https://oeyoews.github.io/tiddlywiki-starter-kit/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-tailwindcss-v4.json",
+        "cpl.title": "$:/plugins/oeyoews/tiddlywiki-tailwindcss-v4",
+        "cpl.author": "oeyoews",
+        "cpl.name": "Tiddlywiki Tailwindcss v4",
+        "cpl.description": "Tiddlywiki Tailwindcss v4",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.1",
+        "title": "Plugin_202505222904385"
+    }
+]

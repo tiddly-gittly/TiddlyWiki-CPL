@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; 页面特效-雪花\n\n源代码：\n\nhttps://github.com/catdad/canvas-confetti\n\n教程：\n\nhttps://www.thosefree.com/canvas-confetti\n\nai分析：\n\nhttps://deepwiki.com/catdad/canvas-confetti",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fpage-canvas-confetti.json",
+        "cpl.title": "$:/plugins/dyp/page-canvas-confetti",
+        "cpl.author": "dyp",
+        "cpl.name": "page-canvas-confetti",
+        "cpl.description": "页面特效-雪花",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202505152626499",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
+    }
+]

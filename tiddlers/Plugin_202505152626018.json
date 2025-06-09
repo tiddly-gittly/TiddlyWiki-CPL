@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; 鼠标拖尾特效\n\n源代码和在线演示\n\nhttps://cursoreffects.com/\n\nhttps://tholman.com/cursor-effects/\n\nhttps://github.com/tholman/cursor-effects/tree/master\n\nhttps://deepwiki.com/tholman/cursor-effects",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fcursor-effects.json",
+        "cpl.title": "$:/plugins/dyp/cursor-effects",
+        "cpl.author": "dyp",
+        "cpl.name": "cursor-effects",
+        "cpl.description": "鼠标拖尾特效",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "title": "Plugin_202505152626018",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library"
+    }
+]
