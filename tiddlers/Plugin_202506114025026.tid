@@ -1,0 +1,11 @@
+cpl.author: oeyoews
+cpl.core-version: >=5.3.6
+cpl.dependents: 
+cpl.description: tiddlywiki-icons
+cpl.name: tiddlywiki-icons
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/oeyoews/tiddlywiki-cmp-icons
+cpl.uri: https://oeyoews.github.io/tiddlywiki-codemirror6/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-cmp-icons.json
+tags: $:/tags/PluginWiki
+title: Plugin_202506114025026

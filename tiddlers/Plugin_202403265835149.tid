@@ -4,7 +4,7 @@ cpl.dependents: $:/plugins/oeyoews/tiddlywiki-codemirror-6 $:/plugins/oeyoews/ne
 cpl.description: tiddlywiki-cmp
 cpl.name: tiddlywiki-cmp
 cpl.plugin-type: plugin
-cpl.readme: 
+cpl.readme: `module-type: snippets` for tiddlywiki-codemirror6
 cpl.title: $:/plugins/oeyoews/tiddlywiki-cmp
 cpl.uri: https://oeyoews.github.io/tiddlywiki-codemirror6/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Foeyoews%252Ftiddlywiki-cmp.json
 tags: $:/tags/PluginWiki
