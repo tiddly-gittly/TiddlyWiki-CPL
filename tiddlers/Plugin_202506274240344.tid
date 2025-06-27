@@ -1,0 +1,13 @@
+cpl.author: dyp
+cpl.core-version: 5.3.7-prerelease
+cpl.dependents: 
+cpl.description: 小说收藏
+cpl.name: novel-collection
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: ; 小说收藏
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
+cpl.title: $:/plugins/dyp/novel-collection
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fnovel-collection.json
+tags: $:/tags/PluginWiki
+title: Plugin_202506274240344
