@@ -1,0 +1,13 @@
+cpl.author: dyp
+cpl.core-version: 5.3.7-prerelease
+cpl.dependents: 
+cpl.description: 书籍收藏
+cpl.name: book-collection
+cpl.parent-plugin: 
+cpl.plugin-type: plugin
+cpl.readme: ; 书籍收藏
+cpl.source: https://github.com/dyp1121054136/dyp-plugins-library
+cpl.title: $:/plugins/dyp/book-collection
+cpl.uri: https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252Fbook-collection.json
+tags: $:/tags/PluginWiki
+title: Plugin_202507200100857
