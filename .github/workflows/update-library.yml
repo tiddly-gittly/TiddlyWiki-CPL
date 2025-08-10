@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4.0.3
+      - uses: actions/setup-node@v4.4.0
         with:
           node-version: '20'
       - uses: pnpm/action-setup@v4
