@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; Triggers\nCurrated triggers for [[ Autocomplete Plugin|https://github.com/EvidentlyCube/TW5-PluginShowcase/tree/main/plugins/EvidentlyCube/TW5-AutoComplete]] from [[Maurycy Zarzycki|https://github.com/EvidentlyCube]]\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Triggers/\n* Code: https://github.com/kookma/TW-Triggers\n",
+        "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Ftriggers.json",
+        "cpl.title": "$:/plugins/kookma/triggers",
+        "cpl.author": "Mohammad Rahmani",
+        "cpl.name": "Autocomplete Triggers",
+        "cpl.description": "Collected triggers for autocomplete plugin from EvidentlyCube",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/kookma/TW-Triggers",
+        "cpl.dependents": "$:/plugins/EvidentlyCube/AutoComplete",
+        "cpl.parent-plugin": "$:/plugins/EvidentlyCube/AutoComplete",
+        "cpl.core-version": ">=5.3.5",
+        "title": "Plugin_202508124000643"
+    }
+]

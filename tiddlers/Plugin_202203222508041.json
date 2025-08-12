@@ -7,11 +7,11 @@
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fpinboard.json",
         "cpl.title": "$:/plugins/kookma/pinboard",
         "cpl.author": "Mohammad Rahmani",
-        "cpl.description": "Create a board to pin messages and pictures",
+        "cpl.description": "Creates a bulletin board (pinboard or noticeboard)",
         "cpl.plugin-type": "plugin",
         "cpl.source": "https://github.com/kookma/TW-Pinboard",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.2.0",
+        "cpl.core-version": ">=5.2.5",
         "cpl.name": "Pinboard",
         "cpl.parent-plugin": ""
     }

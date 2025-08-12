@@ -11,6 +11,7 @@
         "cpl.source": "https://github.com/kookma/TW-Pikaday",
         "cpl.dependents": "",
         "cpl.core-version": ">=5.2.3",
-        "title": "Plugin_202403265750676"
+        "title": "Plugin_202403265750676",
+        "cpl.parent-plugin": ""
     }
 ]

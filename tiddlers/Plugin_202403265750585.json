@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "; Negra \nNegar is a cv and resume builder in Tiddlywiki\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Negar/\n* Code: https://github.com/kookma/TW-Negar\n",
+        "cpl.readme": "; Shiraz[use correct name]\ndescribe what is the plugin in one paragraph\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-???/\n* Code: https://github.com/kookma/TW-???\n",
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fnegar.json",
         "cpl.title": "$:/plugins/kookma/negar",
         "cpl.author": "Mohammad Rahmani",
@@ -11,7 +11,7 @@
         "cpl.source": "https://github.com/kookma/TW-Negar",
         "cpl.dependents": "$:/plugins/kookma/shiraz $:/plugins/kookma/refnotes",
         "cpl.parent-plugin": "",
-        "cpl.core-version": "5.2.5",
+        "cpl.core-version": ">=5.3.6",
         "title": "Plugin_202403265750585"
     }
 ]

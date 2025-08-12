@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": ";Tiddlywiki Garden\nThe garden is used to demonstrate, practice and learn, Filters, Wikitext, and CSS. Tiddlywiki garden inspired from [[CSS Zen Garden|https://en.wikipedia.org/wiki/CSS_Zen_Garden]].\n\n; Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-Garden/\n* Code: https://github.com/kookma/TW-Garden\n",
+        "cpl.readme": "; Shiraz[use correct name]\ndescribe what is the plugin in one paragraph\n\n;Code and demo\nFor learning plugin features, syntax, tutorial and examples see the plugin demo and code pages\n\n* Demo: https://kookma.github.io/TW-???/\n* Code: https://github.com/kookma/TW-???\n",
         "cpl.uri": "https://kookma.github.io/TW-PluginLibrary/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fkookma%252Fgarden.json",
         "cpl.title": "$:/plugins/kookma/garden",
         "cpl.author": "Mohammad Rahmani",
@@ -11,6 +11,7 @@
         "cpl.source": "https://github.com/kookma/TW-Garden",
         "cpl.dependents": "",
         "cpl.core-version": ">=5.2.3",
-        "title": "Plugin_202403265750249"
+        "title": "Plugin_202403265750249",
+        "cpl.parent-plugin": ""
     }
 ]
