@@ -8,15 +8,16 @@
         "cpl.name": "Resizer",
         "cpl.plugin-type": "plugin",
         "cpl.title": "$:/plugins/BTC/resizer",
-        "modified": "20250814065531016",
+        "modified": "20250815002854270",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
         "modifier": "马不前",
-        "cpl.uri": "https://burningtreec.github.io/resizer.html",
+        "cpl.uri": "https://github.com/BurningTreeC/resizer/releases/latest/download/__plugins_BTC_resizer.json",
         "cpl.description": "TiddlyWiki Resizer Widget\n\nA powerful and flexible resizer widget that enables interactive resizing of UI elements with support for multiple tiddlers, various CSS units, and calc() expressions.",
         "cpl.documentation": "https://burningtreec.github.io/resizer/",
         "cpl.core-version": ">=5.3.0",
         "cpl.dependents": "",
-        "cpl.readme": "! TiddlyWiki Resizer Widget\n\nA powerful and flexible resizer widget that enables interactive resizing of UI elements with support for multiple tiddlers, various CSS units, and calc() expressions."
+        "cpl.readme": "! TiddlyWiki Resizer Widget\n\nA powerful and flexible resizer widget that enables interactive resizing of UI elements with support for multiple tiddlers, various CSS units, and calc() expressions.\n\n[[Talk TiddlyWiki: YAR - yet another resizer|https://talk.tiddlywiki.org/t/yar-yet-another-resizer/13060]]",
+        "cpl.source": "https://github.com/BurningTreeC/resizer"
     }
 ]
