@@ -1,0 +1,25 @@
+[
+    {
+        "created": "20250823233645558",
+        "text": "",
+        "creator": "Flibbles",
+        "title": "flibbles/graph",
+        "modified": "20250824000759014",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "Flibbles",
+        "icon": "💡",
+        "cpl.title": "$:/plugins/flibbles/graph",
+        "cpl.author": "Cameron Fischer",
+        "cpl.name": "TW5-Graph",
+        "cpl.description": "A simple and extensible framework to allow you to use graph visualization software in your Tiddlywiki.",
+        "cpl.uri": "https://github.com/flibbles/tw5-graph/releases/latest/download/graph.json",
+        "cpl.readme": "TW5-Graph is the spiritual successor to [[TiddlyMap|felixhayashi/tiddlymap]], with the aim to be more flexible and adaptable. Not only does it provide a simple GUI for creating graphs of your tiddlers with a few button clicks, but it also provides an API of wikitext widgets to allow you to custom sculpt exactly the kind of graph you need.\n\n!! Concept\n\nTW5-Graph creates a framework graph visualization plugins so you can use them in TiddlyWiki. It doesn't provide any graphing software itself. But the benefit of this is that you can //choose// which graph visualization library you'd like to use with your TiddlyWiki, and you can count on having the same comprehensive GUI available no matter what you choose.\n\nCurrently, the following graphing plugins integrate with TW5-Graph:\n\n* [[Vis-Network|Plugin_202506100135297]]\n\nOne of these must be installed to get any use out of TW5-Graph.",
+        "cpl.source": "https://github.com/flibbles/tw5-Graph",
+        "cpl.documentation": "https://flibbles.github.io/tw5-graph",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.7",
+        "cpl.plugin-type": "plugin",
+        "cpl.icon": "https://github.com/flibbles/tw5-graph/raw/refs/heads/master/tiddlers/Images/favicon.png"
+    }
+]
