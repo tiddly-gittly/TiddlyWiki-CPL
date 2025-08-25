@@ -1,0 +1,25 @@
+[
+    {
+        "created": "20250609160135298",
+        "text": "",
+        "creator": "林一二",
+        "title": "flibbles/vis-network",
+        "modified": "20250824225727582",
+        "modifier": "Flibbles",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "icon": "[img height=50px [https://visjs.org/images/visjs_logo.png]]",
+        "page-cover": "https://almende.github.io/vis/images/wall.png",
+        "cpl.title": "$:/plugins/flibbles/vis-network",
+        "cpl.author": "Felix Küppers and Cameron Fischer",
+        "cpl.category": "Visualization",
+        "cpl.name": "Vis-network",
+        "cpl.description": "TiddlyWiki5 plugin for the vis.js library",
+        "cpl.uri": "https://github.com/flibbles/tw5-vis-network/releases/latest/download/__plugins_flibbles_vis-network.json",
+        "cpl.readme": "! TW5-Vis.js\n\nA tiddlywiki plugin for the vis.js library. This plugin integrates with [[TW5-Graph|flibbles/graph]] to provide graph visualization using the feature-rich [[Vis.js Network library|https://visjs.github.io/vis-network/docs/network/]].\n\nThis plugin is also compatible with all versions of [[TiddlyMap|felixhayashi/tiddlymap]].\n\n---\n\n! Notes on Copyright\n\n!! TiddlyWiki\n\nCreated by Jeremy Ruston, (jeremy [at] jermolene [dot] com)\n\nCopyright © Jeremy Ruston 2004-2007 Copyright © UnaMesa Association 2007-2014\n\nPublished under the following [licenses](https://github.com/Jermolene/TiddlyWiki5/tree/master/licenses):\n\n1. BSD 3-clause \"New\" or \"Revised\" License (including any right to adopt any future version of a license if permitted)\n2. Creative Commons Attribution 3.0 (including any right to adopt any future version of a license if permitted)\n\n!! The __vis.js__ library\n\nCopyright (c) 2014 [Almende B.V.](https://github.com/visjs/vis-network)\n\nPublished under the following licenses:\n\n1. Apache License Version 2.0, January 2004 http://www.apache.org/licenses/\n2. MIT License (MIT)\n",
+        "cpl.source": "https://github.com/flibbles/tw5-vis-network",
+        "cpl.documentation": "",
+        "cpl.core-version": ">=5.0.0",
+        "cpl.plugin-type": "plugin"
+    }
+]
