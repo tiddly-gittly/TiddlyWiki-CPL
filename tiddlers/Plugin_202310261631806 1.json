@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20251021083610968",
+        "creator": "林一二",
+        "text": "",
+        "title": "Plugin_202310261631806 1",
+        "cpl.author": "Lin Onetwo",
+        "cpl.name": "check website",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/linonetwo/check-website",
+        "modified": "20251021083940508",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.description": "Check website availability or downtime and display status as a badge.",
+        "cpl.uri": "https://github.com/tiddly-gittly/tw-server-sitemap/releases/latest/download/__plugins_linonetwo_check-website.json",
+        "cpl.readme": "`<$check-website url=\"https://tiddlywiki.com/\" />` will Check TiddlyWiki official site every hour.\n\nA beautiful badge will show, act as a clickable link to the website.\n",
+        "cpl.source": "https://github.com/tiddly-gittly/tw-server-sitemap/src/check-website",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tw-server-sitemap/",
+        "cpl.core-version": ""
+    }
+]
