@@ -2,19 +2,11 @@ created: 20231010221020621
 modified: 20231011081955396
 subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL 使用须知]else[Note to use CPL]] }}}/>
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/popup-readme
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[介绍]else[ReadMe]] }}} />
+title: $:/plugins/Gk0Wk/CPL-Repo/readme
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
-
-<$checkbox
-    tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup"
-    field="text"
-    checked={{$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup-threshold}}
-    unchecked="0"
-    default="0">
-    <$text text={{{ [<chinese>match[yes]then[不再弹出该消息]else[No longer pops up this message]] }}}/>
-</$checkbox>
 
 {{$:/plugins/Gk0Wk/CPL-Repo/readme}}
 
