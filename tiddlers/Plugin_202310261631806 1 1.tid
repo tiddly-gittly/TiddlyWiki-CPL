@@ -1,0 +1,17 @@
+cpl.author: Lin Onetwo
+cpl.core-version: 
+cpl.description: 用于中国网站显示备案信息
+cpl.documentation: https://tiddly-gittly.github.io/tw-server-sitemap/
+cpl.name: 备案信息
+cpl.plugin-type: plugin
+cpl.readme: 在插件设置里填写备案号后，会在页面底部显示「沪ICP备12345678号-1」字样
+cpl.source: https://github.com/tiddly-gittly/tw-server-sitemap/src/beian-miit
+cpl.title: $:/plugins/linonetwo/beian-miit
+cpl.uri: https://github.com/tiddly-gittly/tw-server-sitemap/releases/latest/download/__plugins_linonetwo_beian-miit.json
+created: 20251212095230818
+creator: 林一二
+modified: 20251212095635549
+modifier: 林一二
+tags: $:/tags/PluginWiki
+title: Plugin_202310261631806 1 1
+type: text/vnd.tiddlywiki
