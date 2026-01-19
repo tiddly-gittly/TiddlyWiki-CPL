@@ -1,12 +1,11 @@
+Modern.TiddlyDev#SHA256-Hashed: 77a70a968ab8b7a7195afff15fecd901f16d4505df0c6082594b45d813e72c78
 author: Gk0Wk
-created: 20211204160420839
 dependents: 
 description: Use the cursor to resize the width of the sidebar.
-list: readme
-modified: 20211204160420839
+list: readme LICENSE
 name: Sidebar Resizer
 plugin-type: plugin
 source: https://github.com/Gk0Wk/TiddlySeq/tree/master/plugins/Gk0Wk/sidebar-resizer
 title: $:/plugins/Gk0Wk/sidebar-resizer
 type: application/json
-version: 0.0.3
+version: 0.0.6

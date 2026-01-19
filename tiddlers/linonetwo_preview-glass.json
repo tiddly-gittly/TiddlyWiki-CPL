@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20260119175413960",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/preview-glass",
+        "modified": "20260119175700081",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.title": "$:/plugins/linonetwo/preview-glass",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Hover Preview Glass",
+        "cpl.description": "Modern link hover preview with glass effect",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_preview-glass.json",
+        "cpl.readme": "! About\n\nLink hover preview plugin with glass effect. Complete rewrite of [[tobibeer/preview|https://tobibeer.github.io/tw5-plugins/#preview]].\n\nShows popup on link hover with:\n\n* Content excerpt (first few lines)\n* Backlinks (requires inverse-link-and-folder plugin)\n* Metadata (modified, created, tags)\n\n!! Features\n\n* Glass effect with backdrop-filter\n* Adapts to all themes via TiddlyWiki palette system\n* Lightweight implementation using document-level event listeners\n* Positioned near cursor\n* Configurable exclusions for system/shadow/empty tiddlers\n* 150ms hover delay to avoid accidental triggers",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/preview-glass",
+        "cpl.plugin-type": "plugin",
+        "cpl.category": "Functional",
+        "cpl.tags": "utility"
+    }
+]
