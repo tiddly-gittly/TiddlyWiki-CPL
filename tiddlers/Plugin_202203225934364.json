@@ -12,7 +12,7 @@
         "cpl.source": "https://github.com/flibbles/tw5-relink",
         "cpl.dependents": "",
         "cpl.parent-plugin": "$:/plugins/flibbles/relink",
-        "cpl.core-version": ">=5.1.22",
+        "cpl.core-version": "5.1.22 - 5.3.8",
         "title": "Plugin_202203225934364"
     }
 ]
