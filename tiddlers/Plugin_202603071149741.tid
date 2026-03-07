@@ -1,0 +1,42 @@
+cpl.author: LinOnetwo
+cpl.description: A gallery plugin with masonry/waterfall layout, lightbox expand, hover toolbar and inline tag editor.
+cpl.name: 
+cpl.plugin-type: plugin
+cpl.readme: ! Gallery Plugin
+
+A compact gallery plugin for image/content browsing.
+
+!! Features
+
+* `<<gallery>>` macro with masonry layout
+** `filter` parameter: use any TW filter
+** `tag` parameter: list tiddlers tagged with the given tag
+** no params: uses `currentTiddler` as tag
+* Click image to toggle modes:
+** gallery mode (all items)
+** single-image mode (focused item only)
+* Hover toolbar per item:
+** Open in story river
+** Inline tag edit
+* Story template integration via `$:/tags/StoryTiddlerTemplateFilter`
+** Add tag `$:/tags/gallery` to a tiddler to use gallery-first view
+** Default parts are collapsed and use core fold/unfold banner style
+
+!! Usage
+
+```wikitext
+<<gallery>>
+<<gallery tag:"MyPhotos">>
+<<gallery filter:"[tag[Photos]sort[title]]">>
+```
+cpl.source: https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/gallery
+cpl.title: $:/plugins/linonetwo/gallery
+cpl.uri: https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_gallery.json
+
+created: 20260307061149741
+creator: 林一二
+modified: 20260307061434453
+modifier: 林一二
+tags: $:/tags/PluginWiki
+title: Plugin_202603071149741
+type: text/vnd.tiddlywiki
