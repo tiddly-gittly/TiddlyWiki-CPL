@@ -9,7 +9,7 @@
         "cpl.description": "Hover tooltips, context menu, variable inspector, source viewer. Useful for any TiddlyWiki developer.",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
-        "cpl.core-version": ">=5.3.8",
+        "cpl.core-version": ">=5.4.0",
         "title": "Plugin_202604015544333"
     }
 ]
