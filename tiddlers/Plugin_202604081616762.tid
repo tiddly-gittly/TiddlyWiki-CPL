@@ -1,0 +1,14 @@
+cpl.author: ItsTheWhale
+cpl.core-version: >=5.1.22
+cpl.dependents: $:/plugins/linonetwo/tw-react
+cpl.description: A whiteboard plugin using Excalidraw.
+cpl.documentation: https://itsthewhale.github.io/tiddlywiki-excalidraw/
+cpl.name: tw-excalidraw
+cpl.plugin-type: plugin
+cpl.readme: A whiteboard plugin using Excalidraw.
+cpl.source: https://github.com/ItsTheWhale/tiddlywiki-excalidraw
+cpl.title: $:/plugins/itw/tw-excalidraw
+cpl.uri: https://github.com/ItsTheWhale/tiddlywiki-excalidraw/releases/download/v0.1.0/__plugins_itw_tw-excalidraw.json
+tags: $:/tags/PluginWiki
+title: Plugin_202604081616762
+type: text/vnd.tiddlywiki
