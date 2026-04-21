@@ -4,5 +4,6 @@
   "name": "TiddlyWiki-CPL",
   "gitUrl": "https://github.com/tiddly-gittly/TiddlyWiki-CPL",
   "storageService": "github",
-  "id": "8KLy-UQi6sno8YD322suT"
+  "id": "8KLy-UQi6sno8YD322suT",
+  "hibernateWhenUnused": true
 }
