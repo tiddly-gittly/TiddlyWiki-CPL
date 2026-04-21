@@ -1,0 +1,1 @@
+{"title":"$:/plugins/tiddlywiki/wikitext-serialize","author":"tiddlywiki","name":"WikitextSerialize","description":"Serialize wikitext abstract syntax tree back to wikitext format","version":"5.4.0","plugin-type":"plugin","requires-reload":false,"category":"Unknown","type":"application/json","latest":"5.4.0","versions":["5.4.0"],"versions-size":{"5.4.0":47205}}
