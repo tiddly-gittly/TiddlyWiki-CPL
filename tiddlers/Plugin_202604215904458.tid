@@ -1,0 +1,9 @@
+cpl.dependents: 
+cpl.description: Serialize wikitext abstract syntax tree back to wikitext format
+cpl.name: WikitextSerialize
+cpl.plugin-type: plugin
+cpl.readme: 
+cpl.title: $:/plugins/tiddlywiki/wikitext-serialize
+cpl.uri: https://tiddlywiki.com/library/v5.4.0/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fwikitext-serialize.json
+tags: $:/tags/PluginWiki
+title: Plugin_202604215904458

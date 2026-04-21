@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "The full documentation can be found at [[tw-mcp plugin|https://wikilabs.github.io/editions/tw-mcp/]] main page.\n\n----\n\n''Important'': This plugin adds or modifies several core modules\n\n<$list filter=\"[[$:/plugins/wikilabs/tw-mcp]plugintiddlers[]prefix[$:/core/]]\"><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></$list>",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ftw-mcp.json",
+        "cpl.title": "$:/plugins/wikilabs/tw-mcp",
+        "cpl.author": "pmario",
+        "cpl.name": "TW MCP Server",
+        "cpl.description": "TODO description",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.4.0",
+        "title": "Plugin_202604054850769"
+    }
+]

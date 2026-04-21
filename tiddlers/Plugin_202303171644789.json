@@ -1,0 +1,13 @@
+[
+    {
+        "title": "Plugin_202303171644789",
+        "cpl.dependents": "",
+        "cpl.description": "Documentation from tiddlywiki.com",
+        "cpl.name": "TW5.com Docs",
+        "cpl.plugin-type": "plugin",
+        "cpl.readme": "This is an experimental packaging of the documentation from tiddlywiki.com into a plugin.\n\nIt is currently not fully functional:\n\n* Listings of tiddlers don't always work because the docs tiddlers are now shadow tiddlers\n",
+        "cpl.title": "$:/plugins/tiddlywiki/tw5.com-docs",
+        "cpl.uri": "https://tiddlywiki.com/library/v5.4.0/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Ftw5.com-docs.json",
+        "tags": "$:/tags/PluginWiki"
+    }
+]

@@ -1,0 +1,9 @@
+cpl.dependents: 
+cpl.description: Save DOM nodes as images
+cpl.name: Dom-to-image
+cpl.plugin-type: plugin
+cpl.readme: * [[dom-to-image-more|https://github.com/1904labs/dom-to-image-more]], an open source library for saving web content as images
+cpl.title: $:/plugins/tiddlywiki/dom-to-image
+cpl.uri: https://tiddlywiki.com/library/v5.4.0/recipes/library/tiddlers/%2524%253A%252Fplugins%252Ftiddlywiki%252Fdom-to-image.json
+tags: $:/tags/PluginWiki
+title: Plugin_202604215901203
