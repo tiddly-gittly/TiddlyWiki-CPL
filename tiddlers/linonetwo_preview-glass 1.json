@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20260422114348138",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/preview-glass 1",
+        "modified": "20260422114529217",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.title": "$:/plugins/linonetwo/gallery",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "Gallery by tag",
+        "cpl.description": "Create gallery by tag or filter.",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_gallery.json",
+        "cpl.readme": "! Gallery Plugin\n\nA compact gallery plugin for image/content browsing.\n\n!! Features\n\n* `<<gallery>>` macro with masonry layout\n** `filter` parameter: use any TW filter\n** `tag` parameter: list tiddlers tagged with the given tag\n** no params: uses `currentTiddler` as tag\n* Click image to toggle modes:\n** gallery mode (all items)\n** single-image mode (focused item only)\n* Hover toolbar per item:\n** Open in story river\n** Inline tag edit\n* Story template integration via `$:/tags/StoryTiddlerTemplateFilter`\n** Add tag `$:/tags/gallery` to a tiddler to use gallery-first view\n** Default parts are collapsed and use core fold/unfold banner style\n\n!! Usage\n\n```wikitext\n<<gallery>>\n<<gallery tag:\"MyPhotos\">>\n<<gallery filter:\"[tag[Photos]sort[title]]\">>\n```\n",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/plugins/linonetwo/gallery",
+        "cpl.plugin-type": "plugin",
+        "cpl.category": "Functional",
+        "cpl.tags": "utility",
+        "cpl.documentation": "https://tiddly-gittly.github.io/tiddlywiki-plugins/#%24%3A%2Fplugins%2Flinonetwo%2Fgallery"
+    }
+]
