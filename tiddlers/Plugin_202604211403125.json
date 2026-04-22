@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20260422051403125",
+        "text": "",
+        "title": "Plugin_202604211403125",
+        "modified": "20260422053200797",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "",
+        "cpl.name": "",
+        "cpl.plugin-type": "plugin",
+        "cpl.title": "$:/plugins/mblackman/timelord",
+        "cpl.category": "Functional",
+        "cpl.description": "Tracks tiddler revision history using efficient diff/delta storage, with view, restore, and prune controls.",
+        "cpl.uri": "https://mblackman.github.io/tiddlywiki-timelord/library/index.html",
+        "cpl.icon": "",
+        "cpl.source": "https://github.com/mblackman/tiddlywiki-timelord",
+        "cpl.documentation": "https://github.com/mblackman/tiddlywiki-timelord/tree/main/docs",
+        "cpl.core-version": ">=5.3.0",
+        "cpl.readme": "This plugin automatically stores and displays revision history for your tiddlers. Every time you edit a tiddler, the plugin captures a revision that you can view and restore from the tiddler's info panel.\n\nRenames carry the existing history forward; deletions capture one final revision and surface the tiddler in the ''Deleted Tiddlers'' sidebar tab for restore.\n\nFor a full walkthrough of what gets captured, how restores work, and how to prune history, see [[Timelord Help|$:/plugins/mblackman/timelord/Help]]. Storage stats and prune actions live in the sidebar under ''More → Timelord''.\n"
+    }
+]
