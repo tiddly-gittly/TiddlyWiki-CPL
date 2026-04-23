@@ -1,7 +1,7 @@
 /*\
-Title: $:/plugins/Gk0Wk/CPL-Server/routes/get-stats.js
-Type: application/javascript
-Module-Type: route
+title: $:/plugins/Gk0Wk/CPL-Server/routes/get-stats.js
+type: application/javascript
+module-type: route
 
 GET /cpl/api/stats/:pluginTitle - Get plugin statistics
 \*/
@@ -29,7 +29,7 @@ GET /cpl/api/stats/:pluginTitle - Get plugin statistics
         'Access-Control-Allow-Origin': '*',
         'Cache-Control': 'public, max-age=60' // Cache for 1 minute
       }, JSON.stringify({
-        pluginTitle: pluginTitle,
+        plugintitle: pluginTitle,
         downloadCount: stats.downloadCount,
         downloadLastUpdated: stats.lastUpdated,
         averageRating: ratings.averageRating,

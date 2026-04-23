@@ -1,7 +1,7 @@
 /*\
-Title: $:/plugins/Gk0Wk/CPL-Server/utils/data-store.js
-Type: application/javascript
-Module-Type: library
+title: $:/plugins/Gk0Wk/CPL-Server/utils/data-store.js
+type: application/javascript
+module-type: library
 
 Data storage utilities for CPL Server
 \*/

@@ -34,10 +34,14 @@ if (args.includes('--readonly') || args.includes('-r')) {
   mode = 'readonly';
 }
 
+const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
+
 // Build tiddlywiki command
 const twArgs = [
-  '++./plugins/CPLServer',  // Load CPL Server plugin
-  '.',                        // Wiki path
+  TW_ENTRY,
+  '++./plugins/CPLServer',
+  '++./plugins/CPLPlugin',
+  '.',
   '--listen',
   `port=${port}`,
   `host=${host}`
@@ -61,7 +65,7 @@ console.log(`[CPL Server] Server will start on http://${host}:${port}`);
 console.log('[CPL Server] Press Ctrl+C to stop');
 
 // Start tiddlywiki
-const twProcess = spawn('tiddlywiki', twArgs, {
+const twProcess = spawn(process.execPath, twArgs, {
   cwd: WIKI_PATH,
   stdio: 'inherit'
 });

@@ -1,7 +1,7 @@
 /*\
-Title: $:/plugins/Gk0Wk/CPL-Server/utils/rate-limiter.js
-Type: application/javascript
-Module-Type: library
+title: $:/plugins/Gk0Wk/CPL-Server/utils/rate-limiter.js
+type: application/javascript
+module-type: library
 
 IP-based rate limiting for CPL Server
 \*/
@@ -59,7 +59,10 @@ IP-based rate limiting for CPL Server
   }
 
   // Start cleanup interval
-  setInterval(cleanup, CLEANUP_INTERVAL_MS);
+  var cleanupTimer = setInterval(cleanup, CLEANUP_INTERVAL_MS);
+  if (cleanupTimer && typeof cleanupTimer.unref === 'function') {
+    cleanupTimer.unref();
+  }
 
   // Rate Limiter API
   var RateLimiter = {

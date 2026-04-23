@@ -1,7 +1,7 @@
 /*\
-Title: $:/plugins/Gk0Wk/CPL-Server/routes/get-all-stats.js
-Type: application/javascript
-Module-Type: route
+title: $:/plugins/Gk0Wk/CPL-Server/routes/get-all-stats.js
+type: application/javascript
+module-type: route
 
 GET /cpl/api/stats - Get all plugins statistics
 \*/

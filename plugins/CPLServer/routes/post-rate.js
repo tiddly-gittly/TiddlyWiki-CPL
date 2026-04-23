@@ -1,7 +1,7 @@
 /*\
-Title: $:/plugins/Gk0Wk/CPL-Server/routes/post-rate.js
-Type: application/javascript
-Module-Type: route
+title: $:/plugins/Gk0Wk/CPL-Server/routes/post-rate.js
+type: application/javascript
+module-type: route
 
 POST /cpl/api/rate/:pluginTitle - Submit a plugin rating
 \*/
@@ -88,7 +88,7 @@ POST /cpl/api/rate/:pluginTitle - Submit a plugin rating
     }, JSON.stringify({
       success: true,
       message: 'Rating submitted successfully',
-      pluginTitle: pluginTitle,
+      plugintitle: pluginTitle,
       averageRating: ratings.averageRating,
       totalRatings: ratings.totalRatings
     }));

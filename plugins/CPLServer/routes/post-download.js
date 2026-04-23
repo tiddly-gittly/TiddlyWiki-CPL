@@ -1,7 +1,7 @@
 /*\
-Title: $:/plugins/Gk0Wk/CPL-Server/routes/post-download.js
-Type: application/javascript
-Module-Type: route
+title: $:/plugins/Gk0Wk/CPL-Server/routes/post-download.js
+type: application/javascript
+module-type: route
 
 POST /cpl/api/download/:pluginTitle - Record a plugin download
 \*/
@@ -38,7 +38,7 @@ POST /cpl/api/download/:pluginTitle - Record a plugin download
         }, JSON.stringify({
           success: true,
           message: 'Download recorded',
-          pluginTitle: pluginTitle,
+          plugintitle: pluginTitle,
           downloadCount: stats.downloadCount
         }));
       } else {
@@ -51,7 +51,7 @@ POST /cpl/api/download/:pluginTitle - Record a plugin download
         }, JSON.stringify({
           success: true,
           message: 'Download rate limited (already counted recently)',
-          pluginTitle: pluginTitle,
+          plugintitle: pluginTitle,
           downloadCount: stats.downloadCount
         }));
       }
