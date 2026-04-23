@@ -1,5 +1,5 @@
-const { DataStore } = require('../plugins/CPLServer/utils/data-store.js');
-const { RateLimiter } = require('../plugins/CPLServer/utils/rate-limiter.js');
+const { DataStore } = require('../../plugins/CPLServer/utils/data-store.js');
+const { RateLimiter } = require('../../plugins/CPLServer/utils/rate-limiter.js');
 const fs = require('fs');
 const path = require('path');
 

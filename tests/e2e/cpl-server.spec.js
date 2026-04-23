@@ -1,116 +1,121 @@
 /**
  * Playwright E2E Tests for CPL Server
- * 
- * These tests verify the full user flow:
+ *
+ * These tests verify the full user flow through direct tiddler navigation:
  * 1. Open a TiddlyWiki with CPL Server
- * 2. View a plugin
+ * 2. Navigate to a plugin tiddler
  * 3. Check that stats are displayed
- * 4. Install a plugin and verify download is recorded
+ * 4. Submit a rating and verify it updates
+ * 5. Check changelog section
+ * 6. Verify API accessibility from browser
  */
 
 const { test, expect } = require('@playwright/test');
 
-// Test configuration
 const BASE_URL = process.env.TEST_URL || 'http://localhost:8080';
+const TEST_PLUGIN_TIDDLER = 'Plugin_202203245445241';
+const TEST_PLUGIN_CPL_TITLE = '$:/plugins/sk/Links';
 
-// Helper to wait for CPL API to be available
-test.beforeEach(async ({ page }) => {
+async function navigateToPlugin(page, tiddlerTitle) {
   await page.goto(BASE_URL);
-  
-  // Wait for page to load
   await page.waitForLoadState('networkidle');
-  
-  // Wait for CPL API to be available
-  await page.waitForFunction(() => {
-    return typeof window.CPL_API !== 'undefined';
-  }, { timeout: 10000 });
-});
+  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 10000 });
+  await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 10000 });
+
+  await page.evaluate((title) => {
+    $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
+    $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': title });
+    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
+  }, tiddlerTitle);
+
+  // Wait for the page to render the plugin view
+  await page.waitForSelector('.cpl-plugin-stats', { timeout: 5000 });
+}
 
 test.describe('CPL Server E2E', () => {
-  
+
   test('should display plugin statistics on plugin page', async ({ page }) => {
-    // Navigate to a plugin page
-    // Note: Adjust the selector based on actual page structure
-    const pluginLink = await page.locator('.gk0wk-notion-gallery-block').first();
-    
-    if (await pluginLink.isVisible().catch(() => false)) {
-      await pluginLink.click();
-      
-      // Wait for stats to load
-      await page.waitForSelector('.cpl-plugin-stats', { timeout: 5000 });
-      
-      // Check download count is displayed
-      const downloadCount = await page.locator('.cpl-download-count').first();
-      await expect(downloadCount).toBeVisible();
-      
-      // Check rating is displayed
-      const ratingDisplay = await page.locator('.cpl-rating-display').first();
-      await expect(ratingDisplay).toBeVisible();
-    }
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+
+    const statsWidget = page.locator('.cpl-plugin-stats');
+    await expect(statsWidget).toBeVisible();
+
+    // Verify download count is displayed (should be a number or dash)
+    const downloadCount = statsWidget.locator('.cpl-stat-item').first();
+    await expect(downloadCount).toBeVisible();
   });
 
   test('should allow rating a plugin', async ({ page }) => {
-    // Find and click on a plugin
-    const pluginLink = await page.locator('.gk0wk-notion-gallery-block').first();
-    
-    if (await pluginLink.isVisible().catch(() => false)) {
-      await pluginLink.click();
-      
-      // Wait for rating widget
-      await page.waitForSelector('.cpl-rating-widget', { timeout: 5000 });
-      
-      // Click the third star
-      const thirdStar = await page.locator('.cpl-star[data-rating="3"]').first();
-      
-      if (await thirdStar.isVisible().catch(() => false)) {
-        await thirdStar.click();
-        
-        // Wait for success message
-        await page.waitForSelector('.cpl-rating-message:has-text("submitted")', { timeout: 5000 });
-        
-        // Verify rating was recorded
-        const message = await page.locator('.cpl-rating-message').first();
-        const text = await message.textContent();
-        expect(text).toContain('submitted');
-      }
-    }
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+
+    const ratingWidget = page.locator('.cpl-rating-widget');
+    await expect(ratingWidget).toBeVisible();
+
+    // Click the third star (rating = 3)
+    const stars = ratingWidget.locator('button');
+    await expect(stars).toHaveCount(5);
+    await stars.nth(2).click();
+
+    // Wait for the submission status to update
+    await page.waitForFunction(
+      (title) => {
+        const tempTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/rating-status/' + title);
+        return tempTiddler && (tempTiddler.fields.text === 'success' || String(tempTiddler.fields.text).startsWith('error:'));
+      },
+      TEST_PLUGIN_CPL_TITLE,
+      { timeout: 10000 }
+    );
+
+    // Verify it succeeded, not errored
+    const ratingStatus = await page.evaluate((title) => {
+      const tempTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/rating-status/' + title);
+      return tempTiddler ? tempTiddler.fields.text : null;
+    }, TEST_PLUGIN_CPL_TITLE);
+
+    expect(ratingStatus).toBe('success');
   });
 
   test('should display changelog when available', async ({ page }) => {
-    // Navigate to a plugin page
-    const pluginLink = await page.locator('.gk0wk-notion-gallery-block').first();
-    
-    if (await pluginLink.isVisible().catch(() => false)) {
-      await pluginLink.click();
-      
-      // Wait for changelog section to appear
-      const changelogSection = await page.locator('.cpl-changelog-section').first();
-      
-      if (await changelogSection.isVisible().catch(() => false)) {
-        const content = await page.locator('.cpl-changelog-content').first();
-        await expect(content).toBeVisible();
-      }
-    }
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+
+    const changelogSection = page.locator('.cpl-changelog-section');
+    await expect(changelogSection).toBeVisible();
   });
 
-  test('API should be accessible from browser', async ({ page }) => {
-    // Test that CPL_API is available and working
-    const result = await page.evaluate(async () => {
-      if (typeof window.CPL_API === 'undefined') {
-        return { error: 'CPL_API not available' };
-      }
-      
-      try {
-        const stats = await window.CPL_API.getStats('$:/plugins/test/plugin');
-        return { success: true, stats };
-      } catch (e) {
-        return { error: e.message };
-      }
+  test('API should be accessible from browser via $tw.cplServerAPI', async ({ page }) => {
+    await page.goto(BASE_URL);
+    await page.waitForLoadState('networkidle');
+    await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 10000 });
+
+    const result = await page.evaluate(() => {
+      return new Promise((resolve) => {
+        $tw.cplServerAPI.getStats('$:/plugins/test/plugin', (err, stats) => {
+          if (err) {
+            resolve({ error: err.message || String(err) });
+          } else {
+            resolve({ success: true, stats });
+          }
+        });
+      });
     });
-    
+
     expect(result.error).toBeUndefined();
     expect(result.success).toBe(true);
     expect(result.stats).toHaveProperty('downloadCount');
+  });
+
+  test('should create temp tiddlers for plugin stats', async ({ page }) => {
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+
+    // Wait a moment for async stats fetch
+    await page.waitForTimeout(500);
+
+    const hasTempTiddlers = await page.evaluate((title) => {
+      const statsTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/plugin-stats/' + title);
+      return !!statsTiddler;
+    }, TEST_PLUGIN_CPL_TITLE);
+
+    expect(hasTempTiddlers).toBe(true);
   });
 
 });

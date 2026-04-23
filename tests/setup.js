@@ -26,8 +26,9 @@ function cleanupDataFiles() {
   }
 }
 
-// Clean up before all tests
-cleanupDataFiles();
+beforeEach(() => {
+  cleanupDataFiles();
+});
 
 // Also clean up after all tests
 afterAll(() => {

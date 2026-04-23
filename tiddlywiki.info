@@ -19,7 +19,8 @@
         "tiddlywiki/markdown",
         "tiddlywiki/sax",
         "tiddlywiki/filesystem",
-        "$:/plugins/Gk0Wk/CPL-Server"
+        "$:/plugins/Gk0Wk/CPL-Server",
+        "$:/plugins/Gk0Wk/CPL-Repo"
     ],
     "themes": [
         "tiddlywiki/vanilla"

@@ -17,7 +17,8 @@ function makeRequest(method, requestPath, body = null) {
       path: requestPath,
       method: method,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'TiddlyWiki'
       }
     };
 
@@ -55,24 +56,73 @@ function makeRequest(method, requestPath, body = null) {
 
 describe('CPL Server API', () => {
   let serverProcess;
+  let serverExitedEarly = false;
 
-  beforeAll((done) => {
+  function waitForServer(timeoutMs = 15000) {
+    const start = Date.now();
+    return new Promise((resolve, reject) => {
+      function tryConnect() {
+        if (serverExitedEarly) {
+          reject(new Error('Server process exited before becoming ready'));
+          return;
+        }
+        const req = http.request(
+          {
+            hostname: TEST_HOST,
+            port: TEST_PORT,
+            path: '/',
+            method: 'GET'
+          },
+          (res) => {
+            res.resume();
+            resolve();
+          }
+        );
+        req.on('error', () => {
+          if (Date.now() - start > timeoutMs) {
+            reject(new Error('Timed out waiting for server readiness'));
+            return;
+          }
+          setTimeout(tryConnect, 250);
+        });
+        req.end();
+      }
+      tryConnect();
+    });
+  }
+
+  beforeAll(async () => {
     const wikiPath = path.resolve(__dirname, '../..');
-    
-    serverProcess = spawn('npx', [
-      'tiddlywiki',
-      wikiPath,
-      '--listen',
-      `port=${TEST_PORT}`
-    ], {
+
+    serverProcess = spawn('node', ['scripts/server.js'], {
       cwd: wikiPath,
-      stdio: 'pipe'
+      stdio: 'pipe',
+      env: {
+        ...process.env,
+        PORT: String(TEST_PORT),
+        HOST: TEST_HOST
+      }
     });
 
-    setTimeout(() => {
-      done();
-    }, 5000);
-  }, 10000);
+    let serverOutput = '';
+    serverProcess.stdout.on('data', (data) => {
+      serverOutput += data.toString();
+    });
+    serverProcess.stderr.on('data', (data) => {
+      serverOutput += data.toString();
+    });
+
+    serverProcess.once('exit', () => {
+      serverExitedEarly = true;
+    });
+
+    await waitForServer();
+
+    // Print captured output for debugging
+    if (serverOutput) {
+      console.log('[Server Output]\n', serverOutput);
+    }
+  }, 30000);
 
   afterAll(() => {
     if (serverProcess) {
@@ -81,7 +131,8 @@ describe('CPL Server API', () => {
   });
 
   test('GET /cpl/api/stats/:pluginTitle should return stats', async () => {
-    const response = await makeRequest('GET', '/cpl/api/stats/$:/plugins/test/plugin');
+    const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
+    const response = await makeRequest('GET', `/cpl/api/stats/${pluginTitle}`);
     
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('downloadCount');
