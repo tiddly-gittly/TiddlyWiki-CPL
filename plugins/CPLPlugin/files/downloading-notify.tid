@@ -1,0 +1,26 @@
+code-body: yes
+created: 20231009194310566
+modified: 20231009194920779
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/downloading-notify
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
+<$list filter="[<chinese>match[yes]]" variable="t">
+
+!! 请稍候...
+
+正在下载第 <<count>> 个插件(共 <<total>> 个): <<plugin>>
+
+</$list>
+
+<$list filter="[<chinese>!match[yes]]" variable="t">
+
+!! Please wait...
+
+Downloading the <<count>> of plugins (total <<total>>): <<plugin>>
+
+</$list>
+
+</$list>

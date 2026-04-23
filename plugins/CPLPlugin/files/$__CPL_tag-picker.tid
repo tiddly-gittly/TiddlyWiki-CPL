@@ -1,0 +1,70 @@
+code-body: yes
+created: 20231010211850384
+modified: 20231010214712649
+tags: 
+title: $:/CPL/tag-picker
+type: text/vnd.tiddlywiki
+
+\define tag-plain(text:"",icon:"",color:"",bg:"")
+\whitespace trim
+<span class="tc-tag-label" style="background-color:$bg$;color:$color$;fill:$color$;user-select:none;margin-right:6px;">
+	{{$icon$}}$text$
+</span>
+\end
+
+\define tag-plain-removable(saveTiddler,saveField:"tags",text:"",icon:"",color:"",bg:"")
+\whitespace trim
+<span class="tc-tag-label" style="background-color:$bg$;color:$color$;fill:$color$;user-select:none;margin:4px 6px 2px 0;padding:4px 10px;">
+	{{$icon$}}$text$
+	<$button class="tc-btn-invisible tc-remove-tag-button" style="background-color:$bg$;color:$color$;fill:$color$;">
+		<$action-listops $tiddler=<<__saveTiddler__>> $field=<<__saveField__>> $subfilter="-[<__text__>]"/>{{$:/core/images/close-button}}
+	</$button>
+</span>
+\end
+
+\define cpl-tag-picker(title,field:"cpl.tags")
+<$let 
+    bg={{{ [{$:/palette}getindex[tag-background]] }}}
+    color={{{ [{$:/palette}getindex[foreground]] }}}
+    saveTiddler="$title$"
+    saveField=<<__field__>>
+    inputTitle=<<qualify "$:/temp/CPL/tag-picker-input">>
+    popupTitle=<<qualify "$:/temp/CPL/tag-picker-popup">>
+>
+<div style="width:100%;display:flex;backdrop-filter:contrast(1.3);">
+<div class="cpl-search-tags" style="flex-grow:1;width:0;display:flex;align-items:center;padding:4px 8px;flex-wrap:wrap;">
+    <!-- 已有的标签，可删除 -->
+    <$list filter="[<__title__>get<saveField>enlist-input[]]" variable="tag">
+    <$macrocall $name="tag-plain-removable" text=<<tag>> icon="$:/core/images/tag-button" bg=<<bg>> color=<<color>> saveTiddler=<<__title__>> saveField=<<saveField>> />
+    </$list>
+    <div class="cpl-search-tags-input">
+        <!-- 输入 -->
+        <$macrocall
+            $name="keyboard-driven-input"
+            tiddler=<<inputTitle>>
+            tag="input"
+            placeholder={{$:/language/EditTemplate/Tags/Add/Placeholder}}
+            focusPopup=<<popupTitle>>
+            class="tc-edit-texteditor tc-popup-handle"
+            tabindex=<<tabIndex>>
+            focus="no"
+            filterMinLength="2"
+            configTiddlerFilter="[[$:/core/macros/tag-picker]]"
+            inputAcceptActions="<$action-listops $tiddler=<<__title__>> $field=<<saveField>> $subfilter='[<inputTitle>get[text]]'/>"
+        />
+        <!-- 弹出 -->
+        <$reveal state=<<popupTitle>> type="nomatch" text="" default="">
+        <div class="tc-block-dropdown tc-block-tags-dropdown">
+            <$list filter="[tag[$:/tags/PluginWiki]get[cpl.tags]enlist-input[]unique[]]" variable="tag">
+            <$button class="tc-btn-invisible" tag="a" tooltip={{$:/language/EditTemplate/Tags/Add/Button/Hint}}>
+                <$macrocall $name="tag-plain" text=<<tag>> icon="$:/core/images/tag-button" bg=<<bg>> color=<<color>> />
+                <$action-listops $tiddler=<<__title__>> $field=<<saveField>> $subfilter="[<tag>]"/>
+            </$button>
+            </$list>
+        </div>
+        </$reveal>
+    </div>
+</div>
+</div>
+</$let>
+\end

@@ -1,0 +1,17 @@
+code-body: yes
+created: 20231014131224108
+modified: 20231014134943518
+tags:
+title: $:/plugins/Gk0Wk/CPL-Repo/plugin-uninstall-plugins-item
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[!has[draft.of]plugin-type<currentTab>sort[name]]" emptyMessage={{$:/language/ControlPanel/Plugins/Empty/Hint}}>
+<div style="display:flex;margin:-0.5em 0;">
+	<div style="flex-grow:1;">{{||$:/core/ui/PluginListItemTemplate}}</div>
+	<$button style="backdrop-filter:contrast(0.65);margin:0.5em 0;padding:4px 16px !important;cursor:pointer;background-color:#d7074ebd !important;border:none !important;">
+		{{$:/core/images/delete-button}}
+		<$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/uninstall-plugin-model-template" plugin=<<currentTiddler>>/>
+	</$button>
+</div>
+</$list>

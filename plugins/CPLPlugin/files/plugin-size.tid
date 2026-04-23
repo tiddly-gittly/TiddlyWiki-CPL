@@ -1,0 +1,16 @@
+code-body: yes
+created: 20231013170415326
+modified: 20231013170541854
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/plugin-size
+type: text/vnd.tiddlywiki
+
+\define plugin-size(size:"0")
+<$list filter="[<__size__>compare:integer:gt[0]]" variable="size" emptyMessage="?">
+<$let unit-step={{{ [<size>compare:integer:gteq[1048576]] :then[<size>compare:integer:gteq[1073741824]then[GiB#1073741824]else[MiB#1048576]] :else[<size>compare:integer:gteq[1024]then[KiB#1024]else[B#1]] }}}>
+<$let unit={{{ [<unit-step>split[#]first[]] }}} step={{{ [<unit-step>split[#]last[]] }}}>
+<$text text={{{ [<size>divide<step>fixed[2]] [<unit>] +[join[ ]] }}}/>
+</$let>
+</$let>
+</$list>
+\end

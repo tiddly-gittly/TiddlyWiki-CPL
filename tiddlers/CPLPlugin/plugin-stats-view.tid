@@ -1,0 +1,124 @@
+created: 20260101000000000
+modified: 20260101000000000
+tags: $:/tags/ViewTemplate
+title: $:/plugins/Gk0Wk/CPL-Repo/plugin-stats-view
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+\define stats-fetch-action()
+<$action-sendmessage $message="cpl-fetch-stats" pluginTitle={{!!cpl.title}} />
+\end
+
+\define rating-click-action(rating)
+<$action-sendmessage $message="cpl-submit-rating" pluginTitle={{!!cpl.title}} rating="$rating$" />
+\end
+
+<!-- Plugin Stats Display -->
+<$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
+
+<!-- Auto-fetch stats on render -->
+<$action-sendmessage $message="cpl-fetch-stats" pluginTitle={{!!cpl.title}} />
+
+<div class="cpl-plugin-stats" style="display: flex; gap: 20px; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 10px;">
+  <!-- Download Count -->
+  <div class="cpl-stat-item" style="display: flex; align-items: center; gap: 5px;">
+    <span style="font-size: 1.2em;">⬇️</span>
+    <$let tempTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-stats/]] }}}>
+      <$list filter="[<tempTiddler>is[tiddler]]" variable="hasStats">
+        <$text text={{{ [<tempTiddler>get[text]jsonget[downloadCount]else[0]] }}} />
+      </$list>
+      <$list filter="[<tempTiddler>!is[tiddler]]" variable="noStats">
+        <span style="color: #999;">-</span>
+      </$list>
+    </$let>
+    <span style="font-size: 0.85em; color: #666;">downloads</span>
+  </div>
+  
+  <!-- Rating -->
+  <div class="cpl-stat-item" style="display: flex; align-items: center; gap: 5px;">
+    <span style="font-size: 1.2em;">⭐</span>
+    <$let tempTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-stats/]] }}}>
+      <$list filter="[<tempTiddler>is[tiddler]]" variable="hasStats">
+        <$let avgRating={{{ [<tempTiddler>get[text]jsonget[averageRating]else[0]] }}} totalRatings={{{ [<tempTiddler>get[text]jsonget[totalRatings]else[0]] }}}>
+          <$list filter="[<totalRatings>compare:integer:gt[0]]" variable="hasRatings">
+            <span><$text text=<<avgRating>> />/5</span>
+            <span style="font-size: 0.85em; color: #666;">(<$text text=<<totalRatings>> /> ratings)</span>
+          </$list>
+          <$list filter="[<totalRatings>compare:integer:eq[0]]" variable="noRatings">
+            <span style="color: #999;">No ratings yet</span>
+          </$list>
+        </$let>
+      </$list>
+      <$list filter="[<tempTiddler>!is[tiddler]]" variable="noStats">
+        <span style="color: #999;">-</span>
+      </$list>
+    </$let>
+  </div>
+</div>
+
+<!-- Rating Widget -->
+<div class="cpl-rating-widget" style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+  <h4 style="margin-top: 0;">⭐ Rate this plugin</h4>
+  <div style="display: flex; gap: 5px; font-size: 1.5em;">
+    <$button class="tc-btn-invisible" style="padding: 2px;">
+      <<rating-click-action 1>>
+      <span style="color: #ddd;">★</span>
+    </$button>
+    <$button class="tc-btn-invisible" style="padding: 2px;">
+      <<rating-click-action 2>>
+      <span style="color: #ddd;">★</span>
+    </$button>
+    <$button class="tc-btn-invisible" style="padding: 2px;">
+      <<rating-click-action 3>>
+      <span style="color: #ddd;">★</span>
+    </$button>
+    <$button class="tc-btn-invisible" style="padding: 2px;">
+      <<rating-click-action 4>>
+      <span style="color: #ddd;">★</span>
+    </$button>
+    <$button class="tc-btn-invisible" style="padding: 2px;">
+      <<rating-click-action 5>>
+      <span style="color: #ddd;">★</span>
+    </$button>
+  </div>
+  <$let ratingStatusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}}>
+    <$list filter="[<ratingStatusTiddler>is[tiddler]]" variable="hasStatus">
+      <div style="margin-top: 8px; font-size: 0.85em;">
+        <$list filter="[<ratingStatusTiddler>get[text]match[submitting]]">
+          <span style="color: #666;">Submitting...</span>
+        </$list>
+        <$list filter="[<ratingStatusTiddler>get[text]prefix[error:]]">
+          <span style="color: #dc3545;">✗ <$text text={{{ [<ratingStatusTiddler>get[text]removeprefix[error: ]] }}}/></span>
+        </$list>
+        <$list filter="[<ratingStatusTiddler>get[text]match[success]]">
+          <span style="color: #28a745;">✓ Rating submitted! Average: <$text text={{{ [<ratingStatusTiddler>get[average-rating]] }}}/>/5 (<$text text={{{ [<ratingStatusTiddler>get[total-ratings]] }}}/> ratings)</span>
+        </$list>
+      </div>
+    </$list>
+  </$let>
+</div>
+
+<!-- Changelog Section -->
+<div class="cpl-changelog-section" style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+  <h4 style="margin-top: 0; border-bottom: 1px solid #e9ecef; padding-bottom: 6px;">📋 Changelog</h4>
+  <$action-sendmessage $message="cpl-fetch-changelog" pluginTitle={{!!cpl.title}} />
+  <$let changelogTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}>
+    <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
+      <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}} changelogContent={{{ [<changelogTiddler>get[text]jsonget[changelog]else[]]] }}}>
+        <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
+          <div style="max-height: 300px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; font-size: 0.9em; background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef;">
+            <$text text=<<changelogContent>> />
+          </div>
+        </$list>
+        <$list filter="[<hasChangelogField>!match[true]]" variable="noContent">
+          <span style="color: #999; font-style: italic;">No changelog available.</span>
+        </$list>
+      </$let>
+    </$list>
+    <$list filter="[<changelogTiddler>!is[tiddler]]" variable="loading">
+      <span style="color: #999; font-style: italic;">Loading changelog...</span>
+    </$list>
+  </$let>
+</div>
+
+</$list>

@@ -1,0 +1,32 @@
+title: $:/config/OfficialPluginLibrary
+tags: $:/tags/PluginLibrary
+caption: {{$:/language/OfficialPluginLibrary}}
+enabled: no
+
+\procedure load-plugin-library-button()
+\whitespace trim
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search[zh]]">
+
+为了更好的体验，我们建议您
+<$button>
+打开 CPL 安装插件
+<$action-sendmessage $message="tm-close-tiddler" />
+<$action-sendmessage $message="tm-navigate" navigateTo="$:/plugins/Gk0Wk/CPL-Repo/panel" />
+</$button>
+
+</$list>
+
+<$list filter="[<lang>!search[zh]]">
+
+For a better experience, we recommend you
+<$button>
+Open CPL to install plugins
+<$action-sendmessage $message="tm-close-tiddler" />
+<$action-sendmessage $message="tm-navigate" navigateTo="$:/plugins/Gk0Wk/CPL-Repo/panel" />
+</$button>
+
+</$list></$list>
+\end
+
+<<load-plugin-library-button>>

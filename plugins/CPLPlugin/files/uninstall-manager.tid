@@ -1,0 +1,15 @@
+code-body: yes
+created: 20231014134350491
+modified: 20231014135000304
+tags:
+title: $:/plugins/Gk0Wk/CPL-Repo/uninstall-manager
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[卸载]else[Uninstall]] }}} />
+type: text/vnd.tiddlywiki
+
+<$macrocall
+	$name="tabs"
+	state="$:/temp/CPL-Repo/plugin-uninstall-manager-tab-state"
+	tabsList="plugin theme language"
+	default="plugin"
+	template="$:/plugins/Gk0Wk/CPL-Repo/plugin-uninstall-plugins-item"
+/>

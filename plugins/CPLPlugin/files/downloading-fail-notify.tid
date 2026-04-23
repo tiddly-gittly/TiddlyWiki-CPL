@@ -1,0 +1,10 @@
+code-body: yes
+created: 20231009195144895
+modified: 20231009195350150
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/downloading-fail-notify
+type: text/vnd.tiddlywiki
+
+!! <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[安装失败]else[Installation failed]] }}} />
+
+<<message>>

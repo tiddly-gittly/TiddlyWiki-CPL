@@ -1,0 +1,48 @@
+code-body: yes
+created: 20231010151718412
+modified: 20231010161347568
+tags:
+title: $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
+type: text/vnd.tiddlywiki
+
+\define paged-plugin-list-control(class2:"")
+\whitespace trim
+<$list filter="[<pageMin>!match<pageMax>]">
+<div class="$class2$">
+    <div>
+    <$list filter="[<page>!match<lastPage>]">
+        <$button setTitle=<<pageState>> setTo=<<lastPage>>>{{$:/core/images/left-arrow}}</$button>
+    </$list>
+    </div>
+    <span><$text text={{{ [<page>add[1]] }}}/>&nbsp;/&nbsp;<$text text={{{ [<pageMax>add[1]] }}}/></span>
+    <div>
+    <$list filter="[<page>!match<nextPage>]">
+        <$button setTitle=<<pageState>> setTo=<<nextPage>>>{{$:/core/images/right-arrow}}</$button>
+    </$list>
+    </div>
+</div>
+</$list>
+\end
+\define paged-plugin-list(filter,field,pageSize:"10",indexTitle:"$:/temp/CPL-Repo/plugins-index",class1:"",class2:"")
+\whitespace trim
+<$let pageSize={{{ [<__pageSize__>min[1]] }}} indexTitle=<<__indexTitle__>> pageState=<<qualify "$:/temp/CPL-Repo/paged-plugin-list-page">> pluginCount={{{ $filter$ +[count[]] }}}>
+<$let pageMin="0" pageMax={{{ [<pluginCount>divide<__pageSize__>ceil[]subtract[1]max[0]] }}}>
+<$let page={{{ [<pageState>get[text]else<pageMin>] +[max<pageMin>min<pageMax>] }}}>
+<$let firstIndex={{{ [<page>multiply<__pageSize__>] }}} nextPage={{{ [<page>add[1]min<pageMax>] }}} lastPage={{{ [<page>subtract[1]max<pageMin>] }}}>
+<<paged-plugin-list-control "$class2$">>
+<div class="$class1$">
+    <$list filter="$filter$ +[rest<firstIndex>first<__pageSize__>]" variable="plugin">
+    <$macrocall
+        $name="plugin-list-item"
+        json={{{ [{$:/temp/CPL-Repo/plugins-index}jsonextract<plugin>] }}}
+        field="$field$"
+        class="cpl-plugin-info-box"
+    />
+    </$list>
+</div>
+<<paged-plugin-list-control "$class2$">>
+</$let>
+</$let>
+</$let>
+</$let>
+\end
