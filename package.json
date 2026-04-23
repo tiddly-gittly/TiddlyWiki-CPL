@@ -17,6 +17,8 @@
     "dev:wiki": "tiddlywiki-plugin-dev dev --wiki wiki --write-wiki",
     "build": "tiddlywiki-plugin-dev build --wiki wiki",
     "build:library": "tiddlywiki-plugin-dev build --library --wiki wiki --output dist/library",
+    "fetch-plugins": "node scripts/fetch-plugins.js",
+    "fetch-plugins:dry-run": "node scripts/fetch-plugins.js --dry-run",
     "dev:build": "npm run clean && cross-env NODE_ENV=development npm run build",
     "test": "jest",
     "test:unit": "jest tests/unit",

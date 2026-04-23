@@ -29,3 +29,114 @@ On this site, you can browse through various interesting plugins and install the
 1. Pull this repo
 2. Make sure to install NodeJS and run `npm i`
 3. In this repo folder, run: `npm run help` for further guidance
+
+## Development & Testing
+
+### Project Architecture
+
+This project uses [Modern.TiddlyDev](https://github.com/tiddly-gittly/Modern.TiddlyDev) with the following structure:
+
+- `src/CPLServer/` — Server-side plugin (API routes, data store, rate limiting)
+- `src/CPLPlugin/` — Client-side plugin (browser API client, UI components)
+- `wiki/` — TiddlyWiki content and configuration
+- `wiki/files/plugin-offline/` — Offline plugin files (for plugins not available online)
+- `wiki/files/plugin-fetched/` — Fetched plugin files (populated by scheduled scripts in production)
+- `data/` — Runtime data directory (downloads, ratings, created automatically)
+
+### Local Development
+
+Start the development server with hot reload:
+
+```bash
+pnpm dev
+```
+
+The server will start on `http://127.0.0.1:15745` by default. The `tiddlywiki-plugin-dev` CLI automatically loads plugins from `src/`, so you don't need to manually declare them in `wiki/tiddlywiki.info`.
+
+For LAN access (useful for mobile testing):
+
+```bash
+pnpm dev:lan
+```
+
+### Testing
+
+We have three levels of automated tests:
+
+**Unit tests** — Data store, rate limiter, and utility functions:
+
+```bash
+pnpm test:unit
+```
+
+**API tests** — Server route handlers (runs a test server on port 9876):
+
+```bash
+pnpm test:api
+```
+
+**E2E tests** — Playwright browser automation across Chromium, Firefox, and WebKit:
+
+```bash
+pnpm test:e2e
+```
+
+To run E2E tests with the interactive UI:
+
+```bash
+pnpm test:e2e:ui
+```
+
+**All tests:**
+
+```bash
+pnpm test           # Unit tests only (Jest)
+# To run everything:
+pnpm test:unit && pnpm test:api && pnpm test:e2e
+```
+
+### Building
+
+Build the static website and plugin JSON files:
+
+```bash
+pnpm build
+```
+
+Build the plugin library (for distribution):
+
+```bash
+pnpm build:library
+```
+
+### Adding Offline Plugin Files
+
+Place plugin `.json` files into `wiki/files/plugin-offline/` to make them available for download via the server. The download route (`GET /cpl/api/download-plugin/:title`) checks `wiki/files/plugin-fetched/` first, then falls back to `wiki/files/plugin-offline/`.
+
+### Production Server
+
+Start the production server:
+
+```bash
+pnpm server:start
+```
+
+This starts a standard TiddlyWiki Node.js server with CPL plugins loaded. For public deployments, configure `writer=(anonymous)` to disable write access while keeping download statistics active.
+
+### Scheduled Plugin Fetching
+
+To keep `wiki/files/plugin-fetched/` up to date with the latest plugin versions, schedule `scripts/fetch-plugins.js` to run periodically.
+
+**Windows** — Use Windows Task Scheduler:
+1. Create a new task that runs `node scripts/fetch-plugins.js`
+2. Set the working directory to the repo root
+3. Schedule it to run daily or at your preferred interval
+
+**Linux/macOS** — Use `cron`:
+
+```bash
+# Fetch plugins daily at 3 AM
+0 3 * * * cd /path/to/TiddlyWiki-CPL && node scripts/fetch-plugins.js
+```
+
+The script fetches the latest plugin JSON files and saves them to `wiki/files/plugin-fetched/`. Run it with `--dry-run` to preview what would be fetched without writing files.

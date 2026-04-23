@@ -12,10 +12,45 @@
 
 const { test, expect } = require('@playwright/test');
 const { startBlankWiki, stopBlankWiki, BLANK_WIKI_URL } = require('./helpers/blank-wiki-server');
+const fs = require('fs');
+const path = require('path');
 
 const BASE_URL = process.env.TEST_URL || 'http://localhost:8080';
 const TEST_PLUGIN_TIDDLER = 'Plugin_202203245445241';
 const TEST_PLUGIN_CPL_TITLE = '$:/plugins/sk/Links';
+
+// Temporary test plugin for blank wiki E2E
+const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
+const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
+const TEST_PLUGIN_OFFLINE_PATH = path.resolve('wiki/files/plugin-offline', `${TEST_PLUGIN_SANITIZED}.json`);
+
+function createTestPluginFile() {
+  const testPlugin = {
+    title: TEST_PLUGIN_TITLE,
+    type: 'application/json',
+    'plugin-type': 'plugin',
+    text: JSON.stringify({
+      tiddlers: {
+        [`${TEST_PLUGIN_TITLE}/readme`]: {
+          title: `${TEST_PLUGIN_TITLE}/readme`,
+          text: 'This is an E2E test plugin readme. It verifies that plugins can be installed via the import dialog and their tiddlers are accessible.'
+        }
+      }
+    })
+  };
+  fs.writeFileSync(TEST_PLUGIN_OFFLINE_PATH, JSON.stringify(testPlugin), 'utf-8');
+  return testPlugin;
+}
+
+function removeTestPluginFile() {
+  try {
+    if (fs.existsSync(TEST_PLUGIN_OFFLINE_PATH)) {
+      fs.unlinkSync(TEST_PLUGIN_OFFLINE_PATH);
+    }
+  } catch (e) {
+    // ignore cleanup errors
+  }
+}
 
 async function navigateToPlugin(page, tiddlerTitle) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -37,7 +72,12 @@ test.describe('CPL Server E2E', () => {
   test.beforeEach(async ({ page }) => {
     page.on('console', msg => {
       if (msg.type() === 'error') {
-        console.log(`[Browser ${page.context().browser().browserType().name()}] ${msg.type()}: ${msg.text()}`);
+        const text = msg.text();
+        // Suppress expected 404s from plugins without changelogs
+        if (text.includes('Failed to fetch changelog') && text.includes('XMLHttpRequest error code: 404')) {
+          return;
+        }
+        console.log(`[Browser ${page.context().browser().browserType().name()}] ${msg.type()}: ${text}`);
       }
     });
     page.on('pageerror', err => {
@@ -132,54 +172,72 @@ test.describe('CPL Server E2E', () => {
 
 test.describe('CPL Client Installation E2E', () => {
   test.beforeAll(async () => {
+    createTestPluginFile();
     await startBlankWiki();
   });
 
   test.afterAll(() => {
     stopBlankWiki();
+    removeTestPluginFile();
   });
 
-  test('blank wiki can install CPL client and download plugin from server', async ({ page, context }) => {
-    // Step 1: Open blank wiki and verify it's empty
+  test('blank wiki can install test plugin via TW import dialog and open its readme', async ({ page, request }) => {
+    // Step 1: Download test plugin JSON from server using Playwright request API
+    const pluginResponse = await request.get(`${BASE_URL}/cpl/api/download-plugin/${encodeURIComponent(TEST_PLUGIN_TITLE)}`);
+    expect(pluginResponse.ok()).toBe(true);
+    const pluginJson = await pluginResponse.json();
+    expect(pluginJson).toHaveProperty('title');
+
+    // Step 2: Open blank wiki and verify plugin is not yet installed
     await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
 
-    // Verify no CPL plugin exists yet
-    const hasCPLBefore = await page.evaluate(() => {
-      return !!$tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Repo');
-    });
-    expect(hasCPLBefore).toBe(false);
+    const hasPluginBefore = await page.evaluate((title) => {
+      return !!$tw.wiki.getTiddler(title);
+    }, TEST_PLUGIN_TITLE);
+    expect(hasPluginBefore).toBe(false);
 
-    // Step 2: Install CPL client by fetching plugin JSON from server and importing it
-    // In real world, user would drag-drop or click install link. We simulate the import.
-    const pluginJson = await page.evaluate(async (serverUrl) => {
-      const res = await fetch(`${serverUrl}/cpl/api/download-plugin/dullroar_sitemap`);
-      return res.json();
-    }, BASE_URL);
-
-    expect(pluginJson).toHaveProperty('title');
-
-    // Import the plugin into blank wiki via TW's standard mechanism
+    // Step 3: Prepare $:/Import tiddler data and navigate to it via UI
     await page.evaluate((pluginData) => {
-      $tw.wiki.addTiddler(pluginData);
-      $tw.wiki.readPluginInfo();
-      $tw.wiki.registerPluginTiddlers('plugin');
-      $tw.wiki.unpackPluginTiddlers();
+      const importData = { tiddlers: {} };
+      importData.tiddlers[pluginData.title] = pluginData;
+      $tw.wiki.addTiddler({
+        title: '$:/Import',
+        type: 'application/json',
+        'plugin-type': 'import',
+        status: 'pending',
+        text: JSON.stringify(importData)
+      });
     }, pluginJson);
 
-    // Step 3: Verify plugin is installed
-    const hasPluginAfter = await page.evaluate(() => {
-      return !!$tw.wiki.getTiddler('$:/plugins/dullroar/sitemap');
-    });
+    // Navigate to $:/Import via page URL (UI navigation)
+    await page.goto(`${BLANK_WIKI_URL}#%24%3A%2FImport`, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
+
+    // Step 4: Wait for import preview and confirm via UI click
+    const importButton = page.locator('button').filter({ hasText: /^Import$/i }).first();
+    await expect(importButton).toBeVisible({ timeout: 10000 });
+    await importButton.click();
+
+    // Wait for import to complete
+    await page.waitForTimeout(500);
+
+    // Step 5: Verify plugin is installed
+    const hasPluginAfter = await page.evaluate((title) => {
+      return !!$tw.wiki.getTiddler(title);
+    }, TEST_PLUGIN_TITLE);
     expect(hasPluginAfter).toBe(true);
 
-    // Step 4: Verify plugin functions are available (UI check)
-    // The sitemap plugin should have added its tiddlers
-    const pluginTiddlers = await page.evaluate(() => {
-      const plugin = $tw.wiki.getTiddler('$:/plugins/dullroar/sitemap');
-      return plugin ? Object.keys(JSON.parse(plugin.fields.text).tiddlers) : [];
-    });
-    expect(pluginTiddlers.length).toBeGreaterThan(0);
+    // Step 6: Open the readme tiddler via UI navigation and verify content
+    const readmeTitle = `${TEST_PLUGIN_TITLE}/readme`;
+    await page.goto(`${BLANK_WIKI_URL}#${encodeURIComponent(readmeTitle)}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
+
+    // Use tiddler-frame specific selector to avoid matching multiple open tiddlers
+    const readmeFrame = page.locator(`.tc-tiddler-frame[data-tiddler-title="${readmeTitle}"]`);
+    const readmeBody = readmeFrame.locator('.tc-tiddler-body');
+    await expect(readmeBody).toBeVisible();
+    await expect(readmeBody).toContainText('E2E test plugin readme');
   });
 
   test('blank wiki can connect to CPL server via API', async ({ page }) => {
