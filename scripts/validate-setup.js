@@ -9,25 +9,25 @@ console.log('[CPL Validation] Checking setup...\n');
 
 const checks = [
   {
-    name: 'Plugin directory structure',
+    name: 'Plugin directory structure (src/)',
     check: () => {
       const required = [
-        'plugins/CPLServer/plugin.info',
-        'plugins/CPLServer/utils/data-store.js',
-        'plugins/CPLServer/utils/rate-limiter.js',
-        'plugins/CPLServer/routes/post-download.js',
-        'plugins/CPLServer/routes/get-stats.js',
-        'plugins/CPLServer/routes/post-rate.js',
-        'plugins/CPLServer/routes/get-changelog.js'
+        'src/CPLServer/plugin.info',
+        'src/CPLServer/utils/data-store.js',
+        'src/CPLServer/utils/rate-limiter.js',
+        'src/CPLServer/routes/post-download.js',
+        'src/CPLServer/routes/get-stats.js',
+        'src/CPLServer/routes/post-rate.js',
+        'src/CPLServer/routes/get-changelog.js'
       ];
       return required.every(f => fs.existsSync(f));
     }
   },
   {
-    name: 'tiddlywiki.info updated',
+    name: 'wiki/tiddlywiki.info exists',
     check: () => {
-      const info = JSON.parse(fs.readFileSync('tiddlywiki.info', 'utf-8'));
-      return info.plugins.includes('$:/plugins/Gk0Wk/CPL-Server');
+      const info = JSON.parse(fs.readFileSync('wiki/tiddlywiki.info', 'utf-8'));
+      return info.plugins.includes('tiddlywiki/filesystem');
     }
   },
   {

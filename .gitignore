@@ -117,6 +117,10 @@ tiddlers/subwiki/
 # CPL Server data files
 data/*.json
 
+# Playwright test artifacts
+playwright-report/
+test-results/
+
 # ignore some change from plugin that will only change "modified" field
 $__keepstate_*
 $__Import.tid

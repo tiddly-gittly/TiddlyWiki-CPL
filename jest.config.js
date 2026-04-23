@@ -7,7 +7,7 @@ module.exports = {
     '**/tests/**/*.test.js'
   ],
   collectCoverageFrom: [
-    'plugins/**/*.js',
+    'src/**/*.js',
     '!**/node_modules/**'
   ],
   coverageDirectory: 'coverage',

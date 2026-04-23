@@ -39,9 +39,9 @@ const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
 // Build tiddlywiki command
 const twArgs = [
   TW_ENTRY,
-  '++./plugins/CPLServer',
-  '++./plugins/CPLPlugin',
-  '.',
+  '++./src/CPLServer',
+  '++./src/CPLPlugin',
+  'wiki',
   '--listen',
   `port=${port}`,
   `host=${host}`
