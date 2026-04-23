@@ -1,0 +1,3 @@
+# Ignore data files but keep directory
+*.json
+!README.md

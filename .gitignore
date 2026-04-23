@@ -114,6 +114,9 @@ $__StoryList_*.tid
 settings/settings.json
 tiddlers/subwiki/
 
+# CPL Server data files
+data/*.json
+
 # ignore some change from plugin that will only change "modified" field
 $__keepstate_*
 $__Import.tid

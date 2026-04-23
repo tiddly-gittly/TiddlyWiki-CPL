@@ -18,7 +18,8 @@
         "tiddlywiki/katex",
         "tiddlywiki/markdown",
         "tiddlywiki/sax",
-        "tiddlywiki/filesystem"
+        "tiddlywiki/filesystem",
+        "$:/plugins/Gk0Wk/CPL-Server"
     ],
     "themes": [
         "tiddlywiki/vanilla"
