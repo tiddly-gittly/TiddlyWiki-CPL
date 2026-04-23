@@ -6,12 +6,15 @@ module.exports = defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   reporter: 'html',
+  timeout: 90000,
   use: {
     baseURL: process.env.TEST_URL || 'http://localhost:8080',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    actionTimeout: 20000,
+    navigationTimeout: 60000,
   },
 
   projects: [
@@ -35,5 +38,8 @@ module.exports = defineConfig({
     url: 'http://localhost:8080',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
+    env: {
+      CPL_TEST_MODE: 'true'
+    }
   },
 });

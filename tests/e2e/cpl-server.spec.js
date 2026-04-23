@@ -17,10 +17,9 @@ const TEST_PLUGIN_TIDDLER = 'Plugin_202203245445241';
 const TEST_PLUGIN_CPL_TITLE = '$:/plugins/sk/Links';
 
 async function navigateToPlugin(page, tiddlerTitle) {
-  await page.goto(BASE_URL);
-  await page.waitForLoadState('networkidle');
-  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 10000 });
-  await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 10000 });
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+  await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 30000 });
 
   await page.evaluate((title) => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
@@ -33,6 +32,17 @@ async function navigateToPlugin(page, tiddlerTitle) {
 }
 
 test.describe('CPL Server E2E', () => {
+  // Collect browser console logs for debugging
+  test.beforeEach(async ({ page }) => {
+    page.on('console', msg => {
+      if (msg.type() === 'error') {
+        console.log(`[Browser ${page.context().browser().browserType().name()}] ${msg.type()}: ${msg.text()}`);
+      }
+    });
+    page.on('pageerror', err => {
+      console.log(`[Browser ${page.context().browser().browserType().name()}] Page error: ${err.message}`);
+    });
+  });
 
   test('should display plugin statistics on plugin page', async ({ page }) => {
     await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
@@ -83,9 +93,8 @@ test.describe('CPL Server E2E', () => {
   });
 
   test('API should be accessible from browser via $tw.cplServerAPI', async ({ page }) => {
-    await page.goto(BASE_URL);
-    await page.waitForLoadState('networkidle');
-    await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 10000 });
+    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 30000 });
 
     const result = await page.evaluate(() => {
       return new Promise((resolve) => {
