@@ -1,0 +1,10 @@
+{
+  "title": "$:/plugins/Gk0Wk/CPL-Server",
+  "description": "CPL Server API - Download stats and ratings",
+  "author": "Gk0Wk",
+  "version": "1.0.0",
+  "core-version": ">=5.3.0",
+  "plugin-type": "plugin",
+  "dependents": "",
+  "list": "readme"
+}

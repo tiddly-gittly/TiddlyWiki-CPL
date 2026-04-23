@@ -1,0 +1,63 @@
+created: 20260101000000000
+creator: CPL-Server
+modified: 20260101000000000
+modifier: CPL-Server
+tags: $:/tags/ViewTemplate CPL-Server
+title: $:/plugins/Gk0Wk/CPL-Server/PluginChangelogView
+type: text/vnd.tiddlywiki
+
+\define changelog-display()
+<div class="cpl-changelog-section" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 6px;">
+  <h3 style="margin-top: 0; border-bottom: 2px solid #e9ecef; padding-bottom: 8px;">
+    📋 Changelog
+  </h3>
+  <div class="cpl-changelog-content" data-plugin={{!!cpl.title}}>
+    <div style="color: #666; font-style: italic;">Loading changelog...</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var pluginTitle = '{{!!cpl.title}}';
+  if (!pluginTitle || pluginTitle === '') return;
+  
+  // Find this specific changelog container
+  var containers = document.querySelectorAll('.cpl-changelog-content');
+  var contentEl = null;
+  for (var i = 0; i < containers.length; i++) {
+    if (containers[i].getAttribute('data-plugin') === pluginTitle) {
+      contentEl = containers[i];
+      break;
+    }
+  }
+  
+  if (!contentEl) return;
+  
+  // Fetch changelog
+  if (window.CPL_API) {
+    window.CPL_API.getChangelog(pluginTitle).then(function(data) {
+      if (data.hasChangelog && data.changelog) {
+        // Simple text rendering (could be enhanced with markdown parsing)
+        var formattedContent = data.changelog
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\n/g, '<br>');
+        contentEl.innerHTML = '<div style="max-height: 400px; overflow-y: auto; white-space: pre-wrap;">' + formattedContent + '</div>';
+      } else {
+        contentEl.innerHTML = '<div style="color: #999; font-style: italic;">No changelog available for this plugin.</div>';
+      }
+    }).catch(function(err) {
+      console.error('[CPL] Failed to load changelog:', err);
+      contentEl.innerHTML = '<div style="color: #999; font-style: italic;">Unable to load changelog.</div>';
+    });
+  } else {
+    contentEl.innerHTML = '<div style="color: #999; font-style: italic;">API not available.</div>';
+  }
+})();
+</script>
+\end
+
+<$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="ignore">
+<<changelog-display>>
+</$list>

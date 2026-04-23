@@ -1,0 +1,35 @@
+# CPL Server Plugin
+
+This plugin provides server-side API for the TiddlyWiki CPL (Community Plugin Library).
+
+## Features
+
+- **Download Statistics**: Track plugin download counts with IP-based rate limiting
+- **Rating System**: Allow users to rate plugins (1-5 stars) with IP-based vote limiting
+- **Changelog API**: Serve plugin changelogs
+
+## API Endpoints
+
+### POST /cpl/api/download/:pluginTitle
+Record a plugin download. Limited to one count per IP per hour.
+
+### GET /cpl/api/stats/:pluginTitle
+Get plugin statistics (download count, rating).
+
+### POST /cpl/api/rate/:pluginTitle
+Submit a rating. Body: `{ rating: number(1-5) }`
+
+### GET /cpl/api/changelog/:pluginTitle
+Get plugin changelog content.
+
+## Configuration
+
+The plugin stores data in the `data/` directory:
+- `data/stats.json` - Download statistics
+- `data/ratings.json` - User ratings
+
+## Security
+
+- IP-based rate limiting prevents abuse
+- Read-only mode compatible (use with `--listen writers=(anon)`)
+- Data files should be backed up regularly
