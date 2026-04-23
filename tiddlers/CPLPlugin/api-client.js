@@ -27,23 +27,26 @@ Provides HTTP API access for download stats, ratings, and changelogs.
       type: method,
       headers: {
         'Content-Type': 'application/json'
+      },
+      callback: function(err, response) {
+        if (err) {
+          callback(err.message || err, null);
+          return;
+        }
+        try {
+          var data = JSON.parse(response);
+          callback(null, data);
+        } catch (e) {
+          callback(new Error('Invalid JSON response'), null);
+        }
       }
     };
-    
+
     if (body) {
       options.data = JSON.stringify(body);
     }
 
-    $tw.utils.httpRequest(options).then(function(response) {
-      try {
-        var data = JSON.parse(response);
-        callback(null, data);
-      } catch (e) {
-        callback(new Error('Invalid JSON response'), null);
-      }
-    }).catch(function(error) {
-      callback(error, null);
-    });
+    $tw.utils.httpRequest(options);
   }
 
   /**
