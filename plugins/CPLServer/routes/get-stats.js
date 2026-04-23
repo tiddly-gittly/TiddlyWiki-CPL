@@ -15,24 +15,35 @@ GET /cpl/api/stats/:pluginTitle - Get plugin statistics
   exports.path = /^\/cpl\/api\/stats\/(.+)$/;
 
   exports.handler = function(request, response, state) {
-    // Get plugin title from URL
-    var pluginTitle = decodeURIComponent(state.params[0]);
-    
-    // Get stats and ratings
-    var stats = DataStore.getStats(pluginTitle);
-    var ratings = DataStore.getRatings(pluginTitle);
-    
-    // Send response
-    state.sendResponse(200, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control': 'public, max-age=60' // Cache for 1 minute
-    }, JSON.stringify({
-      pluginTitle: pluginTitle,
-      downloadCount: stats.downloadCount,
-      downloadLastUpdated: stats.lastUpdated,
-      averageRating: ratings.averageRating,
-      totalRatings: ratings.totalRatings
-    }));
+    try {
+      // Get plugin title from URL
+      var pluginTitle = decodeURIComponent(state.params[0]);
+      
+      // Get stats and ratings
+      var stats = DataStore.getStats(pluginTitle);
+      var ratings = DataStore.getRatings(pluginTitle);
+      
+      // Send response
+      state.sendResponse(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=60' // Cache for 1 minute
+      }, JSON.stringify({
+        pluginTitle: pluginTitle,
+        downloadCount: stats.downloadCount,
+        downloadLastUpdated: stats.lastUpdated,
+        averageRating: ratings.averageRating,
+        totalRatings: ratings.totalRatings
+      }));
+    } catch (error) {
+      console.error('[CPL-Server] Error in stats handler:', error);
+      state.sendResponse(500, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }, JSON.stringify({
+        success: false,
+        error: 'Internal server error'
+      }));
+    }
   };
 })();

@@ -16,42 +16,53 @@ POST /cpl/api/download/:pluginTitle - Record a plugin download
   exports.path = /^\/cpl\/api\/download\/(.+)$/;
 
   exports.handler = function(request, response, state) {
-    // Get plugin title from URL
-    var pluginTitle = decodeURIComponent(state.params[0]);
-    
-    // Get client IP
-    var ip = RateLimiter.getClientIp(request);
-    
-    // Check rate limit
-    var canDownload = RateLimiter.canDownload(pluginTitle, ip);
-    
-    if (canDownload) {
-      // Record the download
-      RateLimiter.recordDownload(pluginTitle, ip);
-      var stats = DataStore.updateDownloadStats(pluginTitle, ip);
+    try {
+      // Get plugin title from URL
+      var pluginTitle = decodeURIComponent(state.params[0]);
       
-      // Send success response
-      state.sendResponse(200, {
+      // Get client IP
+      var ip = RateLimiter.getClientIp(request);
+      
+      // Check rate limit
+      var canDownload = RateLimiter.canDownload(pluginTitle, ip);
+      
+      if (canDownload) {
+        // Record the download
+        RateLimiter.recordDownload(pluginTitle, ip);
+        var stats = DataStore.updateDownloadStats(pluginTitle, ip);
+        
+        // Send success response
+        state.sendResponse(200, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }, JSON.stringify({
+          success: true,
+          message: 'Download recorded',
+          pluginTitle: pluginTitle,
+          downloadCount: stats.downloadCount
+        }));
+      } else {
+        // Return current stats without incrementing
+        var stats = DataStore.getStats(pluginTitle);
+        
+        state.sendResponse(200, {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }, JSON.stringify({
+          success: true,
+          message: 'Download rate limited (already counted recently)',
+          pluginTitle: pluginTitle,
+          downloadCount: stats.downloadCount
+        }));
+      }
+    } catch (error) {
+      console.error('[CPL-Server] Error in download handler:', error);
+      state.sendResponse(500, {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       }, JSON.stringify({
-        success: true,
-        message: 'Download recorded',
-        pluginTitle: pluginTitle,
-        downloadCount: stats.downloadCount
-      }));
-    } else {
-      // Return current stats without incrementing
-      var stats = DataStore.getStats(pluginTitle);
-      
-      state.sendResponse(200, {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }, JSON.stringify({
-        success: true,
-        message: 'Download rate limited (already counted recently)',
-        pluginTitle: pluginTitle,
-        downloadCount: stats.downloadCount
+        success: false,
+        error: 'Internal server error'
       }));
     }
   };
