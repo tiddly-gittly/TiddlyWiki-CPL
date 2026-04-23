@@ -166,4 +166,23 @@ describe('CPL Server API', () => {
     
     expect([200, 404]).toContain(response.statusCode);
   });
+
+  test('GET /cpl/api/download-plugin/:pluginTitle should serve plugin file', async () => {
+    // Use an offline plugin that exists
+    const pluginTitle = encodeURIComponent('dullroar_sitemap');
+    const response = await makeRequest('GET', `/cpl/api/download-plugin/${pluginTitle}`);
+    
+    expect(response.statusCode).toBe(200);
+    // Should be valid JSON plugin file (already parsed by makeRequest)
+    expect(response.body).toHaveProperty('title');
+    expect(response.body).toHaveProperty('plugin-type', 'plugin');
+  });
+
+  test('GET /cpl/api/download-plugin/:pluginTitle should return 404 for missing plugin', async () => {
+    const pluginTitle = encodeURIComponent('$:/plugins/nonexistent/plugin');
+    const response = await makeRequest('GET', `/cpl/api/download-plugin/${pluginTitle}`);
+    
+    expect(response.statusCode).toBe(404);
+    expect(response.body.success).toBe(false);
+  });
 });
