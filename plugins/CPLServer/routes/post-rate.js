@@ -30,6 +30,7 @@ POST /cpl/api/rate/:pluginTitle - Submit a plugin rating
   }
 
   exports.handler = function(request, response, state) {
+    try {
     // Get plugin title from URL
     var pluginTitle = decodeURIComponent(state.params[0]);
     
@@ -91,5 +92,15 @@ POST /cpl/api/rate/:pluginTitle - Submit a plugin rating
       averageRating: ratings.averageRating,
       totalRatings: ratings.totalRatings
     }));
+    } catch (error) {
+      console.error('[CPL-Server] Error in rate handler:', error);
+      state.sendResponse(500, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }, JSON.stringify({
+        success: false,
+        error: 'Internal server error'
+      }));
+    }
   };
 })();
