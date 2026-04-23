@@ -30,14 +30,28 @@ Provides HTTP API access for download stats, ratings, and changelogs.
       },
       callback: function(err, response) {
         if (err) {
-          callback(err.message || err, null);
+          var errorMessage = 'Request failed';
+          if (err.message) {
+            errorMessage = err.message;
+          } else if (typeof err === 'string') {
+            errorMessage = err;
+          } else if (err.status !== undefined) {
+            errorMessage = 'HTTP ' + err.status + (err.statusText ? ' ' + err.statusText : '');
+          } else {
+            try {
+              errorMessage = JSON.stringify(err);
+            } catch (e) {
+              errorMessage = String(err);
+            }
+          }
+          callback(errorMessage, null);
           return;
         }
         try {
           var data = JSON.parse(response);
           callback(null, data);
         } catch (e) {
-          callback(new Error('Invalid JSON response'), null);
+          callback('Invalid JSON response', null);
         }
       }
     };
@@ -199,11 +213,11 @@ Provides HTTP API access for download stats, ratings, and changelogs.
       
       CPLServerAPI.submitRating(pluginTitle, rating, function(err, data) {
         if (err) {
-          $tw.wiki.addTiddler({
-            title: tempTitle,
-            text: 'error: ' + err.message,
-            'plugin-title': pluginTitle
-          });
+        $tw.wiki.addTiddler({
+          title: tempTitle,
+          text: 'error: ' + (err || 'Unknown error'),
+          'plugin-title': pluginTitle
+        });
           return;
         }
         

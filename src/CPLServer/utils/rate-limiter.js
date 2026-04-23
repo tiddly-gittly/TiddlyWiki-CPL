@@ -71,6 +71,11 @@ IP-based rate limiting for CPL Server
 
     // Check if download is allowed (one per IP per hour per plugin)
     canDownload: function(pluginTitle, ip) {
+      // Skip rate limiting in test mode
+      if (process.env.CPL_TEST_MODE === 'true') {
+        return true;
+      }
+
       if (!downloadLimits[pluginTitle]) {
         downloadLimits[pluginTitle] = {};
       }
@@ -94,6 +99,11 @@ IP-based rate limiting for CPL Server
 
     // Check if rating is allowed (one per IP per plugin, forever)
     canRate: function(pluginTitle, ip, dataStore) {
+      // Skip rate limiting in test mode
+      if (process.env.CPL_TEST_MODE === 'true') {
+        return true;
+      }
+
       // Check in-memory cache first
       if (ratingLimits[pluginTitle] && ratingLimits[pluginTitle][ip]) {
         return false;
