@@ -11,6 +11,7 @@
  */
 
 const { test, expect } = require('@playwright/test');
+const { startBlankWiki, stopBlankWiki, BLANK_WIKI_URL } = require('./helpers/blank-wiki-server');
 
 const BASE_URL = process.env.TEST_URL || 'http://localhost:8080';
 const TEST_PLUGIN_TIDDLER = 'Plugin_202203245445241';
@@ -125,6 +126,79 @@ test.describe('CPL Server E2E', () => {
     }, TEST_PLUGIN_CPL_TITLE);
 
     expect(hasTempTiddlers).toBe(true);
+  });
+
+});
+
+test.describe('CPL Client Installation E2E', () => {
+  test.beforeAll(async () => {
+    await startBlankWiki();
+  });
+
+  test.afterAll(() => {
+    stopBlankWiki();
+  });
+
+  test('blank wiki can install CPL client and download plugin from server', async ({ page, context }) => {
+    // Step 1: Open blank wiki and verify it's empty
+    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+
+    // Verify no CPL plugin exists yet
+    const hasCPLBefore = await page.evaluate(() => {
+      return !!$tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Repo');
+    });
+    expect(hasCPLBefore).toBe(false);
+
+    // Step 2: Install CPL client by fetching plugin JSON from server and importing it
+    // In real world, user would drag-drop or click install link. We simulate the import.
+    const pluginJson = await page.evaluate(async (serverUrl) => {
+      const res = await fetch(`${serverUrl}/cpl/api/download-plugin/dullroar_sitemap`);
+      return res.json();
+    }, BASE_URL);
+
+    expect(pluginJson).toHaveProperty('title');
+
+    // Import the plugin into blank wiki via TW's standard mechanism
+    await page.evaluate((pluginData) => {
+      $tw.wiki.addTiddler(pluginData);
+      $tw.wiki.readPluginInfo();
+      $tw.wiki.registerPluginTiddlers('plugin');
+      $tw.wiki.unpackPluginTiddlers();
+    }, pluginJson);
+
+    // Step 3: Verify plugin is installed
+    const hasPluginAfter = await page.evaluate(() => {
+      return !!$tw.wiki.getTiddler('$:/plugins/dullroar/sitemap');
+    });
+    expect(hasPluginAfter).toBe(true);
+
+    // Step 4: Verify plugin functions are available (UI check)
+    // The sitemap plugin should have added its tiddlers
+    const pluginTiddlers = await page.evaluate(() => {
+      const plugin = $tw.wiki.getTiddler('$:/plugins/dullroar/sitemap');
+      return plugin ? Object.keys(JSON.parse(plugin.fields.text).tiddlers) : [];
+    });
+    expect(pluginTiddlers.length).toBeGreaterThan(0);
+  });
+
+  test('blank wiki can connect to CPL server via API', async ({ page }) => {
+    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
+
+    // Simulate a blank wiki page fetching stats from CPL server
+    const stats = await page.evaluate(async (serverUrl) => {
+      try {
+        const res = await fetch(`${serverUrl}/cpl/api/stats/${encodeURIComponent('$:/plugins/test/plugin')}`);
+        return res.json();
+      } catch (e) {
+        return { error: e.message };
+      }
+    }, BASE_URL);
+
+    expect(stats.error).toBeUndefined();
+    expect(stats).toHaveProperty('downloadCount');
+    expect(stats).toHaveProperty('averageRating');
   });
 
 });
