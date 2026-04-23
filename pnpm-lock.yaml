@@ -23,7 +23,7 @@ importers:
         version: 2.58.1(typescript@5.7.3)
       '@modern-js/tsconfig':
         specifier: ^2.58.1
-        version: 2.58.1
+        version: 2.68.9
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -1319,8 +1319,8 @@ packages:
   '@modern-js/eslint-config@2.58.1':
     resolution: {integrity: sha512-LwQBZefQkkLZRCZDw9NKyQPRF7Cf/FfnsJS+j8hn3R+Eik0+2zqS3DazVM+/vc00fKjao4jypmIrOxiPffGCxg==}
 
-  '@modern-js/tsconfig@2.58.1':
-    resolution: {integrity: sha512-zXOKaUVFUXJuTrB/ZEDj36bqWMUHMXrnj5cs7fZMtJ+tSNMoOPP4BgqzpSh2o/1O+3qV8GN2z38LbCqlaz8xkg==}
+  '@modern-js/tsconfig@2.68.9':
+    resolution: {integrity: sha512-bb3mkBw7Y6FbSqTnvXfqAdV3Fop7Y36O5+mIkJn8BCJyGYvS5zxgqBdAvvc5mMURzqLKiUUPX9Wst8n810X7Bg==}
 
   '@module-federation/runtime-tools@0.2.3':
     resolution: {integrity: sha512-capN8CVTCEqNAjnl102girrkevczoQfnQYyiYC4WuyKsg7+LUqfirIe1Eiyv6VSE2UgvOTZDnqvervA6rBOlmg==}
@@ -2265,6 +2265,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -3370,6 +3371,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   sourcemap-codec@1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
@@ -3489,7 +3491,6 @@ packages:
     resolution: {integrity: sha512-RfWt+Bo/UsTdzP5N4nEInjaJjgAzylUMf21hE4FL5v65c3x054+A+3g3sgW1m68lTJbTbiiqSZ6q6BEIZMwhSQ==}
     engines: {node: '>=0.8.2'}
     hasBin: true
-    bundledDependencies: []
 
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -5464,7 +5465,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@modern-js/tsconfig@2.58.1': {}
+  '@modern-js/tsconfig@2.68.9': {}
 
   '@module-federation/runtime-tools@0.2.3':
     dependencies:
