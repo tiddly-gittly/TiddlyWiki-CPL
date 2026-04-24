@@ -123,6 +123,41 @@ pnpm server:start
 
 This starts a standard TiddlyWiki Node.js server with CPL plugins loaded. For public deployments, configure `writer=(anonymous)` to disable write access while keeping download statistics active.
 
+### Environment Configuration
+
+CPL Server requires environment variables for authentication and admin configuration. Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Required variables:
+
+| Variable | Description |
+|---|---|
+| `CPL_JWT_SECRET` | Random string for JWT signing. Generate with `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` |
+| `CPL_GITHUB_CLIENT_ID` | GitHub OAuth App Client ID |
+| `CPL_GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret |
+| `CPL_ADMIN_GITHUB_IDS` | Comma-separated list of GitHub user IDs who can moderate comments |
+
+**Never commit `.env` to git** — it is already in `.gitignore`.
+
+**Creating a GitHub OAuth App:**
+1. Go to https://github.com/settings/applications/new
+2. Set Authorization callback URL to `http://your-domain/cpl/api/auth/github/callback`
+3. Copy the Client ID and Client Secret to your `.env`
+
+### Comment System
+
+CPL now includes a self-hosted comment system with GitHub OAuth authentication and moderation:
+
+- Users authenticate via GitHub OAuth
+- Comments support wikitext formatting (dangerous syntax is filtered server-side)
+- New comments are held for moderation (`pending` status)
+- Admins (configured in `CPL_ADMIN_GITHUB_IDS`) can approve, reject, or delete comments
+- Comment data is stored in `data/comments/` as JSON files, suitable for git backup
+- Rate limiting: 10 comments per hour per user (configurable via `CPL_COMMENT_RATE_LIMIT`)
+
 ### Scheduled Plugin Fetching
 
 To keep `wiki/files/plugin-fetched/` up to date with the latest plugin versions, schedule `scripts/fetch-plugins.js` to run periodically.

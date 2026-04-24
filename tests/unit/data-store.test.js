@@ -22,12 +22,16 @@ function cleanup() {
 describe('DataStore', () => {
   beforeEach(() => {
     cleanup();
-    // Override data directory path in DataStore
-    // Note: In real implementation, you might need to make the paths configurable
+    DataStore._resetCache();
   });
 
   afterEach(() => {
     cleanup();
+    DataStore._resetCache();
+  });
+
+  afterAll(() => {
+    DataStore._resetCache();
   });
 
   test('should return default stats for new plugin', () => {

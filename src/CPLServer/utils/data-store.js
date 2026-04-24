@@ -4,6 +4,7 @@ type: application/javascript
 module-type: library
 
 Data storage utilities for CPL Server
+Uses in-memory cache with async flush to disk to prevent race conditions.
 \*/
 
 (function() {
@@ -11,18 +12,26 @@ Data storage utilities for CPL Server
 
   var fs = require('fs');
   var path = require('path');
-  // TiddlyWiki instance for utility functions (optional)
-  var $tw = null;
+
+  // Config may not be available in test environment
+  var Config;
   try {
-    $tw = require('tiddlywiki').TiddlyWiki();
+    Config = require('$:/plugins/Gk0Wk/CPL-Server/utils/config.js').Config;
   } catch (e) {
-    // Not running in TiddlyWiki context
+    Config = {
+      dataDir: path.resolve(process.cwd(), 'data')
+    };
   }
 
-  // Data directory path
-  var DATA_DIR = path.resolve(process.cwd(), 'data');
+  var DATA_DIR = Config.dataDir;
   var STATS_FILE = path.join(DATA_DIR, 'stats.json');
   var RATINGS_FILE = path.join(DATA_DIR, 'ratings.json');
+
+  // In-memory cache
+  var statsCache = null;
+  var ratingsCache = null;
+  var flushTimer = null;
+  var pendingFlush = false;
 
   // Ensure data directory exists
   function ensureDataDir() {
@@ -31,8 +40,8 @@ Data storage utilities for CPL Server
     }
   }
 
-  // Read JSON file with default
-  function readJsonFile(filePath, defaultValue) {
+  // Load JSON from disk into memory cache
+  function loadFromDisk(filePath) {
     try {
       if (fs.existsSync(filePath)) {
         var content = fs.readFileSync(filePath, 'utf-8');
@@ -41,27 +50,66 @@ Data storage utilities for CPL Server
     } catch (e) {
       console.error('[CPL-Server] Error reading ' + filePath + ':', e.message);
     }
-    return defaultValue || {};
+    return {};
   }
 
-  // Write JSON file
-  function writeJsonFile(filePath, data) {
+  // Synchronous flush to disk (used on process exit)
+  function flushSync() {
     try {
       ensureDataDir();
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-      return true;
+      if (statsCache !== null) {
+        fs.writeFileSync(STATS_FILE, JSON.stringify(statsCache, null, 2), 'utf-8');
+      }
+      if (ratingsCache !== null) {
+        fs.writeFileSync(RATINGS_FILE, JSON.stringify(ratingsCache, null, 2), 'utf-8');
+      }
+      pendingFlush = false;
     } catch (e) {
-      console.error('[CPL-Server] Error writing ' + filePath + ':', e.message);
-      return false;
+      console.error('[CPL-Server] Error flushing data to disk:', e.message);
     }
   }
+
+  // Async flush to disk (debounced)
+  function flushAsync() {
+    if (flushTimer) {
+      clearTimeout(flushTimer);
+    }
+    pendingFlush = true;
+    flushTimer = setTimeout(function() {
+      flushSync();
+    }, 5000); // Flush at most every 5 seconds
+  }
+
+  // Initialize caches on first access
+  function ensureStatsLoaded() {
+    if (statsCache === null) {
+      statsCache = loadFromDisk(STATS_FILE);
+    }
+  }
+
+  function ensureRatingsLoaded() {
+    if (ratingsCache === null) {
+      ratingsCache = loadFromDisk(RATINGS_FILE);
+    }
+  }
+
+  // Register process exit handler
+  process.on('exit', flushSync);
+  process.on('SIGINT', function() {
+    flushSync();
+    process.exit(0);
+  });
+  process.on('SIGTERM', function() {
+    flushSync();
+    process.exit(0);
+  });
 
   // Data Store API
   var DataStore = {
     // Get download stats for a plugin
     getStats: function(pluginTitle) {
-      var stats = readJsonFile(STATS_FILE, {});
-      return stats[pluginTitle] || {
+      ensureStatsLoaded();
+      return statsCache[pluginTitle] || {
         downloadCount: 0,
         lastUpdated: null,
         downloadsByIp: {}
@@ -70,28 +118,28 @@ Data storage utilities for CPL Server
 
     // Update download stats for a plugin
     updateDownloadStats: function(pluginTitle, ip) {
-      var stats = readJsonFile(STATS_FILE, {});
+      ensureStatsLoaded();
       
-      if (!stats[pluginTitle]) {
-        stats[pluginTitle] = {
+      if (!statsCache[pluginTitle]) {
+        statsCache[pluginTitle] = {
           downloadCount: 0,
           lastUpdated: null,
           downloadsByIp: {}
         };
       }
 
-      stats[pluginTitle].downloadCount++;
-      stats[pluginTitle].lastUpdated = new Date().toISOString();
-      stats[pluginTitle].downloadsByIp[ip] = new Date().toISOString();
+      statsCache[pluginTitle].downloadCount++;
+      statsCache[pluginTitle].lastUpdated = new Date().toISOString();
+      statsCache[pluginTitle].downloadsByIp[ip] = new Date().toISOString();
 
-      writeJsonFile(STATS_FILE, stats);
-      return stats[pluginTitle];
+      flushAsync();
+      return statsCache[pluginTitle];
     },
 
     // Get ratings for a plugin
     getRatings: function(pluginTitle) {
-      var ratings = readJsonFile(RATINGS_FILE, {});
-      return ratings[pluginTitle] || {
+      ensureRatingsLoaded();
+      return ratingsCache[pluginTitle] || {
         ratings: [],
         averageRating: 0,
         totalRatings: 0
@@ -100,17 +148,17 @@ Data storage utilities for CPL Server
 
     // Add a rating for a plugin
     addRating: function(pluginTitle, ip, rating) {
-      var ratings = readJsonFile(RATINGS_FILE, {});
+      ensureRatingsLoaded();
       
-      if (!ratings[pluginTitle]) {
-        ratings[pluginTitle] = {
+      if (!ratingsCache[pluginTitle]) {
+        ratingsCache[pluginTitle] = {
           ratings: [],
           averageRating: 0,
           totalRatings: 0
         };
       }
 
-      var pluginRatings = ratings[pluginTitle];
+      var pluginRatings = ratingsCache[pluginTitle];
       
       // Check if IP already rated
       var existingIndex = pluginRatings.ratings.findIndex(function(r) {
@@ -137,14 +185,14 @@ Data storage utilities for CPL Server
       pluginRatings.averageRating = Math.round((total / pluginRatings.ratings.length) * 10) / 10;
       pluginRatings.totalRatings = pluginRatings.ratings.length;
 
-      writeJsonFile(RATINGS_FILE, ratings);
+      flushAsync();
       return pluginRatings;
     },
 
     // Check if IP has rated a plugin
     hasRated: function(pluginTitle, ip) {
-      var ratings = readJsonFile(RATINGS_FILE, {});
-      var pluginRatings = ratings[pluginTitle];
+      ensureRatingsLoaded();
+      var pluginRatings = ratingsCache[pluginTitle];
       
       if (!pluginRatings || !pluginRatings.ratings) {
         return false;
@@ -157,12 +205,28 @@ Data storage utilities for CPL Server
 
     // Get all stats (for admin purposes)
     getAllStats: function() {
-      return readJsonFile(STATS_FILE, {});
+      ensureStatsLoaded();
+      return JSON.parse(JSON.stringify(statsCache));
     },
 
     // Get all ratings (for admin purposes)
     getAllRatings: function() {
-      return readJsonFile(RATINGS_FILE, {});
+      ensureRatingsLoaded();
+      return JSON.parse(JSON.stringify(ratingsCache));
+    },
+
+    // Force flush to disk (for testing or shutdown)
+    flushSync: flushSync,
+
+    // Reset in-memory cache (for testing only)
+    _resetCache: function() {
+      statsCache = null;
+      ratingsCache = null;
+      if (flushTimer) {
+        clearTimeout(flushTimer);
+        flushTimer = null;
+      }
+      pendingFlush = false;
     }
   };
 

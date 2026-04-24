@@ -63,6 +63,81 @@ Provides HTTP API access for download stats, ratings, and changelogs.
     $tw.utils.httpRequest(options);
   }
 
+  // JWT Token management
+  var JWT_TOKEN_KEY = 'cpl_jwt_token';
+
+  function getJwtToken() {
+    try {
+      return localStorage.getItem(JWT_TOKEN_KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setJwtToken(token) {
+    try {
+      if (token) {
+        localStorage.setItem(JWT_TOKEN_KEY, token);
+      } else {
+        localStorage.removeItem(JWT_TOKEN_KEY);
+      }
+    } catch (e) {
+      console.error('[CPL-Server] Failed to access localStorage:', e);
+    }
+  }
+
+  /**
+   * Make an authenticated HTTP request to the CPL Server API
+   */
+  function authenticatedRequest(method, endpoint, body, callback) {
+    var url = CPL_API_BASE + endpoint;
+    var options = {
+      url: url,
+      type: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      callback: function(err, response) {
+        if (err) {
+          var errorMessage = 'Request failed';
+          if (err.message) {
+            errorMessage = err.message;
+          } else if (typeof err === 'string') {
+            errorMessage = err;
+          } else if (err.status !== undefined) {
+            errorMessage = 'HTTP ' + err.status + (err.statusText ? ' ' + err.statusText : '');
+          } else {
+            try {
+              errorMessage = JSON.stringify(err);
+            } catch (e) {
+              errorMessage = String(err);
+            }
+          }
+          callback(errorMessage, null);
+          return;
+        }
+        try {
+          var data = JSON.parse(response);
+          callback(null, data);
+        } catch (e) {
+          callback('Invalid JSON response', null);
+        }
+      }
+    };
+
+    // Add JWT token if available
+    var token = getJwtToken();
+    if (token) {
+      options.headers['Authorization'] = 'Bearer ' + token;
+    }
+
+    if (body) {
+      options.data = JSON.stringify(body);
+    }
+
+    $tw.utils.httpRequest(options);
+  }
+
   /**
    * CPL Server API - exposed on $tw.cplServerAPI
    */
@@ -104,6 +179,40 @@ Provides HTTP API access for download stats, ratings, and changelogs.
     getChangelog: function(pluginTitle, callback) {
       var encodedTitle = encodeURIComponent(pluginTitle);
       apiRequest('GET', '/changelog/' + encodedTitle, null, callback);
+    },
+
+    // ===== Comment API =====
+
+    /**
+     * Get comments for a plugin
+     */
+    getComments: function(pluginTitle, callback) {
+      var encodedTitle = encodeURIComponent(pluginTitle);
+      authenticatedRequest('GET', '/comments/' + encodedTitle, null, callback);
+    },
+
+    /**
+     * Submit a comment
+     */
+    submitComment: function(pluginTitle, content, callback) {
+      var encodedTitle = encodeURIComponent(pluginTitle);
+      authenticatedRequest('POST', '/comments/' + encodedTitle, { content: content }, callback);
+    },
+
+    // ===== Auth API =====
+
+    /**
+     * Check authentication status
+     */
+    checkAuthStatus: function(callback) {
+      authenticatedRequest('GET', '/auth/status', null, callback);
+    },
+
+    /**
+     * Logout (clear token)
+     */
+    logout: function() {
+      setJwtToken(null);
     }
   };
 
@@ -260,6 +369,174 @@ Provides HTTP API access for download stats, ratings, and changelogs.
         }
       } catch (e) {
         console.error('[CPL-Server] Error recording download:', e);
+      }
+    });
+
+    // ===== Comment Event Handlers =====
+
+    // Load and cache comments for a plugin
+    function fetchPluginComments(pluginTitle) {
+      if (!pluginTitle) return;
+
+      var tempTitle = '$:/temp/CPL-Server/comments/' + pluginTitle;
+
+      CPLServerAPI.getComments(pluginTitle, function(err, data) {
+        if (err) {
+          console.error('[CPL-Server] Failed to fetch comments for', pluginTitle, err);
+          return;
+        }
+
+        $tw.wiki.addTiddler({
+          title: tempTitle,
+          text: JSON.stringify(data),
+          type: 'application/json',
+          'plugin-title': pluginTitle,
+          timestamp: Date.now().toString()
+        });
+      });
+    }
+
+    // Check auth status on startup
+    CPLServerAPI.checkAuthStatus(function(err, data) {
+      if (!err && data && data.authenticated) {
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/user-status',
+          text: 'authenticated'
+        });
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/user',
+          text: JSON.stringify(data.user),
+          type: 'application/json'
+        });
+      } else {
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/user-status',
+          text: 'anonymous'
+        });
+      }
+    });
+
+    // GitHub Login handler
+    $tw.rootWidget.addEventListener('cpl-github-login', function(event) {
+      var githubClientId = '';
+      // Redirect to GitHub OAuth
+      var redirectUri = window.location.origin + '/cpl/api/auth/github/callback';
+      var githubAuthUrl = 'https://github.com/login/oauth/authorize?client_id=' + encodeURIComponent(githubClientId) +
+        '&redirect_uri=' + encodeURIComponent(redirectUri) +
+        '&scope=user:read';
+      window.location.href = githubAuthUrl;
+    });
+
+    // Handle OAuth callback
+    if (window.location.pathname === '/cpl/api/auth/github/callback') {
+      var urlParams = new URLSearchParams(window.location.search);
+      var code = urlParams.get('code');
+      if (code) {
+        // The callback route returns JSON with token
+        // We need to fetch it properly
+        $tw.utils.httpRequest({
+          url: '/cpl/api/auth/github/callback?code=' + encodeURIComponent(code),
+          type: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          callback: function(err, response) {
+            if (!err && response) {
+              try {
+                var data = JSON.parse(response);
+                if (data.success && data.token) {
+                  setJwtToken(data.token);
+                  $tw.wiki.addTiddler({
+                    title: '$:/temp/CPL-Server/user-status',
+                    text: 'authenticated'
+                  });
+                  $tw.wiki.addTiddler({
+                    title: '$:/temp/CPL-Server/user',
+                    text: JSON.stringify(data.user),
+                    type: 'application/json'
+                  });
+                  // Redirect back to previous page or home
+                  window.history.replaceState({}, document.title, '/');
+                }
+              } catch (e) {
+                console.error('[CPL-Server] Failed to parse auth response:', e);
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // Submit comment handler
+    $tw.rootWidget.addEventListener('cpl-submit-comment', function(event) {
+      var paramObject = event.paramObject || {};
+      var pluginTitle = paramObject.pluginTitle;
+      
+      if (!pluginTitle) {
+        console.error('[CPL-Server] Missing pluginTitle for comment submission');
+        return;
+      }
+
+      var draftTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/comment-draft');
+      var content = draftTiddler ? draftTiddler.fields.text : '';
+      
+      if (!content || content.trim().length === 0) {
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/comment-status/' + pluginTitle,
+          text: 'error: Comment content cannot be empty'
+        });
+        return;
+      }
+
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/comment-status/' + pluginTitle,
+        text: 'submitting'
+      });
+
+      CPLServerAPI.submitComment(pluginTitle, content.trim(), function(err, data) {
+        if (err) {
+          $tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Server/comment-status/' + pluginTitle,
+            text: 'error: ' + (err || 'Failed to submit comment')
+          });
+          return;
+        }
+
+        // Clear draft
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/comment-draft',
+          text: ''
+        });
+
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/comment-status/' + pluginTitle,
+          text: 'success'
+        });
+
+        // Refresh comments
+        fetchPluginComments(pluginTitle);
+      });
+    });
+
+    // Fetch comments handler
+    $tw.rootWidget.addEventListener('cpl-fetch-comments', function(event) {
+      var pluginTitle = event.paramObject && event.paramObject.pluginTitle;
+      if (pluginTitle) {
+        fetchPluginComments(pluginTitle);
+      }
+    });
+
+    // Also fetch comments when navigating to plugin pages
+    $tw.wiki.addEventListener('change', function(changes) {
+      var currentTiddler = $tw.wiki.getTiddler('$:/HistoryList');
+      if (currentTiddler && currentTiddler.fields && currentTiddler.fields['current-tiddler']) {
+        var title = currentTiddler.fields['current-tiddler'];
+        var tiddler = $tw.wiki.getTiddler(title);
+        
+        if (tiddler && tiddler.fields.tags && tiddler.fields.tags.indexOf('$:/tags/PluginWiki') !== -1) {
+          var pluginTitle = tiddler.fields['cpl.title'];
+          if (pluginTitle) {
+            fetchPluginComments(pluginTitle);
+          }
+        }
       }
     });
 
