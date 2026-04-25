@@ -58,8 +58,57 @@ describe('DataStore', () => {
     DataStore.updateDownloadStats(pluginTitle, '192.168.1.2');
     DataStore.updateDownloadStats(pluginTitle, '192.168.1.1');
     
+    // Flush to disk before reading (since getStats now aggregates from files)
+    DataStore.flushSync();
+    
     const stats = DataStore.getStats(pluginTitle);
     expect(stats.downloadCount).toBe(3);
+  });
+
+  test('should aggregate stats from multiple server files', () => {
+    const pluginTitle = '$:/plugins/test/plugin';
+    const DATA_DIR = path.resolve(process.cwd(), 'data');
+    
+    // Simulate multiple servers by creating multiple stats files
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    
+    // Server 1 stats
+    const stats1 = {
+      [pluginTitle]: {
+        downloadCount: 10,
+        lastUpdated: '2024-01-01T00:00:00.000Z',
+        downloadsByIp: {
+          '192.168.1.1': '2024-01-01T00:00:00.000Z',
+          '192.168.1.2': '2024-01-01T00:00:00.000Z'
+        }
+      }
+    };
+    fs.writeFileSync(path.join(DATA_DIR, 'stats.china.json'), JSON.stringify(stats1));
+    
+    // Server 2 stats
+    const stats2 = {
+      [pluginTitle]: {
+        downloadCount: 5,
+        lastUpdated: '2024-01-02T00:00:00.000Z',
+        downloadsByIp: {
+          '192.168.1.3': '2024-01-02T00:00:00.000Z'
+        }
+      }
+    };
+    fs.writeFileSync(path.join(DATA_DIR, 'stats.us.json'), JSON.stringify(stats2));
+    
+    // Get aggregated stats
+    const aggregated = DataStore.getStats(pluginTitle);
+    
+    expect(aggregated.downloadCount).toBe(15); // 10 + 5
+    expect(aggregated.lastUpdated).toBe('2024-01-02T00:00:00.000Z'); // Most recent
+    expect(Object.keys(aggregated.downloadsByIp).length).toBe(3); // Merged IPs
+    
+    // Cleanup
+    fs.unlinkSync(path.join(DATA_DIR, 'stats.china.json'));
+    fs.unlinkSync(path.join(DATA_DIR, 'stats.us.json'));
   });
 });
 

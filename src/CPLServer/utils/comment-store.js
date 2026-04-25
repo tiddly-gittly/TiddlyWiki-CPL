@@ -29,7 +29,62 @@ Comments stored per-plugin in data/comments/{sanitized-plugin-title}.json
 
   function getCommentsFilePath(pluginTitle) {
     var sanitized = pluginTitle.replace(/[\\\/:?*"<>|]/g, '_');
-    return path.join(COMMENTS_DIR, sanitized + '.json');
+    var suffix = Config.getServerSuffix();
+    return path.join(COMMENTS_DIR, sanitized + suffix + '.json');
+  }
+
+  // Get all comment files for a plugin (across all servers)
+  function getAllCommentsFiles(pluginTitle) {
+    var sanitized = pluginTitle.replace(/[\\\/:?*"<>|]/g, '_');
+    var files = [];
+    
+    if (!fs.existsSync(COMMENTS_DIR)) {
+      return files;
+    }
+    
+    var pattern = new RegExp('^' + sanitized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(\\.[^.]+)?\\.json$');
+    fs.readdirSync(COMMENTS_DIR).forEach(function(file) {
+      if (pattern.test(file)) {
+        files.push(path.join(COMMENTS_DIR, file));
+      }
+    });
+    
+    return files;
+  }
+
+  // Aggregate comments from all server-specific files
+  function aggregateComments(pluginTitle) {
+    var files = getAllCommentsFiles(pluginTitle);
+    var allComments = [];
+    var seenIds = new Set();
+    
+    files.forEach(function(filePath) {
+      try {
+        if (fs.existsSync(filePath)) {
+          var content = fs.readFileSync(filePath, 'utf-8');
+          var data = JSON.parse(content);
+          
+          if (data.comments && Array.isArray(data.comments)) {
+            data.comments.forEach(function(comment) {
+              // Deduplicate by ID (first occurrence wins)
+              if (!seenIds.has(comment.id)) {
+                seenIds.add(comment.id);
+                allComments.push(comment);
+              }
+            });
+          }
+        }
+      } catch (e) {
+        console.error('[CPL-Server] Error reading ' + filePath + ':', e.message);
+      }
+    });
+    
+    // Sort by timestamp (newest first)
+    allComments.sort(function(a, b) {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+    
+    return allComments;
   }
 
   function loadCommentsFromDisk(pluginTitle) {
@@ -103,17 +158,16 @@ Comments stored per-plugin in data/comments/{sanitized-plugin-title}.json
   });
 
   var CommentStore = {
-    // Get all comments for a plugin (optionally filter by status)
+    // Get all comments for a plugin (aggregated from all servers, optionally filter by status)
     getComments: function(pluginTitle, status) {
-      ensureLoaded(pluginTitle);
-      var comments = commentsCache[pluginTitle].comments || [];
+      var comments = aggregateComments(pluginTitle);
       if (status) {
         return comments.filter(function(c) { return c.status === status; });
       }
       return comments;
     },
 
-    // Add a new comment
+    // Add a new comment (writes to server-specific file)
     addComment: function(pluginTitle, comment) {
       ensureLoaded(pluginTitle);
       
@@ -126,54 +180,94 @@ Comments stored per-plugin in data/comments/{sanitized-plugin-title}.json
       return comment;
     },
 
-    // Update comment status
+    // Update comment status (updates in server-specific file where comment exists)
     updateCommentStatus: function(pluginTitle, commentId, status) {
-      ensureLoaded(pluginTitle);
+      // Find which server file contains this comment
+      var files = getAllCommentsFiles(pluginTitle);
       
-      var comments = commentsCache[pluginTitle].comments || [];
-      var comment = comments.find(function(c) { return c.id === commentId; });
-      
-      if (comment) {
-        comment.status = status;
-        comment.updatedAt = new Date().toISOString();
-        flushAsync(pluginTitle);
-        return comment;
+      for (var i = 0; i < files.length; i++) {
+        var filePath = files[i];
+        try {
+          var content = fs.readFileSync(filePath, 'utf-8');
+          var data = JSON.parse(content);
+          
+          if (data.comments) {
+            var comment = data.comments.find(function(c) { return c.id === commentId; });
+            if (comment) {
+              comment.status = status;
+              comment.updatedAt = new Date().toISOString();
+              fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+              return comment;
+            }
+          }
+        } catch (e) {
+          console.error('[CPL-Server] Error updating comment in ' + filePath + ':', e.message);
+        }
       }
       
       return null;
     },
 
-    // Delete a comment
+    // Delete a comment (deletes from server-specific file where comment exists)
     deleteComment: function(pluginTitle, commentId) {
-      ensureLoaded(pluginTitle);
+      var files = getAllCommentsFiles(pluginTitle);
       
-      var comments = commentsCache[pluginTitle].comments || [];
-      var index = comments.findIndex(function(c) { return c.id === commentId; });
-      
-      if (index >= 0) {
-        comments.splice(index, 1);
-        flushAsync(pluginTitle);
-        return true;
+      for (var i = 0; i < files.length; i++) {
+        var filePath = files[i];
+        try {
+          var content = fs.readFileSync(filePath, 'utf-8');
+          var data = JSON.parse(content);
+          
+          if (data.comments) {
+            var index = data.comments.findIndex(function(c) { return c.id === commentId; });
+            if (index >= 0) {
+              data.comments.splice(index, 1);
+              fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+              return true;
+            }
+          }
+        } catch (e) {
+          console.error('[CPL-Server] Error deleting comment from ' + filePath + ':', e.message);
+        }
       }
       
       return false;
     },
 
-    // Get pending comments (for admin moderation)
+    // Get pending comments (aggregated from all servers)
     getPendingComments: function() {
       var pending = [];
-      Object.keys(commentsCache).forEach(function(pluginTitle) {
-        ensureLoaded(pluginTitle);
-        var comments = commentsCache[pluginTitle].comments || [];
-        comments.forEach(function(c) {
-          if (c.status === 'pending') {
-            pending.push({
-              pluginTitle: pluginTitle,
-              comment: c
+      
+      if (!fs.existsSync(COMMENTS_DIR)) {
+        return pending;
+      }
+      
+      // Get all comment files
+      var allFiles = fs.readdirSync(COMMENTS_DIR).filter(function(f) {
+        return f.endsWith('.json');
+      });
+      
+      allFiles.forEach(function(file) {
+        var filePath = path.join(COMMENTS_DIR, file);
+        try {
+          var content = fs.readFileSync(filePath, 'utf-8');
+          var data = JSON.parse(content);
+          
+          if (data.comments) {
+            data.comments.forEach(function(c) {
+              if (c.status === 'pending') {
+                pending.push({
+                  pluginTitle: data.pluginTitle,
+                  comment: c
+                });
+              }
             });
           }
-        });
+        } catch (e) {
+          console.error('[CPL-Server] Error reading ' + filePath + ':', e.message);
+        }
       });
+      
       return pending;
     },
 

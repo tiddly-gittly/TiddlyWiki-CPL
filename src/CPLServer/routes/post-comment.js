@@ -122,9 +122,15 @@ Requires JWT authentication. Comments default to 'pending' status.
       // Sanitize wikitext content
       var sanitizedContent = WikitextFilter.sanitize(content);
 
+      // Generate server-specific comment ID
+      var serverId = Config.serverId || 'default';
+      var timestamp = Date.now();
+      var random = Math.random().toString(36).substring(2, 6);
+      var commentId = serverId + '-' + timestamp + '-' + random;
+
       // Create comment
       var comment = {
-        id: uuid.v4(),
+        id: commentId,
         githubId: user.githubId,
         username: user.username,
         avatar: user.avatar,

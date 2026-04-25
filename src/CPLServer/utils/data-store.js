@@ -19,13 +19,24 @@ Uses in-memory cache with async flush to disk to prevent race conditions.
     Config = require('$:/plugins/Gk0Wk/CPL-Server/utils/config.js').Config;
   } catch (e) {
     Config = {
-      dataDir: path.resolve(process.cwd(), 'data')
+      dataDir: path.resolve(process.cwd(), 'data'),
+      getServerSuffix: function() { return ''; }
     };
   }
 
   var DATA_DIR = Config.dataDir;
-  var STATS_FILE = path.join(DATA_DIR, 'stats.json');
-  var RATINGS_FILE = path.join(DATA_DIR, 'ratings.json');
+  
+  // Get file paths with server suffix
+  function getStatsFile() {
+    return path.join(DATA_DIR, 'stats' + Config.getServerSuffix() + '.json');
+  }
+  
+  function getRatingsFile() {
+    return path.join(DATA_DIR, 'ratings' + Config.getServerSuffix() + '.json');
+  }
+  
+  var STATS_FILE = getStatsFile();
+  var RATINGS_FILE = getRatingsFile();
 
   // In-memory cache
   var statsCache = null;
@@ -51,6 +62,99 @@ Uses in-memory cache with async flush to disk to prevent race conditions.
       console.error('[CPL-Server] Error reading ' + filePath + ':', e.message);
     }
     return {};
+  }
+
+  // Aggregate data from all server-specific files
+  function aggregateStats() {
+    var aggregated = {};
+    var files = fs.readdirSync(DATA_DIR).filter(function(f) {
+      return f.match(/^stats(\.[^.]+)?\.json$/);
+    });
+    
+    files.forEach(function(file) {
+      var filePath = path.join(DATA_DIR, file);
+      var data = loadFromDisk(filePath);
+      
+      Object.keys(data).forEach(function(pluginTitle) {
+        if (!aggregated[pluginTitle]) {
+          aggregated[pluginTitle] = {
+            downloadCount: 0,
+            lastUpdated: null,
+            downloadsByIp: {}
+          };
+        }
+        
+        // Sum download counts
+        aggregated[pluginTitle].downloadCount += data[pluginTitle].downloadCount || 0;
+        
+        // Merge downloadsByIp
+        if (data[pluginTitle].downloadsByIp) {
+          Object.assign(aggregated[pluginTitle].downloadsByIp, data[pluginTitle].downloadsByIp);
+        }
+        
+        // Keep most recent lastUpdated
+        if (data[pluginTitle].lastUpdated) {
+          if (!aggregated[pluginTitle].lastUpdated || 
+              data[pluginTitle].lastUpdated > aggregated[pluginTitle].lastUpdated) {
+            aggregated[pluginTitle].lastUpdated = data[pluginTitle].lastUpdated;
+          }
+        }
+      });
+    });
+    
+    return aggregated;
+  }
+
+  function aggregateRatings() {
+    var aggregated = {};
+    var files = fs.readdirSync(DATA_DIR).filter(function(f) {
+      return f.match(/^ratings(\.[^.]+)?\.json$/);
+    });
+    
+    files.forEach(function(file) {
+      var filePath = path.join(DATA_DIR, file);
+      var data = loadFromDisk(filePath);
+      
+      Object.keys(data).forEach(function(pluginTitle) {
+        if (!aggregated[pluginTitle]) {
+          aggregated[pluginTitle] = {
+            ratings: [],
+            averageRating: 0,
+            totalRatings: 0
+          };
+        }
+        
+        // Merge ratings arrays (deduplicate by IP)
+        if (data[pluginTitle].ratings) {
+          data[pluginTitle].ratings.forEach(function(rating) {
+            var existingIndex = aggregated[pluginTitle].ratings.findIndex(function(r) {
+              return r.ip === rating.ip;
+            });
+            
+            if (existingIndex >= 0) {
+              // Keep the most recent rating for this IP
+              if (rating.timestamp > aggregated[pluginTitle].ratings[existingIndex].timestamp) {
+                aggregated[pluginTitle].ratings[existingIndex] = rating;
+              }
+            } else {
+              aggregated[pluginTitle].ratings.push(rating);
+            }
+          });
+        }
+      });
+    });
+    
+    // Recalculate averages
+    Object.keys(aggregated).forEach(function(pluginTitle) {
+      var ratings = aggregated[pluginTitle].ratings;
+      if (ratings.length > 0) {
+        var total = ratings.reduce(function(sum, r) { return sum + r.rating; }, 0);
+        aggregated[pluginTitle].averageRating = Math.round((total / ratings.length) * 10) / 10;
+        aggregated[pluginTitle].totalRatings = ratings.length;
+      }
+    });
+    
+    return aggregated;
   }
 
   // Synchronous flush to disk (used on process exit)
@@ -106,17 +210,17 @@ Uses in-memory cache with async flush to disk to prevent race conditions.
 
   // Data Store API
   var DataStore = {
-    // Get download stats for a plugin
+    // Get download stats for a plugin (aggregated from all servers)
     getStats: function(pluginTitle) {
-      ensureStatsLoaded();
-      return statsCache[pluginTitle] || {
+      var aggregated = aggregateStats();
+      return aggregated[pluginTitle] || {
         downloadCount: 0,
         lastUpdated: null,
         downloadsByIp: {}
       };
     },
 
-    // Update download stats for a plugin
+    // Update download stats for a plugin (writes to server-specific file)
     updateDownloadStats: function(pluginTitle, ip) {
       ensureStatsLoaded();
       
@@ -136,17 +240,17 @@ Uses in-memory cache with async flush to disk to prevent race conditions.
       return statsCache[pluginTitle];
     },
 
-    // Get ratings for a plugin
+    // Get ratings for a plugin (aggregated from all servers)
     getRatings: function(pluginTitle) {
-      ensureRatingsLoaded();
-      return ratingsCache[pluginTitle] || {
+      var aggregated = aggregateRatings();
+      return aggregated[pluginTitle] || {
         ratings: [],
         averageRating: 0,
         totalRatings: 0
       };
     },
 
-    // Add a rating for a plugin
+    // Add a rating for a plugin (writes to server-specific file)
     addRating: function(pluginTitle, ip, rating) {
       ensureRatingsLoaded();
       
@@ -189,10 +293,10 @@ Uses in-memory cache with async flush to disk to prevent race conditions.
       return pluginRatings;
     },
 
-    // Check if IP has rated a plugin
+    // Check if IP has rated a plugin (checks aggregated data)
     hasRated: function(pluginTitle, ip) {
-      ensureRatingsLoaded();
-      var pluginRatings = ratingsCache[pluginTitle];
+      var aggregated = aggregateRatings();
+      var pluginRatings = aggregated[pluginTitle];
       
       if (!pluginRatings || !pluginRatings.ratings) {
         return false;
@@ -203,16 +307,14 @@ Uses in-memory cache with async flush to disk to prevent race conditions.
       });
     },
 
-    // Get all stats (for admin purposes)
+    // Get all stats (aggregated from all servers)
     getAllStats: function() {
-      ensureStatsLoaded();
-      return JSON.parse(JSON.stringify(statsCache));
+      return JSON.parse(JSON.stringify(aggregateStats()));
     },
 
-    // Get all ratings (for admin purposes)
+    // Get all ratings (aggregated from all servers)
     getAllRatings: function() {
-      ensureRatingsLoaded();
-      return JSON.parse(JSON.stringify(ratingsCache));
+      return JSON.parse(JSON.stringify(aggregateRatings()));
     },
 
     // Force flush to disk (for testing or shutdown)

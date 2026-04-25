@@ -139,6 +139,7 @@ Required variables:
 | `CPL_GITHUB_CLIENT_ID` | GitHub OAuth App Client ID |
 | `CPL_GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret |
 | `CPL_ADMIN_GITHUB_IDS` | Comma-separated list of GitHub user IDs who can moderate comments |
+| `CPL_SERVER_ID` | (Optional) Unique server identifier for multi-server deployments (e.g., "china", "us", "eu"). Leave empty for single-server setups. |
 
 **Never commit `.env` to git** — it is already in `.gitignore`.
 
@@ -157,6 +158,57 @@ CPL now includes a self-hosted comment system with GitHub OAuth authentication a
 - Admins (configured in `CPL_ADMIN_GITHUB_IDS`) can approve, reject, or delete comments
 - Comment data is stored in `data/comments/` as JSON files, suitable for git backup
 - Rate limiting: 10 comments per hour per user (configurable via `CPL_COMMENT_RATE_LIMIT`)
+
+### Multi-Server Deployment
+
+CPL supports deploying multiple mirror servers (e.g., China, US, Europe) that all sync data via git without conflicts.
+
+**How it works:**
+
+1. Each server writes to its own files: `stats.{serverId}.json`, `ratings.{serverId}.json`, `comments/{plugin}.{serverId}.json`
+2. When reading data, the server aggregates across all files:
+   - Stats: download counts are summed
+   - Ratings: ratings are merged and averages recalculated
+   - Comments: comments are merged and deduplicated by ID
+3. All servers can push/pull from the same git repository without merge conflicts
+
+**Setup:**
+
+1. Set `CPL_SERVER_ID` in each mirror's `.env` file:
+   ```bash
+   # China mirror
+   CPL_SERVER_ID=china
+   
+   # US mirror
+   CPL_SERVER_ID=us
+   
+   # Europe mirror
+   CPL_SERVER_ID=eu
+   ```
+
+2. Each server will automatically use server-specific files
+
+3. Periodically run the reconciliation script to detect issues:
+   ```bash
+   node scripts/reconcile-data.js              # Dry run (report only)
+   node scripts/reconcile-data.js --fix        # Apply fixes
+   node scripts/reconcile-data.js --clean-stale # Remove stale mirror files (30+ days old)
+   ```
+
+**Git workflow:**
+
+```bash
+# On each mirror, periodically:
+git pull origin main                    # Get data from other mirrors
+node scripts/reconcile-data.js          # Check for issues
+git add data/
+git commit -m "Update stats from {serverId} mirror"
+git push origin main
+```
+
+**Comment IDs:** Each comment gets a unique ID in the format `{serverId}-{timestamp}-{random}` to prevent collisions across mirrors.
+
+**Stale mirrors:** If a mirror goes offline permanently, run `node scripts/reconcile-data.js --clean-stale` to remove its files after 30 days of inactivity.
 
 ### Scheduled Plugin Fetching
 

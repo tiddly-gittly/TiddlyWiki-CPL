@@ -49,6 +49,9 @@ Loads .env file and exposes typed configuration values.
     // Rate Limiting
     commentRateLimit: envInt('CPL_COMMENT_RATE_LIMIT', 10),
 
+    // Multi-server deployment
+    serverId: env('CPL_SERVER_ID', ''),
+
     // Data directories
     dataDir: require('path').resolve(process.cwd(), 'data'),
     commentsDir: require('path').resolve(process.cwd(), 'data', 'comments'),
@@ -57,6 +60,10 @@ Loads .env file and exposes typed configuration values.
     isAdmin: function(githubId) {
       if (!githubId) return false;
       return Config.adminGithubIds.indexOf(String(githubId)) !== -1;
+    },
+
+    getServerSuffix: function() {
+      return Config.serverId ? '.' + Config.serverId : '';
     }
   };
 
