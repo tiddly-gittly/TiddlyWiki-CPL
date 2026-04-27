@@ -36,7 +36,8 @@ function waitForBlankWiki(timeoutMs = 15000) {
   });
 }
 
-async function startBlankWiki() {
+async function startBlankWiki(options = {}) {
+  const { loadCplClient = false } = options;
   const twEntry = require.resolve('tiddlywiki/tiddlywiki.js');
   const emptyEdition = path.join(
     path.dirname(twEntry),
@@ -44,14 +45,21 @@ async function startBlankWiki() {
     'empty'
   );
 
-  blankWikiProcess = spawn(process.execPath, [
-    twEntry,
+  const repoRoot = path.resolve(__dirname, '../../..');
+  const args = [twEntry];
+  if (loadCplClient) {
+    args.push('++./src/CPLPlugin');
+  }
+  args.push(
     emptyEdition,
     '--listen',
     `port=${BLANK_WIKI_PORT}`,
     `host=${BLANK_WIKI_HOST}`
-  ], {
-    stdio: 'pipe'
+  );
+
+  blankWikiProcess = spawn(process.execPath, args, {
+    stdio: 'pipe',
+    cwd: repoRoot
   });
 
   blankWikiProcess.on('error', (err) => {

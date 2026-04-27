@@ -23,6 +23,9 @@ const TEST_PLUGIN_CPL_TITLE = '$:/plugins/sk/Links';
 const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
 const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
 const TEST_PLUGIN_OFFLINE_PATH = path.resolve('wiki/files/plugin-offline', `${TEST_PLUGIN_SANITIZED}.json`);
+const REAL_MIRROR_PLUGIN_TITLE = '$:/plugins/tiddlywiki/powered-by-tiddlywiki';
+const NETLIFY_REPO = 'https://tw-cpl.netlify.app/repo';
+const GITHUB_PAGES_REPO = 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
 
 function createTestPluginFile() {
   const testPlugin = {
@@ -75,6 +78,51 @@ async function openPluginDatabase(page) {
     $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/panel' });
     $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
   });
+}
+
+async function installFromMirrorInBlankWiki(page, mirrorUrl, pluginTitle) {
+  await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+
+  await page.waitForFunction(() => typeof globalThis.__tiddlywiki_cpl__ === 'function', { timeout: 30000 });
+
+  await page.evaluate(({ mirrorUrl }) => {
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
+      text: mirrorUrl
+    });
+  }, { mirrorUrl });
+
+  const queryResult = await page.evaluate(async ({ pluginTitle }) => {
+    try {
+      const text = await globalThis.__tiddlywiki_cpl__('Query', { plugin: pluginTitle });
+      const data = JSON.parse(text);
+      return { ok: true, title: data.title, latest: data.latest };
+    } catch (error) {
+      return { ok: false, error: String(error) };
+    }
+  }, { pluginTitle });
+
+  expect(queryResult.ok).toBe(true);
+  expect(queryResult.title).toBe(pluginTitle);
+
+  await page.evaluate(({ pluginTitle }) => {
+    $tw.rootWidget.dispatchEvent({
+      type: 'cpl-install-plugin-request',
+      paramObject: { title: pluginTitle },
+      widget: $tw.rootWidget
+    });
+  }, { pluginTitle });
+
+  const confirmButton = page.locator('button').filter({ hasText: /Confirm to Install|确认安装/ }).last();
+  await expect(confirmButton).toBeVisible({ timeout: 30000 });
+  await confirmButton.click();
+
+  await page.waitForFunction(
+    (pluginTitle) => !!$tw.wiki.getTiddler(pluginTitle),
+    pluginTitle,
+    { timeout: 60000 }
+  );
 }
 
 test.describe('CPL Server E2E', () => {
@@ -238,7 +286,7 @@ test.describe('CPL Server E2E', () => {
 test.describe('CPL Client Installation E2E', () => {
   test.beforeAll(async () => {
     createTestPluginFile();
-    await startBlankWiki();
+    await startBlankWiki({ loadCplClient: true });
   });
 
   test.afterAll(() => {
@@ -322,6 +370,34 @@ test.describe('CPL Client Installation E2E', () => {
     expect(stats.error).toBeUndefined();
     expect(stats).toHaveProperty('downloadCount');
     expect(stats).toHaveProperty('averageRating');
+  });
+
+  test('blank wiki can install powered-by-tiddlywiki from Netlify mirror', async ({ page }) => {
+    await installFromMirrorInBlankWiki(page, NETLIFY_REPO, REAL_MIRROR_PLUGIN_TITLE);
+
+    const installState = await page.evaluate(({ pluginTitle }) => ({
+      hasPlugin: !!$tw.wiki.getTiddler(pluginTitle),
+      pluginType: $tw.wiki.getTiddler(pluginTitle)?.fields?.['plugin-type'] || null,
+      version: $tw.wiki.getTiddler(pluginTitle)?.fields?.version || null
+    }), { pluginTitle: REAL_MIRROR_PLUGIN_TITLE });
+
+    expect(installState.hasPlugin).toBe(true);
+    expect(installState.pluginType).toBe('plugin');
+    expect(installState.version).toBeTruthy();
+  });
+
+  test('blank wiki can install powered-by-tiddlywiki from GitHub Pages mirror', async ({ page }) => {
+    await installFromMirrorInBlankWiki(page, GITHUB_PAGES_REPO, REAL_MIRROR_PLUGIN_TITLE);
+
+    const installState = await page.evaluate(({ pluginTitle }) => ({
+      hasPlugin: !!$tw.wiki.getTiddler(pluginTitle),
+      pluginType: $tw.wiki.getTiddler(pluginTitle)?.fields?.['plugin-type'] || null,
+      version: $tw.wiki.getTiddler(pluginTitle)?.fields?.version || null
+    }), { pluginTitle: REAL_MIRROR_PLUGIN_TITLE });
+
+    expect(installState.hasPlugin).toBe(true);
+    expect(installState.pluginType).toBe('plugin');
+    expect(installState.version).toBeTruthy();
   });
 
 });
