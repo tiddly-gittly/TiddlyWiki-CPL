@@ -16,11 +16,86 @@ Provides HTTP API access for download stats, ratings, and changelogs.
   exports.synchronous = true;
 
   var CPL_API_BASE = '/cpl/api';
+  var API_STATUS_TIDDLER = '$:/temp/CPL-Repo/api-status';
+  var API_TYPE_TIDDLER = '$:/temp/CPL-Repo/mirror-type';
+  var API_MESSAGE_TIDDLER = '$:/temp/CPL-Repo/mirror-message';
+  var apiAvailability = null;
+  var mirrorConfigTitle = '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
+  var lastMirrorEntry = null;
+
+  function getCurrentMirrorEntry() {
+    return $tw.wiki.getTiddlerText(mirrorConfigTitle, '');
+  }
+
+  function clearServerTempState() {
+    for (var title of $tw.wiki.filterTiddlers('[prefix[$:/temp/CPL-Server/]]')) {
+      $tw.wiki.deleteTiddler(title);
+    }
+  }
+
+  function setApiStatus(status, type, message) {
+    $tw.wiki.addTiddler({
+      title: API_STATUS_TIDDLER,
+      text: status,
+      timestamp: String(Date.now())
+    });
+    $tw.wiki.addTiddler({
+      title: API_TYPE_TIDDLER,
+      text: type || 'unknown',
+      timestamp: String(Date.now())
+    });
+    $tw.wiki.addTiddler({
+      title: API_MESSAGE_TIDDLER,
+      text: message || '',
+      timestamp: String(Date.now())
+    });
+  }
+
+  function refreshMirrorCapabilityState() {
+    var entry = getCurrentMirrorEntry();
+    if (entry === lastMirrorEntry && apiAvailability !== null) {
+      return;
+    }
+    lastMirrorEntry = entry;
+    apiAvailability = null;
+    clearServerTempState();
+    probeApiAvailability(function(available) {
+      if (available) {
+        CPLServerAPI.checkAuthStatus(function(err, data) {
+          if (!err && data && data.authenticated) {
+            $tw.wiki.addTiddler({
+              title: '$:/temp/CPL-Server/user-status',
+              text: 'authenticated'
+            });
+            $tw.wiki.addTiddler({
+              title: '$:/temp/CPL-Server/user',
+              text: JSON.stringify(data.user),
+              type: 'application/json'
+            });
+          } else {
+            $tw.wiki.addTiddler({
+              title: '$:/temp/CPL-Server/user-status',
+              text: 'anonymous'
+            });
+          }
+        });
+      } else {
+        $tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/user-status',
+          text: 'anonymous'
+        });
+      }
+    });
+  }
+
+  function getUnavailableMessage() {
+    return 'This mirror does not provide CPL server API features.';
+  }
 
   /**
    * Make an HTTP request to the CPL Server API
    */
-  function apiRequest(method, endpoint, body, callback) {
+  function rawApiRequest(method, endpoint, body, callback, extraHeaders) {
     var url = CPL_API_BASE + endpoint;
     var options = {
       url: url,
@@ -56,11 +131,25 @@ Provides HTTP API access for download stats, ratings, and changelogs.
       }
     };
 
+    if (extraHeaders) {
+      Object.keys(extraHeaders).forEach(function(key) {
+        options.headers[key] = extraHeaders[key];
+      });
+    }
+
     if (body) {
       options.data = JSON.stringify(body);
     }
 
     $tw.utils.httpRequest(options);
+  }
+
+  function apiRequest(method, endpoint, body, callback) {
+    if (apiAvailability === false) {
+      callback(getUnavailableMessage(), null);
+      return;
+    }
+    rawApiRequest(method, endpoint, body, callback);
   }
 
   // JWT Token management
@@ -90,52 +179,31 @@ Provides HTTP API access for download stats, ratings, and changelogs.
    * Make an authenticated HTTP request to the CPL Server API
    */
   function authenticatedRequest(method, endpoint, body, callback) {
-    var url = CPL_API_BASE + endpoint;
-    var options = {
-      url: url,
-      type: method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      callback: function(err, response) {
-        if (err) {
-          var errorMessage = 'Request failed';
-          if (err.message) {
-            errorMessage = err.message;
-          } else if (typeof err === 'string') {
-            errorMessage = err;
-          } else if (err.status !== undefined) {
-            errorMessage = 'HTTP ' + err.status + (err.statusText ? ' ' + err.statusText : '');
-          } else {
-            try {
-              errorMessage = JSON.stringify(err);
-            } catch (e) {
-              errorMessage = String(err);
-            }
-          }
-          callback(errorMessage, null);
-          return;
-        }
-        try {
-          var data = JSON.parse(response);
-          callback(null, data);
-        } catch (e) {
-          callback('Invalid JSON response', null);
-        }
-      }
-    };
+    if (apiAvailability === false) {
+      callback(getUnavailableMessage(), null);
+      return;
+    }
 
     // Add JWT token if available
     var token = getJwtToken();
-    if (token) {
-      options.headers['Authorization'] = 'Bearer ' + token;
-    }
+    var extraHeaders = token ? { Authorization: 'Bearer ' + token } : null;
+    rawApiRequest(method, endpoint, body, callback, extraHeaders);
+  }
 
-    if (body) {
-      options.data = JSON.stringify(body);
-    }
+  function probeApiAvailability(callback) {
+    setApiStatus('checking', 'unknown', 'Checking mirror capabilities...');
+    rawApiRequest('GET', '/stats/' + encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__'), null, function(err) {
+      if (err) {
+        apiAvailability = false;
+        setApiStatus('unavailable', 'static', 'Static mirror detected. Stats, ratings, comments, and login are unavailable here.');
+        callback(false);
+        return;
+      }
 
-    $tw.utils.httpRequest(options);
+      apiAvailability = true;
+      setApiStatus('available', 'server', 'Full CPL server features are available on this mirror.');
+      callback(true);
+    });
   }
 
   /**
@@ -267,9 +335,14 @@ Provides HTTP API access for download stats, ratings, and changelogs.
   exports.startup = function() {
     // Expose API on $tw namespace
     $tw.cplServerAPI = CPLServerAPI;
+    refreshMirrorCapabilityState();
 
     // Listen for navigation to plugin pages and fetch stats automatically
     $tw.wiki.addEventListener('change', function(changes) {
+      if ($tw.utils.hop(changes, mirrorConfigTitle)) {
+        refreshMirrorCapabilityState();
+      }
+
       // Check if current tiddler changed to a plugin
       var currentTiddler = $tw.wiki.getTiddler('$:/HistoryList');
       if (currentTiddler && currentTiddler.fields && currentTiddler.fields['current-tiddler']) {
@@ -395,26 +468,6 @@ Provides HTTP API access for download stats, ratings, and changelogs.
         });
       });
     }
-
-    // Check auth status on startup
-    CPLServerAPI.checkAuthStatus(function(err, data) {
-      if (!err && data && data.authenticated) {
-        $tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/user-status',
-          text: 'authenticated'
-        });
-        $tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/user',
-          text: JSON.stringify(data.user),
-          type: 'application/json'
-        });
-      } else {
-        $tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/user-status',
-          text: 'anonymous'
-        });
-      }
-    });
 
     // GitHub Login handler
     $tw.rootWidget.addEventListener('cpl-github-login', function(event) {

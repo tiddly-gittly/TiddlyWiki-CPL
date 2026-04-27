@@ -67,6 +67,16 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForSelector('.cpl-plugin-stats', { timeout: 5000 });
 }
 
+async function openPluginDatabase(page) {
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+  await page.evaluate(() => {
+    $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/panel' });
+    $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/panel' });
+    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
+  });
+}
+
 test.describe('CPL Server E2E', () => {
   // Collect browser console logs for debugging
   test.beforeEach(async ({ page }) => {
@@ -166,6 +176,61 @@ test.describe('CPL Server E2E', () => {
     }, TEST_PLUGIN_CPL_TITLE);
 
     expect(hasTempTiddlers).toBe(true);
+  });
+
+  test('should allow switching mirror sources and keep legacy repo loading working', async ({ page }) => {
+    await openPluginDatabase(page);
+
+    const mirrorSelect = page.locator('.cpl-mirror-select');
+    await expect(mirrorSelect).toBeVisible();
+
+    const currentValue = await mirrorSelect.inputValue();
+    const options = await mirrorSelect.locator('option').evaluateAll(nodes => nodes.map(node => node.value));
+    expect(options.length).toBeGreaterThan(1);
+
+    const alternateValue = options.find(value => value !== currentValue);
+    expect(alternateValue).toBeTruthy();
+
+    await mirrorSelect.selectOption(alternateValue);
+
+    await page.waitForFunction(
+      () => {
+        const switchStatus = $tw.wiki.getTiddler('$:/temp/CPL-Repo/mirror-switch-status');
+        return switchStatus && switchStatus.fields.text === 'success';
+      },
+      { timeout: 20000 }
+    );
+
+    await page.waitForFunction(
+      () => {
+        const pluginsIndex = $tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index');
+        return !!pluginsIndex;
+      },
+      { timeout: 20000 }
+    );
+
+    const mirrorState = await page.evaluate(() => ({
+      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo'),
+      mirrorType: $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown'),
+      hasPluginsIndex: !!$tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index')
+    }));
+
+    expect(mirrorState.currentRepo).toBe(alternateValue);
+    expect(mirrorState.hasPluginsIndex).toBe(true);
+    expect(['server', 'static']).toContain(mirrorState.mirrorType);
+  });
+
+  test('should degrade gracefully for static mirror capabilities while preserving mirror selector', async ({ page }) => {
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/mirror-type', text: 'static' });
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/api-status', text: 'unavailable' });
+    });
+
+    const staticNotice = page.locator('.cpl-static-feature-notice').first();
+    await expect(staticNotice).toBeVisible();
+    await expect(page.locator('.cpl-rating-widget')).toHaveCount(0);
   });
 
 });

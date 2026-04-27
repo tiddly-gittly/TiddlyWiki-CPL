@@ -157,3 +157,59 @@ type: text/vnd.tiddlywiki
     box-shadow: 0 0 20px rgba(0, 123, 255, 1);
   }
 }
+
+/* Mirror Switcher Styles */
+.cpl-mirror-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpl-mirror-select {
+  font-size: 0.9em;
+  transition: border-color 0.2s ease;
+}
+
+.cpl-mirror-select:hover {
+  border-color: #999;
+}
+
+.cpl-mirror-select:focus {
+  outline: none;
+  border-color: #1f5ea3;
+  box-shadow: 0 0 0 2px rgba(31, 94, 163, 0.1);
+}
+
+.cpl-mirror-status {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.cpl-mirror-server {
+  color: #28a745;
+}
+
+.cpl-mirror-static {
+  color: #ffc107;
+}
+
+.cpl-mirror-unknown {
+  color: #999;
+}
+
+/* Static Mirror Notice Styles */
+.cpl-static-mirror-notice,
+.cpl-static-feature-notice {
+  animation: fade-in 0.3s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

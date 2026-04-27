@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = async () => {
   const dataDir = path.resolve(__dirname, '../../data');
-  const files = ['stats.json', 'ratings.json'];
+  const files = ['stats.json', 'ratings.json', 'stats.test.json', 'ratings.test.json'];
   for (const file of files) {
     const filePath = path.join(dataDir, file);
     if (fs.existsSync(filePath)) {

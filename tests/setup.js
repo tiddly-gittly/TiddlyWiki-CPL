@@ -9,17 +9,16 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_DIR = path.resolve(__dirname, '../data');
-const STATS_FILE = path.join(DATA_DIR, 'stats.json');
-const RATINGS_FILE = path.join(DATA_DIR, 'ratings.json');
+const DATA_FILES = ['stats.json', 'ratings.json', 'stats.test.json', 'ratings.test.json'];
 
 // Clean up function
 function cleanupDataFiles() {
   try {
-    if (fs.existsSync(STATS_FILE)) {
-      fs.unlinkSync(STATS_FILE);
-    }
-    if (fs.existsSync(RATINGS_FILE)) {
-      fs.unlinkSync(RATINGS_FILE);
+    for (const file of DATA_FILES) {
+      const filePath = path.join(DATA_DIR, file);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
     }
   } catch (e) {
     // Ignore cleanup errors

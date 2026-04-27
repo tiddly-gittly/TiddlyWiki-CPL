@@ -12,6 +12,39 @@ exports.synchronous = true;
  */
 var messagerPromise;
 var previousEntry;
+var currentRepoTitle = '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
+var installRequestLock = false;
+var installLock = false;
+var getPluginsIndexLock = false;
+var mirrorSwitchInternalChange = false;
+var mirrorSwitchPending = false;
+
+function getCurrentRepoEntry() {
+	if (!$tw.wiki || typeof $tw.wiki.getTiddlerText !== 'function') {
+		return 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
+	}
+	return $tw.wiki.getTiddlerText(currentRepoTitle, 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo');
+}
+
+function setMirrorSwitchStatus(status, message) {
+	$tw.wiki.addTiddler({
+		title: '$:/temp/CPL-Repo/mirror-switch-status',
+		text: status || '',
+		message: message || '',
+		repo: getCurrentRepoEntry(),
+		timestamp: String(Date.now()),
+	});
+}
+
+function clearTempRepoState() {
+	for (var title of $tw.wiki.filterTiddlers('[prefix[$:/temp/CPL-Repo/]]')) {
+		$tw.wiki.deleteTiddler(title);
+	}
+}
+
+function isMirrorSwitchBlocked() {
+	return installRequestLock || installLock || getPluginsIndexLock;
+}
 var cpl = function (type, payload) {
 	var entry = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo');
 	if (previousEntry !== entry && globalThis.__tiddlywiki_cpl__reset__ !== undefined) globalThis.__tiddlywiki_cpl__reset__();
@@ -81,9 +114,44 @@ function getAutoUpdateTime() {
 	return parseInt($tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes', '-1')) || -1;
 }
 
+function triggerMirrorRefresh() {
+	$tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/plugins-index-refresh-requested', text: 'yes' });
+	$tw.rootWidget.dispatchEvent({
+		type: 'cpl-get-plugins-index',
+		paramObject: {},
+		widget: $tw.rootWidget,
+	});
+}
+
+function handleMirrorSwitch(newEntry, oldEntry) {
+	if (newEntry === oldEntry) return;
+	if (mirrorSwitchInternalChange) return;
+
+	if (isMirrorSwitchBlocked()) {
+		mirrorSwitchInternalChange = true;
+		$tw.wiki.addTiddler({ title: currentRepoTitle, text: oldEntry });
+		mirrorSwitchInternalChange = false;
+		setMirrorSwitchStatus('blocked', 'Mirror switching is unavailable while CPL is busy.');
+		return;
+	}
+
+	mirrorSwitchPending = true;
+	clearTempRepoState();
+	setMirrorSwitchStatus('switching', 'Switching mirror and reloading plugin data...');
+	if (globalThis.__tiddlywiki_cpl__reset__ !== undefined) {
+		globalThis.__tiddlywiki_cpl__reset__();
+	}
+	previousEntry = newEntry;
+	setTimeout(function () {
+		triggerMirrorRefresh();
+	}, 0);
+}
+
 // 自动更新服务、各种消息通信
 exports.startup = function () {
     globalThis.__tiddlywiki_cpl__ = cpl;
+	previousEntry = getCurrentRepoEntry();
+	setMirrorSwitchStatus('ready', '');
 	// 检测更新
 	var lastUpdateTime = -1;
     var updateLock = false;
@@ -141,6 +209,10 @@ exports.startup = function () {
 	var autoUpdateInterval;
 	var autoTimeout;
 	$tw.wiki.addEventListener("change", function (changes) {
+		if($tw.utils.hop(changes, currentRepoTitle)) {
+			var newEntry = getCurrentRepoEntry();
+			handleMirrorSwitch(newEntry, previousEntry);
+		}
 		if($tw.utils.hop(changes, '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes')) {
             var time = getAutoUpdateTime();
 			if (autoUpdateInterval !== undefined) clearInterval(autoUpdateInterval);
@@ -175,7 +247,6 @@ exports.startup = function () {
     $tw.rootWidget.addEventListener("cpl-update-check", function () {
         update();
     });
-    var installRequestLock = false;
     $tw.rootWidget.addEventListener("cpl-install-plugin-request", function (event) {
         try {
             if (installRequestLock) return;
@@ -270,7 +341,6 @@ exports.startup = function () {
             installRequestLock = false;
         }
     });
-    var installLock = false;
     $tw.rootWidget.addEventListener("cpl-install-plugin", function (event) {
         try {
             if (installLock) return;
@@ -325,7 +395,6 @@ exports.startup = function () {
     var tmpIndex;
     var tmpAllPlugins;
     var tmpCategories;
-    var getPluginsIndexLock = false;
     $tw.rootWidget.addEventListener("cpl-get-plugins-index", function () {
         try {
             if (getPluginsIndexLock) return;
@@ -370,15 +439,29 @@ exports.startup = function () {
                 $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/authors', text: JSON.stringify(authors), type: 'application/json' });
                 $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/tags', text: JSON.stringify(Array.from(allTags)), type: 'application/json' });
                 $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/getting-plugins-index');
+				if (mirrorSwitchPending) {
+					mirrorSwitchPending = false;
+					setMirrorSwitchStatus('success', 'Mirror switched successfully.');
+				} else {
+					setMirrorSwitchStatus('ready', '');
+				}
             }).catch(function (err) {
                 console.error(err);
                 $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/getting-plugins-index', text: err });
+				if (mirrorSwitchPending) {
+					mirrorSwitchPending = false;
+					setMirrorSwitchStatus('error', String(err || 'Failed to switch mirror'));
+				}
             }).finally(function () {
                 getPluginsIndexLock = false;
             });
         } catch (err) {
             console.error(err);
             getPluginsIndexLock = false;
+			if (mirrorSwitchPending) {
+				mirrorSwitchPending = false;
+				setMirrorSwitchStatus('error', String(err || 'Failed to switch mirror'));
+			}
         }
     });
     var queryPluginLocks = new Set();

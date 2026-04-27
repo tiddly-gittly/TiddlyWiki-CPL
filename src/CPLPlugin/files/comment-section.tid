@@ -9,7 +9,21 @@ type: text/vnd.tiddlywiki
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
-<$let pluginTitle={{!!cpl.title}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}}>
+<$let pluginTitle={{!!cpl.title}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}}>
+
+<!-- Static Mirror Notice -->
+<$list filter="[<mirrorType>match[static]]" variable="isStaticMirror">
+<div class="cpl-static-feature-notice" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
+<span style="font-size: 1.5em;">ℹ️</span>
+<div>
+<strong><$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论功能不可用]else[Comments Unavailable]] }}}/></strong>
+<p style="margin: 4px 0 0 0;"><$text text={{{ [[$:/language]get[text]match[zh-CN]then[当前镜像为静态镜像，不支持评论功能。切换到服务器镜像以查看和发表评论。]else[Current mirror is a static mirror. Comments are not available. Switch to a server mirror to view and post comments.]] }}}/></p>
+</div>
+</div>
+</$list>
+
+<!-- Only show comment section for server mirrors -->
+<$list filter="[<mirrorType>match[server]]" variable="isServerMirror">
 
 <div class="cpl-comment-section" style="margin: 20px 0; padding: 16px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
   <h3 style="margin-top: 0; border-bottom: 2px solid #dee2e6; padding-bottom: 8px;">
@@ -102,6 +116,9 @@ type: text/vnd.tiddlywiki
     </$let>
   </div>
 </div>
+
+</$list>
+<!-- End server mirror check -->
 
 </$let>
 </$list>

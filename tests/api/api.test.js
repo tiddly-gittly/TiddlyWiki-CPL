@@ -5,9 +5,38 @@
 const { spawn } = require('child_process');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
 
 const TEST_PORT = 9876;
 const TEST_HOST = 'localhost';
+const FETCHED_DIR = path.resolve(__dirname, '../../wiki/files/plugin-fetched');
+const TEST_FETCHED_PLUGIN_TITLE = '$:/plugins/test/fetched-preferred';
+const TEST_FETCHED_PLUGIN_FILENAME = '$__plugins_test_fetched-preferred.json';
+const TEST_FETCHED_PLUGIN_PATH = path.join(FETCHED_DIR, TEST_FETCHED_PLUGIN_FILENAME);
+
+function createFetchedPluginFile() {
+  if (!fs.existsSync(FETCHED_DIR)) {
+    fs.mkdirSync(FETCHED_DIR, { recursive: true });
+  }
+  fs.writeFileSync(TEST_FETCHED_PLUGIN_PATH, JSON.stringify({
+    title: TEST_FETCHED_PLUGIN_TITLE,
+    'plugin-type': 'plugin',
+    text: JSON.stringify({
+      tiddlers: {
+        [`${TEST_FETCHED_PLUGIN_TITLE}/readme`]: {
+          title: `${TEST_FETCHED_PLUGIN_TITLE}/readme`,
+          text: 'Fetched plugin variant'
+        }
+      }
+    })
+  }), 'utf-8');
+}
+
+function cleanupFetchedPluginFile() {
+  if (fs.existsSync(TEST_FETCHED_PLUGIN_PATH)) {
+    fs.unlinkSync(TEST_FETCHED_PLUGIN_PATH);
+  }
+}
 
 function makeRequest(method, requestPath, body = null) {
   return new Promise((resolve, reject) => {
@@ -93,6 +122,7 @@ describe('CPL Server API', () => {
 
   beforeAll(async () => {
     const wikiPath = path.resolve(__dirname, '../..');
+    createFetchedPluginFile();
 
     serverProcess = spawn('node', ['scripts/server.js'], {
       cwd: wikiPath,
@@ -128,6 +158,7 @@ describe('CPL Server API', () => {
     if (serverProcess) {
       serverProcess.kill();
     }
+    cleanupFetchedPluginFile();
   });
 
   test('GET /cpl/api/stats/:pluginTitle should return stats', async () => {
@@ -184,5 +215,14 @@ describe('CPL Server API', () => {
     
     expect(response.statusCode).toBe(404);
     expect(response.body.success).toBe(false);
+  });
+
+  test('GET /cpl/api/download-plugin/:pluginTitle should prefer plugin-fetched over plugin-offline', async () => {
+    const pluginTitle = encodeURIComponent(TEST_FETCHED_PLUGIN_TITLE);
+    const response = await makeRequest('GET', `/cpl/api/download-plugin/${pluginTitle}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('title', TEST_FETCHED_PLUGIN_TITLE);
+    expect(response.body).toHaveProperty('plugin-type', 'plugin');
   });
 });

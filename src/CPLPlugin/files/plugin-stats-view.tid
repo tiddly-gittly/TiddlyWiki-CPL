@@ -16,6 +16,23 @@ type: text/vnd.tiddlywiki
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
+<!-- Check if current mirror supports server features -->
+<$let mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}}>
+
+<!-- Static Mirror Notice -->
+<$list filter="[<mirrorType>match[static]]" variable="isStaticMirror">
+<div class="cpl-static-feature-notice" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
+<span style="font-size: 1.5em;">ℹ️</span>
+<div>
+<strong><$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[服务器功能不可用]else[Server Features Unavailable]] }}}/></strong>
+<p style="margin: 4px 0 0 0;"><$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[当前镜像为静态镜像，不支持下载统计、评分和更新日志功能。切换到服务器镜像以使用这些功能。]else[Current mirror is a static mirror. Download stats, ratings, and changelog are not available. Switch to a server mirror to access these features.]] }}}/></p>
+</div>
+</div>
+</$list>
+
+<!-- Only show stats/rating/changelog for server mirrors -->
+<$list filter="[<mirrorType>match[server]]" variable="isServerMirror">
+
 <!-- Auto-fetch stats on render -->
 <$action-sendmessage $message="cpl-fetch-stats" pluginTitle={{!!cpl.title}} />
 
@@ -120,5 +137,10 @@ type: text/vnd.tiddlywiki
     </$list>
   </$let>
 </div>
+
+</$list>
+<!-- End server mirror check -->
+
+</$let>
 
 </$list>
