@@ -9,6 +9,7 @@
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const { ensureRuntimePluginsBuilt } = require('./runtime-plugins');
 
 // Configuration
 const WIKI_PATH = path.resolve(__dirname, '..');
@@ -35,13 +36,18 @@ if (args.includes('--readonly') || args.includes('-r')) {
 }
 
 const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
+const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
 
 // Build tiddlywiki command
 const twArgs = [
   TW_ENTRY,
-  '++./src/CPLServer',
-  '++./src/CPLPlugin',
+  '+plugins/tiddlywiki/filesystem',
+  '+plugins/tiddlywiki/tiddlyweb',
   'wiki',
+  '--load',
+  serverPluginPath,
+  '--load',
+  repoPluginPath,
   '--listen',
   `port=${port}`,
   `host=${host}`

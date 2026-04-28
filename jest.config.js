@@ -6,8 +6,12 @@ module.exports = {
   testMatch: [
     '**/tests/**/*.test.js'
   ],
+  transform: {
+    '^.+\\.ts$': '<rootDir>/tests/ts-transformer.js'
+  },
+  moduleFileExtensions: ['js', 'json', 'ts'],
   collectCoverageFrom: [
-    'src/**/*.js',
+    'src/**/*.{js,ts}',
     '!**/node_modules/**'
   ],
   coverageDirectory: 'coverage',

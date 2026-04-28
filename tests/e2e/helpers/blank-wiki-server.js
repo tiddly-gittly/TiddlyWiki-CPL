@@ -1,11 +1,15 @@
 const { spawn } = require('child_process');
+const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const http = require('http');
+const { ensureRuntimePluginsBuilt } = require('../../../scripts/runtime-plugins');
 
 const BLANK_WIKI_PORT = 8081;
 const BLANK_WIKI_HOST = '127.0.0.1';
 
 let blankWikiProcess = null;
+let blankWikiPath = null;
 
 function waitForBlankWiki(timeoutMs = 15000) {
   const start = Date.now();
@@ -44,14 +48,21 @@ async function startBlankWiki(options = {}) {
     'editions',
     'empty'
   );
+  blankWikiPath = fs.mkdtempSync(path.join(os.tmpdir(), 'cpl-blank-wiki-'));
+  fs.cpSync(emptyEdition, blankWikiPath, { recursive: true });
 
   const repoRoot = path.resolve(__dirname, '../../..');
-  const args = [twEntry];
+  const args = [
+    twEntry,
+    '+plugins/tiddlywiki/filesystem',
+    '+plugins/tiddlywiki/tiddlyweb',
+    blankWikiPath,
+  ];
   if (loadCplClient) {
-    args.push('++./src/CPLPlugin');
+    const { repoPluginPath } = ensureRuntimePluginsBuilt();
+    args.push('--load', repoPluginPath);
   }
   args.push(
-    emptyEdition,
     '--listen',
     `port=${BLANK_WIKI_PORT}`,
     `host=${BLANK_WIKI_HOST}`
@@ -75,6 +86,11 @@ function stopBlankWiki() {
     blankWikiProcess.kill();
     blankWikiProcess = null;
     console.log('[Blank Wiki] Stopped');
+  }
+
+  if (blankWikiPath && fs.existsSync(blankWikiPath)) {
+    fs.rmSync(blankWikiPath, { recursive: true, force: true });
+    blankWikiPath = null;
   }
 }
 

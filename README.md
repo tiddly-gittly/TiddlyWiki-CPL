@@ -121,7 +121,15 @@ Start the production server:
 pnpm server:start
 ```
 
-This starts a standard TiddlyWiki Node.js server with CPL plugins loaded. For public deployments, configure `writer=(anonymous)` to disable write access while keeping download statistics active.
+For read-only mode:
+
+```bash
+pnpm server:prod
+```
+
+The server launcher compiles the TypeScript plugin sources into runtime plugin JSON files under `cache/runtime-plugins/`, and then starts a standard TiddlyWiki Node.js server with those compiled plugins loaded via `--load`. This keeps the runtime compatible with TiddlyWiki's Node.js boot process while preserving TypeScript source under `src/`.
+
+For public deployments, configure read-only mode so wiki writes stay disabled while download statistics and API routes remain available.
 
 ### Environment Configuration
 
@@ -158,6 +166,8 @@ CPL now includes a self-hosted comment system with GitHub OAuth authentication a
 - Admins (configured in `CPL_ADMIN_GITHUB_IDS`) can approve, reject, or delete comments
 - Comment data is stored in `data/comments/` as JSON files, suitable for git backup
 - Rate limiting: 10 comments per hour per user (configurable via `CPL_COMMENT_RATE_LIMIT`)
+
+The browser-side CPL client exposes the server API as `$tw.cpl`, with `$tw.cplServerAPI` retained as a legacy alias.
 
 ### Multi-Server Deployment
 

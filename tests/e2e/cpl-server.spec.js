@@ -58,7 +58,7 @@ function removeTestPluginFile() {
 async function navigateToPlugin(page, tiddlerTitle) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-  await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 30000 });
+  await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
   await page.evaluate((title) => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
@@ -191,13 +191,13 @@ test.describe('CPL Server E2E', () => {
     await expect(changelogSection).toBeVisible();
   });
 
-  test('API should be accessible from browser via $tw.cplServerAPI', async ({ page }) => {
+  test('API should be accessible from browser via $tw.cpl', async ({ page }) => {
     await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => typeof $tw.cplServerAPI !== 'undefined', { timeout: 30000 });
+    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
     const result = await page.evaluate(() => {
       return new Promise((resolve) => {
-        $tw.cplServerAPI.getStats('$:/plugins/test/plugin', (err, stats) => {
+        $tw.cpl.getStats('$:/plugins/test/plugin', (err, stats) => {
           if (err) {
             resolve({ error: err.message || String(err) });
           } else {

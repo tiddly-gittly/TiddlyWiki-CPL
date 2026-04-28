@@ -13,12 +13,16 @@ const checks = [
     check: () => {
       const required = [
         'src/CPLServer/plugin.info',
-        'src/CPLServer/utils/data-store.js',
-        'src/CPLServer/utils/rate-limiter.js',
-        'src/CPLServer/routes/post-download.js',
-        'src/CPLServer/routes/get-stats.js',
-        'src/CPLServer/routes/post-rate.js',
-        'src/CPLServer/routes/get-changelog.js'
+        'src/CPLServer/lib/store/data.ts',
+        'src/CPLServer/lib/security/rate-limit.ts',
+        'src/CPLServer/routes/api/download.ts',
+        'src/CPLServer/routes/api/stats/plugin.ts',
+        'src/CPLServer/routes/api/rate.ts',
+        'src/CPLServer/routes/changelog.ts',
+        'src/CPLPlugin/plugin.info',
+        'src/CPLPlugin/startup/core.ts',
+        'src/CPLPlugin/startup/api-client.ts',
+        'src/CPLPlugin/filters/shuffle.ts'
       ];
       return required.every(f => fs.existsSync(f));
     }
@@ -54,6 +58,7 @@ const checks = [
       const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
       return pkg.scripts['server:dev'] && 
              pkg.scripts['server:prod'] &&
+             pkg.scripts['build'] &&
              pkg.scripts['test'];
     }
   }

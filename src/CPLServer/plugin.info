@@ -6,5 +6,5 @@
   "core-version": ">=5.3.0",
   "plugin-type": "plugin",
   "dependents": "",
-  "list": "readme"
+  "list": "readme tree"
 }

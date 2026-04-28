@@ -9,7 +9,16 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_DIR = path.resolve(__dirname, '../data');
-const DATA_FILES = ['stats.json', 'ratings.json', 'stats.test.json', 'ratings.test.json'];
+const DATA_FILES = [
+  'stats.json',
+  'ratings.json',
+  'stats.test.json',
+  'ratings.test.json',
+  'stats.china.json',
+  'stats.us.json',
+  'ratings.china.json',
+  'ratings.us.json',
+];
 
 // Clean up function
 function cleanupDataFiles() {
