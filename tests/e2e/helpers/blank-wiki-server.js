@@ -52,7 +52,7 @@ async function startBlankWiki(options = {}) {
   fs.cpSync(emptyEdition, blankWikiPath, { recursive: true });
 
   const repoRoot = path.resolve(__dirname, '../../..');
-  const toBootPluginArg = (filePath) => `+${path.relative(repoRoot, filePath).replace(/\\/g, '/')}`;
+  const toBootPluginArg = (filePath) => `++${path.relative(repoRoot, filePath).replace(/\\/g, '/')}`;
   const args = [
     twEntry,
     '+plugins/tiddlywiki/filesystem',
