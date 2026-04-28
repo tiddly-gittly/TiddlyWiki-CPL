@@ -2,7 +2,7 @@ code-body: yes
 created: 20231010211850384
 modified: 20231010214712649
 tags: 
-title: $:/CPL/tag-picker
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/tag-picker
 type: text/vnd.tiddlywiki
 
 \define tag-plain(text:"",icon:"",color:"",bg:"")

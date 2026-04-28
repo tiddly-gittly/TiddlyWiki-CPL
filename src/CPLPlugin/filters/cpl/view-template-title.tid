@@ -1,7 +1,7 @@
 created: 20231006113602080
 modified: 20231007164440575
 tags: $:/tags/ViewTemplateTitleFilter TW5CPL
-title: $:/CPL/ViewTemplateTitleFilter
+title: $:/plugins/Gk0Wk/CPL-Repo/filters/cpl/view-template-title
 type: text/vnd.tiddlywiki
 
-[tag[$:/tags/PluginWiki]then[$:/CPL/ViewTemplateTitle]]
+[tag[$:/tags/PluginWiki]then[$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/view-template-title]]

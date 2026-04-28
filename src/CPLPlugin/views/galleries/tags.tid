@@ -2,12 +2,12 @@ caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[
 created: 20231010182024353
 modified: 20231010200036469
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/tags-gallery
+title: $:/plugins/Gk0Wk/CPL-Repo/views/galleries/tags
 type: text/vnd.tiddlywiki
 
-\import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
-\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
-\import $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/list-item
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/paged-list
 
 \define tag-plain(text:"",icon:"",color:"",bg:"")
 \whitespace trim

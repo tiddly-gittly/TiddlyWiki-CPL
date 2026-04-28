@@ -2,12 +2,12 @@ caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[
 created: 20231010113426627
 modified: 20231010200115158
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/home-gallery
+title: $:/plugins/Gk0Wk/CPL-Repo/views/galleries/home
 type: text/vnd.tiddlywiki
 
-\import $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
-\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
-\import $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/list-item
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/paged-list
 \define go-search()
 <$action-sendmessage
     $message="cpl-search-plugins"

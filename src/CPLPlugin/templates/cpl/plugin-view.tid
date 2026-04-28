@@ -2,12 +2,12 @@ code-body: yes
 created: 20231006080749205
 modified: 20231010213737515
 tags: TW5CPL
-title: $:/CPL/PluginViewTemplate
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-view
 type: text/vnd.tiddlywiki
 
-\import $:/CPL/PluginGalleryItem
+\import $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-gallery-item
 \import $:/plugins/Gk0Wk/notionpage-covericon/body
-\import $:/CPL/tag-picker
+\import $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/tag-picker
 
 <$list filter="[[IfEditorMode]get[text]match[yes]]" variable="edit">
 <$macrocall $name="cpl-tag-picker" title=<<currentTiddler>> tagField="cpl.tags"/>
@@ -18,7 +18,7 @@ type: text/vnd.tiddlywiki
 <<<
 @@line-height:2rem;
 <$text text={{{ [<chinese>match[yes]then[作者]else[Author]] }}} />: <$text text={{!!cpl.author}}/><br/>
-<$text text={{{ [<chinese>match[yes]] :then[all[current]get[cpl.category]else[Unknown]addprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]get[text]addprefix[类别: ]] :else[all[current]get[cpl.category]else[Unknown]addprefix[Category: ]] }}}/><br/>
+<$text text={{{ [<chinese>match[yes]] :then[all[current]get[cpl.category]else[Unknown]addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]addprefix[类别: ]] :else[all[current]get[cpl.category]else[Unknown]addprefix[Category: ]] }}}/><br/>
 <$list filter="[<currentTiddler>get[cpl.documentation]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/home-button}} <$text text={{{ [<chinese>match[yes]then[文档]else[Documentation]] }}} />:&nbsp;<$text text=<<url>>/></$button><br/></$list>
 <$list filter="[<currentTiddler>get[cpl.source]!match[]]" variable="url"><$button class="tc-btn-invisible" message="tm-open-external-window" param=<<url>>>{{$:/core/images/github}} <$text text={{{ [<chinese>match[yes]then[源码]else[Source Code]] }}} />:&nbsp;<$text text=<<url>>/></$button><br/></$list>
 @@

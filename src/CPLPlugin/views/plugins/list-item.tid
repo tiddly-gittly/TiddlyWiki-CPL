@@ -2,7 +2,7 @@ code-body: yes
 created: 20231009081025598
 modified: 20231013171005230
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/plugin-list-item
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/list-item
 type: text/vnd.tiddlywiki
 
 \define tag-plain(text:"",icon:"",color:"",bg:"")
@@ -40,7 +40,7 @@ type: text/vnd.tiddlywiki
 
 \define plugin-list-item(json,field,show-suggestion:"yes",class:"")
 \whitespace trim
-\import $:/plugins/Gk0Wk/CPL-Repo/plugin-size
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 <div class="$class$">
 <$let json=<<__json__>>>
@@ -89,7 +89,7 @@ type: text/vnd.tiddlywiki
         <h2><$text text=<<title>>/></h2>
         <div><em><$text text=<<version>>/></em></div>
         <div style="padding-top:4px;">
-            <$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg="#3f51b5" color="#fff" />
+            <$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg="#3f51b5" color="#fff" />
             <$let bg={{{ [{$:/palette}getindex[tag-background]] }}} color={{{ [{$:/palette}getindex[foreground]] }}}>
             <$list filter="[enlist<tags>]" variable="tag">
                 <$macrocall $name="tag-plain" text=<<tag>> icon="$:/core/images/tag-button" bg=<<bg>> color=<<color>> />

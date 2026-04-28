@@ -1,7 +1,7 @@
 created: 20231011064720642
 modified: 20231011074141434
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/about-banner
+title: $:/plugins/Gk0Wk/CPL-Repo/docs/about-banner
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">

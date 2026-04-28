@@ -295,7 +295,7 @@ export const startup = (): void => {
             if (notify !== false) {
               const notificationDuration = tw.config.preferences.notificationDuration;
               tw.config.preferences.notificationDuration = 10_000;
-              tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/update-notify-template', {
+              tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/update-notify-template', {
                 variables: { updateCount: pluginsToShow.length },
               });
               tw.config.preferences.notificationDuration = notificationDuration;
@@ -389,7 +389,7 @@ export const startup = (): void => {
         text: 'yes',
         'plugin-titles': JSON.stringify(titles),
       });
-      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/install-plugin-query-notify', {
+      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/install-plugin-query', {
         variables: {},
       });
 
@@ -479,7 +479,7 @@ export const startup = (): void => {
         ...tiddlerFields,
       });
       tw.wiki.deleteTiddler('$:/temp/CPL-Repo/instal-plugin-requesting');
-      tw.modal.display('$:/plugins/Gk0Wk/CPL-Repo/install-plugin-request-model-template', {
+      tw.modal.display('$:/plugins/Gk0Wk/CPL-Repo/templates/modals/install-plugin-request', {
         variables: {
           requestTiddler: '$:/temp/CPL-Repo/instal-plugin-request-tree',
         },
@@ -554,7 +554,7 @@ export const startup = (): void => {
             version: version ?? 'latest',
           });
           count += 1;
-          tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/downloading-notify', {
+          tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading', {
             variables: { plugin: pluginTitle, count, total },
           });
           return new tw.Tiddler(tw.utils.parseJSONSafe(text));
@@ -565,12 +565,12 @@ export const startup = (): void => {
       for (const tiddler of tiddlers) {
         tw.wiki.addTiddler(tiddler);
       }
-      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/downloading-complete-notify', {
+      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-complete', {
         variables: {},
       });
     } catch (error) {
       console.error(error);
-      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/downloading-fail-notify', {
+      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-fail', {
         variables: { message: String(error) },
       });
       const response = getEventParam(event, 'response');

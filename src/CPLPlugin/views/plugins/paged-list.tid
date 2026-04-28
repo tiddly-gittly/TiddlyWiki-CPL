@@ -2,7 +2,7 @@ code-body: yes
 created: 20231010151718412
 modified: 20231010161347568
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/paged-plugin-list
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/paged-list
 type: text/vnd.tiddlywiki
 
 \define paged-plugin-list-control(class2:"")

@@ -12,7 +12,7 @@ enabled: no
 <$button>
 打开 CPL 安装插件
 <$action-sendmessage $message="tm-close-tiddler" />
-<$action-sendmessage $message="tm-navigate" navigateTo="$:/plugins/Gk0Wk/CPL-Repo/panel" />
+<$action-sendmessage $message="tm-navigate" navigateTo="$:/plugins/Gk0Wk/CPL-Repo/layout/panel" />
 </$button>
 
 </$list>
@@ -23,7 +23,7 @@ For a better experience, we recommend you
 <$button>
 Open CPL to install plugins
 <$action-sendmessage $message="tm-close-tiddler" />
-<$action-sendmessage $message="tm-navigate" navigateTo="$:/plugins/Gk0Wk/CPL-Repo/panel" />
+<$action-sendmessage $message="tm-navigate" navigateTo="$:/plugins/Gk0Wk/CPL-Repo/layout/panel" />
 </$button>
 
 </$list></$list>

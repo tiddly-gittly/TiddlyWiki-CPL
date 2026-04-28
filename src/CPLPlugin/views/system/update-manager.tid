@@ -2,7 +2,7 @@ caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[
 created: 20231010174423870
 modified: 20231010200158827
 tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/update-manager
+title: $:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
@@ -14,4 +14,4 @@ type: text/vnd.tiddlywiki
 </$button>
 </$list>
 
-{{$:/plugins/Gk0Wk/CPL-Repo/update-body}}
+{{$:/plugins/Gk0Wk/CPL-Repo/views/system/update-body}}

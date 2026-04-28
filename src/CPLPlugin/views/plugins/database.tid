@@ -2,7 +2,7 @@ caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[
 created: 20231009065534242
 modified: 20231010201814330
 tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/plugin-database
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/database
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
@@ -89,8 +89,8 @@ type: text/vnd.tiddlywiki
 <$macrocall
 	$name="tabs"
 	state="$:/temp/CPL-Repo/plugin-database-tab-state"
-	tabsList="home-gallery category-gallery tags-gallery update-manager +[addprefix[$:/plugins/Gk0Wk/CPL-Repo/]]"
-	default="$:/plugins/Gk0Wk/CPL-Repo/home-gallery"
+	tabsList="[[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/home]] [[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/category]] [[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/tags]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]]"
+	default="$:/plugins/Gk0Wk/CPL-Repo/views/galleries/home"
 />
 </$list>
 

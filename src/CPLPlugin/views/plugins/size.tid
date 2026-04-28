@@ -2,7 +2,7 @@ code-body: yes
 created: 20231013170415326
 modified: 20231013170541854
 tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/plugin-size
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
 type: text/vnd.tiddlywiki
 
 \define plugin-size(size:"0")

@@ -1,6 +1,6 @@
-title: $:/plugins/Gk0Wk/CPL-Repo/PluginLibraryUI
+title: $:/plugins/Gk0Wk/CPL-Repo/views/system/library-ui
 caption: CPL
 tags: $:/tags/PluginLibrary $:/tags/PluginLibrary/CPL
 enabled: no
 
-{{$:/plugins/Gk0Wk/CPL-Repo/panel}}
+{{$:/plugins/Gk0Wk/CPL-Repo/layout/panel}}

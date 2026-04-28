@@ -26,10 +26,10 @@ type: text/vnd.tiddlywiki
 <div class="tc-more-sidebar home-tabbar">
     <$macrocall
         $name="tabs"
-        tabsList="[[Home]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]removeprefix[$:/plugins/Gk0Wk/CPL-Repo/PluginCategory/]] -[[Unknown]]"
+        tabsList="[[Home]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]removeprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]] -[[Unknown]]"
         default="Home"
         class="tc-vertical"
-        template="$:/CPL/HomeTabTemplate"
-		buttonTemplate="$:/CPL/HomeTabButtonTemplate"
+        template="$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/home-tab"
+		buttonTemplate="$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/home-tab-button"
     />
 </div>

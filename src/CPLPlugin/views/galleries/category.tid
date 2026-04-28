@@ -2,7 +2,7 @@ caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[
 created: 20231010175848637
 modified: 20231010200136257
 tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/category-gallery
+title: $:/plugins/Gk0Wk/CPL-Repo/views/galleries/category
 type: text/vnd.tiddlywiki
 
 <$macrocall
@@ -10,6 +10,6 @@ type: text/vnd.tiddlywiki
 	state="$:/temp/CPL-Repo/category-gallery-tab-state"
 	tabsList="[{$:/temp/CPL-Repo/categories}jsonindexes[]]"
 	default={{{ [{$:/temp/CPL-Repo/categories}jsonindexes[]first[]] }}}
-	template="$:/plugins/Gk0Wk/CPL-Repo/category-tab-container-template"
-	buttonTemplate="$:/plugins/Gk0Wk/CPL-Repo/category-tab-button-template"
+	template="$:/plugins/Gk0Wk/CPL-Repo/templates/category/tab-container"
+	buttonTemplate="$:/plugins/Gk0Wk/CPL-Repo/templates/category/tab-button"
 />

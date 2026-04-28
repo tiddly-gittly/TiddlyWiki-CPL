@@ -3,7 +3,7 @@ created: 20231010201844662
 modified: 20231010204310339
 subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL 设置]else[CPL Settings]] }}}/>
 tags:
-title: $:/plugins/Gk0Wk/CPL-Repo/settings
+title: $:/plugins/Gk0Wk/CPL-Repo/views/system/settings
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">

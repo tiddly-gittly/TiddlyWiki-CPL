@@ -2,10 +2,10 @@ code-body: yes
 created: 20231007150846632
 modified: 20231009075737169
 tags: TW5CPL
-title: $:/CPL/HomeTabTemplate
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/home-tab
 type: text/vnd.tiddlywiki
 
-\import $:/CPL/PluginGalleryItem
+\import $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-gallery-item
 \import $:/plugins/Gk0Wk/notionpage-covericon/body
 
 <$list filter="[<currentTab>match[Home]]">

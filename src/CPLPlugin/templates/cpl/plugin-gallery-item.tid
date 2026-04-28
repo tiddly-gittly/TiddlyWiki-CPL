@@ -3,7 +3,7 @@ created: 20231007085122358
 modified: 20231008174241399
 page-cover: 
 tags: TW5CPL
-title: $:/CPL/PluginGalleryItem
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-gallery-item
 type: text/vnd.tiddlywiki
 
 \define plugin-item(title,class:"")

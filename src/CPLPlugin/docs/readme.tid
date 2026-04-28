@@ -1,11 +1,11 @@
 created: 20231011061802594
 modified: 20231011074813020
 tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/readme
+title: $:/plugins/Gk0Wk/CPL-Repo/docs/readme
 type: text/vnd.tiddlywiki
 
 <div style="display:flex;justify-content:center;">
-{{$:/plugins/Gk0Wk/CPL-Repo/about-banner}}
+{{$:/plugins/Gk0Wk/CPL-Repo/docs/about-banner}}
 </div>
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">

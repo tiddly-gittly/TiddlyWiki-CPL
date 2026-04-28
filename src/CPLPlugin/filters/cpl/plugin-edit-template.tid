@@ -2,7 +2,7 @@ created: 20231006082244698
 list-before: $:/config/EditTemplateBodyFilters/canonical-uri
 modified: 20231008153937943
 tags: $:/tags/EditTemplateBodyFilter TW5CPL
-title: $:/CPL/PluginEditTemplateFilter
+title: $:/plugins/Gk0Wk/CPL-Repo/filters/cpl/plugin-edit-template
 type: text/vnd.tiddlywiki
 
-[tag[$:/tags/PluginWiki]then[$:/CPL/PluginEditTemplate]]
+[tag[$:/tags/PluginWiki]then[$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-edit]]

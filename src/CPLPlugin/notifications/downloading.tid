@@ -2,7 +2,7 @@ code-body: yes
 created: 20231009194310566
 modified: 20231009194920779
 tags: 
-title: $:/plugins/Gk0Wk/CPL-Repo/downloading-notify
+title: $:/plugins/Gk0Wk/CPL-Repo/notifications/downloading
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">

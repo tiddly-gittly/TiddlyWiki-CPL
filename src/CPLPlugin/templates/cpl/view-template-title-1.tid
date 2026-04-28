@@ -2,7 +2,7 @@ code-body: yes
 created: 20231006124003716
 modified: 20231006124026230
 tags: 
-title: $:/CPL/ViewTemplateTitle1
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/view-template-title-1
 type: text/vnd.tiddlywiki
 
 \define plugin-info(title,type)
