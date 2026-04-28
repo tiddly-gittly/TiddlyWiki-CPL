@@ -52,17 +52,19 @@ async function startBlankWiki(options = {}) {
   fs.cpSync(emptyEdition, blankWikiPath, { recursive: true });
 
   const repoRoot = path.resolve(__dirname, '../../..');
+  const toBootPluginArg = (filePath) => `+${path.relative(repoRoot, filePath).replace(/\\/g, '/')}`;
   const args = [
     twEntry,
     '+plugins/tiddlywiki/filesystem',
     '+plugins/tiddlywiki/tiddlyweb',
-    blankWikiPath,
   ];
   if (loadCplClient) {
-    const { repoPluginPath } = ensureRuntimePluginsBuilt();
-    args.push('--load', repoPluginPath);
+    const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
+    args.push(toBootPluginArg(serverPluginPath));
+    args.push(toBootPluginArg(repoPluginPath));
   }
   args.push(
+    blankWikiPath,
     '--listen',
     `port=${BLANK_WIKI_PORT}`,
     `host=${BLANK_WIKI_HOST}`

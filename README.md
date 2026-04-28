@@ -127,7 +127,7 @@ For read-only mode:
 pnpm server:prod
 ```
 
-The server launcher compiles the TypeScript plugin sources into runtime plugin JSON files under `cache/runtime-plugins/`, and then starts a standard TiddlyWiki Node.js server with those compiled plugins loaded via `--load`. This keeps the runtime compatible with TiddlyWiki's Node.js boot process while preserving TypeScript source under `src/`.
+The server launcher compiles the TypeScript plugin sources into runtime plugin JSON files under `cache/runtime-plugins/`, and then starts a standard TiddlyWiki Node.js server with those compiled plugins injected as boot-time plugin arguments. This keeps the runtime compatible with TiddlyWiki's Node.js boot process while preserving TypeScript source under `src/`.
 
 For public deployments, configure read-only mode so wiki writes stay disabled while download statistics and API routes remain available.
 

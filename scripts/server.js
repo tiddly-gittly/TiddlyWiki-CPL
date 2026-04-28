@@ -37,17 +37,16 @@ if (args.includes('--readonly') || args.includes('-r')) {
 
 const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
 const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
+const toBootPluginArg = (filePath) => `+${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
 
 // Build tiddlywiki command
 const twArgs = [
   TW_ENTRY,
   '+plugins/tiddlywiki/filesystem',
   '+plugins/tiddlywiki/tiddlyweb',
+  toBootPluginArg(serverPluginPath),
+  toBootPluginArg(repoPluginPath),
   'wiki',
-  '--load',
-  serverPluginPath,
-  '--load',
-  repoPluginPath,
   '--listen',
   `port=${port}`,
   `host=${host}`
