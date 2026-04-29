@@ -131,3 +131,12 @@ $__config_RelinkOnRename.tid
 $__tmp_searchplugin_input.tid
 $__tmp_searchplugin_input.tid
 tiddlers/$__layout.tid
+
+# Generated runtime plugin files (produced by scripts/server.js at startup)
+wiki/tiddlers/$__plugins_*
+
+# Temporary server output
+wiki/tiddlers/website/
+
+# Temp workspace
+tmp/

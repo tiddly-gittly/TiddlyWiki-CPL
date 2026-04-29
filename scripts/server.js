@@ -37,15 +37,21 @@ if (args.includes('--readonly') || args.includes('-r')) {
 
 const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
 const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
-const toBootPluginArg = (filePath) => `+${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
+
+// Copy runtime plugins into wiki tiddlers so they load before execStartup()
+const tiddlersDir = path.join(WIKI_PATH, 'wiki', 'tiddlers');
+fs.mkdirSync(tiddlersDir, { recursive: true });
+for (const pluginPath of [repoPluginPath, serverPluginPath]) {
+  const dest = path.join(tiddlersDir, path.basename(pluginPath));
+  fs.copyFileSync(pluginPath, dest);
+  console.log(`[CPL Server] Copied plugin to tiddlers: ${path.basename(pluginPath)}`);
+}
 
 // Build tiddlywiki command
 const twArgs = [
   TW_ENTRY,
   '+plugins/tiddlywiki/filesystem',
   '+plugins/tiddlywiki/tiddlyweb',
-  toBootPluginArg(serverPluginPath),
-  toBootPluginArg(repoPluginPath),
   'wiki',
   '--listen',
   `port=${port}`,

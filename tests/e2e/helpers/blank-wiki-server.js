@@ -52,17 +52,20 @@ async function startBlankWiki(options = {}) {
   fs.cpSync(emptyEdition, blankWikiPath, { recursive: true });
 
   const repoRoot = path.resolve(__dirname, '../../..');
-  const toBootPluginArg = (filePath) => `+${path.relative(repoRoot, filePath).replace(/\\/g, '/')}`;
+  if (loadCplClient) {
+    const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
+    const blankTiddlersDir = path.join(blankWikiPath, 'tiddlers');
+    fs.mkdirSync(blankTiddlersDir, { recursive: true });
+    for (const pluginPath of [repoPluginPath, serverPluginPath]) {
+      fs.copyFileSync(pluginPath, path.join(blankTiddlersDir, path.basename(pluginPath)));
+    }
+    console.log('[Blank Wiki] Copied CPL plugins to blank wiki tiddlers');
+  }
   const args = [
     twEntry,
     '+plugins/tiddlywiki/filesystem',
     '+plugins/tiddlywiki/tiddlyweb',
   ];
-  if (loadCplClient) {
-    const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
-    args.push(toBootPluginArg(serverPluginPath));
-    args.push(toBootPluginArg(repoPluginPath));
-  }
   args.push(
     blankWikiPath,
     '--listen',

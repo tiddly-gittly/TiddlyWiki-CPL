@@ -1,428 +1,26 @@
-type JsonObject = Record<string, unknown>;
-type ApiCallback<T> = (error: string | null, data: T | null) => void;
-
-interface HttpErrorLike {
-  message?: string;
-  status?: number;
-  statusText?: string;
-}
-
-interface AuthStatusResponse extends JsonObject {
-  authenticated?: boolean;
-  user?: unknown;
-}
-
-interface RatingResponse extends JsonObject {
-  averageRating?: number;
-  totalRatings?: number;
-}
-
-interface OAuthResponse extends JsonObject {
-  success?: boolean;
-  token?: string;
-  user?: unknown;
-}
-
-interface CPLServerApi {
-  recordDownload: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
-  getStats: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
-  getAllStats: (callback: ApiCallback<JsonObject>) => void;
-  submitRating: (
-    pluginTitle: string,
-    rating: number,
-    callback: ApiCallback<RatingResponse>,
-  ) => void;
-  getChangelog: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
-  getComments: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
-  submitComment: (
-    pluginTitle: string,
-    content: string,
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  checkAuthStatus: (callback: ApiCallback<AuthStatusResponse>) => void;
-  logout: () => void;
-}
-
-type TwWithCplApi = typeof $tw & {
-  cpl?: CPLServerApi;
-  cplServerAPI?: CPLServerApi;
-};
-
-const tw = $tw as TwWithCplApi;
-
-type RootWidgetListener = Parameters<typeof tw.rootWidget.addEventListener>[1];
-type RootWidgetEvent = RootWidgetListener extends (
-  event: infer EventType,
-) => boolean | Promise<void> | undefined
-  ? EventType
-  : never;
+import { tw, type RootWidgetEvent, type OAuthResponse } from './api-client/types';
+import { MIRROR_CONFIG_TITLE } from './api-client/constants';
+import { getEventParam, getViewedPluginTitle } from './api-client/utilities';
+import { setJwtToken } from './api-client/auth';
+import { createCplServerApi } from './api-client/api';
+import { fetchPluginStats, fetchPluginChangelog, fetchPluginComments } from './api-client/data-fetch';
+import { refreshMirrorCapabilityState } from './api-client/server-status';
 
 export const name = 'cpl-server-api-client';
 export const platforms = ['browser'];
 export const after = ['startup'];
 export const synchronous = true;
 
-const CPL_API_BASE = '/cpl/api';
-const API_STATUS_TIDDLER = '$:/temp/CPL-Repo/api-status';
-const API_TYPE_TIDDLER = '$:/temp/CPL-Repo/mirror-type';
-const API_MESSAGE_TIDDLER = '$:/temp/CPL-Repo/mirror-message';
-const MIRROR_CONFIG_TITLE = '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
-const JWT_TOKEN_KEY = 'cpl_jwt_token';
-
-let apiAvailability: boolean | null = null;
-let lastMirrorEntry: string | null = null;
-
-const getCurrentMirrorEntry = (): string =>
-  tw.wiki.getTiddlerText(MIRROR_CONFIG_TITLE, '');
-
-const getEventParam = (event: RootWidgetEvent, name: string): string | undefined => {
-  const value = event.paramObject?.[name];
-  return typeof value === 'string' ? value : undefined;
-};
-
-const clearServerTempState = (): void => {
-  for (const title of tw.wiki.filterTiddlers('[prefix[$:/temp/CPL-Server/]]')) {
-    tw.wiki.deleteTiddler(title);
-  }
-};
-
-const setApiStatus = (status: string, type: string, message: string): void => {
-  const timestamp = String(Date.now());
-
-  tw.wiki.addTiddler({
-    title: API_STATUS_TIDDLER,
-    text: status,
-    timestamp,
-  });
-  tw.wiki.addTiddler({
-    title: API_TYPE_TIDDLER,
-    text: type || 'unknown',
-    timestamp,
-  });
-  tw.wiki.addTiddler({
-    title: API_MESSAGE_TIDDLER,
-    text: message || '',
-    timestamp,
-  });
-};
-
-const getErrorMessage = (error: unknown): string => {
-  if (!error) {
-    return 'Request failed';
-  }
-  if (typeof error === 'string') {
-    return error;
-  }
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-
-  const httpError = error as HttpErrorLike;
-  if (httpError.message) {
-    return httpError.message;
-  }
-  if (httpError.status !== undefined) {
-    return `HTTP ${httpError.status}${httpError.statusText ? ` ${httpError.statusText}` : ''}`;
-  }
-
-  try {
-    return JSON.stringify(error);
-  } catch {
-    return String(error);
-  }
-};
-
-const rawApiRequest = <T extends JsonObject>(
-  method: string,
-  endpoint: string,
-  body: JsonObject | null,
-  callback: ApiCallback<T>,
-  extraHeaders?: Record<string, string>,
-): void => {
-  const options: {
-    url: string;
-    type: string;
-    headers: Record<string, string>;
-    data?: string;
-    callback: (error: unknown, response: string) => void;
-  } = {
-    url: `${CPL_API_BASE}${endpoint}`,
-    type: method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(extraHeaders ?? {}),
-    },
-    callback: (error, response) => {
-      if (error) {
-        callback(getErrorMessage(error), null);
-        return;
-      }
-
-      try {
-        callback(null, JSON.parse(response) as T);
-      } catch {
-        callback('Invalid JSON response', null);
-      }
-    },
-  };
-
-  if (body) {
-    options.data = JSON.stringify(body);
-  }
-
-  tw.utils.httpRequest(options);
-};
-
-const getUnavailableMessage = (): string =>
-  'This mirror does not provide CPL server API features.';
-
-const apiRequest = <T extends JsonObject>(
-  method: string,
-  endpoint: string,
-  body: JsonObject | null,
-  callback: ApiCallback<T>,
-): void => {
-  if (apiAvailability === false) {
-    callback(getUnavailableMessage(), null);
-    return;
-  }
-
-  rawApiRequest(method, endpoint, body, callback);
-};
-
-const getJwtToken = (): string | null => {
-  try {
-    return localStorage.getItem(JWT_TOKEN_KEY);
-  } catch {
-    return null;
-  }
-};
-
-const setJwtToken = (token: string | null): void => {
-  try {
-    if (token) {
-      localStorage.setItem(JWT_TOKEN_KEY, token);
-      return;
-    }
-
-    localStorage.removeItem(JWT_TOKEN_KEY);
-  } catch (error) {
-    console.error('[CPL-Server] Failed to access localStorage:', error);
-  }
-};
-
-const authenticatedRequest = <T extends JsonObject>(
-  method: string,
-  endpoint: string,
-  body: JsonObject | null,
-  callback: ApiCallback<T>,
-): void => {
-  if (apiAvailability === false) {
-    callback(getUnavailableMessage(), null);
-    return;
-  }
-
-  const token = getJwtToken();
-  rawApiRequest(method, endpoint, body, callback, token ? { Authorization: `Bearer ${token}` } : undefined);
-};
-
-const probeApiAvailability = (callback: (available: boolean) => void): void => {
-  setApiStatus('checking', 'unknown', 'Checking mirror capabilities...');
-  rawApiRequest<JsonObject>(
-    'GET',
-    `/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`,
-    null,
-    error => {
-      if (error) {
-        apiAvailability = false;
-        setApiStatus(
-          'unavailable',
-          'static',
-          'Static mirror detected. Stats, ratings, comments, and login are unavailable here.',
-        );
-        callback(false);
-        return;
-      }
-
-      apiAvailability = true;
-      setApiStatus('available', 'server', 'Full CPL server features are available on this mirror.');
-      callback(true);
-    },
-  );
-};
-
-const hasPluginWikiTag = (tags: unknown): boolean => {
-  if (Array.isArray(tags)) {
-    return tags.includes('$:/tags/PluginWiki');
-  }
-  if (typeof tags === 'string') {
-    return tw.utils.parseStringArray(tags).includes('$:/tags/PluginWiki');
-  }
-
-  return false;
-};
-
-const getViewedPluginTitle = (): string | null => {
-  const historyTiddler = tw.wiki.getTiddler('$:/HistoryList');
-  const currentTitle = historyTiddler?.fields?.['current-tiddler'];
-
-  if (typeof currentTitle !== 'string' || currentTitle.length === 0) {
-    return null;
-  }
-
-  const tiddler = tw.wiki.getTiddler(currentTitle);
-  if (!tiddler || !hasPluginWikiTag(tiddler.fields.tags)) {
-    return null;
-  }
-
-  const pluginTitle = tiddler.fields['cpl.title'];
-  return typeof pluginTitle === 'string' && pluginTitle.length > 0 ? pluginTitle : null;
-};
-
-const fetchPluginStats = (pluginTitle: string): void => {
-  if (!pluginTitle) {
-    return;
-  }
-
-  const tempTitle = `$:/temp/CPL-Server/plugin-stats/${pluginTitle}`;
-  cplServerApi.getStats(pluginTitle, (error, data) => {
-    if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch stats for', pluginTitle, error);
-      return;
-    }
-
-    tw.wiki.addTiddler({
-      title: tempTitle,
-      text: JSON.stringify(data),
-      type: 'application/json',
-      'plugin-title': pluginTitle,
-      timestamp: String(Date.now()),
-    });
-  });
-};
-
-const fetchPluginChangelog = (pluginTitle: string): void => {
-  if (!pluginTitle) {
-    return;
-  }
-
-  const tempTitle = `$:/temp/CPL-Server/plugin-changelog/${pluginTitle}`;
-  cplServerApi.getChangelog(pluginTitle, (error, data) => {
-    if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch changelog for', pluginTitle, error);
-      return;
-    }
-
-    tw.wiki.addTiddler({
-      title: tempTitle,
-      text: JSON.stringify(data),
-      type: 'application/json',
-      'plugin-title': pluginTitle,
-      timestamp: String(Date.now()),
-    });
-  });
-};
-
-const fetchPluginComments = (pluginTitle: string): void => {
-  if (!pluginTitle) {
-    return;
-  }
-
-  const tempTitle = `$:/temp/CPL-Server/comments/${pluginTitle}`;
-  cplServerApi.getComments(pluginTitle, (error, data) => {
-    if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch comments for', pluginTitle, error);
-      return;
-    }
-
-    tw.wiki.addTiddler({
-      title: tempTitle,
-      text: JSON.stringify(data),
-      type: 'application/json',
-      'plugin-title': pluginTitle,
-      timestamp: String(Date.now()),
-    });
-  });
-};
-
-const refreshMirrorCapabilityState = (): void => {
-  const entry = getCurrentMirrorEntry();
-  if (entry === lastMirrorEntry && apiAvailability !== null) {
-    return;
-  }
-
-  lastMirrorEntry = entry;
-  apiAvailability = null;
-  clearServerTempState();
-  probeApiAvailability(available => {
-    if (!available) {
-      tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/user-status',
-        text: 'anonymous',
-      });
-      return;
-    }
-
-    cplServerApi.checkAuthStatus((error, data) => {
-      if (!error && data?.authenticated) {
-        tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/user-status',
-          text: 'authenticated',
-        });
-        tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/user',
-          text: JSON.stringify(data.user),
-          type: 'application/json',
-        });
-        return;
-      }
-
-      tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/user-status',
-        text: 'anonymous',
-      });
-    });
-  });
-};
-
-const cplServerApi: CPLServerApi = {
-  recordDownload(pluginTitle, callback) {
-    apiRequest('POST', `/download/${encodeURIComponent(pluginTitle)}`, null, callback);
-  },
-  getStats(pluginTitle, callback) {
-    apiRequest('GET', `/stats/${encodeURIComponent(pluginTitle)}`, null, callback);
-  },
-  getAllStats(callback) {
-    apiRequest('GET', '/stats', null, callback);
-  },
-  submitRating(pluginTitle, rating, callback) {
-    apiRequest('POST', `/rate/${encodeURIComponent(pluginTitle)}`, { rating }, callback);
-  },
-  getChangelog(pluginTitle, callback) {
-    apiRequest('GET', `/changelog/${encodeURIComponent(pluginTitle)}`, null, callback);
-  },
-  getComments(pluginTitle, callback) {
-    authenticatedRequest('GET', `/comments/${encodeURIComponent(pluginTitle)}`, null, callback);
-  },
-  submitComment(pluginTitle, content, callback) {
-    authenticatedRequest('POST', `/comments/${encodeURIComponent(pluginTitle)}`, { content }, callback);
-  },
-  checkAuthStatus(callback) {
-    authenticatedRequest('GET', '/auth/status', null, callback);
-  },
-  logout() {
-    setJwtToken(null);
-  },
-};
+const cplServerApi = createCplServerApi();
 
 export const startup = (): void => {
   tw.cpl = cplServerApi;
   tw.cplServerAPI = tw.cpl;
-  refreshMirrorCapabilityState();
+  refreshMirrorCapabilityState(cplServerApi);
 
   tw.wiki.addEventListener('change', changes => {
     if ($tw.utils.hop(changes, MIRROR_CONFIG_TITLE)) {
-      refreshMirrorCapabilityState();
+      refreshMirrorCapabilityState(cplServerApi);
     }
 
     const pluginTitle = getViewedPluginTitle();
@@ -430,15 +28,15 @@ export const startup = (): void => {
       return;
     }
 
-    fetchPluginStats(pluginTitle);
-    fetchPluginChangelog(pluginTitle);
-    fetchPluginComments(pluginTitle);
+    fetchPluginStats(cplServerApi, pluginTitle);
+    fetchPluginChangelog(cplServerApi, pluginTitle);
+    fetchPluginComments(cplServerApi, pluginTitle);
   });
 
   tw.rootWidget.addEventListener('cpl-fetch-stats', (event: RootWidgetEvent): undefined => {
     const pluginTitle = getEventParam(event, 'pluginTitle');
     if (pluginTitle) {
-      fetchPluginStats(pluginTitle);
+      fetchPluginStats(cplServerApi, pluginTitle);
     }
     return undefined;
   });
@@ -446,7 +44,7 @@ export const startup = (): void => {
   tw.rootWidget.addEventListener('cpl-fetch-changelog', (event: RootWidgetEvent): undefined => {
     const pluginTitle = getEventParam(event, 'pluginTitle');
     if (pluginTitle) {
-      fetchPluginChangelog(pluginTitle);
+      fetchPluginChangelog(cplServerApi, pluginTitle);
     }
     return undefined;
   });
@@ -485,7 +83,7 @@ export const startup = (): void => {
         'total-ratings': String(data.totalRatings || 0),
       });
 
-      fetchPluginStats(pluginTitle);
+      fetchPluginStats(cplServerApi, pluginTitle);
     });
     return undefined;
   });
@@ -607,7 +205,7 @@ export const startup = (): void => {
         title: `$:/temp/CPL-Server/comment-status/${pluginTitle}`,
         text: 'success',
       });
-      fetchPluginComments(pluginTitle);
+      fetchPluginComments(cplServerApi, pluginTitle);
     });
     return undefined;
   });
@@ -615,7 +213,7 @@ export const startup = (): void => {
   tw.rootWidget.addEventListener('cpl-fetch-comments', (event: RootWidgetEvent): undefined => {
     const pluginTitle = getEventParam(event, 'pluginTitle');
     if (pluginTitle) {
-      fetchPluginComments(pluginTitle);
+      fetchPluginComments(cplServerApi, pluginTitle);
     }
     return undefined;
   });
