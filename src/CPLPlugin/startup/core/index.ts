@@ -141,40 +141,18 @@ export const createIndexController = ({
 
       let suggestions: string[] = [];
       if (pluginIndexCache && data.category !== 'Language' && data.tags) {
+        const tags = new Set(
+          tw.utils.parseStringArray(data.tags).map(tag => tag.toLowerCase()),
+        );
         suggestions = pluginIndexCache
           .filter(plugin => plugin.title !== title && plugin.tags)
           .map(plugin => {
-            let weight = 0;
-
-            for (const field of ['title', 'author', 'name'] as const) {
-              const value = plugin[field];
-              if (typeof value === 'string' && value.toLowerCase().includes(title.toLowerCase())) {
-                weight += 10;
-              }
-            }
-
-            const currentPluginTags = tw.utils.parseStringArray(data.tags || '');
-            const candidateTags = new Set(
-              tw.utils.parseStringArray(plugin.tags || '').map(tag => tag.toLowerCase()),
-            );
-            weight += currentPluginTags.reduce(
-              (sum, tag) => sum + (candidateTags.has(tag.toLowerCase()) ? 1 : 0),
-              0,
-            );
-
-            if (typeof plugin.description === 'string' && typeof data.description === 'string') {
-              const currentDescriptionPatterns = data.description
-                .toLowerCase()
-                .split(/\s+/)
-                .filter(Boolean)
-                .slice(0, 10);
-              for (const pattern of currentDescriptionPatterns) {
-                if (plugin.description.toLowerCase().includes(pattern)) {
-                  weight += 1;
-                }
-              }
-            }
-
+            const weight = tw.utils
+              .parseStringArray(data.tags || '')
+              .reduce(
+                (sum, tag) => sum + (tags.has(tag.toLowerCase()) ? 1 : 0),
+                0,
+              );
             return [plugin.title, weight] as const;
           })
           .filter(([, weight]) => weight > 0)

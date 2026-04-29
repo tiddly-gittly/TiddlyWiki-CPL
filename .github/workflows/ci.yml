@@ -42,3 +42,6 @@ jobs:
 
       - name: Run unit tests
         run: pnpm run test:unit
+
+      - name: Run API tests
+        run: pnpm run test:api

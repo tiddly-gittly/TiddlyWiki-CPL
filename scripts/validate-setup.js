@@ -56,7 +56,7 @@ const checks = [
     name: 'Package.json scripts updated',
     check: () => {
       const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-      return pkg.scripts['server:dev'] && 
+      return pkg.scripts['server:start'] && 
              pkg.scripts['server:prod'] &&
              pkg.scripts['build'] &&
              pkg.scripts['test'];
@@ -91,6 +91,6 @@ if (failed > 0) {
   console.log('\n[CPL Validation] All checks passed!');
   console.log('\nNext steps:');
   console.log('  1. Run "npm install" to install dependencies');
-  console.log('  2. Run "npm run server:dev" to start development server');
+  console.log('  2. Run "npm run server:start" to start development server');
   console.log('  3. Run "npm test" to run tests');
 }
