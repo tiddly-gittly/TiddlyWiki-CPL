@@ -1,0 +1,13 @@
+code-body: yes
+created: 20231006113559506
+modified: 20231007064423902
+tags: TW5CPL
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/view-template-title
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<h2>
+<strong><$text text={{{ [<currentTiddler>get[cpl.name]] ~[<currentTiddler>get[cpl.title]split[/]last[1]] }}}/></strong>:&nbsp;
+<$text text={{{ [<currentTiddler>get[cpl.description]] }}}/>
+</h2>

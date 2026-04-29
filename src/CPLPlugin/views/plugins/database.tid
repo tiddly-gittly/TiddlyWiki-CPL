@@ -1,0 +1,97 @@
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[插件数据库]else[Plugin Database]] }}} />
+created: 20231009065534242
+modified: 20231010201814330
+tags: 
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/database
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
+<$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn">
+<$action-sendmessage $message="cpl-get-plugins-index" />
+{{$:/core/images/download-button}}
+&#32;
+<$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />
+</$button>
+
+<!-- Mirror Switcher -->
+<div class="cpl-mirror-switcher" style="display: flex; align-items: center; gap: 8px;">
+<span style="font-weight: 500; font-size: 0.9em;"><$text text={{{ [<chinese>match[yes]then[镜像源]else[Mirror]] }}}/>:</span>
+<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text" class="cpl-mirror-select" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer;">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
+</$list>
+</$select>
+
+<!-- Mirror Status Indicator -->
+<$let mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}} switchStatus={{{ [[$:/temp/CPL-Repo/mirror-switch-status]get[text]else[]] }}} switchMessage={{{ [[$:/temp/CPL-Repo/mirror-switch-status]get[message]else[]] }}}>
+<$list filter="[<mirrorType>match[server]]" variable="isServer">
+<span class="cpl-mirror-status cpl-mirror-server" style="font-size: 0.85em; color: #28a745; display: flex; align-items: center; gap: 4px;">
+<span style="font-size: 1.2em;">✓</span>
+<$text text={{{ [<chinese>match[yes]then[服务器镜像]else[Server Mirror]] }}}/>
+</span>
+</$list>
+<$list filter="[<mirrorType>match[static]]" variable="isStatic">
+<span class="cpl-mirror-status cpl-mirror-static" style="font-size: 0.85em; color: #ffc107; display: flex; align-items: center; gap: 4px;">
+<span style="font-size: 1.2em;">⚠</span>
+<$text text={{{ [<chinese>match[yes]then[静态镜像]else[Static Mirror]] }}}/>
+</span>
+</$list>
+<$list filter="[<mirrorType>match[unknown]]" variable="isUnknown">
+<span class="cpl-mirror-status cpl-mirror-unknown" style="font-size: 0.85em; color: #999; display: flex; align-items: center; gap: 4px;">
+<span style="font-size: 1.2em;">?</span>
+<$text text={{{ [<chinese>match[yes]then[检测中]else[Detecting]] }}}/>
+</span>
+</$list>
+<$list filter="[<switchStatus>match[success]]" variable="switchSuccess">
+<span style="font-size: 0.85em; color: #28a745; margin-left: 4px;">✓</span>
+</$list>
+<$list filter="[<switchStatus>match[error]]" variable="switchError">
+<span style="font-size: 0.85em; color: #dc3545; margin-left: 4px;">✗</span>
+</$list>
+</$let>
+</div>
+</div>
+
+<$list filter="[<switchMessage>!is[blank]]" variable="hasSwitchMessage">
+<div style="font-size:0.85em;color:#666;margin-bottom:8px;">
+<$text text=<<switchMessage>>/>
+</div>
+</$list>
+
+<!-- Static Mirror Info Banner -->
+<$list filter="[[$:/temp/CPL-Repo/mirror-type]get[text]match[static]]" variable="isStaticMirror">
+<div class="cpl-static-mirror-notice" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: start; gap: 8px;">
+<span style="font-size: 1.2em;">ℹ️</span>
+<div>
+<$text text={{{ [<chinese>match[yes]then[当前镜像为静态镜像，不支持评论、评分、统计等服务器功能。如需使用这些功能，请切换到服务器镜像。]else[Current mirror is a static mirror without server features (comments, ratings, stats). Switch to a server mirror to use these features.]] }}}/>
+</div>
+</div>
+</$list>
+
+<!-- 错误提示 -->
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]!field:text[yes]]">
+<div style="background:#e91e3db0;color:white;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
+	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
+</div>
+</$list>
+
+<!-- 加载中提示 -->
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]]">
+<div style="background:#0005;color:#aaa;padding:2px 6px;margin:3px 0;border-radius:2px;backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
+	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/plugins-index]is[tiddler]]" variable="ready">
+<$macrocall
+	$name="tabs"
+	state="$:/temp/CPL-Repo/plugin-database-tab-state"
+	tabsList="[[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/home]] [[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/category]] [[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/tags]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]]"
+	default="$:/plugins/Gk0Wk/CPL-Repo/views/galleries/home"
+/>
+</$list>
+
+</$list>

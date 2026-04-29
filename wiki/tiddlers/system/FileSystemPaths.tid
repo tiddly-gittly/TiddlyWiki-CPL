@@ -1,0 +1,6 @@
+title: $:/config/FileSystemPaths
+
+[is[system]!prefix[$:/plugins/Gk0Wk/CPL-Repo/]!has[draft.of]search-replace:g:regexp[/|\\],[_]addprefix[system/]]
+[prefix[$:/plugins/Gk0Wk/CPL-Repo/]addprefix[website/]]
+[tag[$:/tags/PluginWiki]addprefix[plugins/]]
+[!is[system]!tag[$:/tags/PluginWiki]addprefix[website/]]

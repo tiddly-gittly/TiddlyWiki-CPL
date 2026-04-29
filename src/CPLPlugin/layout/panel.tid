@@ -1,0 +1,19 @@
+caption: CPL
+created: 20231010204556042
+list-after: $:/core/ui/ControlPanel/Plugins
+modified: 20231011074702518
+tags: $:/tags/MoreSideBar $:/tags/ControlPanel
+title: $:/plugins/Gk0Wk/CPL-Repo/layout/panel
+type: text/vnd.tiddlywiki
+
+<!-- 在侧栏不显示 -->
+<$list filter="[<listItem>!match[$:/core/ui/SideBarSegments/tabs]]">
+{{$:/plugins/Gk0Wk/CPL-Repo/docs/about-banner}}
+</$list>
+
+<$macrocall
+	$name="tabs"
+	state="$:/temp/CPL-Repo/panel-tab-state"
+	tabsList="[[$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/uninstall-manager]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/settings]] [[$:/plugins/Gk0Wk/CPL-Repo/docs/readme]]"
+	default="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database"
+/>

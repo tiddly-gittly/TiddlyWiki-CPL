@@ -1,0 +1,10 @@
+{
+  "title": "$:/plugins/Gk0Wk/CPL-Repo",
+  "description": "TiddlyWiki Community Plugin Library - Frontend",
+  "author": "Gk0Wk",
+  "version": "2025.10.25",
+  "core-version": ">=5.3.0",
+  "plugin-type": "plugin",
+  "dependents": "$:/plugins/Gk0Wk/CPL-Server",
+  "list": "readme tree"
+}

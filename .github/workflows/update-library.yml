@@ -21,11 +21,11 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4.0.3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: '20'
-      - uses: pnpm/action-setup@v4
+          node-version: '22'
+      - uses: pnpm/action-setup@v6
         with:
           version: 'latest'
           run_install: false
@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -53,7 +53,7 @@ jobs:
         run: pnpm run importlibraryofficial
 
       # Commit all changed files back to the repository
-      - uses: EndBug/add-and-commit@v9
+      - uses: EndBug/add-and-commit@v10
         with:
           message: Automated Update all Library in libraries.json
           add: 'tiddlers'

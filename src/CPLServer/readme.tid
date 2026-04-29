@@ -1,0 +1,43 @@
+title: $:/plugins/Gk0Wk/CPL-Server/readme
+type: text/vnd.tiddlywiki
+
+! CPL Server Plugin
+
+This plugin provides the server-side API used by the TiddlyWiki CPL (Community Plugin Library).
+
+!! Features
+
+* Download statistics with IP-based throttling
+* Rating submission with one-vote-per-IP enforcement
+* Changelog lookup for plugin tiddlers
+* Comment submission and moderation APIs
+* GitHub OAuth based authentication for moderation flows
+
+!! API Endpoints
+
+* POST /cpl/api/download/:pluginTitle
+* GET /cpl/api/download-plugin/:pluginTitle
+* GET /cpl/api/stats
+* GET /cpl/api/stats/:pluginTitle
+* POST /cpl/api/rate/:pluginTitle
+* GET /cpl/api/changelog/:pluginTitle
+* GET /cpl/api/comments/:pluginTitle
+* POST /cpl/api/comments/:pluginTitle
+* GET /cpl/api/comments/pending
+* PUT /cpl/api/comments/:pluginTitle/:commentId
+* GET /cpl/api/auth/status
+* GET /cpl/api/auth/github/callback?code=...
+
+!! Storage
+
+Server data is stored under the data/ directory:
+
+* data/stats*.json for download counters
+* data/ratings*.json for rating data
+* data/comments/*.json for comment records
+
+!! Notes
+
+* The server supports read-only TiddlyWiki mode.
+* Multi-server deployments can use CPL_SERVER_ID to separate writable files.
+* Back up the data/ directory regularly.
