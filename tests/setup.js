@@ -1,8 +1,11 @@
 /**
  * Test Setup
- * 
+ *
  * This file runs before each test file.
  */
+
+// Provide a minimal $tw global for CPL-Server modules that reference $tw.cplServerState
+global.$tw = global.$tw || {};
 
 // Clean up data files before tests
 const fs = require('fs');

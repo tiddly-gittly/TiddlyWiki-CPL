@@ -103,25 +103,13 @@ Build the static website and plugin JSON files:
 pnpm build
 ```
 
-Build the plugin library (for distribution):
-
-```bash
-pnpm build:library
-```
-
 ### Adding Offline Plugin Files
 
 Place plugin `.json` files into `wiki/files/plugin-offline/` to make them available for download via the server. The download route (`GET /cpl/api/download-plugin/:title`) checks `wiki/files/plugin-fetched/` first, then falls back to `wiki/files/plugin-offline/`.
 
 ### Production Server
 
-Start the production server:
-
-```bash
-pnpm server:start
-```
-
-For read-only mode:
+Start the production server in read-only mode:
 
 ```bash
 pnpm server:prod

@@ -13,6 +13,7 @@ export const rawApiRequest = <T extends JsonObject>(
   body: JsonObject | null,
   callback: ApiCallback<T>,
   extraHeaders?: Record<string, string>,
+  baseUrl?: string,
 ): void => {
   const options: {
     url: string;
@@ -21,7 +22,7 @@ export const rawApiRequest = <T extends JsonObject>(
     data?: string;
     callback: (error: unknown, response: string) => void;
   } = {
-    url: `${CPL_API_BASE}${endpoint}`,
+    url: baseUrl ? `${baseUrl}${CPL_API_BASE}${endpoint}` : `${CPL_API_BASE}${endpoint}`,
     type: method,
     headers: {
       'Content-Type': 'application/json',

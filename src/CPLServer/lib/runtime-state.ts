@@ -36,36 +36,39 @@ export interface CplServerRuntimeState {
   commentRoute: CommentRouteRuntimeState;
 }
 
-declare global {
-  var __TIDDLYWIKI_CPL_SERVER__: CplServerRuntimeState | undefined;
+declare module 'tiddlywiki' {
+  export interface ITiddlyWiki {
+    cplServerState?: CplServerRuntimeState;
+  }
 }
 
-export const getRuntimeState = (): CplServerRuntimeState => {
-  if (!globalThis.__TIDDLYWIKI_CPL_SERVER__) {
-    globalThis.__TIDDLYWIKI_CPL_SERVER__ = {
-      dataStore: {
-        statsCache: null,
-        ratingsCache: null,
-        flushTimer: null,
-        pendingFlush: false,
-        handlersRegistered: false,
-      },
-      commentStore: {
-        commentsCache: {},
-        flushTimer: null,
-        pendingFlushes: new Set<string>(),
-        handlersRegistered: false,
-      },
-      rateLimiter: {
-        downloadLimits: {},
-        ratingLimits: {},
-        cleanupTimer: null,
-      },
-      commentRoute: {
-        limits: {},
-      },
-    };
-  }
+const createRuntimeState = (): CplServerRuntimeState => ({
+  dataStore: {
+    statsCache: null,
+    ratingsCache: null,
+    flushTimer: null,
+    pendingFlush: false,
+    handlersRegistered: false,
+  },
+  commentStore: {
+    commentsCache: {},
+    flushTimer: null,
+    pendingFlushes: new Set<string>(),
+    handlersRegistered: false,
+  },
+  rateLimiter: {
+    downloadLimits: {},
+    ratingLimits: {},
+    cleanupTimer: null,
+  },
+  commentRoute: {
+    limits: {},
+  },
+});
 
-  return globalThis.__TIDDLYWIKI_CPL_SERVER__;
+export const getRuntimeState = (): CplServerRuntimeState => {
+  if (!$tw.cplServerState) {
+    $tw.cplServerState = createRuntimeState();
+  }
+  return $tw.cplServerState;
 };

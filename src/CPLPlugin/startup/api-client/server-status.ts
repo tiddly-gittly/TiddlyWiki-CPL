@@ -3,8 +3,21 @@ import { rawApiRequest } from './http';
 import { setApiStatus, clearServerTempState } from './utilities';
 import { getCurrentMirrorEntry, apiAvailability, lastMirrorEntry, setApiAvailability, setLastMirrorEntry } from './state';
 
+const getMirrorBaseUrl = (): string | undefined => {
+  const entry = getCurrentMirrorEntry();
+  if (!entry) {
+    return undefined;
+  }
+  try {
+    return new URL(entry).origin;
+  } catch {
+    return undefined;
+  }
+};
+
 export const probeApiAvailability = (callback: (available: boolean) => void): void => {
   setApiStatus('checking', 'unknown', 'Checking mirror capabilities...');
+  const baseUrl = getMirrorBaseUrl();
   rawApiRequest<JsonObject>(
     'GET',
     `/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`,
@@ -25,6 +38,8 @@ export const probeApiAvailability = (callback: (available: boolean) => void): vo
       setApiStatus('available', 'server', 'Full CPL server features are available on this mirror.');
       callback(true);
     },
+    undefined,
+    baseUrl,
   );
 };
 

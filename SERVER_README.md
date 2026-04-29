@@ -13,7 +13,6 @@ Use README.md for:
 Quick reference:
 
 ```bash
-pnpm server:start   # writable local server
 pnpm server:prod    # read-only server mode
 pnpm test:api
 pnpm test:e2e

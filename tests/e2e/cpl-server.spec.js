@@ -60,6 +60,16 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
+  // Use local server as mirror so API probing succeeds in test environment.
+  // External mirrors (e.g. netlify) may not have CORS or server API enabled,
+  // which would mark them as static and disable server-only features.
+  await page.evaluate(() => {
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
+      text: window.location.origin
+    });
+  });
+
   await page.evaluate((title) => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
     $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': title });
