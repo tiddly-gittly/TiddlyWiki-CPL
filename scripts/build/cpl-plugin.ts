@@ -51,7 +51,7 @@ export const buildCPLPlugin = (
       category: 'Functional',
       tags: 'CPL [[Plugin Libaray]] Network Essential',
       description: plugin.description,
-      readme: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/readme')!,
+      readme: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/docs/readme')!,
     },
   ];
 };

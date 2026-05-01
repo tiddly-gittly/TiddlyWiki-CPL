@@ -1,0 +1,35 @@
+caption_CN: 欢迎使用CPL！
+caption_EN: Welcome to CPL!
+created: 20211117163457173
+creator: Sttot
+i18ncaption: yes
+icon: 📦
+modified: 20231007164141333
+modifier: Sttot
+page-cover: https://unsplash.com/photos/ZjX-z2Q5zrk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8cGx1Z2lufHwwfHx8fDE2MzcxMTYzOTg&force=true&w=1920
+title: Index
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
+<$list filter="[<lang>search[zh]]">
+
+* [[我想安装插件，如何使用CPL？|Welcome]]
+* [[我是插件作者，如何为CPL登记新插件？|RegisterNewPlugins]]
+</$list>
+<$list filter="[<lang>!search[zh]]">
+
+* [[I want to install plugins. How to use CPL?|Welcome]]
+* [[I'm plugins author. How to register a new plugin for CPL?|RegisterNewPlugins]]
+</$list>
+</$list>
+
+<div class="tc-more-sidebar home-tabbar">
+    <$macrocall
+        $name="tabs"
+        tabsList="[[Home]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]removeprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]] -[[Unknown]]"
+        default="Home"
+        class="tc-vertical"
+        template="$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/home-tab"
+		buttonTemplate="$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/home-tab-button"
+    />
+</div>

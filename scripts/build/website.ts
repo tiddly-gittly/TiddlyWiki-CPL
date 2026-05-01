@@ -18,7 +18,7 @@ const bypassTiddlers = new Set([
 ]);
 
 const headerMetadataTiddler: ITiddlerFields = {
-  title: '$:/CPL/no-cache-html',
+  title: '$:/plugins/Gk0Wk/CPL-Repo/website/no-cache-html',
   tags: ['$:/tags/RawMarkupWikified/TopHead'],
   text: [
     '`',

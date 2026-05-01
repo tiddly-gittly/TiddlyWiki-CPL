@@ -1,0 +1,124 @@
+created: 20260101000000000
+modified: 20260101000000000
+tags: $:/tags/ViewTemplate
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/comments
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!-- Comment Section for Plugin Pages -->
+<$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
+
+<$let pluginTitle={{!!cpl.title}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}}>
+
+<!-- Static Mirror Notice -->
+<$list filter="[<mirrorType>match[static]]" variable="isStaticMirror">
+<div class="cpl-static-feature-notice" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
+<span style="font-size: 1.5em;">ℹ️</span>
+<div>
+<strong><$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论功能不可用]else[Comments Unavailable]] }}}/></strong>
+<p style="margin: 4px 0 0 0;"><$text text={{{ [[$:/language]get[text]match[zh-CN]then[当前镜像为静态镜像，不支持评论功能。切换到服务器镜像以查看和发表评论。]else[Current mirror is a static mirror. Comments are not available. Switch to a server mirror to view and post comments.]] }}}/></p>
+</div>
+</div>
+</$list>
+
+<!-- Only show comment section for server mirrors -->
+<$list filter="[<mirrorType>match[server]]" variable="isServerMirror">
+
+<div class="cpl-comment-section" style="margin: 20px 0; padding: 16px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+  <h3 style="margin-top: 0; border-bottom: 2px solid #dee2e6; padding-bottom: 8px;">
+    💬 <$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论]else[Comments]] }}}/>
+  </h3>
+
+  <!-- Login Status -->
+  <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedIn">
+    <!-- Logged in: Show user info and comment form -->
+    <$let userJson={{{ [[$:/temp/CPL-Server/user]get[text]else[{}]] }}} username={{{ [<userJson>jsonget[username]else[User]] }}} avatar={{{ [<userJson>jsonget[avatar]else[]]] }}}>
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 10px; background: #e7f3ff; border-radius: 6px;">
+      <$list filter="[<avatar>!is[blank]]" variable="hasAvatar">
+        <img src=<<avatar>> style="width: 32px; height: 32px; border-radius: 50%;" alt="avatar"/>
+      </$list>
+      <span><strong><$text text=<<username>>/></strong></span>
+      <$button class="tc-btn-invisible" style="color: #666; font-size: 0.85em;">
+        <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user"/>
+        <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user-status"/>
+        <$action-sendmessage $message="cpl-logout"/>
+        <$text text={{{ [[$:/language]get[text]match[zh-CN]then[退出登录]else[Logout]] }}}/>
+      </$button>
+    </div>
+    </$let>
+
+    <!-- Comment Form -->
+    <div style="margin-bottom: 20px;">
+      <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; resize: vertical; font-family: inherit;" placeholder="Write a comment using wikitext..."/>
+      <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.85em; color: #666;">Wikitext supported</span>
+        <$button class="tc-btn-primary" style="padding: 8px 20px;">
+          <$action-sendmessage $message="cpl-submit-comment" pluginTitle=<<pluginTitle>>/>
+          <$text text={{{ [[$:/language]get[text]match[zh-CN]then[提交评论]else[Submit Comment]] }}}/>
+        </$button>
+      </div>
+      <$let commentStatus={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}}>
+        <$list filter="[<commentStatus>get[text]prefix[error:]]" variable="hasError">
+          <div style="margin-top: 8px; color: #dc3545; font-size: 0.9em;">
+            ✗ <$text text={{{ [<commentStatus>get[text]removeprefix[error: ]] }}}/>
+          </div>
+        </$list>
+        <$list filter="[<commentStatus>get[text]match[success]]" variable="hasSuccess">
+          <div style="margin-top: 8px; color: #28a745; font-size: 0.9em;">
+            ✓ <$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论已提交，等待审核]else[Comment submitted for moderation]] }}}/>
+          </div>
+        </$list>
+      </$let>
+    </div>
+  </$list>
+
+  <$list filter="[<userStatus>!match[authenticated]]" variable="notLoggedIn">
+    <!-- Not logged in: Show login button -->
+    <div style="text-align: center; padding: 20px; background: #fff; border-radius: 6px; margin-bottom: 16px;">
+      <p style="margin: 0 0 12px 0; color: #666;">
+        <$text text={{{ [[$:/language]get[text]match[zh-CN]then[登录后即可发表评论]else[Login to post comments]] }}}/>
+      </p>
+      <$button class="tc-btn-primary" style="padding: 10px 24px;">
+        <$action-sendmessage $message="cpl-github-login"/>
+        <span style="margin-right: 6px;">🔗</span>
+        <$text text={{{ [[$:/language]get[text]match[zh-CN]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
+      </button>
+    </div>
+  </$list>
+
+  <!-- Comments List -->
+  <div class="cpl-comments-list">
+    <$let commentsTiddler={{{ [[$:/temp/CPL-Server/comments/]addsuffix<pluginTitle>] }}} commentsJson={{{ [<commentsTiddler>get[text]else[{}]] }}}>
+      <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:gt[0]]" variable="hasComments">
+        <$list filter="[<commentsJson>jsonget[comments]]" variable="commentItem">
+          <$let commentUsername={{{ [<commentItem>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentItem>jsonget[content]else[]]] }}} commentDate={{{ [<commentItem>jsonget[createdAt]else[]]] }}} commentAvatar={{{ [<commentItem>jsonget[avatar]else[]]] }}}>
+            <div style="padding: 12px 0; border-bottom: 1px solid #e9ecef;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
+                  <img src=<<commentAvatar>> style="width: 28px; height: 28px; border-radius: 50%;" alt=""/>
+                </$list>
+                <strong><$text text=<<commentUsername>>/></strong>
+                <span style="font-size: 0.8em; color: #999;"><$text text=<<commentDate>>/></span>
+              </div>
+              <div style="padding-left: 36px; white-space: pre-wrap;">
+                <$text text=<<commentContent>>/>
+              </div>
+            </div>
+          </$let>
+        </$list>
+      </$list>
+      <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:eq[0]]" variable="noComments">
+        <div style="text-align: center; padding: 20px; color: #999; font-style: italic;">
+          <$text text={{{ [[$:/language]get[text]match[zh-CN]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
+        </div>
+      </$list>
+    </$let>
+  </div>
+</div>
+
+</$list>
+<!-- End server mirror check -->
+
+</$let>
+</$list>
