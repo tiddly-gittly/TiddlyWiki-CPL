@@ -10,7 +10,7 @@ export const buildCPLPlugin = (
   const cplPluginTiddlers: Record<string, ITiddlerFields> = {};
   $tw.wiki
     .filterTiddlers(
-      '[tag[$:/tags/PluginLibrary/CPL]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/]] -$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup -$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+      '[tag[$:/tags/PluginLibrary/CPL]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/]] -$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
     )
     .map(title => ({
       ...$tw.wiki.getTiddler(title)!.fields,
