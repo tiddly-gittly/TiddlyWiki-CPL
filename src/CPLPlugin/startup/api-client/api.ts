@@ -24,8 +24,17 @@ export const createCplServerApi = (): CPLServerApi => ({
   submitComment(pluginTitle, content, callback) {
     authenticatedRequest('POST', `/comments/${encodeURIComponent(pluginTitle)}`, { content }, callback);
   },
+  getCompatibilityReports(pluginTitle, callback) {
+    apiRequest('GET', `/compatibility/${encodeURIComponent(pluginTitle)}`, null, callback);
+  },
+  submitCompatibilityReport(pluginTitle, payload, callback) {
+    authenticatedRequest('POST', `/compatibility/${encodeURIComponent(pluginTitle)}`, payload, callback);
+  },
   checkAuthStatus(callback) {
     authenticatedRequest('GET', '/auth/status', null, callback);
+  },
+  getAuthConfig(callback) {
+    apiRequest('GET', '/auth/config', null, callback);
   },
   logout() {
     setJwtToken(null);

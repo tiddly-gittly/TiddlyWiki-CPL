@@ -65,3 +65,25 @@ export const fetchPluginComments = (cplServerApi: CPLServerApi, pluginTitle: str
     });
   });
 };
+
+export const fetchPluginCompatibility = (cplServerApi: CPLServerApi, pluginTitle: string): void => {
+  if (!pluginTitle) {
+    return;
+  }
+
+  const tempTitle = `$:/temp/CPL-Server/compatibility/${pluginTitle}`;
+  cplServerApi.getCompatibilityReports(pluginTitle, (error, data) => {
+    if (error || !data) {
+      console.error('[CPL-Server] Failed to fetch compatibility reports for', pluginTitle, error);
+      return;
+    }
+
+    tw.wiki.addTiddler({
+      title: tempTitle,
+      text: JSON.stringify(data),
+      type: 'application/json',
+      'plugin-title': pluginTitle,
+      timestamp: String(Date.now()),
+    });
+  });
+};
