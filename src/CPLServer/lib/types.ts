@@ -82,6 +82,27 @@ export interface PendingCommentRecord {
   comment: CommentRecord;
 }
 
+export type CompatibilityReportStatus = 'pending' | 'approved' | 'rejected';
+
+export interface ConflictingPlugin {
+  pluginTitle: string;
+  description: string;
+}
+
+export interface CompatibilityReport {
+  id: string;
+  pluginTitle: string;
+  reporterGithubId: string;
+  reporterUsername: string;
+  twVersionMin?: string;
+  twVersionMax?: string;
+  conflictingPlugins: ConflictingPlugin[];
+  description: string;
+  status: CompatibilityReportStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface GitHubTokenResponse {
   access_token?: string;
   [key: string]: unknown;
