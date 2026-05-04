@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { Config } from '../config';
+import { escapeRegExp, sanitizePluginFileName } from '../files';
 import type { CompatibilityReport, CompatibilityReportStatus } from '../types';
 
 const COMPATIBILITY_DIR = path.resolve(process.cwd(), 'data', 'compatibility');
@@ -15,11 +16,22 @@ const ensureCompatibilityDir = (): void => {
 const getCompatibilityFilePath = (pluginTitle: string): string =>
   path.join(
     COMPATIBILITY_DIR,
-    `${sanitizeFileName(pluginTitle)}${Config.getServerSuffix()}.json`,
+    `${sanitizePluginFileName(pluginTitle)}${Config.getServerSuffix()}.json`,
   );
 
-const sanitizeFileName = (name: string): string =>
-  name.replace(/[^a-zA-Z0-9._-]/g, '_');
+const getAllCompatibilityFiles = (pluginTitle: string): string[] => {
+  if (!fs.existsSync(COMPATIBILITY_DIR)) {
+    return [];
+  }
+
+  const safeName = escapeRegExp(sanitizePluginFileName(pluginTitle));
+  const pattern = new RegExp(`^${safeName}(\\.[^.]+)?\\.json$`);
+
+  return fs
+    .readdirSync(COMPATIBILITY_DIR)
+    .filter(fileName => pattern.test(fileName))
+    .map(fileName => path.join(COMPATIBILITY_DIR, fileName));
+};
 
 const loadReportsFromDisk = (pluginTitle: string): CompatibilityReport[] => {
   const filePath = getCompatibilityFilePath(pluginTitle);
@@ -75,9 +87,39 @@ const getAllReportsFromDisk = (): CompatibilityReport[] => {
   return reports;
 };
 
+const aggregateReports = (pluginTitle: string): CompatibilityReport[] => {
+  const seenIds = new Set<string>();
+  const reports: CompatibilityReport[] = [];
+
+  getAllCompatibilityFiles(pluginTitle).forEach(filePath => {
+    try {
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompatibilityReport[];
+      if (!Array.isArray(data)) {
+        return;
+      }
+
+      data.forEach(report => {
+        if (!seenIds.has(report.id)) {
+          seenIds.add(report.id);
+          reports.push(report);
+        }
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(`[CPL-Server] Error reading compatibility file ${filePath}:`, message);
+    }
+  });
+
+  reports.sort((left, right) => {
+    return new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime();
+  });
+
+  return reports;
+};
+
 export const CompatibilityStore = {
   getReports(pluginTitle: string, status?: CompatibilityReportStatus | null): CompatibilityReport[] {
-    const reports = loadReportsFromDisk(pluginTitle);
+    const reports = aggregateReports(pluginTitle);
     if (!status) {
       return reports;
     }
@@ -96,16 +138,29 @@ export const CompatibilityStore = {
     reportId: string,
     status: CompatibilityReportStatus,
   ): CompatibilityReport | null {
-    const reports = loadReportsFromDisk(pluginTitle);
-    const report = reports.find(r => r.id === reportId);
-    if (!report) {
-      return null;
+    for (const filePath of getAllCompatibilityFiles(pluginTitle)) {
+      try {
+        const reports = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompatibilityReport[];
+        if (!Array.isArray(reports)) {
+          continue;
+        }
+
+        const report = reports.find(r => r.id === reportId);
+        if (!report) {
+          continue;
+        }
+
+        report.status = status;
+        report.updatedAt = new Date().toISOString();
+        fs.writeFileSync(filePath, JSON.stringify(reports, null, 2), 'utf-8');
+        return report;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error(`[CPL-Server] Error updating compatibility file ${filePath}:`, message);
+      }
     }
 
-    report.status = status;
-    report.updatedAt = new Date().toISOString();
-    saveReportsToDisk(pluginTitle, reports);
-    return report;
+    return null;
   },
 
   getPendingReports(): CompatibilityReport[] {
