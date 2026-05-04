@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
+const { URL } = require('url');
 
 const WIKI_TIDDLERS_DIR = path.resolve('wiki', 'tiddlers');
 const OUTPUT_DIR = path.resolve('wiki', 'files', 'plugin-fetched');
@@ -24,6 +25,100 @@ function sanitizeFilename(title) {
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
+function encodePluginTitleForLibraryRecipe(pluginTitle) {
+  return encodeURIComponent(encodeURIComponent(pluginTitle));
+}
+
+function normalizePluginSourceUrl(uri, pluginTitle) {
+  if (!uri) {
+    return uri;
+  }
+
+  try {
+    const parsed = new URL(uri);
+    const normalizedPath = parsed.pathname.replace(/\/+/g, '/');
+    if (normalizedPath.endsWith('/index.html')) {
+      const recipePath = normalizedPath.replace(/\/index\.html$/, '/recipes/library/tiddlers/');
+      parsed.pathname = `${recipePath}${encodePluginTitleForLibraryRecipe(pluginTitle)}.json`;
+      parsed.search = '';
+      parsed.hash = '';
+      return parsed.toString();
+    }
+  } catch {
+    // keep original URI if parsing fails
+  }
+
+  return uri;
+}
+
+function isLikelyValidPluginPayload(content, pluginTitle) {
+  const trimmed = content.trimStart();
+  if (!trimmed) {
+    return false;
+  }
+
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        return parsed.some(item => item && item.title === pluginTitle);
+      }
+
+      if (!parsed || typeof parsed !== 'object') {
+        return false;
+      }
+
+      if (parsed.title === pluginTitle) {
+        if (typeof parsed.text !== 'string') {
+          return true;
+        }
+
+        try {
+          JSON.parse(parsed.text);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      return false;
+    } catch {
+      return false;
+    }
+  }
+
+  if (trimmed.startsWith('<!doctype html') || trimmed.startsWith('<html')) {
+    const looksLikePluginLibraryIndex =
+      trimmed.includes('var assetList') && trimmed.includes('<title>Plugin Library</title>');
+    if (looksLikePluginLibraryIndex) {
+      return false;
+    }
+
+    const looksLikeTiddlyWikiDocument =
+      trimmed.includes('<!--~~ This is a Tiddlywiki file.') ||
+      trimmed.includes('data-tiddler-title=') ||
+      trimmed.includes('<div id="storeArea">') ||
+      trimmed.includes("<div id='storeArea'>");
+
+    return looksLikeTiddlyWikiDocument && trimmed.includes(pluginTitle);
+  }
+
+  return false;
+}
+
+function shouldReuseExistingFile(destPath, pluginTitle) {
+  if (!fs.existsSync(destPath)) {
+    return false;
+  }
+
+  try {
+    const content = fs.readFileSync(destPath, 'utf-8');
+    return isLikelyValidPluginPayload(content, pluginTitle);
+  } catch {
+    return false;
   }
 }
 
@@ -57,19 +152,21 @@ function downloadFile(url, destPath) {
 }
 
 async function main() {
-  // Guard: do not run in test/CI environments
-  if (process.env.NODE_ENV === 'test' || process.env.CI === 'true') {
+  const args = process.argv.slice(2);
+  const dryRun = args.includes('--dry-run');
+  const force = args.includes('--force');
+  const allowCi = args.includes('--allow-ci');
+  const bestEffort = args.includes('--best-effort');
+
+  // Guard: do not run in test/CI environments unless explicitly allowed
+  if (!allowCi && (process.env.NODE_ENV === 'test' || process.env.CI === 'true')) {
     console.log('[fetch-plugins] Skipping: should not run in test/CI environments.');
     process.exit(0);
   }
 
-  const args = process.argv.slice(2);
-  const dryRun = args.includes('--dry-run');
-  const force = args.includes('--force');
-
   ensureDir(OUTPUT_DIR);
 
-  const files = fs.readdirSync(WIKI_TIDDLERS_DIR).filter(f => f.startsWith('Plugin_') && f.endsWith('.json'));
+  const files = fs.readdirSync(WIKI_TIDDLERS_DIR).filter(f => f.endsWith('.json'));
   console.log(`[fetch-plugins] Found ${files.length} plugin metadata files.`);
 
   let downloaded = 0;
@@ -89,8 +186,8 @@ async function main() {
       continue;
     }
 
-    const pluginTitle = metadata['cpl.title'];
-    const uri = metadata['cpl.uri'];
+      const pluginTitle = metadata['cpl.title'];
+      const uri = metadata['cpl.uri'];
 
     if (!pluginTitle) {
       console.warn(`[fetch-plugins] ${file}: missing cpl.title, skipping.`);
@@ -107,13 +204,18 @@ async function main() {
     const destFileName = sanitizeFilename(pluginTitle) + '.json';
     const destPath = path.join(OUTPUT_DIR, destFileName);
 
-    if (!force && fs.existsSync(destPath)) {
-      console.log(`[fetch-plugins] ${pluginTitle}: already exists (${destFileName}), skipping.`);
-      skipped++;
-      continue;
-    }
+      if (!force && shouldReuseExistingFile(destPath, pluginTitle)) {
+        console.log(`[fetch-plugins] ${pluginTitle}: already exists and looks valid (${destFileName}), skipping.`);
+        skipped++;
+        continue;
+      }
 
-    console.log(`[fetch-plugins] ${pluginTitle}: downloading from ${uri} ...`);
+      if (!force && fs.existsSync(destPath)) {
+        console.warn(`[fetch-plugins] ${pluginTitle}: existing file looks invalid, re-downloading (${destFileName}).`);
+      }
+
+      const normalizedUri = normalizePluginSourceUrl(uri, pluginTitle);
+      console.log(`[fetch-plugins] ${pluginTitle}: downloading from ${normalizedUri} ...`);
 
     if (dryRun) {
       console.log(`[fetch-plugins] ${pluginTitle}: dry-run, would save to ${destPath}`);
@@ -121,18 +223,26 @@ async function main() {
       continue;
     }
 
-    try {
-      await downloadFile(uri, destPath);
-      console.log(`[fetch-plugins] ${pluginTitle}: saved to ${destPath}`);
-      downloaded++;
-    } catch (err) {
+      try {
+        if (fs.existsSync(destPath)) {
+          fs.unlinkSync(destPath);
+        }
+        await downloadFile(normalizedUri, destPath);
+        const downloadedContent = fs.readFileSync(destPath, 'utf-8');
+        if (!isLikelyValidPluginPayload(downloadedContent, pluginTitle)) {
+          fs.unlinkSync(destPath);
+          throw new Error('Downloaded content is not a valid payload for requested plugin');
+        }
+        console.log(`[fetch-plugins] ${pluginTitle}: saved to ${destPath}`);
+        downloaded++;
+      } catch (err) {
       console.error(`[fetch-plugins] ${pluginTitle}: download failed - ${err.message}`);
       failed++;
     }
   }
 
   console.log(`\n[fetch-plugins] Done. Downloaded: ${downloaded}, Skipped: ${skipped}, Failed: ${failed}`);
-  process.exit(failed > 0 ? 1 : 0);
+  process.exit(failed > 0 && !bestEffort ? 1 : 0);
 }
 
 main().catch(err => {
