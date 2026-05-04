@@ -109,11 +109,7 @@ export const buildOnlineHTML = async (
       text: '-1',
     } as any,
   );
-  // 不要弹窗
-  tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup', {
-    title: '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
-    text: '1',
-  } as any);
+
 
   // 构建
   console.log(
