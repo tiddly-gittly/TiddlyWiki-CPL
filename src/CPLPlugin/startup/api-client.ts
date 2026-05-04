@@ -3,7 +3,7 @@ import { MIRROR_CONFIG_TITLE } from './api-client/constants';
 import { getEventParam, getViewedPluginTitle } from './api-client/utilities';
 import { setJwtToken } from './api-client/auth';
 import { createCplServerApi } from './api-client/api';
-import { fetchPluginStats, fetchPluginChangelog, fetchPluginComments } from './api-client/data-fetch';
+import { fetchPluginStats, fetchPluginChangelog, fetchPluginComments, fetchPluginCompatibility } from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
 
 export const name = 'cpl-server-api-client';
@@ -122,8 +122,22 @@ export const startup = (): void => {
     return undefined;
   });
 
+  tw.rootWidget.addEventListener('cpl-logout', (_event: RootWidgetEvent): undefined => {
+    cplServerApi.logout();
+    tw.wiki.deleteTiddler('$:/temp/CPL-Server/user');
+    tw.wiki.addTiddler({
+      title: '$:/temp/CPL-Server/user-status',
+      text: 'anonymous',
+    });
+    return undefined;
+  });
+
   tw.rootWidget.addEventListener('cpl-github-login', (_event: RootWidgetEvent): undefined => {
-    const githubClientId = '';
+    const githubClientId = tw.wiki.getTiddlerText('$:/temp/CPL-Server/github-client-id', '');
+    if (!githubClientId) {
+      console.error('[CPL-Server] GitHub client ID not available. Server may not have OAuth configured.');
+      return undefined;
+    }
     const redirectUri = `${window.location.origin}/cpl/api/auth/github/callback`;
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(githubClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:read`;
     window.location.href = githubAuthUrl;
@@ -215,6 +229,86 @@ export const startup = (): void => {
     if (pluginTitle) {
       fetchPluginComments(cplServerApi, pluginTitle);
     }
+    return undefined;
+  });
+
+  tw.rootWidget.addEventListener('cpl-fetch-compatibility', (event: RootWidgetEvent): undefined => {
+    const pluginTitle = getEventParam(event, 'pluginTitle');
+    if (!pluginTitle) {
+      return undefined;
+    }
+    cplServerApi.getCompatibilityReports(pluginTitle, (error, data) => {
+      if (error || !data) {
+        console.error('[CPL-Server] Failed to fetch compatibility reports:', error);
+        return;
+      }
+      tw.wiki.addTiddler({
+        title: `$:/temp/CPL-Server/compatibility/${pluginTitle}`,
+        text: JSON.stringify(data),
+        type: 'application/json',
+      });
+    });
+    return undefined;
+  });
+
+  tw.rootWidget.addEventListener('cpl-submit-compatibility', (event: RootWidgetEvent): undefined => {
+    const pluginTitle = getEventParam(event, 'pluginTitle');
+    if (!pluginTitle) {
+      console.error('[CPL-Server] Missing pluginTitle for compatibility report');
+      return undefined;
+    }
+
+    const twVersionMin = getEventParam(event, 'twVersionMin') || undefined;
+    const twVersionMax = getEventParam(event, 'twVersionMax') || undefined;
+    const description = getEventParam(event, 'description') || '';
+    const conflictPlugin = getEventParam(event, 'conflictPlugin') || '';
+    const conflictDescription = getEventParam(event, 'conflictDescription') || '';
+
+    const conflictingPlugins: Array<{ pluginTitle: string; description: string }> = [];
+    if (conflictPlugin.trim()) {
+      conflictingPlugins.push({
+        pluginTitle: conflictPlugin.trim(),
+        description: conflictDescription.trim() || 'No description provided',
+      });
+    }
+
+    if (!description.trim()) {
+      tw.wiki.addTiddler({
+        title: `$:/temp/CPL-Server/compatibility-status/${pluginTitle}`,
+        text: 'error: Description cannot be empty',
+      });
+      return undefined;
+    }
+
+    tw.wiki.addTiddler({
+      title: `$:/temp/CPL-Server/compatibility-status/${pluginTitle}`,
+      text: 'submitting',
+    });
+
+    cplServerApi.submitCompatibilityReport(
+      pluginTitle,
+      {
+        twVersionMin,
+        twVersionMax,
+        conflictingPlugins,
+        description: description.trim(),
+      },
+      (error, _data) => {
+        if (error) {
+          tw.wiki.addTiddler({
+            title: `$:/temp/CPL-Server/compatibility-status/${pluginTitle}`,
+            text: `error: ${error || 'Failed to submit report'}`,
+          });
+          return;
+        }
+        tw.wiki.addTiddler({
+          title: `$:/temp/CPL-Server/compatibility-status/${pluginTitle}`,
+          text: 'success',
+        });
+        tw.wiki.deleteTiddler(`$:/temp/CPL-Server/compatibility-draft/${pluginTitle}`);
+        fetchPluginCompatibility(cplServerApi, pluginTitle);
+      },
+    );
     return undefined;
   });
 
