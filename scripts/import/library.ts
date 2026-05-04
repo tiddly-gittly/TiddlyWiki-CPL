@@ -3,7 +3,8 @@ import { resolve, dirname } from 'path';
 import { readFileSync, ensureFileSync } from 'fs-extra';
 import chalk from 'chalk';
 import { ITiddlerFields } from 'tiddlywiki';
-import { shellI, getTmpDir, tiddlywiki } from '../utils';
+import { getTmpDir, tiddlywiki } from '../utils';
+import { downloadFile } from '../utils/download';
 import { IImportOption } from './options';
 import { importPlugin } from './plugin';
 
@@ -27,7 +28,7 @@ const forbiddenOfficialLibraryPlugins = [
 export const importLibrary = async (
   uri: string,
   options: IImportOption,
-  $tw = tiddlywiki(),
+  $tw = tiddlywiki([], 'wiki'),
 ) => {
   const tmpDir = getTmpDir();
 
@@ -48,9 +49,7 @@ export const importLibrary = async (
     const tmpLibraryJsonPath = resolve(tmpDir, 'library-json', 'tiddlers.json');
     ensureFileSync(tmpLibraryJsonPath);
     u.pathname = `${basePathname}/recipes/library/tiddlers.json`;
-    shellI(
-      `wget "${u.href}" --no-verbose --force-directories --no-check-certificate --timeout=10 --tries=2 --read-timeout=15 -O "${tmpLibraryJsonPath}"`,
-    );
+    await downloadFile(u.href, tmpLibraryJsonPath);
     const pluginsJson = JSON.parse(
       readFileSync(tmpLibraryJsonPath, 'utf-8'),
     ) as ITiddlerFields[];

@@ -7,13 +7,13 @@ import type { ITiddlerFields } from 'tiddlywiki';
 
 import {
   getTmpDir,
-  shellI,
   tiddlywiki,
   findFirstOne,
   formatTitle,
   getReadmeFromPlugin,
   getTiddlerFromFile,
 } from '../utils';
+import { downloadFile } from '../utils/download';
 import { IImportOption } from './options';
 
 /**
@@ -50,7 +50,7 @@ export const importPlugin = async (
   uri: string,
   title: string,
   options: IImportOption,
-  $tw = tiddlywiki(),
+  $tw = tiddlywiki([], 'wiki'),
   downloadUri = uri,
 ): Promise<boolean> => {
   // 文件暂存路径
@@ -84,9 +84,11 @@ export const importPlugin = async (
     findFile();
     // 文件不存在，尝试下载
     if (!pluginFile) {
-      shellI(
-        `wget "${downloadUri}" --no-verbose --force-directories --no-check-certificate --timeout=10 --tries=2 --read-timeout=15 -O "${tmpTiddlerPath}"`,
-      );
+      try {
+        await downloadFile(downloadUri, tmpTiddlerPath);
+      } catch (error) {
+        console.warn(chalk.yellow(`[Warning] Failed to download ${downloadUri}: ${error}`));
+      }
     }
     findFile();
     if (!pluginFile) {
