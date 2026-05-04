@@ -84,6 +84,38 @@ export const startup = (): void => {
       initialAutoSyncPending = shouldAutoRefreshOnStartup();
     }
 
+    // Auto-load database when switching to CPL layout
+    if (tw.utils.hop(changes, '$:/layout')) {
+      const currentLayout = tw.wiki.getTiddlerText('$:/layout', '');
+      if (
+        currentLayout === '$:/plugins/Gk0Wk/CPL-Repo/layout/layout'
+        && !tw.wiki.tiddlerExists('$:/temp/CPL-Repo/plugins-index')
+        && indexController
+        && !indexController.isBusy()
+      ) {
+        tw.rootWidget.dispatchEvent({
+          type: 'cpl-get-plugins-index',
+          paramObject: {},
+          widget: tw.rootWidget,
+        });
+      }
+    }
+
+    // Auto-check updates when switching to update tab
+    if (tw.utils.hop(changes, '$:/temp/CPL-Repo/plugin-database-tab-state')) {
+      const currentTab = tw.wiki.getTiddlerText(
+        '$:/temp/CPL-Repo/plugin-database-tab-state',
+        '',
+      );
+      if (currentTab === '$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager') {
+        tw.rootWidget.dispatchEvent({
+          type: 'cpl-update-check',
+          paramObject: {},
+          widget: tw.rootWidget,
+        });
+      }
+    }
+
     if (tw.titleWidgetNode?.refresh(changes, tw.titleContainer ?? null, null)) {
       document.title = tw.titleContainer?.textContent ?? document.title;
     }
@@ -124,6 +156,36 @@ export const startup = (): void => {
   });
   tw.rootWidget.addEventListener('cpl-search-plugins', (event: RootWidgetEvent): undefined => {
     indexController?.handleSearchPlugins(event);
+    return undefined;
+  });
+  tw.rootWidget.addEventListener('cpl-download-plugin', (event: RootWidgetEvent): undefined => {
+    const pluginTitle = event.paramObject?.plugin as string | undefined;
+    const version = event.paramObject?.version as string | undefined;
+    if (!pluginTitle) {
+      return undefined;
+    }
+    void (async (): Promise<void> => {
+      try {
+        const text = await cpl('Install', {
+          plugin: pluginTitle,
+          version: version ?? 'latest',
+        });
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${pluginTitle.replace(/[:/$]/g, '_')}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('[CPL] Failed to download plugin:', error);
+        tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-fail', {
+          variables: { message: String(error) },
+        });
+      }
+    })();
     return undefined;
   });
 };
