@@ -1,0 +1,23 @@
+[
+    {
+        "created": "20260501153000000",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/tidgi-feature-analytics",
+        "modified": "20260501153000000",
+        "modifier": "林一二",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.title": "$:/plugins/linonetwo/tidgi-feature-analytics",
+        "cpl.author": "linonetwo",
+        "cpl.name": "TidGi Feature Analytics",
+        "cpl.description": "Track preset plugin feature usage in TidGi Desktop default wiki via TidGi IPC analytics bridge",
+        "cpl.version": "0.0.1",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-rybbit/releases/latest/download/__plugins_linonetwo_tidgi-feature-analytics.json",
+        "cpl.readme": "!! TidGi Feature Analytics\n\nAutomatically tracks coarse feature usage in the TidGi Desktop default wiki without any configuration.\n\n!! How to disable\n\nOpen TidGi Privacy & Analytics settings and turn off analytics, or uninstall this plugin.\n\n!! What is tracked\n\n;`startup`\n: Which plugins are installed, plus `plugin_count`. Plugin list is dynamically enumerated from the live wiki.\n\n;`tiddler_created` / `tiddler_saved` / `tiddler_deleted`\n: Fired immediately on each operation. No title or content is included.\n\n;`search_performed`\n: Fired on each search. No query text is included.\n\n;`layout_used`\n: Fired when the layout changes. Property `layout_plugin` contains the owning plugin slug.\n\n;`feature_used`\n: Fired once per feature per session. Current values include `command_palette`, `calendar`, `whiteboard`, `todolist`, `favorites`.\n\n;`active`\n: Heartbeat every 5 minutes when there is activity.\n\n;`wiki_stats`\n: Once, 8-12 minutes after boot, computed in Node.js worker. Includes `user_tiddler_count`, `size_total_chars`, `size_mean_chars`, `size_median_chars`, `size_max_chars`, `size_top10_mean`, `plugin_count`.\n\n!! Privacy\n\n* No tiddler titles, note content, file paths, URLs, or other user-generated text are included.\n* All events pass through TidGi main-process privacy filter before delivery.\n* Outside TidGi Desktop the plugin does nothing silently.",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-rybbit",
+        "cpl.core-version": ">=5.1.22",
+        "cpl.plugin-type": "plugin",
+        "cpl.documentation": ""
+    }
+]
