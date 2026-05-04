@@ -165,21 +165,29 @@ type: text/vnd.tiddlywiki
     </$list>
     <!-- 历史版本 -->
     <$list filter="[<json>jsonget[versions]count[]compare:integer:gt[1]]" variable="t">
-    <details class="more-versions-details">
-        <summary style="padding:10px 0;">
-            <$text text={{{ [<chinese>match[yes]then[浏览其他历史版本]else[Browse older versions]] }}}/>
+    <details class="more-versions-details" open="open">
+        <summary style="padding:10px 0;font-weight:600;cursor:pointer;">
+            <$text text={{{ [<chinese>match[yes]then[历史版本（可点击安装或下载）]else[Version History (click to install or download)]] }}}"/>
         </summary>
         <$list filter="[<json>jsonget[versions]reverse[]]" variable="version">
-        <div style="background:#1a4655;padding:4px 12px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;border-top:1px solid #15333c;">
+        <div style="background:#1a4655;padding:6px 12px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;border-top:1px solid #15333c;">
             <span>
                 <span style="color: white;"><<version>></span>
                 <span style="opacity: 0.8;">&nbsp;(<$macrocall $name="plugin-size" size={{{ [<json>jsonget[versions-size],<version>else[0]] }}} />)</span>
                 <$list filter="[<latest>compare:version:eq<version>]">&nbsp;<span class="cpl-latest-version-icon">{{$:/core/images/star-filled}}</span></$list>
                 <$list filter="[<installedVersion>compare:version:eq<version>]">&nbsp;<span class="cpl-installed-version-icon">{{$:/core/images/done-button}}</span></$list>
             </span>
-            <div style="font-size:0.8em;line-height:1.2;"><$macrocall $name="install-plugin-button" plugin=<<title>> libraryVersion=<<version>> installedVersion=<<installedVersion>> /></div>
+            <span style="display:flex;gap:6px;align-items:center;">
+                <div style="font-size:0.8em;line-height:1.2;"><$macrocall $name="install-plugin-button" plugin=<<title>> libraryVersion=<<version>> installedVersion=<<installedVersion>> /></div>
+                <$button class="tc-btn-invisible" style="font-size:0.8em;color:#8ecae6;white-space:nowrap;" tooltip={{{ [<chinese>match[yes]then[下载该版本JSON文件]else[Download this version JSON]] }}}>
+                    <$action-sendmessage $message="cpl-download-plugin" plugin=<<title>> version=<<version>> />
+                    {{$:/core/images/save-button}}
+                </$button>
+            </span>
         </div>
         </$list>
+    </details>
+    </$list>
     </details>
     </$list>
     <!-- 正文 -->

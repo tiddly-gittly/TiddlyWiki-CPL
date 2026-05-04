@@ -8,7 +8,7 @@ type: text/vnd.tiddlywiki
 
 \import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
 
-\define dependents-tree(json,checked-title,versions,sizes)
+\define dependents-tree(json,checked-title,versions,sizes,is-batch)
 <$list filter="[<__json__>jsonindexes[]]" variable="plugin">
 <div style="margin-left:1.25em;" class="cpl-plugin-install-request-dependents-tree">
     <$let install-field={{{ [[cpl-plugin#install#]addsuffix<plugin>] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<plugin>] }}}>
@@ -23,6 +23,7 @@ type: text/vnd.tiddlywiki
             <$checkbox tiddler=<<__checked-title__>> field=<<install-field>> checked="yes" unchecked="no" default="no">
                 <$text text={{{ [<__checked-title__>get<install-field>match[yes]] :then[<chinese>match[yes]then[即将安装:]else[Will be installed:]] :else[<chinese>match[yes]then[不会安装]else[Will not be installed]] }}} />
             </$checkbox>
+            <$list filter="[<__is-batch__>!match[yes]]" variable="t">
             <$list filter="[<__checked-title__>get<install-field>match[yes]]" variable="t">
             &nbsp;
             <$select tiddler=<<__checked-title__>> field=<<version-field>>>
@@ -32,9 +33,10 @@ type: text/vnd.tiddlywiki
                 <option value="latest"><$text text="latest"/></option>
             </$select>
             </$list>
+            </$list>
         </span>
     </div>
-    <$macrocall $name="dependents-tree" json={{{ [<__json__>jsonextract<plugin>] }}} checked-title=<<__checked-title__>> versions=<<__versions__>> sizes=<<__sizes__>> />
+    <$macrocall $name="dependents-tree" json={{{ [<__json__>jsonextract<plugin>] }}} checked-title=<<__checked-title__>> versions=<<__versions__>> sizes=<<__sizes__>> is-batch=<<__is-batch__>> />
     </$let>
 </div>
 </$list>
@@ -44,7 +46,11 @@ type: text/vnd.tiddlywiki
 <$let json={{{ [<requestTiddler>get[text]] }}}>
 
 <<<
-<$let title={{{ [<json>jsonget[title]] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<title>] }}}>
+<$let title={{{ [<json>jsonget[title]] }}} isBatch={{{ [<json>jsonget[isBatch]else[no]] }}} version-field={{{ [[cpl-plugin#version#]addsuffix<title>] }}}>
+<$list filter="[<isBatch>match[yes]]" variable="t">
+''<$text text={{{ [<chinese>match[yes]then[即将批量安装以下插件:]else[The following plugins will be installed in batch:]] }}}/>''
+</$list>
+<$list filter="[<isBatch>!match[yes]]" variable="t">
 ''<$text text={{{ [<chinese>match[yes]then[即将安装:]else[To be installed:]] }}}/>''
 <$text text=<<title>>/>&nbsp;&nbsp;&nbsp;
 ''<$text text={{{ [<chinese>match[yes]then[选择版本:]else[Select version:]] }}}/>''
@@ -58,19 +64,35 @@ type: text/vnd.tiddlywiki
 <$let v={{{ [<requestTiddler>get<version-field>] }}}>
 <$macrocall $name="plugin-size" size={{{ [<json>jsonget[sizes],<title>,<v>else[0]] }}} />
 </$let>
+</$list>
 </$let>
 <<<
 
 <!-- 依赖树 -->
+<$let isBatch={{{ [<json>jsonget[isBatch]else[no]] }}}>
 <$list filter="[<json>jsonextract[tree]jsonindexes[]count[]compare:integer:gt[0]]" variable="t">
-<$list filter="[<chinese>match[yes]]" variable="t">
+<$list filter="[<chinese>match[yes]] [<isBatch>match[yes]] +[count[]compare:integer:eq[2]]" variable="t">
+
+以下插件将被批量安装，包括它们的依赖项。如果依赖项安装失败，将会回滚所有安装动作。
+
+你可以自行选择安装哪些插件。插件列表如下：
+
+</$list>
+<$list filter="[<chinese>match[yes]] [<isBatch>!match[yes]] +[count[]compare:integer:eq[2]]" variable="t">
 
 这个插件有一些依赖项，在安装插件之前，将会递归地安装这些插件，如果这些插件没有被成功安装，将会回滚所有安装动作。
 
 你可以自行选择安装哪些插件并选择其版本。插件依赖树如下：
 
 </$list>
-<$list filter="[<chinese>!match[yes]]" variable="t">
+<$list filter="[<chinese>!match[yes]] [<isBatch>match[yes]] +[count[]compare:integer:eq[2]]" variable="t">
+
+The following plugins will be installed in batch, including their dependencies. If any dependency fails to install, all installation actions will be rolled back.
+
+You can choose which plugins to install. The plugin list is as follows:
+
+</$list>
+<$list filter="[<chinese>!match[yes]] [<isBatch>!match[yes]] +[count[]compare:integer:eq[2]]" variable="t">
 
 This plugin has some dependencies that will be installed recursively before installing the plugin, and if these plugins are not installed successfully, all installation actions will be rolled back.
 
@@ -85,8 +107,10 @@ It is up to you to choose which plugins to install and select their versions. Th
         checked-title=<<requestTiddler>>
         versions={{{ [<json>jsonextract[versions]] }}}
         sizes={{{ [<json>jsonextract[sizes]] }}}
+        is-batch=<<isBatch>>
     />
 </div>
+</$let>
 <hr/>
 
 <$list filter="[<chinese>match[yes]]" variable="t">
