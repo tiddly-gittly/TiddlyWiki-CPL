@@ -138,6 +138,124 @@ type: text/vnd.tiddlywiki
   </$let>
 </div>
 
+<!-- Compatibility Reports Section -->
+<div class="cpl-compatibility-section" style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px;">
+  <h4 style="margin-top: 0; border-bottom: 1px solid #e9ecef; padding-bottom: 6px;">⚠️ Compatibility Reports</h4>
+  <$action-sendmessage $message="cpl-fetch-compatibility" pluginTitle={{!!cpl.title}} />
+  <$let compatibilityTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility/]] }}}>
+    <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
+      <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
+        <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <$list filter="[<compatibilityTiddler>get[text]jsonget[reports]]" variable="report">
+              <div style="background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef; border-left: 3px solid #ffc107;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-weight: 600; font-size: 0.9em;">Reported by <$text text={{{ [<report>jsonget[reporterUsername]else[Anonymous]] }}} /></span>
+                  <span style="font-size: 0.8em; color: #666;"><$text text={{{ [<report>jsonget[createdAt]else[Unknown]] }}} /></span>
+                </div>
+                <$list filter="[<report>jsonget[twVersionMin]!is[blank]] [<report>jsonget[twVersionMax]!is[blank]] +[unique[]limit[1]]" variable="hasVersionRange">
+                  <div style="font-size: 0.85em; color: #555; margin-bottom: 4px;">
+                    <strong>TW Version:</strong> <$text text={{{ [<report>jsonget[twVersionMin]else[Any]] }}} /> - <$text text={{{ [<report>jsonget[twVersionMax]else[Any]] }}} />
+                  </div>
+                </$list>
+                <$list filter="[<report>jsonget[conflictingPlugins]count[]compare:integer:gt[0]]" variable="hasConflicts">
+                  <div style="font-size: 0.85em; color: #555; margin-bottom: 4px;">
+                    <strong>Conflicts with:</strong>
+                    <$list filter="[<report>jsonget[conflictingPlugins]]" variable="conflict">
+                      <span style="display: inline-block; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 4px; padding: 2px 6px; margin: 2px; font-size: 0.8em;">
+                        <$text text={{{ [<conflict>jsonget[pluginTitle]else[Unknown]] }}} />
+                      </span>
+                    </$list>
+                  </div>
+                </$list>
+                <div style="font-size: 0.85em; color: #333; background: #f8f9fa; padding: 6px; border-radius: 3px; margin-top: 4px;">
+                  <$text text={{{ [<report>jsonget[description]else[]]] }}} />
+                </div>
+              </div>
+            </$list>
+          </div>
+        </$list>
+        <$list filter="[<reportCount>compare:integer:eq[0]]" variable="noReports">
+          <span style="color: #999; font-style: italic;">No compatibility reports yet. Be the first to submit one!</span>
+        </$list>
+      </$let>
+    </$list>
+    <$list filter="[<compatibilityTiddler>!is[tiddler]]" variable="loading">
+      <span style="color: #999; font-style: italic;">Loading compatibility reports...</span>
+    </$list>
+  </$let>
+
+  <!-- Submit Compatibility Report Form -->
+  <div style="margin-top: 15px; padding-top: 12px; border-top: 1px solid #e9ecef;">
+    <h5 style="margin-top: 0;">Submit a Compatibility Report</h5>
+    <$let
+      pluginTitle={{!!cpl.title}}
+      draftTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility-draft/]] }}}
+      statusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility-status/]] }}}
+    >
+      <!-- Initialize draft tiddler if not exists -->
+      <$list filter="[<draftTiddler>!is[tiddler]]">
+        <$action-setfield $tiddler=<<draftTiddler>> text="" />
+      </$list>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label style="font-size: 0.85em; color: #666;">TW Min Version</label>
+            <$edit-text tiddler=<<draftTiddler>> field="tw-version-min" default="" placeholder="e.g. 5.2.0" style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+          </div>
+          <div style="flex: 1;">
+            <label style="font-size: 0.85em; color: #666;">TW Max Version</label>
+            <$edit-text tiddler=<<draftTiddler>> field="tw-version-max" default="" placeholder="e.g. 5.3.0" style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.85em; color: #666;">Conflicting Plugin Title</label>
+          <$edit-text tiddler=<<draftTiddler>> field="conflict-plugin" default="" placeholder="e.g. $:/plugins/tiddlywiki/highlight" style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+        </div>
+
+        <div>
+          <label style="font-size: 0.85em; color: #666;">Conflict Description</label>
+          <$edit-text tiddler=<<draftTiddler>> field="conflict-description" default="" placeholder="Describe the conflict..." style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+        </div>
+
+        <div>
+          <label style="font-size: 0.85em; color: #666;">Detailed Description *</label>
+          <$edit-text tiddler=<<draftTiddler>> field="description" default="" placeholder="Describe the compatibility issue in detail..." style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px; min-height: 60px;" />
+        </div>
+
+        <$button class="tc-btn-primary" style="padding: 6px 12px; align-self: flex-start;">
+          <$action-sendmessage $message="cpl-submit-compatibility"
+            pluginTitle=<<pluginTitle>>
+            twVersionMin={{{ [<draftTiddler>get[tw-version-min]] }}}
+            twVersionMax={{{ [<draftTiddler>get[tw-version-max]] }}}
+            conflictPlugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
+            conflictDescription={{{ [<draftTiddler>get[conflict-description]] }}}
+            description={{{ [<draftTiddler>get[description]] }}}
+          />
+          Submit Report
+        </$button>
+      </div>
+
+      <!-- Status messages -->
+      <$list filter="[<statusTiddler>is[tiddler]]" variable="hasStatus">
+        <div style="margin-top: 8px; font-size: 0.85em;">
+          <$list filter="[<statusTiddler>get[text]match[submitting]]">
+            <span style="color: #666;">Submitting...</span>
+          </$list>
+          <$list filter="[<statusTiddler>get[text]prefix[error:]]">
+            <span style="color: #dc3545;">✗ <$text text={{{ [<statusTiddler>get[text]removeprefix[error: ]] }}}/></span>
+          </$list>
+          <$list filter="[<statusTiddler>get[text]match[success]]">
+            <span style="color: #28a745;">✓ Report submitted for moderation!</span>
+          </$list>
+        </div>
+      </$list>
+    </$let>
+  </div>
+</div>
+
 </$list>
 <!-- End server mirror check -->
 
