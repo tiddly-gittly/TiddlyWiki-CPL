@@ -29,11 +29,16 @@ interface CommentRouteRuntimeState {
   limits: Record<string, number[]>;
 }
 
+interface CompatibilityRouteRuntimeState {
+  limits: Record<string, number[]>;
+}
+
 export interface CplServerRuntimeState {
   dataStore: DataStoreRuntimeState;
   commentStore: CommentStoreRuntimeState;
   rateLimiter: RateLimiterRuntimeState;
   commentRoute: CommentRouteRuntimeState;
+  compatibilityRoute: CompatibilityRouteRuntimeState;
 }
 
 declare module 'tiddlywiki' {
@@ -62,6 +67,9 @@ const createRuntimeState = (): CplServerRuntimeState => ({
     cleanupTimer: null,
   },
   commentRoute: {
+    limits: {},
+  },
+  compatibilityRoute: {
     limits: {},
   },
 });

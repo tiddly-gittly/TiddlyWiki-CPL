@@ -29,9 +29,12 @@ export const startup = (): void => {
       return;
     }
 
-    fetchPluginStats(cplServerApi, pluginTitle);
-    fetchPluginChangelog(cplServerApi, pluginTitle);
-    fetchPluginComments(cplServerApi, pluginTitle);
+    if ($tw.utils.hop(changes, '$:/HistoryList')) {
+      fetchPluginStats(cplServerApi, pluginTitle);
+      fetchPluginChangelog(cplServerApi, pluginTitle);
+      fetchPluginComments(cplServerApi, pluginTitle);
+      fetchPluginCompatibility(cplServerApi, pluginTitle);
+    }
   });
 
   tw.rootWidget.addEventListener('cpl-fetch-stats', (event: RootWidgetEvent): undefined => {

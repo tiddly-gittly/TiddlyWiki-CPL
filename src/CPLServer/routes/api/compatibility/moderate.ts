@@ -1,6 +1,6 @@
 import { Auth } from '../../../lib/auth';
 import { CompatibilityStore } from '../../../lib/store/compatibility';
-import { sendError, sendInternalError, sendJson, parseJsonBody } from '../../../lib/http';
+import { decodeRouteParam, sendError, sendInternalError, sendJson, parseJsonBody } from '../../../lib/http';
 import type { RouteHandler, CompatibilityReportStatus } from '../../../lib/types';
 
 interface ModerateBody {
@@ -17,8 +17,8 @@ export const bodyFormat = 'string';
 
 export const handler: RouteHandler = (request, _response, context) => {
   try {
-    const pluginTitle = decodeURIComponent(context.params[0] ?? '');
-    const reportId = decodeURIComponent(context.params[1] ?? '');
+    const pluginTitle = decodeRouteParam(context.params[0]);
+    const reportId = decodeRouteParam(context.params[1]);
     const body = parseJsonBody<ModerateBody>(context.data);
     const user = Auth.getUserFromRequest(request);
 
