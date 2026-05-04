@@ -48,15 +48,15 @@ jobs:
       # Other steps that change files in the repository
 
       - name: Import All Library in libraries.json
-        run: pnpm run importAllLibrary
+        run: pnpm run import:libraries
       - name: Import Latest Official Library
-        run: pnpm run importlibraryofficial
+        run: pnpm run import:official-library
 
       # Commit all changed files back to the repository
       - uses: EndBug/add-and-commit@v10
         with:
           message: Automated Update all Library in libraries.json
-          add: 'tiddlers'
+          add: 'wiki/tiddlers'
           author_name: Github Action
           author_email: actions@github.com
           commit_options: '--amend --no-edit'

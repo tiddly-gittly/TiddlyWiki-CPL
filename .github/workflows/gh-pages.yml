@@ -58,7 +58,10 @@ jobs:
           fetch-depth: 1
 
       - name: Build Library
-        run: pnpm run build
+        run: |
+          pnpm run build
+          node scripts/fetch-plugins.js --allow-ci --best-effort
+          pnpm run build:library
 
     #   - name: Minify Front Page HTML (also check if it exists)
     #     run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
