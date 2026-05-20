@@ -2,10 +2,155 @@
 <html lang="zh">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title>TiddlyWiki5 CPL</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f1e8;
+        --panel: rgba(255, 251, 244, 0.92);
+        --text: #21313c;
+        --muted: #5b6b73;
+        --accent: #0f766e;
+        --accent-2: #b45309;
+        --border: rgba(33, 49, 60, 0.12);
+        --shadow: 0 24px 60px rgba(33, 49, 60, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(15, 118, 110, 0.16), transparent 34%),
+          radial-gradient(circle at bottom right, rgba(180, 83, 9, 0.18), transparent 30%),
+          linear-gradient(180deg, #fbf7f0 0%, var(--bg) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px;
+      }
+
+      main {
+        width: min(920px, 100%);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        padding: 32px;
+        backdrop-filter: blur(18px);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2.3rem, 6vw, 4.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+      }
+
+      p {
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.65;
+        color: var(--muted);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: currentColor;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 24px 0 28px;
+      }
+
+      .action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--text);
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .action.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #f5fbfa;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin: 28px 0;
+      }
+
+      .stat {
+        padding: 18px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--border);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+        margin-bottom: 8px;
+        color: var(--accent-2);
+      }
+
+      .note {
+        margin-top: 16px;
+        padding: 16px 18px;
+        border-left: 4px solid var(--accent-2);
+        background: rgba(180, 83, 9, 0.08);
+        border-radius: 14px;
+      }
+
+      code {
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.95em;
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding: 24px;
+          border-radius: 22px;
+        }
+      }
+    </style>
     <script>
       'use strict';
       !(function () {
+        var pluginIndexRequestUrl = 'index.json';
+
         function formatPluginTitle(title) {
           return encodeURIComponent(
             title
@@ -14,6 +159,29 @@
               .replace('$:/themes/', 'themes_')
               .replace(/[:/<>"|?*]/g, '_'),
           );
+        }
+
+        function setPluginCount(text) {
+          var countEl = document.getElementById('plugin-count');
+          if (countEl) {
+            countEl.textContent = text;
+          }
+        }
+
+        function fetchPluginCount() {
+          httpGet(pluginIndexRequestUrl, function (err, text) {
+            if (err) {
+              setPluginCount('Unavailable');
+              return;
+            }
+
+            try {
+              var plugins = JSON.parse(text);
+              setPluginCount(String(Array.isArray(plugins) ? plugins.length : 0));
+            } catch (error) {
+              setPluginCount('Unknown');
+            }
+          });
         }
         function sendBack(success, payload, event) {
           event.source.postMessage(
@@ -89,8 +257,48 @@
           },
           '*',
         );
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', fetchPluginCount, {
+            once: true,
+          });
+        } else {
+          fetchPluginCount();
+        }
       })();
     </script>
   </head>
-  <body></body>
+  <body>
+    <main>
+      <div class="eyebrow">TiddlyWiki CPL</div>
+      <h1>Static Repo Mirror</h1>
+      <p>
+        This page is the compatibility bridge used by the CPL client plugin and by older CI-deployed HTML mirrors.
+        It still serves plugin metadata and package files, but it also now provides a direct browser landing page instead of rendering blank.
+      </p>
+      <div class="actions">
+        <a class="action primary" href="../#Welcome:Welcome">Open CPL Wiki UI</a>
+        <a class="action" href="index.json">Open plugin index JSON</a>
+        <a class="action" href="plugins/">Browse exported plugin files</a>
+      </div>
+      <div class="stats">
+        <section class="stat">
+          <strong id="plugin-count">...</strong>
+          <span>plugins exported in this mirror</span>
+        </section>
+        <section class="stat">
+          <strong>postMessage</strong>
+          <span>bridge kept for legacy CPL client installs</span>
+        </section>
+        <section class="stat">
+          <strong>index.json</strong>
+          <span>machine-readable entry point for plugin catalogs</span>
+        </section>
+      </div>
+      <p class="note">
+        If you are opening this directly in a browser and expected an interactive gallery, use the wiki UI link above.
+        TiddlyWiki instances should keep pointing their mirror setting at this repo path, for example <code>/repo</code>.
+      </p>
+    </main>
+  </body>
 </html>

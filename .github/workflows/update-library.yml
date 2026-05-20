@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - libraries.json
-      - scripts
+      - 'scripts/**'
       - '.github/workflows/update-library.yml'
   schedule:
     - cron: '0 1 * * *'
@@ -31,13 +31,14 @@ jobs:
           run_install: false
 
       - name: Get pnpm store directory
+        id: pnpm-cache
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v5
         name: Setup pnpm cache
         with:
-          path: ${{ env.STORE_PATH }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
@@ -59,4 +60,4 @@ jobs:
           add: 'wiki/tiddlers'
           author_name: Github Action
           author_email: actions@github.com
-          commit_options: '--amend --no-edit'
+          commit: '--no-verify'
