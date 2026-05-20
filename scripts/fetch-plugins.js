@@ -2,7 +2,7 @@
 /**
  * Fetch plugins from their source URLs into wiki/files/plugin-fetched/
  *
- * Reads plugin metadata from wiki/tiddlers/Plugin_*.json files,
+ * Reads plugin metadata from wiki/tiddlers/ recursively,
  * extracts cpl.uri, and downloads the plugin JSON files.
  *
  * Should NOT run in test/development environments (exits early if NODE_ENV=test or CI=true).
@@ -16,6 +16,7 @@ const { URL } = require('url');
 
 const WIKI_TIDDLERS_DIR = path.resolve('wiki', 'tiddlers');
 const OUTPUT_DIR = path.resolve('wiki', 'files', 'plugin-fetched');
+const SUPPORTED_METADATA_EXTENSIONS = new Set(['.json', '.tid', '.multids']);
 
 // Same sanitization as get-download-plugin.js
 function sanitizeFilename(title) {
@@ -26,6 +27,65 @@ function ensureDir(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
+}
+
+function parseFieldBlock(text) {
+  const fields = {};
+  const lines = text.split(/\r?\n/);
+  for (const line of lines) {
+    if (!line.trim()) {
+      break;
+    }
+
+    const separatorIndex = line.indexOf(':');
+    if (separatorIndex <= 0) {
+      continue;
+    }
+
+    const key = line.slice(0, separatorIndex).trim();
+    const value = line.slice(separatorIndex + 1).trimStart();
+    if (key) {
+      fields[key] = value;
+    }
+  }
+  return fields;
+}
+
+function parseMetadataFile(filePath) {
+  const extension = path.extname(filePath).toLowerCase();
+  const content = fs.readFileSync(filePath, 'utf-8');
+
+  if (extension === '.json') {
+    const parsed = JSON.parse(content);
+    return Array.isArray(parsed) ? parsed[0] : parsed;
+  }
+
+  if (extension === '.tid' || extension === '.multids') {
+    return parseFieldBlock(content);
+  }
+
+  throw new Error(`Unsupported metadata extension: ${extension}`);
+}
+
+function getMetadataFiles(dir) {
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const entryPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...getMetadataFiles(entryPath));
+      continue;
+    }
+
+    const extension = path.extname(entry.name).toLowerCase();
+    if (
+      SUPPORTED_METADATA_EXTENSIONS.has(extension) &&
+      !entry.name.endsWith('.meta')
+    ) {
+      files.push(entryPath);
+    }
+  }
+
+  return files.sort();
 }
 
 function encodePluginTitleForLibraryRecipe(pluginTitle) {
@@ -166,7 +226,7 @@ async function main() {
 
   ensureDir(OUTPUT_DIR);
 
-  const files = fs.readdirSync(WIKI_TIDDLERS_DIR).filter(f => f.endsWith('.json'));
+  const files = getMetadataFiles(WIKI_TIDDLERS_DIR);
   console.log(`[fetch-plugins] Found ${files.length} plugin metadata files.`);
 
   let downloaded = 0;
@@ -174,14 +234,11 @@ async function main() {
   let failed = 0;
 
   for (const file of files) {
-    const filePath = path.join(WIKI_TIDDLERS_DIR, file);
     let metadata;
     try {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const parsed = JSON.parse(content);
-      metadata = Array.isArray(parsed) ? parsed[0] : parsed;
+      metadata = parseMetadataFile(file);
     } catch (e) {
-      console.error(`[fetch-plugins] Failed to parse ${file}: ${e.message}`);
+      console.error(`[fetch-plugins] Failed to parse ${path.relative(WIKI_TIDDLERS_DIR, file)}: ${e.message}`);
       failed++;
       continue;
     }
@@ -190,7 +247,7 @@ async function main() {
       const uri = metadata['cpl.uri'];
 
     if (!pluginTitle) {
-      console.warn(`[fetch-plugins] ${file}: missing cpl.title, skipping.`);
+      console.warn(`[fetch-plugins] ${path.relative(WIKI_TIDDLERS_DIR, file)}: missing cpl.title, skipping.`);
       skipped++;
       continue;
     }
