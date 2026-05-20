@@ -2,14 +2,14 @@
     {
         "type": "application/json",
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "! Overview\n\nThis is an opinonated theme, used by pmario.\n\n!! License\n\nCC-BY-NC-SA - {{$:/themes/wikilabs/slant-01/license}}\n\n''Important:'' This plugin modifies a core module and templates\n\n<ul><$list filter=\"[[$:/themes/wikilabs/slant-01]plugintiddlers[]prefix[$:/core/]] \"><li><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></li></$list></ul>",
+        "cpl.readme": "! Overview\n\nThis is an opinionated theme, used by pmario.\n\n* Compact title bar: subtitle (modifier + relative modified date) sits inline to the right of the title and wraps below when the title is long\n* Tiddler toolbar controls float to the top right of the title row\n* Clicking a tag pill opens the Tiddler Info panel and selects the //Tag Map// tab directly\n\n!! License\n\nCC-BY-NC-SA - {{$:/themes/wikilabs/slant-01/license}}\n\n''Important:'' This theme overrides the following core templates\n\n<ul><$list filter=\"[[$:/themes/wikilabs/slant-01]plugintiddlers[]prefix[$:/core/]] \"><li><$link to=<<currentTiddler>>><<currentTiddler>></$link></li></$list></ul>\n",
         "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fthemes%252Fwikilabs%252Fslant-01.json",
         "cpl.title": "$:/themes/wikilabs/slant-01",
         "cpl.author": "Mario Pietsch",
         "cpl.name": "Slant 01",
         "cpl.description": "slant-01 - an opinionated theme",
         "cpl.plugin-type": "theme",
-        "cpl.dependents": "$:/themes/tiddlywiki/snowwhite $:/plugins/wikilabs/info-tagmap $:/plugins/wikilabs/multicol-dropdown",
+        "cpl.dependents": "$:/themes/tiddlywiki/snowwhite $:/themes/wikilabs/underlinedtabs $:/plugins/wikilabs/info-tagmap $:/plugins/wikilabs/multicol-dropdown",
         "cpl.core-version": ">=5.1.10",
         "title": "Plugin_202203243743199"
     }

@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "A theme that restyles the core `.tc-tab-buttons` markup as flat tab buttons over the page background, with the selected tab marked by a 2-pixel coloured underline.\n\n!! Look and feel\n\n* Flat tab buttons, no container background, no border\n* The selected button is bolded and gets a 2-pixel underline in the palette's `primary` colour\n* Hovering over an inactive tab shows a muted underline\n* The first tab sits flush with the left edge when not selected\n* Sidebar tabs follow the same pattern with sidebar-appropriate spacing\n* Includes a small offset fix for the [[link-to-tabs|$:/plugins/wikilabs/link-to-tabs]] indicator\n\n!! Optional first-tab animation\n\nWhen the first tab's selected state changes, an optional slide-in / slide-out animation can be played. The matching keyframes (`tc-underlinedtabs-first-slide-in` and `tc-underlinedtabs-first-slide-out`) ship with this theme; the JavaScript that adds the trigger classes lives in the [[New Style|$:/plugins/wikilabs/new-style]] plugin. Install that plugin alongside this theme to enable the animation. Without it the theme still works — there is just no animation.\n\n!! Dependencies\n\nDepends on `$:/themes/tiddlywiki/snowwhite` for default colours and base styling, and optionally on `$:/plugins/wikilabs/new-style` for the first-tab animation. Activate it from the Control Panel under ''Appearance → Theme''.\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fthemes%252Fwikilabs%252Funderlinedtabs.json",
+        "cpl.title": "$:/themes/wikilabs/underlinedtabs",
+        "cpl.author": "pmario",
+        "cpl.name": "Underlined Tabs",
+        "cpl.description": "Segmented-control style underlined tabs",
+        "cpl.plugin-type": "theme",
+        "cpl.dependents": "$:/themes/tiddlywiki/snowwhite $:/plugins/wikilabs/new-style",
+        "cpl.core-version": ">=5.0.0",
+        "title": "Plugin_202605200714335"
+    }
+]
