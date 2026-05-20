@@ -38,6 +38,15 @@ type: text/vnd.tiddlywiki
 关闭后可以手动在 [[$:/ControlPanel]] 的 [CPL] 中进行检查。
 <<<
 
+<$checkbox
+  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup"
+  field="text"
+  checked="yes"
+  unchecked="no"
+  default="yes">
+  启动时自动刷新数据库并自动安装可更新插件
+</$checkbox>
+
 ; 插件更新筛选器 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/update-filter" tag="input" default="" />
 
 <<<
@@ -84,6 +93,15 @@ When the value is less than or equal to 0, auto-update is turned off, also when 
 
 After closing it can be checked manually in [CPL] of [[$:/ControlPanel]].
 <<<
+
+<$checkbox
+  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup"
+  field="text"
+  checked="yes"
+  unchecked="no"
+  default="yes">
+  Automatically refresh the database and install available updates on startup
+</$checkbox>
 
 ; Plugin Update Filter <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/update-filter" tag="input" default="" />
 

@@ -8,14 +8,6 @@ type: text/vnd.tiddlywiki
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
-<$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn">
-<$action-sendmessage $message="cpl-get-plugins-index" />
-{{$:/core/images/download-button}}
-&#32;
-<$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />
-</$button>
-
-<!-- Mirror Switcher -->
 <div class="cpl-mirror-switcher" style="display: flex; align-items: center; gap: 8px;">
 <span style="font-weight: 500; font-size: 0.9em;"><$text text={{{ [<chinese>match[yes]then[镜像源]else[Mirror]] }}}/>:</span>
 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text" class="cpl-mirror-select" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer;">

@@ -27,6 +27,7 @@ export const createInstallController = (): InstallController => {
         : titleParam
           ? [titleParam]
           : [];
+      const autoConfirm = getEventParam(event, 'auto-confirm') === 'yes';
       if (titles.length === 0) {
         return;
       }
@@ -125,6 +126,14 @@ export const createInstallController = (): InstallController => {
         ...tiddlerFields,
       });
       tw.wiki.deleteTiddler('$:/temp/CPL-Repo/instal-plugin-requesting');
+      if (autoConfirm) {
+        await handleInstallPlugin({
+          type: 'cpl-install-plugin',
+          paramObject: { response: '$:/temp/CPL-Repo/instal-plugin-request-tree' },
+          widget: event.widget,
+        } as RootWidgetEvent);
+        return;
+      }
       tw.modal.display('$:/plugins/Gk0Wk/CPL-Repo/templates/modals/install-plugin-request', {
         variables: {
           requestTiddler: '$:/temp/CPL-Repo/instal-plugin-request-tree',

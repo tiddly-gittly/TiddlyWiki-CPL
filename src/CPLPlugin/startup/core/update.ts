@@ -2,7 +2,7 @@ import { cpl } from './bridge';
 import { tw } from './types';
 
 export interface UpdateController {
-  update: (notify?: boolean) => void;
+  update: (options?: { notify?: boolean; autoInstall?: boolean }) => Promise<string[]>;
   rescheduleAutoUpdate: () => void;
   initializeAutoUpdate: () => void;
 }
@@ -22,10 +22,12 @@ export const createUpdateController = (): UpdateController => {
       10,
     ) || -1;
 
-  const update = (notify?: boolean): void => {
+  const update = async (options?: { notify?: boolean; autoInstall?: boolean }): Promise<string[]> => {
+    const notify = options?.notify;
+    const autoInstall = options?.autoInstall === true;
     try {
       if (updateLock) {
-        return;
+        return [];
       }
 
       updateLock = true;
@@ -37,7 +39,7 @@ export const createUpdateController = (): UpdateController => {
         tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/update-filter', ''),
       );
 
-      updatePromise
+      return updatePromise
         .then(text => {
           const updatePlugins = JSON.parse(text) as Record<string, [string, string?]>;
           const pluginsToShow = plugins.filter(title => {
@@ -74,10 +76,25 @@ export const createUpdateController = (): UpdateController => {
               });
               tw.config.preferences.notificationDuration = notificationDuration;
             }
+
+            if (autoInstall) {
+              tw.rootWidget.dispatchEvent({
+                type: 'cpl-install-plugin-request',
+                paramObject: {
+                  titles: tw.utils.stringifyList(pluginsToShow),
+                  'auto-confirm': 'yes',
+                  version: 'latest',
+                },
+                widget: tw.rootWidget,
+              });
+            }
+          } else {
+            tw.wiki.deleteTiddler('$:/temp/CPL-Repo/update-plugins');
           }
 
           tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
           updateLock = false;
+          return pluginsToShow;
         })
         .catch(error => {
           console.error(error);
@@ -86,6 +103,7 @@ export const createUpdateController = (): UpdateController => {
             text: String(error),
           });
           updateLock = false;
+          return [];
         });
     } catch (error) {
       console.error(error);
@@ -94,6 +112,7 @@ export const createUpdateController = (): UpdateController => {
         text: String(error),
       });
       updateLock = false;
+      return [];
     }
   };
 
@@ -110,9 +129,9 @@ export const createUpdateController = (): UpdateController => {
 
     if (time > 0) {
       autoTimeout = setTimeout(() => {
-        update();
+        void update();
         autoUpdateInterval = setInterval(() => {
-          update();
+          void update();
         }, time * 60_000);
       }, lastUpdateTime === -1 ? 0 : time * 60_000 + lastUpdateTime - Date.now());
     }
@@ -122,9 +141,9 @@ export const createUpdateController = (): UpdateController => {
     autoTimeout = setTimeout(() => {
       const time = getAutoUpdateTime();
       if (time > 0) {
-        update();
+        void update();
         autoUpdateInterval = setInterval(() => {
-          update();
+          void update();
         }, time * 60_000);
       }
     }, 3_000);

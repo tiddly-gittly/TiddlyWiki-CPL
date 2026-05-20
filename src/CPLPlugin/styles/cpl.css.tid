@@ -138,8 +138,54 @@ type: text/vnd.tiddlywiki
   width: 100%;
   padding: 0.5em;
 }
-.cpl-layout-back-button {
-  padding: 0.5em;
+
+.cpl-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.cpl-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.cpl-action-toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.3em;
+  padding: 0 0.8em;
+  border-radius: 999px;
+  border: 1px solid <<colour tiddler-info-border>>;
+  background: <<colour tiddler-info-background>>;
+}
+
+.cpl-action-toggle input {
+  margin-right: 0.45em;
+}
+
+.cpl-action-toggle-label {
+  font-size: 0.92em;
+}
+
+.cpl-action-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.3em;
+  padding: 0 0.8em;
+  border-radius: 999px;
+  background: rgba(60, 179, 113, 0.12);
+  color: #1d6c3e;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.cpl-action-pill-muted {
+  background: rgba(128, 128, 128, 0.14);
+  color: <<colour muted-foreground>>;
 }
 
 /* Disable dut to high GPU usage */

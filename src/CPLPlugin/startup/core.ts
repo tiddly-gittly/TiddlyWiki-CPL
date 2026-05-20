@@ -35,6 +35,14 @@ export const startup = (): void => {
     });
   };
 
+  const shouldAutoRefreshOnStartup = (): boolean =>
+    tw.wiki.getTiddlerText(
+      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup',
+      'yes',
+    ) !== 'no';
+
+  let initialAutoSyncPending = shouldAutoRefreshOnStartup();
+
   const mirrorController = createMirrorController({
     isBusy: () =>
       installController.isInstallRequestPending() ||
@@ -45,7 +53,13 @@ export const startup = (): void => {
 
   const updateController = createUpdateController();
   indexController = createIndexController({
-    onIndexLoaded: mirrorController.completePendingSwitch,
+    onIndexLoaded: () => {
+      mirrorController.completePendingSwitch();
+      if (initialAutoSyncPending) {
+        initialAutoSyncPending = false;
+        void updateController.update({ notify: false, autoInstall: true });
+      }
+    },
     onIndexLoadFailed: mirrorController.failPendingSwitch,
   });
 
@@ -66,6 +80,10 @@ export const startup = (): void => {
       updateController.rescheduleAutoUpdate();
     }
 
+    if (tw.utils.hop(changes, '$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup')) {
+      initialAutoSyncPending = shouldAutoRefreshOnStartup();
+    }
+
     if (tw.titleWidgetNode?.refresh(changes, tw.titleContainer ?? null, null)) {
       document.title = tw.titleContainer?.textContent ?? document.title;
     }
@@ -73,8 +91,16 @@ export const startup = (): void => {
 
   updateController.initializeAutoUpdate();
 
+  if (initialAutoSyncPending) {
+    setTimeout(() => {
+      if (shouldAutoRefreshOnStartup()) {
+        triggerMirrorRefresh();
+      }
+    }, 1500);
+  }
+
   tw.rootWidget.addEventListener('cpl-update-check', (_event: RootWidgetEvent): undefined => {
-    updateController.update();
+    void updateController.update();
     return undefined;
   });
   tw.rootWidget.addEventListener(
