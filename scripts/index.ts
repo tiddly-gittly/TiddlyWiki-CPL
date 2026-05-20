@@ -81,6 +81,7 @@ importCommand
         process.env.GITHUB_ACTIONS === 'true'
           ? [{ title: '$:/status/UserName', text: 'GitHub Action' }]
           : [],
+        'wiki',
       );
       for (const { uri, name } of registeredLibraries) {
         console.log(
@@ -104,6 +105,7 @@ importCommand
         process.env.GITHUB_ACTIONS === 'true'
           ? [{ title: '$:/status/UserName', text: 'GitHub Action' }]
           : [],
+        'wiki',
       );
       // https://tiddlywiki.com/library/v5.2.7
       await importLibrary(
