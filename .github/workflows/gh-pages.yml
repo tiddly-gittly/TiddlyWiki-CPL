@@ -91,7 +91,7 @@ jobs:
                 <p style="margin:0; color:#475569;">The main wiki UI was not generated for this deployment, but the CPL mirror repository and client plugin are still available below.</p>
                 <div class="actions">
                   <a class="primary" href="repo/">Open repo mirror landing page</a>
-                  <a class="secondary" href="repo/plugins/Gk0Wk_CPL-Repo.json">Download CPL client plugin</a>
+                  <a class="secondary" href="library/plugins/Gk0Wk_CPL-Repo.json">Download CPL client plugin</a>
                 </div>
               </main>
             </body>
