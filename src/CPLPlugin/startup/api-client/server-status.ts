@@ -1,45 +1,76 @@
 import { tw, type CPLServerApi, type JsonObject } from './types';
 import { rawApiRequest } from './http';
 import { setApiStatus, clearServerTempState } from './utilities';
-import { getCurrentMirrorEntry, apiAvailability, lastMirrorEntry, setApiAvailability, setLastMirrorEntry } from './state';
+import {
+  getConfiguredMirrorType,
+  getCurrentMirrorEntry,
+  getMirrorOrigin,
+  apiAvailability,
+  lastMirrorEntry,
+  setApiAvailability,
+  setLastMirrorEntry,
+  type MirrorType,
+} from './state';
 
-const getMirrorBaseUrl = (): string | undefined => {
+const setAnonymousUserStatus = (): void => {
+  tw.wiki.addTiddler({
+    title: '$:/temp/CPL-Server/user-status',
+    text: 'anonymous',
+  });
+};
+
+const getMirrorLabel = (): string => {
   const entry = getCurrentMirrorEntry();
-  if (!entry) {
-    return undefined;
-  }
   try {
-    return new URL(entry).origin;
+    return new URL(entry, window.location.origin).host || entry;
   } catch {
-    return undefined;
+    return entry;
   }
 };
 
-export const probeApiAvailability = (callback: (available: boolean) => void): void => {
-  setApiStatus('checking', 'unknown', 'Checking mirror capabilities...');
-  const baseUrl = getMirrorBaseUrl();
+export const probeApiAvailability = (callback: (mirrorType: MirrorType) => void): void => {
+  const configuredMirrorType = getConfiguredMirrorType();
+  if (configuredMirrorType === 'static') {
+    setApiAvailability(false);
+    setApiStatus(
+      'unavailable',
+      'static',
+      'Selected mirror is a static mirror without CPL server features.',
+    );
+    callback('static');
+    return;
+  }
+
+  setApiStatus(
+    'checking',
+    configuredMirrorType === 'server' ? 'server' : 'unknown',
+    configuredMirrorType === 'server'
+      ? `Checking server mirror ${getMirrorLabel()}...`
+      : 'Checking mirror capabilities...',
+  );
   rawApiRequest<JsonObject>(
     'GET',
     `/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`,
     null,
     error => {
       if (error) {
+        const mirrorType = configuredMirrorType === 'server' ? 'unreachable' : 'unknown';
         setApiAvailability(false);
         setApiStatus(
           'unavailable',
-          'static',
-          'Static mirror detected. Stats, ratings, comments, and login are unavailable here.',
+          mirrorType,
+          configuredMirrorType === 'server'
+            ? `Configured server mirror ${getMirrorOrigin()} is currently unreachable or unavailable.`
+            : `Mirror ${getMirrorLabel()} does not expose CPL server features or is currently unreachable.`,
         );
-        callback(false);
+        callback(mirrorType);
         return;
       }
 
       setApiAvailability(true);
       setApiStatus('available', 'server', 'Full CPL server features are available on this mirror.');
-      callback(true);
+      callback('server');
     },
-    undefined,
-    baseUrl,
   );
 };
 
@@ -52,12 +83,9 @@ export const refreshMirrorCapabilityState = (cplServerApi: CPLServerApi): void =
   setLastMirrorEntry(entry);
   setApiAvailability(null);
   clearServerTempState();
-  probeApiAvailability(available => {
-    if (!available) {
-      tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/user-status',
-        text: 'anonymous',
-      });
+  probeApiAvailability(mirrorType => {
+    if (mirrorType !== 'server') {
+      setAnonymousUserStatus();
       return;
     }
 
@@ -75,10 +103,7 @@ export const refreshMirrorCapabilityState = (cplServerApi: CPLServerApi): void =
         return;
       }
 
-      tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/user-status',
-        text: 'anonymous',
-      });
+      setAnonymousUserStatus();
     });
   });
 };

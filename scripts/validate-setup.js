@@ -56,7 +56,8 @@ const checks = [
     name: 'Package.json scripts updated',
     check: () => {
       const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-      return pkg.scripts['server:prod'] &&
+      return pkg.scripts['server:test'] &&
+             pkg.scripts['server:prod'] &&
              pkg.scripts['build'] &&
              pkg.scripts['test'];
     }
