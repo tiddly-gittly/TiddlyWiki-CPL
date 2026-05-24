@@ -109,6 +109,12 @@ Place plugin `.json` files into `wiki/files/plugin-offline/` to make them availa
 
 ### Production Server
 
+For a writable local runtime server that exercises the CPL boot path exactly like the Node.js deployment:
+
+```bash
+pnpm server:test
+```
+
 Start the production server in read-only mode:
 
 ```bash
@@ -116,6 +122,8 @@ pnpm server:prod
 ```
 
 The server launcher compiles the TypeScript plugin sources into runtime plugin JSON files under `cache/runtime-plugins/`, and then starts a standard TiddlyWiki Node.js server with those compiled plugins injected as boot-time plugin arguments. This keeps the runtime compatible with TiddlyWiki's Node.js boot process while preserving TypeScript source under `src/`.
+
+This is intentionally different from `pnpm dev:wiki`: `pnpm dev:wiki` runs the Modern.TiddlyDev development server with wiki writes enabled, while `pnpm server:test` verifies the production-like runtime plugin loading path used by the CPL server.
 
 For public deployments, configure read-only mode so wiki writes stay disabled while download statistics and API routes remain available.
 

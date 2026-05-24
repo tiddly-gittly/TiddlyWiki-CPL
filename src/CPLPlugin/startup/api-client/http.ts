@@ -1,11 +1,14 @@
 import { tw, type JsonObject, type ApiCallback } from './types';
-import { CPL_API_BASE } from './constants';
+import { API_MESSAGE_TIDDLER } from './constants';
 import { getErrorMessage } from './utilities';
 import { getJwtToken } from './auth';
-import { apiAvailability } from './state';
+import { apiAvailability, getCurrentMirrorApiBase } from './state';
 
 const getUnavailableMessage = (): string =>
-  'This mirror does not provide CPL server API features.';
+  tw.wiki.getTiddlerText(
+    API_MESSAGE_TIDDLER,
+    'This mirror does not provide CPL server API features.',
+  );
 
 export const rawApiRequest = <T extends JsonObject>(
   method: string,
@@ -13,7 +16,6 @@ export const rawApiRequest = <T extends JsonObject>(
   body: JsonObject | null,
   callback: ApiCallback<T>,
   extraHeaders?: Record<string, string>,
-  baseUrl?: string,
 ): void => {
   const options: {
     url: string;
@@ -22,10 +24,9 @@ export const rawApiRequest = <T extends JsonObject>(
     data?: string;
     callback: (error: unknown, response: string) => void;
   } = {
-    url: baseUrl ? `${baseUrl}${CPL_API_BASE}${endpoint}` : `${CPL_API_BASE}${endpoint}`,
+    url: `${getCurrentMirrorApiBase()}${endpoint}`,
     type: method,
     headers: {
-      'Content-Type': 'application/json',
       ...(extraHeaders ?? {}),
     },
     callback: (error, response) => {
@@ -43,6 +44,7 @@ export const rawApiRequest = <T extends JsonObject>(
   };
 
   if (body) {
+    options.headers['Content-Type'] = 'application/json';
     options.data = JSON.stringify(body);
   }
 
