@@ -21,6 +21,15 @@ type: text/vnd.tiddlywiki
 </div>
 </div>
 </$list>
+<$list filter="[<mirrorType>match[unreachable]]" variable="isUnavailableMirror">
+<div class="cpl-static-feature-notice" style="background: #f8d7da; border: 1px solid #dc3545; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
+<span style="font-size: 1.5em;">⚠️</span>
+<div>
+<strong><$text text={{{ [[$:/language]get[text]match[zh-CN]then[服务器镜像不可访问]else[Server Mirror Unreachable]] }}}/></strong>
+<p style="margin: 4px 0 0 0;"><$text text={{{ [[$:/language]get[text]match[zh-CN]then[当前选择的是服务器镜像，但它暂时无法访问，因此评论功能当前不可用。]else[The selected mirror should provide comments, but it is currently unreachable, so comments are unavailable right now.]] }}}/></p>
+</div>
+</div>
+</$list>
 
 <!-- Only show comment section for server mirrors -->
 <$list filter="[<mirrorType>match[server]]" variable="isServerMirror">

@@ -31,6 +31,12 @@ type: text/vnd.tiddlywiki
 <$text text={{{ [<chinese>match[yes]then[静态镜像]else[Static Mirror]] }}}/>
 </span>
 </$list>
+<$list filter="[<mirrorType>match[unreachable]]" variable="isUnreachable">
+<span class="cpl-mirror-status cpl-mirror-unreachable" style="font-size: 0.85em; color: #dc3545; display: flex; align-items: center; gap: 4px;">
+<span style="font-size: 1.2em;">✗</span>
+<$text text={{{ [<chinese>match[yes]then[服务器镜像（不可访问）]else[Server Mirror (Unavailable)]] }}}/>
+</span>
+</$list>
 <$list filter="[<mirrorType>match[unknown]]" variable="isUnknown">
 <span class="cpl-mirror-status cpl-mirror-unknown" style="font-size: 0.85em; color: #999; display: flex; align-items: center; gap: 4px;">
 <span style="font-size: 1.2em;">?</span>
@@ -59,6 +65,14 @@ type: text/vnd.tiddlywiki
 <span style="font-size: 1.2em;">ℹ️</span>
 <div>
 <$text text={{{ [<chinese>match[yes]then[当前镜像为静态镜像，不支持评论、评分、统计等服务器功能。如需使用这些功能，请切换到服务器镜像。]else[Current mirror is a static mirror without server features (comments, ratings, stats). Switch to a server mirror to use these features.]] }}}/>
+</div>
+</div>
+</$list>
+<$list filter="[[$:/temp/CPL-Repo/mirror-type]get[text]match[unreachable]]" variable="isUnavailableMirror">
+<div class="cpl-static-mirror-notice" style="background: #f8d7da; border: 1px solid #dc3545; border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: start; gap: 8px;">
+<span style="font-size: 1.2em;">⚠</span>
+<div>
+<$text text={{{ [<chinese>match[yes]then[当前选择的是服务器镜像，但该镜像暂时无法访问。评论、评分、统计和登录功能当前不可用。]else[The selected mirror is a server mirror, but it is currently unreachable. Comments, ratings, stats, and login are unavailable right now.]] }}}/>
 </div>
 </div>
 </$list>
