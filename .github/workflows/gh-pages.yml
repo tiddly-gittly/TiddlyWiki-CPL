@@ -64,6 +64,41 @@ jobs:
           node scripts/fetch-plugins.js --allow-ci --best-effort
           pnpm run build:library
 
+      - name: Ensure root site entry exists
+        run: |
+          if [ ! -f dist/index.html ]; then
+            cat > dist/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>TiddlyWiki CPL</title>
+              <style>
+                body { font-family: system-ui, sans-serif; margin: 0; padding: 32px; background: #f8fafc; color: #0f172a; }
+                main { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(15,23,42,.08); }
+                a { color: #2563eb; }
+                .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+                .actions a { text-decoration: none; padding: 10px 16px; border-radius: 999px; font-weight: 600; }
+                .primary { background: #2563eb; color: #fff; }
+                .secondary { background: #e2e8f0; color: #0f172a; }
+              </style>
+            </head>
+            <body>
+              <main>
+                <p style="margin:0 0 8px; color:#64748b; text-transform:uppercase; letter-spacing:.08em; font-size:.9rem;">TiddlyWiki CPL</p>
+                <h1 style="margin:0 0 12px;">CPL Web UI Fallback</h1>
+                <p style="margin:0; color:#475569;">The main wiki UI was not generated for this deployment, but the CPL mirror repository and client plugin are still available below.</p>
+                <div class="actions">
+                  <a class="primary" href="repo/">Open repo mirror landing page</a>
+                  <a class="secondary" href="repo/plugins/Gk0Wk_CPL-Repo.json">Download CPL client plugin</a>
+                </div>
+              </main>
+            </body>
+          </html>
+          EOF
+          fi
+
     #   - name: Minify Front Page HTML (also check if it exists)
     #     run: pnpm exec html-minifier-terser -c ./html-minifier-terser.config.json -o dist/index.html dist/index.html
     #   - name: Minify Library HTML (also check if it exists)
