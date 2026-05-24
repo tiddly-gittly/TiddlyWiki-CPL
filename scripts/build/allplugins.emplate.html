@@ -92,5 +92,25 @@
       })();
     </script>
   </head>
-  <body></body>
+  <body style="font-family: system-ui, sans-serif; margin: 0; padding: 24px; line-height: 1.6; color: #1f2937; background: #f8fafc;">
+    <main style="max-width: 760px; margin: 0 auto; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);">
+      <p style="margin: 0 0 8px; font-size: 0.9rem; color: #64748b; letter-spacing: 0.08em; text-transform: uppercase;">TiddlyWiki CPL</p>
+      <h1 style="margin: 0 0 12px; font-size: 2rem; line-height: 1.2;">Static Repo Mirror</h1>
+      <p style="margin: 0 0 16px; color: #475569;">
+        This page is the compatibility bridge used by the CPL client plugin and by older static mirrors.
+        If the main CPL web UI is temporarily unavailable, you can still install the CPL client plugin directly from here.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 24px;">
+        <a href="../index.html#Welcome:Welcome" style="display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; background: #2563eb; color: white; text-decoration: none; font-weight: 600;">Open CPL Wiki UI</a>
+        <a href="plugins/Gk0Wk_CPL-Repo.json" style="display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; background: #0f766e; color: white; text-decoration: none; font-weight: 600;">Download CPL Client Plugin</a>
+        <a href="index.json" style="display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; background: #e2e8f0; color: #0f172a; text-decoration: none; font-weight: 600;">Open plugin index JSON</a>
+        <a href="plugins/" style="display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; background: #e2e8f0; color: #0f172a; text-decoration: none; font-weight: 600;">Browse exported plugin files</a>
+      </div>
+      <ul style="margin: 0; padding-left: 20px; color: #475569;">
+        <li>Use <code>plugins/Gk0Wk_CPL-Repo.json</code> to drag-and-drop install the CPL client into another wiki.</li>
+        <li>Keep mirror settings pointed at <code>/repo</code> for machine-readable plugin catalog access.</li>
+        <li>The invisible postMessage bridge below remains in place for legacy CPL client installs.</li>
+      </ul>
+    </main>
+  </body>
 </html>
