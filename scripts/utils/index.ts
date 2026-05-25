@@ -1,11 +1,13 @@
 import { tmpdir } from 'os';
 import { resolve } from 'path';
-import { execSync, ExecSyncOptionsWithStringEncoding } from 'child_process';
+import { execSync } from 'child_process';
+import type { ExecSyncOptionsWithStringEncoding } from 'child_process';
 import fs from 'fs-extra';
 import chalk from 'chalk';
-import { ITiddlyWiki, ITiddlerFields, TiddlyWiki } from 'tiddlywiki';
+import { TiddlyWiki } from 'tiddlywiki';
+import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
 
-export * from './tiddler';
+export * from './tiddler.ts';
 
 /**
  * 初始化 TiddlyWiki

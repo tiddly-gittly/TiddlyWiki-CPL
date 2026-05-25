@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-import { buildOnlineHTML } from './build/website';
+import { buildOnlineHTML } from './build/website.ts';
 
 const args = process.argv.slice(2);
 const outputArg = args.find(arg => arg.startsWith('--output='));
@@ -11,15 +11,8 @@ const distDir = outputArg ? outputArg.slice('--output='.length) : undefined;
 const htmlName = htmlNameArg ? htmlNameArg.slice('--html='.length) : undefined;
 const wikiPath = wikiArg ? wikiArg.slice('--wiki='.length) : undefined;
 
-void (async () => {
-  try {
-    await buildOnlineHTML(
-      wikiPath ?? 'wiki',
-      distDir ?? 'dist',
-      htmlName ?? 'index.html',
-    );
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
-})();
+await buildOnlineHTML(
+  wikiPath ?? 'wiki',
+  distDir ?? 'dist',
+  htmlName ?? 'index.html',
+);

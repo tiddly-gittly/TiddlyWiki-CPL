@@ -1,4 +1,5 @@
 const { DataStore } = require('../../src/CPLServer/lib/store/data.ts');
+const { CompatibilityStore } = require('../../src/CPLServer/lib/store/compatibility.ts');
 const { RateLimiter } = require('../../src/CPLServer/lib/security/rate-limit.ts');
 const fs = require('fs');
 const path = require('path');
@@ -7,6 +8,7 @@ const path = require('path');
 const TEST_DATA_DIR = path.resolve(__dirname, '../data-test');
 const TEST_STATS_FILE = path.join(TEST_DATA_DIR, 'stats.json');
 const TEST_RATINGS_FILE = path.join(TEST_DATA_DIR, 'ratings.json');
+const COMPATIBILITY_DIR = path.resolve(process.cwd(), 'data', 'compatibility');
 
 // Helper to clean up test data
 function cleanup() {
@@ -16,6 +18,17 @@ function cleanup() {
     if (fs.existsSync(TEST_DATA_DIR)) fs.rmdirSync(TEST_DATA_DIR);
   } catch (e) {
     // ignore
+  }
+}
+
+function cleanupCompatibilityTestFiles() {
+  if (!fs.existsSync(COMPATIBILITY_DIR)) {
+    return;
+  }
+  for (const fileName of fs.readdirSync(COMPATIBILITY_DIR)) {
+    if (fileName.includes('unit-compat')) {
+      fs.unlinkSync(path.join(COMPATIBILITY_DIR, fileName));
+    }
   }
 }
 
@@ -109,6 +122,82 @@ describe('DataStore', () => {
     // Cleanup
     fs.unlinkSync(path.join(DATA_DIR, 'stats.china.json'));
     fs.unlinkSync(path.join(DATA_DIR, 'stats.us.json'));
+  });
+});
+
+describe('CompatibilityStore', () => {
+  beforeEach(() => {
+    cleanupCompatibilityTestFiles();
+  });
+
+  afterEach(() => {
+    cleanupCompatibilityTestFiles();
+  });
+
+  test('should aggregate approved reports from multiple mirror files', () => {
+    const pluginTitle = '$:/plugins/unit-compat/subject';
+
+    if (!fs.existsSync(COMPATIBILITY_DIR)) {
+      fs.mkdirSync(COMPATIBILITY_DIR, { recursive: true });
+    }
+
+    const baseReport = {
+      pluginTitle,
+      reporterGithubId: '1',
+      reporterUsername: 'tester',
+      twVersionMin: '5.3.0',
+      twVersionMax: '5.4.0',
+      conflictingPlugins: [],
+      description: 'report',
+      status: 'approved',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z'
+    };
+
+    fs.writeFileSync(
+      path.join(COMPATIBILITY_DIR, '$__plugins_unit-compat_subject.china.json'),
+      JSON.stringify([{ ...baseReport, id: 'china-report' }], null, 2)
+    );
+    fs.writeFileSync(
+      path.join(COMPATIBILITY_DIR, '$__plugins_unit-compat_subject.us.json'),
+      JSON.stringify([{ ...baseReport, id: 'us-report', createdAt: '2024-01-02T00:00:00.000Z' }], null, 2)
+    );
+
+    const reports = CompatibilityStore.getReports(pluginTitle, 'approved');
+
+    expect(reports.map(report => report.id)).toEqual(['us-report', 'china-report']);
+  });
+
+  test('should find related reports where plugin appears as conflict target', () => {
+    const pluginTitle = '$:/plugins/unit-compat/subject';
+    const conflictTitle = '$:/plugins/unit-compat/conflict';
+
+    const report = {
+      id: 'related-report',
+      pluginTitle,
+      reporterGithubId: '1',
+      reporterUsername: 'tester',
+      conflictingPlugins: [{
+        pluginTitle: conflictTitle,
+        versionMin: '1.0.0',
+        severity: 'error',
+        type: 'conflict',
+        description: 'conflict edge'
+      }],
+      description: 'report',
+      status: 'approved',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z'
+    };
+
+    CompatibilityStore.addReport(pluginTitle, report);
+
+    const related = CompatibilityStore.getRelatedReports(conflictTitle, 'approved');
+
+    expect(related).toHaveLength(1);
+    expect(related[0].role).toBe('conflicting-plugin');
+    expect(related[0].report.id).toBe('related-report');
+    expect(related[0].conflictingPlugin.pluginTitle).toBe(conflictTitle);
   });
 });
 

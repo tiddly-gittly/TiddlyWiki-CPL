@@ -3,7 +3,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const http = require('http');
-const { ensureRuntimePluginsBuilt } = require('../../../scripts/runtime-plugins');
+require('ts-node/register/transpile-only');
+const { ensureRuntimePluginsBuilt } = require('../../../scripts/runtime-plugins.ts');
 
 const BLANK_WIKI_PORT = 8081;
 const BLANK_WIKI_HOST = '127.0.0.1';

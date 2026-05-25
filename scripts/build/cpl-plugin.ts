@@ -1,18 +1,81 @@
-import { readJSONSync } from 'fs-extra';
+import fs from 'fs-extra';
 import { resolve } from 'path';
+import { fileURLToPath } from 'url';
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
-import { mergePluginInfo } from './merge';
+import { mergePluginInfo } from './merge.ts';
+import { getTiddlerFromFile } from '../utils/tiddler.ts';
 
-const fallbackPluginVersion = (() => {
-  try {
-    const pluginInfo = readJSONSync(resolve(__dirname, '../../src/CPLPlugin/plugin.info')) as {
-      version?: string;
-    };
-    return pluginInfo.version?.trim();
-  } catch {
-    return undefined;
+interface SourcePluginInfo {
+  title?: string;
+  description?: string;
+  author?: string;
+  version?: string;
+  'core-version'?: string;
+  'plugin-type'?: string;
+  dependents?: string;
+  list?: string;
+}
+
+const pluginInfoPath = resolve(
+  fileURLToPath(new URL('../../src/CPLPlugin/plugin.info', import.meta.url)),
+);
+const repoVersionTiddlerPath = resolve(
+  fileURLToPath(new URL('../../src/CPLPlugin/config/repo-version.tid', import.meta.url)),
+);
+const readmeTiddlerPath = resolve(
+  fileURLToPath(new URL('../../src/CPLPlugin/docs/readme.tid', import.meta.url)),
+);
+
+const requireNonEmptyString = (value: unknown, label: string): string => {
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    throw new Error(`Missing required CPL plugin metadata: ${label}`);
   }
-})();
+
+  return value.trim();
+};
+
+const rawSourcePluginInfo = fs.readJSONSync(pluginInfoPath) as SourcePluginInfo;
+
+const sourcePluginInfo = {
+  title: requireNonEmptyString(rawSourcePluginInfo.title, `${pluginInfoPath}#title`),
+  description: requireNonEmptyString(rawSourcePluginInfo.description, `${pluginInfoPath}#description`),
+  author: requireNonEmptyString(rawSourcePluginInfo.author, `${pluginInfoPath}#author`),
+  version: requireNonEmptyString(rawSourcePluginInfo.version, `${pluginInfoPath}#version`),
+  coreVersion: requireNonEmptyString(rawSourcePluginInfo['core-version'], `${pluginInfoPath}#core-version`),
+  pluginType: requireNonEmptyString(rawSourcePluginInfo['plugin-type'], `${pluginInfoPath}#plugin-type`),
+  dependents: requireNonEmptyString(rawSourcePluginInfo.dependents, `${pluginInfoPath}#dependents`),
+  list: requireNonEmptyString(rawSourcePluginInfo.list, `${pluginInfoPath}#list`),
+};
+
+const getBuiltPluginVersion = ($tw: ITiddlyWiki): string => {
+  const repoVersionTiddler = getTiddlerFromFile(
+    $tw,
+    repoVersionTiddlerPath,
+    'CPL-Repo-Version',
+  );
+  const builtVersion = requireNonEmptyString(
+    repoVersionTiddler?.text,
+    repoVersionTiddlerPath,
+  );
+
+  if (builtVersion !== sourcePluginInfo.version) {
+    throw new Error(
+      `CPL-Repo-Version (${builtVersion}) does not match src/CPLPlugin/plugin.info version (${sourcePluginInfo.version})`,
+    );
+  }
+
+  return builtVersion;
+};
+
+const getBuiltPluginReadme = ($tw: ITiddlyWiki): string =>
+  requireNonEmptyString(
+    getTiddlerFromFile(
+      $tw,
+      readmeTiddlerPath,
+      '$:/plugins/Gk0Wk/CPL-Repo/docs/readme',
+    )?.text,
+    readmeTiddlerPath,
+  );
 
 export const buildCPLPlugin = (
   $tw: ITiddlyWiki,
@@ -20,10 +83,12 @@ export const buildCPLPlugin = (
   Record<string, string>,
   ReturnType<typeof mergePluginInfo>['newInfoTiddler'],
 ] => {
+  const pluginVersion = getBuiltPluginVersion($tw);
+  const pluginReadme = getBuiltPluginReadme($tw);
   const cplPluginTiddlers: Record<string, ITiddlerFields> = {};
   $tw.wiki
     .filterTiddlers(
-      '[tag[$:/tags/PluginLibrary/CPL]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/]] -$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+      '[tag[$:/tags/PluginLibrary/CPL]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/]] -$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup -$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
     )
     .map(title => ({
       ...$tw.wiki.getTiddler(title)!.fields,
@@ -37,18 +102,20 @@ export const buildCPLPlugin = (
     .forEach(tiddler => {
       cplPluginTiddlers[tiddler.title] = tiddler as any;
     });
+
+  if (Object.keys(cplPluginTiddlers).length === 0) {
+    throw new Error('No CPL plugin source tiddlers were loaded for buildCPLPlugin');
+  }
+
   const plugin = {
-    version:
-      $tw.wiki.getTiddlerText('CPL-Repo-Version')?.trim() ||
-      fallbackPluginVersion ||
-      '0.0.0',
+    version: pluginVersion,
     type: 'application/json',
-    title: '$:/plugins/Gk0Wk/CPL-Repo',
-    'plugin-type': 'plugin',
+    title: sourcePluginInfo.title,
+    'plugin-type': sourcePluginInfo.pluginType,
     name: 'CPL Repo',
-    description: 'Essential and powerful plugin manager and library',
-    author: 'Gk0Wk',
-    list: 'readme tree',
+    description: sourcePluginInfo.description,
+    author: sourcePluginInfo.author,
+    list: sourcePluginInfo.list,
     text: JSON.stringify({ tiddlers: cplPluginTiddlers }),
   };
   return [
@@ -60,14 +127,14 @@ export const buildCPLPlugin = (
       version: plugin.version,
       'plugin-type': plugin['plugin-type'],
       icon: '',
-      'core-version': '>=5.3.0',
-      dependents: '',
+      'core-version': sourcePluginInfo.coreVersion,
+      dependents: sourcePluginInfo.dependents,
       'parent-plugin': '',
       'requires-reload': true,
       category: 'Functional',
       tags: 'CPL [[Plugin Libaray]] Network Essential',
       description: plugin.description,
-      readme: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/docs/readme')!,
+      readme: pluginReadme,
     },
   ];
 };
