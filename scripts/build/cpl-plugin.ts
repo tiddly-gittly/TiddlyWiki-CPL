@@ -1,5 +1,18 @@
+import { readJSONSync } from 'fs-extra';
+import { resolve } from 'path';
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
 import { mergePluginInfo } from './merge';
+
+const fallbackPluginVersion = (() => {
+  try {
+    const pluginInfo = readJSONSync(resolve(__dirname, '../../src/CPLPlugin/plugin.info')) as {
+      version?: string;
+    };
+    return pluginInfo.version?.trim();
+  } catch {
+    return undefined;
+  }
+})();
 
 export const buildCPLPlugin = (
   $tw: ITiddlyWiki,
@@ -25,7 +38,10 @@ export const buildCPLPlugin = (
       cplPluginTiddlers[tiddler.title] = tiddler as any;
     });
   const plugin = {
-    version: $tw.wiki.getTiddlerText('CPL-Repo-Version')!.trim(),
+    version:
+      $tw.wiki.getTiddlerText('CPL-Repo-Version')?.trim() ||
+      fallbackPluginVersion ||
+      '0.0.0',
     type: 'application/json',
     title: '$:/plugins/Gk0Wk/CPL-Repo',
     'plugin-type': 'plugin',

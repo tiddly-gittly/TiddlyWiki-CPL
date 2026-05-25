@@ -97,10 +97,12 @@ pnpm test:unit && pnpm test:api && pnpm test:e2e
 
 ### Building
 
-Build the static website and plugin JSON files:
+Build the deployable site artifacts from the Modern.TiddlyDev wiki and plugin library:
 
 ```bash
 pnpm build
+pnpm run build:website
+pnpm run build:library
 ```
 
 ### Adding Offline Plugin Files
