@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import { tiddlywiki, waitForFile, shellI, getTmpDir } from '../utils';
+import { tiddlywiki, waitForFile, getTmpDir } from '../utils';
 import { buildCPLPlugin } from './cpl-plugin';
 
 /** 项目路径 */
@@ -87,7 +87,11 @@ export const buildOnlineHTML = async (
 
   // 拷贝公共资源
   console.log(chalk.bgCyan.black.bold('\nCopying public assets...'));
-  shellI(`cp -r ${publicDir}${path.sep} ${distDir}`);
+  for (const entry of fs.readdirSync(publicDir)) {
+    fs.copySync(path.resolve(publicDir, entry), path.resolve(distDir, entry), {
+      overwrite: true,
+    });
+  }
 
   // 缓存策略
   tiddlers.set(headerMetadataTiddler.title, headerMetadataTiddler);
