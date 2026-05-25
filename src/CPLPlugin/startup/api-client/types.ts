@@ -12,6 +12,10 @@ export interface AuthStatusResponse extends JsonObject {
   user?: unknown;
 }
 
+export interface AuthConfigResponse extends JsonObject {
+  githubClientId?: string;
+}
+
 export interface RatingResponse extends JsonObject {
   averageRating?: number;
   totalRatings?: number;
@@ -21,6 +25,22 @@ export interface OAuthResponse extends JsonObject {
   success?: boolean;
   token?: string;
   user?: unknown;
+}
+
+export interface CompatibilityReportResponse extends JsonObject {
+  success?: boolean;
+  pluginTitle?: string;
+  reports?: Array<{
+    id: string;
+    pluginTitle: string;
+    reporterUsername: string;
+    twVersionMin?: string;
+    twVersionMax?: string;
+    conflictingPlugins: Array<{ pluginTitle: string; description: string }>;
+    description: string;
+    status: string;
+    createdAt: string;
+  }>;
 }
 
 export interface CPLServerApi {
@@ -39,7 +59,19 @@ export interface CPLServerApi {
     content: string,
     callback: ApiCallback<JsonObject>,
   ) => void;
+  getCompatibilityReports: (pluginTitle: string, callback: ApiCallback<CompatibilityReportResponse>) => void;
+  submitCompatibilityReport: (
+    pluginTitle: string,
+    payload: {
+      twVersionMin?: string;
+      twVersionMax?: string;
+      conflictingPlugins: Array<{ pluginTitle: string; description: string }>;
+      description: string;
+    },
+    callback: ApiCallback<JsonObject>,
+  ) => void;
   checkAuthStatus: (callback: ApiCallback<AuthStatusResponse>) => void;
+  getAuthConfig: (callback: ApiCallback<AuthConfigResponse>) => void;
   logout: () => void;
 }
 

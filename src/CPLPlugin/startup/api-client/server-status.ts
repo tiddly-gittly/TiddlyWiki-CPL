@@ -89,6 +89,15 @@ export const refreshMirrorCapabilityState = (cplServerApi: CPLServerApi): void =
       return;
     }
 
+    cplServerApi.getAuthConfig((configError, configData) => {
+      if (!configError && configData?.githubClientId) {
+        tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/github-client-id',
+          text: String(configData.githubClientId),
+        });
+      }
+    });
+
     cplServerApi.checkAuthStatus((error, data) => {
       if (!error && data?.authenticated) {
         tw.wiki.addTiddler({

@@ -82,6 +82,41 @@ export interface PendingCommentRecord {
   comment: CommentRecord;
 }
 
+export type CompatibilityReportStatus = 'pending' | 'approved' | 'rejected';
+
+export type CompatibilitySeverity = 'info' | 'warning' | 'error';
+
+export type CompatibilityConflictType = 'conflict' | 'breaks' | 'requires' | 'replaces' | 'optional';
+
+export interface ConflictingPlugin {
+  pluginTitle: string;
+  description: string;
+  versionMin?: string;
+  versionMax?: string;
+  severity?: CompatibilitySeverity;
+  type?: CompatibilityConflictType;
+}
+
+export interface CompatibilityReport {
+  id: string;
+  pluginTitle: string;
+  reporterGithubId: string;
+  reporterUsername: string;
+  twVersionMin?: string;
+  twVersionMax?: string;
+  conflictingPlugins: ConflictingPlugin[];
+  description: string;
+  status: CompatibilityReportStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RelatedCompatibilityReport {
+  role: 'subject' | 'conflicting-plugin';
+  report: CompatibilityReport;
+  conflictingPlugin?: ConflictingPlugin;
+}
+
 export interface GitHubTokenResponse {
   access_token?: string;
   [key: string]: unknown;

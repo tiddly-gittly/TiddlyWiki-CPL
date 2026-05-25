@@ -119,6 +119,7 @@ export const createInstallController = (): InstallController => {
         type: 'application/json',
         text: JSON.stringify({
           title: titles.length > 1 ? undefined : titles[0],
+          isBatch: titles.length > 1,
           versions: versionsMap,
           sizes: sizesMap,
           tree: allTrees,

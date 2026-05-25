@@ -198,9 +198,9 @@ CPL supports deploying multiple mirror servers (e.g., China, US, Europe) that al
 
 3. Periodically run the reconciliation script to detect issues:
    ```bash
-   node scripts/reconcile-data.js              # Dry run (report only)
-   node scripts/reconcile-data.js --fix        # Apply fixes
-   node scripts/reconcile-data.js --clean-stale # Remove stale mirror files (30+ days old)
+   pnpm run reconcile-data                     # Dry run (report only)
+   pnpm run reconcile-data -- --fix           # Apply fixes
+   pnpm run reconcile-data -- --clean-stale   # Remove stale mirror files (30+ days old)
    ```
 
 **Git workflow:**
@@ -208,7 +208,7 @@ CPL supports deploying multiple mirror servers (e.g., China, US, Europe) that al
 ```bash
 # On each mirror, periodically:
 git pull origin main                    # Get data from other mirrors
-node scripts/reconcile-data.js          # Check for issues
+pnpm run reconcile-data                 # Check for issues
 git add data/
 git commit -m "Update stats from {serverId} mirror"
 git push origin main
@@ -216,14 +216,14 @@ git push origin main
 
 **Comment IDs:** Each comment gets a unique ID in the format `{serverId}-{timestamp}-{random}` to prevent collisions across mirrors.
 
-**Stale mirrors:** If a mirror goes offline permanently, run `node scripts/reconcile-data.js --clean-stale` to remove its files after 30 days of inactivity.
+**Stale mirrors:** If a mirror goes offline permanently, run `pnpm run reconcile-data -- --clean-stale` to remove its files after 30 days of inactivity.
 
 ### Scheduled Plugin Fetching
 
-To keep `wiki/files/plugin-fetched/` up to date with the latest plugin versions, schedule `scripts/fetch-plugins.js` to run periodically.
+To keep `wiki/files/plugin-fetched/` up to date with the latest plugin versions, schedule `pnpm run fetch-plugins` to run periodically.
 
 **Windows** — Use Windows Task Scheduler:
-1. Create a new task that runs `node scripts/fetch-plugins.js`
+1. Create a new task that runs `pnpm run fetch-plugins`
 2. Set the working directory to the repo root
 3. Schedule it to run daily or at your preferred interval
 
@@ -231,7 +231,7 @@ To keep `wiki/files/plugin-fetched/` up to date with the latest plugin versions,
 
 ```bash
 # Fetch plugins daily at 3 AM
-0 3 * * * cd /path/to/TiddlyWiki-CPL && node scripts/fetch-plugins.js
+0 3 * * * cd /path/to/TiddlyWiki-CPL && pnpm run fetch-plugins
 ```
 
-The script fetches the latest plugin JSON files and saves them to `wiki/files/plugin-fetched/`. Run it with `--dry-run` to preview what would be fetched without writing files.
+The script fetches the latest plugin JSON files and saves them to `wiki/files/plugin-fetched/`. Run `pnpm run fetch-plugins:dry-run -- --allow-ci --best-effort` to preview what would be fetched without writing files.

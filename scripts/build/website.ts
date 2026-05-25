@@ -3,8 +3,8 @@ import fs from 'fs-extra';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import { tiddlywiki, waitForFile, getTmpDir } from '../utils';
-import { buildCPLPlugin } from './cpl-plugin';
+import { tiddlywiki, waitForFile, getTmpDir } from '../utils/index.ts';
+import { buildCPLPlugin } from './cpl-plugin.ts';
 
 /** 项目路径 */
 const bypassTiddlers = new Set([
@@ -115,6 +115,7 @@ export const buildOnlineHTML = async (
     text: '1',
   } as any);
 
+
   // 构建
   console.log(
     chalk.bgCyan.black.bold('\nBuilding up TiddlyWiki online website...'),
@@ -146,8 +147,7 @@ export const buildOnlineHTML = async (
     await waitForFile(
       path.resolve(distDir, `tiddlywikicore-${$tw.version}.js`),
     );
-  } catch (e) {
-    console.error(e);
+  } finally {
+    fs.rmSync(tmpFolder, { recursive: true, force: true });
   }
-  fs.rmSync(tmpFolder, { recursive: true, force: true });
 };

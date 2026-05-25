@@ -61,8 +61,10 @@ jobs:
       - name: Build Library
         run: |
           pnpm run build
-          node scripts/fetch-plugins.js --allow-ci --best-effort
           pnpm run build:website
+          pnpm run fetch-plugins -- --allow-ci --best-effort
+          pnpm run build:website
+          pnpm run fetch-plugins -- --allow-ci --best-effort
           pnpm run build:library
 
     #   - name: Minify Front Page HTML (also check if it exists)
