@@ -3,7 +3,11 @@ import * as path from 'path';
 
 import { Config } from '../config';
 import { escapeRegExp, sanitizePluginFileName } from '../files';
-import type { CompatibilityReport, CompatibilityReportStatus } from '../types';
+import type {
+  CompatibilityReport,
+  CompatibilityReportStatus,
+  RelatedCompatibilityReport,
+} from '../types';
 
 const COMPATIBILITY_DIR = path.resolve(process.cwd(), 'data', 'compatibility');
 
@@ -169,5 +173,49 @@ export const CompatibilityStore = {
 
   getAllReports(): CompatibilityReport[] {
     return getAllReportsFromDisk();
+  },
+
+  getRelatedReports(
+    pluginTitle: string,
+    status?: CompatibilityReportStatus | null,
+  ): RelatedCompatibilityReport[] {
+    const related: RelatedCompatibilityReport[] = [];
+    const seen = new Set<string>();
+
+    for (const report of getAllReportsFromDisk()) {
+      if (status && report.status !== status) {
+        continue;
+      }
+
+      if (report.pluginTitle === pluginTitle) {
+        const key = `${report.id}:subject`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          related.push({ role: 'subject', report });
+        }
+      }
+
+      for (const conflict of report.conflictingPlugins ?? []) {
+        if (conflict.pluginTitle !== pluginTitle) {
+          continue;
+        }
+
+        const key = `${report.id}:conflicting-plugin:${conflict.pluginTitle}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          related.push({
+            role: 'conflicting-plugin',
+            report,
+            conflictingPlugin: conflict,
+          });
+        }
+      }
+    }
+
+    related.sort((left, right) => {
+      return new Date(right.report.createdAt).getTime() - new Date(left.report.createdAt).getTime();
+    });
+
+    return related;
   },
 };

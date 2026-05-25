@@ -3,8 +3,8 @@ import fs from 'fs-extra';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import { tiddlywiki, waitForFile, shellI, getTmpDir } from '../utils';
-import { buildCPLPlugin } from './cpl-plugin';
+import { tiddlywiki, waitForFile, getTmpDir } from '../utils/index.ts';
+import { buildCPLPlugin } from './cpl-plugin.ts';
 
 /** 项目路径 */
 const bypassTiddlers = new Set([
@@ -87,7 +87,11 @@ export const buildOnlineHTML = async (
 
   // 拷贝公共资源
   console.log(chalk.bgCyan.black.bold('\nCopying public assets...'));
-  shellI(`cp -r ${publicDir}${path.sep} ${distDir}`);
+  for (const entry of fs.readdirSync(publicDir)) {
+    fs.copySync(path.resolve(publicDir, entry), path.resolve(distDir, entry), {
+      overwrite: true,
+    });
+  }
 
   // 缓存策略
   tiddlers.set(headerMetadataTiddler.title, headerMetadataTiddler);
@@ -105,6 +109,11 @@ export const buildOnlineHTML = async (
       text: '-1',
     } as any,
   );
+  // 不要弹窗
+  tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup', {
+    title: '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
+    text: '1',
+  } as any);
 
 
   // 构建
@@ -138,8 +147,7 @@ export const buildOnlineHTML = async (
     await waitForFile(
       path.resolve(distDir, `tiddlywikicore-${$tw.version}.js`),
     );
-  } catch (e) {
-    console.error(e);
+  } finally {
+    fs.rmSync(tmpFolder, { recursive: true, force: true });
   }
-  fs.rmSync(tmpFolder, { recursive: true, force: true });
 };

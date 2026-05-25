@@ -116,7 +116,7 @@ TiddlyWiki-CPL/
 │   ├── api/                        # API测试
 │   └── e2e/                        # Playwright E2E测试
 └── scripts/
-    └── server.js                   # 服务器启动脚本
+  └── server.ts                   # 服务器启动脚本
 ```
 
 ---

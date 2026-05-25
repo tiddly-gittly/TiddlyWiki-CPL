@@ -3,7 +3,13 @@ import { Config } from '../../../lib/config';
 import { decodeRouteParam, sendError, sendInternalError, sendJson, parseJsonBody } from '../../../lib/http';
 import { getRuntimeState } from '../../../lib/runtime-state';
 import { CompatibilityStore } from '../../../lib/store/compatibility';
-import type { CompatibilityReport, RouteHandler } from '../../../lib/types';
+import type {
+  CompatibilityConflictType,
+  CompatibilityReport,
+  CompatibilitySeverity,
+  ConflictingPlugin,
+  RouteHandler,
+} from '../../../lib/types';
 
 interface CreateCompatibilityBody {
   twVersionMin?: unknown;
@@ -46,6 +52,26 @@ const isValidConflictingPlugin = (value: unknown): value is { pluginTitle: strin
   return typeof candidate.pluginTitle === 'string' && typeof candidate.description === 'string';
 };
 
+const isValidSeverity = (value: unknown): value is CompatibilitySeverity => {
+  return value === 'info' || value === 'warning' || value === 'error';
+};
+
+const isValidConflictType = (value: unknown): value is CompatibilityConflictType => {
+  return value === 'conflict'
+    || value === 'breaks'
+    || value === 'requires'
+    || value === 'replaces'
+    || value === 'optional';
+};
+
+const asOptionalString = (value: unknown): string | undefined => {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+  const trimmed = value.trim();
+  return trimmed ? trimmed : undefined;
+};
+
 export const method = 'POST';
 export const path = /^\/cpl\/api\/compatibility\/(.+)$/;
 export const bodyFormat = 'string';
@@ -81,7 +107,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const conflictingPlugins: Array<{ pluginTitle: string; description: string }> = [];
+    const conflictingPlugins: ConflictingPlugin[] = [];
     if (Array.isArray(body.conflictingPlugins)) {
       for (const item of body.conflictingPlugins) {
         if (!isValidConflictingPlugin(item)) {
@@ -90,9 +116,14 @@ export const handler: RouteHandler = (request, _response, context) => {
 
         const conflictPluginTitle = item.pluginTitle.trim();
         if (conflictPluginTitle) {
+          const candidate = item as Record<string, unknown>;
           conflictingPlugins.push({
             pluginTitle: conflictPluginTitle,
             description: item.description.trim().slice(0, 1000),
+            versionMin: asOptionalString(candidate.versionMin),
+            versionMax: asOptionalString(candidate.versionMax),
+            severity: isValidSeverity(candidate.severity) ? candidate.severity : 'error',
+            type: isValidConflictType(candidate.type) ? candidate.type : 'conflict',
           });
         }
       }
@@ -105,8 +136,8 @@ export const handler: RouteHandler = (request, _response, context) => {
       pluginTitle,
       reporterGithubId: user.githubId,
       reporterUsername: user.username,
-      twVersionMin: typeof body.twVersionMin === 'string' ? body.twVersionMin : undefined,
-      twVersionMax: typeof body.twVersionMax === 'string' ? body.twVersionMax : undefined,
+      twVersionMin: asOptionalString(body.twVersionMin),
+      twVersionMax: asOptionalString(body.twVersionMax),
       conflictingPlugins,
       description,
       status: 'pending',

@@ -60,7 +60,7 @@ jobs:
       - name: Build Library
         run: |
           pnpm run build
-          node scripts/fetch-plugins.js --allow-ci --best-effort
+          pnpm run fetch-plugins -- --allow-ci --best-effort
           pnpm run build:library
 
       - name: Ensure root site entry exists
