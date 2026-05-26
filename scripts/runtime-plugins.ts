@@ -1,7 +1,6 @@
 import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 
 interface RuntimePluginFiles {
   repoPluginPath: string;
@@ -27,8 +26,7 @@ interface PackedPluginText {
 
 type RuntimePluginName = 'repo' | 'server';
 
-const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = path.resolve(SCRIPT_DIR, '..');
+const REPO_ROOT = path.resolve(process.cwd());
 const PLUGIN_DEV_ENTRY = path.join(
   REPO_ROOT,
   'node_modules',
