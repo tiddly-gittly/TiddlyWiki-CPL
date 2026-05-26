@@ -1,0 +1,54 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/layout/action-bar
+created: 20260520000000000
+modified: 20260520000000000
+tags: 
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+<$let autoSyncEnabled={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup]get[text]else[yes]] }}}>
+<div class="cpl-action-bar">
+<$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
+<$action-sendmessage $message="cpl-get-plugins-index" />
+{{$:/core/images/download-button}}
+&#32;
+<$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />
+</$button>
+
+<$button disabled={{{ [{$:/temp/CPL-Repo/updaing]match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
+<$action-sendmessage $message="cpl-update-check" />
+{{$:/core/images/refresh-button}}
+&#32;
+<$text text={{{ [[$:/temp/CPL-Repo/update-plugins]is[tiddler]] :then[<chinese>match[yes]then[重新获取更新]else[Refetch Updates]] :else[<chinese>match[yes]then[获取更新]else[Fetch Updates]] }}} />
+</$button>
+
+<$button disabled={{{ [{$:/temp/CPL-Repo/update-plugins]is[tiddler]] [{$:/temp/CPL-Repo/updaing}match[yes]] [{$:/temp/CPL-Repo/installing-plugin}is[tiddler]] +[count[]compare:integer:gt[1]then[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
+<$action-sendmessage $message="cpl-install-plugin-request" titles={{{ [{$:/temp/CPL-Repo/update-plugins}jsonget[]format:titlelist[]join[ ]] }}} auto-confirm="yes" version="latest"/>
+{{$:/core/images/download-button}}
+&#32;
+<$text text={{{ [<chinese>match[yes]then[更新所有插件]else[Update All]] }}} />
+</$button>
+
+<$list filter="[[$:/layout]is[tiddler]!field:text[]]" variable="inCustomLayout">
+<$button class="tc-btn-big-green tc-primary-btn cpl-action-button">
+{{$:/core/images/default-layout}}
+&#32;
+<$text text={{{ [<chinese>match[yes]then[返回标准布局]else[Back to Standard Layout]] }}} />
+<$action-setfield $tiddler="$:/layout" text="" />
+</$button>
+</$list>
+
+<label class="cpl-action-toggle">
+<$checkbox tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup" field="text" checked="yes" unchecked="no" default="yes">
+<span class="cpl-action-toggle-label"><$text text={{{ [<chinese>match[yes]then[自动刷新并自动加载更新]else[Auto refresh and auto load updates]] }}} /></span>
+</$checkbox>
+</label>
+
+<$list filter="[<autoSyncEnabled>match[yes]]" variable="autoEnabled">
+<span class="cpl-action-pill"><$text text={{{ [<chinese>match[yes]then[默认已启用]else[Enabled by default]] }}} /></span>
+</$list>
+<$list filter="[<autoSyncEnabled>match[no]]" variable="autoDisabled">
+<span class="cpl-action-pill cpl-action-pill-muted"><$text text={{{ [<chinese>match[yes]then[当前已关闭]else[Currently off]] }}} /></span>
+</$list>
+</div>
+</$let>
+</$list>

@@ -1,0 +1,3 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/config/update-filter
+
+[has[plugin-type]] -[prefix[$:/temp/]] -[[$:/core]]

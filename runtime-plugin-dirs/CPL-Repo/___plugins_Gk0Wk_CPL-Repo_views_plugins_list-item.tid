@@ -1,0 +1,139 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/list-item
+code-body: yes
+created: 20231009081025598
+modified: 20231013171005230
+tags: 
+type: text/vnd.tiddlywiki
+
+\define tag-plain(text:"",icon:"",color:"",bg:"")
+\whitespace trim
+<span class="tc-tag-label" style="background-color:$bg$;color:$color$;fill:$color$;user-select:none;margin-right:6px;">
+	{{$icon$}}$text$
+</span>
+\end
+
+<!-- 安装插件的按钮 -->
+\define install-plugin-button(plugin,libraryVersion,installedVersion)
+\whitespace trim
+<div>
+    <$let libraryVersion=<<__libraryVersion__>> installedVersion=<<__installedVersion__>> plugin=<<__plugin__>>>
+    <$set name="reinstall-type" value={{{ [<libraryVersion>compare:version:eq<installedVersion>then[tc-reinstall]] [<libraryVersion>compare:version:gt<installedVersion>then[tc-reinstall-upgrade]] [<libraryVersion>compare:version:lt<installedVersion>then[tc-reinstall-downgrade]] }}}>
+    <$button class={{{ [<installedVersion>!is[blank]then<reinstall-type>] tc-btn-invisible tc-install-plugin +[join[ ]] }}} disabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]else[]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]else[]] +[unique[]match[yes]limit[1]else[no]] }}}>
+    <$action-sendmessage $message="cpl-install-plugin-request" title=<<plugin>> version=<<libraryVersion>>/>
+    <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]field:plugin-title<plugin>]">{{$:/core/images/timestamp-on}}</$list>
+    <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]!field:plugin-title<plugin>]">
+        {{$:/core/images/download-button}}
+        &#32;
+        <!-- 根据版本判断安装/升级/降级/重装 -->
+        <$list filter="[<installedVersion>is[blank]]">{{$:/language/ControlPanel/Plugins/Install/Caption}}</$list>
+        <$list filter="[<installedVersion>!is[blank]]">
+            <$list filter="[<libraryVersion>compare:version:gt<installedVersion>]">{{$:/language/ControlPanel/Plugins/Update/Caption}}</$list>
+            <$list filter="[<libraryVersion>compare:version:lt<installedVersion>]">{{$:/language/ControlPanel/Plugins/Downgrade/Caption}}</$list>
+            <$list filter="[<libraryVersion>compare:version:eq<installedVersion>]">{{$:/language/ControlPanel/Plugins/Reinstall/Caption}}</$list>
+        </$list>
+    </$list>
+    </$button>
+    </$set>
+    </$let>
+</div>
+\end
+
+\define plugin-name-link(pluginTitle,name)
+\whitespace trim
+<$button class="tc-btn-invisible" style="padding: 0; margin: 0; font-weight: 600; font-size: 1.05em; color: inherit; text-align: left;">
+<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<__pluginTitle__>>/>
+<$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
+<$text text=<<__name__>>/>
+</$button>
+\end
+
+\define plugin-list-item(json,field,show-suggestion:"yes",class:"")
+\whitespace trim
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+<div class="$class$" style="margin-bottom: 8px;">
+<$let json=<<__json__>>>
+<$let
+    title={{{ [<json>jsonget[title]] }}}
+    tags={{{ [<json>jsonget[tags]] }}}
+    icon={{{ [<json>jsonget[icon]trim[]] }}}
+    type={{{ [<json>jsonget[type]else[plugin]] }}}
+    name={{{ [<json>jsonget[name]] ~[<json>jsonget[title]split[/]last[1]] }}}
+    description={{{ [<json>jsonget[description]] }}}
+    version={{{ [<json>jsonget[version]] }}}
+    author={{{ [<json>jsonget[author]] }}}
+    category={{{ [<json>jsonget[category]!is[blank]else[Unknown]] }}}
+    installedVersion={{{ [<json>jsonget[title]get[version]] }}}
+>
+
+<!-- Card Container -->
+<div class="cpl-plugin-card" style="background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; transition: box-shadow 0.2s;"
+     onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'"
+     onmouseout="this.style.boxShadow='none'">
+
+<!-- Plugin Icon (clickable) -->
+<div style="flex-shrink: 0;">
+<$button class="tc-btn-invisible" style="padding: 0; margin: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 6px; overflow: hidden;">
+<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<title>>/>
+<$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
+<$list filter="[<icon>!is[blank]]">
+<img src=<<icon>> style="max-width: 100%; max-height: 100%; object-fit: contain;"/>
+</$list>
+<$list filter="[<icon>is[blank]]">
+<$transclude tiddler={{{ [[$:/core/images/plugin-generic-]addsuffix<type>] }}} style="width: 32px; height: 32px;"/>
+</$list>
+</$button>
+</div>
+
+<!-- Plugin Info -->
+<div style="flex: 1; min-width: 0;">
+<!-- Name -->
+<div style="margin-bottom: 2px;">
+<<plugin-name-link pluginTitle=<<title>> name=<<name>> >>
+</div>
+<!-- Description -->
+<div style="font-size: 0.85em; color: #666; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+<$text text=<<description>>/>
+</div>
+<!-- Meta info -->
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+<span style="font-size: 0.8em; color: #888;">v<$text text=<<version>>/></span>
+<$list filter="[<author>!is[blank]]">
+<span style="font-size: 0.8em; color: #888;">by <$text text=<<author>>/></span>
+</$list>
+<$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg="#3f51b5" color="#fff" />
+<$list filter="[<installedVersion>!is[blank]]" variable="t">
+<span style="font-size: 0.8em; color: #28a745;"><em>{{$:/language/ControlPanel/Plugins/AlreadyInstalled/Hint}}</em></span>
+</$list>
+</div>
+</div>
+
+<!-- Install Button -->
+<div style="flex-shrink: 0; padding-top: 2px;">
+<$macrocall $name="install-plugin-button" plugin=<<title>> libraryVersion=<<version>> installedVersion=<<installedVersion>> />
+</div>
+</div>
+
+<!-- Installation Status -->
+<$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]is[tiddler]field:plugin-title<title>]">
+<$list filter="[{$:/temp/CPL-Repo/instal-plugin-requesting}match[yes]]">
+<div style="margin-top: 4px; font-size: 0.85em; color: #28a745;"><$text text={{{ [<chinese>match[yes]then[安装准备中...]else[Preparing installation...]] }}}/></div>
+</$list>
+<$list filter="[{$:/temp/CPL-Repo/instal-plugin-requesting}!match[yes]]">
+<div style="margin-top: 4px; font-size: 0.85em; color: #dc3545;"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/instal-plugin-requesting}] }}}/></div>
+</$list>
+</$list>
+<$list filter="[[$:/temp/CPL-Repo/installing-plugin]is[tiddler]field:plugin-title<title>]">
+<$list filter="[{$:/temp/CPL-Repo/installing-plugin}match[yes]]">
+<div style="margin-top: 4px; font-size: 0.85em; color: #28a745;"><$text text={{{ [<chinese>match[yes]then[安装中...]else[Installing...]] }}}/></div>
+</$list>
+<$list filter="[{$:/temp/CPL-Repo/installing-plugin}!match[yes]]">
+<div style="margin-top: 4px; font-size: 0.85em; color: #dc3545;"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/installing-plugin}] }}}/></div>
+</$list>
+</$list>
+
+</$let>
+</$let>
+</div>
+</$list>
+\end

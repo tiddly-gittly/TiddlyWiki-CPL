@@ -1,0 +1,11 @@
+{
+  "author": "Gk0Wk",
+  "core-version": ">=5.3.0",
+  "dependents": "",
+  "description": "CPL Server API - Download stats and ratings",
+  "list": "readme tree",
+  "plugin-type": "plugin",
+  "title": "$:/plugins/Gk0Wk/CPL-Server",
+  "version": "1.0.0",
+  "Modern.TiddlyDev#SHA256-Hashed": "9b094578dae0b5f33d7e35663d6673b7feb1fda1946eed13a734b6486a963c06"
+}

@@ -1,0 +1,8 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/filters/cpl/plugin-view-template
+created: 20231006080707364
+list-before: $:/config/ViewTemplateBodyFilters/hide-body
+modified: 20231008153857419
+tags: TW5CPL $:/tags/ViewTemplateBodyFilter
+type: text/vnd.tiddlywiki
+
+[tag[$:/tags/PluginWiki]!title[$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail]then[$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-view]]
