@@ -5,4 +5,4 @@ tags: TW5CPL $:/tags/ViewTemplateBodyFilter
 title: $:/plugins/Gk0Wk/CPL-Repo/filters/cpl/plugin-view-template
 type: text/vnd.tiddlywiki
 
-[tag[$:/tags/PluginWiki]then[$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-view]]
+[tag[$:/tags/PluginWiki]!title[$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail]then[$:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-view]]

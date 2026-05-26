@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
 import { mergePluginInfo } from './merge.ts';
 import { getTiddlerFromFile } from '../utils/tiddler.ts';
+import { getRuntimePluginTiddlers } from '../runtime-plugins.ts';
 
 interface SourcePluginInfo {
   title?: string;
@@ -85,13 +86,15 @@ export const buildCPLPlugin = (
 ] => {
   const pluginVersion = getBuiltPluginVersion($tw);
   const pluginReadme = getBuiltPluginReadme($tw);
+  const sourceRuntimeTiddlers = getRuntimePluginTiddlers('repo');
   const cplPluginTiddlers: Record<string, ITiddlerFields> = {};
-  $tw.wiki
-    .filterTiddlers(
-      '[tag[$:/tags/PluginLibrary/CPL]] [prefix[$:/plugins/Gk0Wk/CPL-Repo/]] -$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup -$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
-    )
-    .map(title => ({
-      ...$tw.wiki.getTiddler(title)!.fields,
+  Object.values(sourceRuntimeTiddlers)
+    .filter(({ title }) => ![
+      '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
+      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+    ].includes(title))
+    .map(tiddler => ({
+      ...tiddler,
       created: undefined,
       creator: undefined,
       modified: undefined,

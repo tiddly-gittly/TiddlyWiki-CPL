@@ -1,6 +1,7 @@
 import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
 interface RuntimePluginFiles {
   repoPluginPath: string;
@@ -24,7 +25,10 @@ interface PackedPluginText {
   tiddlers: Record<string, PackedTiddler>;
 }
 
-const REPO_ROOT = path.resolve(__dirname, '..');
+type RuntimePluginName = 'repo' | 'server';
+
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = path.resolve(SCRIPT_DIR, '..');
 const PLUGIN_DEV_ENTRY = path.join(
   REPO_ROOT,
   'node_modules',
@@ -137,4 +141,14 @@ function ensureRuntimePluginsBuilt(): RuntimePluginFiles {
   return runtimePluginFiles;
 }
 
-export { ensureRuntimePluginsBuilt, runtimePluginFiles };
+function getRuntimePluginTiddlers(pluginName: RuntimePluginName): Record<string, PackedTiddler> {
+  ensureRuntimePluginsBuilt();
+
+  const pluginPath = pluginName === 'repo' ? REPO_PLUGIN_PATH : SERVER_PLUGIN_PATH;
+  const json = JSON.parse(fs.readFileSync(pluginPath, 'utf8')) as PackedPluginJson;
+  const parsedText = JSON.parse(json.text) as PackedPluginText;
+
+  return parsedText.tiddlers ?? {};
+}
+
+export { ensureRuntimePluginsBuilt, getRuntimePluginTiddlers, runtimePluginFiles };

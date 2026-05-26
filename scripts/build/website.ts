@@ -5,6 +5,7 @@ import type { ITiddlerFields } from 'tiddlywiki';
 
 import { tiddlywiki, waitForFile, getTmpDir } from '../utils/index.ts';
 import { buildCPLPlugin } from './cpl-plugin.ts';
+import { getRuntimePluginTiddlers } from '../runtime-plugins.ts';
 
 /** 项目路径 */
 const bypassTiddlers = new Set([
@@ -51,6 +52,7 @@ export const buildOnlineHTML = async (
   console.log(chalk.bgCyan.black.bold('\nExporting media tiddlers...'));
   const $tw = tiddlywiki([], wikiFolder);
   const tiddlers: Map<string, ITiddlerFields> = new Map();
+  const sourceRepoPluginTiddlers = getRuntimePluginTiddlers('repo');
   const assetsPath = path.resolve(distDir, 'assets');
   fs.ensureFileSync(path.resolve(assetsPath, '1'));
   $tw.wiki.each(({ fields }, title: string) => {
@@ -84,6 +86,16 @@ export const buildOnlineHTML = async (
       tiddlers.set(title, { ...fields });
     }
   });
+
+  // Overlay the current src/CPLPlugin runtime tiddlers so the website uses the
+  // same UI/templates as the built plugin instead of legacy wiki-side copies.
+  Object.values(sourceRepoPluginTiddlers).forEach(tiddler => {
+    tiddlers.set(tiddler.title, { ...tiddler } as ITiddlerFields);
+  });
+
+  // Remove legacy wiki-side title cascade that overrides the newer detail page.
+  tiddlers.delete('Plugin Info Title Cascade');
+  tiddlers.delete('Plugin Info Title');
 
   // 拷贝公共资源
   console.log(chalk.bgCyan.black.bold('\nCopying public assets...'));
