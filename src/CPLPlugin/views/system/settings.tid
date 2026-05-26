@@ -47,12 +47,12 @@ type: text/vnd.tiddlywiki
 <<<
 
 <$checkbox
-  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup"
+  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout"
   field="text"
   checked="yes"
   unchecked="no"
   default="yes">
-  启动时自动刷新数据库并自动安装可更新插件
+  进入 CPL 布局时自动加载数据库
 </$checkbox>
 
 ; 插件更新筛选器 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/update-filter" tag="input" default="" />
@@ -102,12 +102,12 @@ After closing it can be checked manually in [CPL] of [[$:/ControlPanel]].
 <<<
 
 <$checkbox
-  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup"
+  tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout"
   field="text"
   checked="yes"
   unchecked="no"
   default="yes">
-  Automatically refresh the database and install available updates on startup
+  Automatically load the database when entering the CPL layout
 </$checkbox>
 
 ; Plugin Update Filter <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/update-filter" tag="input" default="" />

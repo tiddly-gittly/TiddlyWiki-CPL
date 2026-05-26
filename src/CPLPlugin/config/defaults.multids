@@ -7,4 +7,5 @@ server-repos: https://cpl.tidgi.fun/repo
 servers: https://cpl.tidgi.fun
 current-repo: https://tw-cpl.netlify.app/repo
 current-server: https://cpl.tidgi.fun
-auto-refresh-at-startup: yes
+auto-refresh-at-startup: no
+auto-load-database-in-cpl-layout: yes
