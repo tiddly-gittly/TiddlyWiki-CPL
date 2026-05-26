@@ -24,10 +24,6 @@ export const startup = (): void => {
   let indexController: ReturnType<typeof createIndexController> | undefined;
 
   const triggerMirrorRefresh = (): void => {
-    tw.wiki.addTiddler({
-      title: '$:/temp/CPL-Repo/plugins-index-refresh-requested',
-      text: 'yes',
-    });
     tw.rootWidget.dispatchEvent({
       type: 'cpl-get-plugins-index',
       paramObject: {},
@@ -35,13 +31,11 @@ export const startup = (): void => {
     });
   };
 
-  const shouldAutoRefreshOnStartup = (): boolean =>
+  const shouldAutoLoadDatabaseInCplLayout = (): boolean =>
     tw.wiki.getTiddlerText(
-      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup',
+      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout',
       'yes',
     ) !== 'no';
-
-  let initialAutoSyncPending = shouldAutoRefreshOnStartup();
 
   const mirrorController = createMirrorController({
     isBusy: () =>
@@ -55,10 +49,6 @@ export const startup = (): void => {
   indexController = createIndexController({
     onIndexLoaded: () => {
       mirrorController.completePendingSwitch();
-      if (initialAutoSyncPending) {
-        initialAutoSyncPending = false;
-        void updateController.update({ notify: false, autoInstall: true });
-      }
     },
     onIndexLoadFailed: mirrorController.failPendingSwitch,
   });
@@ -80,15 +70,11 @@ export const startup = (): void => {
       updateController.rescheduleAutoUpdate();
     }
 
-    if (tw.utils.hop(changes, '$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup')) {
-      initialAutoSyncPending = shouldAutoRefreshOnStartup();
-    }
-
-    // Auto-load database when switching to CPL layout
     if (tw.utils.hop(changes, '$:/layout')) {
       const currentLayout = tw.wiki.getTiddlerText('$:/layout', '');
       if (
         currentLayout === '$:/plugins/Gk0Wk/CPL-Repo/layout/layout'
+        && shouldAutoLoadDatabaseInCplLayout()
         && !tw.wiki.tiddlerExists('$:/temp/CPL-Repo/plugins-index')
         && indexController
         && !indexController.isBusy()
@@ -122,14 +108,6 @@ export const startup = (): void => {
   });
 
   updateController.initializeAutoUpdate();
-
-  if (initialAutoSyncPending) {
-    setTimeout(() => {
-      if (shouldAutoRefreshOnStartup()) {
-        triggerMirrorRefresh();
-      }
-    }, 1500);
-  }
 
   tw.rootWidget.addEventListener('cpl-update-check', (_event: RootWidgetEvent): undefined => {
     void updateController.update();
