@@ -18,7 +18,6 @@ This plugin provides the server-side API used by the TiddlyWiki CPL website and 
 
 # Clone this repository.
 # Run `pnpm install` in the repo root.
-# Run `pnpm run validate-setup` once after cloning or after major upgrades.
 # Create a `.env` file with the required secrets and admin settings.
 # Start the server with either `pnpm server:test` or `pnpm server:prod`.
 
@@ -61,7 +60,6 @@ Optional but useful:
 
 * `pnpm server:test` starts the writable local runtime server.
 * `pnpm server:prod` starts the read-only server for production-style hosting.
-* `pnpm run validate-setup` verifies that the repo layout and scripts are ready.
 * `pnpm run fetch-plugins` refreshes generated files in `wiki/files/plugin-fetched/`.
 * `pnpm run fetch-plugins:dry-run -- --allow-ci --best-effort` previews plugin refreshes without writing files.
 * `pnpm run reconcile-data` reports stale or conflicting multi-server data files.

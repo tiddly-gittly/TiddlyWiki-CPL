@@ -19,7 +19,6 @@
     "fetch-plugins": "ts-node --transpile-only scripts/fetch-plugins.ts",
     "fetch-plugins:dry-run": "ts-node --transpile-only scripts/fetch-plugins.ts --dry-run",
     "reconcile-data": "ts-node --transpile-only scripts/reconcile-data.ts",
-    "validate-setup": "ts-node --transpile-only scripts/validate-setup.ts",
     "test": "jest",
     "test:unit": "jest tests/unit",
     "test:api": "jest tests/api",

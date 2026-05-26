@@ -1,9 +1,0 @@
-{
-  "$schema": "https://raw.githubusercontent.com/tiddly-gittly/TidGi-Desktop/master/src/services/workspaces/tidgi.config.schema.json",
-  "version": 1,
-  "name": "TiddlyWiki-CPL",
-  "gitUrl": "https://github.com/tiddly-gittly/TiddlyWiki-CPL",
-  "storageService": "github",
-  "id": "8KLy-UQi6sno8YD322suT",
-  "hibernateWhenUnused": true
-}
