@@ -5,7 +5,7 @@ tags:
 type: text/vnd.tiddlywiki
 
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
-<$let autoSyncEnabled={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup]get[text]else[yes]] }}}>
+<$let autoSyncEnabled={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout]get[text]else[yes]] }}}>
 <div class="cpl-action-bar">
 <$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
 <$action-sendmessage $message="cpl-get-plugins-index" />
@@ -38,8 +38,8 @@ type: text/vnd.tiddlywiki
 </$list>
 
 <label class="cpl-action-toggle">
-<$checkbox tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-refresh-at-startup" field="text" checked="yes" unchecked="no" default="yes">
-<span class="cpl-action-toggle-label"><$text text={{{ [<chinese>match[yes]then[自动刷新并自动加载更新]else[Auto refresh and auto load updates]] }}} /></span>
+<$checkbox tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout" field="text" checked="yes" unchecked="no" default="yes">
+<span class="cpl-action-toggle-label"><$text text={{{ [<chinese>match[yes]then[进入 CPL 布局时自动加载数据库]else[Auto load the database when entering the CPL layout]] }}} /></span>
 </$checkbox>
 </label>
 
