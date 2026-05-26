@@ -1,17 +1,126 @@
 title: $:/plugins/Gk0Wk/CPL-Server/readme
 type: text/vnd.tiddlywiki
 
-! CPL Server Plugin
+! CPL Server
 
-This plugin provides the server-side API used by the TiddlyWiki CPL (Community Plugin Library).
+This plugin provides the server-side API used by the TiddlyWiki CPL website and client plugin.
 
 !! Features
 
-* Download statistics with IP-based throttling
-* Rating submission with one-vote-per-IP enforcement
-* Changelog lookup for plugin tiddlers
-* Comment submission and moderation APIs
+* Download statistics with throttling
+* Rating submission and aggregation
+* Changelog lookup for plugin payloads
+* Comment listing, submission, and moderation
+* Compatibility report submission and review
 * GitHub OAuth based authentication for moderation flows
+
+!! Deploying The Server
+
+# Clone this repository.
+# Run `pnpm install` in the repo root.
+# Run `pnpm run validate-setup` once after cloning or after major upgrades.
+# Create a `.env` file with the required secrets and admin settings.
+# Start the server with either `pnpm server:test` or `pnpm server:prod`.
+
+`pnpm server:test` starts the writable runtime server and is the best local smoke test for the production boot path.
+
+`pnpm server:prod` starts the same runtime in read-only mode and is the safer default for a public deployment.
+
+For development, `pnpm dev` is also a valid way to work on the project because `tiddlywiki-plugin-dev` loads plugins from `src/` automatically. It is useful for interactive development, but it is still a different startup path from the production-like server launcher.
+
+You do ''not'' need to run `pnpm build` before starting the Node.js server. `scripts/server.ts` compiles the runtime plugin payloads automatically and writes them to `cache/runtime-plugins/` before TiddlyWiki starts.
+
+If you want to inspect or edit the wiki content locally, you can open the cloned repository directly in TidGi Desktop because the repo already contains `tidgi.config.json`.
+
+That is useful for editing and reviewing content, but it is ''not'' the same thing as starting the CPL server runtime.
+
+Opening only the `wiki/` folder in TidGi Desktop does not automatically compile `src/CPLServer` and `src/CPLPlugin` into runtime plugins, and it does not recreate the boot arguments injected by `scripts/server.ts`.
+
+Opening the repository root in TidGi Desktop is closer, because the root `tiddlywiki.info` references the CPL plugins. However, that still depends on generated plugin tiddlers already existing locally. It is not the reliable clean-clone bootstrap path for the server API.
+
+If you need the `/cpl/api/*` routes to work correctly, use `pnpm server:test`, `pnpm server:prod`, or an equivalent custom launcher that performs the same runtime-plugin build and boot-plugin injection.
+
+!! Environment Variables
+
+Required for a real deployment:
+
+* `CPL_JWT_SECRET`
+* `CPL_GITHUB_CLIENT_ID`
+* `CPL_GITHUB_CLIENT_SECRET`
+* `CPL_ADMIN_GITHUB_IDS`
+
+Optional but useful:
+
+* `CPL_SERVER_ID` for multi-server mirror deployments
+* `CPL_JWT_EXPIRY_DAYS`
+* `CPL_COMMENT_RATE_LIMIT`
+* `HOST`
+* `PORT`
+
+!! Operational Scripts
+
+* `pnpm server:test` starts the writable local runtime server.
+* `pnpm server:prod` starts the read-only server for production-style hosting.
+* `pnpm run validate-setup` verifies that the repo layout and scripts are ready.
+* `pnpm run fetch-plugins` refreshes generated files in `wiki/files/plugin-fetched/`.
+* `pnpm run fetch-plugins:dry-run -- --allow-ci --best-effort` previews plugin refreshes without writing files.
+* `pnpm run reconcile-data` reports stale or conflicting multi-server data files.
+* `pnpm run reconcile-data -- --fix` applies reconciliation fixes.
+* `pnpm run reconcile-data -- --clean-stale` removes stale mirror files after the configured grace period.
+
+The static website and library builders are separate concerns:
+
+* `pnpm build`
+* `pnpm run build:website`
+* `pnpm run build:library`
+
+Run those in CI or release jobs when you publish the website or library artifacts. They are not required just to run the server.
+
+!! Suggested Scheduled Tasks
+
+For a public mirror that serves fresh plugin payloads:
+
+* Schedule `pnpm run fetch-plugins` at a regular interval such as hourly or daily.
+
+For multi-server data replication:
+
+* Schedule `pnpm run reconcile-data` as a dry run.
+* Run `pnpm run reconcile-data -- --fix` only in a controlled job or after reviewing the report.
+
+For operations hygiene:
+
+* Back up `data/` on a schedule.
+* Back up `.env` securely outside git.
+
+!! Runtime Data To Keep
+
+`data/` is the authoritative runtime state. Keep it and back it up.
+
+Examples:
+
+* `data/stats*.json`
+* `data/ratings*.json`
+* `data/comments/*.json`
+* `data/compatibility/*.json`
+
+If you intentionally use git to synchronize multiple writable mirrors, commit `data/` deliberately as part of that workflow. Do not treat it like throwaway cache data.
+
+!! Generated Files To Ignore
+
+These files are generated, reproducible, or disposable. Do not treat them as canonical backups, and do not commit them unless you have a very specific release reason:
+
+* `.env` and `.env.test` must never be committed
+* `cache/`
+* `dist/`
+* `tmp/`
+* `playwright-report/`
+* `test-results/`
+* `wiki/files/plugin-fetched/`
+* `wiki/tiddlers/$__plugins_*`
+* `wiki/tiddlers/website/`
+* logs such as `*.log`
+
+In short: back up `data/` and your secret configuration, but do not back up build caches, generated runtime plugins, test artifacts, or fetched plugin mirrors as if they were primary source data.
 
 !! API Endpoints
 
@@ -25,19 +134,11 @@ This plugin provides the server-side API used by the TiddlyWiki CPL (Community P
 * POST /cpl/api/comments/:pluginTitle
 * GET /cpl/api/comments/pending
 * PUT /cpl/api/comments/:pluginTitle/:commentId
+* GET /cpl/api/compatibility/:pluginTitle
+* POST /cpl/api/compatibility/:pluginTitle
+* GET /cpl/api/compatibility/pending
+* PUT /cpl/api/compatibility/:pluginTitle/:reportId
+* GET /cpl/api/compatibility-related/:pluginTitle
 * GET /cpl/api/auth/status
+* GET /cpl/api/auth/config
 * GET /cpl/api/auth/github/callback?code=...
-
-!! Storage
-
-Server data is stored under the data/ directory:
-
-* data/stats*.json for download counters
-* data/ratings*.json for rating data
-* data/comments/*.json for comment records
-
-!! Notes
-
-* The server supports read-only TiddlyWiki mode.
-* Multi-server deployments can use CPL_SERVER_ID to separate writable files.
-* Back up the data/ directory regularly.
