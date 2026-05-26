@@ -1,5 +1,10 @@
 import { tw, type RootWidgetEvent, type HttpErrorLike } from './types';
-import { API_STATUS_TIDDLER, API_TYPE_TIDDLER, API_MESSAGE_TIDDLER } from './constants';
+import {
+  API_STATUS_TIDDLER,
+  API_TYPE_TIDDLER,
+  API_MESSAGE_TIDDLER,
+  REPO_TYPE_TIDDLER,
+} from './constants';
 
 export const getEventParam = (event: RootWidgetEvent, name: string): string | undefined => {
   const value = event.paramObject?.[name];
@@ -29,6 +34,14 @@ export const setApiStatus = (status: string, type: string, message: string): voi
     title: API_MESSAGE_TIDDLER,
     text: message || '',
     timestamp,
+  });
+};
+
+export const setRepoType = (type: string): void => {
+  tw.wiki.addTiddler({
+    title: REPO_TYPE_TIDDLER,
+    text: type || 'unknown',
+    timestamp: String(Date.now()),
   });
 };
 

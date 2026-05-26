@@ -1,6 +1,6 @@
 import { tw, type RootWidgetEvent, type OAuthResponse } from './api-client/types';
-import { MIRROR_CONFIG_TITLE } from './api-client/constants';
-import { getCurrentMirrorOrigin } from './api-client/state';
+import { MIRROR_CONFIG_TITLE, SERVER_CONFIG_TITLE } from './api-client/constants';
+import { getCurrentServerOrigin } from './api-client/state';
 import { getEventParam, getViewedPluginTitle } from './api-client/utilities';
 import { setJwtToken } from './api-client/auth';
 import { createCplServerApi } from './api-client/api';
@@ -20,7 +20,7 @@ export const startup = (): void => {
   refreshMirrorCapabilityState(cplServerApi);
 
   tw.wiki.addEventListener('change', changes => {
-    if ($tw.utils.hop(changes, MIRROR_CONFIG_TITLE)) {
+    if ($tw.utils.hop(changes, MIRROR_CONFIG_TITLE) || $tw.utils.hop(changes, SERVER_CONFIG_TITLE)) {
       refreshMirrorCapabilityState(cplServerApi);
     }
 
@@ -142,7 +142,7 @@ export const startup = (): void => {
       console.error('[CPL-Server] GitHub client ID not available. Server may not have OAuth configured.');
       return undefined;
     }
-    const redirectUri = `${getCurrentMirrorOrigin()}/cpl/api/auth/github/callback`;
+    const redirectUri = `${window.location.origin}/cpl/api/auth/github/callback`;
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(githubClientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:read`;
     window.location.href = githubAuthUrl;
     return undefined;
@@ -152,7 +152,7 @@ export const startup = (): void => {
     const code = new URLSearchParams(window.location.search).get('code');
     if (code) {
       tw.utils.httpRequest({
-        url: `${getCurrentMirrorOrigin()}/cpl/api/auth/github/callback?code=${encodeURIComponent(code)}`,
+        url: `${getCurrentServerOrigin()}/cpl/api/auth/github/callback?code=${encodeURIComponent(code)}`,
         type: 'GET',
         headers: { 'Content-Type': 'application/json' },
         callback: (error: unknown, response: string) => {

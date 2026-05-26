@@ -17,7 +17,7 @@ type: text/vnd.tiddlywiki
 </$select>
 
 <!-- Mirror Status Indicator -->
-<$let mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}} switchStatus={{{ [[$:/temp/CPL-Repo/mirror-switch-status]get[text]else[]] }}} switchMessage={{{ [[$:/temp/CPL-Repo/mirror-switch-status]get[message]else[]] }}}>
+<$let mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}} serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} switchStatus={{{ [[$:/temp/CPL-Repo/mirror-switch-status]get[text]else[]] }}} switchMessage={{{ [[$:/temp/CPL-Repo/mirror-switch-status]get[message]else[]] }}}>
 <$list filter="[<mirrorType>match[server]]" variable="isServer">
 <span class="cpl-mirror-status cpl-mirror-server" style="font-size: 0.85em; color: #28a745; display: flex; align-items: center; gap: 4px;">
 <span style="font-size: 1.2em;">✓</span>
@@ -58,20 +58,11 @@ type: text/vnd.tiddlywiki
 </div>
 </$list>
 
-<!-- Static Mirror Info Banner -->
-<$list filter="[[$:/temp/CPL-Repo/mirror-type]get[text]match[static]]" variable="isStaticMirror">
-<div class="cpl-static-mirror-notice" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: start; gap: 8px;">
-<span style="font-size: 1.2em;">ℹ️</span>
-<div>
-<$text text={{{ [<chinese>match[yes]then[当前镜像为静态镜像，不支持评论、评分、统计等服务器功能。如需使用这些功能，请切换到服务器镜像。]else[Current mirror is a static mirror without server features (comments, ratings, stats). Switch to a server mirror to use these features.]] }}}/>
-</div>
-</div>
-</$list>
-<$list filter="[[$:/temp/CPL-Repo/mirror-type]get[text]match[unreachable]]" variable="isUnavailableMirror">
+<$list filter="[<serverType>match[unreachable]]" variable="isUnavailableServer">
 <div class="cpl-static-mirror-notice" style="background: #f8d7da; border: 1px solid #dc3545; border-radius: 4px; padding: 8px 12px; margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: start; gap: 8px;">
 <span style="font-size: 1.2em;">⚠</span>
 <div>
-<$text text={{{ [<chinese>match[yes]then[当前选择的是服务器镜像，但该镜像暂时无法访问。评论、评分、统计和登录功能当前不可用。]else[The selected mirror is a server mirror, but it is currently unreachable. Comments, ratings, stats, and login are unavailable right now.]] }}}/>
+<$text text={{{ [<chinese>match[yes]then[当前配置的 CPL 服务器暂时不可访问。评论、评分、统计、更新日志和登录功能当前不可用，但数据库镜像仍可正常浏览。]else[The configured CPL server is currently unreachable. Comments, ratings, stats, changelog, and login are unavailable right now, but the database mirror can still be browsed normally.]] }}}/>
 </div>
 </div>
 </$list>

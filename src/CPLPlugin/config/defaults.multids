@@ -4,5 +4,7 @@ update-filter: [has[plugin-type]] -[prefix[$:/temp/]] -[[$:/core]]
 repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo https://cpl.tidgi.fun/repo
 static-repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo
 server-repos: https://cpl.tidgi.fun/repo
+servers: https://cpl.tidgi.fun
 current-repo: https://tw-cpl.netlify.app/repo
+current-server: https://cpl.tidgi.fun
 auto-refresh-at-startup: yes

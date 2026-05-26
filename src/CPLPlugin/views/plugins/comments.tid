@@ -9,34 +9,14 @@ type: text/vnd.tiddlywiki
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
-<$let pluginTitle={{!!cpl.title}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}}>
-
-<!-- Static Mirror Notice -->
-<$list filter="[<mirrorType>match[static]]" variable="isStaticMirror">
-<div class="cpl-static-feature-notice" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
-<span style="font-size: 1.5em;">ℹ️</span>
-<div>
-<strong><$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论功能不可用]else[Comments Unavailable]] }}}/></strong>
-<p style="margin: 4px 0 0 0;"><$text text={{{ [[$:/language]get[text]match[zh-CN]then[当前镜像为静态镜像，不支持评论功能。切换到服务器镜像以查看和发表评论。]else[Current mirror is a static mirror. Comments are not available. Switch to a server mirror to view and post comments.]] }}}/></p>
-</div>
-</div>
-</$list>
-<$list filter="[<mirrorType>match[unreachable]]" variable="isUnavailableMirror">
-<div class="cpl-static-feature-notice" style="background: #f8d7da; border: 1px solid #dc3545; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
-<span style="font-size: 1.5em;">⚠️</span>
-<div>
-<strong><$text text={{{ [[$:/language]get[text]match[zh-CN]then[服务器镜像不可访问]else[Server Mirror Unreachable]] }}}/></strong>
-<p style="margin: 4px 0 0 0;"><$text text={{{ [[$:/language]get[text]match[zh-CN]then[当前选择的是服务器镜像，但它暂时无法访问，因此评论功能当前不可用。]else[The selected mirror should provide comments, but it is currently unreachable, so comments are unavailable right now.]] }}}/></p>
-</div>
-</div>
-</$list>
+<$let pluginTitle={{!!cpl.title}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}>
 
 <!-- Only show comment section for server mirrors -->
-<$list filter="[<mirrorType>match[server]]" variable="isServerMirror">
+<$list filter="[<serverType>match[server]]" variable="isServerMirror">
 
 <div class="cpl-comment-section" style="margin: 20px 0; padding: 16px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
   <h3 style="margin-top: 0; border-bottom: 2px solid #dee2e6; padding-bottom: 8px;">
-    💬 <$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论]else[Comments]] }}}/>
+    💬 <$text text={{{ [<chinese>match[yes]then[评论]else[Comments]] }}}/>
   </h3>
 
   <!-- Login Status -->
@@ -52,7 +32,7 @@ type: text/vnd.tiddlywiki
         <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user"/>
         <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user-status"/>
         <$action-sendmessage $message="cpl-logout"/>
-        <$text text={{{ [[$:/language]get[text]match[zh-CN]then[退出登录]else[Logout]] }}}/>
+        <$text text={{{ [<chinese>match[yes]then[退出登录]else[Logout]] }}}/>
       </$button>
     </div>
     </$let>
@@ -61,10 +41,10 @@ type: text/vnd.tiddlywiki
     <div style="margin-bottom: 20px;">
       <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; resize: vertical; font-family: inherit;" placeholder="Write a comment using wikitext..."/>
       <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 0.85em; color: #666;">Wikitext supported</span>
+        <span style="font-size: 0.85em; color: #666;"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
         <$button class="tc-btn-primary" style="padding: 8px 20px;">
           <$action-sendmessage $message="cpl-submit-comment" pluginTitle=<<pluginTitle>>/>
-          <$text text={{{ [[$:/language]get[text]match[zh-CN]then[提交评论]else[Submit Comment]] }}}/>
+          <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>
         </$button>
       </div>
       <$let commentStatus={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}}>
@@ -75,7 +55,7 @@ type: text/vnd.tiddlywiki
         </$list>
         <$list filter="[<commentStatus>get[text]match[success]]" variable="hasSuccess">
           <div style="margin-top: 8px; color: #28a745; font-size: 0.9em;">
-            ✓ <$text text={{{ [[$:/language]get[text]match[zh-CN]then[评论已提交，等待审核]else[Comment submitted for moderation]] }}}/>
+            ✓ <$text text={{{ [<chinese>match[yes]then[评论已提交，等待审核]else[Comment submitted for moderation]] }}}/>
           </div>
         </$list>
       </$let>
@@ -86,12 +66,12 @@ type: text/vnd.tiddlywiki
     <!-- Not logged in: Show login button -->
     <div style="text-align: center; padding: 20px; background: #fff; border-radius: 6px; margin-bottom: 16px;">
       <p style="margin: 0 0 12px 0; color: #666;">
-        <$text text={{{ [[$:/language]get[text]match[zh-CN]then[登录后即可发表评论]else[Login to post comments]] }}}/>
+        <$text text={{{ [<chinese>match[yes]then[登录后即可发表评论]else[Login to post comments]] }}}/>
       </p>
       <$button class="tc-btn-primary" style="padding: 10px 24px;">
         <$action-sendmessage $message="cpl-github-login"/>
         <span style="margin-right: 6px;">🔗</span>
-        <$text text={{{ [[$:/language]get[text]match[zh-CN]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
+        <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
       </button>
     </div>
   </$list>
@@ -119,7 +99,7 @@ type: text/vnd.tiddlywiki
       </$list>
       <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:eq[0]]" variable="noComments">
         <div style="text-align: center; padding: 20px; color: #999; font-style: italic;">
-          <$text text={{{ [[$:/language]get[text]match[zh-CN]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
+          <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
         </div>
       </$list>
     </$let>
