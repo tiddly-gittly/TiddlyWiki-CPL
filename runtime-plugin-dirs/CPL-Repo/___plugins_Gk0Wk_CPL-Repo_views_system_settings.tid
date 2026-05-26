@@ -18,12 +18,20 @@ type: text/vnd.tiddlywiki
 </$list>
 </$select>
 
+; CPL 服务器地址 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/servers}enlist-input[]]" variable="server">
+<option value=<<server>>><$text text=<<server>>/></option>
+</$list>
+</$select>
+
 <<<
 当 CPL 获取数据经常失败时，你可以尝试切换到其他镜像，目前国内推荐使用 netlify 镜像，
 
 欢迎各位大佬部署国内镜像，详情请咨询QQ交流群或在[[GitHub Issue|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]提问
 
 你可以手动更改数据库镜像入口：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-repo]]
+
+你也可以单独更改 CPL 服务器地址：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-server]]
 <<<
 
 ; 自动更新检查间隔 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes" tag="input" default="-1" /> (分钟/次)
@@ -65,12 +73,20 @@ In this page you can set the behavior of the CPL plugin.
 </$list>
 </$select>
 
+; CPL Server Endpoint <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/servers}enlist-input[]]" variable="server">
+<option value=<<server>>><$text text=<<server>>/></option>
+</$list>
+</$select>
+
 <<<
 When the CPL fails to fetch the data often, you can try to switch to another mirror.
 
 If you'd like to deploy your own mirrors, feel free to ask questions in the [[GitHub Issue|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]!
 
 You can manually change the database mirror entry: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-repo]]
+
+You can also configure the CPL server endpoint independently: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-server]]
 <<<
 
 ; Automatic update of check intervals <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes" tag="input" default="-1" /> (minute(s) per time)
