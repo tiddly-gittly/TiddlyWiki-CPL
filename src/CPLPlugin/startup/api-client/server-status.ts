@@ -1,15 +1,16 @@
 import { tw, type CPLServerApi, type JsonObject } from './types';
 import { rawApiRequest } from './http';
-import { setApiStatus, clearServerTempState } from './utilities';
+import { setApiStatus, clearServerTempState, setRepoType } from './utilities';
 import {
   getConfiguredMirrorType,
   getCurrentMirrorEntry,
-  getMirrorOrigin,
+  getCurrentServerEntry,
+  getCurrentServerOrigin,
   apiAvailability,
   lastMirrorEntry,
   setApiAvailability,
   setLastMirrorEntry,
-  type MirrorType,
+  type ApiServerType,
 } from './state';
 
 const setAnonymousUserStatus = (): void => {
@@ -20,7 +21,7 @@ const setAnonymousUserStatus = (): void => {
 };
 
 const getMirrorLabel = (): string => {
-  const entry = getCurrentMirrorEntry();
+  const entry = getCurrentServerEntry();
   try {
     return new URL(entry, window.location.origin).host || entry;
   } catch {
@@ -28,25 +29,22 @@ const getMirrorLabel = (): string => {
   }
 };
 
-export const probeApiAvailability = (callback: (mirrorType: MirrorType) => void): void => {
-  const configuredMirrorType = getConfiguredMirrorType();
-  if (configuredMirrorType === 'static') {
+export const probeApiAvailability = (callback: (serverType: ApiServerType) => void): void => {
+  if (!getCurrentServerEntry()) {
     setApiAvailability(false);
     setApiStatus(
       'unavailable',
-      'static',
-      'Selected mirror is a static mirror without CPL server features.',
+      'unknown',
+      'No CPL server is configured.',
     );
-    callback('static');
+    callback('unknown');
     return;
   }
 
   setApiStatus(
     'checking',
-    configuredMirrorType === 'server' ? 'server' : 'unknown',
-    configuredMirrorType === 'server'
-      ? `Checking server mirror ${getMirrorLabel()}...`
-      : 'Checking mirror capabilities...',
+    'unknown',
+    `Checking CPL server ${getMirrorLabel()}...`,
   );
   rawApiRequest<JsonObject>(
     'GET',
@@ -54,34 +52,32 @@ export const probeApiAvailability = (callback: (mirrorType: MirrorType) => void)
     null,
     error => {
       if (error) {
-        const mirrorType = configuredMirrorType === 'server' ? 'unreachable' : 'unknown';
         setApiAvailability(false);
         setApiStatus(
           'unavailable',
-          mirrorType,
-          configuredMirrorType === 'server'
-            ? `Configured server mirror ${getMirrorOrigin()} is currently unreachable or unavailable.`
-            : `Mirror ${getMirrorLabel()} does not expose CPL server features or is currently unreachable.`,
+          'unreachable',
+          `Configured CPL server ${getCurrentServerOrigin()} is currently unreachable or unavailable.`,
         );
-        callback(mirrorType);
+        callback('unreachable');
         return;
       }
 
       setApiAvailability(true);
-      setApiStatus('available', 'server', 'Full CPL server features are available on this mirror.');
+      setApiStatus('available', 'server', `CPL server ${getMirrorLabel()} is available.`);
       callback('server');
     },
   );
 };
 
 export const refreshMirrorCapabilityState = (cplServerApi: CPLServerApi): void => {
-  const entry = getCurrentMirrorEntry();
-  if (entry === lastMirrorEntry && apiAvailability !== null) {
+  const signature = `${getCurrentMirrorEntry()}|${getCurrentServerEntry()}`;
+  if (signature === lastMirrorEntry && apiAvailability !== null) {
     return;
   }
 
-  setLastMirrorEntry(entry);
+  setLastMirrorEntry(signature);
   setApiAvailability(null);
+  setRepoType(getConfiguredMirrorType());
   clearServerTempState();
   probeApiAvailability(mirrorType => {
     if (mirrorType !== 'server') {

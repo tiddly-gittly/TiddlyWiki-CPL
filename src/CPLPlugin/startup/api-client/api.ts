@@ -19,7 +19,7 @@ export const createCplServerApi = (): CPLServerApi => ({
     apiRequest('GET', `/changelog/${encodeURIComponent(pluginTitle)}`, null, callback);
   },
   getComments(pluginTitle, callback) {
-    authenticatedRequest('GET', `/comments/${encodeURIComponent(pluginTitle)}`, null, callback);
+    apiRequest('GET', `/comments/${encodeURIComponent(pluginTitle)}`, null, callback);
   },
   submitComment(pluginTitle, content, callback) {
     authenticatedRequest('POST', `/comments/${encodeURIComponent(pluginTitle)}`, { content }, callback);

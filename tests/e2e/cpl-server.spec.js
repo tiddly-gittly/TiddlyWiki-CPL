@@ -60,12 +60,14 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Use local server as mirror so API probing succeeds in test environment.
-  // External mirrors (e.g. netlify) may not have CORS or server API enabled,
-  // which would mark them as static and disable server-only features.
+  // Use the local test server as CPL server endpoint so API probing succeeds.
   await page.evaluate(() => {
     $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
+      text: window.location.origin
+    });
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
       text: window.location.origin
     });
   });
@@ -100,6 +102,10 @@ async function installFromMirrorInBlankWiki(page, mirrorUrl, pluginTitle) {
     $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
       text: mirrorUrl
+    });
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
+      text: window.location.origin
     });
   }, { mirrorUrl });
 
@@ -278,11 +284,11 @@ test.describe('CPL Server E2E', () => {
     expect(['server', 'static']).toContain(mirrorState.mirrorType);
   });
 
-  test('should degrade gracefully for static mirror capabilities while preserving mirror selector', async ({ page }) => {
+  test('should degrade gracefully when CPL server is unavailable while preserving mirror selector', async ({ page }) => {
     await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
 
     await page.evaluate(() => {
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/mirror-type', text: 'static' });
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/server-type', text: 'unreachable' });
       $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/api-status', text: 'unavailable' });
     });
 
