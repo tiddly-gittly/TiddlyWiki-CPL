@@ -69,10 +69,12 @@ Optional but useful:
 The static website and library builders are separate concerns:
 
 * `pnpm build`
-* `pnpm run build:website`
-* `pnpm run build:library`
+* `pnpm run build:static-site`
+* `pnpm run build:static-library`
 
 Run those in CI or release jobs when you publish the website or library artifacts. They are not required just to run the server.
+
+If the server sits behind a reverse proxy or CDN, make sure the real client IP is forwarded correctly. Throttling and one-vote style protections depend on the client address seen by the CPL server.
 
 !! Suggested Scheduled Tasks
 

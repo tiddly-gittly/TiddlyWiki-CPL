@@ -97,13 +97,19 @@ pnpm test:unit && pnpm test:api && pnpm test:e2e
 
 ### Building
 
-Build the deployable site artifacts from the Modern.TiddlyDev wiki and plugin library:
+Build the deployable static site artifacts from the Modern.TiddlyDev wiki and plugin library:
 
 ```bash
 pnpm build
-pnpm run build:website
-pnpm run build:library
+pnpm run build:static-site
+pnpm run build:static-library
 ```
+
+`pnpm build` prepares the plugin packages.
+
+`pnpm run build:static-site` builds the browser-facing static website.
+
+`pnpm run build:static-library` builds the static plugin library JSON artifacts used by the published mirror.
 
 ### Adding Offline Plugin Files
 
@@ -128,6 +134,8 @@ The server launcher compiles the TypeScript plugin sources into runtime plugin J
 This is intentionally different from `pnpm dev:wiki`: `pnpm dev:wiki` runs the Modern.TiddlyDev development server with wiki writes enabled, while `pnpm server:test` verifies the production-like runtime plugin loading path used by the CPL server.
 
 For public deployments, configure read-only mode so wiki writes stay disabled while download statistics and API routes remain available.
+
+If the server is deployed behind a reverse proxy or CDN, make sure the real client IP is preserved correctly. Download throttling, vote limits, and similar protections depend on the client address seen by the CPL server.
 
 ### Environment Configuration
 
