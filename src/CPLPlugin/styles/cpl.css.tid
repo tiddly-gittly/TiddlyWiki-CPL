@@ -6,185 +6,79 @@ type: text/vnd.tiddlywiki
 
 .cpl-normal-button {
   color: <<colour foreground>>;
-  fill: color: <<colour foreground>>;
+  fill: <<colour foreground>>;
 }
 
 .cpl-plugin-info-box {
-  overflow: hidden;
   border: 1px solid <<colour tiddler-info-border>>;
   background-color: <<colour tiddler-info-background>>;
 }
-.cpl-plugin-dependencies {
-  border-left: 0.8px solid <<colour tiddler-info-border>>;
-  border-right: 0.8px solid <<colour tiddler-info-border>>;
-}
-
-.cpl-plugin-info-box > .tc-plugin-info {
-  margin: 0 !important;
-  border: none !important;
-}
-
-.cpl-plugin-info-box > .tc-plugin-info-dropdown {
-  margin-top: 0 !important;
-  border: none !important;
-}
-
-.cpl-plugin-info-box > .tc-plugin-info-dropdown,
-.cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-message,
-.cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-body {
-  background: transparent !important;
-  background-color: transparent !important;
-}
 
 .cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-body {
-  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.3);
-}
-
-.cpl-latest-version-icon > svg, .cpl-installed-version-icon > svg {
-  height: 1em;
-  width: 1em;
+  box-shadow: inset 0 12px 12px -12px <<colour very-muted-foreground>>55;
 }
 
 .cpl-latest-version-icon > svg {
-  color: #FFC107;
-  fill: #FFC107;
+  color: <<colour primary>>;
+  fill: <<colour primary>>;
 }
 
 .cpl-installed-version-icon > svg {
-  color: #3ccb0f;
-  fill: #3ccb0f;
+  color: <<colour download-background>>;
+  fill: <<colour download-background>>;
 }
 
 .cpl-plugin-install-request-dependents-tree {
   border-left:2px dotted <<colour very-muted-foreground>>;
-  background: #0002;
-}
-
-.cpl-plugin-search {
-  flex-grow: 1;
-  width: 0;
-}
-
-.cpl-plugin-search span {
-  display: inline-block;
-  width: 100%;
-}
-
-.cpl-plugin-search span input {
-  margin: 0 !important;
-  width: 100%;
-}
-
-.cpl-plugin-search-go {
-  border-radius: 0 !important;
-  margin: 0 !important;
-  padding: 10px 20px !important;
-  word-break: keep-all;
-}
-
-.cpl-paged-plugin-list-control {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  border: 2px solid <<colour tiddler-info-border>>;
-  background-color: <<colour tiddler-info-background>>;
-}
-
-.cpl-paged-plugin-list-control > div {
-  flex-grow: 1;
-  width: 0;
-  height: 100%;
-}
-
-.cpl-paged-plugin-list-control > div > button {
-  width: 100%;
-  height: 100%;
-  border: none !important;
-  background: transparent !important;
-  cursor: pointer !important;
-}
-
-.cpl-paged-plugin-list-control > div > button:hover {
-  backdrop-filter: contrast(0.75);
-}
-
-.cpl-paged-plugin-list-control > span {
-  padding: 0 10px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  user-select: none;
+  background: <<colour very-muted-foreground>>14;
 }
 
 .cpl-banner-container {
-  padding: 26px 16px;
-  background: #1f5ea3;
-  border-left: 5px solid #acc8d4;
-  display:inline-block;
-  background-image: linear-gradient(45deg, #1f5ea3, #1f71a3);
-  width: 100%;
-}
-.cpl-banner-button-group svg {
-  height: 1em;
-  width: 1em;
+  color: <<colour download-foreground>>;
+  background: linear-gradient(135deg, <<colour primary>>, <<colour download-background>>);
+  border-left: 5px solid <<colour tiddler-info-border>>;
 }
 
-.cpl-layout-container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  height: 100%;
-  width: 100%;
-  padding: 0.5em;
+.cpl-banner-title,
+.cpl-banner-link,
+.cpl-banner-badge,
+.cpl-banner-caption {
+  color: <<colour download-foreground>>;
+  fill: <<colour download-foreground>>;
 }
 
-.cpl-action-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
+.cpl-banner-link-main {
+  background: linear-gradient(45deg, <<colour download-background>>, <<colour primary>>);
+  border-color: <<colour download-background>>;
 }
 
-.cpl-action-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35em;
+.cpl-banner-link-repo {
+  background: linear-gradient(145deg, <<colour primary>>, <<colour muted-foreground>>);
+  border-color: <<colour primary>>;
+}
+
+.cpl-banner-badge-community {
+  background: linear-gradient(145deg, <<colour muted-foreground>>, <<colour tiddler-info-border>>);
+  border-color: <<colour muted-foreground>>;
+}
+
+.cpl-banner-link-partner {
+  background: linear-gradient(300deg, <<colour diff-delete-background>>, <<colour primary>>);
+  border-color: <<colour diff-delete-foreground>>;
 }
 
 .cpl-action-toggle {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.3em;
-  padding: 0 0.8em;
-  border-radius: 999px;
-  border: 1px solid <<colour tiddler-info-border>>;
+  border-color: <<colour tiddler-info-border>>;
   background: <<colour tiddler-info-background>>;
 }
 
-.cpl-action-toggle input {
-  margin-right: 0.45em;
-}
-
-.cpl-action-toggle-label {
-  font-size: 0.92em;
-}
-
 .cpl-action-pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.3em;
-  padding: 0 0.8em;
-  border-radius: 999px;
-  background: rgba(60, 179, 113, 0.12);
-  color: #1d6c3e;
-  font-size: 0.9em;
-  font-weight: 600;
+  background: <<colour download-background>>1f;
+  color: <<colour download-background>>;
 }
 
 .cpl-action-pill-muted {
-  background: rgba(128, 128, 128, 0.14);
+  background: <<colour muted-foreground>>24;
   color: <<colour muted-foreground>>;
 }
 
@@ -197,65 +91,208 @@ type: text/vnd.tiddlywiki
 
 @keyframes breath-glow {
   from {
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 5px <<colour primary>>80;
   }
   to {
-    box-shadow: 0 0 20px rgba(0, 123, 255, 1);
+    box-shadow: 0 0 20px <<colour primary>>;
   }
-}
-
-/* Mirror Switcher Styles */
-.cpl-mirror-switcher {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .cpl-mirror-select {
-  font-size: 0.9em;
-  transition: border-color 0.2s ease;
+  border-color: <<colour tiddler-editor-border>>;
+  background: <<colour tiddler-editor-background>>;
+  color: <<colour foreground>>;
 }
 
 .cpl-mirror-select:hover {
-  border-color: #999;
+  border-color: <<colour muted-foreground>>;
 }
 
 .cpl-mirror-select:focus {
-  outline: none;
-  border-color: #1f5ea3;
-  box-shadow: 0 0 0 2px rgba(31, 94, 163, 0.1);
-}
-
-.cpl-mirror-status {
-  white-space: nowrap;
-  font-weight: 500;
+  border-color: <<colour primary>>;
+  box-shadow: 0 0 0 2px <<colour primary>>1a;
 }
 
 .cpl-mirror-server {
-  color: #28a745;
+  color: <<colour download-background>>;
 }
 
 .cpl-mirror-static {
-  color: #ffc107;
+  color: <<colour primary>>;
+}
+
+.cpl-mirror-unreachable {
+  color: <<colour diff-delete-foreground>>;
 }
 
 .cpl-mirror-unknown {
-  color: #999;
+  color: <<colour muted-foreground>>;
 }
 
-/* Static Mirror Notice Styles */
+.cpl-mirror-switch-indicator-success {
+  color: <<colour diff-insert-foreground>>;
+}
+
+.cpl-mirror-switch-indicator-error {
+  color: <<colour diff-delete-foreground>>;
+}
+
+.cpl-mirror-switch-message {
+  color: <<colour muted-foreground>>;
+}
+
 .cpl-static-mirror-notice,
 .cpl-static-feature-notice {
-  animation: fade-in 0.3s ease;
+  background: <<colour diff-delete-background>>33;
+  border-color: <<colour diff-delete-foreground>>;
+  color: <<colour foreground>>;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.cpl-loading-placeholder,
+.cpl-inline-button-link,
+.cpl-plugin-card-description,
+.cpl-plugin-card-meta-text,
+.cpl-plugin-detail-subtitle,
+.cpl-plugin-detail-meta-text,
+.cpl-version-history-download,
+.cpl-status-muted {
+  color: <<colour muted-foreground>>;
+}
+
+.cpl-status-success {
+  color: <<colour diff-insert-foreground>>;
+}
+
+.cpl-status-error {
+  color: <<colour diff-delete-foreground>>;
+}
+
+.cpl-plugin-card {
+  background: <<colour tiddler-background>>;
+  border: 1px solid <<colour tiddler-info-border>>;
+}
+
+.cpl-plugin-card:hover {
+  box-shadow: 0 2px 8px <<colour very-muted-foreground>>22;
+}
+
+.cpl-plugin-card-icon-frame,
+.cpl-plugin-detail-icon-frame {
+  background: <<colour tiddler-info-background>>;
+}
+
+.cpl-plugin-detail-header,
+.cpl-version-history-list,
+.cpl-version-history-item,
+.cpl-section-heading {
+  border-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-detail-error-notice {
+  background: <<colour diff-delete-background>>44;
+  color: <<colour foreground>>;
+}
+
+.cpl-dependency-tag {
+  background: <<colour background>>22;
+  color: <<colour foreground>>;
+}
+
+.cpl-version-icon-latest {
+  color: <<colour primary>>;
+  fill: <<colour primary>>;
+}
+
+.cpl-version-icon-installed {
+  color: <<colour download-background>>;
+  fill: <<colour download-background>>;
+}
+
+.cpl-delete-button {
+  background-color: <<colour diff-delete-background>> !important;
+  color: <<colour foreground>>;
+  fill: <<colour foreground>>;
+}
+
+.cpl-plugin-thanks {
+  background: <<colour very-muted-foreground>>22;
+  border-top-color: <<colour primary>>;
+  border-bottom-color: <<colour download-background>>;
+}
+
+.cpl-plugin-thanks-title {
+  border-left-color: <<colour primary>>;
+}
+
+.cpl-plugin-stats,
+.cpl-card-heading-bordered,
+.cpl-form-section {
+  border-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-rating-widget,
+.cpl-changelog-section,
+.cpl-compatibility-section,
+.cpl-compatibility-pill,
+.cpl-compatibility-description {
+  background: <<colour tiddler-info-background>>;
+}
+
+.cpl-code-panel,
+.cpl-compatibility-item {
+  background: <<colour tiddler-background>>;
+  border-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-compatibility-item {
+  border-left-color: <<colour primary>>;
+}
+
+.cpl-form-input {
+  background: <<colour tiddler-editor-background>>;
+  color: <<colour foreground>>;
+  border-color: <<colour tiddler-editor-border>>;
+}
+
+.cpl-form-input:focus {
+  outline: none;
+  border-color: <<colour primary>>;
+  box-shadow: 0 0 0 2px <<colour primary>>1a;
+}
+
+.cpl-modal-warning-callout {
+  background: <<colour diff-delete-background>>44;
+  color: <<colour foreground>>;
+}
+
+.cpl-shadow-row {
+  border-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-shadow-row-keep {
+  background: <<colour diff-insert-background>>22;
+}
+
+.cpl-shadow-row-delete {
+  background: <<colour diff-delete-background>>33;
+}
+
+.cpl-rating-star {
+  color: <<colour very-muted-foreground>>;
+}
+
+.cpl-rating-star-button:hover .cpl-rating-star {
+  color: <<colour primary>>;
+}
+
+.cpl-status-banner-error {
+  background: <<colour diff-delete-background>>44;
+  border-color: <<colour diff-delete-background>>;
+  color: <<colour foreground>>;
+}
+
+.cpl-status-banner-loading {
+  background: <<colour very-muted-foreground>>22;
+  border-color: <<colour tiddler-info-border>>;
+  color: <<colour muted-foreground>>;
 }
