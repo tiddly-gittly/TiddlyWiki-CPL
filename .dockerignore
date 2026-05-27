@@ -9,7 +9,9 @@ node_modules/
 # Ignore source data that should come from a persistent volume mount
 data/
 
-# CI files (not needed in image, but keep .git for entrypoint git pull)
+# .git is NOT baked into the image — the entrypoint clones at first run
+# into the repo-cache volume mount.
+.git/
 .github/
 .gitignore
 

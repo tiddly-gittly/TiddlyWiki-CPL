@@ -13,9 +13,10 @@
 #     --build-arg HTTPS_PROXY=http://172.17.0.1:1081 \
 #     -t tiddlywiki-cpl .
 #
-# Run:
+# Run (mounts for persistent data and git cache):
 #   docker run -p 8080:8080 \
 #     -v $(pwd)/data:/app/data \
+#     -v $(pwd)/repo-cache:/app/repo-cache \
 #     -e PORT=8080 -e HOST=0.0.0.0 \
 #     tiddlywiki-cpl
 
@@ -66,28 +67,29 @@ COPY src/ ./src/
 COPY wiki/ ./wiki/
 RUN rm -rf /app/wiki/files/plugin-fetched
 
-# Copy the full .git directory so the entrypoint can run `git pull`.
-COPY .git/ ./.git/
+# TypeScript entrypoint: clones/pulls the repo at first/subsequent startups,
+# fetches plugin JSONs, then starts the server.
+# .git is NOT baked into the image — it lives in the repo-cache volume.
+COPY docker-entrypoint.ts ./docker-entrypoint.ts
 
-# Entrypoint: pulls git updates + fetches plugins before starting the server.
-COPY docker-entrypoint.sh ./docker-entrypoint.sh
-RUN chmod +x docker-entrypoint.sh
-
-# data/ is a persistent mount point — do NOT copy it into the image.
-# Create the directory so the mount point exists.
-RUN mkdir -p /app/data /app/wiki/files/plugin-fetched
+# Persistent mount points — create so Docker doesn't auto-create them as root.
+#   /app/data       — stats, ratings, compatibility data
+#   /app/repo-cache — git clone of the repo (updated at each startup)
+#   /app/wiki/files/plugin-fetched — downloaded plugin JSONs
+RUN mkdir -p /app/data /app/repo-cache /app/wiki/files/plugin-fetched
 
 # Expose default port (override with PORT env var)
 EXPOSE 8080
 
-# STARTUP SEQUENCE (docker-entrypoint.sh):
-#   1. git pull  — refresh wiki metadata (plugin titles, versions, etc.)
-#   2. fetch-plugins — download actual plugin JSON files into wiki/files/plugin-fetched/
-#   3. scripts/server.ts --prod — build runtime plugins, start TiddlyWiki
+# STARTUP SEQUENCE (docker-entrypoint.ts via ts-node):
+#   1. git clone / git pull into /app/repo-cache (volume-mounted)
+#   2. copy wiki/tiddlers/plugin-metadata from repo-cache into /app
+#   3. fetch-plugins — download plugin JSONs into wiki/files/plugin-fetched/
+#   4. scripts/server.ts --prod — build runtime plugins, start TiddlyWiki
 #
 # Use HOST=0.0.0.0 so the container is reachable from outside.
 ENV HOST=0.0.0.0
 ENV PORT=8080
 ENV NODE_ENV=production
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["node_modules/.bin/ts-node", "--transpile-only", "docker-entrypoint.ts"]
