@@ -58,7 +58,20 @@ Suggested cron (weekly, Monday 03:00):
 0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
 ```
 
-See [[data/README|data/README]] (`data/README.md` in the repo) for the full data directory reference.
+!!! `data/` directory
+
+`data/` is runtime state written by the server and committed via host-side PRs.
+
+|!File / Directory|!Description|
+|`stats.json`|Aggregate download counts read by the server at startup|
+|`stats.{serverId}.json`|Per-mirror download stats written by each mirror|
+|`ratings.json`|Aggregate plugin ratings|
+|`ratings.{serverId}.json`|Per-mirror ratings|
+|`comments/{plugin}.json`|Approved comments for a plugin|
+|`comments/{plugin}.{serverId}.json`|Per-mirror comments|
+|`compatibility/`|User-submitted compatibility reports|
+
+Because `data/` is bind-mounted into the cloned repo, every write the container makes is immediately visible on the host and reviewable before merge via `pnpm run sync-data`.
 
 !! Environment Variables
 
@@ -142,3 +155,19 @@ And sync data to GitHub weekly:
 ```
 
 If the server is behind a reverse proxy or CDN, ensure the real client IP is forwarded correctly — rate limiting and download counting depend on it.
+
+!! Building the Docker Image Yourself
+
+```bash
+docker build \
+  --build-arg HTTP_PROXY=http://172.17.0.1:1081 \
+  --build-arg HTTPS_PROXY=http://172.17.0.1:1081 \
+  -t linonetwo/tiddlywiki-cpl:latest \
+  .
+```
+
+Behind a proxy on Linux, forward the host proxy to the Docker bridge first:
+
+```bash
+socat TCP-LISTEN:1081,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:1080 &
+```
