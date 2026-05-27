@@ -13,6 +13,7 @@ interface PluginMetadata {
 const WIKI_TIDDLERS_DIR = path.resolve('wiki', 'tiddlers');
 const PLUGIN_METADATA_DIR = path.resolve(WIKI_TIDDLERS_DIR, 'plugin-metadata');
 const OUTPUT_DIR = path.resolve('wiki', 'files', 'plugin-fetched');
+const HISTORY_DIR = path.resolve('wiki', 'files', 'plugin-fetched-history');
 const SUPPORTED_METADATA_EXTENSIONS = new Set(['.json', '.tid']);
 
 function sanitizeFilename(title: string): string {
@@ -262,6 +263,7 @@ async function main(): Promise<void> {
   }
 
   ensureDir(OUTPUT_DIR);
+  ensureDir(HISTORY_DIR);
 
   const files = collectPluginMetadataFilePaths();
   console.log(`[fetch-plugins] Found ${files.length} plugin metadata files.`);
@@ -337,6 +339,24 @@ async function main(): Promise<void> {
       }
       console.log(`[fetch-plugins] ${pluginTitle}: saved to ${destPath}`);
       downloaded += 1;
+
+      // Save a versioned copy to plugin-fetched-history/{sanitizedTitle}/{version}.json
+      // so the server can serve historical versions on request.
+      try {
+        const parsed = JSON.parse(downloadedContent) as Record<string, unknown>;
+        const version = typeof parsed.version === 'string' ? parsed.version : undefined;
+        if (version) {
+          const historyPluginDir = path.join(HISTORY_DIR, sanitizeFilename(pluginTitle));
+          ensureDir(historyPluginDir);
+          const historyPath = path.join(historyPluginDir, `${version}.json`);
+          if (!fs.existsSync(historyPath)) {
+            fs.copyFileSync(destPath, historyPath);
+            console.log(`[fetch-plugins] ${pluginTitle}: archived version ${version} to history`);
+          }
+        }
+      } catch {
+        // Non-fatal: history archiving failure should not affect the main fetch.
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error(`[fetch-plugins] ${pluginTitle}: download failed - ${message}`);

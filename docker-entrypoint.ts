@@ -20,6 +20,7 @@ import * as path from 'path';
 
 const APP_DIR = path.resolve(__dirname);
 const REPO_CACHE_DIR = path.join(APP_DIR, 'repo-cache');
+const HISTORY_DIR = path.join(APP_DIR, 'wiki', 'files', 'plugin-fetched-history');
 const REPO_URL = 'https://github.com/tiddly-gittly/TiddlyWiki-CPL.git';
 const TSNODEPATH = path.join(APP_DIR, 'node_modules/.bin/ts-node');
 const SYNC_INTERVAL_SECONDS = Number(process.env.SYNC_INTERVAL_SECONDS ?? 3600);
@@ -147,6 +148,11 @@ function scheduleSync(): void {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
+
+// Ensure runtime directories exist (Dockerfile creates them, but volume mounts
+// may replace them with empty dirs on first run).
+fs.mkdirSync(path.join(APP_DIR, 'wiki', 'files', 'plugin-fetched'), { recursive: true });
+fs.mkdirSync(HISTORY_DIR, { recursive: true });
 
 // 1. git clone / pull + metadata sync (blocking, so server starts with latest metadata)
 // Failures are non-fatal: the server will start with baked-in metadata.

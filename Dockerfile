@@ -78,8 +78,8 @@ COPY docker-entrypoint.ts ./docker-entrypoint.ts
 #   /app/repo-cache — git clone of the repo (updated at each startup)
 #   /app/wiki/files/plugin-fetched — downloaded plugin JSONs (mount to persist
 #     across restarts and avoid re-downloading on every container start)
-RUN mkdir -p /app/data /app/repo-cache /app/wiki/files/plugin-fetched
-VOLUME ["/app/data", "/app/repo-cache", "/app/wiki/files/plugin-fetched"]
+RUN mkdir -p /app/data /app/repo-cache /app/wiki/files/plugin-fetched /app/wiki/files/plugin-fetched-history
+VOLUME ["/app/data", "/app/repo-cache", "/app/wiki/files/plugin-fetched", "/app/wiki/files/plugin-fetched-history"]
 
 # Expose default port (override with PORT env var)
 EXPOSE 8080
