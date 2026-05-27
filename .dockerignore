@@ -1,0 +1,27 @@
+# Ignore build artifacts and dev-only directories
+dist/
+cache/
+tmp/
+playwright-report/
+test-results/
+node_modules/
+
+# Ignore source data that should come from a persistent volume mount
+data/
+
+# CI files (not needed in image, but keep .git for entrypoint git pull)
+.github/
+.gitignore
+
+# Test files (not needed at runtime)
+tests/
+
+# Editor / OS files
+.vscode/
+.idea/
+*.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

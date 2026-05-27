@@ -137,6 +137,53 @@ For public deployments, configure read-only mode so wiki writes stay disabled wh
 
 If the server is deployed behind a reverse proxy or CDN, make sure the real client IP is preserved correctly. Download throttling, vote limits, and similar protections depend on the client address seen by the CPL server.
 
+### Docker Deployment
+
+A `Dockerfile` is included for running the server version in a container (not a static-site build image).
+
+**Build and run:**
+
+```bash
+docker build -t tiddlywiki-cpl .
+docker run -p 8080:8080 \
+  -v $(pwd)/data:/app/data \
+  --env-file .env \
+  -e HOST=0.0.0.0 \
+  -e PORT=8080 \
+  tiddlywiki-cpl
+```
+
+**Required volume mount:**
+
+| Path in container | Purpose |
+|---|---|
+| `/app/data` | Persistent runtime data (stats, ratings, compatibility) — must be mounted |
+
+Plugin files live inside the image at `/app/wiki/files/`. To supply your own offline plugins, mount an additional volume:
+
+```bash
+-v $(pwd)/wiki/files/plugin-offline:/app/wiki/files/plugin-offline
+```
+
+**Environment variables:**
+
+| Variable | Description |
+|---|---|
+| `HOST` | Bind address (default `0.0.0.0` in container) |
+| `PORT` | Listen port (default `8080`) |
+| `CPL_JWT_SECRET` | JWT signing secret (required) |
+| `CPL_GITHUB_CLIENT_ID` | GitHub OAuth App Client ID |
+| `CPL_GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret |
+| `CPL_ADMIN_GITHUB_IDS` | Comma-separated GitHub user IDs for moderators |
+
+The container start command runs `docker-entrypoint.sh`, which:
+
+1. **`git pull`** — refreshes wiki tiddler metadata (plugin titles, versions, categories) from the repository.
+2. **`fetch-plugins`** — downloads actual plugin JSON files from upstream sources into `wiki/files/plugin-fetched/`. This directory is **not baked into the image** to avoid stale data and large image size; `wiki/files/plugin-offline/` (committed static fallback plugins) is included.
+3. **`scripts/server.ts --prod`** — builds runtime plugins and starts TiddlyWiki with `--listen`.
+
+Both steps 1 and 2 are best-effort: if they fail (network issue, etc.) the server starts with whatever data is already present.
+
 ### Environment Configuration
 
 CPL Server requires environment variables for authentication and admin configuration. Copy `.env.example` to `.env` and fill in your values:
