@@ -28,17 +28,8 @@ type: text/vnd.tiddlywiki
 <$transclude tiddler=<<currentTiddler>> field="cpl.readme" mode="block"/>
 
 <div
-    style="width: 100%;
-           padding: 0px 0 10px 30px;
-           background: #0003;
-           opacity: 0.8;
-           font-size: 80%;
-           border-radius: 6px;
-           overflow: hidden;
-           margin: 40px 0 0 0;
-           border-top: 1px #03A9F4 dashed;
-           border-bottom: 1px #FFC107 dashed;">
-    <h2 style="border-left: 3px #e91e63 solid; padding-left: 4px;">
+    class="cpl-plugin-thanks">
+    <h2 class="cpl-plugin-thanks-title">
         <$text text={{{ [<chinese>match[yes]then[特别鸣谢]else[Specially thanks to]] }}}/>
     </h2>
     <div>

@@ -73,7 +73,7 @@ type: text/vnd.tiddlywiki
     </$button>
 </div>
 <$list filter="[[$:/temp/CPL-Repo/searching-plugin]is[tiddler]!field:text[yes]]">
-<div style="background:#e91e3db0;color:white;padding:2px 6px;margin:3px 0;backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;">
+<div class="cpl-status-banner cpl-status-banner-error">
 	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
 </div>
 </$list>

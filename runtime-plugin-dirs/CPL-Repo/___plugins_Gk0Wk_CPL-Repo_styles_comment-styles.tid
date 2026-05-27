@@ -1,7 +1,0 @@
-title: $:/plugins/Gk0Wk/CPL-Repo/styles/comment-styles
-created: 20260101000000000
-modified: 20260101000000000
-tags: $:/tags/Stylesheet
-type: text/css
-
-.cpl-comment-section{font-family:inherit}.cpl-comment-section h3{color:#333;font-size:1.2em}.cpl-comment-textarea{font-size:14px;line-height:1.5}.cpl-comment-textarea:focus{outline:0;border-color:#4a90e2;box-shadow:0 0 0 2px rgba(74,144,226,.2)}.cpl-comments-list{margin-top:16px}.cpl-comments-list>div:last-child{border-bottom:none}.tc-story-river .cpl-comment-section,[data-tiddlywiki-theme-name=Dark] .cpl-comment-section{background:#2d2d2d;border-color:#444}.tc-story-river .cpl-comment-section h3,[data-tiddlywiki-theme-name=Dark] .cpl-comment-section h3{color:#e0e0e0;border-color:#444}.tc-story-river .cpl-comment-textarea,[data-tiddlywiki-theme-name=Dark] .cpl-comment-textarea{background:#1e1e1e;color:#e0e0e0;border-color:#555}

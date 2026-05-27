@@ -40,7 +40,7 @@ type: text/vnd.tiddlywiki
 
 \define plugin-name-link(pluginTitle,name)
 \whitespace trim
-<$button class="tc-btn-invisible" style="padding: 0; margin: 0; font-weight: 600; font-size: 1.05em; color: inherit; text-align: left;">
+<$button class="tc-btn-invisible cpl-plugin-card-title" style="color: inherit;">
 <$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<__pluginTitle__>>/>
 <$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
 <$text text=<<__name__>>/>
@@ -67,13 +67,11 @@ type: text/vnd.tiddlywiki
 >
 
 <!-- Card Container -->
-<div class="cpl-plugin-card" style="background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; transition: box-shadow 0.2s;"
-     onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08)'"
-     onmouseout="this.style.boxShadow='none'">
+<div class="cpl-plugin-card">
 
 <!-- Plugin Icon (clickable) -->
-<div style="flex-shrink: 0;">
-<$button class="tc-btn-invisible" style="padding: 0; margin: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 6px; overflow: hidden;">
+<div class="cpl-plugin-card-icon-wrapper">
+<$button class="tc-btn-invisible cpl-plugin-card-icon-frame">
 <$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<title>>/>
 <$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
 <$list filter="[<icon>!is[blank]]">
@@ -86,24 +84,24 @@ type: text/vnd.tiddlywiki
 </div>
 
 <!-- Plugin Info -->
-<div style="flex: 1; min-width: 0;">
+<div class="cpl-plugin-card-body">
 <!-- Name -->
 <div style="margin-bottom: 2px;">
 <<plugin-name-link pluginTitle=<<title>> name=<<name>> >>
 </div>
 <!-- Description -->
-<div style="font-size: 0.85em; color: #666; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+<div class="cpl-plugin-card-description">
 <$text text=<<description>>/>
 </div>
 <!-- Meta info -->
-<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-<span style="font-size: 0.8em; color: #888;">v<$text text=<<version>>/></span>
+<div class="cpl-plugin-card-meta">
+<span class="cpl-plugin-card-meta-text">v<$text text=<<version>>/></span>
 <$list filter="[<author>!is[blank]]">
-<span style="font-size: 0.8em; color: #888;">by <$text text=<<author>>/></span>
+<span class="cpl-plugin-card-meta-text">by <$text text=<<author>>/></span>
 </$list>
-<$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg="#3f51b5" color="#fff" />
+<$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg={{{ [{$:/palette}getindex[tag-background]] }}} color={{{ [{$:/palette}getindex[tag-foreground]] }}} />
 <$list filter="[<installedVersion>!is[blank]]" variable="t">
-<span style="font-size: 0.8em; color: #28a745;"><em>{{$:/language/ControlPanel/Plugins/AlreadyInstalled/Hint}}</em></span>
+<span class="cpl-plugin-card-meta-text cpl-status-success"><em>{{$:/language/ControlPanel/Plugins/AlreadyInstalled/Hint}}</em></span>
 </$list>
 </div>
 </div>
@@ -117,18 +115,18 @@ type: text/vnd.tiddlywiki
 <!-- Installation Status -->
 <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]is[tiddler]field:plugin-title<title>]">
 <$list filter="[{$:/temp/CPL-Repo/instal-plugin-requesting}match[yes]]">
-<div style="margin-top: 4px; font-size: 0.85em; color: #28a745;"><$text text={{{ [<chinese>match[yes]then[安装准备中...]else[Preparing installation...]] }}}/></div>
+<div class="cpl-plugin-card-status cpl-status-success"><$text text={{{ [<chinese>match[yes]then[安装准备中...]else[Preparing installation...]] }}}/></div>
 </$list>
 <$list filter="[{$:/temp/CPL-Repo/instal-plugin-requesting}!match[yes]]">
-<div style="margin-top: 4px; font-size: 0.85em; color: #dc3545;"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/instal-plugin-requesting}] }}}/></div>
+<div class="cpl-plugin-card-status cpl-status-error"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/instal-plugin-requesting}] }}}/></div>
 </$list>
 </$list>
 <$list filter="[[$:/temp/CPL-Repo/installing-plugin]is[tiddler]field:plugin-title<title>]">
 <$list filter="[{$:/temp/CPL-Repo/installing-plugin}match[yes]]">
-<div style="margin-top: 4px; font-size: 0.85em; color: #28a745;"><$text text={{{ [<chinese>match[yes]then[安装中...]else[Installing...]] }}}/></div>
+<div class="cpl-plugin-card-status cpl-status-success"><$text text={{{ [<chinese>match[yes]then[安装中...]else[Installing...]] }}}/></div>
 </$list>
 <$list filter="[{$:/temp/CPL-Repo/installing-plugin}!match[yes]]">
-<div style="margin-top: 4px; font-size: 0.85em; color: #dc3545;"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/installing-plugin}] }}}/></div>
+<div class="cpl-plugin-card-status cpl-status-error"><$text text={{{ [<chinese>match[yes]then[出错: ]else[Error: ]addsuffix{$:/temp/CPL-Repo/installing-plugin}] }}}/></div>
 </$list>
 </$list>
 
