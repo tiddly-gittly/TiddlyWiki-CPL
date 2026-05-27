@@ -180,6 +180,27 @@ docker run -p 8080:8080 \
 >
 > If you omit a `-v` for a path declared as `VOLUME`, Docker creates an anonymous volume and copies the image content into it on first container creation — but this is lost when the container is removed. Always use explicit `-v` mounts for data you want to keep.
 
+**Syncing `data/` back to GitHub (host-side)**
+
+The container has no git credentials and should not need them. Instead, run the provided sync script **on the host** using the host's existing git identity:
+
+```bash
+# One-off sync:
+bash scripts/sync-data.sh
+
+# Automated: add to crontab (runs every hour)
+crontab -e
+# Add this line:
+0 * * * * cd /path/to/TiddlyWiki-CPL && bash scripts/sync-data.sh >> /var/log/cpl-sync.log 2>&1
+```
+
+The script:
+1. `git pull --ff-only` — absorbs changes from other mirrors first
+2. `git add data/` — stages only the data directory (never touches `plugin-fetched/` etc.)
+3. Commits with a timestamped message and pushes
+
+This keeps git credentials entirely on the host and out of the container.
+
 **Volume mount summary:**
 
 | Path in container | Mount from repo | Purpose |
