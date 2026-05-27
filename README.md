@@ -27,14 +27,12 @@ On this site, you can browse through various interesting plugins and install the
 ## Import plugins / libraries
 
 1. Pull this repo
-2. Make sure to install NodeJS and run `npm i`
+2. Make sure to install NodeJS and run `npm i` (`pnpm i`)
 3. In this repo folder, run: `npm run help` for further guidance
 
 ## Maintainer Docs
 
-Maintainer documentation now lives in the wiki so it stays aligned with the published CPL site:
+Maintainer documentation lives in the wiki:
 
-- `Development` (`wiki/tiddlers/Development.tid`) — project architecture, local development, testing, building, and the production-like server path
-- `Deployment` (`wiki/tiddlers/Deployment.tid`) — Docker, bare-metal setup, environment variables, data sync, multi-server operations, and comment administration
-
-This README stays user-focused; maintainers should use those wiki tiddlers as the canonical reference.
+- [Development](wiki/tiddlers/Development.tid) — project architecture, local development, testing, building, and the production-like server path
+- [Deployment](wiki/tiddlers/Deployment.tid) — Docker, bare-metal setup, environment variables, data sync, multi-server operations, and comment administration
