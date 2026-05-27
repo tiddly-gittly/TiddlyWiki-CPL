@@ -139,35 +139,15 @@ If the server is deployed behind a reverse proxy or CDN, make sure the real clie
 
 ### Docker Deployment
 
-A `Dockerfile` is included for running the server version in a container (not a static-site build image).
+A `Dockerfile` is included for running the server version in a container. The published image is `linonetwo/tiddlywiki-cpl`.
 
-**Build and run:**
-
-```bash
-docker build -t tiddlywiki-cpl .
-docker run -p 8080:8080 \
-  -v $(pwd)/data:/app/data \
-  -v $(pwd)/wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched \
-  -v $(pwd)/wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history \
-  -v $(pwd)/repo-cache:/app/repo-cache \
-  --env-file .env \
-  -e HOST=0.0.0.0 \
-  -e PORT=8080 \
-  tiddlywiki-cpl
-```
-
-**Recommended: mount volumes into the cloned repo directory**
-
-The recommended setup is to run the container from inside your cloned copy of this repo and point each mount at the corresponding path in the repo. This way:
-
-- `data/` is inside a git-tracked directory — you can commit download stats, ratings, and comments back to the repo with a simple `git add data/ && git commit`
-- `wiki/files/plugin-fetched/` and `wiki/files/plugin-fetched-history/` are already in `.gitignore`, so they persist on disk across restarts without polluting your git history
+**Quick start** (run from inside your clone of this repo):
 
 ```bash
-# Clone the repo once on your server, then run from inside it:
 git clone https://github.com/tiddly-gittly/TiddlyWiki-CPL.git
 cd TiddlyWiki-CPL
-docker run -p 8080:8080 \
+cp .env.example .env   # fill in secrets
+docker run -d -p 8080:8080 \
   -v $(pwd)/data:/app/data \
   -v $(pwd)/wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched \
   -v $(pwd)/wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history \
@@ -176,66 +156,33 @@ docker run -p 8080:8080 \
   linonetwo/tiddlywiki-cpl:latest
 ```
 
-> **Note on Docker mount behaviour:** When you use `-v /host/path:/container/path`, the host directory _completely shadows_ the container directory — any files baked into the image at that path become invisible for that run (the image layers are untouched, just not accessible). This is intentional for `data/`, `plugin-fetched/`, and `repo-cache/`: you want the host content, not the image content. This is why `wiki/files/plugin-offline/` must **not** be mounted: its offline fallback plugins live inside the image and would be hidden by a host mount, breaking the fallback.
->
-> If you omit a `-v` for a path declared as `VOLUME`, Docker creates an anonymous volume and copies the image content into it on first container creation — but this is lost when the container is removed. Always use explicit `-v` mounts for data you want to keep.
+Mounting into the cloned repo means `data/` changes are immediately on-disk and committable. **Do not mount** `wiki/files/plugin-offline/` — its fallback plugins are baked into the image and would be hidden.
 
-**Syncing `data/` back to GitHub (host-side)**
+**Container lifecycle** (`docker-entrypoint.ts`):
+1. `git clone / pull` into `/app/repo-cache` — syncs latest plugin metadata (non-fatal if GitHub unreachable)
+2. Server starts immediately
+3. `fetch-plugins` runs in the background; server restarts when complete
+4. Repeats every `SYNC_INTERVAL_SECONDS` (default: `3600`)
 
-The container has no git credentials and should not need them. Instead, run the provided sync script **on the host** using the host's existing git identity:
-
-> **How bind mounts work:** `-v $(pwd)/data:/app/data` makes both the host and the container point to the exact same directory on disk. Every write the container makes to `/app/data` is immediately visible at `$(pwd)/data` on the host — no copying or syncing required. The script below only needs to do `git add data/ && git commit && git push`.
-
-```bash
-# One-off sync:
-pnpm run sync-data
-
-# Automated: add to crontab (runs every hour)
-crontab -e
-# Add this line:
-0 * * * * cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
-```
-
-The script:
-1. `git pull --ff-only` — absorbs changes from other mirrors first
-2. `git add data/` — stages only the data directory (never touches `plugin-fetched/` etc.)
-3. Commits with a timestamped message and pushes
-
-This keeps git credentials entirely on the host and out of the container.
-
-**Volume mount summary:**
-
-| Path in container | Mount from repo | Purpose |
-|---|---|---|
-| `/app/data` | `$(pwd)/data` | Stats, ratings, comments — **commit back to git** |
-| `/app/wiki/files/plugin-fetched` | `$(pwd)/wiki/files/plugin-fetched` | Latest plugin JSONs (gitignored, persists on disk) |
-| `/app/wiki/files/plugin-fetched-history` | `$(pwd)/wiki/files/plugin-fetched-history` | Per-version plugin archives (gitignored, persists on disk) |
-| `/app/repo-cache` | `$(pwd)/repo-cache` | Shallow git clone (gitignored) — avoids full re-clone on restart |
-| `/app/wiki/files/plugin-offline` | ❌ do not mount | Baked into image; mounting would hide the content |
-
-**Environment variables:**
-
-| Variable | Description |
-|---|---|
-| `HOST` | Bind address (default `0.0.0.0` in container) |
-| `PORT` | Listen port (default `8080`) |
-| `CPL_JWT_SECRET` | JWT signing secret (required) |
-| `CPL_GITHUB_CLIENT_ID` | GitHub OAuth App Client ID |
-| `CPL_GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret |
-| `CPL_ADMIN_GITHUB_IDS` | Comma-separated GitHub user IDs for moderators |
-
-The container runs `docker-entrypoint.ts` (via `ts-node`) which manages the full lifecycle:
-
-1. **`git clone / pull`** — shallow-clones the repo into `/app/repo-cache` on first start, then `git pull` on subsequent starts to get the latest plugin metadata. Non-fatal: server starts with baked-in metadata if git is unreachable.
-2. **Server starts immediately** — no waiting for plugin downloads.
-3. **`fetch-plugins` (background)** — downloads plugin JSON files from upstream sources into `wiki/files/plugin-fetched/`. Server restarts when complete to serve the new files.
-4. **Periodic sync** — every `SYNC_INTERVAL_SECONDS` (default: `3600`), steps 1 and 3 repeat and the server restarts.
-
-**Extra environment variables:**
+**Key environment variables:**
 
 | Variable | Default | Description |
 |---|---|---|
-| `SYNC_INTERVAL_SECONDS` | `3600` | Seconds between git pull + plugin re-fetch cycles. Set to `0` to disable. |
+| `HOST` | `0.0.0.0` | Bind address |
+| `PORT` | `8080` | Listen port |
+| `CPL_JWT_SECRET` | — | JWT signing secret (required) |
+| `CPL_GITHUB_CLIENT_ID/SECRET` | — | GitHub OAuth App credentials |
+| `CPL_ADMIN_GITHUB_IDS` | — | Comma-separated moderator GitHub user IDs |
+| `CPL_SERVER_ID` | — | Mirror identifier (e.g. `china`, `us`) |
+| `SYNC_INTERVAL_SECONDS` | `3600` | Seconds between git pull + plugin re-fetch; `0` to disable |
+
+**Syncing `data/` back to GitHub** — run on the host once a week (requires `gh` CLI):
+
+```bash
+pnpm run sync-data   # creates a PR via gh pr create
+```
+
+See [data/README.md](data/README.md) for full details on the data directory, bind mount behaviour, and multi-server setup.
 
 ### Environment Configuration
 
