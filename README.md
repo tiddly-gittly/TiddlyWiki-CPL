@@ -176,7 +176,7 @@ docker run -p 8080:8080 \
   linonetwo/tiddlywiki-cpl:latest
 ```
 
-> **Note on Docker mount behaviour:** When you use `-v /host/path:/container/path`, the host directory _completely shadows_ the container directory — any files baked into the image at that path become invisible. This is why `wiki/files/plugin-offline/` must **not** be mounted: its content (offline fallback plugins) lives inside the image and would disappear under a host mount. Only mount paths that are empty in the image (`data/`, `plugin-fetched/`, `plugin-fetched-history/`, `repo-cache/`).
+> **Note on Docker mount behaviour:** When you use `-v /host/path:/container/path`, the host directory _completely shadows_ the container directory — any files baked into the image at that path become invisible for that run (the image layers are untouched, just not accessible). This is intentional for `data/`, `plugin-fetched/`, and `repo-cache/`: you want the host content, not the image content. This is why `wiki/files/plugin-offline/` must **not** be mounted: its offline fallback plugins live inside the image and would be hidden by a host mount, breaking the fallback.
 >
 > If you omit a `-v` for a path declared as `VOLUME`, Docker creates an anonymous volume and copies the image content into it on first container creation — but this is lost when the container is removed. Always use explicit `-v` mounts for data you want to keep.
 
