@@ -147,27 +147,48 @@ A `Dockerfile` is included for running the server version in a container (not a 
 docker build -t tiddlywiki-cpl .
 docker run -p 8080:8080 \
   -v $(pwd)/data:/app/data \
+  -v $(pwd)/wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched \
+  -v $(pwd)/wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history \
+  -v $(pwd)/repo-cache:/app/repo-cache \
   --env-file .env \
   -e HOST=0.0.0.0 \
   -e PORT=8080 \
   tiddlywiki-cpl
 ```
 
-**Recommended volume mounts:**
+**Recommended: mount volumes into the cloned repo directory**
 
-| Path in container | Purpose |
-|---|---|
-| `/app/data` | Runtime data (stats, ratings, comments) — **required** |
-| `/app/repo-cache` | Shallow git clone of this repo; persists across restarts so startup only runs `git pull` instead of a full clone |
-| `/app/wiki/files/plugin-fetched` | Downloaded plugin JSON files; mount to avoid re-downloading everything on each container start |
+The recommended setup is to run the container from inside your cloned copy of this repo and point each mount at the corresponding path in the repo. This way:
 
-To supply your own offline plugins, mount an additional volume:
+- `data/` is inside a git-tracked directory — you can commit download stats, ratings, and comments back to the repo with a simple `git add data/ && git commit`
+- `wiki/files/plugin-fetched/` and `wiki/files/plugin-fetched-history/` are already in `.gitignore`, so they persist on disk across restarts without polluting your git history
 
 ```bash
--v $(pwd)/wiki/files/plugin-offline:/app/wiki/files/plugin-offline
+# Clone the repo once on your server, then run from inside it:
+git clone https://github.com/tiddly-gittly/TiddlyWiki-CPL.git
+cd TiddlyWiki-CPL
+docker run -p 8080:8080 \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched \
+  -v $(pwd)/wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history \
+  -v $(pwd)/repo-cache:/app/repo-cache \
+  --env-file .env \
+  linonetwo/tiddlywiki-cpl:latest
 ```
 
-**Plugin version history:** `plugin-fetched/` contains the latest fetched JSON for each plugin (files are overwritten on each sync). If you need version history, mount the directory into a path tracked by git on the host and commit periodically.
+> **Note on Docker mount behaviour:** When you use `-v /host/path:/container/path`, the host directory _completely shadows_ the container directory — any files baked into the image at that path become invisible. This is why `wiki/files/plugin-offline/` must **not** be mounted: its content (offline fallback plugins) lives inside the image and would disappear under a host mount. Only mount paths that are empty in the image (`data/`, `plugin-fetched/`, `plugin-fetched-history/`, `repo-cache/`).
+>
+> If you omit a `-v` for a path declared as `VOLUME`, Docker creates an anonymous volume and copies the image content into it on first container creation — but this is lost when the container is removed. Always use explicit `-v` mounts for data you want to keep.
+
+**Volume mount summary:**
+
+| Path in container | Mount from repo | Purpose |
+|---|---|---|
+| `/app/data` | `$(pwd)/data` | Stats, ratings, comments — **commit back to git** |
+| `/app/wiki/files/plugin-fetched` | `$(pwd)/wiki/files/plugin-fetched` | Latest plugin JSONs (gitignored, persists on disk) |
+| `/app/wiki/files/plugin-fetched-history` | `$(pwd)/wiki/files/plugin-fetched-history` | Per-version plugin archives (gitignored, persists on disk) |
+| `/app/repo-cache` | `$(pwd)/repo-cache` | Shallow git clone (gitignored) — avoids full re-clone on restart |
+| `/app/wiki/files/plugin-offline` | ❌ do not mount | Baked into image; mounting would hide the content |
 
 **Environment variables:**
 
