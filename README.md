@@ -184,14 +184,16 @@ docker run -p 8080:8080 \
 
 The container has no git credentials and should not need them. Instead, run the provided sync script **on the host** using the host's existing git identity:
 
+> **How bind mounts work:** `-v $(pwd)/data:/app/data` makes both the host and the container point to the exact same directory on disk. Every write the container makes to `/app/data` is immediately visible at `$(pwd)/data` on the host — no copying or syncing required. The script below only needs to do `git add data/ && git commit && git push`.
+
 ```bash
 # One-off sync:
-bash scripts/sync-data.sh
+pnpm run sync-data
 
 # Automated: add to crontab (runs every hour)
 crontab -e
 # Add this line:
-0 * * * * cd /path/to/TiddlyWiki-CPL && bash scripts/sync-data.sh >> /var/log/cpl-sync.log 2>&1
+0 * * * * cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
 ```
 
 The script:
