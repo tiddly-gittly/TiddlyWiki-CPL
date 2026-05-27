@@ -9,7 +9,6 @@ import {
 } from './api-client/constants';
 import { getCurrentServerOrigin } from './api-client/state';
 import { getEventParam, getViewedPluginTitle } from './api-client/utilities';
-import { setJwtToken } from './api-client/auth';
 import { createCplServerApi } from './api-client/api';
 import {
   fetchPluginStats,
@@ -206,11 +205,9 @@ export const startup = (): void => {
 
           try {
             const data = JSON.parse(response) as OAuthResponse;
-            if (!data.success || !data.token) {
+            if (!data.success) {
               return;
             }
-
-            setJwtToken(data.token);
             tw.wiki.addTiddler({
               title: '$:/temp/CPL-Server/user-status',
               text: 'authenticated',

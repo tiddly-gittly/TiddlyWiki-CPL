@@ -23,7 +23,6 @@ export interface RatingResponse extends JsonObject {
 
 export interface OAuthResponse extends JsonObject {
   success?: boolean;
-  token?: string;
   user?: unknown;
 }
 

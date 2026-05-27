@@ -12,4 +12,3 @@ export const MIRROR_SERVER_REPOS_TITLE =
 export const SERVER_CONFIG_TITLE =
   '$:/plugins/Gk0Wk/CPL-Repo/config/current-server';
 export const SERVER_LIST_TITLE = '$:/plugins/Gk0Wk/CPL-Repo/config/servers';
-export const JWT_TOKEN_KEY = 'cpl_jwt_token';

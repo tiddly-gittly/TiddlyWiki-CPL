@@ -17,38 +17,38 @@ export const rawApiRequest = <T extends JsonObject>(
   callback: ApiCallback<T>,
   extraHeaders?: Record<string, string>,
 ): void => {
-  const options: {
-    url: string;
-    type: string;
-    headers: Record<string, string>;
-    data?: string;
-    callback: (error: unknown, response: string) => void;
-  } = {
-    url: `${getCurrentMirrorApiBase()}${endpoint}`,
-    type: method,
-    headers: {
-      ...(extraHeaders ?? {}),
-    },
-    callback: (error, response) => {
-      if (error) {
-        callback(getErrorMessage(error), null);
+  const headers: Record<string, string> = {
+    ...(extraHeaders ?? {}),
+  };
+  let data: string | undefined;
+
+  if (body) {
+    headers['Content-Type'] = 'application/json';
+    data = JSON.stringify(body);
+  }
+
+  fetch(`${getCurrentMirrorApiBase()}${endpoint}`, {
+    method,
+    headers,
+    body: data,
+    credentials: 'include',
+  })
+    .then(async response => {
+      const text = await response.text();
+      if (!response.ok) {
+        callback(text || response.statusText, null);
         return;
       }
 
       try {
-        callback(null, JSON.parse(response) as T);
+        callback(null, JSON.parse(text) as T);
       } catch {
         callback('Invalid JSON response', null);
       }
-    },
-  };
-
-  if (body) {
-    options.headers['Content-Type'] = 'application/json';
-    options.data = JSON.stringify(body);
-  }
-
-  tw.utils.httpRequest(options);
+    })
+    .catch(error => {
+      callback(getErrorMessage(error), null);
+    });
 };
 
 export const apiRequest = <T extends JsonObject>(

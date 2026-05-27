@@ -22,8 +22,27 @@ interface JwtModule {
 
 const jwt = require('jsonwebtoken') as JwtModule;
 
+export const AUTH_COOKIE_NAME = 'cpl_jwt_token';
 const JWT_SECRET = Config.jwtSecret;
 const JWT_EXPIRY = `${Config.jwtExpiryDays}d`;
+
+const parseCookies = (cookieHeader: string): Record<string, string> => {
+  const cookies: Record<string, string> = {};
+  cookieHeader.split(';').forEach(entry => {
+    const separatorIndex = entry.indexOf('=');
+    if (separatorIndex < 0) {
+      return;
+    }
+
+    const name = entry.slice(0, separatorIndex).trim();
+    const value = entry.slice(separatorIndex + 1).trim();
+    if (name) {
+      cookies[name] = decodeURIComponent(value);
+    }
+  });
+
+  return cookies;
+};
 
 const isTokenPayload = (value: unknown): value is TokenPayload => {
   if (typeof value !== 'object' || value === null) {
@@ -93,11 +112,24 @@ export const Auth = {
   getUserFromRequest(request: RouteRequest): TokenPayload | null {
     const authHeader = getHeaderValue(request.headers, 'authorization');
     const match = authHeader.match(/^Bearer\s+(.+)$/);
-    if (!match) {
-      return null;
+    if (match) {
+      return this.verifyToken(match[1]);
     }
 
-    return this.verifyToken(match[1]);
+    const cookieHeader = getHeaderValue(request.headers, 'cookie');
+    const token = parseCookies(cookieHeader)[AUTH_COOKIE_NAME];
+    return token ? this.verifyToken(token) : null;
+  },
+
+  createCookie(token: string): string {
+    const maxAgeSeconds = Config.jwtExpiryDays * 24 * 60 * 60;
+    return `${AUTH_COOKIE_NAME}=${encodeURIComponent(
+      token,
+    )}; Path=/; Max-Age=${maxAgeSeconds}; HttpOnly; SameSite=Lax`;
+  },
+
+  clearCookie(): string {
+    return `${AUTH_COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax`;
   },
 
   async exchangeGitHubCode(code: string): Promise<GitHubTokenResponse> {
@@ -137,5 +169,9 @@ export const Auth = {
 
   isAdmin(user?: { githubId?: string | number | null } | null): boolean {
     return Config.isAdmin(user?.githubId ?? null);
+  },
+
+  isBlocked(user?: { githubId?: string | number | null } | null): boolean {
+    return Config.isBlocked(user?.githubId ?? null);
   },
 };

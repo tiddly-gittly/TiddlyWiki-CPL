@@ -3,7 +3,12 @@ import * as path from 'path';
 
 import { Config } from '../config';
 import { getRuntimeState } from '../runtime-state';
-import type { DownloadStats, RatingRecord, RatingStats } from '../types';
+import type {
+  AuthenticatedUser,
+  DownloadStats,
+  RatingRecord,
+  RatingStats,
+} from '../types';
 
 const runtimeState = getRuntimeState().dataStore;
 const DATA_DIR = Config.dataDir;
@@ -100,8 +105,13 @@ const aggregateRatings = (): Record<string, RatingStats> => {
       const nextRatings = aggregated[pluginTitle] ?? createDefaultRatings();
 
       ratingStats.ratings?.forEach(rating => {
+        const ratingKey = rating.githubId ?? rating.ip;
+        if (!ratingKey) {
+          return;
+        }
+
         const existingIndex = nextRatings.ratings.findIndex(
-          candidate => candidate.ip === rating.ip,
+          candidate => (candidate.githubId ?? candidate.ip) === ratingKey,
         );
 
         if (existingIndex >= 0) {
@@ -235,7 +245,11 @@ export const DataStore = {
     return aggregateRatings()[pluginTitle] ?? createDefaultRatings();
   },
 
-  addRating(pluginTitle: string, ip: string, rating: number): RatingStats {
+  addRating(
+    pluginTitle: string,
+    user: AuthenticatedUser,
+    rating: number,
+  ): RatingStats {
     ensureRatingsLoaded();
 
     if (!runtimeState.ratingsCache) {
@@ -245,9 +259,14 @@ export const DataStore = {
     const pluginRatings =
       runtimeState.ratingsCache[pluginTitle] ?? createDefaultRatings();
     const timestamp = new Date().toISOString();
-    const nextRating: RatingRecord = { ip, rating, timestamp };
+    const nextRating: RatingRecord = {
+      githubId: user.githubId,
+      username: user.username,
+      rating,
+      timestamp,
+    };
     const existingIndex = pluginRatings.ratings.findIndex(
-      candidate => candidate.ip === ip,
+      candidate => (candidate.githubId ?? candidate.ip) === user.githubId,
     );
 
     if (existingIndex >= 0) {
@@ -270,13 +289,15 @@ export const DataStore = {
     return pluginRatings;
   },
 
-  hasRated(pluginTitle: string, ip: string): boolean {
+  hasRated(pluginTitle: string, githubId: string): boolean {
     const pluginRatings = aggregateRatings()[pluginTitle];
     if (!pluginRatings) {
       return false;
     }
 
-    return pluginRatings.ratings.some(candidate => candidate.ip === ip);
+    return pluginRatings.ratings.some(
+      candidate => (candidate.githubId ?? candidate.ip) === githubId,
+    );
   },
 
   getAllStats(): Record<string, DownloadStats> {

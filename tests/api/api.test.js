@@ -15,6 +15,8 @@ const TEST_FETCHED_PLUGIN_FILENAME = '$__plugins_test_fetched-preferred.json';
 const TEST_FETCHED_PLUGIN_PATH = path.join(FETCHED_DIR, TEST_FETCHED_PLUGIN_FILENAME);
 const TEST_DATA_DIR = path.resolve(__dirname, '../../data');
 const TEST_COMPATIBILITY_DIR = path.join(TEST_DATA_DIR, 'compatibility');
+const RUNTIME_PLUGIN_CACHE_DIR = path.resolve(__dirname, '../../cache/runtime-plugins');
+const RUNTIME_PLUGIN_DIR_CACHE_DIR = path.resolve(__dirname, '../../cache/runtime-plugin-dirs');
 const JWT_SECRET = 'test-secret';
 
 function base64UrlEncode(value) {
@@ -45,6 +47,11 @@ function createTestJwt(payload) {
 
 const userToken = createTestJwt({ githubId: '1001', username: 'compat-user' });
 const adminToken = createTestJwt({ githubId: '42', username: 'compat-admin' });
+const blockedToken = createTestJwt({ githubId: '666', username: 'blocked-user' });
+
+function authCookie(token) {
+  return `cpl_jwt_token=${encodeURIComponent(token)}`;
+}
 
 function createFetchedPluginFile() {
   if (!fs.existsSync(FETCHED_DIR)) {
@@ -77,6 +84,14 @@ function cleanupCompatibilityFiles() {
   for (const fileName of fs.readdirSync(TEST_COMPATIBILITY_DIR)) {
     if (fileName.includes('compat-test')) {
       fs.unlinkSync(path.join(TEST_COMPATIBILITY_DIR, fileName));
+    }
+  }
+}
+
+function cleanupRuntimePluginCache() {
+  for (const cacheDir of [RUNTIME_PLUGIN_CACHE_DIR, RUNTIME_PLUGIN_DIR_CACHE_DIR]) {
+    if (fs.existsSync(cacheDir)) {
+      fs.rmSync(cacheDir, { recursive: true, force: true });
     }
   }
 }
@@ -168,6 +183,7 @@ describe('CPL Server API', () => {
     const wikiPath = path.resolve(__dirname, '../..');
     createFetchedPluginFile();
     cleanupCompatibilityFiles();
+    cleanupRuntimePluginCache();
 
     serverProcess = spawn(process.execPath, ['-r', 'ts-node/register/transpile-only', 'scripts/server.ts', '--prod'], {
       cwd: wikiPath,
@@ -178,7 +194,8 @@ describe('CPL Server API', () => {
         HOST: TEST_HOST,
         CPL_TEST_MODE: 'true',
         CPL_JWT_SECRET: JWT_SECRET,
-        CPL_ADMIN_GITHUB_IDS: '42'
+        CPL_ADMIN_GITHUB_IDS: '42',
+        CPL_BLOCKED_GITHUB_IDS: '666'
       }
     });
 
@@ -238,15 +255,39 @@ describe('CPL Server API', () => {
     expect(response.body).toHaveProperty('downloadCount');
   });
 
-  test('POST /cpl/api/rate/:pluginTitle should record rating', async () => {
+  test('POST /cpl/api/rate/:pluginTitle should require authentication', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
     const response = await makeRequest('POST', `/cpl/api/rate/${pluginTitle}`, {
       rating: 5
+    });
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.success).toBe(false);
+  });
+
+  test('POST /cpl/api/rate/:pluginTitle should record rating from auth cookie', async () => {
+    const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
+    const response = await makeRequest('POST', `/cpl/api/rate/${pluginTitle}`, {
+      rating: 5
+    }, {
+      Cookie: authCookie(userToken)
     });
     
     expect(response.statusCode).toBe(200);
     expect(response.body.success).toBe(true);
     expect(response.body).toHaveProperty('averageRating');
+  });
+
+  test('POST /cpl/api/rate/:pluginTitle should reject blocked GitHub users', async () => {
+    const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
+    const response = await makeRequest('POST', `/cpl/api/rate/${pluginTitle}`, {
+      rating: 4
+    }, {
+      Cookie: authCookie(blockedToken)
+    });
+
+    expect(response.statusCode).toBe(403);
+    expect(response.body.success).toBe(false);
   });
 
   test('GET /cpl/api/changelog/:pluginTitle should return changelog or 404', async () => {

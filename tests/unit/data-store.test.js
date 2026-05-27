@@ -123,6 +123,26 @@ describe('DataStore', () => {
     fs.unlinkSync(path.join(DATA_DIR, 'stats.china.json'));
     fs.unlinkSync(path.join(DATA_DIR, 'stats.us.json'));
   });
+
+  test('should update ratings by GitHub user identity', () => {
+    const pluginTitle = '$:/plugins/test/plugin';
+    const user = {
+      githubId: '1001',
+      username: 'rating-user',
+      avatar: 'https://example.com/avatar.png'
+    };
+
+    DataStore.addRating(pluginTitle, user, 5);
+    const updated = DataStore.addRating(pluginTitle, user, 3);
+
+    expect(updated.totalRatings).toBe(1);
+    expect(updated.averageRating).toBe(3);
+    expect(updated.ratings[0]).toMatchObject({
+      githubId: '1001',
+      username: 'rating-user',
+      rating: 3
+    });
+  });
 });
 
 describe('CompatibilityStore', () => {

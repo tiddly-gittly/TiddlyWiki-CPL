@@ -23,7 +23,7 @@ export const createCplServerApi = (): CPLServerApi => ({
     apiRequest('GET', '/stats', null, callback);
   },
   submitRating(pluginTitle, rating, callback) {
-    apiRequest(
+    authenticatedRequest(
       'POST',
       `/rate/${encodeURIComponent(pluginTitle)}`,
       { rating },
@@ -78,5 +78,6 @@ export const createCplServerApi = (): CPLServerApi => ({
   },
   logout() {
     setJwtToken(null);
+    authenticatedRequest('POST', '/auth/logout', null, () => undefined);
   },
 });

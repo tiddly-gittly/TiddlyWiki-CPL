@@ -51,11 +51,18 @@ export const handler: RouteHandler = async (request, _response, context) => {
       avatar: githubUser.avatar_url || '',
     };
 
-    sendJson(context, 200, {
-      success: true,
-      token: Auth.generateToken(user),
-      user,
-    });
+    const token = Auth.generateToken(user);
+    sendJson(
+      context,
+      200,
+      {
+        success: true,
+        user,
+      },
+      {
+        'Set-Cookie': Auth.createCookie(token),
+      },
+    );
   } catch (error) {
     sendInternalError(context, 'auth-github handler', error);
   }

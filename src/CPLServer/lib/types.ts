@@ -48,7 +48,9 @@ export interface DownloadStats {
 }
 
 export interface RatingRecord {
-  ip: string;
+  githubId?: string;
+  username?: string;
+  ip?: string;
   rating: number;
   timestamp: string;
 }

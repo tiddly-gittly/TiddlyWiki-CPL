@@ -38,6 +38,7 @@ const envList = (key: string): string[] => {
 };
 
 const adminGithubIds = envList('CPL_ADMIN_GITHUB_IDS');
+const blockedGithubIds = envList('CPL_BLOCKED_GITHUB_IDS');
 const serverId = env('CPL_SERVER_ID', '');
 
 export const Config = {
@@ -46,6 +47,7 @@ export const Config = {
   githubClientId: env('CPL_GITHUB_CLIENT_ID', ''),
   githubClientSecret: env('CPL_GITHUB_CLIENT_SECRET', ''),
   adminGithubIds,
+  blockedGithubIds,
   commentRateLimit: envInt('CPL_COMMENT_RATE_LIMIT', 10),
   serverId,
   dataDir: path.resolve(process.cwd(), 'data'),
@@ -56,6 +58,13 @@ export const Config = {
     }
 
     return adminGithubIds.includes(String(githubId));
+  },
+  isBlocked: (githubId?: string | number | null): boolean => {
+    if (!githubId) {
+      return false;
+    }
+
+    return blockedGithubIds.includes(String(githubId));
   },
   getServerSuffix: (): string => (serverId ? `.${serverId}` : ''),
 } as const;

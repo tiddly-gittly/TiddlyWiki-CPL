@@ -1,5 +1,5 @@
+import { Auth } from '../../lib/auth';
 import { DataStore } from '../../lib/store/data';
-import { RateLimiter } from '../../lib/security/rate-limit';
 import {
   decodeRouteParam,
   parseJsonBody,
@@ -30,6 +30,25 @@ export const handler: RouteHandler = (request, _response, context) => {
   try {
     const pluginTitle = decodeRouteParam(context.params[0]);
     const body = parseJsonBody<RateBody>(context.data);
+    const user = Auth.getUserFromRequest(request);
+
+    if (!user) {
+      sendError(
+        context,
+        401,
+        'Authentication required. Please login with GitHub.',
+      );
+      return;
+    }
+
+    if (Auth.isBlocked(user)) {
+      sendError(
+        context,
+        403,
+        'This GitHub account is not allowed to submit ratings.',
+      );
+      return;
+    }
 
     if (body?.rating === undefined) {
       sendError(
@@ -50,14 +69,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const ip = RateLimiter.getClientIp(request);
-    if (!RateLimiter.canRate(pluginTitle, ip, DataStore)) {
-      sendError(context, 429, 'You have already rated this plugin.');
-      return;
-    }
-
-    RateLimiter.recordRating(pluginTitle, ip);
-    const ratings = DataStore.addRating(pluginTitle, ip, rating);
+    const ratings = DataStore.addRating(pluginTitle, user, rating);
 
     sendJson(context, 200, {
       success: true,
