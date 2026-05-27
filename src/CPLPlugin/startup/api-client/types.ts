@@ -44,7 +44,10 @@ export interface CompatibilityReportResponse extends JsonObject {
 }
 
 export interface CPLServerApi {
-  recordDownload: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
+  recordDownload: (
+    pluginTitle: string,
+    callback: ApiCallback<JsonObject>,
+  ) => void;
   getStats: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
   getAllStats: (callback: ApiCallback<JsonObject>) => void;
   submitRating: (
@@ -52,14 +55,20 @@ export interface CPLServerApi {
     rating: number,
     callback: ApiCallback<RatingResponse>,
   ) => void;
-  getChangelog: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
+  getChangelog: (
+    pluginTitle: string,
+    callback: ApiCallback<JsonObject>,
+  ) => void;
   getComments: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
   submitComment: (
     pluginTitle: string,
     content: string,
     callback: ApiCallback<JsonObject>,
   ) => void;
-  getCompatibilityReports: (pluginTitle: string, callback: ApiCallback<CompatibilityReportResponse>) => void;
+  getCompatibilityReports: (
+    pluginTitle: string,
+    callback: ApiCallback<CompatibilityReportResponse>,
+  ) => void;
   submitCompatibilityReport: (
     pluginTitle: string,
     payload: {

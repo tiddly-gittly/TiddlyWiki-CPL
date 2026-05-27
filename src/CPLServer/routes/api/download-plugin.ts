@@ -8,7 +8,10 @@ import { RateLimiter } from '../../lib/security/rate-limit';
 import { decodeRouteParam, sendError, sendInternalError } from '../../lib/http';
 import type { RouteHandler } from '../../lib/types';
 
-const findPluginFile = (pluginTitle: string, version?: string): string | null => {
+const findPluginFile = (
+  pluginTitle: string,
+  version?: string,
+): string | null => {
   const baseDir = pathModule.resolve('wiki', 'files');
   const sanitizedTitle = sanitizePluginFileName(pluginTitle);
 
@@ -73,7 +76,9 @@ export const handler: RouteHandler = (request, _response, context) => {
       {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Content-Disposition': `attachment; filename="${sanitizePluginFileName(pluginTitle)}.json"`,
+        'Content-Disposition': `attachment; filename="${sanitizePluginFileName(
+          pluginTitle,
+        )}.json"`,
       },
       fs.readFileSync(filePath, 'utf-8'),
     );

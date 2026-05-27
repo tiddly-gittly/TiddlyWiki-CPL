@@ -1,6 +1,12 @@
 import { Auth } from '../../../lib/auth';
 import { Config } from '../../../lib/config';
-import { decodeRouteParam, sendError, sendInternalError, sendJson, parseJsonBody } from '../../../lib/http';
+import {
+  decodeRouteParam,
+  sendError,
+  sendInternalError,
+  sendJson,
+  parseJsonBody,
+} from '../../../lib/http';
 import { getRuntimeState } from '../../../lib/runtime-state';
 import { CompatibilityStore } from '../../../lib/store/compatibility';
 import type {
@@ -44,24 +50,33 @@ const recordCompatibilityReport = (githubId: string): void => {
   compatibilityLimits[githubId].push(Date.now());
 };
 
-const isValidConflictingPlugin = (value: unknown): value is { pluginTitle: string; description: string } => {
+const isValidConflictingPlugin = (
+  value: unknown,
+): value is { pluginTitle: string; description: string } => {
   if (typeof value !== 'object' || value === null) {
     return false;
   }
   const candidate = value as Record<string, unknown>;
-  return typeof candidate.pluginTitle === 'string' && typeof candidate.description === 'string';
+  return (
+    typeof candidate.pluginTitle === 'string' &&
+    typeof candidate.description === 'string'
+  );
 };
 
 const isValidSeverity = (value: unknown): value is CompatibilitySeverity => {
   return value === 'info' || value === 'warning' || value === 'error';
 };
 
-const isValidConflictType = (value: unknown): value is CompatibilityConflictType => {
-  return value === 'conflict'
-    || value === 'breaks'
-    || value === 'requires'
-    || value === 'replaces'
-    || value === 'optional';
+const isValidConflictType = (
+  value: unknown,
+): value is CompatibilityConflictType => {
+  return (
+    value === 'conflict' ||
+    value === 'breaks' ||
+    value === 'requires' ||
+    value === 'replaces' ||
+    value === 'optional'
+  );
 };
 
 const asOptionalString = (value: unknown): string | undefined => {
@@ -83,7 +98,11 @@ export const handler: RouteHandler = (request, _response, context) => {
     const user = Auth.getUserFromRequest(request);
 
     if (!user) {
-      sendError(context, 401, 'Authentication required. Please login with GitHub.');
+      sendError(
+        context,
+        401,
+        'Authentication required. Please login with GitHub.',
+      );
       return;
     }
 
@@ -122,8 +141,12 @@ export const handler: RouteHandler = (request, _response, context) => {
             description: item.description.trim().slice(0, 1000),
             versionMin: asOptionalString(candidate.versionMin),
             versionMax: asOptionalString(candidate.versionMax),
-            severity: isValidSeverity(candidate.severity) ? candidate.severity : 'error',
-            type: isValidConflictType(candidate.type) ? candidate.type : 'conflict',
+            severity: isValidSeverity(candidate.severity)
+              ? candidate.severity
+              : 'error',
+            type: isValidConflictType(candidate.type)
+              ? candidate.type
+              : 'conflict',
           });
         }
       }
@@ -132,7 +155,9 @@ export const handler: RouteHandler = (request, _response, context) => {
     const timestamp = new Date().toISOString();
 
     const report: CompatibilityReport = {
-      id: `${Config.serverId || 'default'}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      id: `${Config.serverId || 'default'}-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 6)}`,
       pluginTitle,
       reporterGithubId: user.githubId,
       reporterUsername: user.username,

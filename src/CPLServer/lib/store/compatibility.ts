@@ -41,19 +41,27 @@ const loadReportsFromDisk = (pluginTitle: string): CompatibilityReport[] => {
   const filePath = getCompatibilityFilePath(pluginTitle);
   try {
     if (fs.existsSync(filePath)) {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompatibilityReport[];
+      const data = JSON.parse(
+        fs.readFileSync(filePath, 'utf-8'),
+      ) as CompatibilityReport[];
       if (Array.isArray(data)) {
         return data;
       }
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(`[CPL-Server] Error reading compatibility reports for ${pluginTitle}:`, message);
+    console.error(
+      `[CPL-Server] Error reading compatibility reports for ${pluginTitle}:`,
+      message,
+    );
   }
   return [];
 };
 
-const saveReportsToDisk = (pluginTitle: string, reports: CompatibilityReport[]): void => {
+const saveReportsToDisk = (
+  pluginTitle: string,
+  reports: CompatibilityReport[],
+): void => {
   try {
     ensureCompatibilityDir();
     fs.writeFileSync(
@@ -63,7 +71,10 @@ const saveReportsToDisk = (pluginTitle: string, reports: CompatibilityReport[]):
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(`[CPL-Server] Error saving compatibility reports for ${pluginTitle}:`, message);
+    console.error(
+      `[CPL-Server] Error saving compatibility reports for ${pluginTitle}:`,
+      message,
+    );
   }
 };
 
@@ -78,13 +89,18 @@ const getAllReportsFromDisk = (): CompatibilityReport[] => {
     .forEach(fileName => {
       try {
         const filePath = path.join(COMPATIBILITY_DIR, fileName);
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompatibilityReport[];
+        const data = JSON.parse(
+          fs.readFileSync(filePath, 'utf-8'),
+        ) as CompatibilityReport[];
         if (Array.isArray(data)) {
           reports.push(...data);
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        console.error(`[CPL-Server] Error reading compatibility file ${fileName}:`, message);
+        console.error(
+          `[CPL-Server] Error reading compatibility file ${fileName}:`,
+          message,
+        );
       }
     });
 
@@ -97,7 +113,9 @@ const aggregateReports = (pluginTitle: string): CompatibilityReport[] => {
 
   getAllCompatibilityFiles(pluginTitle).forEach(filePath => {
     try {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompatibilityReport[];
+      const data = JSON.parse(
+        fs.readFileSync(filePath, 'utf-8'),
+      ) as CompatibilityReport[];
       if (!Array.isArray(data)) {
         return;
       }
@@ -110,19 +128,27 @@ const aggregateReports = (pluginTitle: string): CompatibilityReport[] => {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      console.error(`[CPL-Server] Error reading compatibility file ${filePath}:`, message);
+      console.error(
+        `[CPL-Server] Error reading compatibility file ${filePath}:`,
+        message,
+      );
     }
   });
 
   reports.sort((left, right) => {
-    return new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime();
+    return (
+      new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime()
+    );
   });
 
   return reports;
 };
 
 export const CompatibilityStore = {
-  getReports(pluginTitle: string, status?: CompatibilityReportStatus | null): CompatibilityReport[] {
+  getReports(
+    pluginTitle: string,
+    status?: CompatibilityReportStatus | null,
+  ): CompatibilityReport[] {
     const reports = aggregateReports(pluginTitle);
     if (!status) {
       return reports;
@@ -130,7 +156,10 @@ export const CompatibilityStore = {
     return reports.filter(report => report.status === status);
   },
 
-  addReport(pluginTitle: string, report: CompatibilityReport): CompatibilityReport {
+  addReport(
+    pluginTitle: string,
+    report: CompatibilityReport,
+  ): CompatibilityReport {
     const reports = loadReportsFromDisk(pluginTitle);
     reports.push(report);
     saveReportsToDisk(pluginTitle, reports);
@@ -144,7 +173,9 @@ export const CompatibilityStore = {
   ): CompatibilityReport | null {
     for (const filePath of getAllCompatibilityFiles(pluginTitle)) {
       try {
-        const reports = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompatibilityReport[];
+        const reports = JSON.parse(
+          fs.readFileSync(filePath, 'utf-8'),
+        ) as CompatibilityReport[];
         if (!Array.isArray(reports)) {
           continue;
         }
@@ -160,7 +191,10 @@ export const CompatibilityStore = {
         return report;
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        console.error(`[CPL-Server] Error updating compatibility file ${filePath}:`, message);
+        console.error(
+          `[CPL-Server] Error updating compatibility file ${filePath}:`,
+          message,
+        );
       }
     }
 
@@ -168,7 +202,9 @@ export const CompatibilityStore = {
   },
 
   getPendingReports(): CompatibilityReport[] {
-    return getAllReportsFromDisk().filter(report => report.status === 'pending');
+    return getAllReportsFromDisk().filter(
+      report => report.status === 'pending',
+    );
   },
 
   getAllReports(): CompatibilityReport[] {
@@ -213,7 +249,10 @@ export const CompatibilityStore = {
     }
 
     related.sort((left, right) => {
-      return new Date(right.report.createdAt).getTime() - new Date(left.report.createdAt).getTime();
+      return (
+        new Date(right.report.createdAt).getTime() -
+        new Date(left.report.createdAt).getTime()
+      );
     });
 
     return related;

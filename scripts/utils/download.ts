@@ -24,7 +24,11 @@ export const downloadFile = async (
         response.headers.location
       ) {
         response.resume();
-        void downloadFile(response.headers.location, destinationPath, redirectCount + 1)
+        void downloadFile(
+          response.headers.location,
+          destinationPath,
+          redirectCount + 1,
+        )
           .then(resolve)
           .catch(reject);
         return;
@@ -45,7 +49,14 @@ export const downloadFile = async (
       });
 
       output.on('error', error => {
-        fs.unlink(destinationPath, () => {});
+        fs.unlink(destinationPath, unlinkError => {
+          if (unlinkError) {
+            console.warn(
+              `Failed to remove incomplete download ${destinationPath}:`,
+              unlinkError.message,
+            );
+          }
+        });
         reject(error);
       });
     });

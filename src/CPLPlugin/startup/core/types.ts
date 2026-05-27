@@ -1,6 +1,12 @@
 export type CplPayload = Record<string, string | number | boolean | undefined>;
-export type CplRequest = (type: string, payload?: CplPayload) => Promise<string>;
-export type RequestHandlers = [(value: string) => void, (reason?: unknown) => void];
+export type CplRequest = (
+  type: string,
+  payload?: CplPayload,
+) => Promise<string>;
+export type RequestHandlers = [
+  (value: string) => void,
+  (reason?: unknown) => void,
+];
 
 export interface DependencyTree {
   [key: string]: DependencyTree;
@@ -32,7 +38,11 @@ export interface PluginInfo {
 
 type TwWithLayoutState = typeof $tw & {
   titleWidgetNode?: {
-    refresh: (changes: unknown, container: Node | null, nextSibling: unknown) => boolean;
+    refresh: (
+      changes: unknown,
+      container: Node | null,
+      nextSibling: unknown,
+    ) => boolean;
   };
   titleContainer?: HTMLElement | null;
 };

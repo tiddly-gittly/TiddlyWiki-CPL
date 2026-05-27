@@ -45,10 +45,14 @@ export const sendNoContent = (
   context: RouteContext,
   headers: Record<string, string> = {},
 ): void => {
-  context.sendResponse(204, {
-    ...CORS_HEADERS,
-    ...headers,
-  }, '');
+  context.sendResponse(
+    204,
+    {
+      ...CORS_HEADERS,
+      ...headers,
+    },
+    '',
+  );
 };
 
 export const parseJsonBody = <T>(body?: string): T | null => {

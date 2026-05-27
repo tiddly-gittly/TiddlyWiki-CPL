@@ -1,6 +1,12 @@
 import { Auth } from '../../../lib/auth';
 import { CommentStore } from '../../../lib/store/comments';
-import { decodeRouteParam, parseJsonBody, sendError, sendInternalError, sendJson } from '../../../lib/http';
+import {
+  decodeRouteParam,
+  parseJsonBody,
+  sendError,
+  sendInternalError,
+  sendJson,
+} from '../../../lib/http';
 import type { CommentStatus, RouteHandler } from '../../../lib/types';
 
 interface ModerateCommentBody {
@@ -34,7 +40,8 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    if (!isValidStatus(body?.status)) {
+    const { status } = body ?? {};
+    if (!isValidStatus(status)) {
       sendError(
         context,
         400,
@@ -43,7 +50,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    if (body.status === 'deleted') {
+    if (status === 'deleted') {
       const deleted = CommentStore.deleteComment(pluginTitle, commentId);
       if (!deleted) {
         sendError(context, 404, 'Comment not found');
@@ -60,7 +67,7 @@ export const handler: RouteHandler = (request, _response, context) => {
     const comment = CommentStore.updateCommentStatus(
       pluginTitle,
       commentId,
-      body.status as Exclude<CommentStatus, 'deleted'>,
+      status as Exclude<CommentStatus, 'deleted'>,
     );
 
     if (!comment) {
@@ -70,7 +77,7 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     sendJson(context, 200, {
       success: true,
-      message: `Comment ${body.status}`,
+      message: `Comment ${status}`,
       comment,
     });
   } catch (error) {

@@ -14,7 +14,8 @@ export interface IndexController {
 }
 
 const asPluginInfo = (value: unknown): PluginInfo => value as PluginInfo;
-const asPluginInfoList = (value: unknown): PluginInfo[] => value as PluginInfo[];
+const asPluginInfoList = (value: unknown): PluginInfo[] =>
+  value as PluginInfo[];
 
 export const createIndexController = ({
   onIndexLoaded,
@@ -60,7 +61,10 @@ export const createIndexController = ({
           authors[plugin.author].push(plugin.title);
         }
 
-        if (!plugin.title.startsWith('$:/languages') && plugin.title.split('/').length === 4) {
+        if (
+          !plugin.title.startsWith('$:/languages') &&
+          plugin.title.split('/').length === 4
+        ) {
           const derivedAuthor = plugin.title.split('/')[2];
           if (derivedAuthor !== plugin.author) {
             authors[derivedAuthor] ??= [];
@@ -130,7 +134,9 @@ export const createIndexController = ({
         text: 'yes',
       });
 
-      const data = asPluginInfo(JSON.parse(await cpl('Query', { plugin: title })));
+      const data = asPluginInfo(
+        JSON.parse(await cpl('Query', { plugin: title })),
+      );
       if (
         !data.author &&
         !data.title.startsWith('$:/languages') &&
@@ -160,7 +166,11 @@ export const createIndexController = ({
           .slice(0, 20)
           .map(([pluginTitle]) => pluginTitle);
 
-        if (suggestions.length < 20 && data.category && data.category !== 'Unknown') {
+        if (
+          suggestions.length < 20 &&
+          data.category &&
+          data.category !== 'Unknown'
+        ) {
           const knownSuggestions = new Set(suggestions);
           for (const pluginTitle of categoryCache[data.category] ?? []) {
             if (knownSuggestions.has(pluginTitle) || pluginTitle === title) {
@@ -310,7 +320,6 @@ export const createIndexController = ({
           break;
         }
         default:
-          return;
       }
     } catch (error) {
       console.error(error);

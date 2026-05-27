@@ -29,14 +29,12 @@ const getMirrorLabel = (): string => {
   }
 };
 
-export const probeApiAvailability = (callback: (serverType: ApiServerType) => void): void => {
+export const probeApiAvailability = (
+  callback: (serverType: ApiServerType) => void,
+): void => {
   if (!getCurrentServerEntry()) {
     setApiAvailability(false);
-    setApiStatus(
-      'unavailable',
-      'unknown',
-      'No CPL server is configured.',
-    );
+    setApiStatus('unavailable', 'unknown', 'No CPL server is configured.');
     callback('unknown');
     return;
   }
@@ -63,13 +61,19 @@ export const probeApiAvailability = (callback: (serverType: ApiServerType) => vo
       }
 
       setApiAvailability(true);
-      setApiStatus('available', 'server', `CPL server ${getMirrorLabel()} is available.`);
+      setApiStatus(
+        'available',
+        'server',
+        `CPL server ${getMirrorLabel()} is available.`,
+      );
       callback('server');
     },
   );
 };
 
-export const refreshMirrorCapabilityState = (cplServerApi: CPLServerApi): void => {
+export const refreshMirrorCapabilityState = (
+  cplServerApi: CPLServerApi,
+): void => {
   const signature = `${getCurrentMirrorEntry()}|${getCurrentServerEntry()}`;
   if (signature === lastMirrorEntry && apiAvailability !== null) {
     return;

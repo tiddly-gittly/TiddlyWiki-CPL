@@ -3,6 +3,7 @@ settings-dev/
 out/
 logs/
 dist/
+cache/
 wiki/
 template/
 .webpack/

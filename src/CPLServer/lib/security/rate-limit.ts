@@ -9,17 +9,19 @@ const CLEANUP_INTERVAL_MS = 60 * 60 * 1000;
 const cleanup = (): void => {
   const now = Date.now();
 
-  Object.entries(runtimeState.downloadLimits).forEach(([pluginTitle, limits]) => {
-    Object.entries(limits).forEach(([ip, timestamp]) => {
-      if (now - timestamp > DOWNLOAD_WINDOW_MS) {
-        delete limits[ip];
-      }
-    });
+  Object.entries(runtimeState.downloadLimits).forEach(
+    ([pluginTitle, limits]) => {
+      Object.entries(limits).forEach(([ip, timestamp]) => {
+        if (now - timestamp > DOWNLOAD_WINDOW_MS) {
+          delete limits[ip];
+        }
+      });
 
-    if (Object.keys(limits).length === 0) {
-      delete runtimeState.downloadLimits[pluginTitle];
-    }
-  });
+      if (Object.keys(limits).length === 0) {
+        delete runtimeState.downloadLimits[pluginTitle];
+      }
+    },
+  );
 
   Object.entries(runtimeState.ratingLimits).forEach(([pluginTitle, limits]) => {
     if (Object.keys(limits).length === 0) {
@@ -46,9 +48,9 @@ export const RateLimiter = {
     }
 
     return (
-      request.connection?.remoteAddress
-      || request.socket?.remoteAddress
-      || 'unknown'
+      request.connection?.remoteAddress ||
+      request.socket?.remoteAddress ||
+      'unknown'
     );
   },
 

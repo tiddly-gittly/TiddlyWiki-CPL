@@ -1,6 +1,12 @@
 import { Auth } from '../../../lib/auth';
 import { Config } from '../../../lib/config';
-import { sendError, sendInternalError, sendJson, parseJsonBody, decodeRouteParam } from '../../../lib/http';
+import {
+  sendError,
+  sendInternalError,
+  sendJson,
+  parseJsonBody,
+  decodeRouteParam,
+} from '../../../lib/http';
 import { getRuntimeState } from '../../../lib/runtime-state';
 import { CommentStore } from '../../../lib/store/comments';
 import { WikitextFilter } from '../../../lib/security/wikitext';

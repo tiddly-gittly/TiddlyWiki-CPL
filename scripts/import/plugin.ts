@@ -87,7 +87,9 @@ export const importPlugin = async (
       try {
         await downloadFile(downloadUri, tmpTiddlerPath);
       } catch (error) {
-        console.warn(chalk.yellow(`[Warning] Failed to download ${downloadUri}: ${error}`));
+        console.warn(
+          chalk.yellow(`[Warning] Failed to download ${downloadUri}: ${error}`),
+        );
       }
     }
     findFile();

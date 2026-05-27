@@ -2,7 +2,10 @@ import { cpl } from './bridge';
 import { tw } from './types';
 
 export interface UpdateController {
-  update: (options?: { notify?: boolean; autoInstall?: boolean }) => Promise<string[]>;
+  update: (options?: {
+    notify?: boolean;
+    autoInstall?: boolean;
+  }) => Promise<string[]>;
   rescheduleAutoUpdate: () => void;
   initializeAutoUpdate: () => void;
 }
@@ -22,7 +25,10 @@ export const createUpdateController = (): UpdateController => {
       10,
     ) || -1;
 
-  const update = async (options?: { notify?: boolean; autoInstall?: boolean }): Promise<string[]> => {
+  const update = async (options?: {
+    notify?: boolean;
+    autoInstall?: boolean;
+  }): Promise<string[]> => {
     const notify = options?.notify;
     const autoInstall = options?.autoInstall === true;
     try {
@@ -36,12 +42,18 @@ export const createUpdateController = (): UpdateController => {
 
       const updatePromise = cpl('Update');
       const plugins = tw.wiki.filterTiddlers(
-        tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/update-filter', ''),
+        tw.wiki.getTiddlerText(
+          '$:/plugins/Gk0Wk/CPL-Repo/config/update-filter',
+          '',
+        ),
       );
 
       return updatePromise
         .then(text => {
-          const updatePlugins = JSON.parse(text) as Record<string, [string, string?]>;
+          const updatePlugins = JSON.parse(text) as Record<
+            string,
+            [string, string?]
+          >;
           const pluginsToShow = plugins.filter(title => {
             const latestVersion = updatePlugins[title];
             if (!latestVersion) {
@@ -58,7 +70,10 @@ export const createUpdateController = (): UpdateController => {
             return !(
               typeof version === 'string' &&
               latestVersion[0] &&
-              tw.utils.compareVersions(version.trim(), latestVersion[0].trim()) >= 0
+              tw.utils.compareVersions(
+                version.trim(),
+                latestVersion[0].trim(),
+              ) >= 0
             );
           });
 
@@ -69,11 +84,14 @@ export const createUpdateController = (): UpdateController => {
               text: JSON.stringify(pluginsToShow),
             });
             if (notify !== false) {
-              const notificationDuration = tw.config.preferences.notificationDuration;
+              const { notificationDuration } = tw.config.preferences;
               tw.config.preferences.notificationDuration = 10_000;
-              tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/update-notify-template', {
-                variables: { updateCount: pluginsToShow.length },
-              });
+              tw.notifier.display(
+                '$:/plugins/Gk0Wk/CPL-Repo/notifications/update-notify-template',
+                {
+                  variables: { updateCount: pluginsToShow.length },
+                },
+              );
               tw.config.preferences.notificationDuration = notificationDuration;
             }
 
@@ -128,12 +146,15 @@ export const createUpdateController = (): UpdateController => {
     autoTimeout = undefined;
 
     if (time > 0) {
-      autoTimeout = setTimeout(() => {
-        void update();
-        autoUpdateInterval = setInterval(() => {
+      autoTimeout = setTimeout(
+        () => {
           void update();
-        }, time * 60_000);
-      }, lastUpdateTime === -1 ? 0 : time * 60_000 + lastUpdateTime - Date.now());
+          autoUpdateInterval = setInterval(() => {
+            void update();
+          }, time * 60_000);
+        },
+        lastUpdateTime === -1 ? 0 : time * 60_000 + lastUpdateTime - Date.now(),
+      );
     }
   };
 

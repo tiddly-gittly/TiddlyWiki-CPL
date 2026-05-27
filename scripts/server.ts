@@ -1,4 +1,5 @@
 import { spawn } from 'child_process';
+import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -8,6 +9,7 @@ type ServerMode = 'dev' | 'prod' | 'readonly';
 
 const WIKI_PATH = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(WIKI_PATH, 'data');
+const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -28,7 +30,8 @@ if (args.includes('--readonly') || args.includes('-r')) {
 
 const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
 const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
-const toBootPluginArg = (filePath: string): string => `++${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
+const toBootPluginArg = (filePath: string): string =>
+  `++${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
 
 const twArgs = [
   TW_ENTRY,
@@ -43,8 +46,23 @@ const twArgs = [
 ];
 
 if (mode === 'prod' || mode === 'readonly') {
-  twArgs.push('writers=(anon)');
-  console.log(`[CPL Server] Starting in ${mode.toUpperCase()} mode (read-only)`);
+  if (
+    !process.env.CPL_JWT_SECRET ||
+    process.env.CPL_JWT_SECRET === DEFAULT_JWT_SECRET
+  ) {
+    console.error(
+      '[CPL Server] Refusing to start read-only production server without CPL_JWT_SECRET.',
+    );
+    process.exit(1);
+  }
+
+  const readonlyWriter = `cpl-readonly-${crypto
+    .randomBytes(12)
+    .toString('hex')}`;
+  twArgs.push('readers=(anon)', `writers=${readonlyWriter}`);
+  console.log(
+    `[CPL Server] Starting in ${mode.toUpperCase()} mode (read-only)`,
+  );
 } else {
   console.log('[CPL Server] Starting in DEV mode (writable)');
 }
@@ -65,12 +83,14 @@ const twProcess = spawn(process.execPath, twArgs, {
 twProcess.on('error', (error: NodeJS.ErrnoException) => {
   console.error('[CPL Server] Failed to start:', error.message);
   if (error.code === 'ENOENT') {
-    console.error('[CPL Server] Make sure tiddlywiki is installed: npm install');
+    console.error(
+      '[CPL Server] Make sure tiddlywiki is installed: npm install',
+    );
   }
   process.exit(1);
 });
 
-twProcess.on('exit', (code) => {
+twProcess.on('exit', code => {
   console.log(`[CPL Server] Server exited with code ${code}`);
   process.exit(code ?? 0);
 });

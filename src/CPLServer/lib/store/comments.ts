@@ -4,7 +4,12 @@ import * as path from 'path';
 import { Config } from '../config';
 import { escapeRegExp, sanitizePluginFileName } from '../files';
 import { getRuntimeState } from '../runtime-state';
-import type { CommentFile, CommentRecord, CommentStatus, PendingCommentRecord } from '../types';
+import type {
+  CommentFile,
+  CommentRecord,
+  CommentStatus,
+  PendingCommentRecord,
+} from '../types';
 
 const runtimeState = getRuntimeState().commentStore;
 const COMMENTS_DIR = Config.commentsDir;
@@ -62,7 +67,9 @@ const aggregateComments = (pluginTitle: string): CommentRecord[] => {
 
   getAllCommentsFiles(pluginTitle).forEach(filePath => {
     try {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CommentFile;
+      const data = JSON.parse(
+        fs.readFileSync(filePath, 'utf-8'),
+      ) as CommentFile;
       data.comments?.forEach(comment => {
         if (!seenIds.has(comment.id)) {
           seenIds.add(comment.id);
@@ -102,8 +109,8 @@ const updateLoadedCacheForCurrentServer = (
   filePath: string,
 ): void => {
   if (
-    filePath === getCommentsFilePath(pluginTitle)
-    && runtimeState.commentsCache[pluginTitle]?.loaded
+    filePath === getCommentsFilePath(pluginTitle) &&
+    runtimeState.commentsCache[pluginTitle]?.loaded
   ) {
     runtimeState.commentsCache[pluginTitle] = {
       ...data,
@@ -177,7 +184,10 @@ const registerProcessHandlers = (): void => {
 registerProcessHandlers();
 
 export const CommentStore = {
-  getComments(pluginTitle: string, status?: CommentStatus | null): CommentRecord[] {
+  getComments(
+    pluginTitle: string,
+    status?: CommentStatus | null,
+  ): CommentRecord[] {
     const comments = aggregateComments(pluginTitle);
     if (!status) {
       return comments;
@@ -208,8 +218,12 @@ export const CommentStore = {
 
     for (const filePath of getAllCommentsFiles(pluginTitle)) {
       try {
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CommentFile;
-        const comment = data.comments.find(candidate => candidate.id === commentId);
+        const data = JSON.parse(
+          fs.readFileSync(filePath, 'utf-8'),
+        ) as CommentFile;
+        const comment = data.comments.find(
+          candidate => candidate.id === commentId,
+        );
         if (!comment) {
           continue;
         }
@@ -217,11 +231,18 @@ export const CommentStore = {
         comment.status = status;
         comment.updatedAt = new Date().toISOString();
         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-        updateLoadedCacheForCurrentServer(pluginTitle, data, currentFilePath === filePath ? currentFilePath : filePath);
+        updateLoadedCacheForCurrentServer(
+          pluginTitle,
+          data,
+          currentFilePath === filePath ? currentFilePath : filePath,
+        );
         return comment;
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        console.error(`[CPL-Server] Error updating comment in ${filePath}:`, message);
+        console.error(
+          `[CPL-Server] Error updating comment in ${filePath}:`,
+          message,
+        );
       }
     }
 
@@ -233,7 +254,9 @@ export const CommentStore = {
 
     for (const filePath of getAllCommentsFiles(pluginTitle)) {
       try {
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CommentFile;
+        const data = JSON.parse(
+          fs.readFileSync(filePath, 'utf-8'),
+        ) as CommentFile;
         const commentIndex = data.comments.findIndex(
           candidate => candidate.id === commentId,
         );
@@ -243,11 +266,18 @@ export const CommentStore = {
 
         data.comments.splice(commentIndex, 1);
         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-        updateLoadedCacheForCurrentServer(pluginTitle, data, currentFilePath === filePath ? currentFilePath : filePath);
+        updateLoadedCacheForCurrentServer(
+          pluginTitle,
+          data,
+          currentFilePath === filePath ? currentFilePath : filePath,
+        );
         return true;
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        console.error(`[CPL-Server] Error deleting comment from ${filePath}:`, message);
+        console.error(
+          `[CPL-Server] Error deleting comment from ${filePath}:`,
+          message,
+        );
       }
     }
 
@@ -268,7 +298,9 @@ export const CommentStore = {
         const filePath = path.join(COMMENTS_DIR, fileName);
 
         try {
-          const data = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CommentFile;
+          const data = JSON.parse(
+            fs.readFileSync(filePath, 'utf-8'),
+          ) as CommentFile;
           data.comments?.forEach(comment => {
             if (comment.status !== 'pending' || seenIds.has(comment.id)) {
               return;
@@ -281,7 +313,8 @@ export const CommentStore = {
             });
           });
         } catch (error) {
-          const message = error instanceof Error ? error.message : String(error);
+          const message =
+            error instanceof Error ? error.message : String(error);
           console.error(`[CPL-Server] Error reading ${filePath}:`, message);
         }
       });

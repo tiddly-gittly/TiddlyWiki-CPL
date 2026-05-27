@@ -1,7 +1,7 @@
 import { Auth } from '../../../lib/auth';
 import { CompatibilityStore } from '../../../lib/store/compatibility';
 import { sendError, sendInternalError, sendJson } from '../../../lib/http';
-import type { RouteHandler, CompatibilityReportStatus } from '../../../lib/types';
+import type { RouteHandler } from '../../../lib/types';
 
 export const method = 'GET';
 export const path = /^\/cpl\/api\/compatibility\/pending$/;

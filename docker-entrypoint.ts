@@ -20,7 +20,12 @@ import * as path from 'path';
 
 const APP_DIR = path.resolve(__dirname);
 const REPO_CACHE_DIR = path.join(APP_DIR, 'repo-cache');
-const HISTORY_DIR = path.join(APP_DIR, 'wiki', 'files', 'plugin-fetched-history');
+const HISTORY_DIR = path.join(
+  APP_DIR,
+  'wiki',
+  'files',
+  'plugin-fetched-history',
+);
 const REPO_URL = 'https://github.com/tiddly-gittly/TiddlyWiki-CPL.git';
 const TSNODEPATH = path.join(APP_DIR, 'node_modules/.bin/ts-node');
 const SYNC_INTERVAL_SECONDS = Number(process.env.SYNC_INTERVAL_SECONDS ?? 3600);
@@ -40,12 +45,18 @@ function run(cmd: string, cwd = APP_DIR): boolean {
 }
 
 function copyDir(src: string, dest: string): void {
-  if (!fs.existsSync(src)) return;
+  if (!fs.existsSync(src)) {
+    return;
+  }
   fs.mkdirSync(dest, { recursive: true });
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
     const s = path.join(src, entry.name);
     const d = path.join(dest, entry.name);
-    entry.isDirectory() ? copyDir(s, d) : fs.copyFileSync(s, d);
+    if (entry.isDirectory()) {
+      copyDir(s, d);
+    } else {
+      fs.copyFileSync(s, d);
+    }
   }
 }
 
@@ -58,16 +69,18 @@ function gitSync(): void {
   if (isFirstRun) {
     console.log(`[entrypoint] First run: cloning ${REPO_URL} ...`);
     if (!run(`git clone --depth=1 ${REPO_URL} ${REPO_CACHE_DIR}`)) {
-      console.warn('[entrypoint] WARNING: git clone failed. Using baked-in metadata.');
+      console.warn(
+        '[entrypoint] WARNING: git clone failed. Using baked-in metadata.',
+      );
       return;
     }
     console.log('[entrypoint] git clone OK');
+  } else if (!run('git pull --ff-only --quiet', REPO_CACHE_DIR)) {
+    console.warn(
+      '[entrypoint] WARNING: git pull failed. Continuing with cached data.',
+    );
   } else {
-    if (!run('git pull --ff-only --quiet', REPO_CACHE_DIR)) {
-      console.warn('[entrypoint] WARNING: git pull failed. Continuing with cached data.');
-    } else {
-      console.log('[entrypoint] git pull OK');
-    }
+    console.log('[entrypoint] git pull OK');
   }
   const src = path.join(REPO_CACHE_DIR, 'wiki', 'tiddlers', 'plugin-metadata');
   const dest = path.join(APP_DIR, 'wiki', 'tiddlers', 'plugin-metadata');
@@ -85,24 +98,35 @@ let serverProcess: ChildProcess | null = null;
 
 function startServer(): void {
   console.log('[entrypoint] Starting CPL server...');
-  serverProcess = spawn(TSNODEPATH, ['--transpile-only', 'scripts/server.ts', '--prod'], {
-    stdio: 'inherit',
-    cwd: APP_DIR,
-  });
-  serverProcess.on('exit', (code) => {
+  serverProcess = spawn(
+    TSNODEPATH,
+    ['--transpile-only', 'scripts/server.ts', '--prod'],
+    {
+      stdio: 'inherit',
+      cwd: APP_DIR,
+    },
+  );
+  serverProcess.on('exit', code => {
     if (code !== null && code !== 0) {
-      console.error(`[entrypoint] Server exited unexpectedly with code ${code}. Exiting container.`);
+      console.error(
+        `[entrypoint] Server exited unexpectedly with code ${code}. Exiting container.`,
+      );
       process.exit(code);
     }
   });
 }
 
 function restartServer(): void {
-  if (!serverProcess) { startServer(); return; }
+  if (!serverProcess) {
+    startServer();
+    return;
+  }
   console.log('[entrypoint] Restarting server to pick up updated plugins...');
   serverProcess.removeAllListeners('exit');
   serverProcess.kill('SIGTERM');
-  serverProcess.on('close', () => { startServer(); });
+  serverProcess.on('close', () => {
+    startServer();
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -111,13 +135,19 @@ function restartServer(): void {
 
 function runFetchPlugins(onDone: () => void): void {
   console.log('[entrypoint] Starting background plugin fetch...');
-  const proc = spawn(TSNODEPATH, ['--transpile-only', 'scripts/fetch-plugins.ts'], {
-    stdio: 'inherit',
-    cwd: APP_DIR,
-  });
-  proc.on('exit', (code) => {
+  const proc = spawn(
+    TSNODEPATH,
+    ['--transpile-only', 'scripts/fetch-plugins.ts'],
+    {
+      stdio: 'inherit',
+      cwd: APP_DIR,
+    },
+  );
+  proc.on('exit', code => {
     if (code !== 0) {
-      console.warn(`[entrypoint] WARNING: fetch-plugins exited with code ${code}.`);
+      console.warn(
+        `[entrypoint] WARNING: fetch-plugins exited with code ${code}.`,
+      );
     } else {
       console.log('[entrypoint] fetch-plugins completed OK.');
     }
@@ -131,10 +161,14 @@ function runFetchPlugins(onDone: () => void): void {
 
 function scheduleSync(): void {
   if (SYNC_INTERVAL_SECONDS <= 0) {
-    console.log('[entrypoint] Periodic sync disabled (SYNC_INTERVAL_SECONDS=0).');
+    console.log(
+      '[entrypoint] Periodic sync disabled (SYNC_INTERVAL_SECONDS=0).',
+    );
     return;
   }
-  console.log(`[entrypoint] Periodic sync scheduled every ${SYNC_INTERVAL_SECONDS}s.`);
+  console.log(
+    `[entrypoint] Periodic sync scheduled every ${SYNC_INTERVAL_SECONDS}s.`,
+  );
   setInterval(() => {
     console.log('[entrypoint] === Periodic sync start ===');
     gitSync();
@@ -151,7 +185,9 @@ function scheduleSync(): void {
 
 // Ensure runtime directories exist (Dockerfile creates them, but volume mounts
 // may replace them with empty dirs on first run).
-fs.mkdirSync(path.join(APP_DIR, 'wiki', 'files', 'plugin-fetched'), { recursive: true });
+fs.mkdirSync(path.join(APP_DIR, 'wiki', 'files', 'plugin-fetched'), {
+  recursive: true,
+});
 fs.mkdirSync(HISTORY_DIR, { recursive: true });
 
 // 1. git clone / pull + metadata sync (blocking, so server starts with latest metadata)

@@ -77,5 +77,11 @@ export const authenticatedRequest = <T extends JsonObject>(
   }
 
   const token = getJwtToken();
-  rawApiRequest(method, endpoint, body, callback, token ? { Authorization: `Bearer ${token}` } : undefined);
+  rawApiRequest(
+    method,
+    endpoint,
+    body,
+    callback,
+    token ? { Authorization: `Bearer ${token}` } : undefined,
+  );
 };

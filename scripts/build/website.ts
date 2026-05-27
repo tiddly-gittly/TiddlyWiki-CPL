@@ -3,9 +3,9 @@ import fs from 'fs-extra';
 import chalk from 'chalk';
 import type { ITiddlerFields } from 'tiddlywiki';
 
-import { tiddlywiki, waitForFile, getTmpDir } from '../utils/index.ts';
-import { buildCPLPlugin } from './cpl-plugin.ts';
-import { getRuntimePluginTiddlers } from '../runtime-plugins.ts';
+import { tiddlywiki, waitForFile, getTmpDir } from '../utils/index';
+import { getRuntimePluginTiddlers } from '../runtime-plugins';
+import { buildCPLPlugin } from './cpl-plugin';
 
 /** 项目路径 */
 const bypassTiddlers = new Set([
@@ -126,7 +126,6 @@ export const buildOnlineHTML = async (
     title: '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
     text: '1',
   } as any);
-
 
   // 构建
   console.log(

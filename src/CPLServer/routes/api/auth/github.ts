@@ -29,7 +29,10 @@ export const handler: RouteHandler = async (request, _response, context) => {
 
     const tokenData = await Auth.exchangeGitHubCode(code);
     if (!tokenData.access_token) {
-      console.error('[CPL-Server] GitHub OAuth token exchange failed:', tokenData);
+      console.error(
+        '[CPL-Server] GitHub OAuth token exchange failed:',
+        tokenData,
+      );
       sendError(context, 400, 'Failed to exchange GitHub authorization code');
       return;
     }

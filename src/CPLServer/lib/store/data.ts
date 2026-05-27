@@ -7,10 +7,7 @@ import type { DownloadStats, RatingRecord, RatingStats } from '../types';
 
 const runtimeState = getRuntimeState().dataStore;
 const DATA_DIR = Config.dataDir;
-const STATS_FILE = path.join(
-  DATA_DIR,
-  `stats${Config.getServerSuffix()}.json`,
-);
+const STATS_FILE = path.join(DATA_DIR, `stats${Config.getServerSuffix()}.json`);
 const RATINGS_FILE = path.join(
   DATA_DIR,
   `ratings${Config.getServerSuffix()}.json`,
@@ -72,8 +69,8 @@ const aggregateStats = (): Record<string, DownloadStats> => {
       }
 
       if (
-        stats.lastUpdated
-        && (!nextStats.lastUpdated || stats.lastUpdated > nextStats.lastUpdated)
+        stats.lastUpdated &&
+        (!nextStats.lastUpdated || stats.lastUpdated > nextStats.lastUpdated)
       ) {
         nextStats.lastUpdated = stats.lastUpdated;
       }
@@ -130,9 +127,8 @@ const aggregateRatings = (): Record<string, RatingStats> => {
       (sum, rating) => sum + rating.rating,
       0,
     );
-    ratingStats.averageRating = Math.round(
-      (total / ratingStats.ratings.length) * 10,
-    ) / 10;
+    ratingStats.averageRating =
+      Math.round((total / ratingStats.ratings.length) * 10) / 10;
     ratingStats.totalRatings = ratingStats.ratings.length;
   });
 
@@ -141,17 +137,15 @@ const aggregateRatings = (): Record<string, RatingStats> => {
 
 const ensureStatsLoaded = (): void => {
   if (runtimeState.statsCache === null) {
-    runtimeState.statsCache = loadFromDisk<Record<string, DownloadStats>>(
-      STATS_FILE,
-    );
+    runtimeState.statsCache =
+      loadFromDisk<Record<string, DownloadStats>>(STATS_FILE);
   }
 };
 
 const ensureRatingsLoaded = (): void => {
   if (runtimeState.ratingsCache === null) {
-    runtimeState.ratingsCache = loadFromDisk<Record<string, RatingStats>>(
-      RATINGS_FILE,
-    );
+    runtimeState.ratingsCache =
+      loadFromDisk<Record<string, RatingStats>>(RATINGS_FILE);
   }
 };
 
@@ -225,7 +219,8 @@ export const DataStore = {
       runtimeState.statsCache = {};
     }
 
-    const pluginStats = runtimeState.statsCache[pluginTitle] ?? createDefaultStats();
+    const pluginStats =
+      runtimeState.statsCache[pluginTitle] ?? createDefaultStats();
     pluginStats.downloadCount += 1;
     pluginStats.lastUpdated = new Date().toISOString();
     pluginStats.downloadsByIp[ip] = pluginStats.lastUpdated;
@@ -265,9 +260,8 @@ export const DataStore = {
       (sum, candidate) => sum + candidate.rating,
       0,
     );
-    pluginRatings.averageRating = Math.round(
-      (total / pluginRatings.ratings.length) * 10,
-    ) / 10;
+    pluginRatings.averageRating =
+      Math.round((total / pluginRatings.ratings.length) * 10) / 10;
     pluginRatings.totalRatings = pluginRatings.ratings.length;
 
     runtimeState.ratingsCache[pluginTitle] = pluginRatings;

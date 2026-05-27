@@ -31,9 +31,11 @@ const isTokenPayload = (value: unknown): value is TokenPayload => {
   }
 
   const candidate = value as Partial<TokenPayload>;
-  return typeof candidate.githubId === 'string'
-    && typeof candidate.username === 'string'
-    && typeof candidate.avatar === 'string';
+  return (
+    typeof candidate.githubId === 'string' &&
+    typeof candidate.username === 'string' &&
+    typeof candidate.avatar === 'string'
+  );
 };
 
 const requestJson = <T>(

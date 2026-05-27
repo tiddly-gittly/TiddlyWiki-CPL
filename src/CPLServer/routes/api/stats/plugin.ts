@@ -1,4 +1,8 @@
-import { decodeRouteParam, sendInternalError, sendJson } from '../../../lib/http';
+import {
+  decodeRouteParam,
+  sendInternalError,
+  sendJson,
+} from '../../../lib/http';
 import { DataStore } from '../../../lib/store/data';
 import type { RouteHandler } from '../../../lib/types';
 

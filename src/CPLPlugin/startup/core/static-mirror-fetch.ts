@@ -36,7 +36,10 @@ export const formatPluginTitle = (title: string): string =>
       .replace(/[:/<>"|?*]/g, '_'),
   );
 
-const fetchFromMirror = async (base: string, title: string): Promise<string> => {
+const fetchFromMirror = async (
+  base: string,
+  title: string,
+): Promise<string> => {
   const url = `${base}/plugins/${formatPluginTitle(title)}.json`;
   const response = await fetch(url, {
     // Treat non-OK responses as errors so we can fall through to the next mirror.
@@ -61,11 +64,12 @@ const fetchFromMirror = async (base: string, title: string): Promise<string> => 
  * @param title  The TiddlyWiki plugin tiddler title.
  * @returns      Resolved with the raw JSON string, or rejects if ALL mirrors failed.
  */
-export const fetchPluginFromStaticMirrors = async (title: string): Promise<string> => {
+export const fetchPluginFromStaticMirrors = async (
+  title: string,
+): Promise<string> => {
   const errors: string[] = [];
   for (const base of STATIC_MIRROR_BASES) {
     try {
-      // eslint-disable-next-line no-await-in-loop
       return await fetchFromMirror(base, title);
     } catch (error) {
       errors.push(String(error));

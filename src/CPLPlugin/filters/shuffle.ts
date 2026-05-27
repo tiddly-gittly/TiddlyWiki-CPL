@@ -18,12 +18,16 @@ export const shuffle = (
 
   const parsedOperand = Number.parseInt(operator.operand ?? '', 10);
   const targetCount = Math.min(
-    Math.max(0, Number.isNaN(parsedOperand) ? Number.POSITIVE_INFINITY : parsedOperand),
+    Math.max(
+      0,
+      Number.isNaN(parsedOperand) ? Number.POSITIVE_INFINITY : parsedOperand,
+    ),
     results.length,
   );
 
   for (let index = 0; index < targetCount; index += 1) {
-    const swapIndex = Math.floor(Math.random() * (results.length - index)) + index;
+    const swapIndex =
+      Math.floor(Math.random() * (results.length - index)) + index;
     [results[index], results[swapIndex]] = [results[swapIndex], results[index]];
   }
 

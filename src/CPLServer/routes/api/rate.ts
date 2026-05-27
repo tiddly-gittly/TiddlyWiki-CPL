@@ -1,6 +1,12 @@
 import { DataStore } from '../../lib/store/data';
 import { RateLimiter } from '../../lib/security/rate-limit';
-import { decodeRouteParam, parseJsonBody, sendError, sendInternalError, sendJson } from '../../lib/http';
+import {
+  decodeRouteParam,
+  parseJsonBody,
+  sendError,
+  sendInternalError,
+  sendJson,
+} from '../../lib/http';
 import type { RouteHandler } from '../../lib/types';
 
 interface RateBody {
@@ -36,7 +42,11 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     const rating = parseRating(body.rating);
     if (rating === null) {
-      sendError(context, 400, 'Invalid rating. Must be an integer between 1 and 5.');
+      sendError(
+        context,
+        400,
+        'Invalid rating. Must be an integer between 1 and 5.',
+      );
       return;
     }
 

@@ -36,7 +36,10 @@ function walkMetadataFiles(rootDir: string): string[] {
     }
 
     const extension = path.extname(entry.name).toLowerCase();
-    if (!SUPPORTED_METADATA_EXTENSIONS.has(extension) || entry.name.endsWith('.json.meta')) {
+    if (
+      !SUPPORTED_METADATA_EXTENSIONS.has(extension) ||
+      entry.name.endsWith('.json.meta')
+    ) {
       continue;
     }
 
@@ -56,13 +59,18 @@ function collectPluginMetadataFilePaths(): string[] {
   }
 
   if (fs.existsSync(WIKI_TIDDLERS_DIR)) {
-    for (const entry of fs.readdirSync(WIKI_TIDDLERS_DIR, { withFileTypes: true })) {
+    for (const entry of fs.readdirSync(WIKI_TIDDLERS_DIR, {
+      withFileTypes: true,
+    })) {
       if (!entry.isFile()) {
         continue;
       }
 
       const extension = path.extname(entry.name).toLowerCase();
-      if (!SUPPORTED_METADATA_EXTENSIONS.has(extension) || entry.name.endsWith('.json.meta')) {
+      if (
+        !SUPPORTED_METADATA_EXTENSIONS.has(extension) ||
+        entry.name.endsWith('.json.meta')
+      ) {
         continue;
       }
 
@@ -118,7 +126,10 @@ function encodePluginTitleForLibraryRecipe(pluginTitle: string): string {
   return encodeURIComponent(encodeURIComponent(pluginTitle));
 }
 
-function normalizePluginSourceUrl(uri: string | undefined, pluginTitle: string): string | undefined {
+function normalizePluginSourceUrl(
+  uri: string | undefined,
+  pluginTitle: string,
+): string | undefined {
   if (!uri) {
     return uri;
   }
@@ -127,8 +138,13 @@ function normalizePluginSourceUrl(uri: string | undefined, pluginTitle: string):
     const parsed = new URL(uri);
     const normalizedPath = parsed.pathname.replace(/\/+/g, '/');
     if (normalizedPath.endsWith('/index.html')) {
-      const recipePath = normalizedPath.replace(/\/index\.html$/, '/recipes/library/tiddlers/');
-      parsed.pathname = `${recipePath}${encodePluginTitleForLibraryRecipe(pluginTitle)}.json`;
+      const recipePath = normalizedPath.replace(
+        /\/index\.html$/,
+        '/recipes/library/tiddlers/',
+      );
+      parsed.pathname = `${recipePath}${encodePluginTitleForLibraryRecipe(
+        pluginTitle,
+      )}.json`;
       parsed.search = '';
       parsed.hash = '';
       return parsed.toString();
@@ -140,7 +156,10 @@ function normalizePluginSourceUrl(uri: string | undefined, pluginTitle: string):
   return uri;
 }
 
-function isLikelyValidPluginPayload(content: string, pluginTitle: string): boolean {
+function isLikelyValidPluginPayload(
+  content: string,
+  pluginTitle: string,
+): boolean {
   const trimmed = content.trimStart();
   if (!trimmed) {
     return false;
@@ -150,7 +169,13 @@ function isLikelyValidPluginPayload(content: string, pluginTitle: string): boole
     try {
       const parsed = JSON.parse(trimmed) as unknown;
       if (Array.isArray(parsed)) {
-        return parsed.some((item) => typeof item === 'object' && item !== null && 'title' in item && item.title === pluginTitle);
+        return parsed.some(
+          item =>
+            typeof item === 'object' &&
+            item !== null &&
+            'title' in item &&
+            item.title === pluginTitle,
+        );
       }
 
       if (!parsed || typeof parsed !== 'object') {
@@ -178,7 +203,8 @@ function isLikelyValidPluginPayload(content: string, pluginTitle: string): boole
 
   if (trimmed.startsWith('<!doctype html') || trimmed.startsWith('<html')) {
     const looksLikePluginLibraryIndex =
-      trimmed.includes('var assetList') && trimmed.includes('<title>Plugin Library</title>');
+      trimmed.includes('var assetList') &&
+      trimmed.includes('<title>Plugin Library</title>');
     if (looksLikePluginLibraryIndex) {
       return false;
     }
@@ -195,7 +221,10 @@ function isLikelyValidPluginPayload(content: string, pluginTitle: string): boole
   return false;
 }
 
-function shouldReuseExistingFile(destPath: string, pluginTitle: string): boolean {
+function shouldReuseExistingFile(
+  destPath: string,
+  pluginTitle: string,
+): boolean {
   if (!fs.existsSync(destPath)) {
     return false;
   }
@@ -211,9 +240,14 @@ function shouldReuseExistingFile(destPath: string, pluginTitle: string): boolean
 function downloadFile(url: string, destPath: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const client = url.startsWith('https:') ? https : http;
-    const request = client.get(url, (response) => {
+    const request = client.get(url, response => {
       const { statusCode, headers } = response;
-      if (statusCode && statusCode >= 300 && statusCode < 400 && headers.location) {
+      if (
+        statusCode &&
+        statusCode >= 300 &&
+        statusCode < 400 &&
+        headers.location
+      ) {
         response.resume();
         const redirectUrl = new URL(headers.location, url).toString();
         resolve(downloadFile(redirectUrl, destPath));
@@ -229,7 +263,7 @@ function downloadFile(url: string, destPath: string): Promise<void> {
       const file = fs.createWriteStream(destPath);
       response.pipe(file);
       file.on('finish', () => {
-        file.close((closeError) => {
+        file.close(closeError => {
           if (closeError) {
             reject(closeError);
             return;
@@ -237,7 +271,7 @@ function downloadFile(url: string, destPath: string): Promise<void> {
           resolve();
         });
       });
-      file.on('error', (error) => {
+      file.on('error', error => {
         fs.unlink(destPath, () => undefined);
         reject(error);
       });
@@ -257,8 +291,13 @@ async function main(): Promise<void> {
   const allowCi = args.includes('--allow-ci');
   const bestEffort = args.includes('--best-effort');
 
-  if (!allowCi && (process.env.NODE_ENV === 'test' || process.env.CI === 'true')) {
-    console.log('[fetch-plugins] Skipping: should not run in test/CI environments.');
+  if (
+    !allowCi &&
+    (process.env.NODE_ENV === 'test' || process.env.CI === 'true')
+  ) {
+    console.log(
+      '[fetch-plugins] Skipping: should not run in test/CI environments.',
+    );
     process.exit(0);
   }
 
@@ -273,7 +312,9 @@ async function main(): Promise<void> {
   let failed = 0;
 
   for (const filePath of files) {
-    const fileName = path.relative(WIKI_TIDDLERS_DIR, filePath).replace(/\\/g, '/');
+    const fileName = path
+      .relative(WIKI_TIDDLERS_DIR, filePath)
+      .replace(/\\/g, '/');
     let metadata: PluginMetadata;
 
     try {
@@ -300,7 +341,9 @@ async function main(): Promise<void> {
     }
 
     if (!uri) {
-      console.warn(`[fetch-plugins] ${pluginTitle}: missing cpl.uri, skipping.`);
+      console.warn(
+        `[fetch-plugins] ${pluginTitle}: missing cpl.uri, skipping.`,
+      );
       skipped += 1;
       continue;
     }
@@ -309,20 +352,28 @@ async function main(): Promise<void> {
     const destPath = path.join(OUTPUT_DIR, destFileName);
 
     if (!force && shouldReuseExistingFile(destPath, pluginTitle)) {
-      console.log(`[fetch-plugins] ${pluginTitle}: already exists and looks valid (${destFileName}), skipping.`);
+      console.log(
+        `[fetch-plugins] ${pluginTitle}: already exists and looks valid (${destFileName}), skipping.`,
+      );
       skipped += 1;
       continue;
     }
 
     if (!force && fs.existsSync(destPath)) {
-      console.warn(`[fetch-plugins] ${pluginTitle}: existing file looks invalid, re-downloading (${destFileName}).`);
+      console.warn(
+        `[fetch-plugins] ${pluginTitle}: existing file looks invalid, re-downloading (${destFileName}).`,
+      );
     }
 
     const normalizedUri = normalizePluginSourceUrl(uri, pluginTitle) ?? uri;
-    console.log(`[fetch-plugins] ${pluginTitle}: downloading from ${normalizedUri} ...`);
+    console.log(
+      `[fetch-plugins] ${pluginTitle}: downloading from ${normalizedUri} ...`,
+    );
 
     if (dryRun) {
-      console.log(`[fetch-plugins] ${pluginTitle}: dry-run, would save to ${destPath}`);
+      console.log(
+        `[fetch-plugins] ${pluginTitle}: dry-run, would save to ${destPath}`,
+      );
       downloaded += 1;
       continue;
     }
@@ -335,7 +386,9 @@ async function main(): Promise<void> {
       const downloadedContent = fs.readFileSync(destPath, 'utf-8');
       if (!isLikelyValidPluginPayload(downloadedContent, pluginTitle)) {
         fs.unlinkSync(destPath);
-        throw new Error('Downloaded content is not a valid payload for requested plugin');
+        throw new Error(
+          'Downloaded content is not a valid payload for requested plugin',
+        );
       }
       console.log(`[fetch-plugins] ${pluginTitle}: saved to ${destPath}`);
       downloaded += 1;
@@ -344,14 +397,20 @@ async function main(): Promise<void> {
       // so the server can serve historical versions on request.
       try {
         const parsed = JSON.parse(downloadedContent) as Record<string, unknown>;
-        const version = typeof parsed.version === 'string' ? parsed.version : undefined;
+        const version =
+          typeof parsed.version === 'string' ? parsed.version : undefined;
         if (version) {
-          const historyPluginDir = path.join(HISTORY_DIR, sanitizeFilename(pluginTitle));
+          const historyPluginDir = path.join(
+            HISTORY_DIR,
+            sanitizeFilename(pluginTitle),
+          );
           ensureDir(historyPluginDir);
           const historyPath = path.join(historyPluginDir, `${version}.json`);
           if (!fs.existsSync(historyPath)) {
             fs.copyFileSync(destPath, historyPath);
-            console.log(`[fetch-plugins] ${pluginTitle}: archived version ${version} to history`);
+            console.log(
+              `[fetch-plugins] ${pluginTitle}: archived version ${version} to history`,
+            );
           }
         }
       } catch {
@@ -359,12 +418,16 @@ async function main(): Promise<void> {
       }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      console.error(`[fetch-plugins] ${pluginTitle}: download failed - ${message}`);
+      console.error(
+        `[fetch-plugins] ${pluginTitle}: download failed - ${message}`,
+      );
       failed += 1;
     }
   }
 
-  console.log(`\n[fetch-plugins] Done. Downloaded: ${downloaded}, Skipped: ${skipped}, Failed: ${failed}`);
+  console.log(
+    `\n[fetch-plugins] Done. Downloaded: ${downloaded}, Skipped: ${skipped}, Failed: ${failed}`,
+  );
   process.exit(failed > 0 && !bestEffort ? 1 : 0);
 }
 

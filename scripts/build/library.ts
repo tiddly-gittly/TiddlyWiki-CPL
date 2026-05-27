@@ -1,6 +1,6 @@
 import { extname, resolve } from 'path';
+import { URL } from 'url';
 import {
-  ensureDirSync,
   ensureFileSync,
   existsSync,
   readFileSync,
@@ -10,18 +10,15 @@ import {
   writeFileSync,
 } from 'fs-extra';
 import chalk from 'chalk';
-import type { ITiddlerFields } from 'tiddlywiki';
-import { URL } from 'url';
 
 import {
-  findFirstOne,
   formatTitle,
   getTiddlerFromFile,
   getTmpDir,
   tiddlywiki,
 } from '../utils';
-import { mergePluginInfo } from './merge';
 import { sanitizePluginFileName } from '../../src/CPLServer/lib/files';
+import { mergePluginInfo } from './merge';
 
 const defaultDistDir = resolve('dist', 'library');
 const pluginFilesBaseDir = resolve('wiki', 'files');
@@ -41,7 +38,8 @@ const resolvePluginSourcePath = (pluginTitle: string): string | null => {
 };
 
 const createCplPluginInfo = (plugin: Record<string, string>) => {
-  const builtTiddlers = JSON.parse(plugin.text || '{"tiddlers":{}}').tiddlers || {};
+  const builtTiddlers =
+    JSON.parse(plugin.text || '{"tiddlers":{}}').tiddlers || {};
   return {
     title: plugin.title,
     name: plugin.name,
@@ -60,7 +58,10 @@ const createCplPluginInfo = (plugin: Record<string, string>) => {
   };
 };
 
-const inferSourceExtension = (sourcePath: string, sourceUri?: string): string => {
+const inferSourceExtension = (
+  sourcePath: string,
+  sourceUri?: string,
+): string => {
   if (sourceUri) {
     try {
       const uriExtension = extname(new URL(sourceUri).pathname);
@@ -92,7 +93,10 @@ const loadPluginFromSource = (
   sourceUri?: string,
 ) => {
   const inferredExtension = inferSourceExtension(sourcePath, sourceUri);
-  const tempPath = resolve(tmpDir, `${sanitizePluginFileName(pluginTitle)}${inferredExtension}`);
+  const tempPath = resolve(
+    tmpDir,
+    `${sanitizePluginFileName(pluginTitle)}${inferredExtension}`,
+  );
   writeFileSync(tempPath, readFileSync(sourcePath, 'utf-8'), 'utf-8');
   return getTiddlerFromFile($tw, tempPath, pluginTitle);
 };
@@ -124,8 +128,14 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       info: ReturnType<typeof mergePluginInfo>['newInfoTiddler'],
     ) => {
       const cachePluginFolderPath = resolve(cachePluginsDir, formatted);
-      const latestCachePluginPath = resolve(cachePluginFolderPath, 'latest.json');
-      const currentCachePluginPath = resolve(cachePluginFolderPath, `${plugin.version}.json`);
+      const latestCachePluginPath = resolve(
+        cachePluginFolderPath,
+        'latest.json',
+      );
+      const currentCachePluginPath = resolve(
+        cachePluginFolderPath,
+        `${plugin.version}.json`,
+      );
       const metaPath = resolve(cachePluginFolderPath, '__meta__.json');
       ensureFileSync(metaPath);
       writeFileSync(latestCachePluginPath, json);
@@ -134,11 +144,18 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       const versions = new Set<string>(
         readdirSync(cachePluginFolderPath)
           .filter(fileName => fileName.endsWith('.json'))
-          .filter(fileName => statSync(resolve(cachePluginFolderPath, fileName)).isFile())
-          .filter(fileName => fileName !== 'latest.json' && fileName !== '__meta__.json')
+          .filter(fileName =>
+            statSync(resolve(cachePluginFolderPath, fileName)).isFile(),
+          )
+          .filter(
+            fileName =>
+              fileName !== 'latest.json' && fileName !== '__meta__.json',
+          )
           .map(fileName => {
             const versionText = fileName.replace(/\.json$/, '').trim();
-            versionsSize[versionText] = statSync(resolve(cachePluginFolderPath, fileName)).size;
+            versionsSize[versionText] = statSync(
+              resolve(cachePluginFolderPath, fileName),
+            ).size;
             return versionText;
           }),
       );
@@ -148,7 +165,9 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
         JSON.stringify({
           ...info,
           latest: plugin.version,
-          versions: Array.from(versions).sort((a, b) => $tw.utils.compareVersions(a, b)),
+          versions: Array.from(versions).sort((a, b) =>
+            $tw.utils.compareVersions(a, b),
+          ),
           'versions-size': versionsSize,
         }),
       );
@@ -158,8 +177,13 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       '[all[tiddlers]!is[draft]tag[$:/tags/PluginWiki]has[cpl.title]sort[cpl.title]]',
     );
 
-    const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] = [];
-    console.log(chalk.bgCyan.black.bold('Exporting plugins from fetched/offline sources...'));
+    const pluginInfos: ReturnType<typeof mergePluginInfo>['newInfoTiddler'][] =
+      [];
+    console.log(
+      chalk.bgCyan.black.bold(
+        'Exporting plugins from fetched/offline sources...',
+      ),
+    );
 
     for (const infoTitle of pluginInfoTiddlerTitles) {
       try {
@@ -170,7 +194,9 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
 
         const title = meta['cpl.title'] as string | undefined;
         if (!title || title.trim() === '') {
-          console.warn(chalk.yellow(`  ${infoTitle} missing cpl.title, skipping.`));
+          console.warn(
+            chalk.yellow(`  ${infoTitle} missing cpl.title, skipping.`),
+          );
           continue;
         }
 
@@ -187,21 +213,37 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
           tmpDir,
           sourcePath,
           title,
-          typeof meta['cpl.uri'] === 'string' ? (meta['cpl.uri'] as string) : undefined,
+          typeof meta['cpl.uri'] === 'string' ? meta['cpl.uri'] : undefined,
         );
         if (!plugin) {
-          failedPlugins[title] = `Cannot load plugin tiddler from ${sourcePath}`;
-          console.warn(chalk.yellow(`  Cannot parse plugin ${title} from ${sourcePath}`));
+          failedPlugins[
+            title
+          ] = `Cannot load plugin tiddler from ${sourcePath}`;
+          console.warn(
+            chalk.yellow(`  Cannot parse plugin ${title} from ${sourcePath}`),
+          );
           continue;
         }
 
-        const { pluginTiddler, newInfoTiddler } = mergePluginInfo(plugin as any, meta, $tw);
+        const { pluginTiddler, newInfoTiddler } = mergePluginInfo(
+          plugin as any,
+          meta,
+          $tw,
+        );
         const pluginJson = JSON.stringify(pluginTiddler);
-        writeFileSync(resolve(pluginsDir, `${formattedTitle}.json`), pluginJson);
+        writeFileSync(
+          resolve(pluginsDir, `${formattedTitle}.json`),
+          pluginJson,
+        );
         pluginInfos.push(newInfoTiddler);
 
         if (cache) {
-          cachePlugin(formattedTitle, pluginJson, pluginTiddler, newInfoTiddler);
+          cachePlugin(
+            formattedTitle,
+            pluginJson,
+            pluginTiddler,
+            newInfoTiddler,
+          );
         }
 
         console.log(chalk.cyan(`  Exported plugin ${title}`));
@@ -213,12 +255,19 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
 
     console.log(chalk.cyan(`  Exporting plugin $:/plugins/Gk0Wk/CPL-Repo`));
     {
-      const builtCplPluginPath = resolve('dist', '$__plugins_Gk0Wk_CPL-Repo.json');
+      const builtCplPluginPath = resolve(
+        'dist',
+        '$__plugins_Gk0Wk_CPL-Repo.json',
+      );
       if (!existsSync(builtCplPluginPath)) {
-        throw new Error('Missing dist/$__plugins_Gk0Wk_CPL-Repo.json. Run `pnpm run build` first.');
+        throw new Error(
+          'Missing dist/$__plugins_Gk0Wk_CPL-Repo.json. Run `pnpm run build` first.',
+        );
       }
 
-      const cplPlugin = JSON.parse(readFileSync(builtCplPluginPath, 'utf-8')) as Record<string, string>;
+      const cplPlugin = JSON.parse(
+        readFileSync(builtCplPluginPath, 'utf-8'),
+      ) as Record<string, string>;
       const cplPluginInfo = createCplPluginInfo(cplPlugin);
       const formattedTitle = formatTitle(cplPlugin.title);
       const pluginJson = JSON.stringify(cplPlugin);
@@ -226,7 +275,12 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       pluginInfos.push(cplPluginInfo as any);
 
       if (cache) {
-        cachePlugin(formattedTitle, pluginJson, cplPlugin as any, cplPluginInfo as any);
+        cachePlugin(
+          formattedTitle,
+          pluginJson,
+          cplPlugin as any,
+          cplPluginInfo as any,
+        );
       }
     }
 

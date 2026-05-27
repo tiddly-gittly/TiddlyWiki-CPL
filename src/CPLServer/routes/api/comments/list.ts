@@ -1,6 +1,10 @@
 import { Auth } from '../../../lib/auth';
 import { CommentStore } from '../../../lib/store/comments';
-import { decodeRouteParam, sendInternalError, sendJson } from '../../../lib/http';
+import {
+  decodeRouteParam,
+  sendInternalError,
+  sendJson,
+} from '../../../lib/http';
 import type { RouteHandler } from '../../../lib/types';
 
 export const method = 'GET';

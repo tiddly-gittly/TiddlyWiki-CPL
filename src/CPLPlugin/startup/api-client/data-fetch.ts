@@ -1,6 +1,9 @@
 import { tw, type CPLServerApi } from './types';
 
-export const fetchPluginStats = (cplServerApi: CPLServerApi, pluginTitle: string): void => {
+export const fetchPluginStats = (
+  cplServerApi: CPLServerApi,
+  pluginTitle: string,
+): void => {
   if (!pluginTitle) {
     return;
   }
@@ -8,7 +11,11 @@ export const fetchPluginStats = (cplServerApi: CPLServerApi, pluginTitle: string
   const tempTitle = `$:/temp/CPL-Server/plugin-stats/${pluginTitle}`;
   cplServerApi.getStats(pluginTitle, (error, data) => {
     if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch stats for', pluginTitle, error);
+      console.error(
+        '[CPL-Server] Failed to fetch stats for',
+        pluginTitle,
+        error,
+      );
       return;
     }
 
@@ -22,7 +29,10 @@ export const fetchPluginStats = (cplServerApi: CPLServerApi, pluginTitle: string
   });
 };
 
-export const fetchPluginChangelog = (cplServerApi: CPLServerApi, pluginTitle: string): void => {
+export const fetchPluginChangelog = (
+  cplServerApi: CPLServerApi,
+  pluginTitle: string,
+): void => {
   if (!pluginTitle) {
     return;
   }
@@ -30,7 +40,11 @@ export const fetchPluginChangelog = (cplServerApi: CPLServerApi, pluginTitle: st
   const tempTitle = `$:/temp/CPL-Server/plugin-changelog/${pluginTitle}`;
   cplServerApi.getChangelog(pluginTitle, (error, data) => {
     if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch changelog for', pluginTitle, error);
+      console.error(
+        '[CPL-Server] Failed to fetch changelog for',
+        pluginTitle,
+        error,
+      );
       return;
     }
 
@@ -44,7 +58,10 @@ export const fetchPluginChangelog = (cplServerApi: CPLServerApi, pluginTitle: st
   });
 };
 
-export const fetchPluginComments = (cplServerApi: CPLServerApi, pluginTitle: string): void => {
+export const fetchPluginComments = (
+  cplServerApi: CPLServerApi,
+  pluginTitle: string,
+): void => {
   if (!pluginTitle) {
     return;
   }
@@ -52,7 +69,11 @@ export const fetchPluginComments = (cplServerApi: CPLServerApi, pluginTitle: str
   const tempTitle = `$:/temp/CPL-Server/comments/${pluginTitle}`;
   cplServerApi.getComments(pluginTitle, (error, data) => {
     if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch comments for', pluginTitle, error);
+      console.error(
+        '[CPL-Server] Failed to fetch comments for',
+        pluginTitle,
+        error,
+      );
       return;
     }
 
@@ -66,7 +87,10 @@ export const fetchPluginComments = (cplServerApi: CPLServerApi, pluginTitle: str
   });
 };
 
-export const fetchPluginCompatibility = (cplServerApi: CPLServerApi, pluginTitle: string): void => {
+export const fetchPluginCompatibility = (
+  cplServerApi: CPLServerApi,
+  pluginTitle: string,
+): void => {
   if (!pluginTitle) {
     return;
   }
@@ -74,7 +98,11 @@ export const fetchPluginCompatibility = (cplServerApi: CPLServerApi, pluginTitle
   const tempTitle = `$:/temp/CPL-Server/compatibility/${pluginTitle}`;
   cplServerApi.getCompatibilityReports(pluginTitle, (error, data) => {
     if (error || !data) {
-      console.error('[CPL-Server] Failed to fetch compatibility reports for', pluginTitle, error);
+      console.error(
+        '[CPL-Server] Failed to fetch compatibility reports for',
+        pluginTitle,
+        error,
+      );
       return;
     }
 

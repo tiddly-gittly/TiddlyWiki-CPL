@@ -169,7 +169,7 @@ describe('CPL Server API', () => {
     createFetchedPluginFile();
     cleanupCompatibilityFiles();
 
-    serverProcess = spawn(process.execPath, ['-r', 'ts-node/register/transpile-only', 'scripts/server.ts'], {
+    serverProcess = spawn(process.execPath, ['-r', 'ts-node/register/transpile-only', 'scripts/server.ts', '--prod'], {
       cwd: wikiPath,
       stdio: 'pipe',
       env: {
@@ -218,6 +218,15 @@ describe('CPL Server API', () => {
     expect(response.body).toHaveProperty('downloadCount');
     expect(response.body).toHaveProperty('averageRating');
     expect(response.body).toHaveProperty('totalRatings');
+  });
+
+  test('native TiddlyWiki tiddler writes should be rejected in production mode', async () => {
+    const response = await makeRequest('PUT', '/recipes/default/tiddlers/ReadonlyCheck', {
+      title: 'ReadonlyCheck',
+      text: 'This should not be writable through native tiddlyweb routes'
+    });
+
+    expect([401, 403]).toContain(response.statusCode);
   });
 
   test('POST /cpl/api/download/:pluginTitle should record download', async () => {

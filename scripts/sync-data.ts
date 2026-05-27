@@ -24,7 +24,11 @@ const REPO_ROOT = path.resolve(__dirname, '..');
 const SERVER_ID = process.env.CPL_SERVER_ID ?? 'default';
 const BRANCH_BASE = `data-sync/${SERVER_ID}`;
 
-function run(cmd: string, args: string[], cwd = REPO_ROOT): { ok: boolean; stdout: string } {
+function run(
+  cmd: string,
+  args: string[],
+  cwd = REPO_ROOT,
+): { ok: boolean; stdout: string } {
   console.log(`[sync-data] $ ${cmd} ${args.join(' ')}`);
   const result = spawnSync(cmd, args, {
     cwd,
@@ -33,7 +37,9 @@ function run(cmd: string, args: string[], cwd = REPO_ROOT): { ok: boolean; stdou
   });
   const stdout = (result.stdout ?? '').trim();
   const stderr = (result.stderr ?? '').trim();
-  if (stderr) console.error(`[sync-data] stderr: ${stderr}`);
+  if (stderr) {
+    console.error(`[sync-data] stderr: ${stderr}`);
+  }
   return { ok: result.status === 0, stdout };
 }
 
@@ -59,7 +65,9 @@ run('git', ['add', 'data/']);
 
 const diff = run('git', ['diff', '--cached', '--quiet']);
 if (diff.ok) {
-  console.log('[sync-data] Nothing staged after git add data/ — already up to date.');
+  console.log(
+    '[sync-data] Nothing staged after git add data/ — already up to date.',
+  );
   run('git', ['checkout', '-']);
   process.exit(0);
 }
@@ -73,14 +81,21 @@ if (!commit.ok) {
 }
 
 // 5. Push the branch.
-const push = run('git', ['push', '--force-with-lease', 'origin', `${branch}:${branch}`]);
+const push = run('git', [
+  'push',
+  '--force-with-lease',
+  'origin',
+  `${branch}:${branch}`,
+]);
 if (!push.ok) {
   console.error('[sync-data] ERROR: git push failed.');
   process.exit(1);
 }
 
 // 6. Open a PR via gh CLI.
-const prTitle = `chore(data): sync from ${SERVER_ID} server (${new Date().toISOString().slice(0, 10)})`;
+const prTitle = `chore(data): sync from ${SERVER_ID} server (${new Date()
+  .toISOString()
+  .slice(0, 10)})`;
 const prBody = [
   `Automated data sync from the **${SERVER_ID}** mirror server.`,
   '',
@@ -93,18 +108,25 @@ const prBody = [
 ].join('\n');
 
 const pr = run('gh', [
-  'pr', 'create',
-  '--title', prTitle,
-  '--body', prBody,
-  '--base', 'master',
-  '--head', branch,
+  'pr',
+  'create',
+  '--title',
+  prTitle,
+  '--body',
+  prBody,
+  '--base',
+  'master',
+  '--head',
+  branch,
 ]);
 
 if (pr.ok) {
   console.log('[sync-data] PR created successfully.');
   console.log(pr.stdout);
 } else {
-  console.error('[sync-data] ERROR: gh pr create failed. You can open the PR manually.');
+  console.error(
+    '[sync-data] ERROR: gh pr create failed. You can open the PR manually.',
+  );
   process.exit(1);
 }
 

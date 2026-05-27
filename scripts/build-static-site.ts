@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-import { buildOnlineHTML } from './build/website.ts';
+import { buildOnlineHTML } from './build/website';
 
 const args = process.argv.slice(2);
 const outputArg = args.find(arg => arg.startsWith('--output='));

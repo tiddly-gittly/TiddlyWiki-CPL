@@ -1,6 +1,11 @@
 import { cpl, getEventParam, getFieldString } from './bridge';
 import { fetchPluginFromStaticMirrors } from './static-mirror-fetch';
-import { tw, type DependencyTree, type PluginInfo, type RootWidgetEvent } from './types';
+import {
+  tw,
+  type DependencyTree,
+  type PluginInfo,
+  type RootWidgetEvent,
+} from './types';
 
 export interface InstallController {
   handleInstallPluginRequest: (event: RootWidgetEvent) => Promise<void>;
@@ -15,7 +20,9 @@ export const createInstallController = (): InstallController => {
   let installRequestLock = false;
   let installLock = false;
 
-  const handleInstallPluginRequest = async (event: RootWidgetEvent): Promise<void> => {
+  const handleInstallPluginRequest = async (
+    event: RootWidgetEvent,
+  ): Promise<void> => {
     try {
       if (installRequestLock) {
         return;
@@ -26,8 +33,8 @@ export const createInstallController = (): InstallController => {
       const titles = titlesParam
         ? tw.utils.parseStringArray(titlesParam)
         : titleParam
-          ? [titleParam]
-          : [];
+        ? [titleParam]
+        : [];
       const autoConfirm = getEventParam(event, 'auto-confirm') === 'yes';
       if (titles.length === 0) {
         return;
@@ -39,24 +46,33 @@ export const createInstallController = (): InstallController => {
         text: 'yes',
         'plugin-titles': JSON.stringify(titles),
       });
-      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/install-plugin-query', {
-        variables: {},
-      });
+      tw.notifier.display(
+        '$:/plugins/Gk0Wk/CPL-Repo/notifications/install-plugin-query',
+        {
+          variables: {},
+        },
+      );
 
       const existingTitles = new Set<string>();
       const versionsMap: Record<string, Record<string, string>> = {};
       const versionsMapLatest: Record<string, string | undefined> = {};
-      const sizesMap: Record<string, Record<string, number | null | undefined>> = {};
+      const sizesMap: Record<
+        string,
+        Record<string, number | null | undefined>
+      > = {};
       const allTrees: Record<string, DependencyTree> = {};
 
-      const recursiveInstallCheck = async (title: string): Promise<DependencyTree> => {
+      const recursiveInstallCheck = async (
+        title: string,
+      ): Promise<DependencyTree> => {
         try {
           const text = await cpl('Query', { plugin: title });
           const data = asPluginInfo(JSON.parse(text));
 
           existingTitles.add(title);
           if (!versionsMap[title]) {
-            versionsMap[title] = (data.versions as Record<string, string>) ?? {};
+            versionsMap[title] =
+              (data.versions as Record<string, string>) ?? {};
             versionsMapLatest[title] = data.latest;
             sizesMap[title] = data['versions-size'] ?? {};
             sizesMap[title].latest = data['versions-size']?.[data.latest ?? ''];
@@ -65,14 +81,18 @@ export const createInstallController = (): InstallController => {
           const seenDependencies = new Set<string>();
           const subtree: DependencyTree = {};
 
-          const processDependency = async (dependencyTitle: string): Promise<void> => {
+          const processDependency = async (
+            dependencyTitle: string,
+          ): Promise<void> => {
             seenDependencies.add(dependencyTitle);
             if (existingTitles.has(dependencyTitle)) {
               subtree[dependencyTitle] = {};
               return;
             }
 
-            subtree[dependencyTitle] = await recursiveInstallCheck(dependencyTitle);
+            subtree[dependencyTitle] = await recursiveInstallCheck(
+              dependencyTitle,
+            );
           };
 
           const parentPlugin = data['parent-plugin'];
@@ -80,7 +100,9 @@ export const createInstallController = (): InstallController => {
             await processDependency(parentPlugin);
           }
 
-          for (const dependencyTitle of tw.utils.parseStringArray(data.dependents || '')) {
+          for (const dependencyTitle of tw.utils.parseStringArray(
+            data.dependents || '',
+          )) {
             if (seenDependencies.has(dependencyTitle)) {
               continue;
             }
@@ -90,7 +112,9 @@ export const createInstallController = (): InstallController => {
           return subtree;
         } catch (error) {
           const message = String(error);
-          throw message.startsWith('404') ? `[404] Cannot find plugin ${title}` : message;
+          throw message.startsWith('404')
+            ? `[404] Cannot find plugin ${title}`
+            : message;
         }
       };
 
@@ -110,7 +134,10 @@ export const createInstallController = (): InstallController => {
         const version = tw.wiki.getTiddler(title)?.fields.version;
         tiddlerFields[`cpl-plugin#install#${title}`] =
           latestVersion &&
-          tw.utils.compareVersions(typeof version === 'string' ? version : '', latestVersion) < 0
+          tw.utils.compareVersions(
+            typeof version === 'string' ? version : '',
+            latestVersion,
+          ) < 0
             ? 'yes'
             : 'no';
       }
@@ -131,17 +158,22 @@ export const createInstallController = (): InstallController => {
       if (autoConfirm) {
         await handleInstallPlugin({
           type: 'cpl-install-plugin',
-          paramObject: { response: '$:/temp/CPL-Repo/instal-plugin-request-tree' },
+          paramObject: {
+            response: '$:/temp/CPL-Repo/instal-plugin-request-tree',
+          },
           widget: event.widget,
-        } as RootWidgetEvent);
+        } as unknown as RootWidgetEvent);
         return;
       }
-      tw.modal.display('$:/plugins/Gk0Wk/CPL-Repo/templates/modals/install-plugin-request', {
-        variables: {
-          requestTiddler: '$:/temp/CPL-Repo/instal-plugin-request-tree',
+      tw.modal.display(
+        '$:/plugins/Gk0Wk/CPL-Repo/templates/modals/install-plugin-request',
+        {
+          variables: {
+            requestTiddler: '$:/temp/CPL-Repo/instal-plugin-request-tree',
+          },
+          event,
         },
-        event,
-      });
+      );
     } catch (error) {
       console.error(error);
       tw.wiki.addTiddler({
@@ -178,17 +210,34 @@ export const createInstallController = (): InstallController => {
 
       const rootPlugin = data.title;
       const plugins: Array<[string, string | undefined]> = rootPlugin
-        ? [[rootPlugin, getFieldString(responseTiddler.fields, `cpl-plugin#version#${rootPlugin}`)]]
+        ? [
+            [
+              rootPlugin,
+              getFieldString(
+                responseTiddler.fields,
+                `cpl-plugin#version#${rootPlugin}`,
+              ),
+            ],
+          ]
         : [];
 
       for (const pluginTitle of Object.keys(data.versions ?? {})) {
         if (
-          getFieldString(responseTiddler.fields, `cpl-plugin#install#${pluginTitle}`) === 'yes' &&
-          getFieldString(responseTiddler.fields, `cpl-plugin#version#${pluginTitle}`)
+          getFieldString(
+            responseTiddler.fields,
+            `cpl-plugin#install#${pluginTitle}`,
+          ) === 'yes' &&
+          getFieldString(
+            responseTiddler.fields,
+            `cpl-plugin#version#${pluginTitle}`,
+          )
         ) {
           plugins.push([
             pluginTitle,
-            getFieldString(responseTiddler.fields, `cpl-plugin#version#${pluginTitle}`),
+            getFieldString(
+              responseTiddler.fields,
+              `cpl-plugin#version#${pluginTitle}`,
+            ),
           ]);
         }
       }
@@ -223,9 +272,12 @@ export const createInstallController = (): InstallController => {
           }
 
           count += 1;
-          tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading', {
-            variables: { plugin: pluginTitle, count, total },
-          });
+          tw.notifier.display(
+            '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading',
+            {
+              variables: { plugin: pluginTitle, count, total },
+            },
+          );
           return new tw.Tiddler(tw.utils.parseJSONSafe(text));
         }),
       );
@@ -234,14 +286,20 @@ export const createInstallController = (): InstallController => {
       for (const tiddler of tiddlers) {
         tw.wiki.addTiddler(tiddler);
       }
-      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-complete', {
-        variables: {},
-      });
+      tw.notifier.display(
+        '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-complete',
+        {
+          variables: {},
+        },
+      );
     } catch (error) {
       console.error(error);
-      tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-fail', {
-        variables: { message: String(error) },
-      });
+      tw.notifier.display(
+        '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-fail',
+        {
+          variables: { message: String(error) },
+        },
+      );
       const response = getEventParam(event, 'response');
       const rootPlugin = response
         ? getFieldString(tw.wiki.getTiddler(response)?.fields ?? {}, 'title')

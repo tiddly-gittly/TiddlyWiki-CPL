@@ -2,14 +2,15 @@ import {
   browserRuntime,
   tw,
   type CplMessageData,
-  type CplPayload,
   type CplRequest,
   type RequestHandlers,
   type RootWidgetEvent,
 } from './types';
 
-export const DEFAULT_REPO_ENTRY = 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
-export const CURRENT_REPO_TITLE = '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
+export const DEFAULT_REPO_ENTRY =
+  'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
+export const CURRENT_REPO_TITLE =
+  '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
 
 let messagerPromise: Promise<CplRequest> | undefined;
 let previousEntry: string | undefined;
@@ -28,7 +29,10 @@ export const setPreviousRepoEntry = (entry: string | undefined): void => {
   previousEntry = entry;
 };
 
-export const getEventParam = (event: RootWidgetEvent, name: string): string | undefined => {
+export const getEventParam = (
+  event: RootWidgetEvent,
+  name: string,
+): string | undefined => {
   const value = event.paramObject?.[name];
   return typeof value === 'string' ? value : undefined;
 };
@@ -49,7 +53,7 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
       document,
       attributes: { src: entry },
       style: { display: 'none' },
-    }) as HTMLIFrameElement;
+    });
 
     const handleMessage = (event: MessageEvent<CplMessageData>): void => {
       if (!iframe.contentWindow || event.source !== iframe.contentWindow) {
@@ -64,21 +68,22 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
       if (data.type === 'Ready') {
         if (counter === 0) {
           counter += 1;
-          resolve((type, payload) =>
-            new Promise<string>((resolveRequest, rejectRequest) => {
-              const token = counter;
-              counter += 1;
-              callbackMap.set(token, [resolveRequest, rejectRequest]);
-              iframe.contentWindow?.postMessage(
-                {
-                  ...(payload ?? {}),
-                  type,
-                  token,
-                  target: 'tiddlywiki-cpl',
-                },
-                '*',
-              );
-            }),
+          resolve(
+            (type, payload) =>
+              new Promise<string>((resolveRequest, rejectRequest) => {
+                const token = counter;
+                counter += 1;
+                callbackMap.set(token, [resolveRequest, rejectRequest]);
+                iframe.contentWindow?.postMessage(
+                  {
+                    ...(payload ?? {}),
+                    type,
+                    token,
+                    target: 'tiddlywiki-cpl',
+                  },
+                  '*',
+                );
+              }),
           );
         }
         return;

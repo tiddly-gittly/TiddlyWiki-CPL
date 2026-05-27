@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { TiddlyWiki } from 'tiddlywiki';
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
 
-export * from './tiddler.ts';
+export * from './tiddler';
 
 /**
  * 初始化 TiddlyWiki

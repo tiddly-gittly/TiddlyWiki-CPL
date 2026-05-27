@@ -1,7 +1,16 @@
 import { Auth } from '../../../lib/auth';
 import { CompatibilityStore } from '../../../lib/store/compatibility';
-import { decodeRouteParam, sendError, sendInternalError, sendJson, parseJsonBody } from '../../../lib/http';
-import type { RouteHandler, CompatibilityReportStatus } from '../../../lib/types';
+import {
+  decodeRouteParam,
+  sendError,
+  sendInternalError,
+  sendJson,
+  parseJsonBody,
+} from '../../../lib/http';
+import type {
+  RouteHandler,
+  CompatibilityReportStatus,
+} from '../../../lib/types';
 
 interface ModerateBody {
   status?: unknown;
@@ -27,12 +36,21 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    if (!isValidStatus(body?.status)) {
-      sendError(context, 400, 'Missing or invalid status. Expected: approved or rejected');
+    const { status } = body ?? {};
+    if (!isValidStatus(status)) {
+      sendError(
+        context,
+        400,
+        'Missing or invalid status. Expected: approved or rejected',
+      );
       return;
     }
 
-    const report = CompatibilityStore.updateReportStatus(pluginTitle, reportId, body.status);
+    const report = CompatibilityStore.updateReportStatus(
+      pluginTitle,
+      reportId,
+      status,
+    );
     if (!report) {
       sendError(context, 404, 'Report not found');
       return;
@@ -40,7 +58,7 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     sendJson(context, 200, {
       success: true,
-      message: `Report ${body.status}`,
+      message: `Report ${status}`,
       report,
     });
   } catch (error) {

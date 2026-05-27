@@ -50,13 +50,19 @@ export const createMirrorController = ({
       mirrorSwitchInternalChange = true;
       tw.wiki.addTiddler({ title: CURRENT_REPO_TITLE, text: oldEntry });
       mirrorSwitchInternalChange = false;
-      setMirrorSwitchStatus('blocked', 'Mirror switching is unavailable while CPL is busy.');
+      setMirrorSwitchStatus(
+        'blocked',
+        'Mirror switching is unavailable while CPL is busy.',
+      );
       return;
     }
 
     mirrorSwitchPending = true;
     clearTempRepoState();
-    setMirrorSwitchStatus('switching', 'Switching mirror and reloading plugin data...');
+    setMirrorSwitchStatus(
+      'switching',
+      'Switching mirror and reloading plugin data...',
+    );
     resetBridge();
     setPreviousRepoEntry(newEntry);
     setTimeout(() => {
@@ -80,7 +86,10 @@ export const createMirrorController = ({
     }
 
     mirrorSwitchPending = false;
-    setMirrorSwitchStatus('error', String(message || 'Failed to switch mirror'));
+    setMirrorSwitchStatus(
+      'error',
+      String(message || 'Failed to switch mirror'),
+    );
   };
 
   return {

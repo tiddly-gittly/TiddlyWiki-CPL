@@ -86,7 +86,12 @@ export type CompatibilityReportStatus = 'pending' | 'approved' | 'rejected';
 
 export type CompatibilitySeverity = 'info' | 'warning' | 'error';
 
-export type CompatibilityConflictType = 'conflict' | 'breaks' | 'requires' | 'replaces' | 'optional';
+export type CompatibilityConflictType =
+  | 'conflict'
+  | 'breaks'
+  | 'requires'
+  | 'replaces'
+  | 'optional';
 
 export interface ConflictingPlugin {
   pluginTitle: string;

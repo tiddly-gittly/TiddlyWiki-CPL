@@ -1,10 +1,10 @@
-import fs from 'fs-extra';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs-extra';
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
-import { mergePluginInfo } from './merge.ts';
-import { getTiddlerFromFile } from '../utils/tiddler.ts';
-import { getRuntimePluginTiddlers } from '../runtime-plugins.ts';
+import { getTiddlerFromFile } from '../utils/tiddler';
+import { getRuntimePluginTiddlers } from '../runtime-plugins';
+import { mergePluginInfo } from './merge';
 
 interface SourcePluginInfo {
   title?: string;
@@ -21,10 +21,14 @@ const pluginInfoPath = resolve(
   fileURLToPath(new URL('../../src/CPLPlugin/plugin.info', import.meta.url)),
 );
 const repoVersionTiddlerPath = resolve(
-  fileURLToPath(new URL('../../src/CPLPlugin/config/repo-version.tid', import.meta.url)),
+  fileURLToPath(
+    new URL('../../src/CPLPlugin/config/repo-version.tid', import.meta.url),
+  ),
 );
 const readmeTiddlerPath = resolve(
-  fileURLToPath(new URL('../../src/CPLPlugin/docs/readme.tid', import.meta.url)),
+  fileURLToPath(
+    new URL('../../src/CPLPlugin/docs/readme.tid', import.meta.url),
+  ),
 );
 
 const requireNonEmptyString = (value: unknown, label: string): string => {
@@ -38,14 +42,38 @@ const requireNonEmptyString = (value: unknown, label: string): string => {
 const rawSourcePluginInfo = fs.readJSONSync(pluginInfoPath) as SourcePluginInfo;
 
 const sourcePluginInfo = {
-  title: requireNonEmptyString(rawSourcePluginInfo.title, `${pluginInfoPath}#title`),
-  description: requireNonEmptyString(rawSourcePluginInfo.description, `${pluginInfoPath}#description`),
-  author: requireNonEmptyString(rawSourcePluginInfo.author, `${pluginInfoPath}#author`),
-  version: requireNonEmptyString(rawSourcePluginInfo.version, `${pluginInfoPath}#version`),
-  coreVersion: requireNonEmptyString(rawSourcePluginInfo['core-version'], `${pluginInfoPath}#core-version`),
-  pluginType: requireNonEmptyString(rawSourcePluginInfo['plugin-type'], `${pluginInfoPath}#plugin-type`),
-  dependents: requireNonEmptyString(rawSourcePluginInfo.dependents, `${pluginInfoPath}#dependents`),
-  list: requireNonEmptyString(rawSourcePluginInfo.list, `${pluginInfoPath}#list`),
+  title: requireNonEmptyString(
+    rawSourcePluginInfo.title,
+    `${pluginInfoPath}#title`,
+  ),
+  description: requireNonEmptyString(
+    rawSourcePluginInfo.description,
+    `${pluginInfoPath}#description`,
+  ),
+  author: requireNonEmptyString(
+    rawSourcePluginInfo.author,
+    `${pluginInfoPath}#author`,
+  ),
+  version: requireNonEmptyString(
+    rawSourcePluginInfo.version,
+    `${pluginInfoPath}#version`,
+  ),
+  coreVersion: requireNonEmptyString(
+    rawSourcePluginInfo['core-version'],
+    `${pluginInfoPath}#core-version`,
+  ),
+  pluginType: requireNonEmptyString(
+    rawSourcePluginInfo['plugin-type'],
+    `${pluginInfoPath}#plugin-type`,
+  ),
+  dependents: requireNonEmptyString(
+    rawSourcePluginInfo.dependents,
+    `${pluginInfoPath}#dependents`,
+  ),
+  list: requireNonEmptyString(
+    rawSourcePluginInfo.list,
+    `${pluginInfoPath}#list`,
+  ),
 };
 
 const getBuiltPluginVersion = ($tw: ITiddlyWiki): string => {
@@ -89,10 +117,13 @@ export const buildCPLPlugin = (
   const sourceRuntimeTiddlers = getRuntimePluginTiddlers('repo');
   const cplPluginTiddlers: Record<string, ITiddlerFields> = {};
   Object.values(sourceRuntimeTiddlers)
-    .filter(({ title }) => ![
-      '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
-      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
-    ].includes(title))
+    .filter(
+      ({ title }) =>
+        ![
+          '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
+          '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
+        ].includes(title),
+    )
     .map(tiddler => ({
       ...tiddler,
       created: undefined,
@@ -107,7 +138,9 @@ export const buildCPLPlugin = (
     });
 
   if (Object.keys(cplPluginTiddlers).length === 0) {
-    throw new Error('No CPL plugin source tiddlers were loaded for buildCPLPlugin');
+    throw new Error(
+      'No CPL plugin source tiddlers were loaded for buildCPLPlugin',
+    );
   }
 
   const plugin = {

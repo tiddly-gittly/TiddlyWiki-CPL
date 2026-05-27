@@ -7,5 +7,10 @@
     "types": ["node", "tw5-typed"],
     "lib": ["DOM", "ESNext"]
   },
-  "include": ["./src/**/*", "./scripts/**/*.ts", "scripts/index.ts"]
+  "include": [
+    "./src/**/*",
+    "./scripts/**/*.ts",
+    "docker-entrypoint.ts",
+    "scripts/index.ts"
+  ]
 }

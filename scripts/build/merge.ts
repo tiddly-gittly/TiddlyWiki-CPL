@@ -1,5 +1,5 @@
 import type { ITiddlerFields, ITiddlyWiki } from 'tiddlywiki';
-import { getReadmeFromPlugin, ifPluginRequiresReload } from '../utils/tiddler.ts';
+import { getReadmeFromPlugin, ifPluginRequiresReload } from '../utils/tiddler';
 
 const mergingFields = [
   'title',
@@ -17,16 +17,16 @@ export const mergeField = (
   info: Record<string, unknown>,
   fallback?: unknown,
 ) => {
+  const pluginValue = plugin[fieldName];
+  const infoValue = info[fieldName];
   const pluginEmpty =
-    plugin[fieldName] === undefined ||
-    plugin[fieldName] === null ||
-    (typeof plugin[fieldName] === 'string' &&
-      (plugin[fieldName] as string).trim() === '');
+    pluginValue === undefined ||
+    pluginValue === null ||
+    (typeof pluginValue === 'string' && pluginValue.trim() === '');
   const infoEmpty =
-    info[fieldName] === undefined ||
-    info[fieldName] === null ||
-    (typeof info[fieldName] === 'string' &&
-      (info[fieldName] as string).trim() === '');
+    infoValue === undefined ||
+    infoValue === null ||
+    (typeof infoValue === 'string' && infoValue.trim() === '');
   if (pluginEmpty && infoEmpty) {
     if (
       fallback !== undefined &&
@@ -37,9 +37,9 @@ export const mergeField = (
       plugin[fieldName] = fallback;
     }
   } else if (pluginEmpty) {
-    plugin[fieldName] = info[fieldName];
+    plugin[fieldName] = infoValue;
   } else if (infoEmpty) {
-    info[fieldName] = plugin[fieldName];
+    info[fieldName] = pluginValue;
   }
 };
 

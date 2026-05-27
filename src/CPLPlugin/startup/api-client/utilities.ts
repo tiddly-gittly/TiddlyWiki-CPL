@@ -6,7 +6,10 @@ import {
   REPO_TYPE_TIDDLER,
 } from './constants';
 
-export const getEventParam = (event: RootWidgetEvent, name: string): string | undefined => {
+export const getEventParam = (
+  event: RootWidgetEvent,
+  name: string,
+): string | undefined => {
   const value = event.paramObject?.[name];
   return typeof value === 'string' ? value : undefined;
 };
@@ -17,7 +20,11 @@ export const clearServerTempState = (): void => {
   }
 };
 
-export const setApiStatus = (status: string, type: string, message: string): void => {
+export const setApiStatus = (
+  status: string,
+  type: string,
+  message: string,
+): void => {
   const timestamp = String(Date.now());
 
   tw.wiki.addTiddler({
@@ -61,7 +68,9 @@ export const getErrorMessage = (error: unknown): string => {
     return httpError.message;
   }
   if (httpError.status !== undefined) {
-    return `HTTP ${httpError.status}${httpError.statusText ? ` ${httpError.statusText}` : ''}`;
+    return `HTTP ${httpError.status}${
+      httpError.statusText ? ` ${httpError.statusText}` : ''
+    }`;
   }
 
   try {
@@ -96,5 +105,7 @@ export const getViewedPluginTitle = (): string | null => {
   }
 
   const pluginTitle = tiddler.fields['cpl.title'];
-  return typeof pluginTitle === 'string' && pluginTitle.length > 0 ? pluginTitle : null;
+  return typeof pluginTitle === 'string' && pluginTitle.length > 0
+    ? pluginTitle
+    : null;
 };

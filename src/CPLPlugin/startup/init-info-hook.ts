@@ -1,6 +1,9 @@
 type UpdatePluginMap = Record<string, [string, ...unknown[]]>;
 
-type CplBridge = (type: string, payload?: Record<string, unknown>) => Promise<string>;
+type CplBridge = (
+  type: string,
+  payload?: Record<string, unknown>,
+) => Promise<string>;
 
 const browserRuntime = globalThis as typeof globalThis & {
   __tiddlywiki_cpl__: CplBridge;
