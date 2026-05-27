@@ -83,19 +83,24 @@ if (fs.existsSync(repoMetaDir)) {
 }
 
 // ---------------------------------------------------------------------------
-// 2. fetch-plugins — download actual plugin JSON files
+// 2. fetch-plugins — run in the background, don't block server startup
 // ---------------------------------------------------------------------------
-console.log('[entrypoint] Fetching plugin JSON files from upstream sources...');
-const fetchOk = $(
-  `${path.join(APP_DIR, 'node_modules/.bin/ts-node')} --transpile-only ${path.join(APP_DIR, 'scripts/fetch-plugins.ts')}`,
-  { ignoreError: true },
+console.log('[entrypoint] Starting background plugin fetch...');
+const fetchProc = require('child_process').spawn(
+  path.join(APP_DIR, 'node_modules/.bin/ts-node'),
+  ['--transpile-only', path.join(APP_DIR, 'scripts/fetch-plugins.ts')],
+  { stdio: 'inherit', cwd: APP_DIR, detached: false },
 );
-if (!fetchOk) {
-  console.warn('[entrypoint] WARNING: fetch-plugins had errors. Server will start with partial plugin data.');
-}
+fetchProc.on('exit', (code: number | null) => {
+  if (code !== 0) {
+    console.warn(`[entrypoint] WARNING: fetch-plugins exited with code ${code}. Plugin data may be incomplete.`);
+  } else {
+    console.log('[entrypoint] fetch-plugins completed OK.');
+  }
+});
 
 // ---------------------------------------------------------------------------
-// 3. start server (replaces this process via execFileSync + process.exit)
+// 3. start server immediately (don't wait for fetch-plugins)
 // ---------------------------------------------------------------------------
 console.log('[entrypoint] Starting CPL server...');
 const server = spawnSync(
