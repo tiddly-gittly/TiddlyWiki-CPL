@@ -13,10 +13,11 @@
 #     --build-arg HTTPS_PROXY=http://172.17.0.1:1081 \
 #     -t tiddlywiki-cpl .
 #
-# Run (mounts for persistent data and git cache):
+# Run (recommended: mount all three persistent directories):
 #   docker run -p 8080:8080 \
 #     -v $(pwd)/data:/app/data \
 #     -v $(pwd)/repo-cache:/app/repo-cache \
+#     -v $(pwd)/plugin-fetched:/app/wiki/files/plugin-fetched \
 #     -e PORT=8080 -e HOST=0.0.0.0 \
 #     tiddlywiki-cpl
 
@@ -75,8 +76,10 @@ COPY docker-entrypoint.ts ./docker-entrypoint.ts
 # Persistent mount points — create so Docker doesn't auto-create them as root.
 #   /app/data       — stats, ratings, compatibility data
 #   /app/repo-cache — git clone of the repo (updated at each startup)
-#   /app/wiki/files/plugin-fetched — downloaded plugin JSONs
+#   /app/wiki/files/plugin-fetched — downloaded plugin JSONs (mount to persist
+#     across restarts and avoid re-downloading on every container start)
 RUN mkdir -p /app/data /app/repo-cache /app/wiki/files/plugin-fetched
+VOLUME ["/app/data", "/app/repo-cache", "/app/wiki/files/plugin-fetched"]
 
 # Expose default port (override with PORT env var)
 EXPOSE 8080

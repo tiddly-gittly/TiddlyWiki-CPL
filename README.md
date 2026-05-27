@@ -153,17 +153,21 @@ docker run -p 8080:8080 \
   tiddlywiki-cpl
 ```
 
-**Required volume mount:**
+**Recommended volume mounts:**
 
 | Path in container | Purpose |
 |---|---|
-| `/app/data` | Persistent runtime data (stats, ratings, compatibility) — must be mounted |
+| `/app/data` | Runtime data (stats, ratings, comments) — **required** |
+| `/app/repo-cache` | Shallow git clone of this repo; persists across restarts so startup only runs `git pull` instead of a full clone |
+| `/app/wiki/files/plugin-fetched` | Downloaded plugin JSON files; mount to avoid re-downloading everything on each container start |
 
-Plugin files live inside the image at `/app/wiki/files/`. To supply your own offline plugins, mount an additional volume:
+To supply your own offline plugins, mount an additional volume:
 
 ```bash
 -v $(pwd)/wiki/files/plugin-offline:/app/wiki/files/plugin-offline
 ```
+
+**Plugin version history:** `plugin-fetched/` contains the latest fetched JSON for each plugin (files are overwritten on each sync). If you need version history, mount the directory into a path tracked by git on the host and commit periodically.
 
 **Environment variables:**
 
@@ -176,13 +180,18 @@ Plugin files live inside the image at `/app/wiki/files/`. To supply your own off
 | `CPL_GITHUB_CLIENT_SECRET` | GitHub OAuth App Client Secret |
 | `CPL_ADMIN_GITHUB_IDS` | Comma-separated GitHub user IDs for moderators |
 
-The container start command runs `docker-entrypoint.sh`, which:
+The container runs `docker-entrypoint.ts` (via `ts-node`) which manages the full lifecycle:
 
-1. **`git pull`** — refreshes wiki tiddler metadata (plugin titles, versions, categories) from the repository.
-2. **`fetch-plugins`** — downloads actual plugin JSON files from upstream sources into `wiki/files/plugin-fetched/`. This directory is **not baked into the image** to avoid stale data and large image size; `wiki/files/plugin-offline/` (committed static fallback plugins) is included.
-3. **`scripts/server.ts --prod`** — builds runtime plugins and starts TiddlyWiki with `--listen`.
+1. **`git clone / pull`** — shallow-clones the repo into `/app/repo-cache` on first start, then `git pull` on subsequent starts to get the latest plugin metadata. Non-fatal: server starts with baked-in metadata if git is unreachable.
+2. **Server starts immediately** — no waiting for plugin downloads.
+3. **`fetch-plugins` (background)** — downloads plugin JSON files from upstream sources into `wiki/files/plugin-fetched/`. Server restarts when complete to serve the new files.
+4. **Periodic sync** — every `SYNC_INTERVAL_SECONDS` (default: `3600`), steps 1 and 3 repeat and the server restarts.
 
-Both steps 1 and 2 are best-effort: if they fail (network issue, etc.) the server starts with whatever data is already present.
+**Extra environment variables:**
+
+| Variable | Default | Description |
+|---|---|---|
+| `SYNC_INTERVAL_SECONDS` | `3600` | Seconds between git pull + plugin re-fetch cycles. Set to `0` to disable. |
 
 ### Environment Configuration
 
