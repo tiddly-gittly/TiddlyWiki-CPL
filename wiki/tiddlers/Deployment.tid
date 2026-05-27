@@ -1,0 +1,144 @@
+created: 20260527000000000
+modified: 20260527000000000
+tags: 
+title: Deployment
+type: text/vnd.tiddlywiki
+
+!! Docker Deployment
+
+The published image is `linonetwo/tiddlywiki-cpl`. Run from inside your clone of this repo so that volume mounts point at the right paths:
+
+```bash
+git clone https://github.com/tiddly-gittly/TiddlyWiki-CPL.git
+cd TiddlyWiki-CPL
+cp .env.example .env   # fill in secrets — see Environment Variables below
+docker run -d -p 8080:8080 \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched \
+  -v $(pwd)/wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history \
+  -v $(pwd)/repo-cache:/app/repo-cache \
+  --env-file .env \
+  linonetwo/tiddlywiki-cpl:latest
+```
+
+!!! Volume mounts
+
+|!Path in container|!Mount from repo|!Notes|
+|`/app/data`|`$(pwd)/data`|Stats, ratings, comments. Bind-mounted so writes are immediately visible on the host and committable via git.|
+|`/app/wiki/files/plugin-fetched`|`$(pwd)/wiki/files/plugin-fetched`|Latest plugin JSONs. Gitignored; persists across restarts.|
+|`/app/wiki/files/plugin-fetched-history`|`$(pwd)/wiki/files/plugin-fetched-history`|Per-version plugin archives. Gitignored.|
+|`/app/repo-cache`|`$(pwd)/repo-cache`|Shallow git clone cache. Gitignored; avoids full re-clone on restart.|
+|`/app/wiki/files/plugin-offline`|❌ do not mount|Offline fallback plugins are baked into the image; mounting would hide them.|
+
+> //Bind mount behaviour://  `-v $(pwd)/data:/app/data` makes the host and container share the exact same directory. Every write the container makes is immediately visible on the host — no copying required. The image content at that path is shadowed (not deleted).
+
+!!! Container lifecycle (`docker-entrypoint.ts`)
+
+# `git clone` (first start) or `git pull` into `/app/repo-cache` — keeps plugin metadata current. Non-fatal if GitHub is unreachable.
+# Server starts immediately.
+# `fetch-plugins` runs in the background; server restarts when it completes to serve the new plugin files.
+# Repeats every `SYNC_INTERVAL_SECONDS` (default `3600`).
+
+Plugin downloads and git sync happen automatically inside the container. Deployers do not need to schedule these separately.
+
+!! Syncing `data/` back to GitHub
+
+The container carries no git credentials. Run this on the host once a week to open a Pull Request with the accumulated stats/ratings/comments:
+
+```bash
+# Requires gh CLI: https://cli.github.com  (gh auth login)
+pnpm run sync-data
+```
+
+`scripts/sync-data.ts` creates a branch `data-sync/{serverId}/{timestamp}`, commits only `data/`, pushes it, and opens a PR via `gh pr create`. The PR provides a review step and prevents direct-push conflicts between mirrors.
+
+Suggested cron (weekly, Monday 03:00):
+
+```
+0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
+```
+
+See [[data/README|data/README]] (`data/README.md` in the repo) for the full data directory reference.
+
+!! Environment Variables
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+|!Variable|!Default|!Description|
+|`HOST`|`0.0.0.0`|Bind address|
+|`PORT`|`8080`|Listen port|
+|`CPL_JWT_SECRET`|—|Random string for JWT signing. Generate: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`|
+|`CPL_GITHUB_CLIENT_ID`|—|GitHub OAuth App Client ID|
+|`CPL_GITHUB_CLIENT_SECRET`|—|GitHub OAuth App Client Secret|
+|`CPL_ADMIN_GITHUB_IDS`|—|Comma-separated GitHub user IDs for comment moderators|
+|`CPL_SERVER_ID`|—|Mirror identifier (e.g. `china`, `us`, `eu`). Leave empty for single-server.|
+|`SYNC_INTERVAL_SECONDS`|`3600`|Seconds between git pull + plugin re-fetch inside the container. Set `0` to disable.|
+
+Never commit `.env` to git — it is already in `.gitignore`.
+
+!!! Creating a GitHub OAuth App
+
+# Go to https://github.com/settings/applications/new
+# Set //Authorization callback URL// to `http://your-domain/cpl/api/auth/github/callback`
+# Copy the Client ID and Client Secret into `.env`
+
+!! Multi-Server Deployment
+
+CPL supports multiple mirror servers (e.g. China, US, Europe) that all write to the same git repository without conflicts.
+
+Each mirror writes to its own files: `stats.{serverId}.json`, `ratings.{serverId}.json`, `comments/{plugin}.{serverId}.json`. The server aggregates all files at read time — no merge conflicts on git.
+
+!!! Setup
+
+Set `CPL_SERVER_ID` in each mirror's `.env`:
+
+```
+CPL_SERVER_ID=china   # or us, eu, etc.
+```
+
+Each mirror runs `pnpm run sync-data` weekly to open a PR for its own `data/` changes. PRs from different mirrors are independent and can be merged or reviewed separately.
+
+To detect data issues across mirrors:
+
+```bash
+pnpm run reconcile-data             # dry run (report only)
+pnpm run reconcile-data -- --fix    # apply fixes
+pnpm run reconcile-data -- --clean-stale   # remove files from mirrors inactive 30+ days
+```
+
+Comment IDs use the format `{serverId}-{timestamp}-{random}` to prevent collisions.
+
+!! Comment System Administration
+
+* Users authenticate via GitHub OAuth
+* New comments are held in `pending` status until a moderator approves them
+* Moderators are the GitHub user IDs listed in `CPL_ADMIN_GITHUB_IDS`
+* Comment data lives in `data/comments/` as JSON files
+* Rate limit: 10 comments per hour per user (configurable via `CPL_COMMENT_RATE_LIMIT`)
+
+!! Bare-Metal Deployment (without Docker)
+
+```bash
+pnpm install
+pnpm run fetch-plugins   # download plugin JSONs into wiki/files/plugin-fetched/
+pnpm server:prod         # start production server
+```
+
+To keep plugin files current on a bare-metal server, schedule `fetch-plugins` yourself (the Docker image does this automatically):
+
+```bash
+# crontab: daily at 03:00
+0 3 * * *  cd /path/to/TiddlyWiki-CPL && pnpm run fetch-plugins >> /var/log/cpl-fetch.log 2>&1
+```
+
+And sync data to GitHub weekly:
+
+```bash
+0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
+```
+
+If the server is behind a reverse proxy or CDN, ensure the real client IP is forwarded correctly — rate limiting and download counting depend on it.
