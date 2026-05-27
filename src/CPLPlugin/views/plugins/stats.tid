@@ -20,7 +20,7 @@ type: text/vnd.tiddlywiki
 <$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}>
 
 <$list filter="[<serverType>!match[server]]" variable="isUnavailableServer">
-<div class="cpl-static-feature-notice" style="background: #f8d7da; border: 1px solid #dc3545; border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 0.9em; display: flex; align-items: start; gap: 10px;">
+<div class="cpl-static-feature-notice" style="margin: 10px 0; gap: 10px;">
 <span style="font-size: 1.5em;">⚠️</span>
 <div>
 <strong><$text text={{{ [<chinese>match[yes]then[CPL 服务器当前不可用]else[CPL Server Unavailable]] }}}/></strong>
@@ -35,79 +35,79 @@ type: text/vnd.tiddlywiki
 <!-- Auto-fetch stats on render -->
 <$action-sendmessage $message="cpl-fetch-stats" pluginTitle={{!!cpl.title}} />
 
-<div class="cpl-plugin-stats" style="display: flex; gap: 20px; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 10px;">
+<div class="cpl-plugin-stats">
   <!-- Download Count -->
-  <div class="cpl-stat-item" style="display: flex; align-items: center; gap: 5px;">
+  <div class="cpl-stat-item">
     <span style="font-size: 1.2em;">⬇️</span>
     <$let tempTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-stats/]] }}}>
       <$list filter="[<tempTiddler>is[tiddler]]" variable="hasStats">
         <$text text={{{ [<tempTiddler>get[text]jsonget[downloadCount]else[0]] }}} />
       </$list>
       <$list filter="[<tempTiddler>!is[tiddler]]" variable="noStats">
-        <span style="color: #999;">-</span>
+        <span class="cpl-status-muted">-</span>
       </$list>
     </$let>
-    <span style="font-size: 0.85em; color: #666;">downloads</span>
+    <span class="cpl-stat-label cpl-status-muted">downloads</span>
   </div>
   
   <!-- Rating -->
-  <div class="cpl-stat-item" style="display: flex; align-items: center; gap: 5px;">
+  <div class="cpl-stat-item">
     <span style="font-size: 1.2em;">⭐</span>
     <$let tempTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-stats/]] }}}>
       <$list filter="[<tempTiddler>is[tiddler]]" variable="hasStats">
         <$let avgRating={{{ [<tempTiddler>get[text]jsonget[averageRating]else[0]] }}} totalRatings={{{ [<tempTiddler>get[text]jsonget[totalRatings]else[0]] }}}>
           <$list filter="[<totalRatings>compare:integer:gt[0]]" variable="hasRatings">
             <span><$text text=<<avgRating>> />/5</span>
-            <span style="font-size: 0.85em; color: #666;">(<$text text=<<totalRatings>> /> ratings)</span>
+            <span class="cpl-stat-label cpl-status-muted">(<$text text=<<totalRatings>> /> ratings)</span>
           </$list>
           <$list filter="[<totalRatings>compare:integer:eq[0]]" variable="noRatings">
-            <span style="color: #999;">No ratings yet</span>
+            <span class="cpl-status-muted">No ratings yet</span>
           </$list>
         </$let>
       </$list>
       <$list filter="[<tempTiddler>!is[tiddler]]" variable="noStats">
-        <span style="color: #999;">-</span>
+        <span class="cpl-status-muted">-</span>
       </$list>
     </$let>
   </div>
 </div>
 
 <!-- Rating Widget -->
-<div class="cpl-rating-widget" style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px;">
-  <h4 style="margin-top: 0;">⭐ Rate this plugin</h4>
-  <div style="display: flex; gap: 5px; font-size: 1.5em;">
-    <$button class="tc-btn-invisible" style="padding: 2px;">
+<div class="cpl-rating-widget">
+  <h4 class="cpl-card-heading">⭐ Rate this plugin</h4>
+  <div class="cpl-rating-stars">
+    <$button class="tc-btn-invisible cpl-rating-star-button">
       <<rating-click-action 1>>
-      <span style="color: #ddd;">★</span>
+      <span class="cpl-rating-star">★</span>
     </$button>
-    <$button class="tc-btn-invisible" style="padding: 2px;">
+    <$button class="tc-btn-invisible cpl-rating-star-button">
       <<rating-click-action 2>>
-      <span style="color: #ddd;">★</span>
+      <span class="cpl-rating-star">★</span>
     </$button>
-    <$button class="tc-btn-invisible" style="padding: 2px;">
+    <$button class="tc-btn-invisible cpl-rating-star-button">
       <<rating-click-action 3>>
-      <span style="color: #ddd;">★</span>
+      <span class="cpl-rating-star">★</span>
     </$button>
-    <$button class="tc-btn-invisible" style="padding: 2px;">
+    <$button class="tc-btn-invisible cpl-rating-star-button">
       <<rating-click-action 4>>
-      <span style="color: #ddd;">★</span>
+      <span class="cpl-rating-star">★</span>
     </$button>
-    <$button class="tc-btn-invisible" style="padding: 2px;">
+    <$button class="tc-btn-invisible cpl-rating-star-button">
       <<rating-click-action 5>>
-      <span style="color: #ddd;">★</span>
+      <span class="cpl-rating-star">★</span>
     </$button>
   </div>
   <$let ratingStatusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}}>
     <$list filter="[<ratingStatusTiddler>is[tiddler]]" variable="hasStatus">
-      <div style="margin-top: 8px; font-size: 0.85em;">
+      <div class="cpl-status-line">
         <$list filter="[<ratingStatusTiddler>get[text]match[submitting]]">
-          <span style="color: #666;">Submitting...</span>
+          <span class="cpl-status-muted">Submitting...</span>
         </$list>
         <$list filter="[<ratingStatusTiddler>get[text]prefix[error:]]">
-          <span style="color: #dc3545;">✗ <$text text={{{ [<ratingStatusTiddler>get[text]removeprefix[error: ]] }}}/></span>
+          <span class="cpl-status-error">✗ <$text text={{{ [<ratingStatusTiddler>get[text]removeprefix[error: ]] }}}/></span>
         </$list>
         <$list filter="[<ratingStatusTiddler>get[text]match[success]]">
-          <span style="color: #28a745;">✓ Rating submitted! Average: <$text text={{{ [<ratingStatusTiddler>get[average-rating]] }}}/>/5 (<$text text={{{ [<ratingStatusTiddler>get[total-ratings]] }}}/> ratings)</span>
+          <span class="cpl-status-success">✓ Rating submitted! Average: <$text text={{{ [<ratingStatusTiddler>get[average-rating]] }}}/>/5 (<$text text={{{ [<ratingStatusTiddler>get[total-ratings]] }}}/> ratings)</span>
         </$list>
       </div>
     </$list>
@@ -115,59 +115,59 @@ type: text/vnd.tiddlywiki
 </div>
 
 <!-- Changelog Section -->
-<div class="cpl-changelog-section" style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px;">
-  <h4 style="margin-top: 0; border-bottom: 1px solid #e9ecef; padding-bottom: 6px;">📋 Changelog</h4>
+<div class="cpl-changelog-section">
+  <h4 class="cpl-card-heading-bordered">📋 Changelog</h4>
   <$action-sendmessage $message="cpl-fetch-changelog" pluginTitle={{!!cpl.title}} />
   <$let changelogTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}>
     <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
       <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}} changelogContent={{{ [<changelogTiddler>get[text]jsonget[changelog]else[]]] }}}>
         <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
-          <div style="max-height: 300px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; font-size: 0.9em; background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef;">
+          <div class="cpl-code-panel">
             <$text text=<<changelogContent>> />
           </div>
         </$list>
         <$list filter="[<hasChangelogField>!match[true]]" variable="noContent">
-          <span style="color: #999; font-style: italic;">No changelog available.</span>
+          <span class="cpl-status-muted" style="font-style: italic;">No changelog available.</span>
         </$list>
       </$let>
     </$list>
     <$list filter="[<changelogTiddler>!is[tiddler]]" variable="loading">
-      <span style="color: #999; font-style: italic;">Loading changelog...</span>
+      <span class="cpl-status-muted" style="font-style: italic;">Loading changelog...</span>
     </$list>
   </$let>
 </div>
 
 <!-- Compatibility Reports Section -->
-<div class="cpl-compatibility-section" style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px;">
-  <h4 style="margin-top: 0; border-bottom: 1px solid #e9ecef; padding-bottom: 6px;">⚠️ Compatibility Reports</h4>
+<div class="cpl-compatibility-section">
+  <h4 class="cpl-card-heading-bordered">⚠️ Compatibility Reports</h4>
   <$action-sendmessage $message="cpl-fetch-compatibility" pluginTitle={{!!cpl.title}} />
   <$let compatibilityTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility/]] }}}>
     <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
       <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
         <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
-          <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="cpl-compatibility-list">
             <$list filter="[<compatibilityTiddler>get[text]jsonget[reports]]" variable="report">
-              <div style="background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef; border-left: 3px solid #ffc107;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <div class="cpl-compatibility-item">
+                <div class="cpl-compatibility-header">
                   <span style="font-weight: 600; font-size: 0.9em;">Reported by <$text text={{{ [<report>jsonget[reporterUsername]else[Anonymous]] }}} /></span>
-                  <span style="font-size: 0.8em; color: #666;"><$text text={{{ [<report>jsonget[createdAt]else[Unknown]] }}} /></span>
+                  <span class="cpl-compatibility-date cpl-status-muted"><$text text={{{ [<report>jsonget[createdAt]else[Unknown]] }}} /></span>
                 </div>
                 <$list filter="[<report>jsonget[twVersionMin]!is[blank]] [<report>jsonget[twVersionMax]!is[blank]] +[unique[]limit[1]]" variable="hasVersionRange">
-                  <div style="font-size: 0.85em; color: #555; margin-bottom: 4px;">
+                  <div class="cpl-compatibility-meta">
                     <strong>TW Version:</strong> <$text text={{{ [<report>jsonget[twVersionMin]else[Any]] }}} /> - <$text text={{{ [<report>jsonget[twVersionMax]else[Any]] }}} />
                   </div>
                 </$list>
                 <$list filter="[<report>jsonget[conflictingPlugins]count[]compare:integer:gt[0]]" variable="hasConflicts">
-                  <div style="font-size: 0.85em; color: #555; margin-bottom: 4px;">
+                  <div class="cpl-compatibility-meta">
                     <strong>Conflicts with:</strong>
                     <$list filter="[<report>jsonget[conflictingPlugins]]" variable="conflict">
-                      <span style="display: inline-block; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 4px; padding: 2px 6px; margin: 2px; font-size: 0.8em;">
+                      <span class="cpl-compatibility-pill">
                         <$text text={{{ [<conflict>jsonget[pluginTitle]else[Unknown]] }}} />
                       </span>
                     </$list>
                   </div>
                 </$list>
-                <div style="font-size: 0.85em; color: #333; background: #f8f9fa; padding: 6px; border-radius: 3px; margin-top: 4px;">
+                <div class="cpl-compatibility-description">
                   <$text text={{{ [<report>jsonget[description]else[]]] }}} />
                 </div>
               </div>
@@ -175,17 +175,17 @@ type: text/vnd.tiddlywiki
           </div>
         </$list>
         <$list filter="[<reportCount>compare:integer:eq[0]]" variable="noReports">
-          <span style="color: #999; font-style: italic;">No compatibility reports yet. Be the first to submit one!</span>
+          <span class="cpl-status-muted" style="font-style: italic;">No compatibility reports yet. Be the first to submit one!</span>
         </$list>
       </$let>
     </$list>
     <$list filter="[<compatibilityTiddler>!is[tiddler]]" variable="loading">
-      <span style="color: #999; font-style: italic;">Loading compatibility reports...</span>
+      <span class="cpl-status-muted" style="font-style: italic;">Loading compatibility reports...</span>
     </$list>
   </$let>
 
   <!-- Submit Compatibility Report Form -->
-  <div style="margin-top: 15px; padding-top: 12px; border-top: 1px solid #e9ecef;">
+  <div class="cpl-form-section">
     <h5 style="margin-top: 0;">Submit a Compatibility Report</h5>
     <$let
       pluginTitle={{!!cpl.title}}
@@ -198,33 +198,33 @@ type: text/vnd.tiddlywiki
       </$list>
 
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="display: flex; gap: 10px;">
-          <div style="flex: 1;">
-            <label style="font-size: 0.85em; color: #666;">TW Min Version</label>
-            <$edit-text tiddler=<<draftTiddler>> field="tw-version-min" default="" placeholder="e.g. 5.2.0" style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+        <div class="cpl-form-row">
+          <div class="cpl-form-field">
+            <label class="cpl-form-label cpl-status-muted">TW Min Version</label>
+            <$edit-text tiddler=<<draftTiddler>> field="tw-version-min" default="" placeholder="e.g. 5.2.0" class="cpl-form-input" />
           </div>
-          <div style="flex: 1;">
-            <label style="font-size: 0.85em; color: #666;">TW Max Version</label>
-            <$edit-text tiddler=<<draftTiddler>> field="tw-version-max" default="" placeholder="e.g. 5.3.0" style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+          <div class="cpl-form-field">
+            <label class="cpl-form-label cpl-status-muted">TW Max Version</label>
+            <$edit-text tiddler=<<draftTiddler>> field="tw-version-max" default="" placeholder="e.g. 5.3.0" class="cpl-form-input" />
           </div>
         </div>
 
         <div>
-          <label style="font-size: 0.85em; color: #666;">Conflicting Plugin Title</label>
-          <$edit-text tiddler=<<draftTiddler>> field="conflict-plugin" default="" placeholder="e.g. $:/plugins/tiddlywiki/highlight" style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+          <label class="cpl-form-label cpl-status-muted">Conflicting Plugin Title</label>
+          <$edit-text tiddler=<<draftTiddler>> field="conflict-plugin" default="" placeholder="e.g. $:/plugins/tiddlywiki/highlight" class="cpl-form-input" />
         </div>
 
         <div>
-          <label style="font-size: 0.85em; color: #666;">Conflict Description</label>
-          <$edit-text tiddler=<<draftTiddler>> field="conflict-description" default="" placeholder="Describe the conflict..." style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px;" />
+          <label class="cpl-form-label cpl-status-muted">Conflict Description</label>
+          <$edit-text tiddler=<<draftTiddler>> field="conflict-description" default="" placeholder="Describe the conflict..." class="cpl-form-input" />
         </div>
 
         <div>
-          <label style="font-size: 0.85em; color: #666;">Detailed Description *</label>
-          <$edit-text tiddler=<<draftTiddler>> field="description" default="" placeholder="Describe the compatibility issue in detail..." style="width: 100%; padding: 4px; border: 1px solid #ccc; border-radius: 3px; min-height: 60px;" />
+          <label class="cpl-form-label cpl-status-muted">Detailed Description *</label>
+          <$edit-text tiddler=<<draftTiddler>> field="description" default="" placeholder="Describe the compatibility issue in detail..." class="cpl-form-input cpl-form-textarea" />
         </div>
 
-        <$button class="tc-btn-primary" style="padding: 6px 12px; align-self: flex-start;">
+        <$button class="tc-btn-primary cpl-submit-button-sm">
           <$action-sendmessage $message="cpl-submit-compatibility"
             pluginTitle=<<pluginTitle>>
             twVersionMin={{{ [<draftTiddler>get[tw-version-min]] }}}
@@ -239,15 +239,15 @@ type: text/vnd.tiddlywiki
 
       <!-- Status messages -->
       <$list filter="[<statusTiddler>is[tiddler]]" variable="hasStatus">
-        <div style="margin-top: 8px; font-size: 0.85em;">
+        <div class="cpl-status-line">
           <$list filter="[<statusTiddler>get[text]match[submitting]]">
-            <span style="color: #666;">Submitting...</span>
+            <span class="cpl-status-muted">Submitting...</span>
           </$list>
           <$list filter="[<statusTiddler>get[text]prefix[error:]]">
-            <span style="color: #dc3545;">✗ <$text text={{{ [<statusTiddler>get[text]removeprefix[error: ]] }}}/></span>
+            <span class="cpl-status-error">✗ <$text text={{{ [<statusTiddler>get[text]removeprefix[error: ]] }}}/></span>
           </$list>
           <$list filter="[<statusTiddler>get[text]match[success]]">
-            <span style="color: #28a745;">✓ Report submitted for moderation!</span>
+            <span class="cpl-status-success">✓ Report submitted for moderation!</span>
           </$list>
         </div>
       </$list>

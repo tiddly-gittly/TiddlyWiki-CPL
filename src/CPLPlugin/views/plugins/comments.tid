@@ -14,8 +14,8 @@ type: text/vnd.tiddlywiki
 <!-- Only show comment section for server mirrors -->
 <$list filter="[<serverType>match[server]]" variable="isServerMirror">
 
-<div class="cpl-comment-section" style="margin: 20px 0; padding: 16px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
-  <h3 style="margin-top: 0; border-bottom: 2px solid #dee2e6; padding-bottom: 8px;">
+<div class="cpl-comment-section">
+  <h3 class="cpl-comment-title">
     💬 <$text text={{{ [<chinese>match[yes]then[评论]else[Comments]] }}}/>
   </h3>
 
@@ -23,12 +23,12 @@ type: text/vnd.tiddlywiki
   <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedIn">
     <!-- Logged in: Show user info and comment form -->
     <$let userJson={{{ [[$:/temp/CPL-Server/user]get[text]else[{}]] }}} username={{{ [<userJson>jsonget[username]else[User]] }}} avatar={{{ [<userJson>jsonget[avatar]else[]]] }}}>
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 10px; background: #e7f3ff; border-radius: 6px;">
+    <div class="cpl-comment-user-card">
       <$list filter="[<avatar>!is[blank]]" variable="hasAvatar">
-        <img src=<<avatar>> style="width: 32px; height: 32px; border-radius: 50%;" alt="avatar"/>
+        <img src=<<avatar>> class="cpl-comment-avatar" alt="avatar"/>
       </$list>
       <span><strong><$text text=<<username>>/></strong></span>
-      <$button class="tc-btn-invisible" style="color: #666; font-size: 0.85em;">
+      <$button class="tc-btn-invisible cpl-comment-logout-button">
         <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user"/>
         <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user-status"/>
         <$action-sendmessage $message="cpl-logout"/>
@@ -38,23 +38,23 @@ type: text/vnd.tiddlywiki
     </$let>
 
     <!-- Comment Form -->
-    <div style="margin-bottom: 20px;">
-      <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; resize: vertical; font-family: inherit;" placeholder="Write a comment using wikitext..."/>
-      <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 0.85em; color: #666;"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
-        <$button class="tc-btn-primary" style="padding: 8px 20px;">
+    <div class="cpl-comment-form">
+      <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" placeholder="Write a comment using wikitext..."/>
+      <div class="cpl-comment-form-actions">
+        <span class="cpl-comment-hint"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
+        <$button class="tc-btn-primary cpl-comment-submit-button">
           <$action-sendmessage $message="cpl-submit-comment" pluginTitle=<<pluginTitle>>/>
           <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>
         </$button>
       </div>
       <$let commentStatus={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}}>
         <$list filter="[<commentStatus>get[text]prefix[error:]]" variable="hasError">
-          <div style="margin-top: 8px; color: #dc3545; font-size: 0.9em;">
+          <div class="cpl-comment-status cpl-comment-status-error">
             ✗ <$text text={{{ [<commentStatus>get[text]removeprefix[error: ]] }}}/>
           </div>
         </$list>
         <$list filter="[<commentStatus>get[text]match[success]]" variable="hasSuccess">
-          <div style="margin-top: 8px; color: #28a745; font-size: 0.9em;">
+          <div class="cpl-comment-status cpl-comment-status-success">
             ✓ <$text text={{{ [<chinese>match[yes]then[评论已提交，等待审核]else[Comment submitted for moderation]] }}}/>
           </div>
         </$list>
@@ -64,15 +64,15 @@ type: text/vnd.tiddlywiki
 
   <$list filter="[<userStatus>!match[authenticated]]" variable="notLoggedIn">
     <!-- Not logged in: Show login button -->
-    <div style="text-align: center; padding: 20px; background: #fff; border-radius: 6px; margin-bottom: 16px;">
-      <p style="margin: 0 0 12px 0; color: #666;">
+    <div class="cpl-comment-login-prompt">
+      <p class="cpl-comment-login-text">
         <$text text={{{ [<chinese>match[yes]then[登录后即可发表评论]else[Login to post comments]] }}}/>
       </p>
-      <$button class="tc-btn-primary" style="padding: 10px 24px;">
+      <$button class="tc-btn-primary cpl-comment-login-button">
         <$action-sendmessage $message="cpl-github-login"/>
-        <span style="margin-right: 6px;">🔗</span>
+        <span class="cpl-comment-login-icon">🔗</span>
         <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
-      </button>
+      </$button>
     </div>
   </$list>
 
@@ -82,15 +82,15 @@ type: text/vnd.tiddlywiki
       <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:gt[0]]" variable="hasComments">
         <$list filter="[<commentsJson>jsonget[comments]]" variable="commentItem">
           <$let commentUsername={{{ [<commentItem>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentItem>jsonget[content]else[]]] }}} commentDate={{{ [<commentItem>jsonget[createdAt]else[]]] }}} commentAvatar={{{ [<commentItem>jsonget[avatar]else[]]] }}}>
-            <div style="padding: 12px 0; border-bottom: 1px solid #e9ecef;">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+            <div class="cpl-comment-item">
+              <div class="cpl-comment-meta">
                 <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
-                  <img src=<<commentAvatar>> style="width: 28px; height: 28px; border-radius: 50%;" alt=""/>
+                  <img src=<<commentAvatar>> class="cpl-comment-avatar-small" alt=""/>
                 </$list>
                 <strong><$text text=<<commentUsername>>/></strong>
-                <span style="font-size: 0.8em; color: #999;"><$text text=<<commentDate>>/></span>
+                <span class="cpl-comment-date"><$text text=<<commentDate>>/></span>
               </div>
-              <div style="padding-left: 36px; white-space: pre-wrap;">
+              <div class="cpl-comment-body">
                 <$text text=<<commentContent>>/>
               </div>
             </div>
@@ -98,7 +98,7 @@ type: text/vnd.tiddlywiki
         </$list>
       </$list>
       <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:eq[0]]" variable="noComments">
-        <div style="text-align: center; padding: 20px; color: #999; font-style: italic;">
+        <div class="cpl-comment-empty">
           <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
         </div>
       </$list>
