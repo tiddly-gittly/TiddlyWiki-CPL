@@ -149,6 +149,7 @@ function scheduleSync(): void {
 // ---------------------------------------------------------------------------
 
 // 1. git clone / pull + metadata sync (blocking, so server starts with latest metadata)
+// Failures are non-fatal: the server will start with baked-in metadata.
 gitSync();
 
 // 2. Start server immediately
