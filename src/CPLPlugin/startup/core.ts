@@ -5,6 +5,7 @@ import {
   getPreviousRepoEntry,
   setPreviousRepoEntry,
 } from './core/bridge';
+import { fetchPluginFromStaticMirrors } from './core/static-mirror-fetch';
 import { browserRuntime, tw, type RootWidgetEvent } from './core/types';
 import { createIndexController } from './core/index';
 import { createInstallController } from './core/install';
@@ -144,10 +145,17 @@ export const startup = (): void => {
     }
     void (async (): Promise<void> => {
       try {
-        const text = await cpl('Install', {
-          plugin: pluginTitle,
-          version: version ?? 'latest',
-        });
+        // Static mirrors first; fall back to bridge (may be server) if both fail.
+        let text: string;
+        try {
+          text = await fetchPluginFromStaticMirrors(pluginTitle);
+        } catch {
+          text = await cpl('Install', {
+            plugin: pluginTitle,
+            version: version ?? 'latest',
+          });
+        }
+
         const blob = new Blob([text], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');

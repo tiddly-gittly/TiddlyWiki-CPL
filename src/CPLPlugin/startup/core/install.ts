@@ -1,4 +1,5 @@
 import { cpl, getEventParam, getFieldString } from './bridge';
+import { fetchPluginFromStaticMirrors } from './static-mirror-fetch';
 import { tw, type DependencyTree, type PluginInfo, type RootWidgetEvent } from './types';
 
 export interface InstallController {
@@ -205,10 +206,22 @@ export const createInstallController = (): InstallController => {
       const total = plugins.length;
       const tiddlers = await Promise.all(
         plugins.map(async ([pluginTitle, version]) => {
-          const text = await cpl('Install', {
-            plugin: pluginTitle,
-            version: version ?? 'latest',
-          });
+          // Static mirrors first — reduces load on the server and works even
+          // when the user has configured a server mirror.  We fall back to the
+          // bridge (which may be a server mirror) only when both static mirrors
+          // are unreachable or don't have the file.
+          let text: string;
+          try {
+            text = await fetchPluginFromStaticMirrors(pluginTitle);
+          } catch {
+            // Both static mirrors failed — fall back to the current mirror via
+            // the bridge (supports versioning).
+            text = await cpl('Install', {
+              plugin: pluginTitle,
+              version: version ?? 'latest',
+            });
+          }
+
           count += 1;
           tw.notifier.display('$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading', {
             variables: { plugin: pluginTitle, count, total },
