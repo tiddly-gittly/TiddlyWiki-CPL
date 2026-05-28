@@ -6,6 +6,7 @@ export type CplRequest = (
 export type RequestHandlers = [
   (value: string) => void,
   (reason?: unknown) => void,
+  () => void,
 ];
 
 export interface DependencyTree {

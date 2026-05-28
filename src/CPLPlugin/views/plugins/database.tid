@@ -11,7 +11,7 @@ type: text/vnd.tiddlywiki
 <div class="cpl-mirror-toolbar">
 <div class="cpl-mirror-switcher">
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[镜像源]else[Mirror]] }}}/>:</span>
-<$let isSelectDisabled={{{ [[$:/temp/CPL-Repo/getting-plugins-index]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/updaing]field:text[yes]then[yes]] +[limit[1]else[no]] }}}>
+<$let isSelectDisabled={{{ [[$:/temp/CPL-Repo/getting-plugins-index]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/updaing]field:text[yes]then[yes]] +[limit[1]] }}}>
 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
 <$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
 <$action-sendmessage $message="cpl-get-plugins-index" />

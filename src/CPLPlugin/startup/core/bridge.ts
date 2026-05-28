@@ -1,6 +1,12 @@
 import {
+  MIRROR_STATIC_REPOS_TITLE,
+  MIRROR_SERVER_REPOS_TITLE,
+} from '../api-client/constants';
+import { fetchStaticRepoFile, formatPluginTitle } from './static-mirror-fetch';
+import {
   browserRuntime,
   tw,
+  type CplPayload,
   type CplMessageData,
   type CplRequest,
   type RequestHandlers,
@@ -11,6 +17,9 @@ export const DEFAULT_REPO_ENTRY =
   'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
 export const CURRENT_REPO_TITLE =
   '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
+
+const BRIDGE_READY_TIMEOUT = 15_000;
+const BRIDGE_REQUEST_TIMEOUT = 30_000;
 
 let messagerPromise: Promise<CplRequest> | undefined;
 let previousEntry: string | undefined;
@@ -39,9 +48,71 @@ export const getFieldString = (
   return typeof value === 'string' ? value : undefined;
 };
 
+const normalizeRepoEntry = (entry: string): string => {
+  try {
+    return new URL(entry, window.location.origin).toString().replace(/\/$/, '');
+  } catch {
+    return entry.trim().replace(/\/$/, '');
+  }
+};
+
+const getConfiguredRepoEntries = (title: string): Set<string> =>
+  new Set(
+    tw.utils
+      .parseStringArray(tw.wiki.getTiddlerText(title, ''))
+      .map(normalizeRepoEntry),
+  );
+
+const getCurrentRepoType = (entry: string): 'static' | 'server' | 'unknown' => {
+  const normalizedEntry = normalizeRepoEntry(entry);
+  if (getConfiguredRepoEntries(MIRROR_STATIC_REPOS_TITLE).has(normalizedEntry)) {
+    return 'static';
+  }
+
+  if (getConfiguredRepoEntries(MIRROR_SERVER_REPOS_TITLE).has(normalizedEntry)) {
+    return 'server';
+  }
+
+  return 'unknown';
+};
+
+const requestStaticMirror = (
+  entry: string,
+  type: string,
+  payload?: CplPayload,
+): Promise<string> => {
+  switch (type) {
+    case 'Index':
+      return fetchStaticRepoFile(entry, 'index.json');
+    case 'Update':
+      return fetchStaticRepoFile(entry, 'update.json');
+    case 'Query': {
+      const plugin = typeof payload?.plugin === 'string' ? payload.plugin : '';
+      return fetchStaticRepoFile(
+        entry,
+        `${formatPluginTitle(plugin)}/__meta__.json`,
+      );
+    }
+    case 'Install': {
+      const plugin = typeof payload?.plugin === 'string' ? payload.plugin : '';
+      const version =
+        typeof payload?.version === 'string' ? payload.version : 'latest';
+      return fetchStaticRepoFile(
+        entry,
+        `${formatPluginTitle(plugin)}/${version}.json`,
+      );
+    }
+    default:
+      return Promise.reject(
+        new Error(`Unsupported static mirror request: ${type}`),
+      );
+  }
+};
+
 const createMessenger = (entry: string): Promise<CplRequest> =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     let counter = 0;
+    let readyTimeout: ReturnType<typeof setTimeout> | undefined;
     const callbackMap = new Map<number, RequestHandlers>();
     const iframe = tw.utils.domMaker('iframe', {
       document,
@@ -61,13 +132,25 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
 
       if (data.type === 'Ready') {
         if (counter === 0) {
+          if (readyTimeout !== undefined) {
+            clearTimeout(readyTimeout);
+            readyTimeout = undefined;
+          }
           counter += 1;
           resolve(
             (type, payload) =>
               new Promise<string>((resolveRequest, rejectRequest) => {
                 const token = counter;
                 counter += 1;
-                callbackMap.set(token, [resolveRequest, rejectRequest]);
+                const requestTimeout = setTimeout(() => {
+                  callbackMap.delete(token);
+                  rejectRequest(new Error(`CPL mirror request timed out: ${type}`));
+                }, BRIDGE_REQUEST_TIMEOUT);
+                callbackMap.set(token, [
+                  resolveRequest,
+                  rejectRequest,
+                  () => clearTimeout(requestTimeout),
+                ]);
                 iframe.contentWindow?.postMessage(
                   {
                     ...(payload ?? {}),
@@ -89,7 +172,8 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
       }
 
       callbackMap.delete(data.token);
-      const [resolveRequest, rejectRequest] = handlers;
+      const [resolveRequest, rejectRequest, clearRequestTimeout] = handlers;
+      clearRequestTimeout();
       if (data.success) {
         resolveRequest(data.payload ?? '');
         return;
@@ -100,12 +184,23 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
 
     window.addEventListener('message', handleMessage);
     document.body.appendChild(iframe);
+    readyTimeout = setTimeout(() => {
+      window.removeEventListener('message', handleMessage);
+      iframe.parentNode?.removeChild(iframe);
+      messagerPromise = undefined;
+      reject(new Error(`CPL mirror did not become ready: ${entry}`));
+    }, BRIDGE_READY_TIMEOUT);
     browserRuntime.__tiddlywiki_cpl__reset__ = () => {
       delete browserRuntime.__tiddlywiki_cpl__reset__;
       messagerPromise = undefined;
+      if (readyTimeout !== undefined) {
+        clearTimeout(readyTimeout);
+        readyTimeout = undefined;
+      }
       window.removeEventListener('message', handleMessage);
       iframe.parentNode?.removeChild(iframe);
-      callbackMap.forEach(([, rejectRequest]) => {
+      callbackMap.forEach(([, rejectRequest, clearRequestTimeout]) => {
+        clearRequestTimeout();
         rejectRequest();
       });
       callbackMap.clear();
@@ -114,6 +209,10 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
 
 export const cpl: CplRequest = (type, payload) => {
   const entry = tw.wiki.getTiddlerText(CURRENT_REPO_TITLE, DEFAULT_REPO_ENTRY);
+
+  if (getCurrentRepoType(entry) === 'static') {
+    return requestStaticMirror(entry, type, payload);
+  }
 
   if (previousEntry !== entry && browserRuntime.__tiddlywiki_cpl__reset__) {
     browserRuntime.__tiddlywiki_cpl__reset__();

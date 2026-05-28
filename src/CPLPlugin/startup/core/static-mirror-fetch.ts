@@ -23,6 +23,21 @@ export const STATIC_MIRROR_BASES = [
   'https://tiddly-gittly.github.io/TiddlyWiki-CPL',
 ] as const;
 
+const normalizeRepoEntry = (entry: string): string => entry.replace(/\/$/, '');
+
+export const fetchStaticRepoFile = async (
+  repoEntry: string,
+  path: string,
+): Promise<string> => {
+  const url = `${normalizeRepoEntry(repoEntry)}/${path.replace(/^\//, '')}`;
+  const response = await fetch(url, { redirect: 'follow' });
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} from ${url}`);
+  }
+
+  return response.text();
+};
+
 /**
  * Transform a TiddlyWiki plugin title into the filename used by the static
  * library, matching the build-time formatTitle() in scripts/utils/tiddler.ts.
