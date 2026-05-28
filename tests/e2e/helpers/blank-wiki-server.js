@@ -42,7 +42,7 @@ function waitForBlankWiki(timeoutMs = 15000) {
 }
 
 async function startBlankWiki(options = {}) {
-  const { loadCplClient = false } = options;
+  const { loadCplClient = false, loadCplServer = false } = options;
   const twEntry = require.resolve('tiddlywiki/tiddlywiki.js');
   const emptyEdition = path.join(
     path.dirname(twEntry),
@@ -61,7 +61,10 @@ async function startBlankWiki(options = {}) {
   ];
   if (loadCplClient) {
     const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
-    args.push(toBootPluginArg(serverPluginPath), toBootPluginArg(repoPluginPath));
+    args.push(toBootPluginArg(repoPluginPath));
+    if (loadCplServer) {
+      args.push(toBootPluginArg(serverPluginPath));
+    }
   }
   args.push(
     blankWikiPath,

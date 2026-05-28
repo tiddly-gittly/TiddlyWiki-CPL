@@ -1,5 +1,4 @@
 import { resolve } from 'path';
-import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import type { ITiddlyWiki, ITiddlerFields } from 'tiddlywiki';
 import { getTiddlerFromFile } from '../utils/tiddler';
@@ -17,22 +16,20 @@ interface SourcePluginInfo {
   list?: string;
 }
 
-const pluginInfoPath = resolve(
-  fileURLToPath(new URL('../../src/CPLPlugin/plugin.info', import.meta.url)),
-);
-const repoVersionTiddlerPath = resolve(
-  fileURLToPath(
-    new URL('../../src/CPLPlugin/config/repo-version.tid', import.meta.url),
-  ),
-);
-const readmeTiddlerPath = resolve(
-  fileURLToPath(
-    new URL('../../src/CPLPlugin/docs/readme.tid', import.meta.url),
-  ),
-);
+const pluginInfoPath = resolve('src/CPLPlugin/plugin.info');
+const repoVersionTiddlerPath = resolve('src/CPLPlugin/config/repo-version.tid');
+const readmeTiddlerPath = resolve('src/CPLPlugin/docs/readme.tid');
 
 const requireNonEmptyString = (value: unknown, label: string): string => {
   if (typeof value !== 'string' || value.trim().length === 0) {
+    throw new Error(`Missing required CPL plugin metadata: ${label}`);
+  }
+
+  return value.trim();
+};
+
+const requireString = (value: unknown, label: string): string => {
+  if (typeof value !== 'string') {
     throw new Error(`Missing required CPL plugin metadata: ${label}`);
   }
 
@@ -66,7 +63,7 @@ const sourcePluginInfo = {
     rawSourcePluginInfo['plugin-type'],
     `${pluginInfoPath}#plugin-type`,
   ),
-  dependents: requireNonEmptyString(
+  dependents: requireString(
     rawSourcePluginInfo.dependents,
     `${pluginInfoPath}#dependents`,
   ),

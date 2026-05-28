@@ -11,8 +11,10 @@ const distDir = outputArg ? outputArg.slice('--output='.length) : undefined;
 const htmlName = htmlNameArg ? htmlNameArg.slice('--html='.length) : undefined;
 const wikiPath = wikiArg ? wikiArg.slice('--wiki='.length) : undefined;
 
-await buildOnlineHTML(
-  wikiPath ?? 'wiki',
-  distDir ?? 'dist',
-  htmlName ?? 'index.html',
-);
+void (async () => {
+  await buildOnlineHTML(
+    wikiPath ?? 'wiki',
+    distDir ?? 'dist',
+    htmlName ?? 'index.html',
+  );
+})();

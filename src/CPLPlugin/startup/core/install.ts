@@ -16,6 +16,16 @@ export interface InstallController {
 
 const asPluginInfo = (value: unknown): PluginInfo => value as PluginInfo;
 
+const CPL_REPO_PLUGIN_TITLE = '$:/plugins/Gk0Wk/CPL-Repo';
+const CPL_SERVER_PLUGIN_TITLE = '$:/plugins/Gk0Wk/CPL-Server';
+
+export const shouldSkipLegacyDependency = (
+  pluginTitle: string,
+  dependencyTitle: string,
+): boolean =>
+  pluginTitle === CPL_REPO_PLUGIN_TITLE &&
+  dependencyTitle === CPL_SERVER_PLUGIN_TITLE;
+
 export const createInstallController = (): InstallController => {
   let installRequestLock = false;
   let installLock = false;
@@ -97,13 +107,18 @@ export const createInstallController = (): InstallController => {
 
           const parentPlugin = data['parent-plugin'];
           if (typeof parentPlugin === 'string' && parentPlugin.length > 0) {
-            await processDependency(parentPlugin);
+            if (!shouldSkipLegacyDependency(title, parentPlugin)) {
+              await processDependency(parentPlugin);
+            }
           }
 
           for (const dependencyTitle of tw.utils.parseStringArray(
             data.dependents || '',
           )) {
             if (seenDependencies.has(dependencyTitle)) {
+              continue;
+            }
+            if (shouldSkipLegacyDependency(title, dependencyTitle)) {
               continue;
             }
             await processDependency(dependencyTitle);
