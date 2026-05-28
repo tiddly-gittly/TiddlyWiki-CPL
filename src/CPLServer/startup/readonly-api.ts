@@ -1,5 +1,3 @@
-const { URL: NodeURL } = require('url') as typeof import('url');
-
 type RequestHandler = (
   request: unknown,
   response: unknown,
@@ -35,7 +33,7 @@ export const shouldUseReaderAuthorizationForCplApi = (
     return false;
   }
 
-  const { pathname } = new NodeURL(request.url ?? '/', 'http://localhost');
+  const { pathname } = new URL(request.url ?? '/', 'http://localhost');
   const pathPrefix = server.get?.('path-prefix') ?? '';
   const routePath =
     pathPrefix && pathname.startsWith(pathPrefix)
@@ -51,6 +49,11 @@ export const before = ['commands'];
 export const synchronous = true;
 
 export const startup = (): void => {
+  // 安全防护：仅在 Node.js 环境下执行
+  if (!$tw.node) {
+    return;
+  }
+
   const serverModule =
     require('$:/core/modules/server/server.js') as TiddlyWikiServerModule;
   const prototype = serverModule.Server?.prototype;
