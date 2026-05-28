@@ -40,8 +40,20 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Build static library (required for library artifact tests)
+        run: pnpm run build:static-library
+
       - name: Run unit tests
         run: pnpm run test:unit
 
       - name: Run API tests
         run: pnpm run test:api
+
+      - name: Install Playwright browsers (Chromium only)
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: pnpm run test:e2e --project=chromium
+        env:
+          CI: true
+          CPL_TEST_MODE: 'true'

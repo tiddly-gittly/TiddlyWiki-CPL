@@ -5,6 +5,6 @@
   "version": "2026.05.26",
   "core-version": ">=5.3.0",
   "plugin-type": "plugin",
-  "dependents": "$:/plugins/Gk0Wk/CPL-Server",
+  "dependents": "",
   "list": "readme tree"
 }

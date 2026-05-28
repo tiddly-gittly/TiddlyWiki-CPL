@@ -54,9 +54,14 @@ const createCplPluginInfo = (plugin: Record<string, string>) => {
     category: 'Functional',
     tags: 'CPL [[Plugin Libaray]] Network Essential',
     description: plugin.description,
-    readme: builtTiddlers['$:/plugins/Gk0Wk/CPL-Repo/docs/readme']?.text || '',
+    readme: builtTiddlers[`${plugin.title}/docs/readme`]?.text || '',
   };
 };
+
+const cplBuiltPluginFiles = [
+  '$__plugins_Gk0Wk_CPL-Repo.json',
+  '$__plugins_Gk0Wk_CPL-Server.json',
+];
 
 const inferSourceExtension = (
   sourcePath: string,
@@ -253,21 +258,18 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       }
     }
 
-    console.log(chalk.cyan(`  Exporting plugin $:/plugins/Gk0Wk/CPL-Repo`));
-    {
-      const builtCplPluginPath = resolve(
-        'dist',
-        '$__plugins_Gk0Wk_CPL-Repo.json',
-      );
+    for (const builtPluginFileName of cplBuiltPluginFiles) {
+      const builtCplPluginPath = resolve('dist', builtPluginFileName);
       if (!existsSync(builtCplPluginPath)) {
         throw new Error(
-          'Missing dist/$__plugins_Gk0Wk_CPL-Repo.json. Run `pnpm run build` first.',
+          `Missing dist/${builtPluginFileName}. Run \`pnpm run build\` first.`,
         );
       }
 
       const cplPlugin = JSON.parse(
         readFileSync(builtCplPluginPath, 'utf-8'),
       ) as Record<string, string>;
+      console.log(chalk.cyan(`  Exporting plugin ${cplPlugin.title}`));
       const cplPluginInfo = createCplPluginInfo(cplPlugin);
       const formattedTitle = formatTitle(cplPlugin.title);
       const pluginJson = JSON.stringify(cplPlugin);

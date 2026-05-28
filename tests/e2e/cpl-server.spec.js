@@ -12,6 +12,7 @@
 
 const { test, expect } = require('@playwright/test');
 const { startBlankWiki, stopBlankWiki, BLANK_WIKI_URL } = require('./helpers/blank-wiki-server');
+const { startStaticRepoServer, stopStaticRepoServer, STATIC_REPO_URL } = require('./helpers/static-repo-server');
 const fs = require('fs');
 const path = require('path');
 
@@ -389,6 +390,7 @@ test.describe('CPL Client Installation E2E', () => {
   });
 
   test('blank wiki can install powered-by-tiddlywiki from Netlify mirror', async ({ page }) => {
+    test.skip(!!process.env.CI, 'Requires external network access to Netlify');
     await installFromMirrorInBlankWiki(page, NETLIFY_REPO, REAL_MIRROR_PLUGIN_TITLE);
 
     const installState = await page.evaluate(({ pluginTitle }) => ({
@@ -403,6 +405,7 @@ test.describe('CPL Client Installation E2E', () => {
   });
 
   test('blank wiki can install powered-by-tiddlywiki from GitHub Pages mirror', async ({ page }) => {
+    test.skip(!!process.env.CI, 'Requires external network access to GitHub Pages');
     await installFromMirrorInBlankWiki(page, GITHUB_PAGES_REPO, REAL_MIRROR_PLUGIN_TITLE);
 
     const installState = await page.evaluate(({ pluginTitle }) => ({
@@ -416,4 +419,92 @@ test.describe('CPL Client Installation E2E', () => {
     expect(installState.version).toBeTruthy();
   });
 
+  test(
+    'CPL-Repo installed in blank wiki must not have CPL-Server as a dependent ' +
+      '(regression: client plugin must be independent of server plugin)',
+    async ({ page }) => {
+      await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.waitForFunction(
+        () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
+        { timeout: 30000 }
+      );
+
+      // CPL-Server must NOT be auto-installed just because CPL-Repo is present
+      const serverInstalled = await page.evaluate(() =>
+        !!$tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Server')
+      );
+      expect(serverInstalled).toBe(false);
+
+      // The installed CPL-Repo plugin must carry an empty dependents field
+      const repoDependents = await page.evaluate(
+        () =>
+          $tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Repo')?.fields?.dependents ?? ''
+      );
+      expect(repoDependents).toBe('');
+    }
+  );
+
+});
+
+// ---------------------------------------------------------------------------
+// Static Library Update Regression
+// Serves cache/plugins locally and simulates the exact HTTP requests a legacy
+// CPL client makes when checking for updates via the static repo.
+// ---------------------------------------------------------------------------
+
+test.describe('CPL Static Library Update Regression', () => {
+  test.beforeAll(async () => {
+    await startStaticRepoServer();
+  });
+
+  test.afterAll(() => {
+    stopStaticRepoServer();
+  });
+
+  test(
+    'GET /Gk0Wk_CPL-Server/__meta__.json should return 200 with correct metadata ' +
+      '(regression: legacy CPL update was failing with 404 for CPL-Server)',
+    async ({ request }) => {
+      const res = await request.get(`${STATIC_REPO_URL}/Gk0Wk_CPL-Server/__meta__.json`);
+      expect(res.status()).toBe(200);
+      const meta = await res.json();
+      expect(meta.title).toBe('$:/plugins/Gk0Wk/CPL-Server');
+      expect(typeof meta.latest).toBe('string');
+      expect(meta.latest.length).toBeGreaterThan(0);
+      expect(Array.isArray(meta.versions)).toBe(true);
+    }
+  );
+
+  test(
+    'GET /Gk0Wk_CPL-Repo/__meta__.json should return 200 with correct metadata',
+    async ({ request }) => {
+      const res = await request.get(`${STATIC_REPO_URL}/Gk0Wk_CPL-Repo/__meta__.json`);
+      expect(res.status()).toBe(200);
+      const meta = await res.json();
+      expect(meta.title).toBe('$:/plugins/Gk0Wk/CPL-Repo');
+    }
+  );
+
+  test(
+    'GET /update.json should list both CPL-Repo and CPL-Server ' +
+      '(regression: both built plugins must be discoverable by the update checker)',
+    async ({ request }) => {
+      const res = await request.get(`${STATIC_REPO_URL}/update.json`);
+      expect(res.status()).toBe(200);
+      const update = await res.json();
+      expect(update).toHaveProperty('$:/plugins/Gk0Wk/CPL-Repo');
+      expect(update).toHaveProperty('$:/plugins/Gk0Wk/CPL-Server');
+    }
+  );
+
+  test(
+    'GET /Gk0Wk_CPL-Server/latest.json should return the server plugin JSON',
+    async ({ request }) => {
+      const res = await request.get(`${STATIC_REPO_URL}/Gk0Wk_CPL-Server/latest.json`);
+      expect(res.status()).toBe(200);
+      const plugin = await res.json();
+      expect(plugin.title).toBe('$:/plugins/Gk0Wk/CPL-Server');
+      expect(plugin['plugin-type']).toBe('plugin');
+    }
+  );
 });
