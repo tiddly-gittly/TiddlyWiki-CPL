@@ -1,11 +1,11 @@
 {
   "author": "Gk0Wk",
   "core-version": ">=5.3.0",
-  "dependents": "$:/plugins/Gk0Wk/CPL-Server",
+  "dependents": "",
   "description": "TiddlyWiki Community Plugin Library - Frontend",
   "list": "readme tree",
   "plugin-type": "plugin",
   "title": "$:/plugins/Gk0Wk/CPL-Repo",
   "version": "2026.05.26",
-  "Modern.TiddlyDev#SHA256-Hashed": "61628673fba1e2b563f6c116723845b6a0b401bc2558985f026bbfb50c52a29e"
+  "Modern.TiddlyDev#SHA256-Hashed": "217f52a5759cf3fac29b210a3e9cda7818d097210232be924ac26798277d2534"
 }

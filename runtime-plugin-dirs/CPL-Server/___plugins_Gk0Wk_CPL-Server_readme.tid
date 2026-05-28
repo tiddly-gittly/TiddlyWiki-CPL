@@ -48,13 +48,30 @@ Required for a real deployment:
 * `CPL_GITHUB_CLIENT_SECRET`
 * `CPL_ADMIN_GITHUB_IDS`
 
+`CPL_JWT_SECRET` is not provided by GitHub. It is the local server secret used to sign CPL session JWTs after GitHub OAuth identifies the user. Generate it with a command such as `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` and keep it out of git.
+
+Create `CPL_GITHUB_CLIENT_ID` and `CPL_GITHUB_CLIENT_SECRET` from a GitHub OAuth App. The callback URL should point to `/cpl/api/auth/github/callback` on your public CPL server.
+
+`CPL_ADMIN_GITHUB_IDS` contains numeric GitHub user IDs, not usernames. You can get one with `curl https://api.github.com/users/<login>` and copy the `id` field, or with `gh api users/<login> --jq .id`.
+
 Optional but useful:
 
 * `CPL_SERVER_ID` for multi-server mirror deployments
 * `CPL_JWT_EXPIRY_DAYS`
 * `CPL_COMMENT_RATE_LIMIT`
+* `CPL_BLOCKED_GITHUB_IDS` for comma-separated numeric GitHub user IDs that may not submit ratings, comments, or compatibility reports
 * `HOST`
 * `PORT`
+
+!! Authentication Model
+
+Public read APIs do not require a user session. Download counting is intentionally anonymous and uses client IP throttling, because it is a trend signal rather than an identity-bound action.
+
+Ratings, comment submission, and compatibility report submission require GitHub identity. Moderation endpoints additionally require the user's numeric GitHub ID to be listed in `CPL_ADMIN_GITHUB_IDS`.
+
+Login uses GitHub OAuth only to identify the user. After GitHub returns the profile, the CPL server signs its own JWT with `CPL_JWT_SECRET` and sends it to the browser as the `cpl_jwt_token` HttpOnly cookie. Client code cannot read this cookie, and authenticated API requests send it automatically. The browser no longer needs `localStorage` for CPL login state.
+
+Ratings are stored by GitHub ID, so one GitHub account has one rating per plugin and submitting again updates the previous rating.
 
 !! Operational Scripts
 
@@ -142,3 +159,4 @@ In short: back up `data/` and your secret configuration, but do not back up buil
 * GET /cpl/api/auth/status
 * GET /cpl/api/auth/config
 * GET /cpl/api/auth/github/callback?code=...
+* POST /cpl/api/auth/logout
