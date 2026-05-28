@@ -43,9 +43,6 @@ type: text/vnd.tiddlywiki
 </$checkbox>
 </label>
 
-<$list filter="[<autoSyncEnabled>match[yes]]" variable="autoEnabled">
-<span class="cpl-action-pill"><$text text={{{ [<chinese>match[yes]then[默认已启用]else[Enabled by default]] }}} /></span>
-</$list>
 <$list filter="[<autoSyncEnabled>match[no]]" variable="autoDisabled">
 <span class="cpl-action-pill cpl-action-pill-muted"><$text text={{{ [<chinese>match[yes]then[当前已关闭]else[Currently off]] }}} /></span>
 </$list>
