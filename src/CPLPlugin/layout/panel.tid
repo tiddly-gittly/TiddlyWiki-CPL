@@ -9,6 +9,7 @@ type: text/vnd.tiddlywiki
 <!-- 在侧栏不显示 -->
 <$list filter="[<listItem>!match[$:/core/ui/SideBarSegments/tabs]]">
 {{$:/plugins/Gk0Wk/CPL-Repo/layout/action-bar}}
+{{$:/plugins/Gk0Wk/CPL-Repo/views/system/status-panel}}
 </$list>
 
 <$macrocall

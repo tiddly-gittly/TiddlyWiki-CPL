@@ -180,6 +180,48 @@
   font-weight: 600;
 }
 
+.cpl-inline-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  margin: 8px 0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+
+.cpl-inline-status svg {
+  flex: 0 0 auto;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.cpl-inline-status span {
+  flex: 1 1 auto;
+}
+
+.cpl-inline-status-action,
+.cpl-inline-status-close {
+  flex: 0 0 auto;
+}
+
+.cpl-install-request-panel {
+  position: relative;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 6px;
+}
+
+.cpl-install-request-panel > .cpl-inline-status-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
 .cpl-mirror-toolbar {
   display: flex;
   align-items: center;
@@ -221,16 +263,6 @@
 .cpl-mirror-status-icon {
   font-size: 1.2em;
   line-height: 1;
-}
-
-.cpl-mirror-switch-indicator {
-  font-size: 0.85em;
-  margin-left: 4px;
-}
-
-.cpl-mirror-switch-message {
-  font-size: 0.85em;
-  margin-bottom: 8px;
 }
 
 .cpl-static-mirror-notice,
@@ -286,6 +318,27 @@
   transition: box-shadow 0.2s;
 }
 
+/* Undo TW paragraph wrapping that breaks flex layout */
+.cpl-plugin-card > p {
+  display: contents;
+}
+
+.cpl-plugin-card-main {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+}
+
+.cpl-plugin-card-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
+  margin-left: auto;
+}
+
 .cpl-plugin-card-icon-wrapper {
   flex-shrink: 0;
 }
@@ -316,7 +369,7 @@
 }
 
 .cpl-plugin-card-description {
-  font-size: 0.85em;
+  font-size: 1em;
   margin-bottom: 6px;
   white-space: nowrap;
   overflow: hidden;
@@ -331,12 +384,20 @@
 }
 
 .cpl-plugin-card-meta-text {
-  font-size: 0.8em;
+  font-size: 0.9em;
+}
+
+.cpl-plugin-card-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
 }
 
 .cpl-plugin-card-status {
   margin-top: 4px;
-  font-size: 0.85em;
+  font-size: 0.9em;
 }
 
 .cpl-plugin-detail-back {

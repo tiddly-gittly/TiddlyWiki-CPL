@@ -84,15 +84,11 @@ export const createUpdateController = (): UpdateController => {
               text: JSON.stringify(pluginsToShow),
             });
             if (notify !== false) {
-              const { notificationDuration } = tw.config.preferences;
-              tw.config.preferences.notificationDuration = 10_000;
-              tw.notifier.display(
-                '$:/plugins/Gk0Wk/CPL-Repo/notifications/update-notify-template',
-                {
-                  variables: { updateCount: pluginsToShow.length },
-                },
-              );
-              tw.config.preferences.notificationDuration = notificationDuration;
+              tw.wiki.addTiddler({
+                title: '$:/temp/CPL-Repo/update-notification',
+                text: 'yes',
+                count: String(pluginsToShow.length),
+              });
             }
 
             if (autoInstall) {

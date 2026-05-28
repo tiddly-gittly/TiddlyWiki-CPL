@@ -1,11 +1,6 @@
 import { cpl, getEventParam } from './bridge';
 import { tw, type PluginInfo, type RootWidgetEvent } from './types';
 
-interface IndexControllerOptions {
-  onIndexLoaded: () => void;
-  onIndexLoadFailed: (message: string) => void;
-}
-
 export interface IndexController {
   handleGetPluginsIndex: () => Promise<void>;
   handleQueryPlugin: (event: RootWidgetEvent) => Promise<void>;
@@ -17,10 +12,7 @@ const asPluginInfo = (value: unknown): PluginInfo => value as PluginInfo;
 const asPluginInfoList = (value: unknown): PluginInfo[] =>
   value as PluginInfo[];
 
-export const createIndexController = ({
-  onIndexLoaded,
-  onIndexLoadFailed,
-}: IndexControllerOptions): IndexController => {
+export const createIndexController = (): IndexController => {
   let getPluginsIndexLock = false;
   let pluginIndexCache: PluginInfo[] | undefined;
   let allPluginsCache: string[] | undefined;
@@ -104,14 +96,12 @@ export const createIndexController = ({
         type: 'application/json',
       });
       tw.wiki.deleteTiddler('$:/temp/CPL-Repo/getting-plugins-index');
-      onIndexLoaded();
     } catch (error) {
       console.error(error);
       tw.wiki.addTiddler({
         title: '$:/temp/CPL-Repo/getting-plugins-index',
         text: String(error),
       });
-      onIndexLoadFailed(String(error || 'Failed to load plugin index'));
     } finally {
       getPluginsIndexLock = false;
     }

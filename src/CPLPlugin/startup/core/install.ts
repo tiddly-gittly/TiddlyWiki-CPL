@@ -10,8 +10,6 @@ import {
 export interface InstallController {
   handleInstallPluginRequest: (event: RootWidgetEvent) => Promise<void>;
   handleInstallPlugin: (event: RootWidgetEvent) => Promise<void>;
-  isInstallRequestPending: () => boolean;
-  isInstallPending: () => boolean;
 }
 
 const asPluginInfo = (value: unknown): PluginInfo => value as PluginInfo;
@@ -56,12 +54,6 @@ export const createInstallController = (): InstallController => {
         text: 'yes',
         'plugin-titles': JSON.stringify(titles),
       });
-      tw.notifier.display(
-        '$:/plugins/Gk0Wk/CPL-Repo/notifications/install-plugin-query',
-        {
-          variables: {},
-        },
-      );
 
       const existingTitles = new Set<string>();
       const versionsMap: Record<string, Record<string, string>> = {};
@@ -180,15 +172,6 @@ export const createInstallController = (): InstallController => {
         } as unknown as RootWidgetEvent);
         return;
       }
-      tw.modal.display(
-        '$:/plugins/Gk0Wk/CPL-Repo/templates/modals/install-plugin-request',
-        {
-          variables: {
-            requestTiddler: '$:/temp/CPL-Repo/instal-plugin-request-tree',
-          },
-          event,
-        },
-      );
     } catch (error) {
       console.error(error);
       tw.wiki.addTiddler({
@@ -263,6 +246,8 @@ export const createInstallController = (): InstallController => {
           title: '$:/temp/CPL-Repo/installing-plugin',
           text: 'yes',
           'plugin-title': rootPlugin,
+          count: '0',
+          total: String(plugins.length),
         });
       }
 
@@ -287,12 +272,14 @@ export const createInstallController = (): InstallController => {
           }
 
           count += 1;
-          tw.notifier.display(
-            '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading',
-            {
-              variables: { plugin: pluginTitle, count, total },
-            },
-          );
+          tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Repo/installing-plugin',
+            text: 'yes',
+            'plugin-title': rootPlugin ?? pluginTitle,
+            'current-plugin': pluginTitle,
+            count: String(count),
+            total: String(total),
+          });
           return new tw.Tiddler(tw.utils.parseJSONSafe(text));
         }),
       );
@@ -301,20 +288,16 @@ export const createInstallController = (): InstallController => {
       for (const tiddler of tiddlers) {
         tw.wiki.addTiddler(tiddler);
       }
-      tw.notifier.display(
-        '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-complete',
-        {
-          variables: {},
-        },
-      );
+      tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Repo/install-plugin-status',
+        text: 'success',
+      });
     } catch (error) {
       console.error(error);
-      tw.notifier.display(
-        '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-fail',
-        {
-          variables: { message: String(error) },
-        },
-      );
+      tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Repo/install-plugin-status',
+        text: String(error),
+      });
       const response = getEventParam(event, 'response');
       const rootPlugin = response
         ? getFieldString(tw.wiki.getTiddler(response)?.fields ?? {}, 'title')
@@ -334,7 +317,5 @@ export const createInstallController = (): InstallController => {
   return {
     handleInstallPluginRequest,
     handleInstallPlugin,
-    isInstallRequestPending: () => installRequestLock,
-    isInstallPending: () => installLock,
   };
 };

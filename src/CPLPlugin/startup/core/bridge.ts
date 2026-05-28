@@ -23,12 +23,6 @@ export const getCurrentRepoEntry = (): string => {
   return tw.wiki.getTiddlerText(CURRENT_REPO_TITLE, DEFAULT_REPO_ENTRY);
 };
 
-export const getPreviousRepoEntry = (): string | undefined => previousEntry;
-
-export const setPreviousRepoEntry = (entry: string | undefined): void => {
-  previousEntry = entry;
-};
-
 export const getEventParam = (
   event: RootWidgetEvent,
   name: string,
@@ -117,10 +111,6 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
       callbackMap.clear();
     };
   });
-
-export const resetBridge = (): void => {
-  browserRuntime.__tiddlywiki_cpl__reset__?.();
-};
 
 export const cpl: CplRequest = (type, payload) => {
   const entry = tw.wiki.getTiddlerText(CURRENT_REPO_TITLE, DEFAULT_REPO_ENTRY);

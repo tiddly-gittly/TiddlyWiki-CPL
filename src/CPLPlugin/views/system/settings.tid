@@ -12,11 +12,7 @@ type: text/vnd.tiddlywiki
 
 在该页面内您可以对 CPL 插件的行为进行设定。
 
-; CPL 数据库镜像入口 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text">
-<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/repos}enlist-input[]]" variable="repo">
-<option value=<<repo>>><$text text=<<repo>>/></option>
-</$list>
-</$select>
+; CPL 数据库镜像入口 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" tag="input" />
 
 ; CPL 服务器地址 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server" field="text">
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/servers}enlist-input[]]" variable="server">
@@ -39,7 +35,7 @@ type: text/vnd.tiddlywiki
 <<<
 自动更新检查会在 Wiki 刚打开时进行，并每隔指定间隔进行一次检查
 
-显然自动检查需要联网，每次所消耗的流量很小，大概10KB。如果发现有插件可以更新会在右上角弹窗提醒。
+显然自动检查需要联网，每次所消耗的流量很小，大概10KB。如果发现有插件可以更新，会在 CPL 面板顶部提醒。
 
 当值小于等于0，则关闭自动更新，也包括刚打开 Wiki 的那一次。
 
@@ -67,11 +63,7 @@ type: text/vnd.tiddlywiki
 
 In this page you can set the behavior of the CPL plugin.
 
-; CPL Database Mirror Entry <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text">
-<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/repos}enlist-input[]]" variable="repo">
-<option value=<<repo>>><$text text=<<repo>>/></option>
-</$list>
-</$select>
+; CPL Database Mirror Entry <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" tag="input" />
 
 ; CPL Server Endpoint <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server" field="text">
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/servers}enlist-input[]]" variable="server">
@@ -94,7 +86,7 @@ You can also configure the CPL server endpoint independently: [[$:/plugins/Gk0Wk
 <<<
 The automatic update check is performed when the Wiki is first opened, and at specified intervals
 
-Obviously auto-checking requires an internet connection and consumes very little traffic each time, about 10KB. If a plugin is found to be updatable, a pop-up window will alert you in the upper right corner.
+Obviously auto-checking requires an internet connection and consumes very little traffic each time, about 10KB. If a plugin is found to be updatable, the CPL panel will show a notice at the top.
 
 When the value is less than or equal to 0, auto-update is turned off, also when the Wiki is just opened.
 

@@ -1,15 +1,8 @@
-import {
-  cpl,
-  CURRENT_REPO_TITLE,
-  getCurrentRepoEntry,
-  getPreviousRepoEntry,
-  setPreviousRepoEntry,
-} from './core/bridge';
+import { cpl } from './core/bridge';
 import { fetchPluginFromStaticMirrors } from './core/static-mirror-fetch';
 import { browserRuntime, tw, type RootWidgetEvent } from './core/types';
 import { createIndexController } from './core/index';
 import { createInstallController } from './core/install';
-import { createMirrorController } from './core/mirror';
 import { createUpdateController } from './core/update';
 
 export const name = 'cpl-repo-init';
@@ -19,18 +12,9 @@ export const synchronous = true;
 
 export const startup = (): void => {
   browserRuntime.__tiddlywiki_cpl__ = cpl;
-  setPreviousRepoEntry(getCurrentRepoEntry());
 
   const installController = createInstallController();
   let indexController: ReturnType<typeof createIndexController> | undefined;
-
-  const triggerMirrorRefresh = (): void => {
-    tw.rootWidget.dispatchEvent({
-      type: 'cpl-get-plugins-index',
-      paramObject: {},
-      widget: tw.rootWidget,
-    });
-  };
 
   const shouldAutoLoadDatabaseInCplLayout = (): boolean =>
     tw.wiki.getTiddlerText(
@@ -38,33 +22,10 @@ export const startup = (): void => {
       'yes',
     ) !== 'no';
 
-  const mirrorController = createMirrorController({
-    isBusy: () =>
-      installController.isInstallRequestPending() ||
-      installController.isInstallPending() ||
-      indexController?.isBusy() === true,
-    onSwitchRequested: triggerMirrorRefresh,
-  });
-
   const updateController = createUpdateController();
-  indexController = createIndexController({
-    onIndexLoaded: () => {
-      mirrorController.completePendingSwitch();
-    },
-    onIndexLoadFailed: mirrorController.failPendingSwitch,
-  });
-
-  mirrorController.setMirrorSwitchStatus('ready', '');
+  indexController = createIndexController();
 
   tw.wiki.addEventListener('change', changes => {
-    if (tw.utils.hop(changes, CURRENT_REPO_TITLE)) {
-      const currentEntry = getCurrentRepoEntry();
-      mirrorController.handleMirrorSwitch(
-        currentEntry,
-        getPreviousRepoEntry() ?? currentEntry,
-      );
-    }
-
     if (
       tw.utils.hop(
         changes,
@@ -189,12 +150,11 @@ export const startup = (): void => {
           URL.revokeObjectURL(url);
         } catch (error) {
           console.error('[CPL] Failed to download plugin:', error);
-          tw.notifier.display(
-            '$:/plugins/Gk0Wk/CPL-Repo/notifications/downloading-fail',
-            {
-              variables: { message: String(error) },
-            },
-          );
+          tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Repo/download-plugin-status',
+            text: String(error),
+            plugin: pluginTitle,
+          });
         }
       })();
       return undefined;

@@ -82,6 +82,30 @@ type: text/vnd.tiddlywiki
   color: <<colour muted-foreground>>;
 }
 
+.cpl-inline-status,
+.cpl-install-request-panel {
+  background: <<colour tiddler-info-background>>;
+  border-color: <<colour tiddler-info-border>>;
+  color: <<colour foreground>>;
+  fill: <<colour foreground>>;
+}
+
+.cpl-inline-status-loading,
+.cpl-inline-status-info {
+  background: <<colour primary>>14;
+  border-color: <<colour primary>>;
+}
+
+.cpl-inline-status-success {
+  background: <<colour diff-insert-background>>33;
+  border-color: <<colour diff-insert-foreground>>;
+}
+
+.cpl-inline-status-error {
+  background: <<colour diff-delete-background>>33;
+  border-color: <<colour diff-delete-foreground>>;
+}
+
 /* Disable dut to high GPU usage */
 /**
 .cpl-website-mainpage-search-bar {
@@ -129,18 +153,6 @@ type: text/vnd.tiddlywiki
   color: <<colour muted-foreground>>;
 }
 
-.cpl-mirror-switch-indicator-success {
-  color: <<colour diff-insert-foreground>>;
-}
-
-.cpl-mirror-switch-indicator-error {
-  color: <<colour diff-delete-foreground>>;
-}
-
-.cpl-mirror-switch-message {
-  color: <<colour muted-foreground>>;
-}
-
 .cpl-static-mirror-notice,
 .cpl-static-feature-notice {
   background: <<colour diff-delete-background>>33;
@@ -150,13 +162,16 @@ type: text/vnd.tiddlywiki
 
 .cpl-loading-placeholder,
 .cpl-inline-button-link,
-.cpl-plugin-card-description,
 .cpl-plugin-card-meta-text,
 .cpl-plugin-detail-subtitle,
 .cpl-plugin-detail-meta-text,
 .cpl-version-history-download,
 .cpl-status-muted {
   color: <<colour muted-foreground>>;
+}
+
+.cpl-plugin-card-description {
+  color: <<colour foreground>>;
 }
 
 .cpl-status-success {

@@ -145,7 +145,7 @@ Even so, do you still want to install it?
 
 </$list>
 
-<$button class="tc-btn-big-green tc-primary-btn" message="tm-close-tiddler">
+<$button class="tc-btn-big-green tc-primary-btn">
 <$action-sendmessage $message="cpl-install-plugin" response=<<requestTiddler>> />
 {{$:/core/images/done-button}}
 &#32;
