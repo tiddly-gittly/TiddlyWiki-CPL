@@ -1,0 +1,122 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/views/system/status-panel
+code-body: yes
+created: 20260528000000000
+modified: 20260528000000000
+tags: 
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+
+<$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]is[tiddler]field:text[yes]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-loading">
+{{$:/core/images/timestamp-on}}
+<span><$text text={{{ [<chinese>match[yes]then[获取安装信息中，请稍候]else[Getting installation information, please wait]] }}} /></span>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]is[tiddler]!field:text[yes]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-error">
+{{$:/core/images/warning}}
+<span><$text text={{{ [<chinese>match[yes]then[安装信息获取失败：]else[Failed to get installation information: ]] }}} /><$text text={{$:/temp/CPL-Repo/instal-plugin-requesting}} /></span>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/instal-plugin-requesting" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/instal-plugin-request-tree]is[tiddler]]" variable="t">
+<div class="cpl-install-request-panel">
+<$let requestTiddler="$:/temp/CPL-Repo/instal-plugin-request-tree">
+{{$:/plugins/Gk0Wk/CPL-Repo/templates/modals/install-plugin-request}}
+</$let>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[取消]else[Cancel]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/instal-plugin-request-tree" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/installing-plugin]is[tiddler]field:text[yes]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-loading">
+{{$:/core/images/timestamp-on}}
+<span>
+<$text text={{{ [<chinese>match[yes]then[正在安装]else[Installing]] }}} />
+<$list filter="[[$:/temp/CPL-Repo/installing-plugin]get[current-plugin]!is[blank]]">
+&#32;<$text text={{$:/temp/CPL-Repo/installing-plugin!!current-plugin}} />
+</$list>
+<$list filter="[[$:/temp/CPL-Repo/installing-plugin]get[count]!is[blank]]">
+&#32;(<$text text={{$:/temp/CPL-Repo/installing-plugin!!count}} />/<$text text={{$:/temp/CPL-Repo/installing-plugin!!total}} />)
+</$list>
+</span>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/installing-plugin]is[tiddler]!field:text[yes]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-error">
+{{$:/core/images/warning}}
+<span><$text text={{{ [<chinese>match[yes]then[安装失败：]else[Installation failed: ]] }}} /><$text text={{$:/temp/CPL-Repo/installing-plugin}} /></span>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/installing-plugin" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/install-plugin-status]field:text[success]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-success">
+{{$:/core/images/done-button}}
+<span><$text text={{{ [<chinese>match[yes]then[安装完成]else[Installation completed]] }}} /></span>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/install-plugin-status" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/install-plugin-status]is[tiddler]!field:text[success]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-error">
+{{$:/core/images/warning}}
+<span><$text text={{{ [<chinese>match[yes]then[安装失败：]else[Installation failed: ]] }}} /><$text text={{$:/temp/CPL-Repo/install-plugin-status}} /></span>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/install-plugin-status" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/update-notification]field:text[yes]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-info">
+{{$:/core/images/info-button}}
+<span><$text text={{{ [<chinese>match[yes]then[发现可更新插件：]else[Plugin updates available: ]] }}} /><$text text={{$:/temp/CPL-Repo/update-notification!!count}} /></span>
+<$button class="tc-btn-invisible cpl-inline-status-action">
+<$action-sendmessage $message="cpl-get-plugins-index" />
+<$action-setfield $tiddler="$:/temp/CPL-Repo/panel-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database" />
+<$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-database-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager" />
+<$text text={{{ [<chinese>match[yes]then[查看]else[View]] }}} />
+</$button>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/update-notification" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+<$list filter="[[$:/temp/CPL-Repo/download-plugin-status]is[tiddler]]" variable="t">
+<div class="cpl-inline-status cpl-inline-status-error">
+{{$:/core/images/warning}}
+<span><$text text={{{ [<chinese>match[yes]then[下载失败：]else[Download failed: ]] }}} /><$text text={{$:/temp/CPL-Repo/download-plugin-status}} /></span>
+<$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/download-plugin-status" />
+{{$:/core/images/close-button}}
+</$button>
+</div>
+</$list>
+
+</$list>
+<!-- 删除状态面板中打开确认内容时遗留的 modal 关闭消息副作用占位。 -->
+
+
+
