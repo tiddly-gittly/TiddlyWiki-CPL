@@ -2,9 +2,9 @@
   "title": "$:/plugins/Gk0Wk/CPL-Repo",
   "description": "TiddlyWiki Community Plugin Library - Frontend",
   "author": "Gk0Wk",
-  "version": "2026.05.29",
+  "version": "2026.05.30",
   "core-version": ">=5.3.0",
   "plugin-type": "plugin",
   "dependents": "",
-  "list": "readme tree"
+  "list": "docs/readme docs/tree views/system/settings docs/changelog"
 }
