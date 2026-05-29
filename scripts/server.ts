@@ -59,7 +59,14 @@ if (mode === 'prod' || mode === 'readonly') {
   const readonlyWriter = `cpl-readonly-${crypto
     .randomBytes(12)
     .toString('hex')}`;
-  twArgs.push('readers=(anon)', `writers=${readonlyWriter}`);
+  // Enable basic auth so tiddlyweb can properly reject unauthenticated writes
+  // readers=(anon) still allows anonymous read access
+  twArgs.push(
+    'readers=(anon)',
+    `writers=${readonlyWriter}`,
+    'username=cpl-server-test',
+    `password=${crypto.randomBytes(16).toString('hex')}`,
+  );
   console.log(
     `[CPL Server] Starting in ${mode.toUpperCase()} mode (read-only)`,
   );

@@ -8,7 +8,7 @@ const path = require('path');
 const fs = require('fs');
 
 const TEST_PORT = 9876;
-const TEST_HOST = '127.0.0.1';
+const TEST_HOST = 'localhost';
 const FETCHED_DIR = path.resolve(__dirname, '../../wiki/files/plugin-fetched');
 const TEST_FETCHED_PLUGIN_TITLE = '$:/plugins/test/fetched-preferred';
 const TEST_FETCHED_PLUGIN_FILENAME = '$__plugins_test_fetched-preferred.json';
