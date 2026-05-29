@@ -1,4 +1,5 @@
 title: $:/plugins/Gk0Wk/CPL-Server/startup/readonly-api.js
 type: application/javascript
 module-type: startup
+platforms: node
 Modern.TiddlyDev#Origin: startup/readonly-api.ts

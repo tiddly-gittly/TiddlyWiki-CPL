@@ -1,0 +1,14 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/docs/changelog
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[更新日志]else[Changelog]] }}} />
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL 更新日志]else[CPL Changelog]] }}} />
+tags: 
+type: text/vnd.tiddlywiki
+
+! 2026.05.30
+
+* 修复 plugin.info 的 `list` 字段，将 Settings 页签路径修正为 `views/system/settings`，使其在插件 info 面板中正确显示
+* 修复 `readonly-api.ts` 元数据，补充 `platforms: node`，避免浏览器端加载时报 `require("url")` 模块缺失错误
+* 新增 Docker 部署支持：
+  ** 提供 `docker-compose.yml` 模板
+  ** `Dockerfile` 构建时内置只读模式 (`IfEditorMode=no`)
+  ** `.dockerignore` / `.gitignore` 排除运行时缓存目录
