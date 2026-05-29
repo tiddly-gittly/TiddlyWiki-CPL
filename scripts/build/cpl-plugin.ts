@@ -17,7 +17,6 @@ interface SourcePluginInfo {
 }
 
 const pluginInfoPath = resolve('src/CPLPlugin/plugin.info');
-const repoVersionTiddlerPath = resolve('src/CPLPlugin/config/repo-version.tid');
 const readmeTiddlerPath = resolve('src/CPLPlugin/docs/readme.tid');
 
 const requireNonEmptyString = (value: unknown, label: string): string => {
@@ -73,26 +72,6 @@ const sourcePluginInfo = {
   ),
 };
 
-const getBuiltPluginVersion = ($tw: ITiddlyWiki): string => {
-  const repoVersionTiddler = getTiddlerFromFile(
-    $tw,
-    repoVersionTiddlerPath,
-    'CPL-Repo-Version',
-  );
-  const builtVersion = requireNonEmptyString(
-    repoVersionTiddler?.text,
-    repoVersionTiddlerPath,
-  );
-
-  if (builtVersion !== sourcePluginInfo.version) {
-    throw new Error(
-      `CPL-Repo-Version (${builtVersion}) does not match src/CPLPlugin/plugin.info version (${sourcePluginInfo.version})`,
-    );
-  }
-
-  return builtVersion;
-};
-
 const getBuiltPluginReadme = ($tw: ITiddlyWiki): string =>
   requireNonEmptyString(
     getTiddlerFromFile(
@@ -109,7 +88,7 @@ export const buildCPLPlugin = (
   Record<string, string>,
   ReturnType<typeof mergePluginInfo>['newInfoTiddler'],
 ] => {
-  const pluginVersion = getBuiltPluginVersion($tw);
+  const pluginVersion = sourcePluginInfo.version;
   const pluginReadme = getBuiltPluginReadme($tw);
   const sourceRuntimeTiddlers = getRuntimePluginTiddlers('repo');
   const cplPluginTiddlers: Record<string, ITiddlerFields> = {};
