@@ -66,6 +66,7 @@ COPY src/ ./src/
 # runtime by the entrypoint).  plugin-offline/ IS included (committed, static
 # fallback plugins that don't need fetching).
 COPY wiki/ ./wiki/
+COPY docker/IfEditorMode.tid ./wiki/tiddlers/IfEditorMode.tid
 RUN rm -rf /app/wiki/files/plugin-fetched
 
 # TypeScript entrypoint: clones/pulls the repo at first/subsequent startups,

@@ -140,3 +140,5 @@ wiki/tiddlers/website/
 
 # Temp workspace
 tmp/
+wiki/files/plugin-fetched-history/
+repo-cache/

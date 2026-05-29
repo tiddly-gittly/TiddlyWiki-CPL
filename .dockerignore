@@ -8,6 +8,9 @@ node_modules/
 
 # Ignore source data that should come from a persistent volume mount
 data/
+repo-cache/
+wiki/files/plugin-fetched/
+wiki/files/plugin-fetched-history/
 
 # .git is NOT baked into the image — the entrypoint clones at first run
 # into the repo-cache volume mount.
