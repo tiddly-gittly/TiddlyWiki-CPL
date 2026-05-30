@@ -55,13 +55,13 @@ function injectTestModeConfig(): void {
 
   const origin = `http://${host}:${port}`;
   const tempDir = path.join(DATA_DIR, '.test-config');
+  fs.rmSync(tempDir, { recursive: true, force: true });
   fs.mkdirSync(tempDir, { recursive: true });
 
   // Write tiddler files that override the CPL-Repo client defaults.
   // Filesystem plugin loads these as user tiddlers, which take priority
   // over the plugin's shadow tiddlers from defaults.multids.
   const overrides: Record<string, string> = {
-    '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo': origin,
     '$:/plugins/Gk0Wk/CPL-Repo/config/current-server': origin,
   };
 
@@ -82,7 +82,8 @@ function injectTestModeConfig(): void {
 
 twArgs.push('wiki', '--listen', `port=${port}`, `host=${host}`);
 
-// Inject in test mode AFTER twArgs is fully built (must come before 'wiki').
+// Inject in test mode after the wiki path is present, so --load is inserted
+// as: tiddlywiki <wiki-path> --load <dir> --listen ...
 injectTestModeConfig();
 
 if (mode === 'prod' || mode === 'readonly') {

@@ -1,3 +1,4 @@
 # Ignore data files but keep directory
 *.json
+.test-config/
 !README.md

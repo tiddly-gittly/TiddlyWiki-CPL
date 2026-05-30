@@ -6,6 +6,9 @@ module.exports = {
   testMatch: [
     '**/tests/**/*.test.js'
   ],
+  testPathIgnorePatterns: [
+    '<rootDir>/repo-cache/'
+  ],
   transform: {
     '^.+\\.ts$': '<rootDir>/tests/ts-transformer.js'
   },

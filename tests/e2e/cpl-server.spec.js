@@ -13,12 +13,13 @@
 const { test, expect } = require('@playwright/test');
 const { startBlankWiki, stopBlankWiki, BLANK_WIKI_URL } = require('./helpers/blank-wiki-server');
 const { startStaticRepoServer, stopStaticRepoServer, STATIC_REPO_URL } = require('./helpers/static-repo-server');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
 const BASE_URL = process.env.TEST_URL || 'http://localhost:8080';
-const TEST_PLUGIN_TIDDLER = 'Plugin_202203245445241';
-const TEST_PLUGIN_CPL_TITLE = '$:/plugins/sk/Links';
+const TEST_PLUGIN_TIDDLER = 'dullroar/sitemap';
+const TEST_PLUGIN_CPL_TITLE = '$:/plugins/dullroar/sitemap';
 
 // Temporary test plugin for blank wiki E2E
 const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
@@ -27,6 +28,44 @@ const TEST_PLUGIN_OFFLINE_PATH = path.resolve('wiki/files/plugin-offline', `${TE
 const REAL_MIRROR_PLUGIN_TITLE = '$:/plugins/tiddlywiki/powered-by-tiddlywiki';
 const NETLIFY_REPO = 'https://tw-cpl.netlify.app/repo';
 const GITHUB_PAGES_REPO = 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
+const JWT_SECRET = 'test-secret';
+
+function base64UrlEncode(value) {
+  return Buffer.from(JSON.stringify(value))
+    .toString('base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+
+function createTestJwt(payload) {
+  const header = base64UrlEncode({ alg: 'HS256', typ: 'JWT' });
+  const body = base64UrlEncode({
+    avatar: 'https://example.com/avatar.png',
+    exp: Math.floor(Date.now() / 1000) + 3600,
+    ...payload
+  });
+  const signature = crypto
+    .createHmac('sha256', JWT_SECRET)
+    .update(`${header}.${body}`)
+    .digest('base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+  return `${header}.${body}.${signature}`;
+}
+
+async function authenticateTestUser(page) {
+  await page.context().addCookies([
+    {
+      name: 'cpl_jwt_token',
+      value: createTestJwt({ githubId: '1001', username: 'e2e-user' }),
+      url: BASE_URL,
+      httpOnly: true,
+      sameSite: 'Lax'
+    }
+  ]);
+}
 
 function createTestPluginFile() {
   const testPlugin = {
@@ -61,8 +100,12 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Server-side test-mode-config already sets current-server to localhost.
-  // Just wait for CPL to probe the local server and settle.
+  // Point CPL API to the local test server. The server-side --load injection
+  // should already do this; this keeps the helper robust for reused servers.
+  await page.evaluate(() => {
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
+  });
+
   await page.waitForFunction(() => {
     return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
   }, { timeout: 30000 });
@@ -82,16 +125,21 @@ async function openPluginDatabase(page) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Override current-repo to the local static repo server, which serves
-  // cache/plugins/{update,index}.json needed by the mirror-switching test.
+  // Use only local mirrors in E2E so switching does not depend on external
+  // Netlify/GitHub Pages availability or CORS behavior.
   await page.evaluate(({ staticRepoUrl }) => {
+    const localServerUrl = window.location.origin;
+    const alternateStaticRepoUrl = staticRepoUrl.endsWith('/') ? staticRepoUrl.slice(0, -1) : `${staticRepoUrl}/`;
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: localServerUrl });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/servers', text: localServerUrl });
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: staticRepoUrl });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/repos', text: `${staticRepoUrl} ${alternateStaticRepoUrl}` });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos', text: `${staticRepoUrl} ${alternateStaticRepoUrl}` });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: '' });
   }, { staticRepoUrl: STATIC_REPO_URL });
 
-  // Wait for CPL re-probe to settle.
   await page.waitForFunction(() => {
-    const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
-    return serverType === 'server' || serverType === 'unreachable';
+    return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
   }, { timeout: 30000 });
 
   await page.evaluate(() => {
@@ -163,36 +211,8 @@ test.describe('CPL Server E2E', () => {
     stopStaticRepoServer();
   });
 
-  // Collect browser console logs for debugging.
-  // Also inject an init script that redirects external CPL fetches to
-  // localhost. This is a safety net; the primary fix is --load injection
-  // in scripts/server.ts.
+  // Collect browser console logs for debugging
   test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      const origin = window.location?.origin || 'http://localhost:8080';
-      const EXTERNAL_HOSTS = [
-        'https://tw-cpl.netlify.app',
-        'https://tiddly-gittly.github.io/TiddlyWiki-CPL',
-        'https://cpl.tidgi.fun',
-      ];
-      const originalFetch = window.fetch;
-      window.fetch = function patchedFetch(url, ...args) {
-        let str = typeof url === 'string' ? url : (url?.url ?? '');
-        if (typeof str === 'string') {
-          for (const host of EXTERNAL_HOSTS) {
-            str = str.replace(host, origin);
-          }
-        }
-        if (typeof url === 'string' && url !== str) {
-          return originalFetch.call(window, str, ...args);
-        }
-        if (url && typeof url === 'object' && url.url !== str) {
-          return originalFetch.call(window, { ...url, url: str }, ...args);
-        }
-        return originalFetch.call(window, url, ...args);
-      };
-    });
-
     page.on('console', msg => {
       if (msg.type() === 'error') {
         const text = msg.text();
@@ -220,6 +240,7 @@ test.describe('CPL Server E2E', () => {
   });
 
   test('should allow rating a plugin', async ({ page }) => {
+    await authenticateTestUser(page);
     await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
 
     const ratingWidget = page.locator('.cpl-rating-widget');
@@ -307,18 +328,12 @@ test.describe('CPL Server E2E', () => {
     await mirrorSelect.selectOption(alternateValue);
 
     await page.waitForFunction(
-      () => {
-        const switchStatus = $tw.wiki.getTiddler('$:/temp/CPL-Repo/mirror-switch-status');
-        return switchStatus && switchStatus.fields.text === 'success';
-      },
-      { timeout: 20000 }
-    );
-
-    await page.waitForFunction(
-      () => {
+      (expectedRepo) => {
+        const currentRepo = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo');
         const pluginsIndex = $tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index');
-        return !!pluginsIndex;
+        return currentRepo === expectedRepo && !!pluginsIndex;
       },
+      alternateValue,
       { timeout: 20000 }
     );
 
@@ -352,34 +367,6 @@ test.describe('CPL Client Installation E2E', () => {
   test.beforeAll(async () => {
     createTestPluginFile();
     await startBlankWiki({ loadCplClient: true });
-  });
-
-  test.beforeEach(async ({ page }) => {
-    // Redirect external CPL fetches to localhost as a safety net.
-    await page.addInitScript(() => {
-      const origin = 'http://localhost:8080';
-      const EXTERNAL_HOSTS = [
-        'https://tw-cpl.netlify.app',
-        'https://tiddly-gittly.github.io/TiddlyWiki-CPL',
-        'https://cpl.tidgi.fun',
-      ];
-      const originalFetch = window.fetch;
-      window.fetch = function patchedFetch(url, ...args) {
-        let str = typeof url === 'string' ? url : (url?.url ?? '');
-        if (typeof str === 'string') {
-          for (const host of EXTERNAL_HOSTS) {
-            str = str.replace(host, origin);
-          }
-        }
-        if (typeof url === 'string' && url !== str) {
-          return originalFetch.call(window, str, ...args);
-        }
-        if (url && typeof url === 'object' && url.url !== str) {
-          return originalFetch.call(window, { ...url, url: str }, ...args);
-        }
-        return originalFetch.call(window, url, ...args);
-      };
-    });
   });
 
   test.afterAll(() => {

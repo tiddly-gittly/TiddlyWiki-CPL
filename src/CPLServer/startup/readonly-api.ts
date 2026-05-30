@@ -25,6 +25,36 @@ interface RouteRequestLike {
 const CPL_API_PATH_PREFIX = '/cpl/api/';
 const CPL_API_WRITE_METHODS = new Set(['POST', 'PUT', 'DELETE']);
 
+const normalizeHeaderValue = (
+  value: string | string[] | undefined,
+): string | null => {
+  if (typeof value === 'string' && value) {
+    return value;
+  }
+  if (Array.isArray(value) && typeof value[0] === 'string' && value[0]) {
+    return value[0];
+  }
+  return null;
+};
+
+const rewriteCorsHeaders = (
+  headers: Record<string, unknown>,
+  origin: string,
+): void => {
+  const allowOriginKey =
+    Object.keys(headers).find(
+      key => key.toLowerCase() === 'access-control-allow-origin',
+    ) ?? 'Access-Control-Allow-Origin';
+
+  if (headers[allowOriginKey] !== '*') {
+    return;
+  }
+
+  headers[allowOriginKey] = origin;
+  headers['Access-Control-Allow-Credentials'] = 'true';
+  headers.Vary = headers.Vary ? `${String(headers.Vary)}, Origin` : 'Origin';
+};
+
 export const shouldUseReaderAuthorizationForCplApi = (
   request: RouteRequestLike,
   server: TiddlyWikiServerPrototype,
@@ -89,21 +119,20 @@ export const startup = (): void => {
     // The CPL browser client uses fetch({credentials:'include'}) which
     // cannot work with Access-Control-Allow-Origin:*. Echo the request's
     // Origin header back on the response instead.
-    const origin =
-      typeof req.headers?.['origin'] === 'string'
-        ? (req.headers['origin'] as string)
-        : null;
+    const origin = normalizeHeaderValue(req.headers?.origin);
     if (origin) {
-      const res = response as { writeHead: (...args: unknown[]) => void };
+      const res = response as { writeHead: (...args: unknown[]) => unknown };
       const origWriteHead = res.writeHead.bind(res);
-      res.writeHead = function (...args: unknown[]): void {
-        // Headers are passed as the second argument (object form).
-        if (args.length >= 2 && typeof args[1] === 'object' && args[1] !== null) {
-          const headers = args[1] as Record<string, string>;
-          if (headers['Access-Control-Allow-Origin'] === '*') {
-            headers['Access-Control-Allow-Origin'] = origin;
-            headers['Access-Control-Allow-Credentials'] = 'true';
-          }
+      res.writeHead = function (...args: unknown[]): unknown {
+        const maybeHeaders =
+          typeof args[1] === 'object' && args[1] !== null
+            ? args[1]
+            : typeof args[2] === 'object' && args[2] !== null
+              ? args[2]
+              : null;
+
+        if (maybeHeaders) {
+          rewriteCorsHeaders(maybeHeaders as Record<string, unknown>, origin);
         }
         return origWriteHead(...args);
       };

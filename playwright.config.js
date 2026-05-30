@@ -39,7 +39,8 @@ module.exports = defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
     env: {
-      CPL_TEST_MODE: 'true'
+      CPL_TEST_MODE: 'true',
+      CPL_JWT_SECRET: 'test-secret'
     }
   },
 });
