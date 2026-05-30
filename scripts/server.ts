@@ -70,11 +70,11 @@ function injectTestModeConfig(): void {
     fs.writeFileSync(filePath, `title: ${title}\n\n${text}\n`, 'utf-8');
   }
 
-  // Inject --load before the wiki path so these tiddlers are available
-  // when the browser client reads its config on startup.
+  // Inject --load after the wiki path so tiddlers are loaded at wiki init
+  // (tiddlywiki CLI: tiddlywiki <wiki-path> --load <dir> --listen ...)
   const wikiIndex = twArgs.indexOf('wiki');
   if (wikiIndex !== -1) {
-    twArgs.splice(wikiIndex, 0, '--load', tempDir);
+    twArgs.splice(wikiIndex + 1, 0, '--load', tempDir);
   }
 
   console.log(`[CPL Server] Test mode: injected local config at ${origin}`);
