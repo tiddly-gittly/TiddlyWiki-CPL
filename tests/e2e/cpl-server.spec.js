@@ -61,17 +61,21 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Point CPL API client to the local test server.
-  // Leave current-repo untouched (defaults to external static repo).
-  // API-only tests (stats, rating, changelog) do not need static repo.
+  // Point CPL to the local test server for both API and repo endpoints.
+  // Setting current-repo to localhost prevents external fetches on startup
+  // which fail due to CORS from http://localhost CI environment.
   await page.evaluate(() => {
     $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
       text: window.location.origin
     });
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
+      text: window.location.origin + '/repo'
+    });
   });
 
-  // Wait for CPL to re-probe the newly configured local server.
+  // Wait for CPL to re-probe the local server and settle the server type.
   await page.waitForFunction(() => {
     const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
     return serverType === 'server' || serverType === 'unreachable';
