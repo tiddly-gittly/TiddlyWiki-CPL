@@ -80,9 +80,10 @@ function injectTestModeConfig(): void {
   console.log(`[CPL Server] Test mode: injected local config at ${origin}`);
 }
 
-injectTestModeConfig();
-
 twArgs.push('wiki', '--listen', `port=${port}`, `host=${host}`);
+
+// Inject in test mode AFTER twArgs is fully built (must come before 'wiki').
+injectTestModeConfig();
 
 if (mode === 'prod' || mode === 'readonly') {
   if (
