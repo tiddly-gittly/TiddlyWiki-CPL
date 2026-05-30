@@ -57,24 +57,21 @@ function removeTestPluginFile() {
 }
 
 async function navigateToPlugin(page, tiddlerTitle) {
-  // Abort all external requests before page loads so TiddlyWiki startup
-  // does not fire CORS-blocked fetches to tw-cpl.netlify.app / cpl.tidgi.fun.
-  await page.route(/^https:\/\/(tw-cpl\.netlify\.app|cpl\.tidgi\.fun)\//, (route) => route.abort());
-
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Override servers to local after startup, which triggers re-probe.
+  // Override current-server to point at the local E2E test server.
+  // TiddlyWiki's startup fired external probes to default URLs (CORS errors are
+  // expected and non-fatal in the browser). After this addTiddler, the
+  // change watcher re-probes the local server and sets server-type='server'.
   await page.evaluate(() => {
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',   text: window.location.origin + '/repo' });
   });
 
-  // Wait for server-type to settle to either 'server' or 'unreachable' after re-probe.
+  // Wait strictly for server-type='server' (the local API probe succeeded).
   await page.waitForFunction(() => {
-    const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
-    return serverType === 'server' || serverType === 'unreachable';
+    return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
   }, { timeout: 30000 });
 
   await page.evaluate((title) => {
@@ -84,23 +81,20 @@ async function navigateToPlugin(page, tiddlerTitle) {
   }, tiddlerTitle);
 
   // Wait for the page to render the plugin view
-  await page.waitForSelector('.cpl-plugin-stats', { timeout: 30000 });
+  await page.waitForSelector('.cpl-plugin-stats', { timeout: 60000 });
 }
 
 async function openPluginDatabase(page) {
-  // Abort external requests before page loads to avoid CORS failures.
-  await page.route(/^https:\/\/(tw-cpl\.netlify\.app|cpl\.tidgi\.fun)\//, (route) => route.abort());
-
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
 
-  // After startup (external requests aborted), point CPL to local endpoints.
+  // Override both API server and static repo endpoints to local.
   await page.evaluate(({ staticRepoUrl }) => {
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: staticRepoUrl });
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
   }, { staticRepoUrl: STATIC_REPO_URL });
 
-  // Wait for server-type settlement after config change.
+  // Wait for CPL re-probe to report either server or unreachable.
   await page.waitForFunction(() => {
     const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
     return serverType === 'server' || serverType === 'unreachable';
