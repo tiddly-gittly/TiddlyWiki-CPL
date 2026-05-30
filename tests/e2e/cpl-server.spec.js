@@ -61,15 +61,8 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Override current-server to point at the local E2E test server.
-  // TiddlyWiki's startup fired external probes to default URLs (CORS errors are
-  // expected and non-fatal in the browser). After this addTiddler, the
-  // change watcher re-probes the local server and sets server-type='server'.
-  await page.evaluate(() => {
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
-  });
-
-  // Wait strictly for server-type='server' (the local API probe succeeded).
+  // Server-side test-mode-config already sets current-server to localhost.
+  // Just wait for CPL to probe the local server and settle.
   await page.waitForFunction(() => {
     return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
   }, { timeout: 30000 });
@@ -87,14 +80,15 @@ async function navigateToPlugin(page, tiddlerTitle) {
 async function openPluginDatabase(page) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+  await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Override both API server and static repo endpoints to local.
+  // Override current-repo to the local static repo server, which serves
+  // cache/plugins/{update,index}.json needed by the mirror-switching test.
   await page.evaluate(({ staticRepoUrl }) => {
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: staticRepoUrl });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
   }, { staticRepoUrl: STATIC_REPO_URL });
 
-  // Wait for CPL re-probe to report either server or unreachable.
+  // Wait for CPL re-probe to settle.
   await page.waitForFunction(() => {
     const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
     return serverType === 'server' || serverType === 'unreachable';
@@ -103,6 +97,7 @@ async function openPluginDatabase(page) {
   await page.evaluate(() => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
     $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
+    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
   });
 }
 
