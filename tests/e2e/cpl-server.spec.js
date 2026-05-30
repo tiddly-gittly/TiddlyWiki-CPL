@@ -61,12 +61,10 @@ async function navigateToPlugin(page, tiddlerTitle) {
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Use the local test server as CPL server endpoint so API probing succeeds.
+  // Point CPL API client to the local test server.
+  // Leave current-repo untouched (defaults to external static repo).
+  // API-only tests (stats, rating, changelog) do not need static repo.
   await page.evaluate(() => {
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
-      text: window.location.origin
-    });
     $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
       text: window.location.origin
@@ -74,7 +72,6 @@ async function navigateToPlugin(page, tiddlerTitle) {
   });
 
   // Wait for CPL to re-probe the newly configured local server.
-  // The change event triggers refreshMirrorCapabilityState asynchronously.
   await page.waitForFunction(() => {
     const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
     return serverType === 'server' || serverType === 'unreachable';
@@ -94,17 +91,17 @@ async function openPluginDatabase(page) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
 
-  // Point CPL to the local test server to avoid external network requests.
-  await page.evaluate(() => {
+  // Point CPL to the local test server (API) and local static repo (mirror).
+  await page.evaluate(({ staticRepoUrl }) => {
     $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
-      text: window.location.origin
+      text: staticRepoUrl
     });
     $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
       text: window.location.origin
     });
-  });
+  }, { staticRepoUrl: STATIC_REPO_URL });
 
   // Wait for CPL server probe to complete before rendering the panel.
   await page.waitForFunction(() => {
@@ -169,6 +166,18 @@ async function installFromMirrorInBlankWiki(page, mirrorUrl, pluginTitle) {
 }
 
 test.describe('CPL Server E2E', () => {
+  test.beforeAll(async () => {
+    // Start local static repo server so mirror-switching tests
+    // do not depend on external network.
+    if (fs.existsSync(path.resolve(__dirname, '../../cache/plugins'))) {
+      await startStaticRepoServer();
+    }
+  });
+
+  test.afterAll(() => {
+    stopStaticRepoServer();
+  });
+
   // Collect browser console logs for debugging
   test.beforeEach(async ({ page }) => {
     page.on('console', msg => {
