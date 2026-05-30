@@ -19,6 +19,7 @@ interface TiddlyWikiServerModule {
 interface RouteRequestLike {
   method?: string;
   url?: string;
+  headers?: Record<string, string | string[] | undefined>;
 }
 
 const CPL_API_PATH_PREFIX = '/cpl/api/';
@@ -75,6 +76,12 @@ export const startup = (): void => {
     return;
   }
 
+  // Import setCorsOrigin for per-request CORS fixup.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const httpLib = require('$:/plugins/Gk0Wk/CPL-Server/lib/http.js') as {
+    setCorsOrigin: (origin: string | null) => void;
+  };
+
   const originalRequestHandler = prototype.requestHandler;
   prototype.requestHandler = function requestHandler(
     this: TiddlyWikiServerPrototype,
@@ -82,8 +89,17 @@ export const startup = (): void => {
     response: unknown,
     options?: Record<string, unknown>,
   ): unknown {
+    // Set the CORS origin for this request so that credentialed fetch()
+    // calls from the browser client work correctly.
+    const req = request as RouteRequestLike;
+    const origin =
+      typeof req.headers?.['origin'] === 'string'
+        ? (req.headers['origin'] as string)
+        : null;
+    httpLib.setCorsOrigin(origin ?? null);
+
     if (
-      shouldUseReaderAuthorizationForCplApi(request as RouteRequestLike, this)
+      shouldUseReaderAuthorizationForCplApi(req, this)
     ) {
       return originalRequestHandler.call(this, request, response, {
         ...options,
