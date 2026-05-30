@@ -76,12 +76,6 @@ export const startup = (): void => {
     return;
   }
 
-  // Import setCorsOrigin for per-request CORS fixup.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const httpLib = require('$:/plugins/Gk0Wk/CPL-Server/lib/http.js') as {
-    setCorsOrigin: (origin: string | null) => void;
-  };
-
   const originalRequestHandler = prototype.requestHandler;
   prototype.requestHandler = function requestHandler(
     this: TiddlyWikiServerPrototype,
@@ -89,14 +83,31 @@ export const startup = (): void => {
     response: unknown,
     options?: Record<string, unknown>,
   ): unknown {
-    // Set the CORS origin for this request so that credentialed fetch()
-    // calls from the browser client work correctly.
     const req = request as RouteRequestLike;
+
+    // Fix CORS for credentialed requests.
+    // The CPL browser client uses fetch({credentials:'include'}) which
+    // cannot work with Access-Control-Allow-Origin:*. Echo the request's
+    // Origin header back on the response instead.
     const origin =
       typeof req.headers?.['origin'] === 'string'
         ? (req.headers['origin'] as string)
         : null;
-    httpLib.setCorsOrigin(origin ?? null);
+    if (origin) {
+      const res = response as { writeHead: (...args: unknown[]) => void };
+      const origWriteHead = res.writeHead.bind(res);
+      res.writeHead = function (...args: unknown[]): void {
+        // Headers are passed as the second argument (object form).
+        if (args.length >= 2 && typeof args[1] === 'object' && args[1] !== null) {
+          const headers = args[1] as Record<string, string>;
+          if (headers['Access-Control-Allow-Origin'] === '*') {
+            headers['Access-Control-Allow-Origin'] = origin;
+            headers['Access-Control-Allow-Credentials'] = 'true';
+          }
+        }
+        return origWriteHead(...args);
+      };
+    }
 
     if (
       shouldUseReaderAuthorizationForCplApi(req, this)

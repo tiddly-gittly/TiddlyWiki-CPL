@@ -1,0 +1,43 @@
+Compiling...
+
+ Minimized plugins 
+ 181.05 KiB   $:/plugins/Gk0Wk/CPL-Repo
+   1.09 MiB   $:/plugins/Gk0Wk/CPL-Server
+
+[CPL Server] Starting in PROD mode (read-only)
+[CPL Server] Server will start on http://127.0.0.1:9877
+[CPL Server] Press Ctrl+C to stop
+鈼?injected env (6) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?multiple files { path: ['.env.local', '.env'] }
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList
+Serving on http://127.0.0.1:9877
+(press ctrl-C to exit)
+$:/plugins/Gk0Wk/CPL-Server/startup/readonly-api.js:1
+(function(module,exports,console,setInterval,clearInterval,setTimeout,clearTimeout,Buffer,$tw,require,process) {  (function(){"use strict";var __defProp=Object.defineProperty,__getOwnPropDesc=Object.getOwnPropertyDescriptor,__getOwnPropNames=Object.getOwnPropertyNames,__hasOwnProp=Object.prototype.hasOwnProperty,__export=(e,r)=>{for(var o in r)__defProp(e,o,{get:r[o],enumerable:!0})},__copyProps=(r,o,t,p)=>{if(o&&"object"==typeof o||"function"==typeof o)for(let e of __getOwnPropNames(o))__hasOwnProp.call(r,e)||e===t||__defProp(r,e,{get:()=>o[e],enumerable:!(p=__getOwnPropDesc(o,e))||p.enumerable});return r},__toCommonJS=e=>__copyProps(__defProp({},"__esModule",{value:!0}),e),readonly_api_exports={},CPL_API_PATH_PREFIX=(__export(readonly_api_exports,{before:()=>before,name:()=>name,platforms:()=>platforms,shouldUseReaderAuthorizationForCplApi:()=>shouldUseReaderAuthorizationForCplApi,startup:()=>startup,synchronous:()=>synchronous}),module.exports=__toCommonJS(readonly_api_exports),"/cpl/api/"),CPL_API_WRITE_METHODS=new Set(["POST","PUT","DELETE"]),shouldUseReaderAuthorizationForCplApi=(e,r)=>{var o,t=e.method??"";return!!CPL_API_WRITE_METHODS.has(t)&&(t=new URL(e.url??"/","http://localhost").pathname,((o=r.get?.("path-prefix")??"")&&t.startsWith(o)?t.slice(o.length)||"/":t).startsWith(CPL_API_PATH_PREFIX))},name="cpl-server-readonly-api",platforms=["node"],before=["commands"],synchronous=!0,startup=()=>{if($tw.node){var e=require("$:/core/modules/server/server.js").Server?.prototype;if(e&&!e.cplApiReadonlyPatchApplied){const t=e.requestHandler;e.requestHandler=function(e,r,o){return shouldUseReaderAuthorizationForCplApi(e,this)?t.call(this,e,r,{...o,authorizationType:"readers"}):t.call(this,e,r,o)},e.cplApiReadonlyPatchApplied=!0}}};
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+ReferenceError: URL is not defined
+    at shouldUseReaderAuthorizationForCplApi ($:/plugins/Gk0Wk/CPL-Server/startup/readonly-api.js:1:1177)
+    at e.requestHandler ($:/plugins/Gk0Wk/CPL-Server/startup/readonly-api.js:1:1611)
+    at Server.emit (node:events:524:28)
+    at parserOnIncoming (node:_http_server:1141:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:118:17)
+
+Node.js v20.20.0
+[CPL Server] Server exited with code 1

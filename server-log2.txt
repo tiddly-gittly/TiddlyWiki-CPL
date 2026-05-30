@@ -1,0 +1,30 @@
+Compiling...
+
+ Minimized plugins 
+ 181.05 KiB   $:/plugins/Gk0Wk/CPL-Repo
+   1.09 MiB   $:/plugins/Gk0Wk/CPL-Server
+
+[CPL Server] Starting in PROD mode (read-only)
+[CPL Server] Server will start on http://127.0.0.1:9878
+[CPL Server] Press Ctrl+C to stop
+鈼?injected env (6) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?override existing { override: true }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈱?multiple files { path: ['.env.local', '.env'] }
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?multiple files { path: ['.env.local', '.env'] }
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList
+Serving on http://127.0.0.1:9878
+(press ctrl-C to exit)
