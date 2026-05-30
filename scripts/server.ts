@@ -39,11 +39,50 @@ const twArgs = [
   '+plugins/tiddlywiki/tiddlyweb',
   toBootPluginArg(serverPluginPath),
   toBootPluginArg(repoPluginPath),
-  'wiki',
-  '--listen',
-  `port=${port}`,
-  `host=${host}`,
 ];
+
+/**
+ * In test mode, inject localhost config tiddlers BEFORE TiddlyWiki loads
+ * the wiki. This prevents the CPL-Repo browser client from attempting
+ * external fetches on startup, which fail in CI due to CORS/network
+ * restrictions. The injected tiddlers are regular user tiddlers and
+ * override the plugin's shadow defaults (defaults.multids).
+ */
+function injectTestModeConfig(): void {
+  if (process.env.CPL_TEST_MODE !== 'true') {
+    return;
+  }
+
+  const origin = `http://${host}:${port}`;
+  const tempDir = path.join(DATA_DIR, '.test-config');
+  fs.mkdirSync(tempDir, { recursive: true });
+
+  // Write tiddler files that override the CPL-Repo client defaults.
+  // Filesystem plugin loads these as user tiddlers, which take priority
+  // over the plugin's shadow tiddlers from defaults.multids.
+  const overrides: Record<string, string> = {
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo': origin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server': origin,
+  };
+
+  for (const [title, text] of Object.entries(overrides)) {
+    const filePath = path.join(tempDir, `${title.replace(/[/:<>"|?*$]/g, '_')}.tid`);
+    fs.writeFileSync(filePath, `title: ${title}\n\n${text}\n`, 'utf-8');
+  }
+
+  // Inject --load before the wiki path so these tiddlers are available
+  // when the browser client reads its config on startup.
+  const wikiIndex = twArgs.indexOf('wiki');
+  if (wikiIndex !== -1) {
+    twArgs.splice(wikiIndex, 0, '--load', tempDir);
+  }
+
+  console.log(`[CPL Server] Test mode: injected local config at ${origin}`);
+}
+
+injectTestModeConfig();
+
+twArgs.push('wiki', '--listen', `port=${port}`, `host=${host}`);
 
 if (mode === 'prod' || mode === 'readonly') {
   if (
