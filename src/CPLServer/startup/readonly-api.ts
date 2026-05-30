@@ -33,7 +33,19 @@ export const shouldUseReaderAuthorizationForCplApi = (
     return false;
   }
 
-  const { pathname } = new URL(request.url ?? '/', 'http://localhost');
+  // Manually extract pathname without using URL constructor,
+  // as URL may not be available in the TiddlyWiki sandbox environment.
+  const url = request.url ?? '/';
+  let pathname = url;
+  const queryIndex = pathname.indexOf('?');
+  if (queryIndex !== -1) {
+    pathname = pathname.slice(0, queryIndex);
+  }
+  const hashIndex = pathname.indexOf('#');
+  if (hashIndex !== -1) {
+    pathname = pathname.slice(0, hashIndex);
+  }
+
   const pathPrefix = server.get?.('path-prefix') ?? '';
   const routePath =
     pathPrefix && pathname.startsWith(pathPrefix)
