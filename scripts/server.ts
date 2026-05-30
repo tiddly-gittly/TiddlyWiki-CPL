@@ -59,14 +59,12 @@ if (mode === 'prod' || mode === 'readonly') {
   const readonlyWriter = `cpl-readonly-${crypto
     .randomBytes(12)
     .toString('hex')}`;
-  // Enable basic auth so tiddlyweb can properly reject unauthenticated writes
-  // readers=(anon) still allows anonymous read access
-  twArgs.push(
-    'readers=(anon)',
-    `writers=${readonlyWriter}`,
-    'username=cpl-server-test',
-    `password=${crypto.randomBytes(16).toString('hex')}`,
-  );
+  // Set ACL so native tiddlyweb routes reject unauthenticated writes.
+  // readers=(anon) allows anonymous read access.
+  // Do NOT set username/password here: enabling basic auth would cause
+  // TiddlyWiki's BasicAuthenticator to intercept Authorization: Bearer
+  // headers sent to CPL API routes, breaking JWT authentication.
+  twArgs.push('readers=(anon)', `writers=${readonlyWriter}`);
   console.log(
     `[CPL Server] Starting in ${mode.toUpperCase()} mode (read-only)`,
   );

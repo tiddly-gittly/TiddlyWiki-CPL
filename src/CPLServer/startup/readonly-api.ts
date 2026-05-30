@@ -52,7 +52,8 @@ export const shouldUseReaderAuthorizationForCplApi = (
       ? pathname.slice(pathPrefix.length) || '/'
       : pathname;
 
-  return routePath.startsWith(CPL_API_PATH_PREFIX);
+  const result = routePath.startsWith(CPL_API_PATH_PREFIX);
+  return result;
 };
 
 export const name = 'cpl-server-readonly-api';
