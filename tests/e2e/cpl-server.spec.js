@@ -163,8 +163,36 @@ test.describe('CPL Server E2E', () => {
     stopStaticRepoServer();
   });
 
-  // Collect browser console logs for debugging
+  // Collect browser console logs for debugging.
+  // Also inject an init script that redirects external CPL fetches to
+  // localhost. This is a safety net; the primary fix is --load injection
+  // in scripts/server.ts.
   test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      const origin = window.location?.origin || 'http://localhost:8080';
+      const EXTERNAL_HOSTS = [
+        'https://tw-cpl.netlify.app',
+        'https://tiddly-gittly.github.io/TiddlyWiki-CPL',
+        'https://cpl.tidgi.fun',
+      ];
+      const originalFetch = window.fetch;
+      window.fetch = function patchedFetch(url, ...args) {
+        let str = typeof url === 'string' ? url : (url?.url ?? '');
+        if (typeof str === 'string') {
+          for (const host of EXTERNAL_HOSTS) {
+            str = str.replace(host, origin);
+          }
+        }
+        if (typeof url === 'string' && url !== str) {
+          return originalFetch.call(window, str, ...args);
+        }
+        if (url && typeof url === 'object' && url.url !== str) {
+          return originalFetch.call(window, { ...url, url: str }, ...args);
+        }
+        return originalFetch.call(window, url, ...args);
+      };
+    });
+
     page.on('console', msg => {
       if (msg.type() === 'error') {
         const text = msg.text();
@@ -324,6 +352,34 @@ test.describe('CPL Client Installation E2E', () => {
   test.beforeAll(async () => {
     createTestPluginFile();
     await startBlankWiki({ loadCplClient: true });
+  });
+
+  test.beforeEach(async ({ page }) => {
+    // Redirect external CPL fetches to localhost as a safety net.
+    await page.addInitScript(() => {
+      const origin = 'http://localhost:8080';
+      const EXTERNAL_HOSTS = [
+        'https://tw-cpl.netlify.app',
+        'https://tiddly-gittly.github.io/TiddlyWiki-CPL',
+        'https://cpl.tidgi.fun',
+      ];
+      const originalFetch = window.fetch;
+      window.fetch = function patchedFetch(url, ...args) {
+        let str = typeof url === 'string' ? url : (url?.url ?? '');
+        if (typeof str === 'string') {
+          for (const host of EXTERNAL_HOSTS) {
+            str = str.replace(host, origin);
+          }
+        }
+        if (typeof url === 'string' && url !== str) {
+          return originalFetch.call(window, str, ...args);
+        }
+        if (url && typeof url === 'object' && url.url !== str) {
+          return originalFetch.call(window, { ...url, url: str }, ...args);
+        }
+        return originalFetch.call(window, url, ...args);
+      };
+    });
   });
 
   test.afterAll(() => {
