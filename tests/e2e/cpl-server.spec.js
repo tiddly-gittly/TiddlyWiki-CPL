@@ -57,29 +57,25 @@ function removeTestPluginFile() {
 }
 
 async function navigateToPlugin(page, tiddlerTitle) {
+  // Abort all external requests before page loads so TiddlyWiki startup
+  // does not fire CORS-blocked fetches to tw-cpl.netlify.app / cpl.tidgi.fun.
+  await page.route(/^https:\/\/(tw-cpl\.netlify\.app|cpl\.tidgi\.fun)\//, (route) => route.abort());
+
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-  // Point CPL to the local test server for both API and repo endpoints.
-  // Setting current-repo to localhost prevents external fetches on startup
-  // which fail due to CORS from http://localhost CI environment.
+  // Override servers to local after startup, which triggers re-probe.
   await page.evaluate(() => {
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
-      text: window.location.origin
-    });
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
-      text: window.location.origin + '/repo'
-    });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',   text: window.location.origin + '/repo' });
   });
 
-  // Wait for CPL to re-probe the local server and settle the server type.
+  // Wait for server-type to settle to either 'server' or 'unreachable' after re-probe.
   await page.waitForFunction(() => {
     const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
     return serverType === 'server' || serverType === 'unreachable';
-  }, { timeout: 10000 });
+  }, { timeout: 30000 });
 
   await page.evaluate((title) => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
@@ -88,35 +84,31 @@ async function navigateToPlugin(page, tiddlerTitle) {
   }, tiddlerTitle);
 
   // Wait for the page to render the plugin view
-  await page.waitForSelector('.cpl-plugin-stats', { timeout: 5000 });
+  await page.waitForSelector('.cpl-plugin-stats', { timeout: 30000 });
 }
 
 async function openPluginDatabase(page) {
+  // Abort external requests before page loads to avoid CORS failures.
+  await page.route(/^https:\/\/(tw-cpl\.netlify\.app|cpl\.tidgi\.fun)\//, (route) => route.abort());
+
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
 
-  // Point CPL to the local test server (API) and local static repo (mirror).
+  // After startup (external requests aborted), point CPL to local endpoints.
   await page.evaluate(({ staticRepoUrl }) => {
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
-      text: staticRepoUrl
-    });
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
-      text: window.location.origin
-    });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: staticRepoUrl });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
   }, { staticRepoUrl: STATIC_REPO_URL });
 
-  // Wait for CPL server probe to complete before rendering the panel.
+  // Wait for server-type settlement after config change.
   await page.waitForFunction(() => {
     const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
     return serverType === 'server' || serverType === 'unreachable';
-  }, { timeout: 10000 });
+  }, { timeout: 30000 });
 
   await page.evaluate(() => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
     $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
-    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
   });
 }
 
