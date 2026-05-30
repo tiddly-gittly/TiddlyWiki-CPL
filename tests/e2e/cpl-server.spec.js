@@ -73,6 +73,13 @@ async function navigateToPlugin(page, tiddlerTitle) {
     });
   });
 
+  // Wait for CPL to re-probe the newly configured local server.
+  // The change event triggers refreshMirrorCapabilityState asynchronously.
+  await page.waitForFunction(() => {
+    const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
+    return serverType === 'server' || serverType === 'unreachable';
+  }, { timeout: 10000 });
+
   await page.evaluate((title) => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
     $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': title });
@@ -86,6 +93,25 @@ async function navigateToPlugin(page, tiddlerTitle) {
 async function openPluginDatabase(page) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+
+  // Point CPL to the local test server to avoid external network requests.
+  await page.evaluate(() => {
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
+      text: window.location.origin
+    });
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
+      text: window.location.origin
+    });
+  });
+
+  // Wait for CPL server probe to complete before rendering the panel.
+  await page.waitForFunction(() => {
+    const serverType = $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
+    return serverType === 'server' || serverType === 'unreachable';
+  }, { timeout: 10000 });
+
   await page.evaluate(() => {
     $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
     $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
