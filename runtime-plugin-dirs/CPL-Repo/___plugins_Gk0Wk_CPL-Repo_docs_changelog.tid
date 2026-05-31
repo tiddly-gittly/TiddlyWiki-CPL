@@ -4,6 +4,15 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags: 
 type: text/vnd.tiddlywiki
 
+! 2026.06.01
+
+* 服务器镜像连接失败不再阻塞界面：对 server 类型镜像增加 fallback 机制，iframe 桥接超时后自动通过 HTTP 直接获取静态文件
+* iframe 桥接超时时间从 15 秒缩短到 8 秒，减少卡顿感知
+* 加载数据期间下拉列表不再被禁用，用户可随时切换镜像源
+* CPL Server 新增 `/repo/` 静态库路由，服务端镜像可直接提供插件数据库 JSON 文件并附带 CORS 头
+* 新增设置选项「进入 CPL 布局时自动检查更新」（默认关闭）
+* 修复进入 CPL 布局时镜像源被意外切换的问题
+
 ! 2026.05.30
 
 * 修复 plugin.info 的 `list` 字段，将 Settings 页签路径修正为 `views/system/settings`，使其在插件 info 面板中正确显示
