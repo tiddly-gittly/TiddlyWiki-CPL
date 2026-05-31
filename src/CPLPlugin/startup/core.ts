@@ -22,6 +22,12 @@ export const startup = (): void => {
       'yes',
     ) !== 'no';
 
+  const shouldAutoCheckUpdatesInCplLayout = (): boolean =>
+    tw.wiki.getTiddlerText(
+      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout',
+      'no',
+    ) === 'yes';
+
   const updateController = createUpdateController();
   indexController = createIndexController();
 
@@ -38,17 +44,27 @@ export const startup = (): void => {
     if (tw.utils.hop(changes, '$:/layout')) {
       const currentLayout = tw.wiki.getTiddlerText('$:/layout', '');
       if (
-        currentLayout === '$:/plugins/Gk0Wk/CPL-Repo/layout/layout' &&
-        shouldAutoLoadDatabaseInCplLayout() &&
-        !tw.wiki.tiddlerExists('$:/temp/CPL-Repo/plugins-index') &&
-        indexController &&
-        !indexController.isBusy()
+        currentLayout === '$:/plugins/Gk0Wk/CPL-Repo/layout/layout'
       ) {
-        tw.rootWidget.dispatchEvent({
-          type: 'cpl-get-plugins-index',
-          paramObject: {},
-          widget: tw.rootWidget,
-        });
+        if (
+          shouldAutoLoadDatabaseInCplLayout() &&
+          !tw.wiki.tiddlerExists('$:/temp/CPL-Repo/plugins-index') &&
+          indexController &&
+          !indexController.isBusy()
+        ) {
+          tw.rootWidget.dispatchEvent({
+            type: 'cpl-get-plugins-index',
+            paramObject: {},
+            widget: tw.rootWidget,
+          });
+        }
+        if (shouldAutoCheckUpdatesInCplLayout()) {
+          tw.rootWidget.dispatchEvent({
+            type: 'cpl-update-check',
+            paramObject: {},
+            widget: tw.rootWidget,
+          });
+        }
       }
     }
 

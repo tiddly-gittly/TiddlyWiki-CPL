@@ -9,3 +9,4 @@ current-repo: https://tw-cpl.netlify.app/repo
 current-server: https://cpl.tidgi.fun
 auto-refresh-at-startup: no
 auto-load-database-in-cpl-layout: yes
+auto-check-updates-in-cpl-layout: no

@@ -18,7 +18,7 @@ export const DEFAULT_REPO_ENTRY =
 export const CURRENT_REPO_TITLE =
   '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
 
-const BRIDGE_READY_TIMEOUT = 15_000;
+const BRIDGE_READY_TIMEOUT = 8_000;
 const BRIDGE_REQUEST_TIMEOUT = 30_000;
 
 let messagerPromise: Promise<CplRequest> | undefined;
@@ -74,6 +74,44 @@ const getCurrentRepoType = (entry: string): 'static' | 'server' | 'unknown' => {
   }
 
   return 'unknown';
+};
+
+/**
+ * For server-type mirrors, try fetching index.json directly as a fallback
+ * when the iframe postMessage bridge is not available. This allows server
+ * mirrors that also serve static files (like cpl.tidgi.fun/repo) to work
+ * without the iframe bridge.
+ */
+const requestServerFallback = async (
+  entry: string,
+  type: string,
+  payload?: CplPayload,
+): Promise<string> => {
+  const base = normalizeRepoEntry(entry);
+  switch (type) {
+    case 'Index':
+      return fetchStaticRepoFile(base, 'index.json');
+    case 'Update':
+      return fetchStaticRepoFile(base, 'update.json');
+    case 'Query': {
+      const plugin = typeof payload?.plugin === 'string' ? payload.plugin : '';
+      return fetchStaticRepoFile(
+        base,
+        `${formatPluginTitle(plugin)}/__meta__.json`,
+      );
+    }
+    case 'Install': {
+      const plugin = typeof payload?.plugin === 'string' ? payload.plugin : '';
+      const version =
+        typeof payload?.version === 'string' ? payload.version : 'latest';
+      return fetchStaticRepoFile(
+        base,
+        `${formatPluginTitle(plugin)}/${version}.json`,
+      );
+    }
+    default:
+      throw new Error(`Unsupported server fallback request: ${type}`);
+  }
 };
 
 const requestStaticMirror = (
@@ -214,11 +252,21 @@ export const cpl: CplRequest = (type, payload) => {
     return requestStaticMirror(entry, type, payload);
   }
 
+  // For server/unknown mirrors, try the iframe bridge first; if it fails,
+  // fall back to direct file fetch (many server mirrors also serve static files).
   if (previousEntry !== entry && browserRuntime.__tiddlywiki_cpl__reset__) {
     browserRuntime.__tiddlywiki_cpl__reset__();
   }
 
   previousEntry = entry;
-  messagerPromise ??= createMessenger(entry);
+  messagerPromise ??= createMessenger(entry).catch((bridgeError) => {
+    console.warn(
+      `CPL iframe bridge failed for ${entry}, trying direct fetch: ${bridgeError}`,
+    );
+    // Fall back to direct HTTP fetch of static files.
+    const fallback: CplRequest = (type: string, payload?: CplPayload) =>
+      requestServerFallback(entry, type, payload);
+    return fallback;
+  });
   return messagerPromise.then(request => request(type, payload));
 };
