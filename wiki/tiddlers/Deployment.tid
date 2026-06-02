@@ -97,8 +97,11 @@ Never commit `.env` to git — it is already in `.gitignore`.
 !!! Creating a GitHub OAuth App
 
 # Go to https://github.com/settings/applications/new
-# Set //Authorization callback URL// to `http://your-domain/cpl/api/auth/github/callback`
+# Set //Homepage URL// to `https://cpl.tidgi.fun/`
+# Set //Authorization callback URL// to `https://cpl.tidgi.fun/cpl/api/auth/github/callback`
 # Copy the Client ID and Client Secret into `.env`
+
+Use a dedicated OAuth App for the CPL server. Desktop/local OAuth Apps such as TidGi Desktop usually use a `127.0.0.1` callback and PKCE flow, so they cannot be reused by this server-side callback unless their GitHub App callback URL is changed to the CPL server URL.
 
 !!! GitHub User IDs
 

@@ -183,7 +183,7 @@ export const startup = (): void => {
       const redirectUri = `${window.location.origin}/cpl/api/auth/github/callback`;
       const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(
         githubClientId,
-      )}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:read`;
+      )}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=read:user`;
       window.location.href = githubAuthUrl;
       return undefined;
     },
