@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 import { ensureRuntimePluginsBuilt } from './runtime-plugins';
@@ -33,6 +34,22 @@ const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
 const toBootPluginArg = (filePath: string): string =>
   `++${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
 
+let runtimeWikiPath = 'wiki';
+
+function prepareTestWiki(): void {
+  if (process.env.CPL_TEST_MODE !== 'true') {
+    return;
+  }
+
+  const tempRoot = path.join(os.tmpdir(), 'cpl-test-wiki');
+  fs.rmSync(tempRoot, { recursive: true, force: true });
+  fs.cpSync(path.join(WIKI_PATH, 'wiki'), tempRoot, { recursive: true });
+  runtimeWikiPath = tempRoot;
+  console.log(`[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`);
+}
+
+prepareTestWiki();
+
 const twArgs = [
   TW_ENTRY,
   '+plugins/tiddlywiki/filesystem',
@@ -54,7 +71,7 @@ function injectTestModeConfig(): void {
   }
 
   const origin = `http://${host}:${port}`;
-  const tempDir = path.join(require('os').tmpdir(), 'cpl-test-config');
+  const tempDir = path.join(os.tmpdir(), 'cpl-test-config');
   fs.rmSync(tempDir, { recursive: true, force: true });
   fs.mkdirSync(tempDir, { recursive: true });
 
@@ -72,7 +89,7 @@ function injectTestModeConfig(): void {
 
   // Inject --load after the wiki path so tiddlers are loaded at wiki init
   // (tiddlywiki CLI: tiddlywiki <wiki-path> --load <dir> --listen ...)
-  const wikiIndex = twArgs.indexOf('wiki');
+  const wikiIndex = twArgs.indexOf(runtimeWikiPath);
   if (wikiIndex !== -1) {
     twArgs.splice(wikiIndex + 1, 0, '--load', tempDir);
   }
@@ -80,7 +97,7 @@ function injectTestModeConfig(): void {
   console.log(`[CPL Server] Test mode: injected local config at ${origin}`);
 }
 
-twArgs.push('wiki', '--listen', `port=${port}`, `host=${host}`);
+twArgs.push(runtimeWikiPath, '--listen', `port=${port}`, `host=${host}`);
 
 // Inject in test mode after the wiki path is present, so --load is inserted
 // as: tiddlywiki <wiki-path> --load <dir> --listen ...

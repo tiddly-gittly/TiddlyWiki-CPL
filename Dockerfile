@@ -67,7 +67,9 @@ COPY src/ ./src/
 # fallback plugins that don't need fetching).
 COPY wiki/ ./wiki/
 COPY docker/IfEditorMode.tid ./wiki/tiddlers/IfEditorMode.tid
-RUN rm -rf /app/wiki/files/plugin-fetched
+RUN rm -rf /app/wiki/files/plugin-fetched && \
+    find /app/wiki/tiddlers -type f -name '\$__plugins_Gk0Wk_CPL-Repo_config_*' -delete && \
+    rm -rf '/app/wiki/tiddlers/website/$_/plugins/Gk0Wk/CPL-Repo/config'
 
 # TypeScript entrypoint: clones/pulls the repo at first/subsequent startups,
 # fetches plugin JSONs, then starts the server.

@@ -51,26 +51,40 @@ export const buildOnlineHTML = async (
   // Remove any CPL config tiddlers that leaked from CI test runs.
   // CI E2E tests write config tiddlers (current-server, current-repo, etc.)
   // through the browser to the test TW server. TW's filesystem sync saves
-  // these to wiki/tiddlers/$__plugins_Gk0Wk_CPL-Repo_config_*.tid.  These
-  // files are gitignored but persist on the runner within the same workflow
-  // run, causing `tiddlywiki([], wikiFolder)` below to load them as user
+  // these to wiki/tiddlers/ (sometimes under subdirs like website/$_/plugins/...
+  // due to FileSystemPaths rules). These files are gitignored but persist on
+  // the runner, causing `tiddlywiki([], wikiFolder)` below to load them as user
   // tiddlers that override the plugin's defaults.multids.
-  const leakedConfigGlob = path.join(
-    wikiFolder,
-    'tiddlers',
-    '$__plugins_Gk0Wk_CPL-Repo_config_*',
+  const tiddlersDir = path.join(wikiFolder, 'tiddlers');
+  const cplConfigDir = path.join(
+    tiddlersDir,
+    'website',
+    '$_',
+    'plugins',
+    'Gk0Wk',
+    'CPL-Repo',
+    'config',
   );
-  for (const file of fs.readdirSync(path.join(wikiFolder, 'tiddlers'), {
-    withFileTypes: true,
-  })) {
-    if (
-      file.isFile() &&
-      file.name.startsWith('$__plugins_Gk0Wk_CPL-Repo_config_')
-    ) {
-      const filePath = path.join(wikiFolder, 'tiddlers', file.name);
-      fs.removeSync(filePath);
-      console.log(chalk.gray(`  Cleaned up leaked config: ${file.name}`));
+  function cleanLeakedConfig(dir: string): void {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const entryPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        cleanLeakedConfig(entryPath);
+      } else if (
+        entry.isFile() &&
+        entry.name.startsWith('$__plugins_Gk0Wk_CPL-Repo_config_')
+      ) {
+        fs.removeSync(entryPath);
+        console.log(chalk.gray(`  Cleaned up leaked config: ${path.relative(tiddlersDir, entryPath)}`));
+      }
     }
+  }
+  if (fs.existsSync(tiddlersDir)) {
+    cleanLeakedConfig(tiddlersDir);
+  }
+  if (fs.existsSync(cplConfigDir)) {
+    fs.removeSync(cplConfigDir);
+    console.log(chalk.gray(`  Cleaned up leaked config directory: ${path.relative(tiddlersDir, cplConfigDir)}`));
   }
 
   // 读取、导出外置资源、处理 tiddler
