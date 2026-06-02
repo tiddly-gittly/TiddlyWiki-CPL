@@ -121,15 +121,17 @@ export const startup = (): void => {
     // Origin header back on the response instead.
     const origin = normalizeHeaderValue(req.headers?.origin);
     if (origin) {
-      const res = response as { writeHead: (...args: unknown[]) => unknown };
-      const origWriteHead = res.writeHead.bind(res);
-      res.writeHead = function (...args: unknown[]): unknown {
+      const resForCors = response as {
+        writeHead: (...args: unknown[]) => unknown;
+      };
+      const origWriteHead = resForCors.writeHead.bind(resForCors);
+      resForCors.writeHead = function (...args: unknown[]): unknown {
         const maybeHeaders =
           typeof args[1] === 'object' && args[1] !== null
             ? args[1]
             : typeof args[2] === 'object' && args[2] !== null
-              ? args[2]
-              : null;
+            ? args[2]
+            : null;
 
         if (maybeHeaders) {
           rewriteCorsHeaders(maybeHeaders as Record<string, unknown>, origin);
@@ -138,9 +140,7 @@ export const startup = (): void => {
       };
     }
 
-    if (
-      shouldUseReaderAuthorizationForCplApi(req, this)
-    ) {
+    if (shouldUseReaderAuthorizationForCplApi(req, this)) {
       return originalRequestHandler.call(this, request, response, {
         ...options,
         authorizationType: 'readers',

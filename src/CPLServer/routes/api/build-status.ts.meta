@@ -1,0 +1,7 @@
+title: $:/plugins/Gk0Wk/CPL-Server/routes/api/build-status
+type: application/javascript
+module-type: route
+method: GET
+path: /cpl/api/build-status
+
+Returns the current build status of the CPL server (idle, syncing, building, fetching, ready).

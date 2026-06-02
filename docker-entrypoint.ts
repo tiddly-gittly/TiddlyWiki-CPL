@@ -3,10 +3,11 @@
  *
  * Startup + maintenance loop for the Docker container:
  *
+ *   0. Start a lightweight maintenance/loading page server (prevents 502)
  *   1. git clone (first run) or git pull (subsequent) into REPO_CACHE_DIR
  *   2. Sync wiki/tiddlers/plugin-metadata from the git cache
  *   3. Build cache/plugins static repo artifacts from currently available plugin files
- *   4. Start the TiddlyWiki server immediately
+ *   4. Stop maintenance server, start the TiddlyWiki server
  *   5. Run fetch-plugins in the background; rebuild static repo and restart server when done
  *   6. Every SYNC_INTERVAL_SECONDS (default: 3600), repeat steps 1-2-5-restart
  *
@@ -34,6 +35,75 @@ const DIST_CPL_PLUGIN_FILES = [
   '$__plugins_Gk0Wk_CPL-Repo.json',
   '$__plugins_Gk0Wk_CPL-Server.json',
 ];
+const BUILD_STATUS_FILE = '/tmp/cpl-build-status.json';
+const MAINTENANCE_PID_FILE = '/tmp/cpl-maintenance-server.pid';
+const MAINTENANCE_FLAG_FILE = '/tmp/cpl-maintenance-active';
+
+// ---------------------------------------------------------------------------
+// Build status tracking
+// ---------------------------------------------------------------------------
+
+function updateBuildStatus(phase: string, message?: string): void {
+  try {
+    const status = {
+      phase,
+      message: message ?? '',
+      startedAt: new Date().toISOString(),
+    };
+    fs.writeFileSync(BUILD_STATUS_FILE, JSON.stringify(status), 'utf-8');
+  } catch {
+    // non-fatal
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Maintenance server (prevents 502 during startup)
+// ---------------------------------------------------------------------------
+
+let maintenanceProcess: ChildProcess | null = null;
+
+function startMaintenanceServer(): void {
+  console.log('[entrypoint] Starting maintenance loading page on :8081...');
+  updateBuildStatus('starting', 'Initializing server...');
+  // Write flag file so nginx knows to proxy to maintenance backend
+  fs.writeFileSync(MAINTENANCE_FLAG_FILE, '1', 'utf-8');
+  maintenanceProcess = spawn(
+    TSNODEPATH,
+    ['--transpile-only', 'scripts/maintenance-server.ts'],
+    {
+      stdio: 'inherit',
+      cwd: APP_DIR,
+      detached: false,
+    },
+  );
+  // Give it a moment to bind the port
+  spawnSync('sleep', ['1']);
+  console.log('[entrypoint] Maintenance server started on :8081.');
+}
+
+function stopMaintenanceServer(): void {
+  // Remove flag file so nginx switches to TiddlyWiki backend
+  try { fs.unlinkSync(MAINTENANCE_FLAG_FILE); } catch { /* ok */ }
+
+  if (!maintenanceProcess) {
+    // Try to kill by PID file
+    try {
+      if (fs.existsSync(MAINTENANCE_PID_FILE)) {
+        const pid = parseInt(fs.readFileSync(MAINTENANCE_PID_FILE, 'utf-8').trim(), 10);
+        if (!isNaN(pid)) {
+          process.kill(pid, 'SIGTERM');
+        }
+      }
+    } catch { /* already dead */ }
+    return;
+  }
+  console.log('[entrypoint] Stopping maintenance server...');
+  maintenanceProcess.removeAllListeners('exit');
+  try { maintenanceProcess.kill('SIGTERM'); } catch { /* already dead */ }
+  maintenanceProcess = null;
+  // Clean up PID file
+  try { fs.unlinkSync(MAINTENANCE_PID_FILE); } catch { /* ok */ }
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -88,6 +158,7 @@ function buildStaticRepo(): void {
     return;
   }
 
+  updateBuildStatus('building', 'Building plugin library (cache/plugins)...');
   console.log('[entrypoint] Building cache/plugins static repo artifacts...');
   if (!run('pnpm run build:static-library')) {
     console.warn(
@@ -106,6 +177,7 @@ function buildStaticRepo(): void {
 function gitSync(): void {
   const isFirstRun = !fs.existsSync(path.join(REPO_CACHE_DIR, '.git'));
   if (isFirstRun) {
+    updateBuildStatus('syncing', 'Cloning plugin repository...');
     console.log(`[entrypoint] First run: cloning ${REPO_URL} ...`);
     if (!run(`git clone --depth=1 ${REPO_URL} ${REPO_CACHE_DIR}`)) {
       console.warn(
@@ -114,12 +186,15 @@ function gitSync(): void {
       return;
     }
     console.log('[entrypoint] git clone OK');
-  } else if (!run('git pull --ff-only --quiet', REPO_CACHE_DIR)) {
-    console.warn(
-      '[entrypoint] WARNING: git pull failed. Continuing with cached data.',
-    );
   } else {
-    console.log('[entrypoint] git pull OK');
+    updateBuildStatus('syncing', 'Updating plugin metadata...');
+    if (!run('git pull --ff-only --quiet', REPO_CACHE_DIR)) {
+      console.warn(
+        '[entrypoint] WARNING: git pull failed. Continuing with cached data.',
+      );
+    } else {
+      console.log('[entrypoint] git pull OK');
+    }
   }
   const src = path.join(REPO_CACHE_DIR, 'wiki', 'tiddlers', 'plugin-metadata');
   const dest = path.join(APP_DIR, 'wiki', 'tiddlers', 'plugin-metadata');
@@ -173,6 +248,7 @@ function restartServer(): void {
 // ---------------------------------------------------------------------------
 
 function runFetchPlugins(onDone: () => void): void {
+  updateBuildStatus('fetching', 'Downloading plugin data from sources...');
   console.log('[entrypoint] Starting background plugin fetch...');
   const proc = spawn(
     TSNODEPATH,
@@ -230,6 +306,9 @@ fs.mkdirSync(path.join(APP_DIR, 'wiki', 'files', 'plugin-fetched'), {
 });
 fs.mkdirSync(HISTORY_DIR, { recursive: true });
 
+// 0. Start maintenance/loading page server immediately (prevents 502 errors)
+startMaintenanceServer();
+
 // 1. git clone / pull + metadata sync (blocking, so server starts with latest metadata)
 // Failures are non-fatal: the server will start with baked-in metadata.
 gitSync();
@@ -237,12 +316,23 @@ gitSync();
 // 2. Build static repo from persisted/baked plugin files if available
 buildStaticRepo();
 
-// 3. Start server immediately
+// 3. Stop maintenance server and start the real TiddlyWiki server
+updateBuildStatus('ready', 'Server is starting...');
+stopMaintenanceServer();
 startServer();
+
+// Mark as idle once server is up (give it a moment to boot)
+setTimeout(() => {
+  updateBuildStatus('idle', 'Server is running');
+}, 5000);
 
 // 4. Fetch plugins in background; restart server when done so it loads them
 runFetchPlugins(() => {
+  updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
   restartServer();
+  setTimeout(() => {
+    updateBuildStatus('idle', 'Server is running');
+  }, 5000);
 });
 
 // 5. Schedule periodic sync + restart

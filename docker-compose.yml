@@ -2,13 +2,17 @@ services:
   cpl:
     image: linonetwo/tiddlywiki-cpl:latest
     container_name: tiddlywiki-cpl
+    # Direct access for debugging (no gzip/cache): localhost:28080
     ports:
       - "127.0.0.1:28080:8080"
     volumes:
       - ./data:/app/data
+      - ./cache:/app/cache
       - ./wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched
       - ./wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history
       - ./docker/IfEditorMode.tid:/app/wiki/tiddlers/IfEditorMode.tid:ro
+      # Shared with nginx: maintenance flag file
+      - cpl-runtime:/tmp
       # ⚠️ 仅开发调试：挂载本地源码以覆盖镜像中的旧代码。
       # 前提：必须从 git clone 了完整仓库（确保本地 src/ 目录存在）。
       # 如果本地没有 src/，Docker 会创建空目录，导致容器崩溃。
@@ -25,3 +29,19 @@ services:
       - NODE_ENV=production
     restart: always
     pull_policy: always
+
+  nginx:
+    image: nginx:alpine
+    container_name: cpl-nginx
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Shared with cpl: maintenance flag file
+      - cpl-runtime:/tmp
+    depends_on:
+      - cpl
+    restart: always
+
+volumes:
+  cpl-runtime:

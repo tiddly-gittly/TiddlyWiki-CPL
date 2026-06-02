@@ -17,6 +17,7 @@ import {
   fetchPluginCompatibility,
 } from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
+import { startBuildStatusPolling } from './build-status-poll';
 
 export const name = 'cpl-server-api-client';
 export const platforms = ['browser'];
@@ -29,6 +30,9 @@ export const startup = (): void => {
   tw.cpl = cplServerApi;
   tw.cplServerAPI = tw.cpl;
   refreshMirrorCapabilityState(cplServerApi);
+
+  // Start polling build status for the badge widget
+  startBuildStatusPolling();
 
   tw.wiki.addEventListener('change', changes => {
     if (
