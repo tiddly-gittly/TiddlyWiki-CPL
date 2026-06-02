@@ -58,13 +58,10 @@ export const getMirrorOrigin = (entry = getCurrentMirrorEntry()): string => {
 };
 
 export const getServerOrigin = (entry = getCurrentServerEntry()): string => {
-  if (!entry) {
-    return window.location.origin;
-  }
   try {
     return new URL(entry, window.location.origin).origin;
   } catch {
-    return window.location.origin;
+    return '';
   }
 };
 

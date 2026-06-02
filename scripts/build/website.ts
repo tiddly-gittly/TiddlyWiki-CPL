@@ -48,6 +48,31 @@ export const buildOnlineHTML = async (
   const distDir = path.resolve(dist);
   const publicDir = path.resolve('public');
 
+  // Remove any CPL config tiddlers that leaked from CI test runs.
+  // CI E2E tests write config tiddlers (current-server, current-repo, etc.)
+  // through the browser to the test TW server. TW's filesystem sync saves
+  // these to wiki/tiddlers/$__plugins_Gk0Wk_CPL-Repo_config_*.tid.  These
+  // files are gitignored but persist on the runner within the same workflow
+  // run, causing `tiddlywiki([], wikiFolder)` below to load them as user
+  // tiddlers that override the plugin's defaults.multids.
+  const leakedConfigGlob = path.join(
+    wikiFolder,
+    'tiddlers',
+    '$__plugins_Gk0Wk_CPL-Repo_config_*',
+  );
+  for (const file of fs.readdirSync(path.join(wikiFolder, 'tiddlers'), {
+    withFileTypes: true,
+  })) {
+    if (
+      file.isFile() &&
+      file.name.startsWith('$__plugins_Gk0Wk_CPL-Repo_config_')
+    ) {
+      const filePath = path.join(wikiFolder, 'tiddlers', file.name);
+      fs.removeSync(filePath);
+      console.log(chalk.gray(`  Cleaned up leaked config: ${file.name}`));
+    }
+  }
+
   // 读取、导出外置资源、处理 tiddler
   console.log(chalk.bgCyan.black.bold('\nExporting media tiddlers...'));
   const $tw = tiddlywiki([], wikiFolder);
@@ -121,31 +146,11 @@ export const buildOnlineHTML = async (
       text: '-1',
     } as any,
   );
+  // 不要弹窗
   tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup', {
     title: '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
     text: '1',
   } as any);
-
-  // Force production URLs in case local test data leaked onto the build runner.
-  // (CI API/E2E tests may write 127.0.0.1 configs that get picked up by the
-  // filesystem plugin when TW loads the wiki folder for static site generation.)
-  const productionConfig: Record<string, string> = {
-    '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo':
-      'https://tw-cpl.netlify.app/repo',
-    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server':
-      'https://cpl.tidgi.fun',
-    '$:/plugins/Gk0Wk/CPL-Repo/config/servers':
-      'https://cpl.tidgi.fun',
-    '$:/plugins/Gk0Wk/CPL-Repo/config/repos':
-      'https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo https://cpl.tidgi.fun/repo',
-    '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos':
-      'https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo',
-    '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos':
-      'https://cpl.tidgi.fun/repo',
-  };
-  for (const [title, text] of Object.entries(productionConfig)) {
-    tiddlers.set(title, { title, text } as any);
-  }
 
   // 构建
   console.log(
