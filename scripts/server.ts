@@ -16,7 +16,27 @@ if (!fs.existsSync(DATA_DIR)) {
   console.log('[CPL Server] Created data directory:', DATA_DIR);
 }
 
+// Clean up leaked test config files from data/ directory.
+// TW's filesystem plugin may have saved 127.0.0.1 config tiddlers
+// during test runs. These persist across container restarts because
+// data/ is a mounted volume, overriding defaults.multids in production.
 const args = process.argv.slice(2);
+const isTestMode = process.env.CPL_TEST_MODE === 'true';
+if (!isTestMode) {
+  const leakedFiles = fs
+    .readdirSync(DATA_DIR)
+    .filter(file => file.startsWith('___plugins_Gk0Wk_CPL-Repo_config_'));
+  for (const file of leakedFiles) {
+    const filePath = path.join(DATA_DIR, file);
+    try {
+      fs.unlinkSync(filePath);
+      console.log(`[CPL Server] Cleaned up leaked config: ${file}`);
+    } catch {
+      // ignore
+    }
+  }
+}
+
 const port = process.env.PORT ?? '8080';
 const host = process.env.HOST ?? '127.0.0.1';
 
