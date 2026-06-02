@@ -40,11 +40,23 @@ export const fetchPluginChangelog = (
   const tempTitle = `$:/temp/CPL-Server/plugin-changelog/${pluginTitle}`;
   cplServerApi.getChangelog(pluginTitle, (error, data) => {
     if (error || !data) {
-      console.error(
+      console.warn(
         '[CPL-Server] Failed to fetch changelog for',
         pluginTitle,
         error,
       );
+      tw.wiki.addTiddler({
+        title: tempTitle,
+        text: JSON.stringify({
+          plugintitle: pluginTitle,
+          hasChangelog: false,
+          changelog: null,
+          message: error || 'No changelog available',
+        }),
+        type: 'application/json',
+        'plugin-title': pluginTitle,
+        timestamp: String(Date.now()),
+      });
       return;
     }
 
@@ -98,11 +110,23 @@ export const fetchPluginCompatibility = (
   const tempTitle = `$:/temp/CPL-Server/compatibility/${pluginTitle}`;
   cplServerApi.getCompatibilityReports(pluginTitle, (error, data) => {
     if (error || !data) {
-      console.error(
+      console.warn(
         '[CPL-Server] Failed to fetch compatibility reports for',
         pluginTitle,
         error,
       );
+      tw.wiki.addTiddler({
+        title: tempTitle,
+        text: JSON.stringify({
+          success: false,
+          pluginTitle,
+          reports: [],
+          message: error || 'No compatibility reports available',
+        }),
+        type: 'application/json',
+        'plugin-title': pluginTitle,
+        timestamp: String(Date.now()),
+      });
       return;
     }
 

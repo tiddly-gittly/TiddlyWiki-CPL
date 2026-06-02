@@ -59,7 +59,7 @@ export const handler: RouteHandler = (_request, _response, context) => {
       return;
     }
 
-    sendJson(context, 404, {
+    sendJson(context, 200, {
       plugintitle: pluginTitle,
       hasChangelog: false,
       changelog: null,

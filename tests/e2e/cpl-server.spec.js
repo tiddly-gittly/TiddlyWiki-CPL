@@ -216,10 +216,6 @@ test.describe('CPL Server E2E', () => {
     page.on('console', msg => {
       if (msg.type() === 'error') {
         const text = msg.text();
-        // Suppress expected 404s from plugins without changelogs
-        if (text.includes('Failed to fetch changelog') && text.includes('XMLHttpRequest error code: 404')) {
-          return;
-        }
         console.log(`[Browser ${page.context().browser().browserType().name()}] ${msg.type()}: ${text}`);
       }
     });
@@ -288,11 +284,28 @@ test.describe('CPL Server E2E', () => {
     await ratingToggle.click();
     await expect(page.locator('.cpl-rating-widget')).toContainText(/Login to rate this plugin|登录后即可为插件评分/);
     await expect(page.locator('.cpl-rating-star-button')).toHaveCount(0);
+    await expect(page.locator('.cpl-comment-login-button')).toHaveCount(0);
+    await expect(page.locator('.cpl-comment-login-icon')).toHaveCount(0);
+    await expect(page.locator('.cpl-comment-section')).toContainText(/GitHub login is not configured|GitHub 登录暂未配置/);
 
     await expect(
       page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
     ).toHaveCount(0);
     await expect(page.locator('.cpl-compatibility-section')).toContainText(/Login to submit a compatibility report|登录后即可提交兼容性报告/);
+  });
+
+  test('should render empty changelog and compatibility reports without staying in loading state', async ({ page }) => {
+    await navigateToPlugin(page, 'tiddly-gittly/heti');
+
+    const changelogSection = page.locator('.cpl-changelog-section');
+    await expect(changelogSection).toBeVisible();
+    await expect(changelogSection).toContainText(/No changelog available|暂无更新日志/);
+    await expect(changelogSection).not.toContainText(/Loading changelog|正在加载更新日志/);
+
+    const compatibilitySection = page.locator('.cpl-compatibility-section');
+    await expect(compatibilitySection).toBeVisible();
+    await expect(compatibilitySection).toContainText(/No compatibility reports yet|暂无兼容性报告/);
+    await expect(compatibilitySection).not.toContainText(/Loading compatibility reports|正在加载兼容性报告/);
   });
 
   test('should show compatibility submission form after login', async ({ page }) => {

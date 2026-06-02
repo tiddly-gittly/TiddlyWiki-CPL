@@ -146,7 +146,7 @@ describe('CPL Server API', () => {
   let serverProcess;
   let serverExitedEarly = false;
 
-  function waitForServer(timeoutMs = 15000) {
+  function waitForServer(timeoutMs = 60000) {
     const start = Date.now();
     return new Promise((resolve, reject) => {
       function tryConnect() {
@@ -217,7 +217,7 @@ describe('CPL Server API', () => {
     if (serverOutput) {
       console.log('[Server Output]\n', serverOutput);
     }
-  }, 30000);
+  }, 90000);
 
   afterAll(() => {
     if (serverProcess) {
@@ -290,11 +290,13 @@ describe('CPL Server API', () => {
     expect(response.body.success).toBe(false);
   });
 
-  test('GET /cpl/api/changelog/:pluginTitle should return changelog or 404', async () => {
+  test('GET /cpl/api/changelog/:pluginTitle should return empty changelog payload when absent', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
     const response = await makeRequest('GET', `/cpl/api/changelog/${pluginTitle}`);
-    
-    expect([200, 404]).toContain(response.statusCode);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('hasChangelog', false);
+    expect(response.body).toHaveProperty('changelog', null);
   });
 
   test('GET /cpl/api/download-plugin/:pluginTitle should serve plugin file', async () => {

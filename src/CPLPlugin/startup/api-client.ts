@@ -294,23 +294,9 @@ export const startup = (): void => {
     'cpl-fetch-compatibility',
     (event: RootWidgetEvent): undefined => {
       const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (!pluginTitle) {
-        return undefined;
+      if (pluginTitle) {
+        fetchPluginCompatibility(cplServerApi, pluginTitle);
       }
-      cplServerApi.getCompatibilityReports(pluginTitle, (error, data) => {
-        if (error || !data) {
-          console.error(
-            '[CPL-Server] Failed to fetch compatibility reports:',
-            error,
-          );
-          return;
-        }
-        tw.wiki.addTiddler({
-          title: `$:/temp/CPL-Server/compatibility/${pluginTitle}`,
-          text: JSON.stringify(data),
-          type: 'application/json',
-        });
-      });
       return undefined;
     },
   );
