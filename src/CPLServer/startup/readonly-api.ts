@@ -1,3 +1,5 @@
+import * as crypto from 'crypto';
+
 type RequestHandler = (
   request: unknown,
   response: unknown,
@@ -24,6 +26,10 @@ interface RouteRequestLike {
 
 const CPL_API_PATH_PREFIX = '/cpl/api/';
 const CPL_API_WRITE_METHODS = new Set(['POST', 'PUT', 'DELETE']);
+
+// ETag based on server startup time — changes on restart, stable otherwise.
+// This allows browsers to get 304 on refresh instead of re-downloading ~12MB.
+const homepageEtag = `"${Date.now().toString(36)}"`;
 
 const normalizeHeaderValue = (
   value: string | string[] | undefined,
@@ -114,6 +120,36 @@ export const startup = (): void => {
     options?: Record<string, unknown>,
   ): unknown {
     const req = request as RouteRequestLike;
+
+    // ── ETag support for homepage ─────────────────────────────────
+    // TW doesn't send ETag/Last-Modified, so browser refresh always
+    // re-downloads the ~12MB homepage. We intercept the response to
+    // add ETag and handle If-None-Match → 304.
+    const url = req.url ?? '/';
+    const pathname = url.split('?')[0].split('#')[0];
+    const isHomepage = pathname === '/' || pathname === '';
+
+    if (isHomepage && req.method === 'GET') {
+      const reqHeaders = req.headers as Record<string, string | string[] | undefined>;
+      const ifNoneMatch = normalizeHeaderValue(reqHeaders['if-none-match']);
+      if (ifNoneMatch === homepageEtag) {
+        const res = response as { writeHead: (...a: unknown[]) => unknown; end: (...a: unknown[]) => unknown };
+        res.writeHead(304, { ETag: homepageEtag, 'Cache-Control': 'public, max-age=300' });
+        res.end();
+        return;
+      }
+
+      // Add ETag to the response so browser can revalidate on next request
+      const resForEtag = response as { end: (...a: unknown[]) => unknown };
+      const origEnd = resForEtag.end.bind(resForEtag);
+      resForEtag.end = function (...args: unknown[]): unknown {
+        // Inject ETag header before the response is sent
+        try {
+          (resForEtag as unknown as { setHeader: (n: string, v: string) => void }).setHeader('ETag', homepageEtag);
+        } catch { /* header already sent */ }
+        return origEnd(...args);
+      };
+    }
 
     // Fix CORS for credentialed requests.
     // The CPL browser client uses fetch({credentials:'include'}) which
