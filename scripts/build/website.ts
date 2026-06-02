@@ -113,7 +113,7 @@ export const buildOnlineHTML = async (
   const cplPlugin = buildCPLPlugin($tw)[0];
   tiddlers.set(cplPlugin.title, cplPlugin as any);
 
-  // 停用自动更新
+  // Disable auto update and popup for the deployed static site.
   tiddlers.set(
     '$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes',
     {
@@ -121,11 +121,31 @@ export const buildOnlineHTML = async (
       text: '-1',
     } as any,
   );
-  // 不要弹窗
   tiddlers.set('$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup', {
     title: '$:/plugins/Gk0Wk/CPL-Repo/config/popup-readme-at-startup',
     text: '1',
   } as any);
+
+  // Force production URLs in case local test data leaked onto the build runner.
+  // (CI API/E2E tests may write 127.0.0.1 configs that get picked up by the
+  // filesystem plugin when TW loads the wiki folder for static site generation.)
+  const productionConfig: Record<string, string> = {
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo':
+      'https://tw-cpl.netlify.app/repo',
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server':
+      'https://cpl.tidgi.fun',
+    '$:/plugins/Gk0Wk/CPL-Repo/config/servers':
+      'https://cpl.tidgi.fun',
+    '$:/plugins/Gk0Wk/CPL-Repo/config/repos':
+      'https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo https://cpl.tidgi.fun/repo',
+    '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos':
+      'https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo',
+    '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos':
+      'https://cpl.tidgi.fun/repo',
+  };
+  for (const [title, text] of Object.entries(productionConfig)) {
+    tiddlers.set(title, { title, text } as any);
+  }
 
   // 构建
   console.log(

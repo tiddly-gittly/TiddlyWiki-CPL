@@ -43,37 +43,11 @@ export const setLastMirrorEntry = (value: string | null): void => {
 export const getCurrentMirrorEntry = (): string =>
   tw.wiki.getTiddlerText(MIRROR_CONFIG_TITLE, '');
 
-export const getCurrentServerEntry = (): string => {
-  const raw = tw.wiki.getTiddlerText(
+export const getCurrentServerEntry = (): string =>
+  tw.wiki.getTiddlerText(
     SERVER_CONFIG_TITLE,
     getConfiguredServerEntries()[0] ?? '',
   );
-  // If the persisted config points to a localhost address but the current
-  // page is NOT localhost (e.g. production deployment cpl.tidgi.fun that
-  // accidentally saved a test config from CI), ignore it.
-  if (raw && isLocalhostUrl(raw) && !isLocalhostPage()) {
-    return '';
-  }
-  return raw;
-};
-
-const isLocalhostUrl = (url: string): boolean => {
-  try {
-    const hostname = new URL(url, window.location.origin).hostname;
-    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
-  } catch {
-    return false;
-  }
-};
-
-const isLocalhostPage = (): boolean => {
-  try {
-    const hostname = window.location.hostname;
-    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
-  } catch {
-    return true; // safe default for test environments
-  }
-};
 
 export const getMirrorOrigin = (entry = getCurrentMirrorEntry()): string => {
   try {
