@@ -617,6 +617,17 @@
   padding: 2px;
 }
 
+.cpl-rating-toggle-button {
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.cpl-rating-toggle-button:hover,
+.cpl-rating-toggle-button:focus-visible {
+  box-shadow: 0 0 0 2px currentColor;
+}
+
 .cpl-status-line {
   margin-top: 8px;
   font-size: 0.85em;

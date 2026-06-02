@@ -14,6 +14,8 @@ export type ApiServerType = 'server' | 'unreachable' | 'unknown';
 export let apiAvailability: boolean | null = null;
 export let lastMirrorEntry: string | null = null;
 
+const SERVER_REPO_PATH = '/repo';
+
 const normalizeUrlEntry = (entry: string): string => {
   try {
     return new URL(entry, window.location.origin).toString().replace(/\/$/, '');
@@ -22,11 +24,28 @@ const normalizeUrlEntry = (entry: string): string => {
   }
 };
 
-const getConfiguredMirrorEntries = (title: string): Set<string> =>
+const normalizeServerMirrorEntry = (entry: string): string => {
+  const normalizedEntry = normalizeUrlEntry(entry);
+  try {
+    const url = new URL(normalizedEntry, window.location.origin);
+    const pathname = url.pathname.replace(/\/$/, '');
+    if (pathname.endsWith(SERVER_REPO_PATH)) {
+      url.pathname = pathname.slice(0, -SERVER_REPO_PATH.length) || '/';
+    }
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return normalizedEntry.replace(/\/repo$/, '');
+  }
+};
+
+const getConfiguredMirrorEntries = (
+  title: string,
+  normalizer = normalizeUrlEntry,
+): Set<string> =>
   new Set(
     tw.utils
       .parseStringArray(tw.wiki.getTiddlerText(title, ''))
-      .map(normalizeUrlEntry),
+      .map(normalizer),
   );
 
 const getConfiguredServerEntries = (): string[] =>
@@ -77,7 +96,10 @@ export const getConfiguredMirrorType = (
 ): MirrorType => {
   const normalizedEntry = normalizeUrlEntry(entry);
   if (
-    getConfiguredMirrorEntries(MIRROR_SERVER_REPOS_TITLE).has(normalizedEntry)
+    getConfiguredMirrorEntries(
+      MIRROR_SERVER_REPOS_TITLE,
+      normalizeServerMirrorEntry,
+    ).has(normalizeServerMirrorEntry(entry))
   ) {
     return 'server';
   }

@@ -20,6 +20,7 @@ export const CURRENT_REPO_TITLE =
 
 const BRIDGE_READY_TIMEOUT = 8_000;
 const BRIDGE_REQUEST_TIMEOUT = 30_000;
+const SERVER_REPO_PATH = '/repo';
 
 let messagerPromise: Promise<CplRequest> | undefined;
 let previousEntry: string | undefined;
@@ -56,11 +57,46 @@ const normalizeRepoEntry = (entry: string): string => {
   }
 };
 
-const getConfiguredRepoEntries = (title: string): Set<string> =>
+const normalizeServerMirrorEntry = (entry: string): string => {
+  const normalizedEntry = normalizeRepoEntry(entry);
+  try {
+    const url = new URL(normalizedEntry, window.location.origin);
+    const pathname = url.pathname.replace(/\/$/, '');
+    if (pathname.endsWith(SERVER_REPO_PATH)) {
+      url.pathname = pathname.slice(0, -SERVER_REPO_PATH.length) || '/';
+    }
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return normalizedEntry.replace(/\/repo$/, '');
+  }
+};
+
+const normalizeServerRepoBase = (entry: string): string => {
+  const normalizedEntry = normalizeRepoEntry(entry);
+  try {
+    const url = new URL(normalizedEntry, window.location.origin);
+    const pathname = url.pathname.replace(/\/$/, '');
+    if (!pathname.endsWith(SERVER_REPO_PATH)) {
+      url.pathname = `${pathname}${SERVER_REPO_PATH}`.replace(/\/+/g, '/');
+    }
+    url.search = '';
+    url.hash = '';
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return normalizedEntry.endsWith(SERVER_REPO_PATH)
+      ? normalizedEntry
+      : `${normalizedEntry}${SERVER_REPO_PATH}`;
+  }
+};
+
+const getConfiguredRepoEntries = (
+  title: string,
+  normalizer = normalizeRepoEntry,
+): Set<string> =>
   new Set(
     tw.utils
       .parseStringArray(tw.wiki.getTiddlerText(title, ''))
-      .map(normalizeRepoEntry),
+      .map(normalizer),
   );
 
 const getCurrentRepoType = (entry: string): 'static' | 'server' | 'unknown' => {
@@ -69,7 +105,12 @@ const getCurrentRepoType = (entry: string): 'static' | 'server' | 'unknown' => {
     return 'static';
   }
 
-  if (getConfiguredRepoEntries(MIRROR_SERVER_REPOS_TITLE).has(normalizedEntry)) {
+  if (
+    getConfiguredRepoEntries(
+      MIRROR_SERVER_REPOS_TITLE,
+      normalizeServerMirrorEntry,
+    ).has(normalizeServerMirrorEntry(entry))
+  ) {
     return 'server';
   }
 
@@ -87,7 +128,7 @@ const requestServerFallback = async (
   type: string,
   payload?: CplPayload,
 ): Promise<string> => {
-  const base = normalizeRepoEntry(entry);
+  const base = normalizeServerRepoBase(entry);
   switch (type) {
     case 'Index':
       return fetchStaticRepoFile(base, 'index.json');
@@ -247,8 +288,9 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
 
 export const cpl: CplRequest = (type, payload) => {
   const entry = tw.wiki.getTiddlerText(CURRENT_REPO_TITLE, DEFAULT_REPO_ENTRY);
+  const repoType = getCurrentRepoType(entry);
 
-  if (getCurrentRepoType(entry) === 'static') {
+  if (repoType === 'static') {
     return requestStaticMirror(entry, type, payload);
   }
 
@@ -265,7 +307,9 @@ export const cpl: CplRequest = (type, payload) => {
     );
     // Fall back to direct HTTP fetch of static files.
     const fallback: CplRequest = (type: string, payload?: CplPayload) =>
-      requestServerFallback(entry, type, payload);
+      repoType === 'server'
+        ? requestServerFallback(entry, type, payload)
+        : requestStaticMirror(entry, type, payload);
     return fallback;
   });
   return messagerPromise.then(request => request(type, payload));

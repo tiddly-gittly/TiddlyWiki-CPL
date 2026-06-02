@@ -5,9 +5,10 @@
  *
  *   1. git clone (first run) or git pull (subsequent) into REPO_CACHE_DIR
  *   2. Sync wiki/tiddlers/plugin-metadata from the git cache
- *   3. Start the TiddlyWiki server immediately
- *   4. Run fetch-plugins in the background; restart server when done
- *   5. Every SYNC_INTERVAL_SECONDS (default: 3600), repeat steps 1-2-4-restart
+ *   3. Build cache/plugins static repo artifacts from currently available plugin files
+ *   4. Start the TiddlyWiki server immediately
+ *   5. Run fetch-plugins in the background; rebuild static repo and restart server when done
+ *   6. Every SYNC_INTERVAL_SECONDS (default: 3600), repeat steps 1-2-5-restart
  *
  * Environment variables:
  *   SYNC_INTERVAL_SECONDS  – how often to sync git + re-fetch plugins (default: 3600)
@@ -29,6 +30,10 @@ const HISTORY_DIR = path.join(
 const REPO_URL = 'https://github.com/tiddly-gittly/TiddlyWiki-CPL.git';
 const TSNODEPATH = path.join(APP_DIR, 'node_modules/.bin/ts-node');
 const SYNC_INTERVAL_SECONDS = Number(process.env.SYNC_INTERVAL_SECONDS ?? 3600);
+const DIST_CPL_PLUGIN_FILES = [
+  '$__plugins_Gk0Wk_CPL-Repo.json',
+  '$__plugins_Gk0Wk_CPL-Server.json',
+];
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -58,6 +63,40 @@ function copyDir(src: string, dest: string): void {
       fs.copyFileSync(s, d);
     }
   }
+}
+
+function hasBuiltCplPluginDist(): boolean {
+  return DIST_CPL_PLUGIN_FILES.every(fileName =>
+    fs.existsSync(path.join(APP_DIR, 'dist', fileName)),
+  );
+}
+
+function ensureCplPluginDist(): boolean {
+  if (hasBuiltCplPluginDist()) {
+    return true;
+  }
+
+  console.log('[entrypoint] Building CPL plugin dist artifacts...');
+  return run('pnpm run build');
+}
+
+function buildStaticRepo(): void {
+  if (!ensureCplPluginDist()) {
+    console.warn(
+      '[entrypoint] WARNING: cannot build static repo because plugin dist build failed.',
+    );
+    return;
+  }
+
+  console.log('[entrypoint] Building cache/plugins static repo artifacts...');
+  if (!run('pnpm run build:static-library')) {
+    console.warn(
+      '[entrypoint] WARNING: static repo build failed. /repo/* may be unavailable.',
+    );
+    return;
+  }
+
+  console.log('[entrypoint] cache/plugins static repo build OK.');
 }
 
 // ---------------------------------------------------------------------------
@@ -151,6 +190,7 @@ function runFetchPlugins(onDone: () => void): void {
     } else {
       console.log('[entrypoint] fetch-plugins completed OK.');
     }
+    buildStaticRepo();
     onDone();
   });
 }
@@ -194,13 +234,16 @@ fs.mkdirSync(HISTORY_DIR, { recursive: true });
 // Failures are non-fatal: the server will start with baked-in metadata.
 gitSync();
 
-// 2. Start server immediately
+// 2. Build static repo from persisted/baked plugin files if available
+buildStaticRepo();
+
+// 3. Start server immediately
 startServer();
 
-// 3. Fetch plugins in background; restart server when done so it loads them
+// 4. Fetch plugins in background; restart server when done so it loads them
 runFetchPlugins(() => {
   restartServer();
 });
 
-// 4. Schedule periodic sync + restart
+// 5. Schedule periodic sync + restart
 scheduleSync();

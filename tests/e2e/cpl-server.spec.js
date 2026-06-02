@@ -242,8 +242,16 @@ test.describe('CPL Server E2E', () => {
   test('should allow rating a plugin', async ({ page }) => {
     await authenticateTestUser(page);
     await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+    await page.waitForFunction(() => {
+      return $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') === 'authenticated';
+    }, { timeout: 30000 });
 
     const ratingWidget = page.locator('.cpl-rating-widget');
+    await expect(ratingWidget).toHaveCount(0);
+
+    const ratingToggle = page.locator('.cpl-rating-toggle-button');
+    await expect(ratingToggle).toBeVisible();
+    await ratingToggle.click();
     await expect(ratingWidget).toBeVisible();
 
     // Click the third star (rating = 3)
@@ -268,6 +276,35 @@ test.describe('CPL Server E2E', () => {
     }, TEST_PLUGIN_CPL_TITLE);
 
     expect(ratingStatus).toBe('success');
+  });
+
+  test('should hide rating and compatibility submission forms until login', async ({ page }) => {
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+
+    const ratingToggle = page.locator('.cpl-rating-toggle-button');
+    await expect(ratingToggle).toBeVisible();
+    await expect(page.locator('.cpl-rating-widget')).toHaveCount(0);
+
+    await ratingToggle.click();
+    await expect(page.locator('.cpl-rating-widget')).toContainText(/Login to rate this plugin|登录后即可为插件评分/);
+    await expect(page.locator('.cpl-rating-star-button')).toHaveCount(0);
+
+    await expect(
+      page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
+    ).toHaveCount(0);
+    await expect(page.locator('.cpl-compatibility-section')).toContainText(/Login to submit a compatibility report|登录后即可提交兼容性报告/);
+  });
+
+  test('should show compatibility submission form after login', async ({ page }) => {
+    await authenticateTestUser(page);
+    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+    await page.waitForFunction(() => {
+      return $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') === 'authenticated';
+    }, { timeout: 30000 });
+
+    await expect(
+      page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
+    ).toBeVisible();
   });
 
   test('should display changelog when available', async ({ page }) => {
@@ -346,6 +383,59 @@ test.describe('CPL Server E2E', () => {
     expect(mirrorState.currentRepo).toBe(alternateValue);
     expect(mirrorState.hasPluginsIndex).toBe(true);
     expect(['server', 'static']).toContain(mirrorState.mirrorType);
+  });
+
+  test('should load plugin index from the CPL server mirror root URL', async ({ page, request }) => {
+    const serverRoot = new URL(BASE_URL).origin;
+    const repoResponse = await request.get(`${serverRoot}/repo/index.json`);
+    expect(repoResponse.status()).toBe(200);
+    const repoIndex = await repoResponse.json();
+    expect(Array.isArray(repoIndex)).toBe(true);
+    expect(repoIndex.length).toBeGreaterThan(0);
+
+    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
+
+    await page.evaluate(() => {
+      const serverRoot = window.location.origin;
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: serverRoot });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/servers', text: serverRoot });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: serverRoot });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/repos', text: `${serverRoot} ${serverRoot}/repo` });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos', text: '' });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: `${serverRoot} ${serverRoot}/repo` });
+    });
+
+    await page.waitForFunction(() => {
+      return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', '') === 'server' &&
+        $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
+    }, { timeout: 30000 });
+
+    await page.evaluate(() => {
+      $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/plugins-index');
+      $tw.rootWidget.dispatchEvent({
+        type: 'cpl-get-plugins-index',
+        paramObject: {},
+        widget: $tw.rootWidget
+      });
+    });
+
+    await page.waitForFunction(() => {
+      const errorTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Repo/getting-plugins-index');
+      const pluginsIndex = $tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index');
+      return !errorTiddler && !!pluginsIndex;
+    }, { timeout: 30000 });
+
+    const mirrorState = await page.evaluate(() => ({
+      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo'),
+      mirrorType: $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown'),
+      hasPluginsIndex: !!$tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index')
+    }));
+
+    expect(mirrorState.currentRepo).toBe(serverRoot);
+    expect(mirrorState.mirrorType).toBe('server');
+    expect(mirrorState.hasPluginsIndex).toBe(true);
   });
 
   test('should degrade gracefully when CPL server is unavailable while preserving mirror selector', async ({ page }) => {

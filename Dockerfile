@@ -90,8 +90,10 @@ EXPOSE 8080
 # STARTUP SEQUENCE (docker-entrypoint.ts via ts-node):
 #   1. git clone / git pull into /app/repo-cache (volume-mounted)
 #   2. copy wiki/tiddlers/plugin-metadata from repo-cache into /app
-#   3. fetch-plugins — download plugin JSONs into wiki/files/plugin-fetched/
+#   3. build-static-library — generate cache/plugins for /repo/* from available plugin files
 #   4. scripts/server.ts --prod — build runtime plugins, start TiddlyWiki
+#   5. fetch-plugins — download plugin JSONs into wiki/files/plugin-fetched/
+#   6. rebuild cache/plugins, then restart the server with the updated plugin files
 #
 # Use HOST=0.0.0.0 so the container is reachable from outside.
 ENV HOST=0.0.0.0
