@@ -50,7 +50,7 @@ Required for a real deployment:
 
 `CPL_JWT_SECRET` is not provided by GitHub. It is the local server secret used to sign CPL session JWTs after GitHub OAuth identifies the user. Generate it with a command such as `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` and keep it out of git.
 
-Create `CPL_GITHUB_CLIENT_ID` and `CPL_GITHUB_CLIENT_SECRET` from a GitHub OAuth App. The callback URL should point to `/cpl/api/auth/github/callback` on your public CPL server.
+Create `CPL_GITHUB_CLIENT_ID` and `CPL_GITHUB_CLIENT_SECRET` from a GitHub OAuth App. For the public CPL mirror, set the callback URL to `https://cpl.tidgi.fun/cpl/api/auth/github/callback`.
 
 `CPL_ADMIN_GITHUB_IDS` contains numeric GitHub user IDs, not usernames. You can get one with `curl https://api.github.com/users/<login>` and copy the `id` field, or with `gh api users/<login> --jq .id`.
 
