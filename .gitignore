@@ -138,6 +138,9 @@ wiki/tiddlers/$__plugins_*
 # Temporary server output
 wiki/tiddlers/website/
 
+# Build-regenerated file (removed from version control in fa2be1c5)
+src/CPLPlugin/config/repo-version.tid
+
 # Temp workspace
 tmp/
 wiki/files/plugin-fetched-history/
