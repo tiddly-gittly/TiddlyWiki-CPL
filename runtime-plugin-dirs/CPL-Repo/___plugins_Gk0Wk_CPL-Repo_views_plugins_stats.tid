@@ -16,7 +16,7 @@ type: text/vnd.tiddlywiki
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
-<$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}} ratingPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/rating-widget/]] }}}>
+<$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}} githubClientId={{{ [[$:/temp/CPL-Server/github-client-id]get[text]] }}} ratingPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/rating-widget/]] }}}>
 
 <$list filter="[<serverType>!match[server]]" variable="isUnavailableServer">
 <div class="cpl-static-feature-notice" style="margin: 10px 0; gap: 10px;">
@@ -119,10 +119,15 @@ type: text/vnd.tiddlywiki
   <$list filter="[<userStatus>!match[authenticated]]" variable="isAnonymousForRating">
     <div class="cpl-rating-widget cpl-auth-required">
       <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可为插件评分。]else[Login to rate this plugin.]] }}}/></p>
-      <$button class="tc-btn-primary cpl-comment-login-button">
-        <$action-sendmessage $message="cpl-github-login"/>
-        <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
-      </$button>
+      <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
+        <$button class="tc-btn-primary cpl-comment-login-button">
+          <$action-sendmessage $message="cpl-github-login"/>
+          <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
+        </$button>
+      </$list>
+      <$list filter="[<githubClientId>is[blank]]" variable="missingGithubOAuth">
+        <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[GitHub 登录暂未配置。]else[GitHub login is not configured.]] }}}/></p>
+      </$list>
     </div>
   </$list>
 </$list>
@@ -271,10 +276,15 @@ type: text/vnd.tiddlywiki
   <$list filter="[<userStatus>!match[authenticated]]" variable="isAnonymousForCompatibility">
     <div class="cpl-form-section cpl-auth-required">
       <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可提交兼容性报告。]else[Login to submit a compatibility report.]] }}}/></p>
-      <$button class="tc-btn-primary cpl-comment-login-button">
-        <$action-sendmessage $message="cpl-github-login"/>
-        <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
-      </$button>
+      <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
+        <$button class="tc-btn-primary cpl-comment-login-button">
+          <$action-sendmessage $message="cpl-github-login"/>
+          <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
+        </$button>
+      </$list>
+      <$list filter="[<githubClientId>is[blank]]" variable="missingGithubOAuth">
+        <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[GitHub 登录暂未配置。]else[GitHub login is not configured.]] }}}/></p>
+      </$list>
     </div>
   </$list>
 </div>
