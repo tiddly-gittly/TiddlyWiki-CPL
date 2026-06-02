@@ -139,15 +139,27 @@ export const startup = (): void => {
         return;
       }
 
-      // Add ETag to the response so browser can revalidate on next request
-      const resForEtag = response as { end: (...a: unknown[]) => unknown };
-      const origEnd = resForEtag.end.bind(resForEtag);
-      resForEtag.end = function (...args: unknown[]): unknown {
-        // Inject ETag header before the response is sent
+      // Add ETag to the response so browser can revalidate on next request.
+      // TW uses chunked encoding — headers are sent on the first write()/writeHead(),
+      // not on end(). We wrap writeHead and write to inject ETag before headers fly.
+      const resForEtag = response as Record<string, unknown>;
+      const origWriteHead = (resForEtag.writeHead as (...a: unknown[]) => unknown).bind(resForEtag);
+      const origWrite = (resForEtag.write as (...a: unknown[]) => unknown).bind(resForEtag);
+      let etagInjected = false;
+      const injectEtag = (): void => {
+        if (etagInjected) return;
+        etagInjected = true;
         try {
-          (resForEtag as unknown as { setHeader: (n: string, v: string) => void }).setHeader('ETag', homepageEtag);
-        } catch { /* header already sent */ }
-        return origEnd(...args);
+          (resForEtag as { setHeader: (n: string, v: string) => void }).setHeader('ETag', homepageEtag);
+        } catch { /* already sent */ }
+      };
+      resForEtag.writeHead = function (...args: unknown[]): unknown {
+        injectEtag();
+        return origWriteHead(...args);
+      };
+      resForEtag.write = function (...args: unknown[]): unknown {
+        injectEtag();
+        return origWrite(...args);
       };
     }
 
