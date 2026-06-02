@@ -180,10 +180,14 @@ export const startup = (): void => {
         );
         return undefined;
       }
-      const redirectUri = `${window.location.origin}/cpl/api/auth/github/callback`;
-      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(
-        githubClientId,
-      )}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=read:user`;
+      const redirectUri = `${getCurrentServerOrigin()}/cpl/api/auth/github/callback`;
+      const githubAuthParams = new URLSearchParams({
+        client_id: githubClientId,
+        redirect_uri: redirectUri,
+        scope: 'read:user',
+        state: window.location.href,
+      });
+      const githubAuthUrl = `https://github.com/login/oauth/authorize?${githubAuthParams.toString()}`;
       window.location.href = githubAuthUrl;
       return undefined;
     },

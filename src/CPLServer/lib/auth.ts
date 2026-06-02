@@ -125,11 +125,11 @@ export const Auth = {
     const maxAgeSeconds = Config.jwtExpiryDays * 24 * 60 * 60;
     return `${AUTH_COOKIE_NAME}=${encodeURIComponent(
       token,
-    )}; Path=/; Max-Age=${maxAgeSeconds}; HttpOnly; SameSite=Lax`;
+    )}; Path=/; Max-Age=${maxAgeSeconds}; HttpOnly; SameSite=None; Secure`;
   },
 
   clearCookie(): string {
-    return `${AUTH_COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax`;
+    return `${AUTH_COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly; SameSite=None; Secure`;
   },
 
   async exchangeGitHubCode(code: string): Promise<GitHubTokenResponse> {
