@@ -300,6 +300,16 @@ type: text/vnd.tiddlywiki
   color: <<colour primary>>;
 }
 
+.cpl-rating-toggle-button:hover,
+.cpl-rating-toggle-button:focus-visible {
+  background: <<colour very-muted-foreground>>22;
+}
+
+.cpl-rating-toggle-button:hover .cpl-rating-toggle-icon,
+.cpl-rating-toggle-button:focus-visible .cpl-rating-toggle-icon {
+  color: <<colour primary>>;
+}
+
 .cpl-status-banner-error {
   background: <<colour diff-delete-background>>44;
   border-color: <<colour diff-delete-background>>;

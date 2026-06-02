@@ -39,7 +39,7 @@ type: text/vnd.tiddlywiki
 
     <!-- Comment Form -->
     <div class="cpl-comment-form">
-      <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" placeholder="Write a comment using wikitext..."/>
+      <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" placeholder={{{ [<chinese>match[yes]then[使用 Wikitext 写评论...]else[Write a comment using wikitext...]] }}}/>
       <div class="cpl-comment-form-actions">
         <span class="cpl-comment-hint"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
         <$button class="tc-btn-primary cpl-comment-submit-button">

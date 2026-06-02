@@ -16,8 +16,7 @@ type: text/vnd.tiddlywiki
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
-<!-- Check if configured CPL server is available -->
-<$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}>
+<$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}} ratingPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/rating-widget/]] }}}>
 
 <$list filter="[<serverType>!match[server]]" variable="isUnavailableServer">
 <div class="cpl-static-feature-notice" style="margin: 10px 0; gap: 10px;">
@@ -47,21 +46,22 @@ type: text/vnd.tiddlywiki
         <span class="cpl-status-muted">-</span>
       </$list>
     </$let>
-    <span class="cpl-stat-label cpl-status-muted">downloads</span>
+    <span class="cpl-stat-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[下载]else[downloads]] }}}/></span>
   </div>
-  
-  <!-- Rating -->
-  <div class="cpl-stat-item">
-    <span style="font-size: 1.2em;">⭐</span>
+
+  <!-- Rating Summary Toggle -->
+  <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[为此插件评分]else[Rate this plugin]] }}} aria-expanded={{{ [<ratingPanelStateTitle>get[text]match[open]then[true]else[false]] }}}>
+    <$action-setfield $tiddler=<<ratingPanelStateTitle>> text={{{ [<ratingPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
+    <span class="cpl-rating-toggle-icon" style="font-size: 1.2em;">⭐</span>
     <$let tempTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-stats/]] }}}>
       <$list filter="[<tempTiddler>is[tiddler]]" variable="hasStats">
         <$let avgRating={{{ [<tempTiddler>get[text]jsonget[averageRating]else[0]] }}} totalRatings={{{ [<tempTiddler>get[text]jsonget[totalRatings]else[0]] }}}>
           <$list filter="[<totalRatings>compare:integer:gt[0]]" variable="hasRatings">
             <span><$text text=<<avgRating>> />/5</span>
-            <span class="cpl-stat-label cpl-status-muted">(<$text text=<<totalRatings>> /> ratings)</span>
+            <span class="cpl-stat-label cpl-status-muted">(<$text text=<<totalRatings>> /> <$text text={{{ [<chinese>match[yes]then[评分]else[ratings]] }}}/>)</span>
           </$list>
           <$list filter="[<totalRatings>compare:integer:eq[0]]" variable="noRatings">
-            <span class="cpl-status-muted">No ratings yet</span>
+            <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[暂无评分]else[No ratings yet]] }}}/></span>
           </$list>
         </$let>
       </$list>
@@ -69,54 +69,67 @@ type: text/vnd.tiddlywiki
         <span class="cpl-status-muted">-</span>
       </$list>
     </$let>
-  </div>
+  </$button>
 </div>
 
 <!-- Rating Widget -->
-<div class="cpl-rating-widget">
-  <h4 class="cpl-card-heading">⭐ Rate this plugin</h4>
-  <div class="cpl-rating-stars">
-    <$button class="tc-btn-invisible cpl-rating-star-button">
-      <<rating-click-action 1>>
-      <span class="cpl-rating-star">★</span>
-    </$button>
-    <$button class="tc-btn-invisible cpl-rating-star-button">
-      <<rating-click-action 2>>
-      <span class="cpl-rating-star">★</span>
-    </$button>
-    <$button class="tc-btn-invisible cpl-rating-star-button">
-      <<rating-click-action 3>>
-      <span class="cpl-rating-star">★</span>
-    </$button>
-    <$button class="tc-btn-invisible cpl-rating-star-button">
-      <<rating-click-action 4>>
-      <span class="cpl-rating-star">★</span>
-    </$button>
-    <$button class="tc-btn-invisible cpl-rating-star-button">
-      <<rating-click-action 5>>
-      <span class="cpl-rating-star">★</span>
-    </$button>
-  </div>
-  <$let ratingStatusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}}>
-    <$list filter="[<ratingStatusTiddler>is[tiddler]]" variable="hasStatus">
-      <div class="cpl-status-line">
-        <$list filter="[<ratingStatusTiddler>get[text]match[submitting]]">
-          <span class="cpl-status-muted">Submitting...</span>
-        </$list>
-        <$list filter="[<ratingStatusTiddler>get[text]prefix[error:]]">
-          <span class="cpl-status-error">✗ <$text text={{{ [<ratingStatusTiddler>get[text]removeprefix[error: ]] }}}/></span>
-        </$list>
-        <$list filter="[<ratingStatusTiddler>get[text]match[success]]">
-          <span class="cpl-status-success">✓ Rating submitted! Average: <$text text={{{ [<ratingStatusTiddler>get[average-rating]] }}}/>/5 (<$text text={{{ [<ratingStatusTiddler>get[total-ratings]] }}}/> ratings)</span>
-        </$list>
+<$list filter="[<ratingPanelStateTitle>get[text]match[open]]" variable="isRatingPanelOpen">
+  <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedInForRating">
+    <div class="cpl-rating-widget">
+      <h4 class="cpl-card-heading">⭐ <$text text={{{ [<chinese>match[yes]then[为此插件评分]else[Rate this plugin]] }}}/></h4>
+      <div class="cpl-rating-stars">
+        <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="1">
+          <<rating-click-action 1>>
+          <span class="cpl-rating-star">★</span>
+        </$button>
+        <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="2">
+          <<rating-click-action 2>>
+          <span class="cpl-rating-star">★</span>
+        </$button>
+        <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="3">
+          <<rating-click-action 3>>
+          <span class="cpl-rating-star">★</span>
+        </$button>
+        <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="4">
+          <<rating-click-action 4>>
+          <span class="cpl-rating-star">★</span>
+        </$button>
+        <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="5">
+          <<rating-click-action 5>>
+          <span class="cpl-rating-star">★</span>
+        </$button>
       </div>
-    </$list>
-  </$let>
-</div>
+      <$let ratingStatusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}}>
+        <$list filter="[<ratingStatusTiddler>is[tiddler]]" variable="hasStatus">
+          <div class="cpl-status-line">
+            <$list filter="[<ratingStatusTiddler>get[text]match[submitting]]">
+              <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[提交中...]else[Submitting...]] }}}/></span>
+            </$list>
+            <$list filter="[<ratingStatusTiddler>get[text]prefix[error:]]">
+              <span class="cpl-status-error">✗ <$text text={{{ [<ratingStatusTiddler>get[text]removeprefix[error: ]] }}}/></span>
+            </$list>
+            <$list filter="[<ratingStatusTiddler>get[text]match[success]]">
+              <span class="cpl-status-success">✓ <$text text={{{ [<chinese>match[yes]then[评分已提交！平均分：]else[Rating submitted! Average: ]] }}}/><$text text={{{ [<ratingStatusTiddler>get[average-rating]] }}}/>/5 (<$text text={{{ [<ratingStatusTiddler>get[total-ratings]] }}}/> <$text text={{{ [<chinese>match[yes]then[评分]else[ratings]] }}}/>)</span>
+            </$list>
+          </div>
+        </$list>
+      </$let>
+    </div>
+  </$list>
+  <$list filter="[<userStatus>!match[authenticated]]" variable="isAnonymousForRating">
+    <div class="cpl-rating-widget cpl-auth-required">
+      <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可为插件评分。]else[Login to rate this plugin.]] }}}/></p>
+      <$button class="tc-btn-primary cpl-comment-login-button">
+        <$action-sendmessage $message="cpl-github-login"/>
+        <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
+      </$button>
+    </div>
+  </$list>
+</$list>
 
 <!-- Changelog Section -->
 <div class="cpl-changelog-section">
-  <h4 class="cpl-card-heading-bordered">📋 Changelog</h4>
+  <h4 class="cpl-card-heading-bordered">📋 <$text text={{{ [<chinese>match[yes]then[更新日志]else[Changelog]] }}}/></h4>
   <$action-sendmessage $message="cpl-fetch-changelog" pluginTitle={{!!cpl.title}} />
   <$let changelogTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}>
     <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
@@ -127,19 +140,19 @@ type: text/vnd.tiddlywiki
           </div>
         </$list>
         <$list filter="[<hasChangelogField>!match[true]]" variable="noContent">
-          <span class="cpl-status-muted" style="font-style: italic;">No changelog available.</span>
+          <span class="cpl-status-muted" style="font-style: italic;"><$text text={{{ [<chinese>match[yes]then[暂无更新日志。]else[No changelog available.]] }}}/></span>
         </$list>
       </$let>
     </$list>
     <$list filter="[<changelogTiddler>!is[tiddler]]" variable="loading">
-      <span class="cpl-status-muted" style="font-style: italic;">Loading changelog...</span>
+      <span class="cpl-status-muted" style="font-style: italic;"><$text text={{{ [<chinese>match[yes]then[正在加载更新日志...]else[Loading changelog...]] }}}/></span>
     </$list>
   </$let>
 </div>
 
 <!-- Compatibility Reports Section -->
 <div class="cpl-compatibility-section">
-  <h4 class="cpl-card-heading-bordered">⚠️ Compatibility Reports</h4>
+  <h4 class="cpl-card-heading-bordered">⚠️ <$text text={{{ [<chinese>match[yes]then[兼容性报告]else[Compatibility Reports]] }}}/></h4>
   <$action-sendmessage $message="cpl-fetch-compatibility" pluginTitle={{!!cpl.title}} />
   <$let compatibilityTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility/]] }}}>
     <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
@@ -149,17 +162,17 @@ type: text/vnd.tiddlywiki
             <$list filter="[<compatibilityTiddler>get[text]jsonget[reports]]" variable="report">
               <div class="cpl-compatibility-item">
                 <div class="cpl-compatibility-header">
-                  <span style="font-weight: 600; font-size: 0.9em;">Reported by <$text text={{{ [<report>jsonget[reporterUsername]else[Anonymous]] }}} /></span>
+                  <span style="font-weight: 600; font-size: 0.9em;"><$text text={{{ [<chinese>match[yes]then[报告人：]else[Reported by ]] }}}/><$text text={{{ [<report>jsonget[reporterUsername]else[Anonymous]] }}} /></span>
                   <span class="cpl-compatibility-date cpl-status-muted"><$text text={{{ [<report>jsonget[createdAt]else[Unknown]] }}} /></span>
                 </div>
                 <$list filter="[<report>jsonget[twVersionMin]!is[blank]] [<report>jsonget[twVersionMax]!is[blank]] +[unique[]limit[1]]" variable="hasVersionRange">
                   <div class="cpl-compatibility-meta">
-                    <strong>TW Version:</strong> <$text text={{{ [<report>jsonget[twVersionMin]else[Any]] }}} /> - <$text text={{{ [<report>jsonget[twVersionMax]else[Any]] }}} />
+                    <strong><$text text={{{ [<chinese>match[yes]then[TW 版本：]else[TW Version:]] }}}/></strong> <$text text={{{ [<report>jsonget[twVersionMin]else[Any]] }}} /> - <$text text={{{ [<report>jsonget[twVersionMax]else[Any]] }}} />
                   </div>
                 </$list>
                 <$list filter="[<report>jsonget[conflictingPlugins]count[]compare:integer:gt[0]]" variable="hasConflicts">
                   <div class="cpl-compatibility-meta">
-                    <strong>Conflicts with:</strong>
+                    <strong><$text text={{{ [<chinese>match[yes]then[冲突插件：]else[Conflicts with:]] }}}/></strong>
                     <$list filter="[<report>jsonget[conflictingPlugins]]" variable="conflict">
                       <span class="cpl-compatibility-pill">
                         <$text text={{{ [<conflict>jsonget[pluginTitle]else[Unknown]] }}} />
@@ -175,89 +188,99 @@ type: text/vnd.tiddlywiki
           </div>
         </$list>
         <$list filter="[<reportCount>compare:integer:eq[0]]" variable="noReports">
-          <span class="cpl-status-muted" style="font-style: italic;">No compatibility reports yet. Be the first to submit one!</span>
+          <span class="cpl-status-muted" style="font-style: italic;"><$text text={{{ [<chinese>match[yes]then[暂无兼容性报告。]else[No compatibility reports yet.]] }}}/></span>
         </$list>
       </$let>
     </$list>
     <$list filter="[<compatibilityTiddler>!is[tiddler]]" variable="loading">
-      <span class="cpl-status-muted" style="font-style: italic;">Loading compatibility reports...</span>
+      <span class="cpl-status-muted" style="font-style: italic;"><$text text={{{ [<chinese>match[yes]then[正在加载兼容性报告...]else[Loading compatibility reports...]] }}}/></span>
     </$list>
   </$let>
 
-  <!-- Submit Compatibility Report Form -->
-  <div class="cpl-form-section">
-    <h5 style="margin-top: 0;">Submit a Compatibility Report</h5>
-    <$let
-      pluginTitle={{!!cpl.title}}
-      draftTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility-draft/]] }}}
-      statusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility-status/]] }}}
-    >
-      <!-- Initialize draft tiddler if not exists -->
-      <$list filter="[<draftTiddler>!is[tiddler]]">
-        <$action-setfield $tiddler=<<draftTiddler>> text="" />
-      </$list>
+  <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedInForCompatibility">
+    <!-- Submit Compatibility Report Form -->
+    <div class="cpl-form-section">
+      <h5 style="margin-top: 0;"><$text text={{{ [<chinese>match[yes]then[提交兼容性报告]else[Submit a Compatibility Report]] }}}/></h5>
+      <$let
+        pluginTitle={{!!cpl.title}}
+        draftTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility-draft/]] }}}
+        statusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility-status/]] }}}
+      >
+        <!-- Initialize draft tiddler if not exists -->
+        <$list filter="[<draftTiddler>!is[tiddler]]">
+          <$action-setfield $tiddler=<<draftTiddler>> text="" />
+        </$list>
 
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div class="cpl-form-row">
-          <div class="cpl-form-field">
-            <label class="cpl-form-label cpl-status-muted">TW Min Version</label>
-            <$edit-text tiddler=<<draftTiddler>> field="tw-version-min" default="" placeholder="e.g. 5.2.0" class="cpl-form-input" />
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="cpl-form-row">
+            <div class="cpl-form-field">
+              <label class="cpl-form-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[TW 最低版本]else[TW Min Version]] }}}/></label>
+              <$edit-text tiddler=<<draftTiddler>> field="tw-version-min" default="" placeholder="e.g. 5.2.0" class="cpl-form-input" />
+            </div>
+            <div class="cpl-form-field">
+              <label class="cpl-form-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[TW 最高版本]else[TW Max Version]] }}}/></label>
+              <$edit-text tiddler=<<draftTiddler>> field="tw-version-max" default="" placeholder="e.g. 5.3.0" class="cpl-form-input" />
+            </div>
           </div>
-          <div class="cpl-form-field">
-            <label class="cpl-form-label cpl-status-muted">TW Max Version</label>
-            <$edit-text tiddler=<<draftTiddler>> field="tw-version-max" default="" placeholder="e.g. 5.3.0" class="cpl-form-input" />
+
+          <div>
+            <label class="cpl-form-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[冲突插件标题]else[Conflicting Plugin Title]] }}}/></label>
+            <$edit-text tiddler=<<draftTiddler>> field="conflict-plugin" default="" placeholder="e.g. $:/plugins/tiddlywiki/highlight" class="cpl-form-input" />
           </div>
+
+          <div>
+            <label class="cpl-form-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[冲突说明]else[Conflict Description]] }}}/></label>
+            <$edit-text tiddler=<<draftTiddler>> field="conflict-description" default="" placeholder={{{ [<chinese>match[yes]then[描述这个冲突...]else[Describe the conflict...]] }}} class="cpl-form-input" />
+          </div>
+
+          <div>
+            <label class="cpl-form-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[详细说明 *]else[Detailed Description *]] }}}/></label>
+            <$edit-text tiddler=<<draftTiddler>> field="description" default="" placeholder={{{ [<chinese>match[yes]then[详细描述兼容性问题...]else[Describe the compatibility issue in detail...]] }}} class="cpl-form-input cpl-form-textarea" />
+          </div>
+
+          <$button class="tc-btn-primary cpl-submit-button-sm">
+            <$action-sendmessage $message="cpl-submit-compatibility"
+              pluginTitle=<<pluginTitle>>
+              twVersionMin={{{ [<draftTiddler>get[tw-version-min]] }}}
+              twVersionMax={{{ [<draftTiddler>get[tw-version-max]] }}}
+              conflictPlugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
+              conflictDescription={{{ [<draftTiddler>get[conflict-description]] }}}
+              description={{{ [<draftTiddler>get[description]] }}}
+            />
+            <$text text={{{ [<chinese>match[yes]then[提交报告]else[Submit Report]] }}}/>
+          </$button>
         </div>
 
-        <div>
-          <label class="cpl-form-label cpl-status-muted">Conflicting Plugin Title</label>
-          <$edit-text tiddler=<<draftTiddler>> field="conflict-plugin" default="" placeholder="e.g. $:/plugins/tiddlywiki/highlight" class="cpl-form-input" />
-        </div>
-
-        <div>
-          <label class="cpl-form-label cpl-status-muted">Conflict Description</label>
-          <$edit-text tiddler=<<draftTiddler>> field="conflict-description" default="" placeholder="Describe the conflict..." class="cpl-form-input" />
-        </div>
-
-        <div>
-          <label class="cpl-form-label cpl-status-muted">Detailed Description *</label>
-          <$edit-text tiddler=<<draftTiddler>> field="description" default="" placeholder="Describe the compatibility issue in detail..." class="cpl-form-input cpl-form-textarea" />
-        </div>
-
-        <$button class="tc-btn-primary cpl-submit-button-sm">
-          <$action-sendmessage $message="cpl-submit-compatibility"
-            pluginTitle=<<pluginTitle>>
-            twVersionMin={{{ [<draftTiddler>get[tw-version-min]] }}}
-            twVersionMax={{{ [<draftTiddler>get[tw-version-max]] }}}
-            conflictPlugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
-            conflictDescription={{{ [<draftTiddler>get[conflict-description]] }}}
-            description={{{ [<draftTiddler>get[description]] }}}
-          />
-          Submit Report
-        </$button>
-      </div>
-
-      <!-- Status messages -->
-      <$list filter="[<statusTiddler>is[tiddler]]" variable="hasStatus">
-        <div class="cpl-status-line">
-          <$list filter="[<statusTiddler>get[text]match[submitting]]">
-            <span class="cpl-status-muted">Submitting...</span>
-          </$list>
-          <$list filter="[<statusTiddler>get[text]prefix[error:]]">
-            <span class="cpl-status-error">✗ <$text text={{{ [<statusTiddler>get[text]removeprefix[error: ]] }}}/></span>
-          </$list>
-          <$list filter="[<statusTiddler>get[text]match[success]]">
-            <span class="cpl-status-success">✓ Report submitted for moderation!</span>
-          </$list>
-        </div>
-      </$list>
-    </$let>
-  </div>
+        <!-- Status messages -->
+        <$list filter="[<statusTiddler>is[tiddler]]" variable="hasStatus">
+          <div class="cpl-status-line">
+            <$list filter="[<statusTiddler>get[text]match[submitting]]">
+              <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[提交中...]else[Submitting...]] }}}/></span>
+            </$list>
+            <$list filter="[<statusTiddler>get[text]prefix[error:]]">
+              <span class="cpl-status-error">✗ <$text text={{{ [<statusTiddler>get[text]removeprefix[error: ]] }}}/></span>
+            </$list>
+            <$list filter="[<statusTiddler>get[text]match[success]]">
+              <span class="cpl-status-success">✓ <$text text={{{ [<chinese>match[yes]then[报告已提交，等待审核！]else[Report submitted for moderation!]] }}}/></span>
+            </$list>
+          </div>
+        </$list>
+      </$let>
+    </div>
+  </$list>
+  <$list filter="[<userStatus>!match[authenticated]]" variable="isAnonymousForCompatibility">
+    <div class="cpl-form-section cpl-auth-required">
+      <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可提交兼容性报告。]else[Login to submit a compatibility report.]] }}}/></p>
+      <$button class="tc-btn-primary cpl-comment-login-button">
+        <$action-sendmessage $message="cpl-github-login"/>
+        <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
+      </$button>
+    </div>
+  </$list>
 </div>
 
 </$list>
 <!-- End server mirror check -->
 
 </$let>
-
 </$list>
