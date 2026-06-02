@@ -1,0 +1,6 @@
+title: $:/plugins/Gk0Wk/CPL-Server/routes/api/build-status.js
+type: application/javascript
+module-type: route
+method: GET
+path: /cpl/api/build-status
+Modern.TiddlyDev#Origin: routes/api/build-status.ts

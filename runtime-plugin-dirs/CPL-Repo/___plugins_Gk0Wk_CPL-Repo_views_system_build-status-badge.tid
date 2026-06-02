@@ -1,0 +1,57 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/views/system/build-status-badge
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<$reveal state="$:/temp/CPL-Server/build-status" type="nomatch" text="idle" invert="no">
+<div style="
+  position: fixed; top: 12px; right: 12px; z-index: 9999;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff; padding: 10px 18px; border-radius: 10px;
+  font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;
+  animation: cpl-badge-pulse 2s ease-in-out infinite;
+">
+  <div style="
+    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%;
+    animation: cpl-badge-spin 0.8s linear infinite;
+  "></div>
+  <div>
+    <div style="font-weight: 600; font-size: 13px;">
+      <$text text={{$:/temp/CPL-Server/build-status-message}} />
+    </div>
+    <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">
+      <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+        <$text text={{{ [<chinese>match[yes]then[服务器构建中...]else[Server building...]] }}} />
+      </$list>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes cpl-badge-spin { to { transform: rotate(360deg); } }
+@keyframes cpl-badge-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.85; } }
+</style>
+</$reveal>
+
+<$reveal state="$:/temp/CPL-Server/build-status" type="match" text="error">
+<div style="
+  position: fixed; top: 12px; right: 12px; z-index: 9999;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff; padding: 10px 18px; border-radius: 10px;
+  font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;
+">
+  <span style="font-size: 18px;">⚠️</span>
+  <div>
+    <div style="font-weight: 600;">
+      <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+        <$text text={{{ [<chinese>match[yes]then[构建错误]else[Build Error]] }}} />
+      </$list>
+    </div>
+    <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;">
+      <$text text={{$:/temp/CPL-Server/build-status-message}} />
+    </div>
+  </div>
+</div>
+</$reveal>
