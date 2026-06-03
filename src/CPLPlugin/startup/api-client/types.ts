@@ -81,6 +81,23 @@ export interface CPLServerApi {
   checkAuthStatus: (callback: ApiCallback<AuthStatusResponse>) => void;
   getAuthConfig: (callback: ApiCallback<AuthConfigResponse>) => void;
   logout: () => void;
+  getPendingComments: (callback: ApiCallback<JsonObject>) => void;
+  getAllRecentComments: (callback: ApiCallback<JsonObject>) => void;
+  moderateComment: (
+    pluginTitle: string,
+    commentId: string,
+    status: string,
+    callback: ApiCallback<JsonObject>,
+  ) => void;
+  getPendingCompatibilityReports: (
+    callback: ApiCallback<JsonObject>,
+  ) => void;
+  moderateCompatibilityReport: (
+    pluginTitle: string,
+    reportId: string,
+    status: string,
+    callback: ApiCallback<JsonObject>,
+  ) => void;
 }
 
 export type TwWithCplApi = typeof $tw & {

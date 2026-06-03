@@ -167,6 +167,10 @@ export const startup = (): void => {
         title: '$:/temp/CPL-Server/user-status',
         text: 'anonymous',
       });
+      tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/is-admin',
+        text: 'no',
+      });
       return undefined;
     },
   );
@@ -224,6 +228,15 @@ export const startup = (): void => {
               title: '$:/temp/CPL-Server/user',
               text: JSON.stringify(data.user),
               type: 'application/json',
+            });
+            // Also check admin status after login
+            cplServerApi.checkAuthStatus((_err, authData) => {
+              if (!_err && authData) {
+                tw.wiki.addTiddler({
+                  title: '$:/temp/CPL-Server/is-admin',
+                  text: authData.isAdmin ? 'yes' : 'no',
+                });
+              }
             });
             window.history.replaceState({}, document.title, '/');
           } catch (parseError) {
@@ -374,6 +387,97 @@ export const startup = (): void => {
           tw.wiki.deleteTiddler(
             `$:/temp/CPL-Server/compatibility-draft/${pluginTitle}`,
           );
+          fetchPluginCompatibility(cplServerApi, pluginTitle);
+        },
+      );
+      return undefined;
+    },
+  );
+
+  tw.rootWidget.addEventListener(
+    'cpl-fetch-pending-comments',
+    (_event: RootWidgetEvent): undefined => {
+      cplServerApi.getPendingComments((error, data) => {
+        if (error || !data) {
+          console.error('[CPL-Server] Failed to fetch pending comments:', error);
+          return;
+        }
+        tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/pending-comments',
+          text: JSON.stringify(data),
+          type: 'application/json',
+        });
+      });
+      return undefined;
+    },
+  );
+
+  tw.rootWidget.addEventListener(
+    'cpl-fetch-all-recent-comments',
+    (_event: RootWidgetEvent): undefined => {
+      cplServerApi.getAllRecentComments((error, data) => {
+        if (error || !data) {
+          console.error(
+            '[CPL-Server] Failed to fetch all recent comments:',
+            error,
+          );
+          return;
+        }
+        tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/all-recent-comments',
+          text: JSON.stringify(data),
+          type: 'application/json',
+        });
+      });
+      return undefined;
+    },
+  );
+
+  tw.rootWidget.addEventListener(
+    'cpl-moderate-comment',
+    (event: RootWidgetEvent): undefined => {
+      const pluginTitle = getEventParam(event, 'pluginTitle');
+      const commentId = getEventParam(event, 'commentId');
+      const status = getEventParam(event, 'status');
+      if (!pluginTitle || !commentId || !status) {
+        console.error('[CPL-Server] Missing params for comment moderation');
+        return undefined;
+      }
+      cplServerApi.moderateComment(pluginTitle, commentId, status, error => {
+        if (error) {
+          console.error('[CPL-Server] Comment moderation error:', error);
+          return;
+        }
+        fetchPluginComments(cplServerApi, pluginTitle);
+      });
+      return undefined;
+    },
+  );
+
+  tw.rootWidget.addEventListener(
+    'cpl-moderate-compatibility',
+    (event: RootWidgetEvent): undefined => {
+      const pluginTitle = getEventParam(event, 'pluginTitle');
+      const reportId = getEventParam(event, 'reportId');
+      const status = getEventParam(event, 'status');
+      if (!pluginTitle || !reportId || !status) {
+        console.error(
+          '[CPL-Server] Missing params for compatibility moderation',
+        );
+        return undefined;
+      }
+      cplServerApi.moderateCompatibilityReport(
+        pluginTitle,
+        reportId,
+        status,
+        error => {
+          if (error) {
+            console.error(
+              '[CPL-Server] Compatibility moderation error:',
+              error,
+            );
+            return;
+          }
           fetchPluginCompatibility(cplServerApi, pluginTitle);
         },
       );

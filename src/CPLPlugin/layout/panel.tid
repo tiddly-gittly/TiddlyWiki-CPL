@@ -16,6 +16,6 @@ type: text/vnd.tiddlywiki
 <$macrocall
 	$name="tabs"
 	state="$:/temp/CPL-Repo/panel-tab-state"
-	tabsList="[[$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/uninstall-manager]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/settings]] [[$:/plugins/Gk0Wk/CPL-Repo/docs/readme]]"
+	tabsList="[[$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/uninstall-manager]] [[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/settings]] [[$:/plugins/Gk0Wk/CPL-Repo/docs/readme]]"
 	default="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database"
 />

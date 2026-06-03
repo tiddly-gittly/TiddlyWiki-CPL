@@ -18,6 +18,10 @@ const setAnonymousUserStatus = (): void => {
     title: '$:/temp/CPL-Server/user-status',
     text: 'anonymous',
   });
+  tw.wiki.addTiddler({
+    title: '$:/temp/CPL-Server/is-admin',
+    text: 'no',
+  });
 };
 
 const getMirrorLabel = (): string => {
@@ -108,6 +112,10 @@ export const refreshMirrorCapabilityState = (
           title: '$:/temp/CPL-Server/user',
           text: JSON.stringify(data.user),
           type: 'application/json',
+        });
+        tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/is-admin',
+          text: data.isAdmin ? 'yes' : 'no',
         });
         return;
       }
