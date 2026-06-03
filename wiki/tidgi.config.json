@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "$schema": "https://raw.githubusercontent.com/tiddly-gittly/TidGi-Desktop/master/src/services/workspaces/tidgi.config.schema.json",
+  "id": "btNbP-BVSfVmsXrv9dFi9",
+  "name": "CPL",
+  "hibernateWhenUnused": true
+}
