@@ -20,7 +20,7 @@ services:
       # 前提：必须从 git clone 了完整仓库（确保本地 src/ 目录存在）。
       # 如果本地没有 src/，Docker 会创建空目录，导致容器崩溃。
       # 生产部署应使用最新镜像，不要挂载此行。
-      # - ./src:/app/src:ro
+      - ./src:/app/src:ro
     env_file:
       - .env
     environment:

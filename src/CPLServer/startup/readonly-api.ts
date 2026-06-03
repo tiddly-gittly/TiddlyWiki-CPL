@@ -43,6 +43,15 @@ const normalizeHeaderValue = (
   return null;
 };
 
+/**
+ * Strip the W/ prefix from an ETag for comparison.
+ * Nginx adds W/ to ETags when gzip is enabled because the compressed
+ * content is not byte-for-byte identical to the original. We need to
+ * compare the opaque part only.
+ */
+const stripWeakEtagPrefix = (etag: string): string =>
+  etag.startsWith('W/') ? etag.slice(2) : etag;
+
 const rewriteCorsHeaders = (
   headers: Record<string, unknown>,
   origin: string,
@@ -132,7 +141,11 @@ export const startup = (): void => {
     if (isHomepage && req.method === 'GET') {
       const reqHeaders = req.headers as Record<string, string | string[] | undefined>;
       const ifNoneMatch = normalizeHeaderValue(reqHeaders['if-none-match']);
-      if (ifNoneMatch === homepageEtag) {
+      // Nginx weakens ETags (adds W/ prefix) when gzip is on, so we
+      // strip the prefix before comparing. Firefox sends back the
+      // weakened ETag; Edge serves from disk cache within max-age.
+      const stripped = ifNoneMatch ? stripWeakEtagPrefix(ifNoneMatch) : null;
+      if (stripped === homepageEtag) {
         const res = response as { writeHead: (...a: unknown[]) => unknown; end: (...a: unknown[]) => unknown };
         res.writeHead(304, { ETag: homepageEtag, 'Cache-Control': 'public, max-age=300' });
         res.end();
