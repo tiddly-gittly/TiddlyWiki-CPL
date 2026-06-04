@@ -8,15 +8,13 @@ import {
   SERVER_CONFIG_TITLE,
 } from './api-client/constants';
 import { getCurrentServerOrigin } from './api-client/state';
-import { getEventParam, getViewedPluginTitle } from './api-client/utilities';
+import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
 import {
   fetchPluginStats,
   fetchPluginChangelog,
   fetchPluginComments,
   fetchPluginCompatibility,
-  fetchAllRecentComments,
-  fetchPendingComments,
 } from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
 import { startBuildStatusPolling } from './build-status-poll';
@@ -36,6 +34,7 @@ export const startup = (): void => {
   // Start polling build status for the badge widget
   startBuildStatusPolling();
 
+  // Mirror config change → refresh API availability (rare, keep as simple JS listener)
   tw.wiki.addEventListener('change', changes => {
     if (
       $tw.utils.hop(changes, MIRROR_CONFIG_TITLE) ||
@@ -43,31 +42,15 @@ export const startup = (): void => {
     ) {
       refreshMirrorCapabilityState(cplServerApi);
     }
-
-    // Auto-fetch when comments-center tab is selected
-    if ($tw.utils.hop(changes, '$:/temp/CPL-Repo/panel-tab-state')) {
-      const newTab = tw.wiki.getTiddlerText(
-        '$:/temp/CPL-Repo/panel-tab-state',
-        '',
-      );
-      if (newTab === '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center') {
-        fetchAllRecentComments(cplServerApi);
-        fetchPendingComments(cplServerApi);
-      }
-    }
-
-    const pluginTitle = getViewedPluginTitle();
-    if (!pluginTitle) {
-      return;
-    }
-
-    if ($tw.utils.hop(changes, '$:/HistoryList')) {
-      fetchPluginStats(cplServerApi, pluginTitle);
-      fetchPluginChangelog(cplServerApi, pluginTitle);
-      fetchPluginComments(cplServerApi, pluginTitle);
-      fetchPluginCompatibility(cplServerApi, pluginTitle);
-    }
   });
+
+  tw.rootWidget.addEventListener(
+    'cpl-refresh-mirror',
+    (_event: RootWidgetEvent): undefined => {
+      refreshMirrorCapabilityState(cplServerApi);
+      return undefined;
+    },
+  );
 
   tw.rootWidget.addEventListener(
     'cpl-fetch-stats',
