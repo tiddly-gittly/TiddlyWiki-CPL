@@ -13,6 +13,24 @@ type: text/vnd.tiddlywiki
 <$action-sendmessage $message="cpl-submit-rating" pluginTitle={{!!cpl.title}} rating="$rating$" />
 \end
 
+\procedure cpl-fetch-changelog-action(pluginTitle)
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/api/changelog/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+\end
+
+\procedure cpl-fetch-compatibility-action(pluginTitle)
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/api/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+\end
+
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
@@ -134,7 +152,7 @@ type: text/vnd.tiddlywiki
 
 <!-- Changelog Section -->
 <div class="cpl-changelog-section">
-  <$action-sendmessage $message="cpl-fetch-changelog" pluginTitle={{!!cpl.title}} />
+  <<cpl-fetch-changelog-action {{!!cpl.title}}>>
   <$let changelogTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}>
     <$button class="tc-btn-invisible cpl-stat-item cpl-section-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看更新日志]else[Click to view changelog]] }}} aria-expanded={{{ [<changelogPanelStateTitle>get[text]match[open]then[true]else[false]] }}}>
       <$action-setfield $tiddler=<<changelogPanelStateTitle>> text={{{ [<changelogPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
@@ -174,7 +192,7 @@ type: text/vnd.tiddlywiki
 
 <!-- Compatibility Reports Section -->
 <div class="cpl-compatibility-section">
-  <$action-sendmessage $message="cpl-fetch-compatibility" pluginTitle={{!!cpl.title}} />
+  <<cpl-fetch-compatibility-action {{!!cpl.title}}>>
   <$let compatibilityTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility/]] }}}>
     <$button class="tc-btn-invisible cpl-stat-item cpl-section-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看兼容性报告]else[Click to view compatibility reports]] }}} aria-expanded={{{ [<compatibilityPanelStateTitle>get[text]match[open]then[true]else[false]] }}}>
       <$action-setfield $tiddler=<<compatibilityPanelStateTitle>> text={{{ [<compatibilityPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />

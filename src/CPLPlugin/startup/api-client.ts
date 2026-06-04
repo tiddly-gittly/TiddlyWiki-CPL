@@ -12,7 +12,6 @@ import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
 import {
   fetchPluginStats,
-  fetchPluginChangelog,
   fetchPluginComments,
   fetchPluginCompatibility,
   queuePluginStatsFetch,
@@ -59,17 +58,6 @@ export const startup = (): void => {
       const pluginTitle = getEventParam(event, 'pluginTitle');
       if (pluginTitle) {
         queuePluginStatsFetch(cplServerApi, pluginTitle);
-      }
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-changelog',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginChangelog(cplServerApi, pluginTitle);
       }
       return undefined;
     },
@@ -299,28 +287,6 @@ export const startup = (): void => {
   );
 
   tw.rootWidget.addEventListener(
-    'cpl-fetch-comments',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginComments(cplServerApi, pluginTitle);
-      }
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-compatibility',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginCompatibility(cplServerApi, pluginTitle);
-      }
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
     'cpl-submit-compatibility',
     (event: RootWidgetEvent): undefined => {
       const pluginTitle = getEventParam(event, 'pluginTitle');
@@ -388,45 +354,6 @@ export const startup = (): void => {
           fetchPluginCompatibility(cplServerApi, pluginTitle);
         },
       );
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-pending-comments',
-    (_event: RootWidgetEvent): undefined => {
-      cplServerApi.getPendingComments((error, data) => {
-        if (error || !data) {
-          console.error('[CPL-Server] Failed to fetch pending comments:', error);
-          return;
-        }
-        tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/pending-comments',
-          text: JSON.stringify(data),
-          type: 'application/json',
-        });
-      });
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-all-recent-comments',
-    (_event: RootWidgetEvent): undefined => {
-      cplServerApi.getAllRecentComments((error, data) => {
-        if (error || !data) {
-          console.error(
-            '[CPL-Server] Failed to fetch all recent comments:',
-            error,
-          );
-          return;
-        }
-        tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/all-recent-comments',
-          text: JSON.stringify(data),
-          type: 'application/json',
-        });
-      });
       return undefined;
     },
   );

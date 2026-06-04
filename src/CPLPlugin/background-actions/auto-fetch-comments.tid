@@ -6,5 +6,11 @@ track-filter: [[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk
 type: text/vnd.tiddlywiki
 
 \whitespace trim
-<$action-sendmessage $message="cpl-fetch-all-recent-comments"/>
-<$action-sendmessage $message="cpl-fetch-pending-comments"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/api/comments/all-recent]] }}}
+  method="GET"
+  oncompletion="<$action-setfield $tiddler=&quot;$:/temp/CPL-Server/all-recent-comments&quot; text=<<data>> type=&quot;application/json&quot;/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/api/comments/pending]] }}}
+  method="GET"
+  oncompletion="<$action-setfield $tiddler=&quot;$:/temp/CPL-Server/pending-comments&quot; text=<<data>> type=&quot;application/json&quot;/>"/>

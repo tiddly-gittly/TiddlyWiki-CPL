@@ -87,6 +87,13 @@ export const refreshMirrorCapabilityState = (
   setApiAvailability(null);
   setRepoType(getConfiguredMirrorType());
   clearServerTempState();
+
+  // Expose API base URL for Wikitext tm-http-request widgets
+  tw.wiki.addTiddler({
+    title: '$:/temp/CPL-Server/api-base',
+    text: getCurrentServerOrigin(),
+  });
+
   probeApiAvailability(mirrorType => {
     if (mirrorType !== 'server') {
       setAnonymousUserStatus();

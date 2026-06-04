@@ -90,7 +90,10 @@ type: text/vnd.tiddlywiki
           </div>
           <div class="cpl-moderation-refresh-hint">
             <$button class="tc-btn-invisible">
-              <$action-sendmessage $message="cpl-fetch-pending-comments" />
+              <$action-sendmessage $message="tm-http-request"
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/api/comments/pending]] }}}
+                method="GET"
+                oncompletion="<$action-setfield $tiddler=&quot;$:/temp/CPL-Server/pending-comments&quot; text=<<data>> type=&quot;application/json&quot;/>"/>
               <$text text={{{ [<chinese>match[yes]then[审核后点此刷新]else[Click to refresh after moderation] }}}}/>
             </$button>
           </div>
@@ -122,7 +125,10 @@ type: text/vnd.tiddlywiki
       🕐 <$text text={{{ [<chinese>match[yes]then[最新评论]else[Recent Comments]] }}}/>
     </h3>
     <$button class="tc-btn-invisible cpl-inline-button-link">
-      <$action-sendmessage $message="cpl-fetch-all-recent-comments" />
+      <$action-sendmessage $message="tm-http-request"
+        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/api/comments/all-recent]] }}}
+        method="GET"
+        oncompletion="<$action-setfield $tiddler=&quot;$:/temp/CPL-Server/all-recent-comments&quot; text=<<data>> type=&quot;application/json&quot;/>"/>
       🔄 <$text text={{{ [<chinese>match[yes]then[刷新]else[Refresh]] }}}/>
     </$button>
   </div>
