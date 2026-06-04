@@ -96,20 +96,27 @@ const serializeStatsTiddler = (
  */
 const readStats = (pluginTitle: string): DownloadStats => {
   const dir = getStatsDir();
-  const filename = `${pluginTitleToFilename(pluginTitle)}.tid`;
-  const filePath = pathModule.join(dir, filename);
+  const baseName = pluginTitleToFilename(pluginTitle);
 
-  if (!fs.existsSync(filePath)) {
-    return { downloadCount: 0, lastUpdated: null, downloadsByIp: {} };
+  // Try suffixed version first (multi-server), then unsuffixed
+  const suffix = Config.getServerSuffix();
+  const candidates = suffix
+    ? [`${baseName}${suffix}.tid`, `${baseName}.tid`]
+    : [`${baseName}.tid`];
+
+  for (const filename of candidates) {
+    const filePath = pathModule.join(dir, filename);
+    if (!fs.existsSync(filePath)) continue;
+    try {
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const parsed = parseStatsTiddler(content);
+      if (parsed) return parsed;
+    } catch {
+      // try next candidate
+    }
   }
 
-  try {
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const parsed = parseStatsTiddler(content);
-    return parsed ?? { downloadCount: 0, lastUpdated: null, downloadsByIp: {} };
-  } catch {
-    return { downloadCount: 0, lastUpdated: null, downloadsByIp: {} };
-  }
+  return { downloadCount: 0, lastUpdated: null, downloadsByIp: {} };
 };
 
 /**
