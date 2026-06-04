@@ -584,6 +584,24 @@ test.describe('CPL Client Installation E2E', () => {
 
   test('blank wiki can install powered-by-tiddlywiki from Netlify mirror', async ({ page }) => {
     test.skip(!!process.env.CI, 'Requires external network access to Netlify');
+
+    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
+
+    // Browser-side health check: use the same CPL Query path the install
+    // will use, so CORS/proxy issues are caught early.
+    const netlifyReachable = await page.evaluate(async (pluginTitle) => {
+      try {
+        await globalThis.__tiddlywiki_cpl__('Query', { plugin: pluginTitle });
+        return true;
+      } catch {
+        return false;
+      }
+    }, REAL_MIRROR_PLUGIN_TITLE);
+    if (!netlifyReachable) {
+      test.skip(true, 'Netlify mirror unreachable from browser (CORS or network)');
+    }
+
     await installFromMirrorInBlankWiki(page, NETLIFY_REPO, REAL_MIRROR_PLUGIN_TITLE);
 
     const installState = await page.evaluate(({ pluginTitle }) => ({
@@ -599,6 +617,22 @@ test.describe('CPL Client Installation E2E', () => {
 
   test('blank wiki can install powered-by-tiddlywiki from GitHub Pages mirror', async ({ page }) => {
     test.skip(!!process.env.CI, 'Requires external network access to GitHub Pages');
+
+    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
+
+    const ghReachable = await page.evaluate(async (pluginTitle) => {
+      try {
+        await globalThis.__tiddlywiki_cpl__('Query', { plugin: pluginTitle });
+        return true;
+      } catch {
+        return false;
+      }
+    }, REAL_MIRROR_PLUGIN_TITLE);
+    if (!ghReachable) {
+      test.skip(true, 'GitHub Pages mirror unreachable from browser (CORS or network)');
+    }
+
     await installFromMirrorInBlankWiki(page, GITHUB_PAGES_REPO, REAL_MIRROR_PLUGIN_TITLE);
 
     const installState = await page.evaluate(({ pluginTitle }) => ({
