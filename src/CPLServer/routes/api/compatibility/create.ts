@@ -8,7 +8,7 @@ import {
   parseJsonBody,
 } from '../../../lib/http';
 import { getRuntimeState } from '../../../lib/runtime-state';
-import { CompatibilityStore } from '../../../lib/store/compatibility';
+import { CompatibilityTiddlerStore } from '../../../lib/store/compatibility-tiddlers';
 import type {
   CompatibilityConflictType,
   CompatibilityReport,
@@ -170,7 +170,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       updatedAt: timestamp,
     };
 
-    CompatibilityStore.addReport(pluginTitle, report);
+    CompatibilityTiddlerStore.addReport(report);
     recordCompatibilityReport(user.githubId);
 
     sendJson(context, 201, {

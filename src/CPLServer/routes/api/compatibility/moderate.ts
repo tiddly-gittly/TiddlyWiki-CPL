@@ -1,5 +1,5 @@
 import { Auth } from '../../../lib/auth';
-import { CompatibilityStore } from '../../../lib/store/compatibility';
+import { CompatibilityTiddlerStore } from '../../../lib/store/compatibility-tiddlers';
 import {
   decodeRouteParam,
   sendError,
@@ -46,7 +46,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const report = CompatibilityStore.updateReportStatus(
+    const report = CompatibilityTiddlerStore.updateReportStatus(
       pluginTitle,
       reportId,
       status,

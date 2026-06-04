@@ -146,5 +146,7 @@ tmp/
 wiki/files/plugin-fetched-history/
 repo-cache/
 
-# CPL runtime comment tiddlers (managed by CPL server)
+# CPL runtime tiddler data (managed by CPL server — user-generated content)
 wiki/tiddlers/comments/
+wiki/tiddlers/ratings/
+wiki/tiddlers/compatibility/

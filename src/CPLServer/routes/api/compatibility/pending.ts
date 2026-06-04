@@ -1,5 +1,5 @@
 import { Auth } from '../../../lib/auth';
-import { CompatibilityStore } from '../../../lib/store/compatibility';
+import { CompatibilityTiddlerStore } from '../../../lib/store/compatibility-tiddlers';
 import { sendError, sendInternalError, sendJson } from '../../../lib/http';
 import type { RouteHandler } from '../../../lib/types';
 
@@ -14,7 +14,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const reports = CompatibilityStore.getPendingReports();
+    const reports = CompatibilityTiddlerStore.getPendingReports();
 
     sendJson(context, 200, {
       success: true,

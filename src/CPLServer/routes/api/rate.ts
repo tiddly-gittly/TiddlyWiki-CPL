@@ -1,5 +1,5 @@
 import { Auth } from '../../lib/auth';
-import { DataStore } from '../../lib/store/data';
+import { RatingTiddlerStore } from '../../lib/store/rating-tiddlers';
 import {
   decodeRouteParam,
   parseJsonBody,
@@ -69,7 +69,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const ratings = DataStore.addRating(pluginTitle, user, rating);
+    const ratings = RatingTiddlerStore.addRating(pluginTitle, user, rating);
 
     sendJson(context, 200, {
       success: true,

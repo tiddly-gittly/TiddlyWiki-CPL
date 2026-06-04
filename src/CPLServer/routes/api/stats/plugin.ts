@@ -4,6 +4,7 @@ import {
   sendJson,
 } from '../../../lib/http';
 import { DataStore } from '../../../lib/store/data';
+import { RatingTiddlerStore } from '../../../lib/store/rating-tiddlers';
 import type { RouteHandler } from '../../../lib/types';
 
 export const method = 'GET';
@@ -13,7 +14,7 @@ export const handler: RouteHandler = (_request, _response, context) => {
   try {
     const pluginTitle = decodeRouteParam(context.params[0]);
     const stats = DataStore.getStats(pluginTitle);
-    const ratings = DataStore.getRatings(pluginTitle);
+    const ratings = RatingTiddlerStore.getStats(pluginTitle);
 
     sendJson(
       context,

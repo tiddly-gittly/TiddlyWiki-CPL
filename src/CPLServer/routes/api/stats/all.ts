@@ -1,5 +1,6 @@
 import { sendInternalError, sendJson } from '../../../lib/http';
 import { DataStore } from '../../../lib/store/data';
+import { RatingTiddlerStore } from '../../../lib/store/rating-tiddlers';
 import type { RouteHandler } from '../../../lib/types';
 
 interface CombinedStats {
@@ -14,7 +15,7 @@ export const path = /^\/cpl\/api\/stats$/;
 export const handler: RouteHandler = (_request, _response, context) => {
   try {
     const allStats = DataStore.getAllStats();
-    const allRatings = DataStore.getAllRatings();
+    const allRatings = RatingTiddlerStore.getAllStats();
     const result: Record<string, CombinedStats> = {};
 
     Object.entries(allStats).forEach(([pluginTitle, stats]) => {
