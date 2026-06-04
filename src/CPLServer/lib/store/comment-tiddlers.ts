@@ -4,8 +4,8 @@ import * as pathModule from 'path';
 import { Config } from '../config';
 import type { CommentRecord, PendingCommentRecord } from '../types';
 
-const getCommentTiddlersDir = (): string => Config.commentsTiddlersDir;
-
+const getPendingDir = (): string => Config.commentsPendingDir;
+const getApprovedDir = (): string => Config.commentsApprovedDir;
 const COMMENT_PREFIX = '$:/cpl/comment/';
 const TID_FIELD_ORDER = [
   'title',
@@ -19,59 +19,56 @@ const TID_FIELD_ORDER = [
   'type',
 ];
 
-const ensureDir = (): void => {
-  if (!fs.existsSync(getCommentTiddlersDir())) {
-    fs.mkdirSync(getCommentTiddlersDir(), { recursive: true });
+const ensureDir = (dir: string): void => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
   }
 };
 
 /**
- * Read all comment tiddlers from disk and return as CommentRecord[].
+ * Scan a directory for .tid files and parse them into comment records.
  */
-const readAllCommentTiddlers = (): Array<CommentRecord & { pluginTitle: string }> => {
-  if (!fs.existsSync(getCommentTiddlersDir())) {
-    return [];
-  }
-
-  const seenIds = new Set<string>();
+const scanDir = (
+  dir: string,
+): Array<CommentRecord & { pluginTitle: string }> => {
+  if (!fs.existsSync(dir)) return [];
   const results: Array<CommentRecord & { pluginTitle: string }> = [];
 
-  for (const fileName of fs.readdirSync(getCommentTiddlersDir())) {
-    if (!fileName.endsWith('.tid')) {
-      continue;
-    }
-
-    const filePath = pathModule.join(getCommentTiddlersDir(), fileName);
+  for (const fileName of fs.readdirSync(dir)) {
+    if (!fileName.endsWith('.tid')) continue;
     try {
-      const content = fs.readFileSync(filePath, 'utf-8');
+      const content = fs.readFileSync(
+        pathModule.join(dir, fileName),
+        'utf-8',
+      );
       const parsed = parseCommentTiddler(content);
-      if (parsed && !seenIds.has(parsed.id)) {
-        seenIds.add(parsed.id);
-        results.push(parsed);
-      }
-    } catch {
-      // skip unreadable files
-    }
+      if (parsed) results.push(parsed);
+    } catch { /* skip unreadable */ }
   }
 
   return results;
 };
 
 /**
+ * Read all comment tiddlers from both pending/ and approved/ directories.
+ * Dedup by id: approved takes priority over pending.
+ */
+const readAllCommentTiddlers = (): Array<
+  CommentRecord & { pluginTitle: string }
+> => {
+  const pending = scanDir(getPendingDir());
+  const approved = scanDir(getApprovedDir());
+
+  const byId = new Map<string, CommentRecord & { pluginTitle: string }>();
+  for (const c of pending) byId.set(c.id, c);
+  // Approved overwrites pending for same id
+  for (const c of approved) byId.set(c.id, c);
+
+  return [...byId.values()].filter(c => c.status !== 'deleted');
+};
+
+/**
  * Parse a .tid string into a CommentRecord.
- *
- * Expected format:
- * title: $:/cpl/comment/<id>
- * plugin-title: $:/plugins/xxx/yyy
- * github-id: 3746270
- * username: linonetwo
- * avatar: https://...
- * status: pending|approved|rejected|deleted
- * created-at: 2026-06-03T10:22:07.498Z
- * updated-at: 2026-06-03T10:22:07.498Z
- * type: text/vnd.tiddlywiki
- *
- * <content>
  */
 const parseCommentTiddler = (
   raw: string,
@@ -81,36 +78,27 @@ const parseCommentTiddler = (
   let bodyStart = 0;
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    // Empty line after header fields → body starts next line
+    const trimmed = lines[i].trim();
     if (trimmed === '' && Object.keys(fields).length > 0) {
       bodyStart = i + 1;
       break;
     }
-
-    const colonIdx = line.indexOf(':');
-    if (colonIdx === -1) {
-      continue;
-    }
-
-    const key = line.substring(0, colonIdx).trim().toLowerCase();
-    const value = line.substring(colonIdx + 1).trim();
-
-    if (key === 'title' || key === 'plugin-title' || key === 'github-id' ||
-        key === 'username' || key === 'avatar' || key === 'status' ||
-        key === 'created-at' || key === 'updated-at') {
+    const colonIdx = lines[i].indexOf(':');
+    if (colonIdx === -1) continue;
+    const key = lines[i].substring(0, colonIdx).trim().toLowerCase();
+    const value = lines[i].substring(colonIdx + 1).trim();
+    if (
+      key === 'title' || key === 'plugin-title' || key === 'github-id' ||
+      key === 'username' || key === 'avatar' || key === 'status' ||
+      key === 'created-at' || key === 'updated-at'
+    ) {
       fields[key] = value;
     }
   }
 
-  if (!fields['title'] || !fields['plugin-title']) {
-    return null;
-  }
+  if (!fields['title'] || !fields['plugin-title']) return null;
 
   const content = lines.slice(bodyStart).join('\n').trim();
-
   return {
     id: fields['title'].startsWith(COMMENT_PREFIX)
       ? fields['title'].slice(COMMENT_PREFIX.length)
@@ -144,92 +132,100 @@ const serializeCommentTiddler = (
     'updated-at': comment.updatedAt,
     'type': 'text/vnd.tiddlywiki',
   };
-
   const header = TID_FIELD_ORDER
     .filter(key => fields[key] !== undefined)
     .map(key => `${key}: ${fields[key]}`)
     .join('\n');
-
   return `${header}\n\n${comment.content}`;
 };
 
-const getTidFilePath = (commentId: string): string =>
-  pathModule.join(getCommentTiddlersDir(), `${commentId}${Config.getServerSuffix()}.tid`);
+/**
+ * Get the file path for a comment in the given directory.
+ */
+const getFilePath = (dir: string, commentId: string): string =>
+  pathModule.join(dir, `${commentId}${Config.getServerSuffix()}.tid`);
 
 /**
- * Find a comment file by ID, regardless of server suffix.
- * Multi-server deployments write different suffixes on the same logical comment.
+ * Find a comment file by ID across both dirs.
  */
-const findCommentFile = (commentId: string): string | null => {
-  const dir = getCommentTiddlersDir();
-  if (!fs.existsSync(dir)) return null;
-  for (const fileName of fs.readdirSync(dir)) {
-    if (fileName.startsWith(commentId) && fileName.endsWith('.tid')) {
-      return pathModule.join(dir, fileName);
+const findCommentFile = (
+  commentId: string,
+): { dir: string; path: string } | null => {
+  for (const dir of [getPendingDir(), getApprovedDir()]) {
+    if (!fs.existsSync(dir)) continue;
+    for (const fileName of fs.readdirSync(dir)) {
+      if (fileName.startsWith(commentId) && fileName.endsWith('.tid')) {
+        return { dir, path: pathModule.join(dir, fileName) };
+      }
     }
   }
   return null;
 };
 
 export const CommentTiddlerStore = {
-  /**
-   * Get comments for a specific plugin, optionally filtered by status.
-   */
   getComments(
     pluginTitle: string,
     status?: string | null,
   ): CommentRecord[] {
     const all = readAllCommentTiddlers()
       .filter(c => c.pluginTitle === pluginTitle)
-      // exclude deleted
       .filter(c => c.status !== 'deleted');
-
-    if (!status) {
-      return all;
-    }
-
-    return all.filter(c => c.status === status);
+    return status ? all.filter(c => c.status === status) : all;
   },
 
   /**
-   * Create a new comment as a .tid file.
+   * Create a new comment — always goes to pending/.
    */
   addComment(
     pluginTitle: string,
     comment: CommentRecord,
   ): CommentRecord {
-    ensureDir();
-    const filePath = getTidFilePath(comment.id);
-    const tid = serializeCommentTiddler(comment, pluginTitle);
-    fs.writeFileSync(filePath, tid, 'utf-8');
+    const dir = getPendingDir();
+    ensureDir(dir);
+    const filePath = getFilePath(dir, comment.id);
+    // New comments always start as pending
+    const pendingComment = { ...comment, status: 'pending' as const };
+    fs.writeFileSync(filePath, serializeCommentTiddler(pendingComment, pluginTitle), 'utf-8');
     return comment;
   },
 
   /**
-   * Update a comment's status by rewriting its .tid file.
+   * Update comment status.
+   * - approved → move from pending/ to approved/
+   * - rejected → remove from pending/
+   * - deleted → remove from wherever it is
    */
   updateCommentStatus(
     pluginTitle: string,
     commentId: string,
     status: 'approved' | 'rejected',
   ): CommentRecord | null {
-    const filePath = findCommentFile(commentId) ?? getTidFilePath(commentId);
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
+    const found = findCommentFile(commentId);
+    if (!found) return null;
 
     try {
-      const raw = fs.readFileSync(filePath, 'utf-8');
+      const raw = fs.readFileSync(found.path, 'utf-8');
       const comment = parseCommentTiddler(raw);
-      if (!comment) {
-        return null;
-      }
+      if (!comment) return null;
 
       comment.status = status;
       comment.updatedAt = new Date().toISOString();
-
       const tid = serializeCommentTiddler(comment, pluginTitle);
-      fs.writeFileSync(filePath, tid, 'utf-8');
+
+      if (status === 'approved') {
+        // Move from pending/ to approved/
+        const approvedDir = getApprovedDir();
+        ensureDir(approvedDir);
+        const newPath = getFilePath(approvedDir, commentId);
+        fs.writeFileSync(newPath, tid, 'utf-8');
+        if (found.dir !== approvedDir) {
+          fs.unlinkSync(found.path);
+        }
+      } else {
+        // rejected — just remove from pending/
+        fs.unlinkSync(found.path);
+      }
+
       return comment;
     } catch {
       return null;
@@ -237,27 +233,21 @@ export const CommentTiddlerStore = {
   },
 
   /**
-   * Delete a comment by removing its .tid file.
+   * Delete a comment — remove from whichever dir it's in.
    */
   deleteComment(_pluginTitle: string, commentId: string): boolean {
-    const filePath = findCommentFile(commentId);
-    if (!fs.existsSync(filePath)) {
-      return false;
-    }
-
+    const found = findCommentFile(commentId);
+    if (!found) return false;
     try {
-      fs.unlinkSync(filePath);
+      fs.unlinkSync(found.path);
       return true;
     } catch {
       return false;
     }
   },
 
-  /**
-   * Get all pending comments across all plugins.
-   */
   getPendingComments(): PendingCommentRecord[] {
-    return readAllCommentTiddlers()
+    return scanDir(getPendingDir())
       .filter(c => c.status === 'pending')
       .map(c => ({
         pluginTitle: c.pluginTitle,
@@ -274,18 +264,11 @@ export const CommentTiddlerStore = {
       }));
   },
 
-  /**
-   * Get all recent comments across all plugins.
-   * Admins see all non-deleted; regular users only see approved.
-   */
-  getAllComments(isAdmin: boolean): Array<CommentRecord & { pluginTitle: string }> {
-    const all = readAllCommentTiddlers()
-      .filter(c => c.status !== 'deleted');
-
-    if (!isAdmin) {
-      return all.filter(c => c.status === 'approved');
-    }
-
+  getAllComments(
+    isAdmin: boolean,
+  ): Array<CommentRecord & { pluginTitle: string }> {
+    const all = readAllCommentTiddlers();
+    if (!isAdmin) return all.filter(c => c.status === 'approved');
     return all.sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
