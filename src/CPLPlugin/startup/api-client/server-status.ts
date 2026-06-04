@@ -1,4 +1,8 @@
 import { tw, type CPLServerApi, type JsonObject } from './types';
+import {
+  ALL_PLUGIN_STATS_REFRESH_TITLE,
+  PLUGIN_ACTIVITY_REFRESH_TITLE,
+} from './constants';
 import { rawApiRequest } from './http';
 import { setApiStatus, clearServerTempState, setRepoType } from './utilities';
 import {
@@ -21,6 +25,13 @@ const setAnonymousUserStatus = (): void => {
   tw.wiki.addTiddler({
     title: '$:/temp/CPL-Server/is-admin',
     text: 'no',
+  });
+};
+
+const touchRefreshToken = (title: string): void => {
+  tw.wiki.addTiddler({
+    title,
+    text: String(Date.now()),
   });
 };
 
@@ -70,6 +81,8 @@ export const probeApiAvailability = (
         'server',
         `CPL server ${getMirrorLabel()} is available.`,
       );
+      touchRefreshToken(ALL_PLUGIN_STATS_REFRESH_TITLE);
+      touchRefreshToken(PLUGIN_ACTIVITY_REFRESH_TITLE);
       callback('server');
     },
   );

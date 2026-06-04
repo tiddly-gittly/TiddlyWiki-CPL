@@ -4,18 +4,17 @@ import {
   type OAuthResponse,
 } from './api-client/types';
 import {
+  ALL_PLUGIN_STATS_REFRESH_TITLE,
+  COMMENTS_CENTER_REFRESH_TITLE,
+  LEGACY_MIRROR_CONFIG_TITLE,
+  LEGACY_SERVER_CONFIG_TITLE,
   MIRROR_CONFIG_TITLE,
+  PLUGIN_ACTIVITY_REFRESH_TITLE,
   SERVER_CONFIG_TITLE,
 } from './api-client/constants';
 import { getCurrentServerOrigin } from './api-client/state';
 import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
-import {
-  fetchPluginStats,
-  fetchPluginComments,
-  fetchPluginCompatibility,
-  queuePluginStatsFetch,
-} from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
 import { startBuildStatusPolling } from './build-status-poll';
 
@@ -25,6 +24,25 @@ export const after = ['startup'];
 export const synchronous = true;
 
 const cplServerApi = createCplServerApi();
+const touchRefreshToken = (title: string, pluginTitle?: string): void => {
+  tw.wiki.addTiddler({
+    title,
+    text: String(Date.now()),
+    ...(pluginTitle ? { 'plugin-title': pluginTitle } : {}),
+  });
+};
+
+const requestAllPluginStatsRefresh = (pluginTitle?: string): void => {
+  touchRefreshToken(ALL_PLUGIN_STATS_REFRESH_TITLE, pluginTitle);
+};
+
+const requestPluginActivityRefresh = (pluginTitle: string): void => {
+  touchRefreshToken(PLUGIN_ACTIVITY_REFRESH_TITLE, pluginTitle);
+};
+
+const requestCommentsCenterRefresh = (pluginTitle: string): void => {
+  touchRefreshToken(COMMENTS_CENTER_REFRESH_TITLE, pluginTitle);
+};
 
 export const startup = (): void => {
   tw.cpl = cplServerApi;
@@ -38,7 +56,9 @@ export const startup = (): void => {
   tw.wiki.addEventListener('change', changes => {
     if (
       $tw.utils.hop(changes, MIRROR_CONFIG_TITLE) ||
-      $tw.utils.hop(changes, SERVER_CONFIG_TITLE)
+      $tw.utils.hop(changes, LEGACY_MIRROR_CONFIG_TITLE) ||
+      $tw.utils.hop(changes, SERVER_CONFIG_TITLE) ||
+      $tw.utils.hop(changes, LEGACY_SERVER_CONFIG_TITLE)
     ) {
       refreshMirrorCapabilityState(cplServerApi);
     }
@@ -48,17 +68,6 @@ export const startup = (): void => {
     'cpl-refresh-mirror',
     (_event: RootWidgetEvent): undefined => {
       refreshMirrorCapabilityState(cplServerApi);
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-stats',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        queuePluginStatsFetch(cplServerApi, pluginTitle);
-      }
       return undefined;
     },
   );
@@ -99,7 +108,7 @@ export const startup = (): void => {
           'total-ratings': String(data.totalRatings || 0),
         });
 
-        fetchPluginStats(cplServerApi, pluginTitle);
+        requestAllPluginStatsRefresh(pluginTitle);
       });
       return undefined;
     },
@@ -135,6 +144,7 @@ export const startup = (): void => {
             }
 
             console.log('[CPL-Server] Download recorded for', rootPlugin);
+            requestAllPluginStatsRefresh(rootPlugin);
           });
         }, 100);
       } catch (error) {
@@ -280,7 +290,8 @@ export const startup = (): void => {
           title: `$:/temp/CPL-Server/comment-status/${pluginTitle}`,
           text: 'success',
         });
-        fetchPluginComments(cplServerApi, pluginTitle);
+        requestPluginActivityRefresh(pluginTitle);
+        requestCommentsCenterRefresh(pluginTitle);
       });
       return undefined;
     },
@@ -351,7 +362,7 @@ export const startup = (): void => {
           tw.wiki.deleteTiddler(
             `$:/temp/CPL-Server/compatibility-draft/${pluginTitle}`,
           );
-          fetchPluginCompatibility(cplServerApi, pluginTitle);
+          requestPluginActivityRefresh(pluginTitle);
         },
       );
       return undefined;
@@ -373,7 +384,8 @@ export const startup = (): void => {
           console.error('[CPL-Server] Comment moderation error:', error);
           return;
         }
-        fetchPluginComments(cplServerApi, pluginTitle);
+        requestPluginActivityRefresh(pluginTitle);
+        requestCommentsCenterRefresh(pluginTitle);
       });
       return undefined;
     },
@@ -403,7 +415,7 @@ export const startup = (): void => {
             );
             return;
           }
-          fetchPluginCompatibility(cplServerApi, pluginTitle);
+          requestPluginActivityRefresh(pluginTitle);
         },
       );
       return undefined;

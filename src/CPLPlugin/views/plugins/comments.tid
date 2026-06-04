@@ -6,6 +6,15 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
+\procedure cpl-fetch-comments-action(pluginTitle)
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+\end
+
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
@@ -13,6 +22,8 @@ type: text/vnd.tiddlywiki
 
 <!-- Only show comment section for server mirrors -->
 <$list filter="[<serverType>match[server]]" variable="isServerMirror">
+
+<<cpl-fetch-comments-action {{!!cpl.title}}>>
 
 <div class="cpl-comment-section">
   <h3 class="cpl-comment-title">

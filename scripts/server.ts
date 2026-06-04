@@ -82,6 +82,7 @@ function injectTestModeConfig(): void {
   // over the plugin's shadow tiddlers from defaults.multids.
   const overrides: Record<string, string> = {
     '$:/plugins/Gk0Wk/CPL-Repo/config/current-server': origin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo': `${origin}/repo`,
   };
 
   for (const [title, text] of Object.entries(overrides)) {

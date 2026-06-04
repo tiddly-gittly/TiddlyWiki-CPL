@@ -1,6 +1,8 @@
 import {
+  LEGACY_MIRROR_CONFIG_TITLE,
   MIRROR_STATIC_REPOS_TITLE,
   MIRROR_SERVER_REPOS_TITLE,
+  STATIC_REPO_CONFIG_TITLE,
 } from '../api-client/constants';
 import { fetchStaticRepoFile, formatPluginTitle } from './static-mirror-fetch';
 import {
@@ -13,10 +15,8 @@ import {
   type RootWidgetEvent,
 } from './types';
 
-export const DEFAULT_REPO_ENTRY =
-  'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
-export const CURRENT_REPO_TITLE =
-  '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo';
+export const DEFAULT_REPO_ENTRY = 'https://tw-cpl.netlify.app/repo';
+export const CURRENT_REPO_TITLE = STATIC_REPO_CONFIG_TITLE;
 
 const BRIDGE_READY_TIMEOUT = 8_000;
 const BRIDGE_REQUEST_TIMEOUT = 30_000;
@@ -30,7 +30,20 @@ export const getCurrentRepoEntry = (): string => {
     return DEFAULT_REPO_ENTRY;
   }
 
-  return tw.wiki.getTiddlerText(CURRENT_REPO_TITLE, DEFAULT_REPO_ENTRY);
+  for (const includeShadow of [false, true]) {
+    for (const title of [CURRENT_REPO_TITLE, LEGACY_MIRROR_CONFIG_TITLE]) {
+      const value = tw.wiki.getTiddlerText(title, '').trim();
+      if (!value) {
+        continue;
+      }
+      if (!includeShadow && !tw.wiki.tiddlerExists(title)) {
+        continue;
+      }
+      return value;
+    }
+  }
+
+  return DEFAULT_REPO_ENTRY;
 };
 
 export const getEventParam = (
@@ -291,7 +304,7 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
   });
 
 export const cpl: CplRequest = (type, payload) => {
-  const entry = tw.wiki.getTiddlerText(CURRENT_REPO_TITLE, DEFAULT_REPO_ENTRY);
+  const entry = getCurrentRepoEntry();
   const repoType = getCurrentRepoType(entry);
 
   if (repoType === 'static') {

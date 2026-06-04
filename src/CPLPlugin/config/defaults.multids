@@ -2,11 +2,13 @@ title: $:/plugins/Gk0Wk/CPL-Repo/config/
 
 update-filter: [has[plugin-type]] -[prefix[$:/temp/]] -[[$:/core]]
 repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo https://cpl.tidgi.fun/repo
-static-repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo
+static-repos: https://tw-cpl.netlify.app/repo https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo https://cpl.tidgi.fun/repo
 server-repos: https://cpl.tidgi.fun/repo
 servers: https://cpl.tidgi.fun
 current-repo: https://tw-cpl.netlify.app/repo
 current-server: https://cpl.tidgi.fun
+current-static-repo: https://tw-cpl.netlify.app/repo
+current-server-repo: https://cpl.tidgi.fun/repo
 auto-refresh-at-startup: no
 auto-load-database-in-cpl-layout: yes
 auto-check-updates-in-cpl-layout: no

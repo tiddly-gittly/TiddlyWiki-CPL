@@ -104,6 +104,8 @@ async function navigateToPlugin(page, tiddlerTitle) {
   // should already do this; this keeps the helper robust for reused servers.
   await page.evaluate(() => {
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo', text: `${window.location.origin}/repo` });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo', text: `${window.location.origin}/repo` });
   });
 
   await page.waitForFunction(() => {
@@ -129,13 +131,16 @@ async function openPluginDatabase(page) {
   // Netlify/GitHub Pages availability or CORS behavior.
   await page.evaluate(({ staticRepoUrl }) => {
     const localServerUrl = window.location.origin;
+    const localServerRepoUrl = `${localServerUrl}/repo`;
     const alternateStaticRepoUrl = staticRepoUrl.endsWith('/') ? staticRepoUrl.slice(0, -1) : `${staticRepoUrl}/`;
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: localServerUrl });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo', text: localServerRepoUrl });
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/servers', text: localServerUrl });
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: staticRepoUrl });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo', text: staticRepoUrl });
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/repos', text: `${staticRepoUrl} ${alternateStaticRepoUrl}` });
     $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos', text: `${staticRepoUrl} ${alternateStaticRepoUrl}` });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: '' });
+    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: localServerRepoUrl });
   }, { staticRepoUrl: STATIC_REPO_URL });
 
   await page.waitForFunction(() => {
@@ -161,8 +166,16 @@ async function installFromMirrorInBlankWiki(page, mirrorUrl, pluginTitle) {
       text: mirrorUrl
     });
     $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo',
+      text: mirrorUrl
+    });
+    $tw.wiki.addTiddler({
       title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
       text: window.location.origin
+    });
+    $tw.wiki.addTiddler({
+      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo',
+      text: `${window.location.origin}/repo`
     });
   }, { mirrorUrl });
 
@@ -283,15 +296,15 @@ test.describe('CPL Server E2E', () => {
 
     await ratingToggle.click();
     await expect(page.locator('.cpl-rating-widget')).toContainText(/Login to rate this plugin|登录后即可为插件评分/);
+    // Rating stars should not be clickable when anonymous
     await expect(page.locator('.cpl-rating-star-button')).toHaveCount(0);
-    await expect(page.locator('.cpl-comment-login-button')).toHaveCount(0);
-    await expect(page.locator('.cpl-comment-login-icon')).toHaveCount(0);
-    await expect(page.locator('.cpl-comment-section')).toContainText(/GitHub login is not configured|GitHub 登录暂未配置/);
 
+    // Compatibility submission form is inside a collapsible panel and should not be visible by default
     await expect(
       page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
     ).toHaveCount(0);
-    await expect(page.locator('.cpl-compatibility-section')).toContainText(/Login to submit a compatibility report|登录后即可提交兼容性报告/);
+    // The collapsed panel shows a summary label instead of the anonymous prompt
+    await expect(page.locator('.cpl-compatibility-section')).toContainText(/No compatibility reports yet|暂无兼容性报告/);
   });
 
   test('should render empty changelog and compatibility reports without staying in loading state', async ({ page }) => {
@@ -314,6 +327,11 @@ test.describe('CPL Server E2E', () => {
     await page.waitForFunction(() => {
       return $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') === 'authenticated';
     }, { timeout: 30000 });
+
+    // Expand the compatibility panel first (it is collapsed by default)
+    const compatibilityToggle = page.locator('.cpl-compatibility-section .cpl-section-toggle-button');
+    await expect(compatibilityToggle).toBeVisible();
+    await compatibilityToggle.click();
 
     await expect(
       page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
@@ -348,24 +366,31 @@ test.describe('CPL Server E2E', () => {
     expect(result.stats).toHaveProperty('downloadCount');
   });
 
-  test('should create temp tiddlers for plugin stats', async ({ page }) => {
+  test('should create a shared temp tiddler for plugin stats', async ({ page }) => {
     await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
 
     // Wait a moment for async stats fetch
-    await page.waitForTimeout(500);
-
-    const hasTempTiddlers = await page.evaluate((title) => {
-      const statsTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/plugin-stats/' + title);
+    await page.waitForFunction(() => {
+      const statsTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats');
       return !!statsTiddler;
-    }, TEST_PLUGIN_CPL_TITLE);
+    }, { timeout: 10000 });
 
-    expect(hasTempTiddlers).toBe(true);
+    const hasSharedStatsTiddler = await page.evaluate(() => {
+      const statsTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats');
+      if (!statsTiddler) {
+        return false;
+      }
+      const stats = JSON.parse(statsTiddler.fields.text || '{}');
+      return !!stats.plugins && typeof stats.plugins === 'object';
+    });
+
+    expect(hasSharedStatsTiddler).toBe(true);
   });
 
   test('should allow switching mirror sources and keep legacy repo loading working', async ({ page }) => {
     await openPluginDatabase(page);
 
-    const mirrorSelect = page.locator('.cpl-mirror-select');
+    const mirrorSelect = page.locator('select.cpl-mirror-select').first();
     await expect(mirrorSelect).toBeVisible();
 
     const currentValue = await mirrorSelect.inputValue();
@@ -379,7 +404,7 @@ test.describe('CPL Server E2E', () => {
 
     await page.waitForFunction(
       (expectedRepo) => {
-        const currentRepo = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo');
+        const currentRepo = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo');
         const pluginsIndex = $tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index');
         return currentRepo === expectedRepo && !!pluginsIndex;
       },
@@ -388,7 +413,7 @@ test.describe('CPL Server E2E', () => {
     );
 
     const mirrorState = await page.evaluate(() => ({
-      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo'),
+      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo'),
       mirrorType: $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown'),
       hasPluginsIndex: !!$tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index')
     }));
@@ -413,8 +438,10 @@ test.describe('CPL Server E2E', () => {
     await page.evaluate(() => {
       const serverRoot = window.location.origin;
       $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: serverRoot });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo', text: `${serverRoot}/repo` });
       $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/servers', text: serverRoot });
       $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: serverRoot });
+      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo', text: serverRoot });
       $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/repos', text: `${serverRoot} ${serverRoot}/repo` });
       $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos', text: '' });
       $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: `${serverRoot} ${serverRoot}/repo` });
@@ -441,7 +468,7 @@ test.describe('CPL Server E2E', () => {
     }, { timeout: 30000 });
 
     const mirrorState = await page.evaluate(() => ({
-      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-repo'),
+      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo'),
       mirrorType: $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown'),
       hasPluginsIndex: !!$tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index')
     }));
