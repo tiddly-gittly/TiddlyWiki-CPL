@@ -5,9 +5,6 @@ tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager
 type: text/vnd.tiddlywiki
 
-<!-- Auto-check updates when this tab becomes active -->
-<$action-sendmessage $message="cpl-update-check" $filter="[[$:/temp/CPL-Repo/plugin-database-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]]"/>
-
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 {{$:/plugins/Gk0Wk/CPL-Repo/views/system/update-body}}
 </$list>

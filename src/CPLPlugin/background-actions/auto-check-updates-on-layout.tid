@@ -1,0 +1,9 @@
+created: 20260604000000000
+modified: 20260604000000000
+tags: $:/tags/BackgroundAction
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-check-updates-on-layout
+track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$action-sendmessage $message="cpl-update-check"/>

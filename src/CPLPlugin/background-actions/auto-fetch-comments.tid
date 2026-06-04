@@ -1,0 +1,10 @@
+created: 20260604000000000
+modified: 20260604000000000
+tags: $:/tags/BackgroundAction
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-comments
+track-filter: [[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$action-sendmessage $message="cpl-fetch-all-recent-comments"/>
+<$action-sendmessage $message="cpl-fetch-pending-comments"/>

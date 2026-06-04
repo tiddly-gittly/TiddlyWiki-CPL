@@ -22,10 +22,6 @@ type: text/vnd.tiddlywiki
   searchState="$:/temp/CPL-Comments/search-query"
 >
 
-<!-- Auto-fetch when this tab becomes active (panel-tab-state triggers action widgets) -->
-<$action-sendmessage $message="cpl-fetch-all-recent-comments" $filter="[[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]]"/>
-<$action-sendmessage $message="cpl-fetch-pending-comments" $filter="[[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]]"/>
-
 <div class="cpl-comments-center">
 
 <!-- Login prompt for anonymous users -->
