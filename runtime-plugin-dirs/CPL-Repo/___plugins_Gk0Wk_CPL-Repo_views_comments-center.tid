@@ -43,8 +43,6 @@ type: text/vnd.tiddlywiki
 <!-- Admin: Pending Comments Section -->
 <$list filter="[<isAdmin>match[yes]]" variable="adminView">
 
-<$action-sendmessage $message="cpl-fetch-pending-comments" />
-
 <div class="cpl-comments-center-section">
   <h3 class="cpl-card-heading-bordered">
     🔔 <$text text={{{ [<chinese>match[yes]then[待审核评论]else[Pending Comments]] }}}/>
@@ -119,9 +117,7 @@ type: text/vnd.tiddlywiki
 
 <!-- Recent Comments (everyone) -->
 <div class="cpl-comments-center-section">
-  <$action-sendmessage $message="cpl-fetch-all-recent-comments" />
-
-  <div class="cpl-comments-toolbar">
+<div class="cpl-comments-toolbar">
     <h3 class="cpl-card-heading-bordered" style="flex:1;margin:0;">
       🕐 <$text text={{{ [<chinese>match[yes]then[最新评论]else[Recent Comments]] }}}/>
     </h3>
