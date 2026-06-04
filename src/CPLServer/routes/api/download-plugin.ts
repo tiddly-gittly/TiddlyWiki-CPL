@@ -3,8 +3,8 @@ import * as pathModule from 'path';
 import { URL } from 'url';
 
 import { sanitizePluginFileName } from '../../lib/files';
-import { DataStore } from '../../lib/store/data';
 import { RateLimiter } from '../../lib/security/rate-limit';
+import { DownloadStatsTiddlerStore } from '../../lib/store/download-stats-tiddlers';
 import { decodeRouteParam, sendError, sendInternalError } from '../../lib/http';
 import type { RouteHandler } from '../../lib/types';
 
@@ -68,7 +68,7 @@ export const handler: RouteHandler = (request, _response, context) => {
     const ip = RateLimiter.getClientIp(request);
     if (RateLimiter.canDownload(pluginTitle, ip)) {
       RateLimiter.recordDownload(pluginTitle, ip);
-      DataStore.updateDownloadStats(pluginTitle, ip);
+      DownloadStatsTiddlerStore.updateDownloadStats(pluginTitle, ip);
     }
 
     context.sendResponse(

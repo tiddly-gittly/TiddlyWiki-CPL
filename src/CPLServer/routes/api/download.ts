@@ -1,5 +1,5 @@
-import { DataStore } from '../../lib/store/data';
 import { RateLimiter } from '../../lib/security/rate-limit';
+import { DownloadStatsTiddlerStore } from '../../lib/store/download-stats-tiddlers';
 import { decodeRouteParam, sendInternalError, sendJson } from '../../lib/http';
 import type { RouteHandler } from '../../lib/types';
 
@@ -13,7 +13,7 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     if (RateLimiter.canDownload(pluginTitle, ip)) {
       RateLimiter.recordDownload(pluginTitle, ip);
-      const stats = DataStore.updateDownloadStats(pluginTitle, ip);
+      const stats = DownloadStatsTiddlerStore.updateDownloadStats(pluginTitle, ip);
       sendJson(context, 200, {
         success: true,
         message: 'Download recorded',
@@ -23,7 +23,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const stats = DataStore.getStats(pluginTitle);
+    const stats = DownloadStatsTiddlerStore.getStats(pluginTitle);
     sendJson(context, 200, {
       success: true,
       message: 'Download rate limited (already counted recently)',

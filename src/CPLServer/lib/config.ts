@@ -55,6 +55,7 @@ export const Config = {
   commentsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'comments'),
   ratingsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'ratings'),
   compatibilityTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'compatibility'),
+  downloadStatsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'download-stats'),
   isAdmin: (githubId?: string | number | null): boolean => {
     if (!githubId) {
       return false;

@@ -16,6 +16,7 @@ services:
       - ./wiki/tiddlers/comments:/app/wiki/tiddlers/comments
       - ./wiki/tiddlers/ratings:/app/wiki/tiddlers/ratings
       - ./wiki/tiddlers/compatibility:/app/wiki/tiddlers/compatibility
+      - ./wiki/tiddlers/download-stats:/app/wiki/tiddlers/download-stats
       - ./docker/IfEditorMode.tid:/app/wiki/tiddlers/IfEditorMode.tid:ro
       # Shared with nginx: maintenance flag file
       - cpl-runtime:/tmp
