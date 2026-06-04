@@ -9,7 +9,6 @@ services:
     ports:
       - "127.0.0.1:28081:8080"
     volumes:
-      - ./data:/app/data
       - ./cache:/app/cache
       - ./wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched
       - ./wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history

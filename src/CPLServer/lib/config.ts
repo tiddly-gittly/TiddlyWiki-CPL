@@ -50,8 +50,6 @@ export const Config = {
   blockedGithubIds,
   commentRateLimit: envInt('CPL_COMMENT_RATE_LIMIT', 10),
   serverId,
-  dataDir: path.resolve(process.cwd(), 'data'),
-  commentsDir: path.resolve(process.cwd(), 'data', 'comments'),
   commentsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'comments'),
   ratingsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'ratings'),
   compatibilityTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'compatibility'),
