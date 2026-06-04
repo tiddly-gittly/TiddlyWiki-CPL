@@ -33,6 +33,7 @@ const readAllCommentTiddlers = (): Array<CommentRecord & { pluginTitle: string }
     return [];
   }
 
+  const seenIds = new Set<string>();
   const results: Array<CommentRecord & { pluginTitle: string }> = [];
 
   for (const fileName of fs.readdirSync(getCommentTiddlersDir())) {
@@ -44,7 +45,8 @@ const readAllCommentTiddlers = (): Array<CommentRecord & { pluginTitle: string }
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
       const parsed = parseCommentTiddler(content);
-      if (parsed) {
+      if (parsed && !seenIds.has(parsed.id)) {
+        seenIds.add(parsed.id);
         results.push(parsed);
       }
     } catch {
@@ -152,7 +154,22 @@ const serializeCommentTiddler = (
 };
 
 const getTidFilePath = (commentId: string): string =>
-  pathModule.join(getCommentTiddlersDir(), `${commentId}.tid`);
+  pathModule.join(getCommentTiddlersDir(), `${commentId}${Config.getServerSuffix()}.tid`);
+
+/**
+ * Find a comment file by ID, regardless of server suffix.
+ * Multi-server deployments write different suffixes on the same logical comment.
+ */
+const findCommentFile = (commentId: string): string | null => {
+  const dir = getCommentTiddlersDir();
+  if (!fs.existsSync(dir)) return null;
+  for (const fileName of fs.readdirSync(dir)) {
+    if (fileName.startsWith(commentId) && fileName.endsWith('.tid')) {
+      return pathModule.join(dir, fileName);
+    }
+  }
+  return null;
+};
 
 export const CommentTiddlerStore = {
   /**
@@ -196,7 +213,7 @@ export const CommentTiddlerStore = {
     commentId: string,
     status: 'approved' | 'rejected',
   ): CommentRecord | null {
-    const filePath = getTidFilePath(commentId);
+    const filePath = findCommentFile(commentId) ?? getTidFilePath(commentId);
     if (!fs.existsSync(filePath)) {
       return null;
     }
@@ -223,7 +240,7 @@ export const CommentTiddlerStore = {
    * Delete a comment by removing its .tid file.
    */
   deleteComment(_pluginTitle: string, commentId: string): boolean {
-    const filePath = getTidFilePath(commentId);
+    const filePath = findCommentFile(commentId);
     if (!fs.existsSync(filePath)) {
       return false;
     }

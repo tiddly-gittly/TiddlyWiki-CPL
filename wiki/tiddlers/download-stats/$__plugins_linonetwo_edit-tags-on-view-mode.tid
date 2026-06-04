@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_edit-tags-on-view-mode
+plugin-title: $:/plugins/linonetwo/edit-tags-on-view-mode
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-06-03T13:33:43.681Z","downloadsByIp":{"183.192.12.24":"2026-06-03T13:33:43.681Z"}}

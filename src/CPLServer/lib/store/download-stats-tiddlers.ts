@@ -118,7 +118,7 @@ const readStats = (pluginTitle: string): DownloadStats => {
 const writeStats = (pluginTitle: string, stats: DownloadStats): void => {
   ensureDir();
   const dir = getStatsDir();
-  const filename = `${pluginTitleToFilename(pluginTitle)}.tid`;
+  const filename = `${pluginTitleToFilename(pluginTitle)}${Config.getServerSuffix()}.tid`;
   const filePath = pathModule.join(dir, filename);
   const tid = serializeStatsTiddler(pluginTitle, stats);
   fs.writeFileSync(filePath, tid, 'utf-8');

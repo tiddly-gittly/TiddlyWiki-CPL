@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_tiddlywiki_codemirror-mode-htmlembedded
+plugin-title: $:/plugins/tiddlywiki/codemirror-mode-htmlembedded
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-06-04T01:55:46.076Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:55:46.076Z"}}

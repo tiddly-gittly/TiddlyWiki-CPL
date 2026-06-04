@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_krystal
+plugin-title: $:/plugins/linonetwo/krystal
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-06-03T13:03:02.207Z","downloadsByIp":{"49.75.111.177":"2026-06-03T13:03:02.207Z"}}

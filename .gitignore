@@ -145,9 +145,3 @@ src/CPLPlugin/config/repo-version.tid
 tmp/
 wiki/files/plugin-fetched-history/
 repo-cache/
-
-# CPL runtime tiddler data (managed by CPL server — user-generated content)
-wiki/tiddlers/comments/
-wiki/tiddlers/ratings/
-wiki/tiddlers/compatibility/
-wiki/tiddlers/download-stats/

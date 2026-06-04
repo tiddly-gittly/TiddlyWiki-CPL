@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as pathModule from 'path';
 
 import { Config } from '../config';
+import { Config } from '../config';
 import type { AuthenticatedUser, RatingRecord, RatingStats } from '../types';
 
 const getRatingsDir = (): string => Config.ratingsTiddlersDir;
@@ -197,7 +198,7 @@ export const RatingTiddlerStore = {
       `type: text/vnd.tiddlywiki`,
     ].join('\n');
 
-    const fileName = pathModule.join(getRatingsDir(), `${ratingId}.tid`);
+    const fileName = pathModule.join(getRatingsDir(), `${ratingId}${Config.getServerSuffix()}.tid`);
     fs.writeFileSync(fileName, tid, 'utf-8');
 
     return readAllRatingTiddlers(pluginTitle);

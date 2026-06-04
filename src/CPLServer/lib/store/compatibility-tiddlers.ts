@@ -159,10 +159,24 @@ export const CompatibilityTiddlerStore = {
     const tid = serializeCompatibilityTiddler(report);
     const fileName = pathModule.join(
       getCompatibilityDir(),
-      `${report.id}.tid`,
+      `${report.id}${Config.getServerSuffix()}.tid`,
     );
     fs.writeFileSync(fileName, tid, 'utf-8');
     return report;
+  },
+
+  /**
+   * Find a report file by ID, regardless of server suffix.
+   */
+  findReportFile(reportId: string): string | null {
+    const dir = getCompatibilityDir();
+    if (!fs.existsSync(dir)) return null;
+    for (const fileName of fs.readdirSync(dir)) {
+      if (fileName.startsWith(reportId) && fileName.endsWith('.tid')) {
+        return pathModule.join(dir, fileName);
+      }
+    }
+    return null;
   },
 
   updateReportStatus(
@@ -170,8 +184,11 @@ export const CompatibilityTiddlerStore = {
     status: Exclude<CompatibilityReportStatus, 'deleted'>,
   ): CompatibilityReport | null {
     const dir = getCompatibilityDir();
-    const filePath = pathModule.join(dir, `${reportId}.tid`);
-    if (!fs.existsSync(filePath)) return null;
+    let filePath = pathModule.join(dir, `${reportId}.tid`);
+    if (!fs.existsSync(filePath)) {
+      const existing = this.findReportFile(reportId);
+      if (existing) filePath = existing; else return null;
+    }
 
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
