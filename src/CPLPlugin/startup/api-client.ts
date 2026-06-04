@@ -185,7 +185,7 @@ export const startup = (): void => {
         );
         return undefined;
       }
-      const redirectUri = `${getCurrentServerOrigin()}/cpl/api/auth/github/callback`;
+      const redirectUri = `${getCurrentServerOrigin()}/cpl/auth/github/callback`;
       const githubAuthParams = new URLSearchParams({
         client_id: githubClientId,
         redirect_uri: redirectUri,
@@ -198,11 +198,11 @@ export const startup = (): void => {
     },
   );
 
-  if (window.location.pathname === '/cpl/api/auth/github/callback') {
+  if (window.location.pathname === '/cpl/auth/github/callback') {
     const code = new URLSearchParams(window.location.search).get('code');
     if (code) {
       tw.utils.httpRequest({
-        url: `${getCurrentServerOrigin()}/cpl/api/auth/github/callback?code=${encodeURIComponent(
+        url: `${getCurrentServerOrigin()}/cpl/auth/github/callback?code=${encodeURIComponent(
           code,
         )}`,
         type: 'GET',

@@ -1,5 +1,5 @@
 /**
- * Polls the /cpl/api/build-status endpoint and updates temp tiddlers
+ * Polls the /cpl/build-status endpoint and updates temp tiddlers
  * so the build-status-badge widget can reactively display build progress.
  *
  * Polls every 5 seconds when the status is not "idle". Stops polling

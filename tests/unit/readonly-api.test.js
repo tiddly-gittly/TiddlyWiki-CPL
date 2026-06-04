@@ -5,7 +5,7 @@ const {
 describe('CPL API readonly authorization patch', () => {
   test('uses reader authorization for CPL API write requests', () => {
     const shouldBypassWriterAcl = shouldUseReaderAuthorizationForCplApi(
-      { method: 'POST', url: '/cpl/api/download/%24%3A%2Fplugins%2Fdemo' },
+      { method: 'POST', url: '/cpl/download/%24%3A%2Fplugins%2Fdemo' },
       { get: () => '' },
     );
 
@@ -23,7 +23,7 @@ describe('CPL API readonly authorization patch', () => {
 
   test('does not change read requests', () => {
     const shouldBypassWriterAcl = shouldUseReaderAuthorizationForCplApi(
-      { method: 'GET', url: '/cpl/api/stats/%24%3A%2Fplugins%2Fdemo' },
+      { method: 'GET', url: '/cpl/stats/%24%3A%2Fplugins%2Fdemo' },
       { get: () => '' },
     );
 
@@ -32,7 +32,7 @@ describe('CPL API readonly authorization patch', () => {
 
   test('recognizes CPL API write requests behind a TiddlyWiki path prefix', () => {
     const shouldBypassWriterAcl = shouldUseReaderAuthorizationForCplApi(
-      { method: 'PUT', url: '/wiki/cpl/api/comments/%24%3A%2Fplugins%2Fdemo/comment-id' },
+      { method: 'PUT', url: '/wiki/cpl/comments/%24%3A%2Fplugins%2Fdemo/comment-id' },
       { get: name => (name === 'path-prefix' ? '/wiki' : '') },
     );
 

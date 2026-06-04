@@ -23,10 +23,8 @@ type: text/vnd.tiddlywiki
 >
 
 <!-- Auto-fetch when this tab becomes active (panel-tab-state triggers action widgets) -->
-<$list filter="[[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]]" variable="tabTrigger">
-<$action-sendmessage $message="cpl-fetch-all-recent-comments"/>
-<$action-sendmessage $message="cpl-fetch-pending-comments"/>
-</$list>
+<$action-sendmessage $message="cpl-fetch-all-recent-comments" $filter="[[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]]"/>
+<$action-sendmessage $message="cpl-fetch-pending-comments" $filter="[[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]]"/>
 
 <div class="cpl-comments-center">
 

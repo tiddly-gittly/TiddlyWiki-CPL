@@ -479,7 +479,7 @@ test.describe('CPL Client Installation E2E', () => {
 
   test('blank wiki can install test plugin via TW import dialog and open its readme', async ({ page, request }) => {
     // Step 1: Download test plugin JSON from server using Playwright request API
-    const pluginResponse = await request.get(`${BASE_URL}/cpl/api/download-plugin/${encodeURIComponent(TEST_PLUGIN_TITLE)}`);
+    const pluginResponse = await request.get(`${BASE_URL}/cpl/download-plugin/${encodeURIComponent(TEST_PLUGIN_TITLE)}`);
     expect(pluginResponse.ok()).toBe(true);
     const pluginJson = await pluginResponse.json();
     expect(pluginJson).toHaveProperty('title');
@@ -543,7 +543,7 @@ test.describe('CPL Client Installation E2E', () => {
     // Simulate a blank wiki page fetching stats from CPL server
     const stats = await page.evaluate(async (serverUrl) => {
       try {
-        const res = await fetch(`${serverUrl}/cpl/api/stats/${encodeURIComponent('$:/plugins/test/plugin')}`);
+        const res = await fetch(`${serverUrl}/cpl/stats/${encodeURIComponent('$:/plugins/test/plugin')}`);
         return res.json();
       } catch (e) {
         return { error: e.message };

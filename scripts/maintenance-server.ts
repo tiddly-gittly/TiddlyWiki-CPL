@@ -6,7 +6,7 @@
  * 502 errors from the reverse proxy while the main TiddlyWiki server
  * hasn't started yet.
  *
- * Also exposes /cpl/api/build-status so the frontend can poll build progress.
+ * Also exposes /cpl/build-status so the frontend can poll build progress.
  *
  * Usage:
  *   ts-node scripts/maintenance-server.ts [--port 8080] [--status-file /tmp/cpl-build-status.json]
@@ -99,7 +99,7 @@ const HTML_PAGE = `<!DOCTYPE html>
   };
   var isZh = navigator.language.startsWith('zh');
   function update() {
-    fetch('/cpl/api/build-status')
+    fetch('/cpl/build-status')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         var labels = phaseLabels[d.phase] || phaseLabels['starting'];
@@ -124,7 +124,7 @@ const server = http.createServer((req, res) => {
   const url = req.url?.split('?')[0] ?? '/';
 
   // Expose build status as JSON API
-  if (url === '/cpl/api/build-status') {
+  if (url === '/cpl/build-status') {
     const status = readStatus();
     res.writeHead(200, {
       'Content-Type': 'application/json',

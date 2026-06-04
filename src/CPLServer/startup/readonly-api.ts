@@ -24,8 +24,20 @@ interface RouteRequestLike {
   headers?: Record<string, string | string[] | undefined>;
 }
 
-const CPL_API_PATH_PREFIX = '/cpl/api/';
+const CPL_API_PATH_PREFIX = '/cpl/';
 const CPL_API_WRITE_METHODS = new Set(['POST', 'PUT', 'DELETE']);
+
+/**
+ * CPL routes that perform write operations and need readonly bypass.
+ * Only POST/PUT/DELETE requests matching these patterns get reader authorization.
+ */
+const CPL_WRITE_ROUTES: RegExp[] = [
+  /^\/cpl\/download\//,
+  /^\/cpl\/rate\//,
+  /^\/cpl\/comments\//,
+  /^\/cpl\/compatibility\//,
+  /^\/cpl\/auth\/logout/,
+];
 
 // ETag based on server startup time — changes on restart, stable otherwise.
 // This allows browsers to get 304 on refresh instead of re-downloading ~12MB.
@@ -98,7 +110,7 @@ export const shouldUseReaderAuthorizationForCplApi = (
       ? pathname.slice(pathPrefix.length) || '/'
       : pathname;
 
-  const result = routePath.startsWith(CPL_API_PATH_PREFIX);
+  const result = CPL_WRITE_ROUTES.some((pattern) => pattern.test(routePath));
   return result;
 };
 

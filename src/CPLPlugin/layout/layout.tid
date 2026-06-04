@@ -17,14 +17,8 @@ tc-page-container tc-language-$(languageTitle)$ cpl-layout-container
 \end
 
 <!-- Auto-trigger: when entering CPL layout, auto-load DB and check updates -->
-<$list filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout]get[text]!match[no]]" variable="autoLoad">
-<$list filter="[[$:/temp/CPL-Repo/plugins-index]!is[tiddler]]" variable="noIndex">
-<$action-sendmessage $message="cpl-get-plugins-index"/>
-</$list>
-</$list>
-<$list filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]match[yes]]" variable="autoUpdate">
-<$action-sendmessage $message="cpl-update-check"/>
-</$list>
+<$action-sendmessage $message="cpl-get-plugins-index" $filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout]get[text]!match[no]] :and[[$:/temp/CPL-Repo/plugins-index]!is[tiddler]]"/>
+<$action-sendmessage $message="cpl-update-check" $filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]match[yes]]"/>
 
 <$navigator story="$:/StoryList" history="$:/HistoryList" openLinkFromInsideRiver={{$:/config/Navigation/openLinkFromInsideRiver}} openLinkFromOutsideRiver={{$:/config/Navigation/openLinkFromOutsideRiver}} relinkOnRename={{$:/config/RelinkOnRename}}>
 	<$messagecatcher $tm-navigate=<<redirected-navigate-actions>>>

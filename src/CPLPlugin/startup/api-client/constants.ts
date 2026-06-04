@@ -1,4 +1,4 @@
-export const CPL_API_BASE = '/cpl/api';
+export const CPL_API_BASE = '/cpl';
 export const API_STATUS_TIDDLER = '$:/temp/CPL-Repo/api-status';
 export const API_TYPE_TIDDLER = '$:/temp/CPL-Repo/server-type';
 export const API_MESSAGE_TIDDLER = '$:/temp/CPL-Repo/server-message';

@@ -227,9 +227,9 @@ describe('CPL Server API', () => {
     cleanupCompatibilityFiles();
   });
 
-  test('GET /cpl/api/stats/:pluginTitle should return stats', async () => {
+  test('GET /cpl/stats/:pluginTitle should return stats', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
-    const response = await makeRequest('GET', `/cpl/api/stats/${pluginTitle}`);
+    const response = await makeRequest('GET', `/cpl/stats/${pluginTitle}`);
     
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('downloadCount');
@@ -246,18 +246,18 @@ describe('CPL Server API', () => {
     expect([401, 403]).toContain(response.statusCode);
   });
 
-  test('POST /cpl/api/download/:pluginTitle should record download', async () => {
+  test('POST /cpl/download/:pluginTitle should record download', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
-    const response = await makeRequest('POST', `/cpl/api/download/${pluginTitle}`);
+    const response = await makeRequest('POST', `/cpl/download/${pluginTitle}`);
     
     expect(response.statusCode).toBe(200);
     expect(response.body.success).toBe(true);
     expect(response.body).toHaveProperty('downloadCount');
   });
 
-  test('POST /cpl/api/rate/:pluginTitle should require authentication', async () => {
+  test('POST /cpl/rate/:pluginTitle should require authentication', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
-    const response = await makeRequest('POST', `/cpl/api/rate/${pluginTitle}`, {
+    const response = await makeRequest('POST', `/cpl/rate/${pluginTitle}`, {
       rating: 5
     });
 
@@ -265,9 +265,9 @@ describe('CPL Server API', () => {
     expect(response.body.success).toBe(false);
   });
 
-  test('POST /cpl/api/rate/:pluginTitle should record rating from auth cookie', async () => {
+  test('POST /cpl/rate/:pluginTitle should record rating from auth cookie', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
-    const response = await makeRequest('POST', `/cpl/api/rate/${pluginTitle}`, {
+    const response = await makeRequest('POST', `/cpl/rate/${pluginTitle}`, {
       rating: 5
     }, {
       Cookie: authCookie(userToken)
@@ -278,9 +278,9 @@ describe('CPL Server API', () => {
     expect(response.body).toHaveProperty('averageRating');
   });
 
-  test('POST /cpl/api/rate/:pluginTitle should reject blocked GitHub users', async () => {
+  test('POST /cpl/rate/:pluginTitle should reject blocked GitHub users', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
-    const response = await makeRequest('POST', `/cpl/api/rate/${pluginTitle}`, {
+    const response = await makeRequest('POST', `/cpl/rate/${pluginTitle}`, {
       rating: 4
     }, {
       Cookie: authCookie(blockedToken)
@@ -290,19 +290,19 @@ describe('CPL Server API', () => {
     expect(response.body.success).toBe(false);
   });
 
-  test('GET /cpl/api/changelog/:pluginTitle should return empty changelog payload when absent', async () => {
+  test('GET /cpl/changelog/:pluginTitle should return empty changelog payload when absent', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/test/plugin');
-    const response = await makeRequest('GET', `/cpl/api/changelog/${pluginTitle}`);
+    const response = await makeRequest('GET', `/cpl/changelog/${pluginTitle}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('hasChangelog', false);
     expect(response.body).toHaveProperty('changelog', null);
   });
 
-  test('GET /cpl/api/download-plugin/:pluginTitle should serve plugin file', async () => {
+  test('GET /cpl/download-plugin/:pluginTitle should serve plugin file', async () => {
     // Use an offline plugin that exists
     const pluginTitle = encodeURIComponent('dullroar_sitemap');
-    const response = await makeRequest('GET', `/cpl/api/download-plugin/${pluginTitle}`);
+    const response = await makeRequest('GET', `/cpl/download-plugin/${pluginTitle}`);
     
     expect(response.statusCode).toBe(200);
     // Should be valid JSON plugin file (already parsed by makeRequest)
@@ -310,17 +310,17 @@ describe('CPL Server API', () => {
     expect(response.body).toHaveProperty('plugin-type', 'plugin');
   });
 
-  test('GET /cpl/api/download-plugin/:pluginTitle should return 404 for missing plugin', async () => {
+  test('GET /cpl/download-plugin/:pluginTitle should return 404 for missing plugin', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/nonexistent/plugin');
-    const response = await makeRequest('GET', `/cpl/api/download-plugin/${pluginTitle}`);
+    const response = await makeRequest('GET', `/cpl/download-plugin/${pluginTitle}`);
     
     expect(response.statusCode).toBe(404);
     expect(response.body.success).toBe(false);
   });
 
-  test('GET /cpl/api/download-plugin/:pluginTitle should prefer plugin-fetched over plugin-offline', async () => {
+  test('GET /cpl/download-plugin/:pluginTitle should prefer plugin-fetched over plugin-offline', async () => {
     const pluginTitle = encodeURIComponent(TEST_FETCHED_PLUGIN_TITLE);
-    const response = await makeRequest('GET', `/cpl/api/download-plugin/${pluginTitle}`);
+    const response = await makeRequest('GET', `/cpl/download-plugin/${pluginTitle}`);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('title', TEST_FETCHED_PLUGIN_TITLE);
@@ -329,7 +329,7 @@ describe('CPL Server API', () => {
 
   test('compatibility reports should require authentication for submission', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/compat-test/no-auth');
-    const response = await makeRequest('POST', `/cpl/api/compatibility/${pluginTitle}`, {
+    const response = await makeRequest('POST', `/cpl/compatibility/${pluginTitle}`, {
       description: 'Should be rejected'
     });
 
@@ -345,7 +345,7 @@ describe('CPL Server API', () => {
 
     const submitResponse = await makeRequest(
       'POST',
-      `/cpl/api/compatibility/${encodedPluginTitle}`,
+      `/cpl/compatibility/${encodedPluginTitle}`,
       {
         twVersionMin: '5.3.0',
         twVersionMax: '5.4.0',
@@ -377,7 +377,7 @@ describe('CPL Server API', () => {
 
     const pendingResponse = await makeRequest(
       'GET',
-      '/cpl/api/compatibility/pending',
+      '/cpl/compatibility/pending',
       null,
       { Authorization: `Bearer ${adminToken}` }
     );
@@ -387,7 +387,7 @@ describe('CPL Server API', () => {
 
     const publicBeforeModeration = await makeRequest(
       'GET',
-      `/cpl/api/compatibility/${encodedPluginTitle}`
+      `/cpl/compatibility/${encodedPluginTitle}`
     );
 
     expect(publicBeforeModeration.statusCode).toBe(200);
@@ -395,7 +395,7 @@ describe('CPL Server API', () => {
 
     const moderateResponse = await makeRequest(
       'PUT',
-      `/cpl/api/compatibility/${encodedPluginTitle}/${encodeURIComponent(submitResponse.body.report.id)}`,
+      `/cpl/compatibility/${encodedPluginTitle}/${encodeURIComponent(submitResponse.body.report.id)}`,
       { status: 'approved' },
       { Authorization: `Bearer ${adminToken}` }
     );
@@ -405,7 +405,7 @@ describe('CPL Server API', () => {
 
     const publicAfterModeration = await makeRequest(
       'GET',
-      `/cpl/api/compatibility/${encodedPluginTitle}`
+      `/cpl/compatibility/${encodedPluginTitle}`
     );
 
     expect(publicAfterModeration.statusCode).toBe(200);
@@ -414,7 +414,7 @@ describe('CPL Server API', () => {
 
     const relatedResponse = await makeRequest(
       'GET',
-      `/cpl/api/compatibility-related/${encodedConflictingTitle}`
+      `/cpl/compatibility-related/${encodedConflictingTitle}`
     );
 
     expect(relatedResponse.statusCode).toBe(200);
