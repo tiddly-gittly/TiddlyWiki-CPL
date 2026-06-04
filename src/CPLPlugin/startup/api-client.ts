@@ -15,6 +15,8 @@ import {
   fetchPluginChangelog,
   fetchPluginComments,
   fetchPluginCompatibility,
+  fetchAllRecentComments,
+  fetchPendingComments,
 } from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
 import { startBuildStatusPolling } from './build-status-poll';
@@ -40,6 +42,18 @@ export const startup = (): void => {
       $tw.utils.hop(changes, SERVER_CONFIG_TITLE)
     ) {
       refreshMirrorCapabilityState(cplServerApi);
+    }
+
+    // Auto-fetch when comments-center tab is selected
+    if ($tw.utils.hop(changes, '$:/temp/CPL-Repo/panel-tab-state')) {
+      const newTab = tw.wiki.getTiddlerText(
+        '$:/temp/CPL-Repo/panel-tab-state',
+        '',
+      );
+      if (newTab === '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center') {
+        fetchAllRecentComments(cplServerApi);
+        fetchPendingComments(cplServerApi);
+      }
     }
 
     const pluginTitle = getViewedPluginTitle();

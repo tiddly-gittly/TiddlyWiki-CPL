@@ -139,3 +139,35 @@ export const fetchPluginCompatibility = (
     });
   });
 };
+
+export const fetchAllRecentComments = (
+  cplServerApi: CPLServerApi,
+): void => {
+  cplServerApi.getAllRecentComments((error, data) => {
+    if (error || !data) {
+      console.warn('[CPL-Server] Failed to fetch all recent comments:', error);
+      return;
+    }
+    tw.wiki.addTiddler({
+      title: '$:/temp/CPL-Server/all-recent-comments',
+      text: JSON.stringify(data),
+      type: 'application/json',
+    });
+  });
+};
+
+export const fetchPendingComments = (
+  cplServerApi: CPLServerApi,
+): void => {
+  cplServerApi.getPendingComments((error, data) => {
+    if (error || !data) {
+      console.warn('[CPL-Server] Failed to fetch pending comments:', error);
+      return;
+    }
+    tw.wiki.addTiddler({
+      title: '$:/temp/CPL-Server/pending-comments',
+      text: JSON.stringify(data),
+      type: 'application/json',
+    });
+  });
+};
