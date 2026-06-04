@@ -22,6 +22,12 @@ export const createCplServerApi = (): CPLServerApi => ({
   getAllStats(callback) {
     apiRequest('GET', '/stats', null, callback);
   },
+  getStatsBatch(pluginTitles, callback) {
+    const titles = pluginTitles
+      .map(t => encodeURIComponent(t))
+      .join(',');
+    apiRequest('GET', `/stats?titles=${titles}`, null, callback);
+  },
   submitRating(pluginTitle, rating, callback) {
     authenticatedRequest(
       'POST',

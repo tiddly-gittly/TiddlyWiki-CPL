@@ -49,6 +49,10 @@ export interface CPLServerApi {
   ) => void;
   getStats: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
   getAllStats: (callback: ApiCallback<JsonObject>) => void;
+  getStatsBatch: (
+    pluginTitles: string[],
+    callback: ApiCallback<JsonObject>,
+  ) => void;
   submitRating: (
     pluginTitle: string,
     rating: number,

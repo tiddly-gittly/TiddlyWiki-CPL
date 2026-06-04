@@ -15,6 +15,7 @@ import {
   fetchPluginChangelog,
   fetchPluginComments,
   fetchPluginCompatibility,
+  queuePluginStatsFetch,
 } from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
 import { startBuildStatusPolling } from './build-status-poll';
@@ -57,7 +58,7 @@ export const startup = (): void => {
     (event: RootWidgetEvent): undefined => {
       const pluginTitle = getEventParam(event, 'pluginTitle');
       if (pluginTitle) {
-        fetchPluginStats(cplServerApi, pluginTitle);
+        queuePluginStatsFetch(cplServerApi, pluginTitle);
       }
       return undefined;
     },
