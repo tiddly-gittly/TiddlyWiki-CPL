@@ -125,48 +125,9 @@ const writeStats = (pluginTitle: string, stats: DownloadStats): void => {
 };
 
 /**
- * Migrate existing data/stats.json into the new tiddler-based format.
- * This is called once and is idempotent — it won't overwrite existing .tid files.
+ * Initialize the directory on module load.
  */
-const migrateFromOldJson = (): void => {
-  const oldPath = pathModule.resolve(process.cwd(), 'data', 'stats.json');
-  if (!fs.existsSync(oldPath)) return;
-
-  let migrated = false;
-  try {
-    const oldData = JSON.parse(
-      fs.readFileSync(oldPath, 'utf-8'),
-    ) as Record<string, DownloadStats>;
-
-    for (const [pluginTitle, stats] of Object.entries(oldData)) {
-      const dir = getStatsDir();
-      const filename = `${pluginTitleToFilename(pluginTitle)}.tid`;
-      const filePath = pathModule.join(dir, filename);
-
-      // Don't overwrite existing .tid files
-      if (fs.existsSync(filePath)) continue;
-
-      writeStats(pluginTitle, stats);
-      migrated = true;
-    }
-
-    if (migrated) {
-      console.log(
-        '[DownloadStatsTiddlerStore] Migrated stats from data/stats.json to wiki/tiddlers/download-stats/',
-      );
-    }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.warn(
-      '[DownloadStatsTiddlerStore] Failed to migrate old stats.json:',
-      message,
-    );
-  }
-};
-
-// Auto-migrate on first load
 ensureDir();
-migrateFromOldJson();
 
 export const DownloadStatsTiddlerStore = {
   /**
@@ -231,12 +192,5 @@ export const DownloadStatsTiddlerStore = {
     }
 
     return result;
-  },
-
-  /**
-   * Manually trigger stats.json migration (exposed for testing).
-   */
-  migrate(): void {
-    migrateFromOldJson();
   },
 };
