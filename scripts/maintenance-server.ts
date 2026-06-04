@@ -30,13 +30,23 @@ const PID_FILE = path.resolve('/tmp/cpl-maintenance-server.pid');
 /** Write PID so entrypoint can kill us */
 fs.writeFileSync(PID_FILE, String(process.pid), 'utf-8');
 
-const readStatus = (): { phase: string; message: string; startedAt: string } => {
+const readStatus = (): {
+  phase: string;
+  message: string;
+  startedAt: string;
+} => {
   try {
     if (fs.existsSync(STATUS_FILE)) {
       return JSON.parse(fs.readFileSync(STATUS_FILE, 'utf-8'));
     }
-  } catch { /* ignore */ }
-  return { phase: 'starting', message: 'Initializing...', startedAt: new Date().toISOString() };
+  } catch {
+    /* ignore */
+  }
+  return {
+    phase: 'starting',
+    message: 'Initializing...',
+    startedAt: new Date().toISOString(),
+  };
 };
 
 const HTML_PAGE = `<!DOCTYPE html>

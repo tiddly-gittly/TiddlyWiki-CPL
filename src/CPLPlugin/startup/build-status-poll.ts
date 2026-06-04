@@ -23,30 +23,25 @@ const setBuildStatus = (phase: string, message: string): void => {
 };
 
 const pollBuildStatus = (): void => {
-  rawApiRequest<JsonObject>(
-    'GET',
-    '/build-status',
-    null,
-    (error, data) => {
-      if (error) {
-        // If the build-status endpoint fails (e.g. server restarting),
-        // show a transient "restarting" state
-        setBuildStatus('restarting', 'Server is restarting...');
-        return;
-      }
+  rawApiRequest<JsonObject>('GET', '/build-status', null, (error, data) => {
+    if (error) {
+      // If the build-status endpoint fails (e.g. server restarting),
+      // show a transient "restarting" state
+      setBuildStatus('restarting', 'Server is restarting...');
+      return;
+    }
 
-      const phase = String(data?.phase ?? 'idle');
-      const message = String(data?.message ?? '');
+    const phase = String(data?.phase ?? 'idle');
+    const message = String(data?.message ?? '');
 
-      setBuildStatus(phase, message);
+    setBuildStatus(phase, message);
 
-      // Stop polling once idle
-      if (phase === 'idle' && pollTimer) {
-        clearInterval(pollTimer);
-        pollTimer = null;
-      }
-    },
-  );
+    // Stop polling once idle
+    if (phase === 'idle' && pollTimer) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+  });
 };
 
 export const startBuildStatusPolling = (): void => {

@@ -14,10 +14,8 @@ export const startup = (): void => {
   browserRuntime.__tiddlywiki_cpl__ = cpl;
 
   const installController = createInstallController();
-  let indexController: ReturnType<typeof createIndexController> | undefined;
-
   const updateController = createUpdateController();
-  indexController = createIndexController();
+  const indexController = createIndexController();
 
   tw.wiki.addEventListener('change', changes => {
     if (

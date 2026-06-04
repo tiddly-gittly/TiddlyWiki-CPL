@@ -45,7 +45,9 @@ function prepareTestWiki(): void {
   fs.rmSync(tempRoot, { recursive: true, force: true });
   fs.cpSync(path.join(WIKI_PATH, 'wiki'), tempRoot, { recursive: true });
   runtimeWikiPath = tempRoot;
-  console.log(`[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`);
+  console.log(
+    `[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`,
+  );
 }
 
 prepareTestWiki();
@@ -83,7 +85,10 @@ function injectTestModeConfig(): void {
   };
 
   for (const [title, text] of Object.entries(overrides)) {
-    const filePath = path.join(tempDir, `${title.replace(/[/:<>"|?*$]/g, '_')}.tid`);
+    const filePath = path.join(
+      tempDir,
+      `${title.replace(/[/:<>"|?*$]/g, '_')}.tid`,
+    );
     fs.writeFileSync(filePath, `title: ${title}\n\n${text}\n`, 'utf-8');
   }
 

@@ -31,19 +31,24 @@ const ensureDir = (dir: string): void => {
 const scanDir = (
   dir: string,
 ): Array<CommentRecord & { pluginTitle: string }> => {
-  if (!fs.existsSync(dir)) return [];
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
   const results: Array<CommentRecord & { pluginTitle: string }> = [];
 
   for (const fileName of fs.readdirSync(dir)) {
-    if (!fileName.endsWith('.tid')) continue;
+    if (!fileName.endsWith('.tid')) {
+      continue;
+    }
     try {
-      const content = fs.readFileSync(
-        pathModule.join(dir, fileName),
-        'utf-8',
-      );
+      const content = fs.readFileSync(pathModule.join(dir, fileName), 'utf-8');
       const parsed = parseCommentTiddler(content);
-      if (parsed) results.push(parsed);
-    } catch { /* skip unreadable */ }
+      if (parsed) {
+        results.push(parsed);
+      }
+    } catch {
+      /* skip unreadable */
+    }
   }
 
   return results;
@@ -60,9 +65,13 @@ const readAllCommentTiddlers = (): Array<
   const approved = scanDir(getApprovedDir());
 
   const byId = new Map<string, CommentRecord & { pluginTitle: string }>();
-  for (const c of pending) byId.set(c.id, c);
+  for (const c of pending) {
+    byId.set(c.id, c);
+  }
   // Approved overwrites pending for same id
-  for (const c of approved) byId.set(c.id, c);
+  for (const c of approved) {
+    byId.set(c.id, c);
+  }
 
   return [...byId.values()].filter(c => c.status !== 'deleted');
 };
@@ -84,30 +93,39 @@ const parseCommentTiddler = (
       break;
     }
     const colonIdx = lines[i].indexOf(':');
-    if (colonIdx === -1) continue;
+    if (colonIdx === -1) {
+      continue;
+    }
     const key = lines[i].substring(0, colonIdx).trim().toLowerCase();
     const value = lines[i].substring(colonIdx + 1).trim();
     if (
-      key === 'title' || key === 'plugin-title' || key === 'github-id' ||
-      key === 'username' || key === 'avatar' || key === 'status' ||
-      key === 'created-at' || key === 'updated-at'
+      key === 'title' ||
+      key === 'plugin-title' ||
+      key === 'github-id' ||
+      key === 'username' ||
+      key === 'avatar' ||
+      key === 'status' ||
+      key === 'created-at' ||
+      key === 'updated-at'
     ) {
       fields[key] = value;
     }
   }
 
-  if (!fields['title'] || !fields['plugin-title']) return null;
+  if (!fields.title || !fields['plugin-title']) {
+    return null;
+  }
 
   const content = lines.slice(bodyStart).join('\n').trim();
   return {
-    id: fields['title'].startsWith(COMMENT_PREFIX)
-      ? fields['title'].slice(COMMENT_PREFIX.length)
-      : fields['title'],
+    id: fields.title.startsWith(COMMENT_PREFIX)
+      ? fields.title.slice(COMMENT_PREFIX.length)
+      : fields.title,
     githubId: fields['github-id'] ?? '',
-    username: fields['username'] ?? 'Anonymous',
-    avatar: fields['avatar'] ?? '',
+    username: fields.username ?? 'Anonymous',
+    avatar: fields.avatar ?? '',
     content,
-    status: (fields['status'] as CommentRecord['status']) || 'pending',
+    status: (fields.status as CommentRecord['status']) || 'pending',
     createdAt: fields['created-at'] ?? new Date().toISOString(),
     updatedAt: fields['updated-at'] ?? new Date().toISOString(),
     pluginTitle: fields['plugin-title'],
@@ -122,18 +140,17 @@ const serializeCommentTiddler = (
   pluginTitle: string,
 ): string => {
   const fields: Record<string, string> = {
-    'title': `${COMMENT_PREFIX}${comment.id}`,
+    title: `${COMMENT_PREFIX}${comment.id}`,
     'plugin-title': pluginTitle,
     'github-id': comment.githubId,
-    'username': comment.username,
-    'avatar': comment.avatar || '',
-    'status': comment.status,
+    username: comment.username,
+    avatar: comment.avatar || '',
+    status: comment.status,
     'created-at': comment.createdAt,
     'updated-at': comment.updatedAt,
-    'type': 'text/vnd.tiddlywiki',
+    type: 'text/vnd.tiddlywiki',
   };
-  const header = TID_FIELD_ORDER
-    .filter(key => fields[key] !== undefined)
+  const header = TID_FIELD_ORDER.filter(key => fields[key] !== undefined)
     .map(key => `${key}: ${fields[key]}`)
     .join('\n');
   return `${header}\n\n${comment.content}`;
@@ -152,7 +169,9 @@ const findCommentFile = (
   commentId: string,
 ): { dir: string; path: string } | null => {
   for (const dir of [getPendingDir(), getApprovedDir()]) {
-    if (!fs.existsSync(dir)) continue;
+    if (!fs.existsSync(dir)) {
+      continue;
+    }
     for (const fileName of fs.readdirSync(dir)) {
       if (fileName.startsWith(commentId) && fileName.endsWith('.tid')) {
         return { dir, path: pathModule.join(dir, fileName) };
@@ -163,10 +182,7 @@ const findCommentFile = (
 };
 
 export const CommentTiddlerStore = {
-  getComments(
-    pluginTitle: string,
-    status?: string | null,
-  ): CommentRecord[] {
+  getComments(pluginTitle: string, status?: string | null): CommentRecord[] {
     const all = readAllCommentTiddlers()
       .filter(c => c.pluginTitle === pluginTitle)
       .filter(c => c.status !== 'deleted');
@@ -176,16 +192,17 @@ export const CommentTiddlerStore = {
   /**
    * Create a new comment — always goes to pending/.
    */
-  addComment(
-    pluginTitle: string,
-    comment: CommentRecord,
-  ): CommentRecord {
+  addComment(pluginTitle: string, comment: CommentRecord): CommentRecord {
     const dir = getPendingDir();
     ensureDir(dir);
     const filePath = getFilePath(dir, comment.id);
     // New comments always start as pending
     const pendingComment = { ...comment, status: 'pending' as const };
-    fs.writeFileSync(filePath, serializeCommentTiddler(pendingComment, pluginTitle), 'utf-8');
+    fs.writeFileSync(
+      filePath,
+      serializeCommentTiddler(pendingComment, pluginTitle),
+      'utf-8',
+    );
     return comment;
   },
 
@@ -201,12 +218,16 @@ export const CommentTiddlerStore = {
     status: 'approved' | 'rejected',
   ): CommentRecord | null {
     const found = findCommentFile(commentId);
-    if (!found) return null;
+    if (!found) {
+      return null;
+    }
 
     try {
       const raw = fs.readFileSync(found.path, 'utf-8');
       const comment = parseCommentTiddler(raw);
-      if (!comment) return null;
+      if (!comment) {
+        return null;
+      }
 
       comment.status = status;
       comment.updatedAt = new Date().toISOString();
@@ -237,7 +258,9 @@ export const CommentTiddlerStore = {
    */
   deleteComment(_pluginTitle: string, commentId: string): boolean {
     const found = findCommentFile(commentId);
-    if (!found) return false;
+    if (!found) {
+      return false;
+    }
     try {
       fs.unlinkSync(found.path);
       return true;
@@ -268,7 +291,9 @@ export const CommentTiddlerStore = {
     isAdmin: boolean,
   ): Array<CommentRecord & { pluginTitle: string }> {
     const all = readAllCommentTiddlers();
-    if (!isAdmin) return all.filter(c => c.status === 'approved');
+    if (!isAdmin) {
+      return all.filter(c => c.status === 'approved');
+    }
     return all.sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),

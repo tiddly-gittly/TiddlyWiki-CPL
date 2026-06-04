@@ -7,10 +7,7 @@ import {
   sendJson,
   parseJsonBody,
 } from '../../lib/http';
-import type {
-  RouteHandler,
-  CompatibilityReportStatus,
-} from '../../lib/types';
+import type { RouteHandler, CompatibilityReportStatus } from '../../lib/types';
 
 interface ModerateBody {
   status?: unknown;
@@ -26,7 +23,6 @@ export const bodyFormat = 'string';
 
 export const handler: RouteHandler = (request, _response, context) => {
   try {
-    const pluginTitle = decodeRouteParam(context.params[0]);
     const reportId = decodeRouteParam(context.params[1]);
     const body = parseJsonBody<ModerateBody>(context.data);
     const user = Auth.getUserFromRequest(request);
@@ -47,7 +43,6 @@ export const handler: RouteHandler = (request, _response, context) => {
     }
 
     const report = CompatibilityTiddlerStore.updateReportStatus(
-      pluginTitle,
       reportId,
       status,
     );

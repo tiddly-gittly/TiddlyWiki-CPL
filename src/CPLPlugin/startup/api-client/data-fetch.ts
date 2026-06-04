@@ -7,7 +7,7 @@ import { tw, type CPLServerApi } from './types';
  * want N HTTP requests for N plugins on a single page. This collects titles
  * over a short window and fires one batched request to /cpl/stats?titles=...
  */
-let batchQueue = new Set<string>();
+const batchQueue = new Set<string>();
 let batchTimer: ReturnType<typeof setTimeout> | null = null;
 const BATCH_WINDOW_MS = 100;
 
@@ -16,7 +16,9 @@ const flushStatsBatch = (cplServerApi: CPLServerApi): void => {
   batchQueue.clear();
   batchTimer = null;
 
-  if (titles.length === 0) return;
+  if (titles.length === 0) {
+    return;
+  }
 
   cplServerApi.getStatsBatch(titles, (error, data) => {
     if (error || !data) {
@@ -27,7 +29,9 @@ const flushStatsBatch = (cplServerApi: CPLServerApi): void => {
     const plugins = (data as Record<string, unknown>).plugins as
       | Record<string, Record<string, unknown>>
       | undefined;
-    if (!plugins) return;
+    if (!plugins) {
+      return;
+    }
 
     const now = String(Date.now());
     for (const [pluginTitle, stats] of Object.entries(plugins)) {
@@ -44,10 +48,16 @@ const flushStatsBatch = (cplServerApi: CPLServerApi): void => {
     // empty placeholder so the Wikitext UI shows a dash instead of
     // waiting forever for a tiddler that will never appear.
     for (const title of titles) {
-      if (plugins[title] !== undefined) continue;
+      if (plugins[title] !== undefined) {
+        continue;
+      }
       tw.wiki.addTiddler({
         title: `$:/temp/CPL-Server/plugin-stats/${title}`,
-        text: JSON.stringify({ downloadCount: 0, averageRating: 0, totalRatings: 0 }),
+        text: JSON.stringify({
+          downloadCount: 0,
+          averageRating: 0,
+          totalRatings: 0,
+        }),
         type: 'application/json',
         'plugin-title': title,
         timestamp: now,
@@ -64,14 +74,18 @@ export const queuePluginStatsFetch = (
   cplServerApi: CPLServerApi,
   pluginTitle: string,
 ): void => {
-  if (!pluginTitle) return;
+  if (!pluginTitle) {
+    return;
+  }
 
   // Skip if we already have fresh stats (<60s old) for this plugin
   const tempTitle = `$:/temp/CPL-Server/plugin-stats/${pluginTitle}`;
   const existing = tw.wiki.getTiddler(tempTitle);
   if (existing) {
     const ts = Number(existing.fields.timestamp ?? 0);
-    if (Date.now() - ts < 60_000) return;
+    if (Date.now() - ts < 60_000) {
+      return;
+    }
   }
 
   batchQueue.add(pluginTitle);

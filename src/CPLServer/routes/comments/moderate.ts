@@ -7,7 +7,7 @@ import {
   sendInternalError,
   sendJson,
 } from '../../lib/http';
-import type { CommentStatus, RouteHandler } from '../../lib/types';
+import type { RouteHandler } from '../../lib/types';
 
 interface ModerateCommentBody {
   status?: unknown;
@@ -67,7 +67,7 @@ export const handler: RouteHandler = (request, _response, context) => {
     const comment = CommentTiddlerStore.updateCommentStatus(
       pluginTitle,
       commentId,
-      status as Exclude<CommentStatus, 'deleted'>,
+      status,
     );
 
     if (!comment) {

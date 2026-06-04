@@ -1,8 +1,8 @@
+import { URL } from 'url';
 import { sendInternalError, sendJson } from '../../lib/http';
 import { DownloadStatsTiddlerStore } from '../../lib/store/download-stats-tiddlers';
 import { RatingTiddlerStore } from '../../lib/store/rating-tiddlers';
 import type { RouteHandler } from '../../lib/types';
-import { URL } from 'url';
 
 interface CombinedStats {
   downloadCount: number;

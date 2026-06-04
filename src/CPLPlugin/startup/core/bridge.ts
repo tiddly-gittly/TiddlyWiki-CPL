@@ -101,7 +101,9 @@ const getConfiguredRepoEntries = (
 
 const getCurrentRepoType = (entry: string): 'static' | 'server' | 'unknown' => {
   const normalizedEntry = normalizeRepoEntry(entry);
-  if (getConfiguredRepoEntries(MIRROR_STATIC_REPOS_TITLE).has(normalizedEntry)) {
+  if (
+    getConfiguredRepoEntries(MIRROR_STATIC_REPOS_TITLE).has(normalizedEntry)
+  ) {
     return 'static';
   }
 
@@ -223,7 +225,9 @@ const createMessenger = (entry: string): Promise<CplRequest> =>
                 counter += 1;
                 const requestTimeout = setTimeout(() => {
                   callbackMap.delete(token);
-                  rejectRequest(new Error(`CPL mirror request timed out: ${type}`));
+                  rejectRequest(
+                    new Error(`CPL mirror request timed out: ${type}`),
+                  );
                 }, BRIDGE_REQUEST_TIMEOUT);
                 callbackMap.set(token, [
                   resolveRequest,
@@ -301,7 +305,7 @@ export const cpl: CplRequest = (type, payload) => {
   }
 
   previousEntry = entry;
-  messagerPromise ??= createMessenger(entry).catch((bridgeError) => {
+  messagerPromise ??= createMessenger(entry).catch(bridgeError => {
     console.warn(
       `CPL iframe bridge failed for ${entry}, trying direct fetch: ${bridgeError}`,
     );

@@ -23,9 +23,7 @@ export const createCplServerApi = (): CPLServerApi => ({
     apiRequest('GET', '/stats', null, callback);
   },
   getStatsBatch(pluginTitles, callback) {
-    const titles = pluginTitles
-      .map(t => encodeURIComponent(t))
-      .join(',');
+    const titles = pluginTitles.map(t => encodeURIComponent(t)).join(',');
     apiRequest('GET', `/stats?titles=${titles}`, null, callback);
   },
   submitRating(pluginTitle, rating, callback) {
@@ -95,7 +93,9 @@ export const createCplServerApi = (): CPLServerApi => ({
   moderateComment(pluginTitle, commentId, status, callback) {
     authenticatedRequest(
       'PUT',
-      `/comments/${encodeURIComponent(pluginTitle)}/${encodeURIComponent(commentId)}`,
+      `/comments/${encodeURIComponent(pluginTitle)}/${encodeURIComponent(
+        commentId,
+      )}`,
       { status },
       callback,
     );
@@ -106,7 +106,9 @@ export const createCplServerApi = (): CPLServerApi => ({
   moderateCompatibilityReport(pluginTitle, reportId, status, callback) {
     authenticatedRequest(
       'PUT',
-      `/compatibility/${encodeURIComponent(pluginTitle)}/${encodeURIComponent(reportId)}`,
+      `/compatibility/${encodeURIComponent(pluginTitle)}/${encodeURIComponent(
+        reportId,
+      )}`,
       { status },
       callback,
     );

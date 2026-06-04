@@ -50,12 +50,44 @@ export const Config = {
   blockedGithubIds,
   commentRateLimit: envInt('CPL_COMMENT_RATE_LIMIT', 10),
   serverId,
-  commentsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'comments'),
-  commentsPendingDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'comments', 'pending'),
-  commentsApprovedDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'comments', 'approved'),
-  ratingsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'ratings'),
-  compatibilityTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'compatibility'),
-  downloadStatsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'download-stats'),
+  commentsTiddlersDir: path.resolve(
+    process.cwd(),
+    'wiki',
+    'tiddlers',
+    'comments',
+  ),
+  commentsPendingDir: path.resolve(
+    process.cwd(),
+    'wiki',
+    'tiddlers',
+    'comments',
+    'pending',
+  ),
+  commentsApprovedDir: path.resolve(
+    process.cwd(),
+    'wiki',
+    'tiddlers',
+    'comments',
+    'approved',
+  ),
+  ratingsTiddlersDir: path.resolve(
+    process.cwd(),
+    'wiki',
+    'tiddlers',
+    'ratings',
+  ),
+  compatibilityTiddlersDir: path.resolve(
+    process.cwd(),
+    'wiki',
+    'tiddlers',
+    'compatibility',
+  ),
+  downloadStatsTiddlersDir: path.resolve(
+    process.cwd(),
+    'wiki',
+    'tiddlers',
+    'download-stats',
+  ),
   isAdmin: (githubId?: string | number | null): boolean => {
     if (!githubId) {
       return false;

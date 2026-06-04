@@ -22,9 +22,7 @@ const ensureDir = (): void => {
 /**
  * Parse a compatibility report .tid back into CompatibilityReport.
  */
-const parseCompatibilityTiddler = (
-  raw: string,
-): CompatibilityReport | null => {
+const parseCompatibilityTiddler = (raw: string): CompatibilityReport | null => {
   const lines = raw.split(/\r?\n/);
   const fields: Record<string, string> = {};
   let bodyStart = 0;
@@ -37,7 +35,9 @@ const parseCompatibilityTiddler = (
     }
 
     const colonIdx = lines[i].indexOf(':');
-    if (colonIdx === -1) continue;
+    if (colonIdx === -1) {
+      continue;
+    }
 
     const key = lines[i].substring(0, colonIdx).trim().toLowerCase();
     const value = lines[i].substring(colonIdx + 1).trim();
@@ -57,7 +57,9 @@ const parseCompatibilityTiddler = (
     }
   }
 
-  if (!fields['plugin-title'] || !fields['created-at']) return null;
+  if (!fields['plugin-title'] || !fields['created-at']) {
+    return null;
+  }
 
   const content = lines.slice(bodyStart).join('\n').trim();
   let conflictingPlugins: ConflictingPlugin[] = [];
@@ -69,9 +71,9 @@ const parseCompatibilityTiddler = (
     }
   }
 
-  const id = fields['title']?.startsWith('$:/cpl/compatibility/')
-    ? fields['title'].slice('$:/cpl/compatibility/'.length)
-    : fields['title'] ?? '';
+  const id = fields.title?.startsWith('$:/cpl/compatibility/')
+    ? fields.title.slice('$:/cpl/compatibility/'.length)
+    : fields.title ?? '';
 
   return {
     id,
@@ -82,7 +84,7 @@ const parseCompatibilityTiddler = (
     twVersionMax: fields['tw-version-max'] || undefined,
     conflictingPlugins,
     description: content,
-    status: (fields['status'] as CompatibilityReportStatus) || 'pending',
+    status: (fields.status as CompatibilityReportStatus) || 'pending',
     createdAt: fields['created-at'],
     updatedAt: fields['updated-at'] ?? fields['created-at'],
   };
@@ -91,22 +93,24 @@ const parseCompatibilityTiddler = (
 /**
  * Serialize a CompatibilityReport to .tid format.
  */
-const serializeCompatibilityTiddler = (
-  report: CompatibilityReport,
-): string => {
+const serializeCompatibilityTiddler = (report: CompatibilityReport): string => {
   const fields: Record<string, string> = {
-    'title': `$:/cpl/compatibility/${report.id}`,
+    title: `$:/cpl/compatibility/${report.id}`,
     'plugin-title': report.pluginTitle,
     'reporter-github-id': report.reporterGithubId,
     'reporter-username': report.reporterUsername,
-    'status': report.status,
+    status: report.status,
     'created-at': report.createdAt,
     'updated-at': report.updatedAt,
-    'type': 'text/vnd.tiddlywiki',
+    type: 'text/vnd.tiddlywiki',
   };
 
-  if (report.twVersionMin) fields['tw-version-min'] = report.twVersionMin;
-  if (report.twVersionMax) fields['tw-version-max'] = report.twVersionMax;
+  if (report.twVersionMin) {
+    fields['tw-version-min'] = report.twVersionMin;
+  }
+  if (report.twVersionMax) {
+    fields['tw-version-max'] = report.twVersionMax;
+  }
   if (report.conflictingPlugins.length > 0) {
     fields['conflicting-plugins'] = JSON.stringify(report.conflictingPlugins);
   }
@@ -123,18 +127,21 @@ const serializeCompatibilityTiddler = (
  */
 const readAllReportTiddlers = (): CompatibilityReport[] => {
   const dir = getCompatibilityDir();
-  if (!fs.existsSync(dir)) return [];
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
 
   const reports: CompatibilityReport[] = [];
   for (const fileName of fs.readdirSync(dir)) {
-    if (!fileName.endsWith('.tid')) continue;
+    if (!fileName.endsWith('.tid')) {
+      continue;
+    }
     try {
-      const content = fs.readFileSync(
-        pathModule.join(dir, fileName),
-        'utf-8',
-      );
+      const content = fs.readFileSync(pathModule.join(dir, fileName), 'utf-8');
       const parsed = parseCompatibilityTiddler(content);
-      if (parsed) reports.push(parsed);
+      if (parsed) {
+        reports.push(parsed);
+      }
     } catch {
       // skip
     }
@@ -170,7 +177,9 @@ export const CompatibilityTiddlerStore = {
    */
   findReportFile(reportId: string): string | null {
     const dir = getCompatibilityDir();
-    if (!fs.existsSync(dir)) return null;
+    if (!fs.existsSync(dir)) {
+      return null;
+    }
     for (const fileName of fs.readdirSync(dir)) {
       if (fileName.startsWith(reportId) && fileName.endsWith('.tid')) {
         return pathModule.join(dir, fileName);
@@ -187,13 +196,19 @@ export const CompatibilityTiddlerStore = {
     let filePath = pathModule.join(dir, `${reportId}.tid`);
     if (!fs.existsSync(filePath)) {
       const existing = this.findReportFile(reportId);
-      if (existing) filePath = existing; else return null;
+      if (existing) {
+        filePath = existing;
+      } else {
+        return null;
+      }
     }
 
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
       const report = parseCompatibilityTiddler(content);
-      if (!report) return null;
+      if (!report) {
+        return null;
+      }
 
       report.status = status;
       report.updatedAt = new Date().toISOString();
@@ -207,11 +222,10 @@ export const CompatibilityTiddlerStore = {
   },
 
   deleteReport(reportId: string): boolean {
-    const filePath = pathModule.join(
-      getCompatibilityDir(),
-      `${reportId}.tid`,
-    );
-    if (!fs.existsSync(filePath)) return false;
+    const filePath = pathModule.join(getCompatibilityDir(), `${reportId}.tid`);
+    if (!fs.existsSync(filePath)) {
+      return false;
+    }
     try {
       fs.unlinkSync(filePath);
       return true;
@@ -220,14 +234,14 @@ export const CompatibilityTiddlerStore = {
     }
   },
 
-  getRelatedReports(
-    pluginTitle: string,
-  ): RelatedCompatibilityReport[] {
+  getRelatedReports(pluginTitle: string): RelatedCompatibilityReport[] {
     const all = readAllReportTiddlers();
     const results: RelatedCompatibilityReport[] = [];
 
     for (const report of all) {
-      if (report.status !== 'approved') continue;
+      if (report.status !== 'approved') {
+        continue;
+      }
 
       if (report.pluginTitle === pluginTitle) {
         results.push({ role: 'subject', report });

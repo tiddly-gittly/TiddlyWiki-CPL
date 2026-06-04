@@ -20,9 +20,7 @@ const ensureDir = (): void => {
  * Replaces $:/ -> $__ and / -> _
  */
 const pluginTitleToFilename = (pluginTitle: string): string =>
-  pluginTitle
-    .replace(/^\$:\//, '$__')
-    .replace(/\//g, '_');
+  pluginTitle.replace(/^\$:\//, '$__').replace(/\//g, '_');
 
 /**
  * Parse a download-stats .tid file into DownloadStats.
@@ -36,7 +34,6 @@ const pluginTitleToFilename = (pluginTitle: string): string =>
 const parseStatsTiddler = (raw: string): DownloadStats | null => {
   const lines = raw.split(/\r?\n/);
   let bodyStart = 0;
-  let isJson = false;
 
   for (let i = 0; i < lines.length; i++) {
     const trimmed = lines[i].trim();
@@ -44,15 +41,13 @@ const parseStatsTiddler = (raw: string): DownloadStats | null => {
       bodyStart = i + 1;
       break;
     }
-
-    if (trimmed.toLowerCase().startsWith('type:') && trimmed.includes('application/json')) {
-      isJson = true;
-    }
   }
 
   // Support both JSON body and old plaintext format
   const body = lines.slice(bodyStart).join('\n').trim();
-  if (!body) return null;
+  if (!body) {
+    return null;
+  }
 
   try {
     // Try JSON first
@@ -106,11 +101,15 @@ const readStats = (pluginTitle: string): DownloadStats => {
 
   for (const filename of candidates) {
     const filePath = pathModule.join(dir, filename);
-    if (!fs.existsSync(filePath)) continue;
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
       const parsed = parseStatsTiddler(content);
-      if (parsed) return parsed;
+      if (parsed) {
+        return parsed;
+      }
     } catch {
       // try next candidate
     }
@@ -125,7 +124,9 @@ const readStats = (pluginTitle: string): DownloadStats => {
 const writeStats = (pluginTitle: string, stats: DownloadStats): void => {
   ensureDir();
   const dir = getStatsDir();
-  const filename = `${pluginTitleToFilename(pluginTitle)}${Config.getServerSuffix()}.tid`;
+  const filename = `${pluginTitleToFilename(
+    pluginTitle,
+  )}${Config.getServerSuffix()}.tid`;
   const filePath = pathModule.join(dir, filename);
   const tid = serializeStatsTiddler(pluginTitle, stats);
   fs.writeFileSync(filePath, tid, 'utf-8');
@@ -166,23 +167,29 @@ export const DownloadStatsTiddlerStore = {
    */
   getAllStats(): Record<string, DownloadStats> {
     const dir = getStatsDir();
-    if (!fs.existsSync(dir)) return {};
+    if (!fs.existsSync(dir)) {
+      return {};
+    }
 
     const result: Record<string, DownloadStats> = {};
 
     for (const fileName of fs.readdirSync(dir)) {
-      if (!fileName.endsWith('.tid')) continue;
+      if (!fileName.endsWith('.tid')) {
+        continue;
+      }
 
       const filePath = pathModule.join(dir, fileName);
       try {
         const content = fs.readFileSync(filePath, 'utf-8');
         const parsed = parseStatsTiddler(content);
-        if (!parsed) continue;
+        if (!parsed) {
+          continue;
+        }
 
         // Extract plugin title from the title field
-        const titleLine = content.split(/\r?\n/).find(
-          l => l.toLowerCase().startsWith('title:'),
-        );
+        const titleLine = content
+          .split(/\r?\n/)
+          .find(l => l.toLowerCase().startsWith('title:'));
         const fullTitle = titleLine
           ? titleLine.substring(titleLine.indexOf(':') + 1).trim()
           : '';

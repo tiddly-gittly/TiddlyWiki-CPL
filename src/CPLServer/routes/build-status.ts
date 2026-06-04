@@ -1,19 +1,24 @@
+import * as fs from 'fs';
 import { sendInternalError, sendJson } from '../lib/http';
 import type { RouteHandler } from '../lib/types';
-import * as fs from 'fs';
-import * as pathModule from 'path';
 
 export const method = 'GET';
 export const path = /^\/cpl\/build-status$/;
 
 const BUILD_STATUS_FILE = '/tmp/cpl-build-status.json';
 
-const readBuildStatus = (): { phase: string; message: string; startedAt: string } => {
+const readBuildStatus = (): {
+  phase: string;
+  message: string;
+  startedAt: string;
+} => {
   try {
     if (fs.existsSync(BUILD_STATUS_FILE)) {
       return JSON.parse(fs.readFileSync(BUILD_STATUS_FILE, 'utf-8'));
     }
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return { phase: 'idle', message: 'Server is running', startedAt: '' };
 };
 

@@ -93,9 +93,7 @@ export interface CPLServerApi {
     status: string,
     callback: ApiCallback<JsonObject>,
   ) => void;
-  getPendingCompatibilityReports: (
-    callback: ApiCallback<JsonObject>,
-  ) => void;
+  getPendingCompatibilityReports: (callback: ApiCallback<JsonObject>) => void;
   moderateCompatibilityReport: (
     pluginTitle: string,
     reportId: string,
