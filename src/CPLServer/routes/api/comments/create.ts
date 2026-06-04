@@ -8,7 +8,7 @@ import {
   decodeRouteParam,
 } from '../../../lib/http';
 import { getRuntimeState } from '../../../lib/runtime-state';
-import { CommentStore } from '../../../lib/store/comments';
+import { CommentTiddlerStore } from '../../../lib/store/comment-tiddlers';
 import { WikitextFilter } from '../../../lib/security/wikitext';
 import type { CommentRecord, RouteHandler } from '../../../lib/types';
 
@@ -99,7 +99,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       updatedAt: timestamp,
     };
 
-    CommentStore.addComment(pluginTitle, comment);
+    CommentTiddlerStore.addComment(pluginTitle, comment);
     recordComment(user.githubId);
 
     sendJson(context, 201, {

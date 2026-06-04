@@ -1,5 +1,5 @@
 import { Auth } from '../../../lib/auth';
-import { CommentStore } from '../../../lib/store/comments';
+import { CommentTiddlerStore } from '../../../lib/store/comment-tiddlers';
 import { sendError, sendInternalError, sendJson } from '../../../lib/http';
 import type { RouteHandler } from '../../../lib/types';
 
@@ -21,7 +21,7 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     sendJson(context, 200, {
       success: true,
-      comments: CommentStore.getPendingComments(),
+      comments: CommentTiddlerStore.getPendingComments(),
     });
   } catch (error) {
     sendInternalError(context, 'get-pending-comments handler', error);

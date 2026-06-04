@@ -52,6 +52,7 @@ export const Config = {
   serverId,
   dataDir: path.resolve(process.cwd(), 'data'),
   commentsDir: path.resolve(process.cwd(), 'data', 'comments'),
+  commentsTiddlersDir: path.resolve(process.cwd(), 'wiki', 'tiddlers', 'comments'),
   isAdmin: (githubId?: string | number | null): boolean => {
     if (!githubId) {
       return false;

@@ -1,5 +1,5 @@
 import { Auth } from '../../../lib/auth';
-import { CommentStore } from '../../../lib/store/comments';
+import { CommentTiddlerStore } from '../../../lib/store/comment-tiddlers';
 import {
   decodeRouteParam,
   parseJsonBody,
@@ -51,7 +51,7 @@ export const handler: RouteHandler = (request, _response, context) => {
     }
 
     if (status === 'deleted') {
-      const deleted = CommentStore.deleteComment(pluginTitle, commentId);
+      const deleted = CommentTiddlerStore.deleteComment(pluginTitle, commentId);
       if (!deleted) {
         sendError(context, 404, 'Comment not found');
         return;
@@ -64,7 +64,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
-    const comment = CommentStore.updateCommentStatus(
+    const comment = CommentTiddlerStore.updateCommentStatus(
       pluginTitle,
       commentId,
       status as Exclude<CommentStatus, 'deleted'>,

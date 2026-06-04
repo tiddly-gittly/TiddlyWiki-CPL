@@ -1,5 +1,5 @@
 import { Auth } from '../../../lib/auth';
-import { CommentStore } from '../../../lib/store/comments';
+import { CommentTiddlerStore } from '../../../lib/store/comment-tiddlers';
 import {
   decodeRouteParam,
   sendInternalError,
@@ -14,7 +14,7 @@ export const handler: RouteHandler = (request, _response, context) => {
   try {
     const pluginTitle = decodeRouteParam(context.params[0]);
     const user = Auth.getUserFromRequest(request);
-    const comments = CommentStore.getComments(
+    const comments = CommentTiddlerStore.getComments(
       pluginTitle,
       user && Auth.isAdmin(user) ? null : 'approved',
     );
