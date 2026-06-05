@@ -10,4 +10,17 @@ module.exports = async () => {
       fs.unlinkSync(filePath);
     }
   }
+
+  // Clean up test comment tiddlers
+  const commentsPendingDir = path.resolve(__dirname, '../../wiki/tiddlers/comments/pending');
+  const commentsApprovedDir = path.resolve(__dirname, '../../wiki/tiddlers/comments/approved');
+  for (const dir of [commentsPendingDir, commentsApprovedDir]) {
+    if (fs.existsSync(dir)) {
+      for (const file of fs.readdirSync(dir)) {
+        if (file.includes('comment-test') || file.includes('e2e-test-comment')) {
+          fs.unlinkSync(path.join(dir, file));
+        }
+      }
+    }
+  }
 };

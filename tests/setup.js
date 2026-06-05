@@ -23,6 +23,9 @@ const DATA_FILES = [
   'ratings.us.json',
 ];
 
+const COMMENTS_PENDING_DIR = path.resolve(__dirname, '../wiki/tiddlers/comments/pending');
+const COMMENTS_APPROVED_DIR = path.resolve(__dirname, '../wiki/tiddlers/comments/approved');
+
 // Clean up function
 function cleanupDataFiles() {
   try {
@@ -30,6 +33,16 @@ function cleanupDataFiles() {
       const filePath = path.join(DATA_DIR, file);
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
+      }
+    }
+    // Clean up test comment tiddlers
+    for (const dir of [COMMENTS_PENDING_DIR, COMMENTS_APPROVED_DIR]) {
+      if (fs.existsSync(dir)) {
+        for (const file of fs.readdirSync(dir)) {
+          if (file.includes('comment-test') || file.includes('e2e-test-comment')) {
+            fs.unlinkSync(path.join(dir, file));
+          }
+        }
       }
     }
   } catch (e) {

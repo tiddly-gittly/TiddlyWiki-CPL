@@ -327,6 +327,139 @@ describe('CPL Server API', () => {
     expect(response.body).toHaveProperty('plugin-type', 'plugin');
   });
 
+  test('POST /cpl/comments/:pluginTitle should require authentication', async () => {
+    const pluginTitle = encodeURIComponent('$:/plugins/comment-test/no-auth');
+    const response = await makeRequest('POST', `/cpl/comments/${pluginTitle}`, {
+      content: 'Should be rejected'
+    });
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.success).toBe(false);
+  });
+
+  test('comments should support submit, list, moderation, and all-recent flow', async () => {
+    const pluginTitle = '$:/plugins/comment-test/subject';
+    const encodedPluginTitle = encodeURIComponent(pluginTitle);
+
+    // 1. Submit a comment as authenticated user
+    const submitResponse = await makeRequest(
+      'POST',
+      `/cpl/comments/${encodedPluginTitle}`,
+      { content: 'This is a test comment for E2E validation' },
+      { Cookie: authCookie(userToken) }
+    );
+
+    expect(submitResponse.statusCode).toBe(201);
+    expect(submitResponse.body.success).toBe(true);
+    expect(submitResponse.body.comment.status).toBe('pending');
+    expect(submitResponse.body.comment.content).toBe('This is a test comment for E2E validation');
+    expect(submitResponse.body.comment).toHaveProperty('id');
+    expect(submitResponse.body.comment).toHaveProperty('username');
+
+    const commentId = submitResponse.body.comment.id;
+
+    // 2. Public list should NOT show pending comments
+    const publicListResponse = await makeRequest(
+      'GET',
+      `/cpl/comments/${encodedPluginTitle}`
+    );
+
+    expect(publicListResponse.statusCode).toBe(200);
+    expect(publicListResponse.body.comments).toEqual([]);
+
+    // 3. Admin can see pending comments
+    const pendingResponse = await makeRequest(
+      'GET',
+      '/cpl/comments/pending',
+      null,
+      { Cookie: authCookie(adminToken) }
+    );
+
+    expect(pendingResponse.statusCode).toBe(200);
+    expect(pendingResponse.body.comments.some(c => c.id === commentId)).toBe(true);
+
+    // 4. all-recent should NOT show pending comments to anonymous
+    const allRecentAnonymous = await makeRequest('GET', '/cpl/comments/all-recent');
+    expect(allRecentAnonymous.statusCode).toBe(200);
+    expect(allRecentAnonymous.body.comments.some(c => c.id === commentId)).toBe(false);
+
+    // 5. Approve the comment
+    const approveResponse = await makeRequest(
+      'PUT',
+      `/cpl/comments/${encodedPluginTitle}/${encodeURIComponent(commentId)}`,
+      { status: 'approved' },
+      { Cookie: authCookie(adminToken) }
+    );
+
+    expect(approveResponse.statusCode).toBe(200);
+    expect(approveResponse.body.success).toBe(true);
+
+    // 6. Public list should now show the approved comment
+    const publicListAfterApproval = await makeRequest(
+      'GET',
+      `/cpl/comments/${encodedPluginTitle}`
+    );
+
+    expect(publicListAfterApproval.statusCode).toBe(200);
+    expect(publicListAfterApproval.body.comments).toHaveLength(1);
+    expect(publicListAfterApproval.body.comments[0].id).toBe(commentId);
+    expect(publicListAfterApproval.body.comments[0].status).toBe('approved');
+
+    // 7. all-recent should now show the approved comment
+    const allRecentAfterApproval = await makeRequest('GET', '/cpl/comments/all-recent');
+    expect(allRecentAfterApproval.statusCode).toBe(200);
+    expect(allRecentAfterApproval.body.comments.some(c => c.id === commentId)).toBe(true);
+
+    // 8. Non-admin cannot access pending endpoint
+    const pendingAsUser = await makeRequest(
+      'GET',
+      '/cpl/comments/pending',
+      null,
+      { Cookie: authCookie(userToken) }
+    );
+    expect([401, 403]).toContain(pendingAsUser.statusCode);
+
+    // 9. Reject another comment
+    const rejectSubmitResponse = await makeRequest(
+      'POST',
+      `/cpl/comments/${encodedPluginTitle}`,
+      { content: 'This comment will be rejected' },
+      { Cookie: authCookie(userToken) }
+    );
+    expect(rejectSubmitResponse.statusCode).toBe(201);
+
+    const rejectCommentId = rejectSubmitResponse.body.comment.id;
+    const rejectResponse = await makeRequest(
+      'PUT',
+      `/cpl/comments/${encodedPluginTitle}/${encodeURIComponent(rejectCommentId)}`,
+      { status: 'rejected' },
+      { Cookie: authCookie(adminToken) }
+    );
+    expect(rejectResponse.statusCode).toBe(200);
+
+    // Rejected comments should not appear in public list
+    const publicListAfterReject = await makeRequest(
+      'GET',
+      `/cpl/comments/${encodedPluginTitle}`
+    );
+    expect(publicListAfterReject.body.comments).toHaveLength(1); // Only the approved one
+
+    // 10. Delete comment
+    const deleteResponse = await makeRequest(
+      'PUT',
+      `/cpl/comments/${encodedPluginTitle}/${encodeURIComponent(commentId)}`,
+      { status: 'deleted' },
+      { Cookie: authCookie(adminToken) }
+    );
+    expect(deleteResponse.statusCode).toBe(200);
+
+    const publicListAfterDelete = await makeRequest(
+      'GET',
+      `/cpl/comments/${encodedPluginTitle}`
+    );
+    expect(publicListAfterDelete.body.comments).toHaveLength(0);
+  });
+
   test('compatibility reports should require authentication for submission', async () => {
     const pluginTitle = encodeURIComponent('$:/plugins/compat-test/no-auth');
     const response = await makeRequest('POST', `/cpl/compatibility/${pluginTitle}`, {
