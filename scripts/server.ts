@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
-import { ensureRuntimePluginsBuilt } from './runtime-plugins';
 import { paths } from '../src/CPLServer/lib/paths';
+import { ensureRuntimePluginsBuilt } from './runtime-plugins';
 
 type ServerMode = 'dev' | 'prod' | 'readonly';
 

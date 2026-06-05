@@ -1,8 +1,4 @@
-import {
-  tw,
-  type RootWidgetEvent,
-  type OAuthResponse,
-} from './api-client/types';
+import { tw, type RootWidgetEvent } from './api-client/types';
 import {
   ALL_PLUGIN_STATS_REFRESH_TITLE,
   COMMENTS_CENTER_REFRESH_TITLE,
@@ -12,10 +8,11 @@ import {
   PLUGIN_ACTIVITY_REFRESH_TITLE,
   SERVER_CONFIG_TITLE,
 } from './api-client/constants';
-import { getCurrentServerOrigin } from './api-client/state';
 import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
+import { setupCommentJsonProcessor } from './api-client/comment-processor';
+import { handleGithubLogin, handleOAuthCallback } from './api-client/oauth';
 import { startBuildStatusPolling } from './build-status-poll';
 
 export const name = 'cpl-server-api-client';
@@ -42,128 +39,6 @@ const requestPluginActivityRefresh = (pluginTitle: string): void => {
 
 const requestCommentsCenterRefresh = (pluginTitle: string): void => {
   touchRefreshToken(COMMENTS_CENTER_REFRESH_TITLE, pluginTitle);
-};
-
-/**
- * TW5.4.0's filter parser cannot handle JSON text containing `[`, `]`, `{`, `}`
- * characters as filter operands — the brackets are misinterpreted as filter syntax.
- *
- * This function works around the limitation by parsing the JSON in JavaScript and
- * creating individual tiddlers for each comment item. The wikitext can then iterate
- * over the tiddler list using standard TW list syntax (title references), avoiding
- * the need to pass JSON through filter expressions.
- *
- * Creates:
- *   $:/temp/CPL-Server/comment-items/<prefix>/list  — newline-separated tiddler titles
- *   $:/temp/CPL-Server/comment-items/<prefix>/<index> — one tiddler per comment with fields
- */
-const processCommentsToTiddlers = (
-  jsonText: string | undefined,
-  prefix: 'pending' | 'recent',
-): void => {
-  const listTitle = `$:/temp/CPL-Server/comment-items/${prefix}/list`;
-  const itemPrefix = `$:/temp/CPL-Server/comment-items/${prefix}`;
-  // Clear old items
-  const oldList = tw.wiki.getTiddlerText(listTitle, '');
-  if (oldList) {
-    for (const title of oldList.split('\n').filter(Boolean)) {
-      tw.wiki.deleteTiddler(title);
-    }
-  }
-
-  if (!jsonText) {
-    tw.wiki.addTiddler({ title: listTitle, text: '' });
-    return;
-  }
-
-  try {
-    const data = JSON.parse(jsonText);
-    if (!data.comments || !Array.isArray(data.comments)) {
-      tw.wiki.addTiddler({ title: listTitle, text: '' });
-      return;
-    }
-
-    const titles: string[] = [];
-    data.comments.forEach(
-      (item: Record<string, unknown>, index: number) => {
-        const tiddlerTitle = `${itemPrefix}/${index}`;
-        titles.push(tiddlerTitle);
-        tw.wiki.addTiddler({
-          title: tiddlerTitle,
-          pluginTitle: item.pluginTitle ?? '',
-          commentId:
-            typeof item.comment === 'object' && item.comment !== null
-              ? (item.comment as Record<string, unknown>).id ?? ''
-              : item.id ?? '',
-          username:
-            typeof item.comment === 'object' && item.comment !== null
-              ? (item.comment as Record<string, unknown>).username ?? 'Anonymous'
-              : (item.username as string) ?? 'Anonymous',
-          content:
-            typeof item.comment === 'object' && item.comment !== null
-              ? (item.comment as Record<string, unknown>).content ?? ''
-              : (item.content as string) ?? '',
-          createdAt:
-            typeof item.comment === 'object' && item.comment !== null
-              ? (item.comment as Record<string, unknown>).createdAt ?? ''
-              : (item.createdAt as string) ?? '',
-          avatar:
-            typeof item.comment === 'object' && item.comment !== null
-              ? (item.comment as Record<string, unknown>).avatar ?? ''
-              : (item.avatar as string) ?? '',
-          status:
-            typeof item.comment === 'object' && item.comment !== null
-              ? (item.comment as Record<string, unknown>).status ?? 'approved'
-              : (item.status as string) ?? 'approved',
-        });
-      },
-    );
-    tw.wiki.addTiddler({ title: listTitle, text: titles.join('\n') });
-  } catch {
-    tw.wiki.addTiddler({ title: listTitle, text: '' });
-  }
-};
-
-/**
- * Listen for changes to the raw JSON comment tiddlers and process them
- * into individual tiddlers that the wikitext can safely iterate over.
- */
-const setupCommentJsonProcessor = (): void => {
-  const pendingTitle = '$:/temp/CPL-Server/pending-comments';
-  const recentTitle = '$:/temp/CPL-Server/all-recent-comments';
-  const commentPrefix = '$:/temp/CPL-Server/comments/';
-
-  const processChange = (changedTiddlers: Record<string, unknown>) => {
-    if (changedTiddlers[pendingTitle]) {
-      processCommentsToTiddlers(
-        tw.wiki.getTiddlerText(pendingTitle),
-        'pending',
-      );
-    }
-    if (changedTiddlers[recentTitle]) {
-      processCommentsToTiddlers(
-        tw.wiki.getTiddlerText(recentTitle),
-        'recent',
-      );
-    }
-    // Handle per-plugin comment tiddlers
-    for (const key of Object.keys(changedTiddlers)) {
-      if (key.startsWith(commentPrefix) && key !== pendingTitle && key !== recentTitle) {
-        const pluginTitle = key.slice(commentPrefix.length);
-        processCommentsToTiddlers(
-          tw.wiki.getTiddlerText(key),
-          `plugin/${pluginTitle}` as 'pending',
-        );
-      }
-    }
-  };
-
-  // Use synchronous processing — no debounce — because the wikitext $list
-  // widget re-renders immediately when the JSON tiddler changes, and needs
-  // the individual item tiddlers to already exist.
-  tw.wiki.addEventListener('change', (changes) => {
-    processChange(changes as Record<string, unknown>);
-  });
 };
 
 export const startup = (): void => {
@@ -296,135 +171,11 @@ export const startup = (): void => {
     },
   );
 
-  const OAUTH_STATE_KEY = 'cpl-oauth-state';
-  const OAUTH_RETURN_KEY = 'cpl-oauth-return';
-
-  const generateOAuthState = (): string => {
-    const array = new Uint8Array(16);
-    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-      crypto.getRandomValues(array);
-    } else {
-      // Fallback for very old environments
-      for (let i = 0; i < array.length; i++) {
-        array[i] = Math.floor(Math.random() * 256);
-      }
-    }
-    return Array.from(array)
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
-  };
-
-  tw.rootWidget.addEventListener(
-    'cpl-github-login',
-    (_event: RootWidgetEvent): undefined => {
-      const githubClientId = tw.wiki.getTiddlerText(
-        '$:/temp/CPL-Server/github-client-id',
-        '',
-      );
-      if (!githubClientId) {
-        console.error(
-          '[CPL-Server] GitHub client ID not available. Server may not have OAuth configured.',
-        );
-        return undefined;
-      }
-      const state = generateOAuthState();
-      try {
-        sessionStorage.setItem(OAUTH_STATE_KEY, state);
-        sessionStorage.setItem(OAUTH_RETURN_KEY, window.location.href);
-      } catch {
-        // sessionStorage may be unavailable in some contexts; continue without CSRF protection
-      }
-      const redirectUri = `${getCurrentServerOrigin()}/cpl/auth/github/callback`;
-      const githubAuthParams = new URLSearchParams({
-        client_id: githubClientId,
-        redirect_uri: redirectUri,
-        scope: 'read:user',
-        state,
-      });
-      const githubAuthUrl = `https://github.com/login/oauth/authorize?${githubAuthParams.toString()}`;
-      window.location.href = githubAuthUrl;
-      return undefined;
-    },
-  );
-
-  if (window.location.pathname === '/cpl/auth/github/callback') {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
-    let returnUrl = '/';
-    let stateValid = false;
-    try {
-      const storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
-      const storedReturn = sessionStorage.getItem(OAUTH_RETURN_KEY);
-      if (storedState && state === storedState) {
-        stateValid = true;
-        if (storedReturn) {
-          returnUrl = storedReturn;
-        }
-      }
-      sessionStorage.removeItem(OAUTH_STATE_KEY);
-      sessionStorage.removeItem(OAUTH_RETURN_KEY);
-    } catch {
-      // sessionStorage unavailable; treat as invalid
-    }
-
-    if (!stateValid) {
-      console.error(
-        '[CPL-Server] OAuth state mismatch. Possible CSRF attack.',
-      );
-      tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/oauth-error',
-        text: 'OAuth state mismatch. Please try logging in again.',
-      });
-      window.location.replace('/');
-    } else if (code) {
-      tw.utils.httpRequest({
-        url: `${getCurrentServerOrigin()}/cpl/auth/github/callback?code=${encodeURIComponent(
-          code,
-        )}`,
-        type: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        callback: (error: unknown, response: string) => {
-          if (error || !response) {
-            return;
-          }
-
-          try {
-            const data = JSON.parse(response) as OAuthResponse;
-            if (!data.success) {
-              return;
-            }
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/user-status',
-              text: 'authenticated',
-            });
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/user',
-              text: JSON.stringify(data.user),
-              type: 'application/json',
-            });
-            // Also check admin status after login
-            cplServerApi.checkAuthStatus((_err, authData) => {
-              if (!_err && authData) {
-                tw.wiki.addTiddler({
-                  title: '$:/temp/CPL-Server/is-admin',
-                  text: authData.isAdmin ? 'yes' : 'no',
-                });
-              }
-            });
-            window.location.replace(returnUrl);
-          } catch (parseError) {
-            console.error(
-              '[CPL-Server] Failed to parse auth response:',
-              parseError,
-            );
-          }
-        },
-      });
-    } else {
-      window.location.replace('/');
-    }
-  }
+  tw.rootWidget.addEventListener('cpl-github-login', (): undefined => {
+    handleGithubLogin();
+    return undefined;
+  });
+  handleOAuthCallback();
 
   tw.rootWidget.addEventListener(
     'cpl-submit-comment',

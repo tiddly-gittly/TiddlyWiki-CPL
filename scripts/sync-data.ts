@@ -18,7 +18,6 @@
  */
 
 import { spawnSync } from 'child_process';
-import * as path from 'path';
 import { paths } from '../src/CPLServer/lib/paths';
 
 const SERVER_ID = process.env.CPL_SERVER_ID ?? 'default';
