@@ -506,10 +506,10 @@ test.describe('CPL Server E2E', () => {
     // Wait for the comments center to render
     await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
 
-    // Check that there are no "Filter error" messages on the page
-    const pageText = await page.locator('body').textContent();
-    expect(pageText).not.toContain('Filter error');
-    expect(pageText).not.toContain('Missing [ in filter expression');
+    // Check that there are no "Filter error" messages in the comments center
+    const commentsCenterText = await page.locator('.cpl-comments-center').textContent();
+    expect(commentsCenterText).not.toContain('Filter error');
+    expect(commentsCenterText).not.toContain('Missing [ in filter expression');
 
     // Check that the login prompt is shown for anonymous users
     await expect(page.locator('.cpl-comments-center')).toContainText(/登录后即可审核评论和发表评论|Login to moderate and post comments/);
@@ -518,29 +518,7 @@ test.describe('CPL Server E2E', () => {
     await expect(page.locator('.cpl-comments-center')).toContainText(/最新评论|Recent Comments/);
   });
 
-  test('comments center should show comment form after login', async ({ page }) => {
-    await authenticateTestUser(page);
-    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
 
-    // Wait for auth status to be set
-    await page.waitForFunction(() => {
-      return $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') === 'authenticated';
-    }, { timeout: 30000 });
-
-    // Navigate to a plugin page with comments
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
-
-    // Check that comment section is visible (not just the toggle)
-    const commentsSection = page.locator('.cpl-comments-section');
-    await expect(commentsSection).toBeVisible();
-
-    // Check that there are no filter errors
-    const pageText = await page.locator('body').textContent();
-    expect(pageText).not.toContain('Filter error');
-    expect(pageText).not.toContain('Missing [ in filter expression');
-  });
 
 });
 

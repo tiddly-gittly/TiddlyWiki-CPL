@@ -4,12 +4,40 @@
 
 const { spawn } = require('child_process');
 const http = require('http');
+const net = require('net');
 const path = require('path');
 const fs = require('fs');
 
-const TEST_PORT = 9876;
-const TEST_HOST = 'localhost';
+const TEST_HOST = '127.0.0.1';
 const FETCHED_DIR = path.resolve(__dirname, '../../wiki/files/plugin-fetched');
+
+function getAvailablePort(preferredPort = 9876, maxAttempts = 20) {
+  return new Promise((resolve, reject) => {
+    function tryPort(port, attempt) {
+      if (attempt >= maxAttempts) {
+        reject(new Error('Could not find an available port'));
+        return;
+      }
+      const server = net.createServer();
+      server.unref();
+      server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          tryPort(port + 1, attempt + 1);
+        } else {
+          reject(err);
+        }
+      });
+      server.listen(port, TEST_HOST, () => {
+        const assigned = server.address().port;
+        server.close(() => {
+          // Brief cooldown to allow OS to release the port
+          setTimeout(() => resolve(assigned), 50);
+        });
+      });
+    }
+    tryPort(preferredPort, 0);
+  });
+}
 const TEST_FETCHED_PLUGIN_TITLE = '$:/plugins/test/fetched-preferred';
 const TEST_FETCHED_PLUGIN_FILENAME = '$__plugins_test_fetched-preferred.json';
 const TEST_FETCHED_PLUGIN_PATH = path.join(FETCHED_DIR, TEST_FETCHED_PLUGIN_FILENAME);
@@ -96,57 +124,61 @@ function cleanupRuntimePluginCache() {
   }
 }
 
-function makeRequest(method, requestPath, body = null, headers = {}) {
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: TEST_HOST,
-      port: TEST_PORT,
-      path: requestPath,
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'TiddlyWiki',
-        ...headers
-      }
-    };
-
-    const req = http.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        try {
-          resolve({
-            statusCode: res.statusCode,
-            headers: res.headers,
-            body: JSON.parse(data)
-          });
-        } catch (e) {
-          resolve({
-            statusCode: res.statusCode,
-            headers: res.headers,
-            body: data
-          });
+function createMakeRequest(port) {
+  return function makeRequest(method, requestPath, body = null, headers = {}) {
+    return new Promise((resolve, reject) => {
+      const options = {
+        hostname: TEST_HOST,
+        port: port,
+        path: requestPath,
+        method: method,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'TiddlyWiki',
+          ...headers
         }
+      };
+
+      const req = http.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          try {
+            resolve({
+              statusCode: res.statusCode,
+              headers: res.headers,
+              body: JSON.parse(data)
+            });
+          } catch (e) {
+            resolve({
+              statusCode: res.statusCode,
+              headers: res.headers,
+              body: data
+            });
+          }
+        });
       });
+
+      req.on('error', reject);
+
+      if (body) {
+        req.write(JSON.stringify(body));
+      }
+
+      req.end();
     });
-
-    req.on('error', reject);
-
-    if (body) {
-      req.write(JSON.stringify(body));
-    }
-
-    req.end();
-  });
+  };
 }
 
 describe('CPL Server API', () => {
   let serverProcess;
   let serverExitedEarly = false;
+  let TEST_PORT;
+  let makeRequest;
 
-  function waitForServer(timeoutMs = 60000) {
+  function waitForServer(timeoutMs = 120000) {
     const start = Date.now();
     return new Promise((resolve, reject) => {
       function tryConnect() {
@@ -180,6 +212,8 @@ describe('CPL Server API', () => {
   }
 
   beforeAll(async () => {
+    TEST_PORT = await getAvailablePort();
+    makeRequest = createMakeRequest(TEST_PORT);
     const wikiPath = path.resolve(__dirname, '../..');
     createFetchedPluginFile();
     cleanupCompatibilityFiles();
@@ -207,20 +241,31 @@ describe('CPL Server API', () => {
       serverOutput += data.toString();
     });
 
-    serverProcess.once('exit', () => {
+    serverProcess.once('exit', (code) => {
       serverExitedEarly = true;
+      if (serverOutput) {
+        console.log(`[Server exited with code ${code}]\n`, serverOutput);
+      }
     });
 
-    await waitForServer();
+    try {
+      await waitForServer();
+    } catch (error) {
+      if (serverOutput) {
+        console.log('[Server Output at failure]\n', serverOutput);
+      }
+      throw error;
+    }
 
     // Print captured output for debugging
     if (serverOutput) {
       console.log('[Server Output]\n', serverOutput);
     }
-  }, 90000);
+  }, 180000);
 
   afterAll(() => {
     if (serverProcess) {
+      serverProcess.removeAllListeners('exit');
       serverProcess.kill();
     }
     cleanupFetchedPluginFile();
@@ -376,7 +421,7 @@ describe('CPL Server API', () => {
     );
 
     expect(pendingResponse.statusCode).toBe(200);
-    expect(pendingResponse.body.comments.some(c => c.id === commentId)).toBe(true);
+    expect(pendingResponse.body.comments.some(c => c.comment.id === commentId)).toBe(true);
 
     // 4. all-recent should NOT show pending comments to anonymous
     const allRecentAnonymous = await makeRequest('GET', '/cpl/comments/all-recent');
@@ -516,7 +561,7 @@ describe('CPL Server API', () => {
     );
 
     expect(pendingResponse.statusCode).toBe(200);
-    expect(pendingResponse.body.reports.some(report => report.id === submitResponse.body.report.id)).toBe(true);
+    expect(pendingResponse.body.reports.some(report => report.comment.id === submitResponse.body.report.id)).toBe(true);
 
     const publicBeforeModeration = await makeRequest(
       'GET',

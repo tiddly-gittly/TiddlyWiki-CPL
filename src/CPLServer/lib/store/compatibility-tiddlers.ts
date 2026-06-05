@@ -43,6 +43,7 @@ const parseCompatibilityTiddler = (raw: string): CompatibilityReport | null => {
     const value = lines[i].substring(colonIdx + 1).trim();
 
     if (
+      key === 'title' ||
       key === 'plugin-title' ||
       key === 'reporter-github-id' ||
       key === 'reporter-username' ||
