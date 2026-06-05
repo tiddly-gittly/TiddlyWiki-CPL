@@ -95,10 +95,10 @@ type: text/vnd.tiddlywiki
 
   <!-- Comments List -->
   <div class="cpl-comments-list">
-    <$let commentsTiddler={{{ [[$:/temp/CPL-Server/comments/]addsuffix<pluginTitle>] }}} commentsJson={{{ [<commentsTiddler>get[text]else[{}]] }}}>
-      <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:gt[0]]" variable="hasComments">
-        <$list filter="[<commentsJson>jsonget[comments]]" variable="commentItem">
-          <$let commentUsername={{{ [<commentItem>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentItem>jsonget[content]else[]] }}} commentDate={{{ [<commentItem>jsonget[createdAt]else[]] }}} commentAvatar={{{ [<commentItem>jsonget[avatar]else[]] }}} commentStatus={{{ [<commentItem>jsonget[status]else[approved]] }}} commentId={{{ [<commentItem>jsonget[id]else[]] }}}>
+    <$let commentsTiddler={{{ [[$:/temp/CPL-Server/comments/]addsuffix<pluginTitle>] }}}>
+      <$list filter="[[$:/temp/CPL-Server/comment-items/plugin/<pluginTitle>/list]get[text]!is[blank]]" variable="hasComments">
+        <$list filter="[[$:/temp/CPL-Server/comment-items/plugin/<pluginTitle>/list]get[text]split[\\n]]" variable="commentTitle">
+          <$let commentUsername={{{ [<commentTitle>get[username]else[Anonymous]] }}} commentContent={{{ [<commentTitle>get[content]] }}} commentDate={{{ [<commentTitle>get[createdAt]] }}} commentAvatar={{{ [<commentTitle>get[avatar]] }}} commentStatus={{{ [<commentTitle>get[status]else[approved]] }}} commentId={{{ [<commentTitle>get[commentId]] }}}>
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
                 <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
@@ -114,14 +114,14 @@ type: text/vnd.tiddlywiki
               <$list filter="[<isAdmin>match[yes]]" variable="isAdminUser">
                 <$list filter="[<commentStatus>match[pending]]" variable="isPending">
                   <div class="cpl-moderation-actions">
-                    <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending] }}}/></span>
+                    <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
                     <$button class="tc-btn-primary cpl-moderation-approve-btn">
                       <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="approved" />
-                      <$text text={{{ [<chinese>match[yes]then[通过]else[Approve] }}}/>
+                      <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
                       <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="rejected" />
-                      <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject] }}}/>
+                      <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </div>
                 </$list>
@@ -130,7 +130,7 @@ type: text/vnd.tiddlywiki
           </$let>
         </$list>
       </$list>
-      <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:eq[0]]" variable="noComments">
+      <$list filter="[[$:/temp/CPL-Server/comment-items/plugin/<pluginTitle>/list]get[text]is[blank]]" variable="noComments">
         <div class="cpl-comment-empty">
           <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
         </div>

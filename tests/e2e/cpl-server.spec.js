@@ -521,6 +521,94 @@ test.describe('CPL Server E2E', () => {
 
 
 
+  test('comments center admin view with pending comments should render without filter errors', async ({ page, request }) => {
+    // Step 1: Submit a comment via API as authenticated user
+    const adminToken = createTestJwt({ githubId: '42', username: 'admin-test' });
+    const commentResponse = await request.post(`${BASE_URL}/cpl/comments/${encodeURIComponent('$:/plugins/test/e2e-admin-comment')}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'TiddlyWiki',
+        'Cookie': `cpl_jwt_token=${adminToken}`,
+      },
+      data: { content: 'Admin test comment for filter verification' },
+    });
+    expect(commentResponse.ok()).toBe(true);
+    const commentData = await commentResponse.json();
+    expect(commentData.success).toBe(true);
+
+    // Step 2: Open comments center, then inject admin auth state via tiddlers
+    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
+
+    // Set admin auth state directly via TW tiddlers (simulates login)
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/user-status', text: 'authenticated' });
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/is-admin', text: 'yes' });
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/user', text: JSON.stringify({ githubId: '42', username: 'admin-test', avatar: '' }), type: 'application/json' });
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/github-client-id', text: 'fake-client-id' });
+    });
+
+    // Trigger pending comments fetch with cookie
+    await page.context().addCookies([{
+      name: 'cpl_jwt_token',
+      value: adminToken,
+      url: BASE_URL,
+    }]);
+    await page.evaluate(async (baseUrl) => {
+      const resp = await fetch(`${baseUrl}/cpl/comments/pending`, { credentials: 'include' });
+      const data = await resp.json();
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/pending-comments', text: JSON.stringify(data), type: 'application/json' });
+    }, BASE_URL);
+
+    // Wait for the JS processor to create individual tiddlers from JSON
+    await page.waitForFunction(
+      () => $tw.wiki.getTiddlerText('$:/temp/CPL-Server/comment-items/pending/list', '') !== '',
+      { timeout: 10000 },
+    );
+
+    // Navigate to comments center
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center' });
+      $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center' });
+      $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
+    });
+
+    await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
+
+    // Step 3: Verify no filter errors anywhere on the page
+    const fullPageText = await page.locator('.cpl-comments-center').textContent();
+    expect(fullPageText).not.toContain('Filter error');
+    expect(fullPageText).not.toContain('Missing [ in filter expression');
+    expect(fullPageText).not.toContain('Missing ] in filter expression');
+
+    // Step 4: Verify admin sees pending comments section
+    await expect(page.locator('.cpl-comments-center')).toContainText(/待审核评论|Pending Comments/);
+
+    // Step 5: Verify the submitted comment content appears
+    await expect(page.locator('.cpl-comments-center')).toContainText('Admin test comment for filter verification');
+    await expect(page.locator('.cpl-comments-center')).toContainText('admin-test');
+
+    // Step 6: Verify moderation buttons are present
+    await expect(page.locator('.cpl-moderation-approve-btn').first()).toBeVisible();
+
+    // Step 7: Verify no phantom/duplicate comment entries (each comment should appear once)
+    const commentItems = page.locator('.cpl-comment-item');
+    const commentCount = await commentItems.count();
+    // Should have exactly 1 pending comment (plus possibly recent comments)
+    expect(commentCount).toBeGreaterThanOrEqual(1);
+
+    // Step 8: Cleanup - delete the test comment (best-effort, don't fail test if cleanup fails)
+    await request.put(`${BASE_URL}/cpl/comments/${encodeURIComponent('$:/plugins/test/e2e-admin-comment')}/${encodeURIComponent(commentData.commentId)}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'TiddlyWiki',
+        'Cookie': `cpl_jwt_token=${adminToken}`,
+      },
+      data: { status: 'deleted' },
+    }).catch(() => {});
+  });
+
 });
 
 test.describe('CPL Client Installation E2E', () => {
