@@ -110,7 +110,16 @@ type: text/vnd.tiddlywiki
     </$list>
   </$list>
 
-  <$list filter="[<pendingData>jsonget[comments]is[blank]]" variable="loading">
+  <$list filter="[<pendingData>jsonget[success]match[false]]" variable="authError">
+    <div class="cpl-comment-empty cpl-auth-error">
+      ⚠️ <$text text={{{ [<chinese>match[yes]then[获取失败：]else[Failed to load:]] }}}/> <$text text={{{ [<pendingData>jsonget[error]else[Unknown error]] }}}/><br/>
+      <$list filter="[<pendingData>jsonget[error]match[Authentication required]]" variable="needLogin">
+        <$text text={{{ [<chinese>match[yes]then[请重新登录后刷新页面]else[Please re-login and refresh the page]] }}}/>.
+      </$list>
+    </div>
+  </$list>
+
+  <$list filter="[<pendingData>jsonget[success]!match[false]] [<pendingData>jsonget[comments]is[blank]] +[else[yes]]" variable="loading">
     <div class="cpl-comment-empty">
       <$text text={{{ [<chinese>match[yes]then[正在加载...]else[Loading...]] }}}/>
     </div>
