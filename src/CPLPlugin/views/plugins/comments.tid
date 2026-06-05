@@ -33,7 +33,7 @@ type: text/vnd.tiddlywiki
   <!-- Login Status -->
   <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedIn">
     <!-- Logged in: Show user info and comment form -->
-    <$let userJson={{{ [[$:/temp/CPL-Server/user]get[text]else[{}]] }}} username={{{ [<userJson>jsonget[username]else[User]] }}} avatar={{{ [<userJson>jsonget[avatar]else[]]] }}}>
+    <$let userJson={{{ [[$:/temp/CPL-Server/user]get[text]else[{}]] }}} username={{{ [<userJson>jsonget[username]else[User]] }}} avatar={{{ [<userJson>jsonget[avatar]else[]] }}}>
     <div class="cpl-comment-user-card">
       <$list filter="[<avatar>!is[blank]]" variable="hasAvatar">
         <img src=<<avatar>> class="cpl-comment-avatar" alt="avatar"/>
@@ -98,7 +98,7 @@ type: text/vnd.tiddlywiki
     <$let commentsTiddler={{{ [[$:/temp/CPL-Server/comments/]addsuffix<pluginTitle>] }}} commentsJson={{{ [<commentsTiddler>get[text]else[{}]] }}}>
       <$list filter="[<commentsJson>jsonget[comments]length[]compare:integer:gt[0]]" variable="hasComments">
         <$list filter="[<commentsJson>jsonget[comments]]" variable="commentItem">
-          <$let commentUsername={{{ [<commentItem>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentItem>jsonget[content]else[]]] }}} commentDate={{{ [<commentItem>jsonget[createdAt]else[]]] }}} commentAvatar={{{ [<commentItem>jsonget[avatar]else[]]] }}} commentStatus={{{ [<commentItem>jsonget[status]else[approved]] }}} commentId={{{ [<commentItem>jsonget[id]else[]]] }}}>
+          <$let commentUsername={{{ [<commentItem>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentItem>jsonget[content]else[]] }}} commentDate={{{ [<commentItem>jsonget[createdAt]else[]] }}} commentAvatar={{{ [<commentItem>jsonget[avatar]else[]] }}} commentStatus={{{ [<commentItem>jsonget[status]else[approved]] }}} commentId={{{ [<commentItem>jsonget[id]else[]] }}}>
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
                 <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">

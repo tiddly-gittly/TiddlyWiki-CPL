@@ -176,7 +176,7 @@ type: text/vnd.tiddlywiki
     </$button>
     <$list filter="[<changelogPanelStateTitle>get[text]match[open]]" variable="showContent">
       <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
-        <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}} changelogContent={{{ [<changelogTiddler>get[text]jsonget[changelog]else[]]] }}}>
+        <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}} changelogContent={{{ [<changelogTiddler>get[text]jsonget[changelog]else[]] }}}>
           <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
             <div class="cpl-code-panel">
               <$text text=<<changelogContent>> />
@@ -241,7 +241,7 @@ type: text/vnd.tiddlywiki
                     </div>
                   </$list>
                   <div class="cpl-compatibility-description">
-                    <$text text={{{ [<report>jsonget[description]else[]]] }}} />
+                    <$text text={{{ [<report>jsonget[description]else[]] }}} />
                   </div>
                   <!-- Admin moderation buttons for pending reports -->
                   <$list filter="[<isAdmin>match[yes]]" variable="isAdminUser">

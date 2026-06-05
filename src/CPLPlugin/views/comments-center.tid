@@ -54,9 +54,9 @@ type: text/vnd.tiddlywiki
         pluginTitle={{{ [<item>jsonget[pluginTitle]] }}}
         commentId={{{ [<item>jsonget[comment]jsonget[id]] }}}
         commentUsername={{{ [<item>jsonget[comment]jsonget[username]else[Anonymous]] }}}
-        commentContent={{{ [<item>jsonget[comment]jsonget[content]else[]]] }}}
-        commentDate={{{ [<item>jsonget[comment]jsonget[createdAt]else[]]] }}}
-        commentAvatar={{{ [<item>jsonget[comment]jsonget[avatar]else[]]] }}}
+        commentContent={{{ [<item>jsonget[comment]jsonget[content]else[]] }}}
+        commentDate={{{ [<item>jsonget[comment]jsonget[createdAt]else[]] }}}
+        commentAvatar={{{ [<item>jsonget[comment]jsonget[avatar]else[]] }}}
       >
         <div class="cpl-comment-item cpl-moderation-item">
           <div class="cpl-comment-meta">
@@ -154,17 +154,17 @@ type: text/vnd.tiddlywiki
   </div>
 
   <$list filter="[<recentData>jsonget[comments]length[]compare:integer:gt[0]]" variable="hasRecent">
-    <$let searchText={{{ [<searchState>get[text]else[]]] }}}>
+    <$let searchText={{{ [<searchState>get[text]else[]] }}}>
       <$list filter="[<recentData>jsonget[comments]]" variable="commentItem">
         <$list filter="[<searchText>is[blank]] [<commentItem>jsonget[username]search:words<searchText>] [<commentItem>jsonget[content]search:words<searchText>] [<commentItem>jsonget[pluginTitle]search:words<searchText>] +[limit[1]]" variable="match">
           <$let
             commentUsername={{{ [<commentItem>jsonget[username]else[Anonymous]] }}}
-            commentContent={{{ [<commentItem>jsonget[content]else[]]] }}}
-            commentDate={{{ [<commentItem>jsonget[createdAt]else[]]] }}}
-            commentAvatar={{{ [<commentItem>jsonget[avatar]else[]]] }}}
-            commentPlugin={{{ [<commentItem>jsonget[pluginTitle]else[]]] }}}
+            commentContent={{{ [<commentItem>jsonget[content]else[]] }}}
+            commentDate={{{ [<commentItem>jsonget[createdAt]else[]] }}}
+            commentAvatar={{{ [<commentItem>jsonget[avatar]else[]] }}}
+            commentPlugin={{{ [<commentItem>jsonget[pluginTitle]else[]] }}}
             commentStatus={{{ [<commentItem>jsonget[status]else[approved]] }}}
-            commentId={{{ [<commentItem>jsonget[id]else[]]] }}}
+            commentId={{{ [<commentItem>jsonget[id]else[]] }}}
           >
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
