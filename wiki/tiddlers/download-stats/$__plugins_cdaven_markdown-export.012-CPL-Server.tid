@@ -1,5 +1,0 @@
-title: $:/cpl/download-stats/$__plugins_cdaven_markdown-export
-plugin-title: $:/plugins/cdaven/markdown-export
-type: application/json
-
-{"downloadCount":1,"lastUpdated":"2026-06-03T00:14:00.851Z","downloadsByIp":{"49.75.111.177":"2026-06-03T00:14:00.851Z"}}

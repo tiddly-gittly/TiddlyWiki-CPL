@@ -1,5 +1,0 @@
-title: $:/cpl/download-stats/$__plugins_linonetwo_slate-write
-plugin-title: $:/plugins/linonetwo/slate-write
-type: application/json
-
-{"downloadCount":2,"lastUpdated":"2026-06-04T01:47:00.650Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:47:00.650Z"}}

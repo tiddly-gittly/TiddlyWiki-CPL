@@ -148,3 +148,9 @@ repo-cache/
 
 # Pending comments (not yet reviewed by admin)
 wiki/tiddlers/comments/pending/
+
+# Runtime data (not version controlled)
+wiki/tiddlers/compatibility/*.tid
+wiki/tiddlers/ratings/*.tid
+wiki/tiddlers/ratings/*.json
+wiki/tiddlers/download-stats/*.tid

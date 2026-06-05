@@ -1,5 +1,0 @@
-title: $:/cpl/download-stats/$__plugins_tiddlywiki_codemirror-mode-markdown
-plugin-title: $:/plugins/tiddlywiki/codemirror-mode-markdown
-type: application/json
-
-{"downloadCount":1,"lastUpdated":"2026-06-04T01:55:11.865Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:55:11.865Z"}}

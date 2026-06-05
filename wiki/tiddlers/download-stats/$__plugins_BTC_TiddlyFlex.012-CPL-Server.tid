@@ -1,5 +1,0 @@
-title: $:/cpl/download-stats/$__plugins_BTC_TiddlyFlex
-plugin-title: $:/plugins/BTC/TiddlyFlex
-type: application/json
-
-{"downloadCount":3,"lastUpdated":"2026-06-04T01:08:20.766Z","downloadsByIp":{"134.238.82.175":"2026-06-03T13:27:10.887Z","60.190.11.50":"2026-06-04T01:08:20.766Z"}}
