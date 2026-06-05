@@ -4,7 +4,7 @@
         "creator": "林一二",
         "text": "",
         "title": "linonetwo/rybbit-analytics",
-        "modified": "20260501153000000",
+        "modified": "20260605080902011",
         "modifier": "林一二",
         "tags": "$:/tags/PluginWiki",
         "type": "text/vnd.tiddlywiki",
@@ -15,8 +15,8 @@
         "cpl.version": "0.2.0",
         "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-rybbit/releases/latest/download/__plugins_linonetwo_rybbit-analytics.json",
         "cpl.readme": "!! TiddlyWiki Rybbit 统计分析插件\n\n将 [[Rybbit|https://rybbit.io]] 开源统计脚本注入 TiddlyWiki，支持自托管和官方云服务实例。\n\n!! 快速开始\n\n# 进入''控制面板 → 插件 → Rybbit Analytics → 设置''\n# 将''脚本地址''设置为你的 Rybbit 实例，例如 `https://analytics.example.com/api/script.js`\n# 将''站点 ID''设置为 Rybbit 后台代码片段中显示的十六进制 ID\n# 将''启用追踪''切换为 `yes`\n# 重新加载 Wiki\n\n!! 自动功能\n\n开启''启用追踪''后：\n\n* 启动时自动上报一次 pageview\n* 可选的 TiddlyWiki 导航追踪会在每次打开 tiddler 时触发精确的 `pageview` 和 `tiddler-open` 事件\n* 提供 `<$rybbit-event>`、`<$rybbit-view>`、`<$rybbit-identify>` 三个 widget 用于自定义事件、曝光追踪和用户标识\n\n!! 跳过规则\n\n''跳过规则''字段接受 glob 或正则路径模式的 JSON 数组，匹配的 tiddler 路径不会被追踪。\n\n```json\n[\"/admin/**\", \"/drafts/**\", \"re:^/private\"]\n```\n\n!! 自托管部署\n\n# 用 Docker 部署 [[Rybbit|https://github.com/rybbit-io/rybbit]]\n# 在 `.env` 中将你的域名加入 `BETTER_AUTH_TRUSTED_ORIGINS`\n# 将''脚本地址''指向 `https://your-domain.com/api/script.js`",
-        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-rybbit",
-        "cpl.core-version": ">=5.1.22",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-rybbit/blob/master/src/rybbit-analytics",
+        "cpl.core-version": "",
         "cpl.plugin-type": "plugin",
         "cpl.documentation": ""
     }
