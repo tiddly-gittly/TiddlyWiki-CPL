@@ -171,6 +171,24 @@ export const startup = (): void => {
     },
   );
 
+  const OAUTH_STATE_KEY = 'cpl-oauth-state';
+  const OAUTH_RETURN_KEY = 'cpl-oauth-return';
+
+  const generateOAuthState = (): string => {
+    const array = new Uint8Array(16);
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      crypto.getRandomValues(array);
+    } else {
+      // Fallback for very old environments
+      for (let i = 0; i < array.length; i++) {
+        array[i] = Math.floor(Math.random() * 256);
+      }
+    }
+    return Array.from(array)
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  };
+
   tw.rootWidget.addEventListener(
     'cpl-github-login',
     (_event: RootWidgetEvent): undefined => {
@@ -184,12 +202,19 @@ export const startup = (): void => {
         );
         return undefined;
       }
+      const state = generateOAuthState();
+      try {
+        sessionStorage.setItem(OAUTH_STATE_KEY, state);
+        sessionStorage.setItem(OAUTH_RETURN_KEY, window.location.href);
+      } catch {
+        // sessionStorage may be unavailable in some contexts; continue without CSRF protection
+      }
       const redirectUri = `${getCurrentServerOrigin()}/cpl/auth/github/callback`;
       const githubAuthParams = new URLSearchParams({
         client_id: githubClientId,
         redirect_uri: redirectUri,
         scope: 'read:user',
-        state: window.location.href,
+        state,
       });
       const githubAuthUrl = `https://github.com/login/oauth/authorize?${githubAuthParams.toString()}`;
       window.location.href = githubAuthUrl;
@@ -198,8 +223,36 @@ export const startup = (): void => {
   );
 
   if (window.location.pathname === '/cpl/auth/github/callback') {
-    const code = new URLSearchParams(window.location.search).get('code');
-    if (code) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const state = urlParams.get('state');
+    let returnUrl = '/';
+    let stateValid = false;
+    try {
+      const storedState = sessionStorage.getItem(OAUTH_STATE_KEY);
+      const storedReturn = sessionStorage.getItem(OAUTH_RETURN_KEY);
+      if (storedState && state === storedState) {
+        stateValid = true;
+        if (storedReturn) {
+          returnUrl = storedReturn;
+        }
+      }
+      sessionStorage.removeItem(OAUTH_STATE_KEY);
+      sessionStorage.removeItem(OAUTH_RETURN_KEY);
+    } catch {
+      // sessionStorage unavailable; treat as invalid
+    }
+
+    if (!stateValid) {
+      console.error(
+        '[CPL-Server] OAuth state mismatch. Possible CSRF attack.',
+      );
+      tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/oauth-error',
+        text: 'OAuth state mismatch. Please try logging in again.',
+      });
+      window.location.replace('/');
+    } else if (code) {
       tw.utils.httpRequest({
         url: `${getCurrentServerOrigin()}/cpl/auth/github/callback?code=${encodeURIComponent(
           code,
@@ -234,7 +287,7 @@ export const startup = (): void => {
                 });
               }
             });
-            window.history.replaceState({}, document.title, '/');
+            window.location.replace(returnUrl);
           } catch (parseError) {
             console.error(
               '[CPL-Server] Failed to parse auth response:',
@@ -243,6 +296,8 @@ export const startup = (): void => {
           }
         },
       });
+    } else {
+      window.location.replace('/');
     }
   }
 
