@@ -10,8 +10,8 @@ global.$tw = global.$tw || {};
 // Clean up data files before tests
 const fs = require('fs');
 const path = require('path');
+const paths = require('./paths');
 
-const DATA_DIR = path.resolve(__dirname, '../data');
 const DATA_FILES = [
   'stats.json',
   'ratings.json',
@@ -23,15 +23,14 @@ const DATA_FILES = [
   'ratings.us.json',
 ];
 
-const TEST_WIKI_ROOT = path.resolve(__dirname, '../tmp/test-wiki');
-const COMMENTS_PENDING_DIR = path.join(TEST_WIKI_ROOT, 'tiddlers/comments/pending');
-const COMMENTS_APPROVED_DIR = path.join(TEST_WIKI_ROOT, 'tiddlers/comments/approved');
+const COMMENTS_PENDING_DIR = paths.comments.pending;
+const COMMENTS_APPROVED_DIR = paths.comments.approved;
 
 // Clean up function
 function cleanupDataFiles() {
   try {
     for (const file of DATA_FILES) {
-      const filePath = path.join(DATA_DIR, file);
+      const filePath = path.join(paths.data, file);
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }

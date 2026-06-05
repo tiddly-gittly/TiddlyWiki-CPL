@@ -14,6 +14,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const paths = require('../../paths');
 
 const STATIC_REPO_PORT = 8083;
 const STATIC_REPO_HOST = '127.0.0.1';
@@ -25,7 +26,7 @@ let staticRepoServer = null;
  * @returns {Promise<void>}
  */
 function startStaticRepoServer() {
-  const cachePluginsDir = path.resolve(__dirname, '../../../cache/plugins');
+  const cachePluginsDir = paths.cache.plugins;
   return new Promise((resolve, reject) => {
     staticRepoServer = http.createServer((req, res) => {
       // Sanitize the URL to prevent path traversal

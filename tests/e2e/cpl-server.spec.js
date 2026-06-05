@@ -16,6 +16,7 @@ const { startStaticRepoServer, stopStaticRepoServer, STATIC_REPO_URL } = require
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const paths = require('../paths');
 
 const BASE_URL = process.env.TEST_URL || 'http://localhost:8080';
 const TEST_PLUGIN_TIDDLER = 'dullroar/sitemap';
@@ -24,7 +25,7 @@ const TEST_PLUGIN_CPL_TITLE = '$:/plugins/dullroar/sitemap';
 // Temporary test plugin for blank wiki E2E
 const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
 const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
-const TEST_PLUGIN_OFFLINE_PATH = path.resolve('wiki/files/plugin-offline', `${TEST_PLUGIN_SANITIZED}.json`);
+const TEST_PLUGIN_OFFLINE_PATH = path.join(paths.pluginOffline, `${TEST_PLUGIN_SANITIZED}.json`);
 const REAL_MIRROR_PLUGIN_TITLE = '$:/plugins/tiddlywiki/powered-by-tiddlywiki';
 const NETLIFY_REPO = 'https://tw-cpl.netlify.app/repo';
 const GITHUB_PAGES_REPO = 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
@@ -215,7 +216,7 @@ test.describe('CPL Server E2E', () => {
   test.beforeAll(async () => {
     // Start local static repo server so mirror-switching tests
     // do not depend on external network.
-    if (fs.existsSync(path.resolve(__dirname, '../../cache/plugins'))) {
+    if (fs.existsSync(paths.cache.plugins)) {
       await startStaticRepoServer();
     }
   });

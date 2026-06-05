@@ -7,9 +7,10 @@ const http = require('http');
 const net = require('net');
 const path = require('path');
 const fs = require('fs');
+const paths = require('../paths');
 
 const TEST_HOST = '127.0.0.1';
-const FETCHED_DIR = path.resolve(__dirname, '../../wiki/files/plugin-fetched');
+const FETCHED_DIR = paths.pluginFetched;
 
 function getAvailablePort(preferredPort = 9876, maxAttempts = 20) {
   return new Promise((resolve, reject) => {
@@ -41,11 +42,9 @@ function getAvailablePort(preferredPort = 9876, maxAttempts = 20) {
 const TEST_FETCHED_PLUGIN_TITLE = '$:/plugins/test/fetched-preferred';
 const TEST_FETCHED_PLUGIN_FILENAME = '$__plugins_test_fetched-preferred.json';
 const TEST_FETCHED_PLUGIN_PATH = path.join(FETCHED_DIR, TEST_FETCHED_PLUGIN_FILENAME);
-const TEST_DATA_DIR = path.resolve(__dirname, '../../data');
-const TEST_WIKI_ROOT = path.resolve(__dirname, '../../tmp/test-wiki');
-const TEST_COMPATIBILITY_DIR = path.join(TEST_WIKI_ROOT, 'tiddlers/compatibility');
-const RUNTIME_PLUGIN_CACHE_DIR = path.resolve(__dirname, '../../cache/runtime-plugins');
-const RUNTIME_PLUGIN_DIR_CACHE_DIR = path.resolve(__dirname, '../../cache/runtime-plugin-dirs');
+const TEST_COMPATIBILITY_DIR = paths.compatibility;
+const RUNTIME_PLUGIN_CACHE_DIR = paths.cache.runtimePlugins;
+const RUNTIME_PLUGIN_DIR_CACHE_DIR = paths.cache.runtimePluginDirs;
 const JWT_SECRET = 'test-secret';
 
 function base64UrlEncode(value) {
@@ -215,13 +214,12 @@ describe('CPL Server API', () => {
   beforeAll(async () => {
     TEST_PORT = await getAvailablePort();
     makeRequest = createMakeRequest(TEST_PORT);
-    const wikiPath = path.resolve(__dirname, '../..');
     createFetchedPluginFile();
     cleanupCompatibilityFiles();
     cleanupRuntimePluginCache();
 
     serverProcess = spawn(process.execPath, ['-r', 'ts-node/register/transpile-only', 'scripts/server.ts', '--prod'], {
-      cwd: wikiPath,
+      cwd: paths.projectRoot,
       stdio: 'pipe',
       env: {
         ...process.env,

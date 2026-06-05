@@ -3,12 +3,13 @@ const { CompatibilityStore } = require('../../src/CPLServer/lib/store/compatibil
 const { RateLimiter } = require('../../src/CPLServer/lib/security/rate-limit.ts');
 const fs = require('fs');
 const path = require('path');
+const paths = require('../paths');
 
 // Mock data directory for tests
 const TEST_DATA_DIR = path.resolve(__dirname, '../data-test');
 const TEST_STATS_FILE = path.join(TEST_DATA_DIR, 'stats.json');
 const TEST_RATINGS_FILE = path.join(TEST_DATA_DIR, 'ratings.json');
-const COMPATIBILITY_DIR = path.resolve(process.cwd(), 'data', 'compatibility');
+const COMPATIBILITY_DIR = paths.data;
 
 // Helper to clean up test data
 function cleanup() {
@@ -80,7 +81,7 @@ describe('DataStore', () => {
 
   test('should aggregate stats from multiple server files', () => {
     const pluginTitle = '$:/plugins/test/plugin';
-    const DATA_DIR = path.resolve(process.cwd(), 'data');
+    const DATA_DIR = paths.data;
     
     // Simulate multiple servers by creating multiple stats files
     if (!fs.existsSync(DATA_DIR)) {

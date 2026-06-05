@@ -19,15 +19,15 @@
 
 import { spawnSync } from 'child_process';
 import * as path from 'path';
+import { paths } from '../src/CPLServer/lib/paths';
 
-const REPO_ROOT = path.resolve(__dirname, '..');
 const SERVER_ID = process.env.CPL_SERVER_ID ?? 'default';
 const BRANCH_BASE = `data-sync/${SERVER_ID}`;
 
 function run(
   cmd: string,
   args: string[],
-  cwd = REPO_ROOT,
+  cwd = paths.projectRoot,
 ): { ok: boolean; stdout: string } {
   console.log(`[sync-data] $ ${cmd} ${args.join(' ')}`);
   const result = spawnSync(cmd, args, {

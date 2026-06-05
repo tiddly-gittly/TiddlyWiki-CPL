@@ -5,16 +5,15 @@ import * as os from 'os';
 import * as path from 'path';
 
 import { ensureRuntimePluginsBuilt } from './runtime-plugins';
+import { paths } from '../src/CPLServer/lib/paths';
 
 type ServerMode = 'dev' | 'prod' | 'readonly';
 
-const WIKI_PATH = path.resolve(__dirname, '..');
-const DATA_DIR = path.join(WIKI_PATH, 'data');
 const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  console.log('[CPL Server] Created data directory:', DATA_DIR);
+if (!fs.existsSync(paths.data)) {
+  fs.mkdirSync(paths.data, { recursive: true });
+  console.log('[CPL Server] Created data directory:', paths.data);
 }
 
 const args = process.argv.slice(2);
@@ -32,10 +31,9 @@ if (args.includes('--readonly') || args.includes('-r')) {
 const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
 const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
 const toBootPluginArg = (filePath: string): string =>
-  `++${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
+  `++${path.relative(paths.projectRoot, filePath).replace(/\\/g, '/')}`;
 
 let runtimeWikiPath = 'wiki';
-const TEST_WIKI_PATH = path.join(WIKI_PATH, 'tmp', 'test-wiki');
 
 function prepareTestWiki(): void {
   if (process.env.CPL_TEST_MODE !== 'true') {
@@ -44,10 +42,10 @@ function prepareTestWiki(): void {
 
   // Use a fixed project-local temp directory so test helpers can reliably
   // clean up the same path that the server writes to.
-  fs.rmSync(TEST_WIKI_PATH, { recursive: true, force: true });
-  fs.mkdirSync(path.dirname(TEST_WIKI_PATH), { recursive: true });
-  fs.cpSync(path.join(WIKI_PATH, 'wiki'), TEST_WIKI_PATH, { recursive: true });
-  runtimeWikiPath = TEST_WIKI_PATH;
+  fs.rmSync(paths.testWiki, { recursive: true, force: true });
+  fs.mkdirSync(path.dirname(paths.testWiki), { recursive: true });
+  fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
+  runtimeWikiPath = paths.testWiki;
   console.log(
     `[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`,
   );
@@ -148,7 +146,7 @@ console.log(`[CPL Server] Server will start on http://${host}:${port}`);
 console.log('[CPL Server] Press Ctrl+C to stop');
 
 const twProcess = spawn(process.execPath, twArgs, {
-  cwd: WIKI_PATH,
+  cwd: paths.projectRoot,
   stdio: 'inherit',
 });
 

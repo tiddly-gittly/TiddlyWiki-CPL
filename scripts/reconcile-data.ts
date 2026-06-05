@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { paths } from '../src/CPLServer/lib/paths';
 
 interface CommentEntry {
   id?: string;
@@ -36,8 +37,7 @@ interface IdCollision {
   pluginTitle?: string;
 }
 
-const DATA_DIR = path.resolve(__dirname, '..', 'data');
-const COMMENTS_DIR = path.join(DATA_DIR, 'comments');
+const COMMENTS_DIR = path.join(paths.data, 'comments');
 const STALE_THRESHOLD_DAYS = 30;
 const DUPLICATE_WINDOW_MS = 5 * 60 * 1000;
 

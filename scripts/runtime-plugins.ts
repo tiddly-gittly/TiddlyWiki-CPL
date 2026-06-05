@@ -1,6 +1,7 @@
 import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { paths } from '../src/CPLServer/lib/paths';
 
 interface RuntimePluginFiles {
   repoPluginPath: string;
@@ -26,16 +27,15 @@ interface PackedPluginText {
 
 type RuntimePluginName = 'repo' | 'server';
 
-const REPO_ROOT = path.resolve(process.cwd());
 const PLUGIN_DEV_ENTRY = path.join(
-  REPO_ROOT,
+  paths.projectRoot,
   'node_modules',
   'tiddlywiki-plugin-dev',
   'dist',
   'js',
   'main.js',
 );
-const RUNTIME_PLUGIN_DIR = path.join(REPO_ROOT, 'cache', 'runtime-plugins');
+const RUNTIME_PLUGIN_DIR = paths.cache.runtimePlugins;
 const REPO_PLUGIN_PATH = path.join(
   RUNTIME_PLUGIN_DIR,
   '$__plugins_Gk0Wk_CPL-Repo.json',
@@ -45,11 +45,7 @@ const SERVER_PLUGIN_PATH = path.join(
   '$__plugins_Gk0Wk_CPL-Server.json',
 );
 
-const RUNTIME_PLUGIN_DIRS_ROOT = path.join(
-  REPO_ROOT,
-  'cache',
-  'runtime-plugin-dirs',
-);
+const RUNTIME_PLUGIN_DIRS_ROOT = paths.cache.runtimePluginDirs;
 const SERVER_PLUGIN_DIR = path.join(RUNTIME_PLUGIN_DIRS_ROOT, 'CPL-Server');
 const REPO_PLUGIN_DIR = path.join(RUNTIME_PLUGIN_DIRS_ROOT, 'CPL-Repo');
 
@@ -134,7 +130,7 @@ function ensureRuntimePluginsBuilt(): RuntimePluginFiles {
       'src',
     ],
     {
-      cwd: REPO_ROOT,
+      cwd: paths.projectRoot,
       env: process.env,
       stdio: 'inherit',
     },

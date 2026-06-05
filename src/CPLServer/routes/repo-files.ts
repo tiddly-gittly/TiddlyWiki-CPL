@@ -6,9 +6,10 @@
 import * as fs from 'fs';
 import * as pathModule from 'path';
 import { CORS_HEADERS, sendError, decodeRouteParam } from '../lib/http';
+import { paths } from '../lib/paths';
 import type { RouteHandler } from '../lib/types';
 
-const REPO_DIR = pathModule.resolve(process.cwd(), 'cache', 'plugins');
+const REPO_DIR = paths.cache.plugins;
 
 const MIME_TYPES: Record<string, string> = {
   '.json': 'application/json',
