@@ -80,4 +80,29 @@ export const createCplServerApi = (): CPLServerApi => ({
     setJwtToken(null);
     authenticatedRequest('POST', '/auth/logout', null, () => undefined);
   },
+  getPendingComments(callback) {
+    authenticatedRequest('GET', '/comments/pending', null, callback);
+  },
+  getAllRecentComments(callback) {
+    apiRequest('GET', '/comments/all-recent', null, callback);
+  },
+  moderateComment(pluginTitle, commentId, status, callback) {
+    authenticatedRequest(
+      'PUT',
+      `/comments/${encodeURIComponent(pluginTitle)}/${encodeURIComponent(commentId)}`,
+      { status },
+      callback,
+    );
+  },
+  getPendingCompatibilityReports(callback) {
+    authenticatedRequest('GET', '/compatibility/pending', null, callback);
+  },
+  moderateCompatibilityReport(pluginTitle, reportId, status, callback) {
+    authenticatedRequest(
+      'PUT',
+      `/compatibility/${encodeURIComponent(pluginTitle)}/${encodeURIComponent(reportId)}`,
+      { status },
+      callback,
+    );
+  },
 });

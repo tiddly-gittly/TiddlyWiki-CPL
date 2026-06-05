@@ -8,7 +8,7 @@ import {
 import type { RouteHandler } from '../../../lib/types';
 
 export const method = 'GET';
-export const path = /^\/cpl\/api\/comments\/(?!pending$)(.+)$/;
+export const path = /^\/cpl\/api\/comments\/(?!pending$|all-recent$)(.+)$/;
 
 export const handler: RouteHandler = (request, _response, context) => {
   try {

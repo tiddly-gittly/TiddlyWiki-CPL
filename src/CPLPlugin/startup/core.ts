@@ -16,18 +16,6 @@ export const startup = (): void => {
   const installController = createInstallController();
   let indexController: ReturnType<typeof createIndexController> | undefined;
 
-  const shouldAutoLoadDatabaseInCplLayout = (): boolean =>
-    tw.wiki.getTiddlerText(
-      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout',
-      'yes',
-    ) !== 'no';
-
-  const shouldAutoCheckUpdatesInCplLayout = (): boolean =>
-    tw.wiki.getTiddlerText(
-      '$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout',
-      'no',
-    ) === 'yes';
-
   const updateController = createUpdateController();
   indexController = createIndexController();
 
@@ -39,50 +27,6 @@ export const startup = (): void => {
       )
     ) {
       updateController.rescheduleAutoUpdate();
-    }
-
-    if (tw.utils.hop(changes, '$:/layout')) {
-      const currentLayout = tw.wiki.getTiddlerText('$:/layout', '');
-      if (
-        currentLayout === '$:/plugins/Gk0Wk/CPL-Repo/layout/layout'
-      ) {
-        if (
-          shouldAutoLoadDatabaseInCplLayout() &&
-          !tw.wiki.tiddlerExists('$:/temp/CPL-Repo/plugins-index') &&
-          indexController &&
-          !indexController.isBusy()
-        ) {
-          tw.rootWidget.dispatchEvent({
-            type: 'cpl-get-plugins-index',
-            paramObject: {},
-            widget: tw.rootWidget,
-          });
-        }
-        if (shouldAutoCheckUpdatesInCplLayout()) {
-          tw.rootWidget.dispatchEvent({
-            type: 'cpl-update-check',
-            paramObject: {},
-            widget: tw.rootWidget,
-          });
-        }
-      }
-    }
-
-    // Auto-check updates when switching to update tab
-    if (tw.utils.hop(changes, '$:/temp/CPL-Repo/plugin-database-tab-state')) {
-      const currentTab = tw.wiki.getTiddlerText(
-        '$:/temp/CPL-Repo/plugin-database-tab-state',
-        '',
-      );
-      if (
-        currentTab === '$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager'
-      ) {
-        tw.rootWidget.dispatchEvent({
-          type: 'cpl-update-check',
-          paramObject: {},
-          widget: tw.rootWidget,
-        });
-      }
     }
 
     if (tw.titleWidgetNode?.refresh(changes, tw.titleContainer ?? null, null)) {

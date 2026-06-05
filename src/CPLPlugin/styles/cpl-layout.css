@@ -750,3 +750,58 @@
     transform: translateY(0);
   }
 }
+
+/* Section toggle button (changelog, compatibility) */
+.cpl-section-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+  font-size: inherit;
+}
+
+.cpl-section-toggle-button:hover,
+.cpl-section-toggle-button:focus-visible {
+  box-shadow: 0 0 0 2px currentColor;
+}
+
+.cpl-section-toggle-icon {
+  flex-shrink: 0;
+}
+
+.cpl-section-toggle-text {
+  font-weight: 600;
+}
+
+/* Moderation actions (admin approve/reject) */
+.cpl-moderation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top-width: 1px;
+  border-top-style: dashed;
+}
+
+.cpl-moderation-badge {
+  font-size: 0.8em;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.cpl-moderation-approve-btn {
+  padding: 4px 12px;
+  font-size: 0.8em;
+}
+
+.cpl-moderation-reject-btn {
+  padding: 4px 12px;
+  font-size: 0.8em;
+}

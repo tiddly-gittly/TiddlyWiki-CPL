@@ -290,7 +290,11 @@ function scheduleSync(): void {
     gitSync();
     runFetchPlugins(() => {
       console.log('[entrypoint] Periodic sync complete. Restarting server...');
+      updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
       restartServer();
+      setTimeout(() => {
+        updateBuildStatus('idle', 'Server is running');
+      }, 5000);
     });
   }, SYNC_INTERVAL_SECONDS * 1000);
 }

@@ -133,3 +133,143 @@
   padding: 20px;
   font-style: italic;
 }
+
+/* Comments Center (moderation dashboard) */
+.cpl-comments-center {
+  padding: 16px;
+}
+
+.cpl-comments-center-section {
+  margin-bottom: 24px;
+}
+
+.cpl-comment-plugin-pill {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-left: 8px;
+  font-size: 0.8em;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.cpl-moderation-item {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-left-width: 3px;
+  border-left-style: solid;
+}
+
+.cpl-moderation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top-width: 1px;
+  border-top-style: dashed;
+}
+
+.cpl-moderation-badge {
+  font-size: 0.8em;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.cpl-moderation-approve-btn {
+  padding: 4px 12px;
+  font-size: 0.8em;
+}
+
+.cpl-moderation-reject-btn {
+  padding: 4px 12px;
+  font-size: 0.8em;
+}
+
+.cpl-moderation-delete-btn {
+  padding: 4px 12px;
+  font-size: 0.8em;
+  margin-left: auto;
+}
+
+.cpl-moderation-refresh-hint {
+  margin-top: 6px;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.cpl-moderation-all-clear {
+  font-size: 1.1em;
+  padding: 30px;
+}
+
+/* Comments Center Layout */
+.cpl-comments-center-layout {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+/* Comments Center Header */
+.cpl-comments-center-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+/* Comments Center Toolbar (heading + refresh) */
+.cpl-comments-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+/* Comments Center Search Bar */
+.cpl-comments-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cpl-comments-search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+/* Pagination */
+.cpl-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 0;
+  margin: 8px 0;
+}
+
+.cpl-pagination-btn {
+  padding: 4px 12px;
+  font-size: 1em;
+  border-radius: 4px;
+}
+
+.cpl-pagination-info {
+  font-size: 0.9em;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: center;
+}
