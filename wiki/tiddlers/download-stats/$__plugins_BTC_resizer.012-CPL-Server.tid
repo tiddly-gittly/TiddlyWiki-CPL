@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_BTC_resizer
+plugin-title: $:/plugins/BTC/resizer
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-06-04T01:07:55.534Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:07:55.534Z"}}
