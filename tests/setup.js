@@ -23,8 +23,9 @@ const DATA_FILES = [
   'ratings.us.json',
 ];
 
-const COMMENTS_PENDING_DIR = path.resolve(__dirname, '../wiki/tiddlers/comments/pending');
-const COMMENTS_APPROVED_DIR = path.resolve(__dirname, '../wiki/tiddlers/comments/approved');
+const TEST_WIKI_ROOT = path.resolve(__dirname, '../tmp/test-wiki');
+const COMMENTS_PENDING_DIR = path.join(TEST_WIKI_ROOT, 'tiddlers/comments/pending');
+const COMMENTS_APPROVED_DIR = path.join(TEST_WIKI_ROOT, 'tiddlers/comments/approved');
 
 // Clean up function
 function cleanupDataFiles() {

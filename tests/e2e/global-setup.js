@@ -11,16 +11,10 @@ module.exports = async () => {
     }
   }
 
-  // Clean up test comment tiddlers
-  const commentsPendingDir = path.resolve(__dirname, '../../wiki/tiddlers/comments/pending');
-  const commentsApprovedDir = path.resolve(__dirname, '../../wiki/tiddlers/comments/approved');
-  for (const dir of [commentsPendingDir, commentsApprovedDir]) {
-    if (fs.existsSync(dir)) {
-      for (const file of fs.readdirSync(dir)) {
-        if (file.includes('comment-test') || file.includes('e2e-test-comment')) {
-          fs.unlinkSync(path.join(dir, file));
-        }
-      }
-    }
+  // In test mode the server uses tmp/test-wiki. Wipe it before E2E tests
+  // so the server starts from a clean copy of the production wiki.
+  const testWikiRoot = path.resolve(__dirname, '../../tmp/test-wiki');
+  if (fs.existsSync(testWikiRoot)) {
+    fs.rmSync(testWikiRoot, { recursive: true, force: true });
   }
 };

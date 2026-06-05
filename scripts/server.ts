@@ -35,16 +35,19 @@ const toBootPluginArg = (filePath: string): string =>
   `++${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
 
 let runtimeWikiPath = 'wiki';
+const TEST_WIKI_PATH = path.join(WIKI_PATH, 'tmp', 'test-wiki');
 
 function prepareTestWiki(): void {
   if (process.env.CPL_TEST_MODE !== 'true') {
     return;
   }
 
-  const tempRoot = path.join(os.tmpdir(), 'cpl-test-wiki');
-  fs.rmSync(tempRoot, { recursive: true, force: true });
-  fs.cpSync(path.join(WIKI_PATH, 'wiki'), tempRoot, { recursive: true });
-  runtimeWikiPath = tempRoot;
+  // Use a fixed project-local temp directory so test helpers can reliably
+  // clean up the same path that the server writes to.
+  fs.rmSync(TEST_WIKI_PATH, { recursive: true, force: true });
+  fs.mkdirSync(path.dirname(TEST_WIKI_PATH), { recursive: true });
+  fs.cpSync(path.join(WIKI_PATH, 'wiki'), TEST_WIKI_PATH, { recursive: true });
+  runtimeWikiPath = TEST_WIKI_PATH;
   console.log(
     `[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`,
   );
