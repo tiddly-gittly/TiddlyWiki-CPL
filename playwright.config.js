@@ -58,7 +58,7 @@ module.exports = defineConfig({
     command: 'npm run server:test',
     url: `http://localhost:${TEST_PORT}`,
     reuseExistingServer: !process.env.CI,
-    timeout: 120000,
+    timeout: 300000, // 5 min: server startup includes runtime plugin compilation on first run
     env: {
       PORT: TEST_PORT,
       CPL_TEST_MODE: 'true',
