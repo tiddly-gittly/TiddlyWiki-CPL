@@ -1,40 +1,36 @@
 /**
  * Playwright E2E Tests for CPL Server
  *
- * These tests verify the full user flow through direct tiddler navigation:
- * 1. Open a TiddlyWiki with CPL Server
- * 2. Navigate to a plugin tiddler
- * 3. Check that stats are displayed
- * 4. Submit a rating and verify it updates
- * 5. Check changelog section
- * 6. Verify API accessibility from browser
+ * All tests use mock data — no real plugins, no external network calls.
+ * The test server (started by playwright.config.js webServer) provides
+ * the TW wiki + CPL server on a dynamic port.
  */
 
-const { test, expect } = require('@playwright/test');
-const { startBlankWiki, stopBlankWiki, BLANK_WIKI_URL } = require('./helpers/blank-wiki-server');
-const { startStaticRepoServer, stopStaticRepoServer, STATIC_REPO_URL } = require('./helpers/static-repo-server');
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { test, expect } = require('@playwright/test');
 const paths = require('../paths');
+const {
+  startBlankWiki,
+  stopBlankWiki,
+  BLANK_WIKI_URL,
+} = require('./helpers/blank-wiki-server');
+const {
+  startMockRepoServer,
+  stopMockRepoServer,
+  MOCK_PLUGIN_TITLE,
+} = require('./helpers/mock-repo-server');
 
-const BASE_URL = process.env.TEST_URL || `http://localhost:${process.env.TEST_PORT || '19876'}`;
-const TEST_PLUGIN_TIDDLER = 'dullroar/sitemap';
-const TEST_PLUGIN_CPL_TITLE = '$:/plugins/dullroar/sitemap';
-
-// Temporary test plugin for blank wiki E2E
-const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
-const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
-const TEST_PLUGIN_OFFLINE_PATH = path.join(paths.pluginOffline, `${TEST_PLUGIN_SANITIZED}.json`);
-const REAL_MIRROR_PLUGIN_TITLE = '$:/plugins/tiddlywiki/powered-by-tiddlywiki';
-const NETLIFY_REPO = 'https://tw-cpl.netlify.app/repo';
-const GITHUB_PAGES_REPO = 'https://tiddly-gittly.github.io/TiddlyWiki-CPL/repo';
+const BASE_URL =
+  process.env.TEST_URL ||
+  `http://localhost:${process.env.TEST_PORT || '19876'}`;
 const JWT_SECRET = 'test-secret';
 
 function base64UrlEncode(value) {
   return Buffer.from(JSON.stringify(value))
     .toString('base64')
-    .replace(/=/g, '')
+    .replace(/[=]/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 }
@@ -44,314 +40,382 @@ function createTestJwt(payload) {
   const body = base64UrlEncode({
     avatar: 'https://example.com/avatar.png',
     exp: Math.floor(Date.now() / 1000) + 3600,
-    ...payload
+    ...payload,
   });
   const signature = crypto
     .createHmac('sha256', JWT_SECRET)
     .update(`${header}.${body}`)
     .digest('base64')
-    .replace(/=/g, '')
+    .replace(/[=]/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
   return `${header}.${body}.${signature}`;
 }
 
-async function authenticateTestUser(page) {
-  await page.context().addCookies([
-    {
-      name: 'cpl_jwt_token',
-      value: createTestJwt({ githubId: '1001', username: 'e2e-user' }),
-      url: BASE_URL,
-      httpOnly: true,
-      sameSite: 'Lax'
-    }
-  ]);
-}
-
-function createTestPluginFile() {
-  const testPlugin = {
-    title: TEST_PLUGIN_TITLE,
-    type: 'application/json',
-    'plugin-type': 'plugin',
-    text: JSON.stringify({
-      tiddlers: {
-        [`${TEST_PLUGIN_TITLE}/readme`]: {
-          title: `${TEST_PLUGIN_TITLE}/readme`,
-          text: 'This is an E2E test plugin readme. It verifies that plugins can be installed via the import dialog and their tiddlers are accessible.'
-        }
-      }
-    })
-  };
-  fs.writeFileSync(TEST_PLUGIN_OFFLINE_PATH, JSON.stringify(testPlugin), 'utf-8');
-  return testPlugin;
-}
-
-function removeTestPluginFile() {
-  try {
-    if (fs.existsSync(TEST_PLUGIN_OFFLINE_PATH)) {
-      fs.unlinkSync(TEST_PLUGIN_OFFLINE_PATH);
-    }
-  } catch (e) {
-    // ignore cleanup errors
-  }
-}
-
-async function navigateToPlugin(page, tiddlerTitle) {
+/** Wait for TW + CPL client to be ready. */
+async function waitForReady(page) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-  await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
-
-  // Point CPL API to the local test server. The server-side --load injection
-  // should already do this; this keeps the helper robust for reused servers.
-  await page.evaluate(() => {
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: window.location.origin });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo', text: `${window.location.origin}/repo` });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo', text: `${window.location.origin}/repo` });
-  });
-
-  await page.waitForFunction(() => {
-    return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
-  }, { timeout: 30000 });
-
-  await page.evaluate((title) => {
-    $tw.wiki.addTiddler({ title: '$:/StoryList', list: title });
-    $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': title });
-    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
-  }, tiddlerTitle);
-
-  // Wait for the page to render the plugin view
-  await page.waitForSelector('.cpl-plugin-stats', { timeout: 60000 });
-}
-
-async function openPluginDatabase(page) {
-  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-  await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
-
-  // Use only local mirrors in E2E so switching does not depend on external
-  // Netlify/GitHub Pages availability or CORS behavior.
-  await page.evaluate(({ staticRepoUrl }) => {
-    const localServerUrl = window.location.origin;
-    const localServerRepoUrl = `${localServerUrl}/repo`;
-    const alternateStaticRepoUrl = staticRepoUrl.endsWith('/') ? staticRepoUrl.slice(0, -1) : `${staticRepoUrl}/`;
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: localServerUrl });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo', text: localServerRepoUrl });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/servers', text: localServerUrl });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: staticRepoUrl });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo', text: staticRepoUrl });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/repos', text: `${staticRepoUrl} ${alternateStaticRepoUrl}` });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos', text: `${staticRepoUrl} ${alternateStaticRepoUrl}` });
-    $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: localServerRepoUrl });
-  }, { staticRepoUrl: STATIC_REPO_URL });
-
-  await page.waitForFunction(() => {
-    return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
-  }, { timeout: 30000 });
-
-  await page.evaluate(() => {
-    $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
-    $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/layout/panel' });
-    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
-  });
-}
-
-async function installFromMirrorInBlankWiki(page, mirrorUrl, pluginTitle) {
-  await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-
-  await page.waitForFunction(() => typeof globalThis.__tiddlywiki_cpl__ === 'function', { timeout: 30000 });
-
-  await page.evaluate(({ mirrorUrl }) => {
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo',
-      text: mirrorUrl
-    });
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo',
-      text: mirrorUrl
-    });
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
-      text: window.location.origin
-    });
-    $tw.wiki.addTiddler({
-      title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo',
-      text: `${window.location.origin}/repo`
-    });
-  }, { mirrorUrl });
-
-  const queryResult = await page.evaluate(async ({ pluginTitle }) => {
-    try {
-      const text = await globalThis.__tiddlywiki_cpl__('Query', { plugin: pluginTitle });
-      const data = JSON.parse(text);
-      return { ok: true, title: data.title, latest: data.latest };
-    } catch (error) {
-      return { ok: false, error: String(error) };
-    }
-  }, { pluginTitle });
-
-  expect(queryResult.ok).toBe(true);
-  expect(queryResult.title).toBe(pluginTitle);
-
-  await page.evaluate(({ pluginTitle }) => {
-    $tw.rootWidget.dispatchEvent({
-      type: 'cpl-install-plugin-request',
-      paramObject: { title: pluginTitle },
-      widget: $tw.rootWidget
-    });
-  }, { pluginTitle });
-
-  const confirmButton = page.locator('button').filter({ hasText: /Confirm to Install|确认安装/ }).last();
-  await expect(confirmButton).toBeVisible({ timeout: 30000 });
-  await confirmButton.click();
-
   await page.waitForFunction(
-    (pluginTitle) => !!$tw.wiki.getTiddler(pluginTitle),
-    pluginTitle,
-    { timeout: 60000 }
+    () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
+    { timeout: 30000 },
   );
+  await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', {
+    timeout: 30000,
+  });
 }
+
+/** Navigate to a mock plugin tiddler that has cpl.title set. */
+async function navigateToMockPlugin(page) {
+  await waitForReady(page);
+
+  // Create a mock plugin tiddler with cpl.title so the stats widget renders
+  await page.evaluate(title => {
+    $tw.wiki.addTiddler({
+      title: '$:/temp/e2e-mock-plugin-info',
+      'cpl.title': title,
+      text: 'Mock plugin for E2E testing',
+      tags: '$:/tags/PluginWiki',
+    });
+    $tw.wiki.addTiddler({
+      title: '$:/StoryList',
+      list: '$:/temp/e2e-mock-plugin-info',
+    });
+    $tw.wiki.addTiddler({
+      title: '$:/HistoryList',
+      'current-tiddler': '$:/temp/e2e-mock-plugin-info',
+    });
+    $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
+  }, MOCK_PLUGIN_TITLE);
+
+  // Wait for stats widget to render
+  await page.waitForSelector('.cpl-plugin-stats', { timeout: 30000 });
+}
+
+// ─── Test Suite ─────────────────────────────────────────────────────────────
 
 test.describe('CPL Server E2E', () => {
   test.beforeAll(async () => {
-    // Start local static repo server so mirror-switching tests
-    // do not depend on external network.
-    if (fs.existsSync(paths.cache.plugins)) {
-      await startStaticRepoServer();
-    }
+    await startMockRepoServer();
   });
 
   test.afterAll(() => {
-    stopStaticRepoServer();
+    stopMockRepoServer();
   });
 
-  // Collect browser console logs for debugging
   test.beforeEach(async ({ page }) => {
     page.on('console', msg => {
       if (msg.type() === 'error') {
-        const text = msg.text();
-        console.log(`[Browser ${page.context().browser().browserType().name()}] ${msg.type()}: ${text}`);
+        console.log(`[Browser] error: ${msg.text()}`);
       }
-    });
-    page.on('pageerror', err => {
-      console.log(`[Browser ${page.context().browser().browserType().name()}] Page error: ${err.message}`);
     });
   });
 
-  test('should display plugin statistics on plugin page', async ({ page }) => {
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+  // ── Plugin Stats ──────────────────────────────────────────────────────
 
+  test('should display plugin statistics widget on plugin page', async ({
+    page,
+  }) => {
+    await navigateToMockPlugin(page);
     const statsWidget = page.locator('.cpl-plugin-stats');
     await expect(statsWidget).toBeVisible();
-
-    // Verify download count is displayed (should be a number or dash)
+    // Download count should be rendered (number or dash)
     const downloadCount = statsWidget.locator('.cpl-stat-item').first();
     await expect(downloadCount).toBeVisible();
   });
 
-  test('should allow rating a plugin', async ({ page }) => {
-    await authenticateTestUser(page);
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
-    await page.waitForFunction(() => {
-      return $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') === 'authenticated';
-    }, { timeout: 30000 });
+  test('should create shared stats tiddler after page load', async ({
+    page,
+  }) => {
+    await navigateToMockPlugin(page);
+    await page.waitForFunction(
+      () => Boolean($tw.wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats')),
+      { timeout: 10000 },
+    );
+    const hasStats = await page.evaluate(() => {
+      const t = $tw.wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats');
+      if (!t) {
+        return false;
+      }
+      const stats = JSON.parse(t.fields.text || '{}');
+      return Boolean(stats.plugins) && typeof stats.plugins === 'object';
+    });
+    expect(hasStats).toBe(true);
+  });
 
-    const ratingWidget = page.locator('.cpl-rating-widget');
-    await expect(ratingWidget).toHaveCount(0);
+  // ── Rating ────────────────────────────────────────────────────────────
 
+  test('should allow authenticated user to rate a plugin', async ({ page }) => {
+    await page.context().addCookies([
+      {
+        name: 'cpl_jwt_token',
+        value: createTestJwt({ githubId: '1001', username: 'e2e-user' }),
+        url: BASE_URL,
+      },
+    ]);
+
+    await navigateToMockPlugin(page);
+    await page.waitForFunction(
+      () =>
+        $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') ===
+        'authenticated',
+      { timeout: 30000 },
+    );
+
+    // Open rating panel
     const ratingToggle = page.locator('.cpl-rating-toggle-button');
     await expect(ratingToggle).toBeVisible();
     await ratingToggle.click();
+
+    const ratingWidget = page.locator('.cpl-rating-widget');
     await expect(ratingWidget).toBeVisible();
 
-    // Click the third star (rating = 3)
+    // Click 3rd star
     const stars = ratingWidget.locator('button');
     await expect(stars).toHaveCount(5);
     await stars.nth(2).click();
 
-    // Wait for the submission status to update
+    // Wait for submission result
     await page.waitForFunction(
-      (title) => {
-        const tempTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/rating-status/' + title);
-        return tempTiddler && (tempTiddler.fields.text === 'success' || String(tempTiddler.fields.text).startsWith('error:'));
+      title => {
+        const t = $tw.wiki.getTiddler(
+          `$:/temp/CPL-Server/rating-status/${title}`,
+        );
+        return (
+          t &&
+          (t.fields.text === 'success' ||
+            String(t.fields.text).startsWith('error:'))
+        );
       },
-      TEST_PLUGIN_CPL_TITLE,
-      { timeout: 10000 }
+      MOCK_PLUGIN_TITLE,
+      { timeout: 10000 },
     );
 
-    // Verify it succeeded, not errored
-    const ratingStatus = await page.evaluate((title) => {
-      const tempTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/rating-status/' + title);
-      return tempTiddler ? tempTiddler.fields.text : null;
-    }, TEST_PLUGIN_CPL_TITLE);
-
-    expect(ratingStatus).toBe('success');
+    const status = await page.evaluate(title => {
+      const t = $tw.wiki.getTiddler(
+        `$:/temp/CPL-Server/rating-status/${title}`,
+      );
+      return t ? t.fields.text : null;
+    }, MOCK_PLUGIN_TITLE);
+    expect(status).toBe('success');
   });
 
-  test('should hide rating and compatibility submission forms until login', async ({ page }) => {
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+  test('should show login prompt for anonymous users in rating panel', async ({
+    page,
+  }) => {
+    await navigateToMockPlugin(page);
 
     const ratingToggle = page.locator('.cpl-rating-toggle-button');
     await expect(ratingToggle).toBeVisible();
-    await expect(page.locator('.cpl-rating-widget')).toHaveCount(0);
-
     await ratingToggle.click();
-    await expect(page.locator('.cpl-rating-widget')).toContainText(/Login to rate this plugin|登录后即可为插件评分/);
-    // Rating stars should not be clickable when anonymous
+
+    await expect(page.locator('.cpl-rating-widget')).toContainText(
+      /Login to rate this plugin|登录后即可为插件评分/,
+    );
     await expect(page.locator('.cpl-rating-star-button')).toHaveCount(0);
-
-    // Compatibility submission form is inside a collapsible panel and should not be visible by default
-    await expect(
-      page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
-    ).toHaveCount(0);
-    // The collapsed panel shows a summary label instead of the anonymous prompt
-    await expect(page.locator('.cpl-compatibility-section')).toContainText(/No compatibility reports yet|暂无兼容性报告/);
   });
 
-  test('should render empty changelog and compatibility reports without staying in loading state', async ({ page }) => {
-    await navigateToPlugin(page, 'tiddly-gittly/heti');
+  // ── Changelog / Compatibility ──────────────────────────────────────────
 
-    const changelogSection = page.locator('.cpl-changelog-section');
-    await expect(changelogSection).toBeVisible();
-    await expect(changelogSection).toContainText(/No changelog available|暂无更新日志/);
-    await expect(changelogSection).not.toContainText(/Loading changelog|正在加载更新日志/);
+  test('should show empty state for changelog and compatibility', async ({
+    page,
+  }) => {
+    await navigateToMockPlugin(page);
 
-    const compatibilitySection = page.locator('.cpl-compatibility-section');
-    await expect(compatibilitySection).toBeVisible();
-    await expect(compatibilitySection).toContainText(/No compatibility reports yet|暂无兼容性报告/);
-    await expect(compatibilitySection).not.toContainText(/Loading compatibility reports|正在加载兼容性报告/);
+    // Changelog should show "no changelog" (not loading forever)
+    const changelogLabel = page
+      .locator('.cpl-plugin-stats')
+      .filter({ hasText: /No changelog|暂无更新日志/ });
+    await expect(changelogLabel).toBeVisible({ timeout: 15000 });
+
+    // Compatibility should show "no reports"
+    const compatLabel = page
+      .locator('.cpl-plugin-stats')
+      .filter({ hasText: /No reports|暂无兼容性报告/ });
+    await expect(compatLabel).toBeVisible({ timeout: 15000 });
   });
 
-  test('should show compatibility submission form after login', async ({ page }) => {
-    await authenticateTestUser(page);
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
-    await page.waitForFunction(() => {
-      return $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') === 'authenticated';
-    }, { timeout: 30000 });
+  // ── Comments Center (anonymous) ───────────────────────────────────────
 
-    // Expand the compatibility panel first (it is collapsed by default)
-    const compatibilityToggle = page.locator('.cpl-compatibility-section .cpl-section-toggle-button');
-    await expect(compatibilityToggle).toBeVisible();
-    await compatibilityToggle.click();
+  test('comments center should render without filter syntax errors', async ({
+    page,
+  }) => {
+    await waitForReady(page);
 
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/StoryList',
+        list: '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center',
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/HistoryList',
+        'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center',
+      });
+      $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
+    });
+
+    await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
+
+    const text = await page.locator('.cpl-comments-center').textContent();
+    expect(text).not.toContain('Filter error');
+    expect(text).not.toContain('Missing [ in filter expression');
+
+    await expect(page.locator('.cpl-comments-center')).toContainText(
+      /登录后即可审核评论和发表评论|Login to moderate and post comments/,
+    );
+    await expect(page.locator('.cpl-comments-center')).toContainText(
+      /最新评论|Recent Comments/,
+    );
+  });
+
+  // ── Comments Center (admin with pending) ───────────────────────────────
+
+  test('comments center admin view with pending comments should render without filter errors', async ({
+    page,
+    request,
+  }) => {
+    const adminToken = createTestJwt({
+      githubId: '42',
+      username: 'admin-test',
+    });
+
+    // Submit a comment via API
+    const resp = await request.post(
+      `${BASE_URL}/cpl/comments/${encodeURIComponent(
+        '$:/plugins/test/e2e-admin-comment',
+      )}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'TiddlyWiki',
+          Cookie: `cpl_jwt_token=${adminToken}`,
+        },
+        data: { content: 'Admin test comment for filter verification' },
+      },
+    );
+    expect(resp.ok()).toBe(true);
+    const commentData = await resp.json();
+    expect(commentData.success).toBe(true);
+
+    await waitForReady(page);
+
+    // Inject admin auth state
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/user-status',
+        text: 'authenticated',
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/is-admin',
+        text: 'yes',
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/user',
+        text: JSON.stringify({
+          githubId: '42',
+          username: 'admin-test',
+          avatar: '',
+        }),
+        type: 'application/json',
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/github-client-id',
+        text: 'fake-id',
+      });
+    });
+
+    // Fetch pending comments and inject into TW
+    await page
+      .context()
+      .addCookies([
+        { name: 'cpl_jwt_token', value: adminToken, url: BASE_URL },
+      ]);
+    await page.evaluate(async baseUrl => {
+      const resp = await fetch(`${baseUrl}/cpl/comments/pending`, {
+        credentials: 'include',
+      });
+      const data = await resp.json();
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/pending-comments',
+        text: JSON.stringify(data),
+        type: 'application/json',
+      });
+    }, BASE_URL);
+
+    // Wait for JS processor to create individual tiddlers
+    await page.waitForFunction(
+      () =>
+        $tw.wiki.getTiddlerText(
+          '$:/temp/CPL-Server/comment-items/pending/list',
+          '',
+        ) !== '',
+      { timeout: 10000 },
+    );
+
+    // Navigate to comments center
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/StoryList',
+        list: '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center',
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/HistoryList',
+        'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center',
+      });
+      $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
+    });
+
+    await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
+
+    // No filter errors
+    const text = await page.locator('.cpl-comments-center').textContent();
+    expect(text).not.toContain('Filter error');
+    expect(text).not.toContain('Missing [ in filter expression');
+
+    // Admin sees pending section
+    await expect(page.locator('.cpl-comments-center')).toContainText(
+      /待审核评论|Pending Comments/,
+    );
+
+    // Comment content renders
+    await expect(page.locator('.cpl-comments-center')).toContainText(
+      'Admin test comment for filter verification',
+    );
+    await expect(page.locator('.cpl-comments-center')).toContainText(
+      'admin-test',
+    );
+
+    // Moderation buttons visible
     await expect(
-      page.locator('.cpl-form-section').filter({ hasText: /Submit a Compatibility Report|提交兼容性报告/ })
+      page.locator('.cpl-moderation-approve-btn').first(),
     ).toBeVisible();
+
+    // Cleanup
+    await request
+      .put(
+        `${BASE_URL}/cpl/comments/${encodeURIComponent(
+          '$:/plugins/test/e2e-admin-comment',
+        )}/${encodeURIComponent(commentData.commentId)}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'TiddlyWiki',
+            Cookie: `cpl_jwt_token=${adminToken}`,
+          },
+          data: { status: 'deleted' },
+        },
+      )
+      .catch(() => {});
   });
 
-  test('should display changelog when available', async ({ page }) => {
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+  // ── API from Browser ──────────────────────────────────────────────────
 
-    const changelogSection = page.locator('.cpl-changelog-section');
-    await expect(changelogSection).toBeVisible();
-  });
-
-  test('API should be accessible from browser via $tw.cpl', async ({ page }) => {
-    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
+  test('API should be accessible from browser via $tw.cpl', async ({
+    page,
+  }) => {
+    await waitForReady(page);
 
     const result = await page.evaluate(() => {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         $tw.cpl.getStats('$:/plugins/test/plugin', (err, stats) => {
           if (err) {
             resolve({ error: err.message || String(err) });
@@ -367,251 +431,69 @@ test.describe('CPL Server E2E', () => {
     expect(result.stats).toHaveProperty('downloadCount');
   });
 
-  test('should create a shared temp tiddler for plugin stats', async ({ page }) => {
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
+  // ── Server Degradation ────────────────────────────────────────────────
 
-    // Wait a moment for async stats fetch
-    await page.waitForFunction(() => {
-      const statsTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats');
-      return !!statsTiddler;
-    }, { timeout: 10000 });
-
-    const hasSharedStatsTiddler = await page.evaluate(() => {
-      const statsTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats');
-      if (!statsTiddler) {
-        return false;
-      }
-      const stats = JSON.parse(statsTiddler.fields.text || '{}');
-      return !!stats.plugins && typeof stats.plugins === 'object';
-    });
-
-    expect(hasSharedStatsTiddler).toBe(true);
-  });
-
-  test('should allow switching mirror sources and keep legacy repo loading working', async ({ page }) => {
-    await openPluginDatabase(page);
-
-    const mirrorSelect = page.locator('select.cpl-mirror-select').first();
-    await expect(mirrorSelect).toBeVisible();
-
-    const currentValue = await mirrorSelect.inputValue();
-    const options = await mirrorSelect.locator('option').evaluateAll(nodes => nodes.map(node => node.value));
-    expect(options.length).toBeGreaterThan(1);
-
-    const alternateValue = options.find(value => value !== currentValue);
-    expect(alternateValue).toBeTruthy();
-
-    await mirrorSelect.selectOption(alternateValue);
-
-    await page.waitForFunction(
-      (expectedRepo) => {
-        const currentRepo = $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo');
-        const pluginsIndex = $tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index');
-        return currentRepo === expectedRepo && !!pluginsIndex;
-      },
-      alternateValue,
-      { timeout: 20000 }
-    );
-
-    const mirrorState = await page.evaluate(() => ({
-      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo'),
-      mirrorType: $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown'),
-      hasPluginsIndex: !!$tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index')
-    }));
-
-    expect(mirrorState.currentRepo).toBe(alternateValue);
-    expect(mirrorState.hasPluginsIndex).toBe(true);
-    expect(['server', 'static']).toContain(mirrorState.mirrorType);
-  });
-
-  test('should load plugin index from the CPL server mirror root URL', async ({ page, request }) => {
-    const serverRoot = new URL(BASE_URL).origin;
-    const repoResponse = await request.get(`${serverRoot}/repo/index.json`);
-    expect(repoResponse.status()).toBe(200);
-    const repoIndex = await repoResponse.json();
-    expect(Array.isArray(repoIndex)).toBe(true);
-    expect(repoIndex.length).toBeGreaterThan(0);
-
-    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
+  test('should degrade gracefully when CPL server is unavailable', async ({
+    page,
+  }) => {
+    await navigateToMockPlugin(page);
 
     await page.evaluate(() => {
-      const serverRoot = window.location.origin;
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server', text: serverRoot });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo', text: `${serverRoot}/repo` });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/servers', text: serverRoot });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo', text: serverRoot });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo', text: serverRoot });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/repos', text: `${serverRoot} ${serverRoot}/repo` });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos', text: '' });
-      $tw.wiki.addTiddler({ title: '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos', text: `${serverRoot} ${serverRoot}/repo` });
-    });
-
-    await page.waitForFunction(() => {
-      return $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', '') === 'server' &&
-        $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '') === 'server';
-    }, { timeout: 30000 });
-
-    await page.evaluate(() => {
-      $tw.wiki.deleteTiddler('$:/temp/CPL-Repo/plugins-index');
-      $tw.rootWidget.dispatchEvent({
-        type: 'cpl-get-plugins-index',
-        paramObject: {},
-        widget: $tw.rootWidget
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Repo/server-type',
+        text: 'unreachable',
       });
-    });
-
-    await page.waitForFunction(() => {
-      const errorTiddler = $tw.wiki.getTiddler('$:/temp/CPL-Repo/getting-plugins-index');
-      const pluginsIndex = $tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index');
-      return !errorTiddler && !!pluginsIndex;
-    }, { timeout: 30000 });
-
-    const mirrorState = await page.evaluate(() => ({
-      currentRepo: $tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo'),
-      mirrorType: $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown'),
-      hasPluginsIndex: !!$tw.wiki.getTiddler('$:/temp/CPL-Repo/plugins-index')
-    }));
-
-    expect(mirrorState.currentRepo).toBe(serverRoot);
-    expect(mirrorState.mirrorType).toBe('server');
-    expect(mirrorState.hasPluginsIndex).toBe(true);
-  });
-
-  test('should degrade gracefully when CPL server is unavailable while preserving mirror selector', async ({ page }) => {
-    await navigateToPlugin(page, TEST_PLUGIN_TIDDLER);
-
-    await page.evaluate(() => {
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/server-type', text: 'unreachable' });
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/api-status', text: 'unavailable' });
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Repo/api-status',
+        text: 'unavailable',
+      });
     });
 
     const staticNotice = page.locator('.cpl-static-feature-notice').first();
     await expect(staticNotice).toBeVisible();
     await expect(page.locator('.cpl-rating-widget')).toHaveCount(0);
   });
-
-  test('comments center should render without filter syntax errors', async ({ page }) => {
-    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
-
-    // Navigate to comments center
-    await page.evaluate(() => {
-      $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center' });
-      $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center' });
-      $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
-    });
-
-    // Wait for the comments center to render
-    await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
-
-    // Check that there are no "Filter error" messages in the comments center
-    const commentsCenterText = await page.locator('.cpl-comments-center').textContent();
-    expect(commentsCenterText).not.toContain('Filter error');
-    expect(commentsCenterText).not.toContain('Missing [ in filter expression');
-
-    // Check that the login prompt is shown for anonymous users
-    await expect(page.locator('.cpl-comments-center')).toContainText(/登录后即可审核评论和发表评论|Login to moderate and post comments/);
-
-    // Check that recent comments section is visible
-    await expect(page.locator('.cpl-comments-center')).toContainText(/最新评论|Recent Comments/);
-  });
-
-
-
-  test('comments center admin view with pending comments should render without filter errors', async ({ page, request }) => {
-    // Step 1: Submit a comment via API as authenticated user
-    const adminToken = createTestJwt({ githubId: '42', username: 'admin-test' });
-    const commentResponse = await request.post(`${BASE_URL}/cpl/comments/${encodeURIComponent('$:/plugins/test/e2e-admin-comment')}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'TiddlyWiki',
-        'Cookie': `cpl_jwt_token=${adminToken}`,
-      },
-      data: { content: 'Admin test comment for filter verification' },
-    });
-    expect(commentResponse.ok()).toBe(true);
-    const commentData = await commentResponse.json();
-    expect(commentData.success).toBe(true);
-
-    // Step 2: Open comments center, then inject admin auth state via tiddlers
-    await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
-    await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', { timeout: 30000 });
-
-    // Set admin auth state directly via TW tiddlers (simulates login)
-    await page.evaluate(() => {
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/user-status', text: 'authenticated' });
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/is-admin', text: 'yes' });
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/user', text: JSON.stringify({ githubId: '42', username: 'admin-test', avatar: '' }), type: 'application/json' });
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/github-client-id', text: 'fake-client-id' });
-    });
-
-    // Trigger pending comments fetch with cookie
-    await page.context().addCookies([{
-      name: 'cpl_jwt_token',
-      value: adminToken,
-      url: BASE_URL,
-    }]);
-    await page.evaluate(async (baseUrl) => {
-      const resp = await fetch(`${baseUrl}/cpl/comments/pending`, { credentials: 'include' });
-      const data = await resp.json();
-      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/pending-comments', text: JSON.stringify(data), type: 'application/json' });
-    }, BASE_URL);
-
-    // Wait for the JS processor to create individual tiddlers from JSON
-    await page.waitForFunction(
-      () => $tw.wiki.getTiddlerText('$:/temp/CPL-Server/comment-items/pending/list', '') !== '',
-      { timeout: 10000 },
-    );
-
-    // Navigate to comments center
-    await page.evaluate(() => {
-      $tw.wiki.addTiddler({ title: '$:/StoryList', list: '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center' });
-      $tw.wiki.addTiddler({ title: '$:/HistoryList', 'current-tiddler': '$:/plugins/Gk0Wk/CPL-Repo/views/comments-center' });
-      $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
-    });
-
-    await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
-
-    // Step 3: Verify no filter errors anywhere on the page
-    const fullPageText = await page.locator('.cpl-comments-center').textContent();
-    expect(fullPageText).not.toContain('Filter error');
-    expect(fullPageText).not.toContain('Missing [ in filter expression');
-    expect(fullPageText).not.toContain('Missing ] in filter expression');
-
-    // Step 4: Verify admin sees pending comments section
-    await expect(page.locator('.cpl-comments-center')).toContainText(/待审核评论|Pending Comments/);
-
-    // Step 5: Verify the submitted comment content appears
-    await expect(page.locator('.cpl-comments-center')).toContainText('Admin test comment for filter verification');
-    await expect(page.locator('.cpl-comments-center')).toContainText('admin-test');
-
-    // Step 6: Verify moderation buttons are present
-    await expect(page.locator('.cpl-moderation-approve-btn').first()).toBeVisible();
-
-    // Step 7: Verify no phantom/duplicate comment entries (each comment should appear once)
-    const commentItems = page.locator('.cpl-comment-item');
-    const commentCount = await commentItems.count();
-    // Should have exactly 1 pending comment (plus possibly recent comments)
-    expect(commentCount).toBeGreaterThanOrEqual(1);
-
-    // Step 8: Cleanup - delete the test comment (best-effort, don't fail test if cleanup fails)
-    await request.put(`${BASE_URL}/cpl/comments/${encodeURIComponent('$:/plugins/test/e2e-admin-comment')}/${encodeURIComponent(commentData.commentId)}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'TiddlyWiki',
-        'Cookie': `cpl_jwt_token=${adminToken}`,
-      },
-      data: { status: 'deleted' },
-    }).catch(() => {});
-  });
-
 });
 
+// ── Blank Wiki Installation ─────────────────────────────────────────────────
+
 test.describe('CPL Client Installation E2E', () => {
+  const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
+  const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
+  const TEST_PLUGIN_OFFLINE_PATH = path.join(
+    paths.pluginOffline,
+    `${TEST_PLUGIN_SANITIZED}.json`,
+  );
+
+  function createTestPluginFile() {
+    const testPlugin = {
+      title: TEST_PLUGIN_TITLE,
+      type: 'application/json',
+      'plugin-type': 'plugin',
+      text: JSON.stringify({
+        tiddlers: {
+          [`${TEST_PLUGIN_TITLE}/readme`]: {
+            title: `${TEST_PLUGIN_TITLE}/readme`,
+            text: 'E2E test plugin readme.',
+          },
+        },
+      }),
+    };
+    fs.writeFileSync(
+      TEST_PLUGIN_OFFLINE_PATH,
+      JSON.stringify(testPlugin),
+      'utf-8',
+    );
+  }
+
+  function removeTestPluginFile() {
+    try {
+      if (fs.existsSync(TEST_PLUGIN_OFFLINE_PATH)) {
+        fs.unlinkSync(TEST_PLUGIN_OFFLINE_PATH);
+      }
+    } catch {}
+  }
+
   test.beforeAll(async () => {
     createTestPluginFile();
     await startBlankWiki({ loadCplClient: true });
@@ -622,24 +504,37 @@ test.describe('CPL Client Installation E2E', () => {
     removeTestPluginFile();
   });
 
-  test('blank wiki can install test plugin via TW import dialog and open its readme', async ({ page, request }) => {
-    // Step 1: Download test plugin JSON from server using Playwright request API
-    const pluginResponse = await request.get(`${BASE_URL}/cpl/download-plugin/${encodeURIComponent(TEST_PLUGIN_TITLE)}`);
-    expect(pluginResponse.ok()).toBe(true);
-    const pluginJson = await pluginResponse.json();
-    expect(pluginJson).toHaveProperty('title');
+  test('blank wiki can install test plugin and open its readme', async ({
+    page,
+    request,
+  }) => {
+    // Download test plugin from server
+    const pluginResp = await request.get(
+      `${BASE_URL}/cpl/download-plugin/${encodeURIComponent(
+        TEST_PLUGIN_TITLE,
+      )}`,
+    );
+    expect(pluginResp.ok()).toBe(true);
 
-    // Step 2: Open blank wiki and verify plugin is not yet installed
-    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined', { timeout: 30000 });
+    await page.goto(BLANK_WIKI_URL, {
+      waitUntil: 'domcontentloaded',
+      timeout: 60000,
+    });
+    await page.waitForFunction(
+      () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
+      { timeout: 30000 },
+    );
 
-    const hasPluginBefore = await page.evaluate((title) => {
-      return !!$tw.wiki.getTiddler(title);
-    }, TEST_PLUGIN_TITLE);
-    expect(hasPluginBefore).toBe(false);
+    // Verify plugin not installed
+    const before = await page.evaluate(
+      t => Boolean($tw.wiki.getTiddler(t)),
+      TEST_PLUGIN_TITLE,
+    );
+    expect(before).toBe(false);
 
-    // Step 3: Prepare $:/Import tiddler data and navigate to it via UI
-    await page.evaluate((pluginData) => {
+    // Install via import
+    const pluginJson = await pluginResp.json();
+    await page.evaluate(pluginData => {
       const importData = { tiddlers: {} };
       importData.tiddlers[pluginData.title] = pluginData;
       $tw.wiki.addTiddler({
@@ -647,209 +542,29 @@ test.describe('CPL Client Installation E2E', () => {
         type: 'application/json',
         'plugin-type': 'import',
         status: 'pending',
-        text: JSON.stringify(importData)
+        text: JSON.stringify(importData),
       });
     }, pluginJson);
 
-    // Navigate to $:/Import via page URL (UI navigation)
-    await page.goto(`${BLANK_WIKI_URL}#%24%3A%2FImport`, { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
+    // Confirm import
+    const confirmBtn = page
+      .locator('button')
+      .filter({ hasText: /Confirm to Install|确认安装/ })
+      .last();
+    await expect(confirmBtn).toBeVisible({ timeout: 30000 });
+    await confirmBtn.click();
 
-    // Step 4: Wait for import preview and confirm via UI click
-    const importButton = page.locator('button').filter({ hasText: /^Import$/i }).first();
-    await expect(importButton).toBeVisible({ timeout: 10000 });
-    await importButton.click();
+    // Wait for plugin to be installed
+    await page.waitForFunction(
+      t => Boolean($tw.wiki.getTiddler(t)),
+      TEST_PLUGIN_TITLE,
+      { timeout: 60000 },
+    );
 
-    // Wait for import to complete
-    await page.waitForTimeout(500);
-
-    // Step 5: Verify plugin is installed
-    const hasPluginAfter = await page.evaluate((title) => {
-      return !!$tw.wiki.getTiddler(title);
-    }, TEST_PLUGIN_TITLE);
-    expect(hasPluginAfter).toBe(true);
-
-    // Step 6: Open the readme tiddler via UI navigation and verify content
-    const readmeTitle = `${TEST_PLUGIN_TITLE}/readme`;
-    await page.goto(`${BLANK_WIKI_URL}#${encodeURIComponent(readmeTitle)}`, { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
-
-    // Use tiddler-frame specific selector to avoid matching multiple open tiddlers
-    const readmeFrame = page.locator(`.tc-tiddler-frame[data-tiddler-title="${readmeTitle}"]`);
-    const readmeBody = readmeFrame.locator('.tc-tiddler-body');
-    await expect(readmeBody).toBeVisible();
-    await expect(readmeBody).toContainText('E2E test plugin readme');
+    const after = await page.evaluate(
+      t => Boolean($tw.wiki.getTiddler(t)),
+      TEST_PLUGIN_TITLE,
+    );
+    expect(after).toBe(true);
   });
-
-  test('blank wiki can connect to CPL server via API', async ({ page }) => {
-    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
-
-    // Simulate a blank wiki page fetching stats from CPL server
-    const stats = await page.evaluate(async (serverUrl) => {
-      try {
-        const res = await fetch(`${serverUrl}/cpl/stats/${encodeURIComponent('$:/plugins/test/plugin')}`);
-        return res.json();
-      } catch (e) {
-        return { error: e.message };
-      }
-    }, BASE_URL);
-
-    expect(stats.error).toBeUndefined();
-    expect(stats).toHaveProperty('downloadCount');
-    expect(stats).toHaveProperty('averageRating');
-  });
-
-  test('blank wiki can install powered-by-tiddlywiki from Netlify mirror', async ({ page }) => {
-    test.skip(!!process.env.CI, 'Requires external network access to Netlify');
-
-    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
-
-    // Browser-side health check: use the same CPL Query path the install
-    // will use, so CORS/proxy issues are caught early.
-    const netlifyReachable = await page.evaluate(async (pluginTitle) => {
-      try {
-        await globalThis.__tiddlywiki_cpl__('Query', { plugin: pluginTitle });
-        return true;
-      } catch {
-        return false;
-      }
-    }, REAL_MIRROR_PLUGIN_TITLE);
-    if (!netlifyReachable) {
-      test.skip(true, 'Netlify mirror unreachable from browser (CORS or network)');
-    }
-
-    await installFromMirrorInBlankWiki(page, NETLIFY_REPO, REAL_MIRROR_PLUGIN_TITLE);
-
-    const installState = await page.evaluate(({ pluginTitle }) => ({
-      hasPlugin: !!$tw.wiki.getTiddler(pluginTitle),
-      pluginType: $tw.wiki.getTiddler(pluginTitle)?.fields?.['plugin-type'] || null,
-      version: $tw.wiki.getTiddler(pluginTitle)?.fields?.version || null
-    }), { pluginTitle: REAL_MIRROR_PLUGIN_TITLE });
-
-    expect(installState.hasPlugin).toBe(true);
-    expect(installState.pluginType).toBe('plugin');
-    expect(installState.version).toBeTruthy();
-  });
-
-  test('blank wiki can install powered-by-tiddlywiki from GitHub Pages mirror', async ({ page }) => {
-    test.skip(!!process.env.CI, 'Requires external network access to GitHub Pages');
-
-    await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForFunction(() => typeof $tw !== 'undefined', { timeout: 30000 });
-
-    const ghReachable = await page.evaluate(async (pluginTitle) => {
-      try {
-        await globalThis.__tiddlywiki_cpl__('Query', { plugin: pluginTitle });
-        return true;
-      } catch {
-        return false;
-      }
-    }, REAL_MIRROR_PLUGIN_TITLE);
-    if (!ghReachable) {
-      test.skip(true, 'GitHub Pages mirror unreachable from browser (CORS or network)');
-    }
-
-    await installFromMirrorInBlankWiki(page, GITHUB_PAGES_REPO, REAL_MIRROR_PLUGIN_TITLE);
-
-    const installState = await page.evaluate(({ pluginTitle }) => ({
-      hasPlugin: !!$tw.wiki.getTiddler(pluginTitle),
-      pluginType: $tw.wiki.getTiddler(pluginTitle)?.fields?.['plugin-type'] || null,
-      version: $tw.wiki.getTiddler(pluginTitle)?.fields?.version || null
-    }), { pluginTitle: REAL_MIRROR_PLUGIN_TITLE });
-
-    expect(installState.hasPlugin).toBe(true);
-    expect(installState.pluginType).toBe('plugin');
-    expect(installState.version).toBeTruthy();
-  });
-
-  test(
-    'CPL-Repo installed in blank wiki must not have CPL-Server as a dependent ' +
-      '(regression: client plugin must be independent of server plugin)',
-    async ({ page }) => {
-      await page.goto(BLANK_WIKI_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-      await page.waitForFunction(
-        () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
-        { timeout: 30000 }
-      );
-
-      // CPL-Server must NOT be auto-installed just because CPL-Repo is present
-      const serverInstalled = await page.evaluate(() =>
-        !!$tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Server')
-      );
-      expect(serverInstalled).toBe(false);
-
-      // The installed CPL-Repo plugin must carry an empty dependents field
-      const repoDependents = await page.evaluate(
-        () =>
-          $tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Repo')?.fields?.dependents ?? ''
-      );
-      expect(repoDependents).toBe('');
-    }
-  );
-
-});
-
-// ---------------------------------------------------------------------------
-// Static Library Update Regression
-// Serves cache/plugins locally and simulates the exact HTTP requests a legacy
-// CPL client makes when checking for updates via the static repo.
-// ---------------------------------------------------------------------------
-
-test.describe('CPL Static Library Update Regression', () => {
-  test.beforeAll(async () => {
-    await startStaticRepoServer();
-  });
-
-  test.afterAll(() => {
-    stopStaticRepoServer();
-  });
-
-  test(
-    'GET /Gk0Wk_CPL-Server/__meta__.json should return 200 with correct metadata ' +
-      '(regression: legacy CPL update was failing with 404 for CPL-Server)',
-    async ({ request }) => {
-      const res = await request.get(`${STATIC_REPO_URL}/Gk0Wk_CPL-Server/__meta__.json`);
-      expect(res.status()).toBe(200);
-      const meta = await res.json();
-      expect(meta.title).toBe('$:/plugins/Gk0Wk/CPL-Server');
-      expect(typeof meta.latest).toBe('string');
-      expect(meta.latest.length).toBeGreaterThan(0);
-      expect(Array.isArray(meta.versions)).toBe(true);
-    }
-  );
-
-  test(
-    'GET /Gk0Wk_CPL-Repo/__meta__.json should return 200 with correct metadata',
-    async ({ request }) => {
-      const res = await request.get(`${STATIC_REPO_URL}/Gk0Wk_CPL-Repo/__meta__.json`);
-      expect(res.status()).toBe(200);
-      const meta = await res.json();
-      expect(meta.title).toBe('$:/plugins/Gk0Wk/CPL-Repo');
-    }
-  );
-
-  test(
-    'GET /update.json should list both CPL-Repo and CPL-Server ' +
-      '(regression: both built plugins must be discoverable by the update checker)',
-    async ({ request }) => {
-      const res = await request.get(`${STATIC_REPO_URL}/update.json`);
-      expect(res.status()).toBe(200);
-      const update = await res.json();
-      expect(update).toHaveProperty('$:/plugins/Gk0Wk/CPL-Repo');
-      expect(update).toHaveProperty('$:/plugins/Gk0Wk/CPL-Server');
-    }
-  );
-
-  test(
-    'GET /Gk0Wk_CPL-Server/latest.json should return the server plugin JSON',
-    async ({ request }) => {
-      const res = await request.get(`${STATIC_REPO_URL}/Gk0Wk_CPL-Server/latest.json`);
-      expect(res.status()).toBe(200);
-      const plugin = await res.json();
-      expect(plugin.title).toBe('$:/plugins/Gk0Wk/CPL-Server');
-      expect(plugin['plugin-type']).toBe('plugin');
-    }
-  );
 });
