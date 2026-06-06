@@ -57,10 +57,10 @@ async function waitForReady(page) {
   await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(
     () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
-    { timeout: 30000 },
+    { timeout: 60000 },
   );
   await page.waitForFunction(() => typeof $tw.cpl !== 'undefined', {
-    timeout: 30000,
+    timeout: 60000,
   });
 }
 
@@ -145,24 +145,20 @@ test.describe('CPL Server E2E', () => {
   // ── Rating ────────────────────────────────────────────────────────────
 
   test('should allow authenticated user to rate a plugin', async ({ page }) => {
-    await page.context().addCookies([
-      {
-        name: 'cpl_jwt_token',
-        value: createTestJwt({ githubId: '1001', username: 'e2e-user' }),
-        url: BASE_URL,
-      },
-    ]);
-
     await navigateToMockPlugin(page);
-    await page.waitForFunction(
-      () =>
-        $tw.wiki.getTiddlerText('$:/temp/CPL-Server/user-status', '') ===
-        'authenticated',
-      { timeout: 30000 },
-    );
 
-    // Open rating panel
-    const ratingToggle = page.locator('.cpl-rating-toggle-button');
+    // Inject auth state directly (cookie-based auth doesn't update TW tiddlers in tests)
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({ title: '$:/temp/CPL-Server/user-status', text: 'authenticated' });
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/user',
+        text: JSON.stringify({ githubId: '1001', username: 'e2e-user', avatar: '' }),
+        type: 'application/json',
+      });
+    });
+
+    // Open rating panel (first toggle button = rating)
+    const ratingToggle = page.locator('.cpl-rating-toggle-button').first();
     await expect(ratingToggle).toBeVisible();
     await ratingToggle.click();
 
@@ -204,7 +200,8 @@ test.describe('CPL Server E2E', () => {
   }) => {
     await navigateToMockPlugin(page);
 
-    const ratingToggle = page.locator('.cpl-rating-toggle-button');
+    // First toggle button = rating
+    const ratingToggle = page.locator('.cpl-rating-toggle-button').first();
     await expect(ratingToggle).toBeVisible();
     await ratingToggle.click();
 

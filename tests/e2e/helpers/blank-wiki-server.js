@@ -75,7 +75,7 @@ async function startBlankWiki(options = {}) {
 
   blankWikiProcess = spawn(process.execPath, args, {
     stdio: 'pipe',
-    cwd: repoRoot
+    cwd: paths.projectRoot
   });
 
   blankWikiProcess.on('error', (err) => {
