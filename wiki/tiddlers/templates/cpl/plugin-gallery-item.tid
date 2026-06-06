@@ -7,8 +7,8 @@ title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-gallery-item
 type: text/vnd.tiddlywiki
 
 \define plugin-item(title,class:"")
-<$let currentTiddler=<<__title__>>>
-<$link to=<<currentTiddler>> tag="div" class="gk0wk-notion-gallery-block $class$">
+<$let currentTiddler=<<__title__>> pluginTarget={{{ [<__title__>get[cpl.title]else<__title__>] }}}>
+<$link to=<<pluginTarget>> tag="div" class="gk0wk-notion-gallery-block $class$">
 
 <!-- 封面 -->
 <div style="witdh: 100%; height: 180px; overflow: hidden;">
