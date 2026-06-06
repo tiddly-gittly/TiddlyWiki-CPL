@@ -7,6 +7,7 @@
  */
 import { tw, type JsonObject } from './api-client/types';
 import { rawApiRequest } from './api-client/http';
+import { getConfiguredMirrorType } from './api-client/state';
 
 const POLL_INTERVAL = 5000;
 let pollTimer: ReturnType<typeof setInterval> | null = null;
@@ -23,6 +24,13 @@ const setBuildStatus = (phase: string, message: string): void => {
 };
 
 const pollBuildStatus = (): void => {
+  // When using a static mirror, the build-status endpoint is irrelevant —
+  // skip the request and clear any stale badge so users aren't confused.
+  if (getConfiguredMirrorType() !== 'server') {
+    setBuildStatus('idle', '');
+    return;
+  }
+
   rawApiRequest<JsonObject>('GET', '/build-status', null, (error, data) => {
     if (error) {
       // If the build-status endpoint fails (e.g. server restarting),
