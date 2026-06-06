@@ -192,12 +192,6 @@ type: text/vnd.tiddlywiki
   background: <<colour tiddler-info-background>>;
 }
 
-.cpl-plugin-card {
-  border-color: <<colour tiddler-info-border>>;
-}
-
-.cpl-status-banner {
-
 .cpl-dependency-tag {
   background: <<colour background>>22;
   color: <<colour foreground>>;
