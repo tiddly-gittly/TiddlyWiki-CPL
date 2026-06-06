@@ -147,11 +147,15 @@ test.describe('CPL Server E2E', () => {
   test('should allow authenticated user to rate a plugin', async ({ page }) => {
     const userToken = createTestJwt({ githubId: '1001', username: 'e2e-user' });
 
-    // Set cookie so server API accepts authenticated requests
+    // Set auth cookie (secure:false because test server runs on HTTP, not HTTPS).
+    // The TW client uses fetch(credentials:'include') which sends this cookie.
     await page.context().addCookies([{
       name: 'cpl_jwt_token',
       value: userToken,
-      url: BASE_URL,
+      domain: 'localhost',
+      path: '/',
+      secure: false,
+      sameSite: 'None',
     }]);
 
     await navigateToMockPlugin(page);
