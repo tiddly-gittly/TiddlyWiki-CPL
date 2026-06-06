@@ -1,3 +1,4 @@
+const { defineConfig, devices } = require('@playwright/test');
 const net = require('net');
 
 /** Find an available port starting from the preferred port. */

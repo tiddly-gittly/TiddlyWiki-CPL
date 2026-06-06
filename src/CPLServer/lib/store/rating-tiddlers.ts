@@ -170,10 +170,19 @@ export const RatingTiddlerStore = {
 
     const result: Record<string, RatingStats> = {};
     for (const [title, data] of Object.entries(aggregated)) {
-      const totalRatings = data.ratings.length;
-      const sum = data.ratings.reduce((acc, r) => acc + r.rating, 0);
+      // Deduplicate by githubId (keep latest timestamp)
+      const byUser = new Map<string, RatingRecord>();
+      for (const r of data.ratings) {
+        const existing = byUser.get(r.githubId);
+        if (!existing || new Date(r.timestamp) > new Date(existing.timestamp)) {
+          byUser.set(r.githubId, r);
+        }
+      }
+      const deduplicated = Array.from(byUser.values());
+      const totalRatings = deduplicated.length;
+      const sum = deduplicated.reduce((acc, r) => acc + r.rating, 0);
       result[title] = {
-        ratings: data.ratings,
+        ratings: deduplicated,
         averageRating:
           totalRatings > 0 ? Math.round((sum / totalRatings) * 10) / 10 : 0,
         totalRatings,
@@ -189,6 +198,39 @@ export const RatingTiddlerStore = {
     rating: number,
   ): RatingStats {
     ensureDir();
+
+    // Remove any existing rating from this user for this plugin (deduplication)
+    const dir = getRatingsDir();
+    if (fs.existsSync(dir)) {
+      for (const fileName of fs.readdirSync(dir)) {
+        if (!fileName.endsWith('.tid')) {
+          continue;
+        }
+        const filePath = pathModule.join(dir, fileName);
+        try {
+          const content = fs.readFileSync(filePath, 'utf-8');
+          const lines = content.split(/\r?\n/);
+          const pluginField = lines.find(l =>
+            l.toLowerCase().startsWith('plugin-title:'),
+          );
+          const githubField = lines.find(l =>
+            l.toLowerCase().startsWith('github-id:'),
+          );
+          if (
+            pluginField &&
+            githubField &&
+            pluginField.substring(pluginField.indexOf(':') + 1).trim() ===
+              pluginTitle &&
+            githubField.substring(githubField.indexOf(':') + 1).trim() ===
+              user.githubId
+          ) {
+            fs.unlinkSync(filePath);
+          }
+        } catch {
+          // skip unreadable
+        }
+      }
+    }
 
     const timestamp = new Date().toISOString();
     const ratingId = `r-${Date.now()}-${Math.random()

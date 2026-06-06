@@ -229,9 +229,14 @@ export const CommentTiddlerStore = {
         return null;
       }
 
+      // Verify the comment belongs to the expected plugin to prevent cross-plugin manipulation
+      if (comment.pluginTitle !== pluginTitle) {
+        return null;
+      }
+
       comment.status = status;
       comment.updatedAt = new Date().toISOString();
-      const tid = serializeCommentTiddler(comment, pluginTitle);
+      const tid = serializeCommentTiddler(comment, comment.pluginTitle);
 
       if (status === 'approved') {
         // Move from pending/ to approved/
@@ -256,12 +261,17 @@ export const CommentTiddlerStore = {
   /**
    * Delete a comment — remove from whichever dir it's in.
    */
-  deleteComment(_pluginTitle: string, commentId: string): boolean {
+  deleteComment(pluginTitle: string, commentId: string): boolean {
     const found = findCommentFile(commentId);
     if (!found) {
       return false;
     }
     try {
+      const raw = fs.readFileSync(found.path, 'utf-8');
+      const comment = parseCommentTiddler(raw);
+      if (comment && comment.pluginTitle !== pluginTitle) {
+        return false;
+      }
       fs.unlinkSync(found.path);
       return true;
     } catch {
@@ -291,10 +301,8 @@ export const CommentTiddlerStore = {
     isAdmin: boolean,
   ): Array<CommentRecord & { pluginTitle: string }> {
     const all = readAllCommentTiddlers();
-    if (!isAdmin) {
-      return all.filter(c => c.status === 'approved');
-    }
-    return all.sort(
+    const filtered = isAdmin ? all : all.filter(c => c.status === 'approved');
+    return filtered.sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );

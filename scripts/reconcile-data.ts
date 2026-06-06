@@ -37,7 +37,8 @@ interface IdCollision {
   pluginTitle?: string;
 }
 
-const COMMENTS_DIR = path.join(paths.data, 'comments');
+const DATA_DIR = paths.data;
+const COMMENTS_DIR = path.join(DATA_DIR, 'comments');
 const STALE_THRESHOLD_DAYS = 30;
 const DUPLICATE_WINDOW_MS = 5 * 60 * 1000;
 
