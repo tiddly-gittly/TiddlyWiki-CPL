@@ -147,16 +147,14 @@ test.describe('CPL Server E2E', () => {
   test('should allow authenticated user to rate a plugin', async ({ page }) => {
     const userToken = createTestJwt({ githubId: '1001', username: 'e2e-user' });
 
-    // Set auth cookie (secure:false because test server runs on HTTP, not HTTPS).
-    // The TW client uses fetch(credentials:'include') which sends this cookie.
-    await page.context().addCookies([{
-      name: 'cpl_jwt_token',
-      value: userToken,
-      domain: 'localhost',
-      path: '/',
-      secure: false,
-      sameSite: 'None',
-    }]);
+    // Inject JWT as Authorization header on all authenticated API requests.
+    // Production uses HttpOnly Secure cookies (HTTPS only); test server is HTTP,
+    // so we route-intercept to attach the token. Server supports both methods.
+    await page.route('**/cpl/rate/**', async (route) => {
+      const headers = route.request().headers();
+      headers['authorization'] = `Bearer ${userToken}`;
+      await route.continue({ headers });
+    });
 
     await navigateToMockPlugin(page);
 
