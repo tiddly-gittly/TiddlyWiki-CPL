@@ -173,9 +173,10 @@ export const RatingTiddlerStore = {
       // Deduplicate by githubId (keep latest timestamp)
       const byUser = new Map<string, RatingRecord>();
       for (const r of data.ratings) {
-        const existing = byUser.get(r.githubId);
+        const key = r.githubId ?? r.ip ?? `anon-${r.timestamp}`;
+        const existing = byUser.get(key);
         if (!existing || new Date(r.timestamp) > new Date(existing.timestamp)) {
-          byUser.set(r.githubId, r);
+          byUser.set(key, r);
         }
       }
       const deduplicated = Array.from(byUser.values());
