@@ -163,9 +163,6 @@ type: text/vnd.tiddlywiki
 .cpl-loading-placeholder,
 .cpl-inline-button-link,
 .cpl-plugin-card-meta-text,
-.cpl-plugin-detail-subtitle,
-.cpl-plugin-detail-meta-text,
-.cpl-version-history-download,
 .cpl-status-muted {
   color: <<colour muted-foreground>>;
 }
@@ -191,22 +188,15 @@ type: text/vnd.tiddlywiki
   box-shadow: 0 2px 8px <<colour very-muted-foreground>>22;
 }
 
-.cpl-plugin-card-icon-frame,
-.cpl-plugin-detail-icon-frame {
+.cpl-plugin-card-icon-frame {
   background: <<colour tiddler-info-background>>;
 }
 
-.cpl-plugin-detail-header,
-.cpl-version-history-list,
-.cpl-version-history-item,
-.cpl-section-heading {
+.cpl-plugin-card {
   border-color: <<colour tiddler-info-border>>;
 }
 
-.cpl-detail-error-notice {
-  background: <<colour diff-delete-background>>44;
-  color: <<colour foreground>>;
-}
+.cpl-status-banner {
 
 .cpl-dependency-tag {
   background: <<colour background>>22;

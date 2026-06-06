@@ -63,13 +63,6 @@ export const startup = (): void => {
     },
   );
   tw.rootWidget.addEventListener(
-    'cpl-query-plugin',
-    (event: RootWidgetEvent): undefined => {
-      void indexController?.handleQueryPlugin(event);
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
     'cpl-search-plugins',
     (event: RootWidgetEvent): undefined => {
       indexController?.handleSearchPlugins(event);
