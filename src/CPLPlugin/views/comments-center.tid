@@ -6,11 +6,6 @@ title: $:/plugins/Gk0Wk/CPL-Repo/views/comments-center
 type: text/vnd.tiddlywiki
 
 \whitespace trim
-\define open-plugin-actions(pluginTitle)
-<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<pluginTitle>>/>
-<$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
-<$action-setfield $tiddler="$:/temp/CPL-Repo/panel-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database"/>
-\end
 
 <$let
   chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}
