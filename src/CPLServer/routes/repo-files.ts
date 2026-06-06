@@ -5,15 +5,11 @@
  */
 import * as fs from 'fs';
 import * as pathModule from 'path';
-import { CORS_HEADERS, sendError } from '../lib/http';
-import { decodeRouteParam } from '../lib/http';
+import { CORS_HEADERS, sendError, decodeRouteParam } from '../lib/http';
+import { paths } from '../lib/paths';
 import type { RouteHandler } from '../lib/types';
 
-const REPO_DIR = pathModule.resolve(
-  process.cwd(),
-  'cache',
-  'plugins',
-);
+const REPO_DIR = paths.cache.plugins;
 
 const MIME_TYPES: Record<string, string> = {
   '.json': 'application/json',
@@ -27,14 +23,19 @@ const MIME_TYPES: Record<string, string> = {
 };
 
 const getMimeType = (filePath: string): string =>
-  MIME_TYPES[pathModule.extname(filePath).toLowerCase()] ?? 'application/octet-stream';
+  MIME_TYPES[pathModule.extname(filePath).toLowerCase()] ??
+  'application/octet-stream';
 
 const resolveSafePath = (requestedPath: string): string | null => {
   // Normalize and prevent directory traversal
-  const normalized = pathModule.normalize(requestedPath)
+  const normalized = pathModule
+    .normalize(requestedPath)
     .replace(/^(\.\.(\/|\\|$))+/, '');
   const resolved = pathModule.resolve(REPO_DIR, normalized);
-  if (!resolved.startsWith(REPO_DIR + pathModule.sep) && resolved !== REPO_DIR) {
+  if (
+    !resolved.startsWith(REPO_DIR + pathModule.sep) &&
+    resolved !== REPO_DIR
+  ) {
     return null;
   }
   return resolved;

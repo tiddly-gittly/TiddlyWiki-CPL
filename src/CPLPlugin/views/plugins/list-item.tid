@@ -43,8 +43,7 @@ type: text/vnd.tiddlywiki
 \define plugin-name-link(pluginTitle,name)
 \whitespace trim
 <$button class="tc-btn-invisible cpl-plugin-card-title" style="color: inherit;">
-<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<__pluginTitle__>>/>
-<$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
+<$action-navigate $to=<<__pluginTitle__>>/>
 <$text text=<<__name__>>/>
 </$button>
 \end
@@ -76,8 +75,7 @@ type: text/vnd.tiddlywiki
 <!-- Plugin Icon (clickable) -->
 <div class="cpl-plugin-card-icon-wrapper">
 <$button class="tc-btn-invisible cpl-plugin-card-icon-frame">
-<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<title>>/>
-<$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
+<$action-navigate $to=<<title>>/>
 <$list filter="[<icon>!is[blank]]">
 <img src=<<icon>> style="width: 40px; height: 40px; object-fit: contain;"/>
 </$list>

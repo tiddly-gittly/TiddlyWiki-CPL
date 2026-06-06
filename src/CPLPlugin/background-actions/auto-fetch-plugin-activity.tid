@@ -1,0 +1,32 @@
+created: 20260604000000000
+modified: 20260604000000000
+tags: $:/tags/BackgroundAction
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-plugin-activity
+track-filter: [[$:/HistoryList]get[current-tiddler]] [[$:/HistoryList]get[current-tiddler]get[cpl.title]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/plugin-activity-refresh-token]get[text]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
+<$let pluginTitle={{{ [[$:/HistoryList]get[current-tiddler]get[cpl.title]!is[blank]] [[$:/HistoryList]get[current-tiddler]tag[$:/tags/PluginWiki]get[title]!is[blank]] +[limit[1]] }}}>
+<$list filter="[<pluginTitle>!is[blank]]">
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/changelog/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+</$list>
+</$let>
+</$list>

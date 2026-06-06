@@ -4,17 +4,16 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
+import { paths } from '../src/CPLServer/lib/paths';
 import { ensureRuntimePluginsBuilt } from './runtime-plugins';
 
 type ServerMode = 'dev' | 'prod' | 'readonly';
 
-const WIKI_PATH = path.resolve(__dirname, '..');
-const DATA_DIR = path.join(WIKI_PATH, 'data');
 const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  console.log('[CPL Server] Created data directory:', DATA_DIR);
+if (!fs.existsSync(paths.data)) {
+  fs.mkdirSync(paths.data, { recursive: true });
+  console.log('[CPL Server] Created data directory:', paths.data);
 }
 
 const args = process.argv.slice(2);
@@ -32,7 +31,7 @@ if (args.includes('--readonly') || args.includes('-r')) {
 const TW_ENTRY = require.resolve('tiddlywiki/tiddlywiki.js');
 const { repoPluginPath, serverPluginPath } = ensureRuntimePluginsBuilt();
 const toBootPluginArg = (filePath: string): string =>
-  `++${path.relative(WIKI_PATH, filePath).replace(/\\/g, '/')}`;
+  `++${path.relative(paths.projectRoot, filePath).replace(/\\/g, '/')}`;
 
 let runtimeWikiPath = 'wiki';
 
@@ -41,11 +40,15 @@ function prepareTestWiki(): void {
     return;
   }
 
-  const tempRoot = path.join(os.tmpdir(), 'cpl-test-wiki');
-  fs.rmSync(tempRoot, { recursive: true, force: true });
-  fs.cpSync(path.join(WIKI_PATH, 'wiki'), tempRoot, { recursive: true });
-  runtimeWikiPath = tempRoot;
-  console.log(`[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`);
+  // Use a fixed project-local temp directory so test helpers can reliably
+  // clean up the same path that the server writes to.
+  fs.rmSync(paths.testWiki, { recursive: true, force: true });
+  fs.mkdirSync(path.dirname(paths.testWiki), { recursive: true });
+  fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
+  runtimeWikiPath = paths.testWiki;
+  console.log(
+    `[CPL Server] Test mode: using temporary wiki at ${runtimeWikiPath}`,
+  );
 }
 
 prepareTestWiki();
@@ -80,10 +83,14 @@ function injectTestModeConfig(): void {
   // over the plugin's shadow tiddlers from defaults.multids.
   const overrides: Record<string, string> = {
     '$:/plugins/Gk0Wk/CPL-Repo/config/current-server': origin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo': `${origin}/repo`,
   };
 
   for (const [title, text] of Object.entries(overrides)) {
-    const filePath = path.join(tempDir, `${title.replace(/[/:<>"|?*$]/g, '_')}.tid`);
+    const filePath = path.join(
+      tempDir,
+      `${title.replace(/[/:<>"|?*$]/g, '_')}.tid`,
+    );
     fs.writeFileSync(filePath, `title: ${title}\n\n${text}\n`, 'utf-8');
   }
 
@@ -139,7 +146,7 @@ console.log(`[CPL Server] Server will start on http://${host}:${port}`);
 console.log('[CPL Server] Press Ctrl+C to stop');
 
 const twProcess = spawn(process.execPath, twArgs, {
-  cwd: WIKI_PATH,
+  cwd: paths.projectRoot,
   stdio: 'inherit',
 });
 

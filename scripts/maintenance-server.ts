@@ -6,7 +6,7 @@
  * 502 errors from the reverse proxy while the main TiddlyWiki server
  * hasn't started yet.
  *
- * Also exposes /cpl/api/build-status so the frontend can poll build progress.
+ * Also exposes /cpl/build-status so the frontend can poll build progress.
  *
  * Usage:
  *   ts-node scripts/maintenance-server.ts [--port 8080] [--status-file /tmp/cpl-build-status.json]
@@ -30,13 +30,23 @@ const PID_FILE = path.resolve('/tmp/cpl-maintenance-server.pid');
 /** Write PID so entrypoint can kill us */
 fs.writeFileSync(PID_FILE, String(process.pid), 'utf-8');
 
-const readStatus = (): { phase: string; message: string; startedAt: string } => {
+const readStatus = (): {
+  phase: string;
+  message: string;
+  startedAt: string;
+} => {
   try {
     if (fs.existsSync(STATUS_FILE)) {
       return JSON.parse(fs.readFileSync(STATUS_FILE, 'utf-8'));
     }
-  } catch { /* ignore */ }
-  return { phase: 'starting', message: 'Initializing...', startedAt: new Date().toISOString() };
+  } catch {
+    /* ignore */
+  }
+  return {
+    phase: 'starting',
+    message: 'Initializing...',
+    startedAt: new Date().toISOString(),
+  };
 };
 
 const HTML_PAGE = `<!DOCTYPE html>
@@ -99,7 +109,7 @@ const HTML_PAGE = `<!DOCTYPE html>
   };
   var isZh = navigator.language.startsWith('zh');
   function update() {
-    fetch('/cpl/api/build-status')
+    fetch('/cpl/build-status')
       .then(function(r) { return r.json(); })
       .then(function(d) {
         var labels = phaseLabels[d.phase] || phaseLabels['starting'];
@@ -124,7 +134,7 @@ const server = http.createServer((req, res) => {
   const url = req.url?.split('?')[0] ?? '/';
 
   // Expose build status as JSON API
-  if (url === '/cpl/api/build-status') {
+  if (url === '/cpl/build-status') {
     const status = readStatus();
     res.writeHead(200, {
       'Content-Type': 'application/json',

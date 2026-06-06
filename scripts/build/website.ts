@@ -75,7 +75,14 @@ export const buildOnlineHTML = async (
         entry.name.startsWith('$__plugins_Gk0Wk_CPL-Repo_config_')
       ) {
         fs.removeSync(entryPath);
-        console.log(chalk.gray(`  Cleaned up leaked config: ${path.relative(tiddlersDir, entryPath)}`));
+        console.log(
+          chalk.gray(
+            `  Cleaned up leaked config: ${path.relative(
+              tiddlersDir,
+              entryPath,
+            )}`,
+          ),
+        );
       }
     }
   }
@@ -84,7 +91,14 @@ export const buildOnlineHTML = async (
   }
   if (fs.existsSync(cplConfigDir)) {
     fs.removeSync(cplConfigDir);
-    console.log(chalk.gray(`  Cleaned up leaked config directory: ${path.relative(tiddlersDir, cplConfigDir)}`));
+    console.log(
+      chalk.gray(
+        `  Cleaned up leaked config directory: ${path.relative(
+          tiddlersDir,
+          cplConfigDir,
+        )}`,
+      ),
+    );
   }
 
   // 读取、导出外置资源、处理 tiddler

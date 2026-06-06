@@ -2,7 +2,7 @@ import { decodeRouteParam, sendInternalError, sendJson } from '../lib/http';
 import type { RouteHandler } from '../lib/types';
 
 export const method = 'GET';
-export const path = /^\/cpl\/api\/changelog\/(.+)$/;
+export const path = /^\/cpl\/changelog\/(.+)$/;
 
 export const handler: RouteHandler = (_request, _response, context) => {
   try {

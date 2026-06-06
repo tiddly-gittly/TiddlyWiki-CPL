@@ -1,22 +1,18 @@
+import { tw, type RootWidgetEvent } from './api-client/types';
 import {
-  tw,
-  type RootWidgetEvent,
-  type OAuthResponse,
-} from './api-client/types';
-import {
+  ALL_PLUGIN_STATS_REFRESH_TITLE,
+  COMMENTS_CENTER_REFRESH_TITLE,
+  LEGACY_MIRROR_CONFIG_TITLE,
+  LEGACY_SERVER_CONFIG_TITLE,
   MIRROR_CONFIG_TITLE,
+  PLUGIN_ACTIVITY_REFRESH_TITLE,
   SERVER_CONFIG_TITLE,
 } from './api-client/constants';
-import { getCurrentServerOrigin } from './api-client/state';
 import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
-import {
-  fetchPluginStats,
-  fetchPluginChangelog,
-  fetchPluginComments,
-  fetchPluginCompatibility,
-} from './api-client/data-fetch';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
+import { setupCommentJsonProcessor } from './api-client/comment-processor';
+import { handleGithubLogin, handleOAuthCallback } from './api-client/oauth';
 import { startBuildStatusPolling } from './build-status-poll';
 
 export const name = 'cpl-server-api-client';
@@ -25,6 +21,25 @@ export const after = ['startup'];
 export const synchronous = true;
 
 const cplServerApi = createCplServerApi();
+const touchRefreshToken = (title: string, pluginTitle?: string): void => {
+  tw.wiki.addTiddler({
+    title,
+    text: String(Date.now()),
+    ...(pluginTitle ? { 'plugin-title': pluginTitle } : {}),
+  });
+};
+
+const requestAllPluginStatsRefresh = (pluginTitle?: string): void => {
+  touchRefreshToken(ALL_PLUGIN_STATS_REFRESH_TITLE, pluginTitle);
+};
+
+const requestPluginActivityRefresh = (pluginTitle: string): void => {
+  touchRefreshToken(PLUGIN_ACTIVITY_REFRESH_TITLE, pluginTitle);
+};
+
+const requestCommentsCenterRefresh = (pluginTitle: string): void => {
+  touchRefreshToken(COMMENTS_CENTER_REFRESH_TITLE, pluginTitle);
+};
 
 export const startup = (): void => {
   tw.cpl = cplServerApi;
@@ -34,11 +49,16 @@ export const startup = (): void => {
   // Start polling build status for the badge widget
   startBuildStatusPolling();
 
+  // Process comment JSON into individual tiddlers for safe filter iteration
+  setupCommentJsonProcessor();
+
   // Mirror config change → refresh API availability (rare, keep as simple JS listener)
   tw.wiki.addEventListener('change', changes => {
     if (
       $tw.utils.hop(changes, MIRROR_CONFIG_TITLE) ||
-      $tw.utils.hop(changes, SERVER_CONFIG_TITLE)
+      $tw.utils.hop(changes, LEGACY_MIRROR_CONFIG_TITLE) ||
+      $tw.utils.hop(changes, SERVER_CONFIG_TITLE) ||
+      $tw.utils.hop(changes, LEGACY_SERVER_CONFIG_TITLE)
     ) {
       refreshMirrorCapabilityState(cplServerApi);
     }
@@ -48,28 +68,6 @@ export const startup = (): void => {
     'cpl-refresh-mirror',
     (_event: RootWidgetEvent): undefined => {
       refreshMirrorCapabilityState(cplServerApi);
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-stats',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginStats(cplServerApi, pluginTitle);
-      }
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-changelog',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginChangelog(cplServerApi, pluginTitle);
-      }
       return undefined;
     },
   );
@@ -110,7 +108,7 @@ export const startup = (): void => {
           'total-ratings': String(data.totalRatings || 0),
         });
 
-        fetchPluginStats(cplServerApi, pluginTitle);
+        requestAllPluginStatsRefresh(pluginTitle);
       });
       return undefined;
     },
@@ -146,6 +144,7 @@ export const startup = (): void => {
             }
 
             console.log('[CPL-Server] Download recorded for', rootPlugin);
+            requestAllPluginStatsRefresh(rootPlugin);
           });
         }, 100);
       } catch (error) {
@@ -172,80 +171,11 @@ export const startup = (): void => {
     },
   );
 
-  tw.rootWidget.addEventListener(
-    'cpl-github-login',
-    (_event: RootWidgetEvent): undefined => {
-      const githubClientId = tw.wiki.getTiddlerText(
-        '$:/temp/CPL-Server/github-client-id',
-        '',
-      );
-      if (!githubClientId) {
-        console.error(
-          '[CPL-Server] GitHub client ID not available. Server may not have OAuth configured.',
-        );
-        return undefined;
-      }
-      const redirectUri = `${getCurrentServerOrigin()}/cpl/api/auth/github/callback`;
-      const githubAuthParams = new URLSearchParams({
-        client_id: githubClientId,
-        redirect_uri: redirectUri,
-        scope: 'read:user',
-        state: window.location.href,
-      });
-      const githubAuthUrl = `https://github.com/login/oauth/authorize?${githubAuthParams.toString()}`;
-      window.location.href = githubAuthUrl;
-      return undefined;
-    },
-  );
-
-  if (window.location.pathname === '/cpl/api/auth/github/callback') {
-    const code = new URLSearchParams(window.location.search).get('code');
-    if (code) {
-      tw.utils.httpRequest({
-        url: `${getCurrentServerOrigin()}/cpl/api/auth/github/callback?code=${encodeURIComponent(
-          code,
-        )}`,
-        type: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        callback: (error: unknown, response: string) => {
-          if (error || !response) {
-            return;
-          }
-
-          try {
-            const data = JSON.parse(response) as OAuthResponse;
-            if (!data.success) {
-              return;
-            }
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/user-status',
-              text: 'authenticated',
-            });
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/user',
-              text: JSON.stringify(data.user),
-              type: 'application/json',
-            });
-            // Also check admin status after login
-            cplServerApi.checkAuthStatus((_err, authData) => {
-              if (!_err && authData) {
-                tw.wiki.addTiddler({
-                  title: '$:/temp/CPL-Server/is-admin',
-                  text: authData.isAdmin ? 'yes' : 'no',
-                });
-              }
-            });
-            window.history.replaceState({}, document.title, '/');
-          } catch (parseError) {
-            console.error(
-              '[CPL-Server] Failed to parse auth response:',
-              parseError,
-            );
-          }
-        },
-      });
-    }
-  }
+  tw.rootWidget.addEventListener('cpl-github-login', (): undefined => {
+    handleGithubLogin();
+    return undefined;
+  });
+  handleOAuthCallback();
 
   tw.rootWidget.addEventListener(
     'cpl-submit-comment',
@@ -291,30 +221,9 @@ export const startup = (): void => {
           title: `$:/temp/CPL-Server/comment-status/${pluginTitle}`,
           text: 'success',
         });
-        fetchPluginComments(cplServerApi, pluginTitle);
+        requestPluginActivityRefresh(pluginTitle);
+        requestCommentsCenterRefresh(pluginTitle);
       });
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-comments',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginComments(cplServerApi, pluginTitle);
-      }
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-compatibility',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = getEventParam(event, 'pluginTitle');
-      if (pluginTitle) {
-        fetchPluginCompatibility(cplServerApi, pluginTitle);
-      }
       return undefined;
     },
   );
@@ -384,48 +293,9 @@ export const startup = (): void => {
           tw.wiki.deleteTiddler(
             `$:/temp/CPL-Server/compatibility-draft/${pluginTitle}`,
           );
-          fetchPluginCompatibility(cplServerApi, pluginTitle);
+          requestPluginActivityRefresh(pluginTitle);
         },
       );
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-pending-comments',
-    (_event: RootWidgetEvent): undefined => {
-      cplServerApi.getPendingComments((error, data) => {
-        if (error || !data) {
-          console.error('[CPL-Server] Failed to fetch pending comments:', error);
-          return;
-        }
-        tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/pending-comments',
-          text: JSON.stringify(data),
-          type: 'application/json',
-        });
-      });
-      return undefined;
-    },
-  );
-
-  tw.rootWidget.addEventListener(
-    'cpl-fetch-all-recent-comments',
-    (_event: RootWidgetEvent): undefined => {
-      cplServerApi.getAllRecentComments((error, data) => {
-        if (error || !data) {
-          console.error(
-            '[CPL-Server] Failed to fetch all recent comments:',
-            error,
-          );
-          return;
-        }
-        tw.wiki.addTiddler({
-          title: '$:/temp/CPL-Server/all-recent-comments',
-          text: JSON.stringify(data),
-          type: 'application/json',
-        });
-      });
       return undefined;
     },
   );
@@ -445,7 +315,8 @@ export const startup = (): void => {
           console.error('[CPL-Server] Comment moderation error:', error);
           return;
         }
-        fetchPluginComments(cplServerApi, pluginTitle);
+        requestPluginActivityRefresh(pluginTitle);
+        requestCommentsCenterRefresh(pluginTitle);
       });
       return undefined;
     },
@@ -475,7 +346,7 @@ export const startup = (): void => {
             );
             return;
           }
-          fetchPluginCompatibility(cplServerApi, pluginTitle);
+          requestPluginActivityRefresh(pluginTitle);
         },
       );
       return undefined;

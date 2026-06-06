@@ -1,5 +1,8 @@
 import {
   CPL_API_BASE,
+  LEGACY_MIRROR_CONFIG_TITLE,
+  LEGACY_SERVER_CONFIG_TITLE,
+  LEGACY_SERVER_LIST_TITLE,
   MIRROR_CONFIG_TITLE,
   MIRROR_SERVER_REPOS_TITLE,
   MIRROR_STATIC_REPOS_TITLE,
@@ -48,8 +51,50 @@ const getConfiguredMirrorEntries = (
       .map(normalizer),
   );
 
-const getConfiguredServerEntries = (): string[] =>
-  tw.utils.parseStringArray(tw.wiki.getTiddlerText(SERVER_LIST_TITLE, ''));
+const getConfiguredTextValue = (
+  title: string,
+  includeShadow: boolean,
+): string => {
+  const value = tw.wiki.getTiddlerText(title, '').trim();
+  if (!value) {
+    return '';
+  }
+
+  if (!includeShadow && !tw.wiki.tiddlerExists(title)) {
+    return '';
+  }
+
+  return value;
+};
+
+const getConfiguredText = (titles: string[], fallback: string): string => {
+  for (const includeShadow of [false, true]) {
+    for (const title of titles) {
+      const value = getConfiguredTextValue(title, includeShadow);
+      if (value.length > 0) {
+        return value;
+      }
+    }
+  }
+
+  return fallback;
+};
+
+const getConfiguredStringArray = (titles: string[]): string[] =>
+  tw.utils.parseStringArray(getConfiguredText(titles, ''));
+
+const getConfiguredServerEntries = (): string[] => {
+  return getConfiguredStringArray([
+    SERVER_LIST_TITLE,
+    LEGACY_SERVER_LIST_TITLE,
+  ]);
+};
+
+const getFirstConfiguredStaticRepo = (): string =>
+  getConfiguredStringArray([MIRROR_STATIC_REPOS_TITLE])[0] ?? '';
+
+const getFirstConfiguredServerRepo = (): string =>
+  getConfiguredServerEntries()[0] ?? '';
 
 export const setApiAvailability = (value: boolean | null): void => {
   apiAvailability = value;
@@ -60,12 +105,15 @@ export const setLastMirrorEntry = (value: string | null): void => {
 };
 
 export const getCurrentMirrorEntry = (): string =>
-  tw.wiki.getTiddlerText(MIRROR_CONFIG_TITLE, '');
+  getConfiguredText(
+    [MIRROR_CONFIG_TITLE, LEGACY_MIRROR_CONFIG_TITLE],
+    getFirstConfiguredStaticRepo(),
+  );
 
 export const getCurrentServerEntry = (): string =>
-  tw.wiki.getTiddlerText(
-    SERVER_CONFIG_TITLE,
-    getConfiguredServerEntries()[0] ?? '',
+  getConfiguredText(
+    [SERVER_CONFIG_TITLE, LEGACY_SERVER_CONFIG_TITLE],
+    getFirstConfiguredServerRepo(),
   );
 
 export const getMirrorOrigin = (entry = getCurrentMirrorEntry()): string => {
@@ -96,18 +144,18 @@ export const getConfiguredMirrorType = (
 ): MirrorType => {
   const normalizedEntry = normalizeUrlEntry(entry);
   if (
+    getConfiguredMirrorEntries(MIRROR_STATIC_REPOS_TITLE).has(normalizedEntry)
+  ) {
+    return 'static';
+  }
+
+  if (
     getConfiguredMirrorEntries(
       MIRROR_SERVER_REPOS_TITLE,
       normalizeServerMirrorEntry,
     ).has(normalizeServerMirrorEntry(entry))
   ) {
     return 'server';
-  }
-
-  if (
-    getConfiguredMirrorEntries(MIRROR_STATIC_REPOS_TITLE).has(normalizedEntry)
-  ) {
-    return 'static';
   }
 
   return 'unknown';

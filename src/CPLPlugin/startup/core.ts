@@ -14,10 +14,8 @@ export const startup = (): void => {
   browserRuntime.__tiddlywiki_cpl__ = cpl;
 
   const installController = createInstallController();
-  let indexController: ReturnType<typeof createIndexController> | undefined;
-
   const updateController = createUpdateController();
-  indexController = createIndexController();
+  const indexController = createIndexController();
 
   tw.wiki.addEventListener('change', changes => {
     if (
@@ -61,13 +59,6 @@ export const startup = (): void => {
     'cpl-get-plugins-index',
     (_event: RootWidgetEvent): undefined => {
       void indexController?.handleGetPluginsIndex();
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
-    'cpl-query-plugin',
-    (event: RootWidgetEvent): undefined => {
-      void indexController?.handleQueryPlugin(event);
       return undefined;
     },
   );

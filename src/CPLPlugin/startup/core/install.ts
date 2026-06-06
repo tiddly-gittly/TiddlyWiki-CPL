@@ -170,7 +170,6 @@ export const createInstallController = (): InstallController => {
           },
           widget: event.widget,
         } as unknown as RootWidgetEvent);
-        return;
       }
     } catch (error) {
       console.error(error);

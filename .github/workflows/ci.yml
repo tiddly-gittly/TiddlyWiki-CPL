@@ -40,6 +40,15 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Verify no stale filter errors in compiled output
+        shell: bash
+        run: |
+          if grep -r 'else\[\]\]\]' cache/runtime-plugins/ cache/runtime-plugin-dirs/ dist/; then
+            echo "ERROR: Found stale filter errors in compiled output"
+            exit 1
+          fi
+          echo "Compiled output is clean"
+
       - name: Build static library (required for library artifact tests)
         run: pnpm run build:static-library
 

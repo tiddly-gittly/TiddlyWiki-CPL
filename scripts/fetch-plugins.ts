@@ -3,6 +3,7 @@ import * as http from 'http';
 import * as https from 'https';
 import * as path from 'path';
 import { URL } from 'url';
+import { paths } from '../src/CPLServer/lib/paths';
 
 interface PluginMetadata {
   'cpl.title'?: string;
@@ -10,10 +11,10 @@ interface PluginMetadata {
   [key: string]: unknown;
 }
 
-const WIKI_TIDDLERS_DIR = path.resolve('wiki', 'tiddlers');
-const PLUGIN_METADATA_DIR = path.resolve(WIKI_TIDDLERS_DIR, 'plugin-metadata');
-const OUTPUT_DIR = path.resolve('wiki', 'files', 'plugin-fetched');
-const HISTORY_DIR = path.resolve('wiki', 'files', 'plugin-fetched-history');
+const WIKI_TIDDLERS_DIR = path.join(paths.wiki, 'tiddlers');
+const PLUGIN_METADATA_DIR = path.join(WIKI_TIDDLERS_DIR, 'plugin-metadata');
+const OUTPUT_DIR = paths.pluginFetched;
+const HISTORY_DIR = paths.pluginFetchedHistory;
 const SUPPORTED_METADATA_EXTENSIONS = new Set(['.json', '.tid']);
 
 function sanitizeFilename(title: string): string {

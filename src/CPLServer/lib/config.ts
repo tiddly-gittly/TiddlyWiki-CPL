@@ -1,4 +1,4 @@
-import * as path from 'path';
+import { paths } from './paths';
 
 const dotenv = require('dotenv') as {
   config: () => void;
@@ -50,8 +50,12 @@ export const Config = {
   blockedGithubIds,
   commentRateLimit: envInt('CPL_COMMENT_RATE_LIMIT', 10),
   serverId,
-  dataDir: path.resolve(process.cwd(), 'data'),
-  commentsDir: path.resolve(process.cwd(), 'data', 'comments'),
+  commentsTiddlersDir: paths.comments.root,
+  commentsPendingDir: paths.comments.pending,
+  commentsApprovedDir: paths.comments.approved,
+  ratingsTiddlersDir: paths.ratings,
+  compatibilityTiddlersDir: paths.compatibility,
+  downloadStatsTiddlersDir: paths.downloadStats,
   isAdmin: (githubId?: string | number | null): boolean => {
     if (!githubId) {
       return false;

@@ -23,7 +23,8 @@ export const startup = (): void => {
     return;
   }
 
-  browserRuntime.__tiddlywiki_cpl__('Update')
+  browserRuntime
+    .__tiddlywiki_cpl__('Update')
     .then(text => {
       const updatePlugins = JSON.parse(text) as UpdatePluginMap;
       const pluginVersions: Record<string, string> = {};

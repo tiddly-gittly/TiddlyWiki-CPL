@@ -83,26 +83,43 @@ function startMaintenanceServer(): void {
 
 function stopMaintenanceServer(): void {
   // Remove flag file so nginx switches to TiddlyWiki backend
-  try { fs.unlinkSync(MAINTENANCE_FLAG_FILE); } catch { /* ok */ }
+  try {
+    fs.unlinkSync(MAINTENANCE_FLAG_FILE);
+  } catch {
+    /* ok */
+  }
 
   if (!maintenanceProcess) {
     // Try to kill by PID file
     try {
       if (fs.existsSync(MAINTENANCE_PID_FILE)) {
-        const pid = parseInt(fs.readFileSync(MAINTENANCE_PID_FILE, 'utf-8').trim(), 10);
+        const pid = parseInt(
+          fs.readFileSync(MAINTENANCE_PID_FILE, 'utf-8').trim(),
+          10,
+        );
         if (!isNaN(pid)) {
           process.kill(pid, 'SIGTERM');
         }
       }
-    } catch { /* already dead */ }
+    } catch {
+      /* already dead */
+    }
     return;
   }
   console.log('[entrypoint] Stopping maintenance server...');
   maintenanceProcess.removeAllListeners('exit');
-  try { maintenanceProcess.kill('SIGTERM'); } catch { /* already dead */ }
+  try {
+    maintenanceProcess.kill('SIGTERM');
+  } catch {
+    /* already dead */
+  }
   maintenanceProcess = null;
   // Clean up PID file
-  try { fs.unlinkSync(MAINTENANCE_PID_FILE); } catch { /* ok */ }
+  try {
+    fs.unlinkSync(MAINTENANCE_PID_FILE);
+  } catch {
+    /* ok */
+  }
 }
 
 // ---------------------------------------------------------------------------

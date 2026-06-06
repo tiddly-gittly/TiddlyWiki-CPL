@@ -1,5 +1,3 @@
-import * as crypto from 'crypto';
-
 type RequestHandler = (
   request: unknown,
   response: unknown,
@@ -24,8 +22,19 @@ interface RouteRequestLike {
   headers?: Record<string, string | string[] | undefined>;
 }
 
-const CPL_API_PATH_PREFIX = '/cpl/api/';
 const CPL_API_WRITE_METHODS = new Set(['POST', 'PUT', 'DELETE']);
+
+/**
+ * CPL routes that perform write operations and need readonly bypass.
+ * Only POST/PUT/DELETE requests matching these patterns get reader authorization.
+ */
+const CPL_WRITE_ROUTES: RegExp[] = [
+  /^\/cpl\/download\//,
+  /^\/cpl\/rate\//,
+  /^\/cpl\/comments\//,
+  /^\/cpl\/compatibility\//,
+  /^\/cpl\/auth\/logout/,
+];
 
 // ETag based on server startup time — changes on restart, stable otherwise.
 // This allows browsers to get 304 on refresh instead of re-downloading ~12MB.
@@ -98,7 +107,7 @@ export const shouldUseReaderAuthorizationForCplApi = (
       ? pathname.slice(pathPrefix.length) || '/'
       : pathname;
 
-  const result = routePath.startsWith(CPL_API_PATH_PREFIX);
+  const result = CPL_WRITE_ROUTES.some(pattern => pattern.test(routePath));
   return result;
 };
 
@@ -139,32 +148,51 @@ export const startup = (): void => {
     const isHomepage = pathname === '/' || pathname === '';
 
     if (isHomepage && req.method === 'GET') {
-      const reqHeaders = req.headers as Record<string, string | string[] | undefined>;
+      const reqHeaders = req.headers as Record<
+        string,
+        string | string[] | undefined
+      >;
       const ifNoneMatch = normalizeHeaderValue(reqHeaders['if-none-match']);
       // Nginx weakens ETags (adds W/ prefix) when gzip is on, so we
       // strip the prefix before comparing. Firefox sends back the
       // weakened ETag; Edge serves from disk cache within max-age.
       const stripped = ifNoneMatch ? stripWeakEtagPrefix(ifNoneMatch) : null;
       if (stripped === homepageEtag) {
-        const res = response as { writeHead: (...a: unknown[]) => unknown; end: (...a: unknown[]) => unknown };
-        res.writeHead(304, { ETag: homepageEtag, 'Cache-Control': 'public, max-age=300' });
+        const res = response as {
+          writeHead: (...a: unknown[]) => unknown;
+          end: (...a: unknown[]) => unknown;
+        };
+        res.writeHead(304, {
+          ETag: homepageEtag,
+          'Cache-Control': 'public, max-age=300',
+        });
         res.end();
-        return;
+        return undefined as unknown;
       }
 
       // Add ETag to the response so browser can revalidate on next request.
       // TW uses chunked encoding — headers are sent on the first write()/writeHead(),
       // not on end(). We wrap writeHead and write to inject ETag before headers fly.
       const resForEtag = response as Record<string, unknown>;
-      const origWriteHead = (resForEtag.writeHead as (...a: unknown[]) => unknown).bind(resForEtag);
-      const origWrite = (resForEtag.write as (...a: unknown[]) => unknown).bind(resForEtag);
+      const origWriteHead = (
+        resForEtag.writeHead as (...a: unknown[]) => unknown
+      ).bind(resForEtag);
+      const origWrite = (resForEtag.write as (...a: unknown[]) => unknown).bind(
+        resForEtag,
+      );
       let etagInjected = false;
       const injectEtag = (): void => {
-        if (etagInjected) return;
+        if (etagInjected) {
+          return;
+        }
         etagInjected = true;
         try {
-          (resForEtag as { setHeader: (n: string, v: string) => void }).setHeader('ETag', homepageEtag);
-        } catch { /* already sent */ }
+          (
+            resForEtag as { setHeader: (n: string, v: string) => void }
+          ).setHeader('ETag', homepageEtag);
+        } catch {
+          /* already sent */
+        }
       };
       resForEtag.writeHead = function (...args: unknown[]): unknown {
         injectEtag();

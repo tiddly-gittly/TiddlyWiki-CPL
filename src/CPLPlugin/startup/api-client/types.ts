@@ -49,6 +49,10 @@ export interface CPLServerApi {
   ) => void;
   getStats: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
   getAllStats: (callback: ApiCallback<JsonObject>) => void;
+  getStatsBatch: (
+    pluginTitles: string[],
+    callback: ApiCallback<JsonObject>,
+  ) => void;
   submitRating: (
     pluginTitle: string,
     rating: number,
@@ -89,9 +93,7 @@ export interface CPLServerApi {
     status: string,
     callback: ApiCallback<JsonObject>,
   ) => void;
-  getPendingCompatibilityReports: (
-    callback: ApiCallback<JsonObject>,
-  ) => void;
+  getPendingCompatibilityReports: (callback: ApiCallback<JsonObject>) => void;
   moderateCompatibilityReport: (
     pluginTitle: string,
     reportId: string,

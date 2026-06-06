@@ -37,7 +37,7 @@ Opening only the `wiki/` folder in TidGi Desktop does not automatically compile 
 
 Opening the repository root in TidGi Desktop is closer, because the root `tiddlywiki.info` references the CPL plugins. However, that still depends on generated plugin tiddlers already existing locally. It is not the reliable clean-clone bootstrap path for the server API.
 
-If you need the `/cpl/api/*` routes to work correctly, use `pnpm server:test`, `pnpm server:prod`, or an equivalent custom launcher that performs the same runtime-plugin build and boot-plugin injection.
+If you need the `/cpl/*` routes to work correctly, use `pnpm server:test`, `pnpm server:prod`, or an equivalent custom launcher that performs the same runtime-plugin build and boot-plugin injection.
 
 !! Environment Variables
 
@@ -50,7 +50,7 @@ Required for a real deployment:
 
 `CPL_JWT_SECRET` is not provided by GitHub. It is the local server secret used to sign CPL session JWTs after GitHub OAuth identifies the user. Generate it with a command such as `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` and keep it out of git.
 
-Create `CPL_GITHUB_CLIENT_ID` and `CPL_GITHUB_CLIENT_SECRET` from a GitHub OAuth App. For the public CPL mirror, set the callback URL to `https://cpl.tidgi.fun/cpl/api/auth/github/callback`.
+Create `CPL_GITHUB_CLIENT_ID` and `CPL_GITHUB_CLIENT_SECRET` from a GitHub OAuth App. For the public CPL mirror, set the callback URL to `https://cpl.tidgi.fun/cpl/auth/github/callback`.
 
 `CPL_ADMIN_GITHUB_IDS` contains numeric GitHub user IDs, not usernames. You can get one with `curl https://api.github.com/users/<login>` and copy the `id` field, or with `gh api users/<login> --jq .id`.
 
@@ -141,22 +141,22 @@ In short: back up `data/` and your secret configuration, but do not back up buil
 
 !! API Endpoints
 
-* POST /cpl/api/download/:pluginTitle
-* GET /cpl/api/download-plugin/:pluginTitle
-* GET /cpl/api/stats
-* GET /cpl/api/stats/:pluginTitle
-* POST /cpl/api/rate/:pluginTitle
-* GET /cpl/api/changelog/:pluginTitle
-* GET /cpl/api/comments/:pluginTitle
-* POST /cpl/api/comments/:pluginTitle
-* GET /cpl/api/comments/pending
-* PUT /cpl/api/comments/:pluginTitle/:commentId
-* GET /cpl/api/compatibility/:pluginTitle
-* POST /cpl/api/compatibility/:pluginTitle
-* GET /cpl/api/compatibility/pending
-* PUT /cpl/api/compatibility/:pluginTitle/:reportId
-* GET /cpl/api/compatibility-related/:pluginTitle
-* GET /cpl/api/auth/status
-* GET /cpl/api/auth/config
-* GET /cpl/api/auth/github/callback?code=...
-* POST /cpl/api/auth/logout
+* POST /cpl/download/:pluginTitle
+* GET /cpl/download-plugin/:pluginTitle
+* GET /cpl/stats
+* GET /cpl/stats/:pluginTitle
+* POST /cpl/rate/:pluginTitle
+* GET /cpl/changelog/:pluginTitle
+* GET /cpl/comments/:pluginTitle
+* POST /cpl/comments/:pluginTitle
+* GET /cpl/comments/pending
+* PUT /cpl/comments/:pluginTitle/:commentId
+* GET /cpl/compatibility/:pluginTitle
+* POST /cpl/compatibility/:pluginTitle
+* GET /cpl/compatibility/pending
+* PUT /cpl/compatibility/:pluginTitle/:reportId
+* GET /cpl/compatibility-related/:pluginTitle
+* GET /cpl/auth/status
+* GET /cpl/auth/config
+* GET /cpl/auth/github/callback?code=...
+* POST /cpl/auth/logout

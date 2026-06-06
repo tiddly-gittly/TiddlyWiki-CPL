@@ -15,10 +15,10 @@
 
 const fs = require('fs');
 const path = require('path');
+const paths = require('../paths');
 
-const ROOT = path.resolve(__dirname, '../..');
-const distDir = path.join(ROOT, 'dist');
-const cachePluginsDir = path.join(ROOT, 'cache', 'plugins');
+const distDir = paths.dist;
+const cachePluginsDir = paths.cache.plugins;
 
 // These tests require build artefacts. If the build has not been run yet (e.g.
 // a developer running just unit tests), skip gracefully so they are not

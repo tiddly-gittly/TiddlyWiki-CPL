@@ -3,12 +3,10 @@ import { tw, type PluginInfo, type RootWidgetEvent } from './types';
 
 export interface IndexController {
   handleGetPluginsIndex: () => Promise<void>;
-  handleQueryPlugin: (event: RootWidgetEvent) => Promise<void>;
   handleSearchPlugins: (event: RootWidgetEvent) => void;
   isBusy: () => boolean;
 }
 
-const asPluginInfo = (value: unknown): PluginInfo => value as PluginInfo;
 const asPluginInfoList = (value: unknown): PluginInfo[] =>
   value as PluginInfo[];
 
@@ -16,9 +14,7 @@ export const createIndexController = (): IndexController => {
   let getPluginsIndexLock = false;
   let pluginIndexCache: PluginInfo[] | undefined;
   let allPluginsCache: string[] | undefined;
-  let categoryCache: Record<string, string[]> = {};
   let searchLock = false;
-  const queryPluginLocks = new Set<string>();
 
   const handleGetPluginsIndex = async (): Promise<void> => {
     try {
@@ -73,7 +69,6 @@ export const createIndexController = (): IndexController => {
 
       pluginIndexCache = data;
       allPluginsCache = allPlugins;
-      categoryCache = categories;
 
       tw.wiki.addTiddler({
         title: '$:/temp/CPL-Repo/plugins-index',
@@ -104,91 +99,6 @@ export const createIndexController = (): IndexController => {
       });
     } finally {
       getPluginsIndexLock = false;
-    }
-  };
-
-  const handleQueryPlugin = async (event: RootWidgetEvent): Promise<void> => {
-    const title = getEventParam(event, 'title');
-    if (!title) {
-      return;
-    }
-
-    try {
-      if (queryPluginLocks.has(title)) {
-        return;
-      }
-
-      queryPluginLocks.add(title);
-      tw.wiki.addTiddler({
-        title: `$:/temp/CPL-Repo/querying-plugin/${title}`,
-        text: 'yes',
-      });
-
-      const data = asPluginInfo(
-        JSON.parse(await cpl('Query', { plugin: title })),
-      );
-      if (
-        !data.author &&
-        !data.title.startsWith('$:/languages') &&
-        data.title.split('/').length === 4
-      ) {
-        data.author = data.title.split('/')[2];
-      }
-
-      let suggestions: string[] = [];
-      if (pluginIndexCache && data.category !== 'Language' && data.tags) {
-        const tags = new Set(
-          tw.utils.parseStringArray(data.tags).map(tag => tag.toLowerCase()),
-        );
-        suggestions = pluginIndexCache
-          .filter(plugin => plugin.title !== title && plugin.tags)
-          .map(plugin => {
-            const weight = tw.utils
-              .parseStringArray(data.tags || '')
-              .reduce(
-                (sum, tag) => sum + (tags.has(tag.toLowerCase()) ? 1 : 0),
-                0,
-              );
-            return [plugin.title, weight] as const;
-          })
-          .filter(([, weight]) => weight > 0)
-          .sort((left, right) => right[1] - left[1])
-          .slice(0, 20)
-          .map(([pluginTitle]) => pluginTitle);
-
-        if (
-          suggestions.length < 20 &&
-          data.category &&
-          data.category !== 'Unknown'
-        ) {
-          const knownSuggestions = new Set(suggestions);
-          for (const pluginTitle of categoryCache[data.category] ?? []) {
-            if (knownSuggestions.has(pluginTitle) || pluginTitle === title) {
-              continue;
-            }
-            suggestions.push(pluginTitle);
-            if (suggestions.length >= 20) {
-              break;
-            }
-          }
-        }
-      }
-
-      data.suggestions = tw.utils.stringifyList(suggestions);
-      tw.wiki.addTiddler({
-        title: `$:/temp/CPL-Repo/plugin-info/${title}`,
-        text: JSON.stringify(data),
-        type: 'application/json',
-      });
-      tw.wiki.deleteTiddler(`$:/temp/CPL-Repo/querying-plugin/${title}`);
-    } catch (error) {
-      console.error(error);
-      tw.wiki.addTiddler({
-        title: `$:/temp/CPL-Repo/querying-plugin/${title}`,
-        text: String(error),
-      });
-    } finally {
-      queryPluginLocks.delete(title);
     }
   };
 
@@ -324,7 +234,6 @@ export const createIndexController = (): IndexController => {
 
   return {
     handleGetPluginsIndex,
-    handleQueryPlugin,
     handleSearchPlugins,
     isBusy: () => getPluginsIndexLock,
   };

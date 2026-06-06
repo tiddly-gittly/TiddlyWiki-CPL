@@ -3,6 +3,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const http = require('http');
+const paths = require('../../paths');
 require('ts-node/register/transpile-only');
 const { ensureRuntimePluginsBuilt } = require('../../../scripts/runtime-plugins.ts');
 
@@ -52,8 +53,7 @@ async function startBlankWiki(options = {}) {
   blankWikiPath = fs.mkdtempSync(path.join(os.tmpdir(), 'cpl-blank-wiki-'));
   fs.cpSync(emptyEdition, blankWikiPath, { recursive: true });
 
-  const repoRoot = path.resolve(__dirname, '../../..');
-  const toBootPluginArg = (filePath) => `++${path.relative(repoRoot, filePath).replace(/\\/g, '/')}`;
+  const toBootPluginArg = (filePath) => `++${path.relative(paths.projectRoot, filePath).replace(/\\/g, '/')}`;
   const args = [
     twEntry,
     '+plugins/tiddlywiki/filesystem',
@@ -75,7 +75,7 @@ async function startBlankWiki(options = {}) {
 
   blankWikiProcess = spawn(process.execPath, args, {
     stdio: 'pipe',
-    cwd: repoRoot
+    cwd: paths.projectRoot
   });
 
   blankWikiProcess.on('error', (err) => {

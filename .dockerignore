@@ -1,5 +1,4 @@
 # Ignore build artifacts and dev-only directories
-dist/
 cache/
 tmp/
 playwright-report/
