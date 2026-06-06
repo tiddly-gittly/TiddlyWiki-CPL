@@ -7,7 +7,7 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 \define open-plugin-actions(pluginTitle)
-<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title="$pluginTitle$"/>
+<$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<pluginTitle>>/>
 <$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
 <$action-setfield $tiddler="$:/temp/CPL-Repo/panel-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database"/>
 \end
@@ -65,7 +65,9 @@ type: text/vnd.tiddlywiki
             <span class="cpl-comment-date"><$text text=<<commentDate>>/></span>
             <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
             <$button class="tc-btn-invisible cpl-comment-plugin-pill">
-              <<open-plugin-actions """$pluginTitle$""">>
+              <$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<pluginTitle>>/>
+              <$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
+              <$action-setfield $tiddler="$:/temp/CPL-Repo/panel-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database"/>
               📦 <$text text=<<pluginTitle>>/>
             </$button>
           </div>
@@ -171,7 +173,9 @@ type: text/vnd.tiddlywiki
                 <span class="cpl-comment-date"><$text text=<<commentDate>>/></span>
                 <$list filter="[<commentPlugin>!is[blank]]" variable="hasPlugin">
                   <$button class="tc-btn-invisible cpl-comment-plugin-pill">
-                    <<open-plugin-actions """$commentPlugin$""">>
+                    <$action-setfield $tiddler="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail" cpl.title=<<commentPlugin>>/>
+                    <$action-navigate $to="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/plugin-detail"/>
+                    <$action-setfield $tiddler="$:/temp/CPL-Repo/panel-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database"/>
                     📦 <$text text=<<commentPlugin>>/>
                   </$button>
                 </$list>

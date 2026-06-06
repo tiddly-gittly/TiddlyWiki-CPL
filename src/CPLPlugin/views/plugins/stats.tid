@@ -37,7 +37,7 @@ type: text/vnd.tiddlywiki
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
-<$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}} githubClientId={{{ [[$:/temp/CPL-Server/github-client-id]get[text]] }}} pluginTitle={{!!cpl.title}} allStatsTiddler="$:/temp/CPL-Server/all-plugin-stats" ratingPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/rating-widget/]] }}} changelogPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/changelog-panel/]] }}} compatibilityPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/compatibility-panel/]] }}} isAdmin={{{ [[$:/temp/CPL-Server/is-admin]get[text]else[no]] }}}>
+<$let serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} userStatus={{{ [[$:/temp/CPL-Server/user-status]get[text]else[anonymous]] }}} chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}} githubClientId={{{ [[$:/temp/CPL-Server/github-client-id]get[text]] }}} pluginTitle={{!!cpl.title}} allStatsTiddler="$:/temp/CPL-Server/all-plugin-stats" ratingPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/rating-widget/]] }}} changelogPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/changelog-panel/]] }}} compatibilityPanelStateTitle={{{ [<currentTiddler>get[cpl.title]addprefix[$:/state/CPL-Repo/compatibility-panel/]] }}} isAdmin={{{ [[$:/temp/CPL-Server/is-admin]get[text]else[no]] }}} changelogTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}} compatibilityTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility/]] }}}>
 
 <$list filter="[<serverType>!match[server]]" variable="isUnavailableServer">
 <div class="cpl-static-feature-notice" style="margin: 10px 0; gap: 10px;">
@@ -86,6 +86,50 @@ type: text/vnd.tiddlywiki
         <span class="cpl-status-muted">-</span>
       </$list>
   </$button>
+
+  <!-- Changelog Toggle (inline in stats row) -->
+  <<cpl-fetch-changelog-action {{!!cpl.title}}>>
+    <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看更新日志]else[Click to view changelog]] }}}>
+      <$action-setfield $tiddler=<<changelogPanelStateTitle>> text={{{ [<changelogPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
+      <span style="font-size: 1.2em;">📋</span>
+      <$list filter="[<changelogPanelStateTitle>get[text]else[closed]!match[open]]" variable="collapsed">
+        <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
+          <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}}>
+            <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
+              <span class="cpl-stat-label"><$text text={{{ [<chinese>match[yes]then[更新日志]else[Changelog]] }}}/></span>
+            </$list>
+            <$list filter="[<hasChangelogField>!match[true]]" variable="noContent">
+              <span class="cpl-stat-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[暂无更新日志]else[No changelog]] }}}/></span>
+            </$list>
+          </$let>
+        </$list>
+      </$list>
+      <$list filter="[<changelogPanelStateTitle>get[text]match[open]]" variable="expanded">
+        <span class="cpl-stat-label"><$text text={{{ [<chinese>match[yes]then[更新日志 ▾]else[Changelog ▾]] }}}/></span>
+      </$list>
+    </$button>
+
+  <!-- Compatibility Toggle (inline in stats row) -->
+  <<cpl-fetch-compatibility-action {{!!cpl.title}}>>
+    <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看兼容性报告]else[Click to view compatibility reports]] }}}>
+      <$action-setfield $tiddler=<<compatibilityPanelStateTitle>> text={{{ [<compatibilityPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
+      <span style="font-size: 1.2em;">⚠️</span>
+      <$list filter="[<compatibilityPanelStateTitle>get[text]else[closed]!match[open]]" variable="collapsed">
+        <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
+          <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
+            <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
+              <span class="cpl-stat-label"><$text text={{{ [<chinese>match[yes]then[兼容性报告]else[Compatibility]] }}}/> (<$text text=<<reportCount>>/>)</span>
+            </$list>
+            <$list filter="[<reportCount>compare:integer:eq[0]]" variable="noReports">
+              <span class="cpl-stat-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[暂无兼容性报告]else[No reports]] }}}/></span>
+            </$list>
+          </$let>
+        </$list>
+      </$list>
+      <$list filter="[<compatibilityPanelStateTitle>get[text]match[open]]" variable="expanded">
+        <span class="cpl-stat-label"><$text text={{{ [<chinese>match[yes]then[兼容性报告 ▾]else[Compatibility ▾]] }}}/></span>
+      </$list>
+    </$button>
 </div>
 
 <!-- Rating Widget -->
@@ -148,75 +192,23 @@ type: text/vnd.tiddlywiki
   </$list>
 </$list>
 
-<!-- Changelog Section -->
-<div class="cpl-changelog-section">
-  <<cpl-fetch-changelog-action {{!!cpl.title}}>>
-  <$let changelogTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}>
-    <$button class="tc-btn-invisible cpl-stat-item cpl-section-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看更新日志]else[Click to view changelog]] }}} aria-expanded={{{ [<changelogPanelStateTitle>get[text]match[open]then[true]else[false]] }}}>
-      <$action-setfield $tiddler=<<changelogPanelStateTitle>> text={{{ [<changelogPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
-      <span class="cpl-section-toggle-icon" style="font-size: 1.2em;">📋</span>
-      <$list filter="[<changelogPanelStateTitle>get[text]else[closed]!match[open]]" variable="collapsed">
-        <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
-          <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}}>
-            <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
-              <span class="cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[更新日志]else[Changelog]] }}}/> ▸</span>
-            </$list>
-            <$list filter="[<hasChangelogField>!match[true]]" variable="noContent">
-              <span class="cpl-status-muted cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[暂无更新日志]else[No changelog available]] }}}/></span>
-            </$list>
-          </$let>
-        </$list>
-        <$list filter="[<changelogTiddler>!is[tiddler]]" variable="loading">
-          <span class="cpl-status-muted cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[正在加载...]else[Loading...]] }}}/></span>
-        </$list>
+<!-- Changelog Expandable Content -->
+<$list filter="[<changelogPanelStateTitle>get[text]match[open]]" variable="showChangelogContent">
+  <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
+    <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}} changelogContent={{{ [<changelogTiddler>get[text]jsonget[changelog]else[]] }}}>
+      <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
+        <div class="cpl-code-panel">
+          <$text text=<<changelogContent>> />
+        </div>
       </$list>
-      <$list filter="[<changelogPanelStateTitle>get[text]match[open]]" variable="expanded">
-        <span class="cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[更新日志]else[Changelog]] }}}/> ▾</span>
-      </$list>
-    </$button>
-    <$list filter="[<changelogPanelStateTitle>get[text]match[open]]" variable="showContent">
-      <$list filter="[<changelogTiddler>is[tiddler]]" variable="hasChangelog">
-        <$let hasChangelogField={{{ [<changelogTiddler>get[text]jsonget[hasChangelog]else[false]] }}} changelogContent={{{ [<changelogTiddler>get[text]jsonget[changelog]else[]] }}}>
-          <$list filter="[<hasChangelogField>match[true]]" variable="hasContent">
-            <div class="cpl-code-panel">
-              <$text text=<<changelogContent>> />
-            </div>
-          </$list>
-        </$let>
-      </$list>
-    </$list>
-  </$let>
-</div>
+    </$let>
+  </$list>
+</$list>
 
-<!-- Compatibility Reports Section -->
-<div class="cpl-compatibility-section">
-  <<cpl-fetch-compatibility-action {{!!cpl.title}}>>
-  <$let compatibilityTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/compatibility/]] }}}>
-    <$button class="tc-btn-invisible cpl-stat-item cpl-section-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看兼容性报告]else[Click to view compatibility reports]] }}} aria-expanded={{{ [<compatibilityPanelStateTitle>get[text]match[open]then[true]else[false]] }}}>
-      <$action-setfield $tiddler=<<compatibilityPanelStateTitle>> text={{{ [<compatibilityPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
-      <span class="cpl-section-toggle-icon" style="font-size: 1.2em;">⚠️</span>
-      <$list filter="[<compatibilityPanelStateTitle>get[text]else[closed]!match[open]]" variable="collapsed">
-        <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
-          <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
-            <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
-              <span class="cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[兼容性报告]else[Compatibility Reports]] }}}/> (<$text text=<<reportCount>>/>) ▸</span>
-            </$list>
-            <$list filter="[<reportCount>compare:integer:eq[0]]" variable="noReports">
-              <span class="cpl-status-muted cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[暂无兼容性报告]else[No compatibility reports yet]] }}}/></span>
-            </$list>
-          </$let>
-        </$list>
-        <$list filter="[<compatibilityTiddler>!is[tiddler]]" variable="loading">
-          <span class="cpl-status-muted cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[正在加载...]else[Loading...]] }}}/></span>
-        </$list>
-      </$list>
-      <$list filter="[<compatibilityPanelStateTitle>get[text]match[open]]" variable="expanded">
-        <span class="cpl-section-toggle-text"><$text text={{{ [<chinese>match[yes]then[兼容性报告]else[Compatibility Reports]] }}}/> ▾</span>
-      </$list>
-    </$button>
-    <$list filter="[<compatibilityPanelStateTitle>get[text]match[open]]" variable="showContent">
-      <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
-        <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
+<!-- Compatibility Expandable Content -->
+<$list filter="[<compatibilityPanelStateTitle>get[text]match[open]]" variable="showCompatibilityContent">
+  <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
+    <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
           <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
             <div class="cpl-compatibility-list">
               <$list filter="[<compatibilityTiddler>get[text]jsonget[reports]]" variable="report">

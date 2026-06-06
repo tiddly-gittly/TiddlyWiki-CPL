@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const paths = require('../paths');
 
-const BASE_URL = process.env.TEST_URL || 'http://localhost:8080';
+const BASE_URL = process.env.TEST_URL || `http://localhost:${process.env.TEST_PORT || '19876'}`;
 const TEST_PLUGIN_TIDDLER = 'dullroar/sitemap';
 const TEST_PLUGIN_CPL_TITLE = '$:/plugins/dullroar/sitemap';
 

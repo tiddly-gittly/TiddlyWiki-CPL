@@ -569,11 +569,13 @@
 
 .cpl-plugin-stats {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
   padding: 10px 0;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   margin-bottom: 10px;
+  align-items: center;
 }
 
 .cpl-stat-item {
