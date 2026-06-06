@@ -1,0 +1,9 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-load-database
+created: 20260604000000000
+modified: 20260604000000000
+tags: $:/tags/BackgroundAction
+track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$action-sendmessage $message="cpl-get-plugins-index"/>

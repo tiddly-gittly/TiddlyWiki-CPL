@@ -12,22 +12,26 @@ type: text/vnd.tiddlywiki
 
 在该页面内您可以对 CPL 插件的行为进行设定。
 
-; CPL 数据库镜像入口 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" tag="input" />
+; CPL 数据库镜像入口 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
+</$list>
+</$select>
 
-; CPL 服务器地址 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server" field="text">
-<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/servers}enlist-input[]]" variable="server">
-<option value=<<server>>><$text text=<<server>>/></option>
+; CPL 服务器功能源 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/server-repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
 </$list>
 </$select>
 
 <<<
-当 CPL 获取数据经常失败时，你可以尝试切换到其他镜像，目前国内推荐使用 netlify 镜像，
+当 CPL 获取插件数据库经常失败时，你可以尝试切换静态数据库镜像；评论、评分、统计和登录等功能由服务器功能源提供。
 
 欢迎各位大佬部署国内镜像，详情请咨询QQ交流群或在[[GitHub Issue|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]提问
 
-你可以手动更改数据库镜像入口：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-repo]]
+你可以手动更改数据库镜像入口：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]]
 
-你也可以单独更改 CPL 服务器地址：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-server]]
+你也可以单独更改 CPL 服务器功能源：[[$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo]]
 <<<
 
 ; 自动更新检查间隔 <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes" tag="input" default="-1" /> (分钟/次)
@@ -72,22 +76,26 @@ type: text/vnd.tiddlywiki
 
 In this page you can set the behavior of the CPL plugin.
 
-; CPL Database Mirror Entry <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" tag="input" />
+; CPL Database Mirror Entry <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
+</$list>
+</$select>
 
-; CPL Server Endpoint <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server" field="text">
-<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/servers}enlist-input[]]" variable="server">
-<option value=<<server>>><$text text=<<server>>/></option>
+; CPL Feature Server <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo" field="text">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/server-repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
 </$list>
 </$select>
 
 <<<
-When the CPL fails to fetch the data often, you can try to switch to another mirror.
+When CPL often fails to fetch the plugin database, you can switch the static database mirror. Comments, ratings, stats, and login are provided by the feature server.
 
 If you'd like to deploy your own mirrors, feel free to ask questions in the [[GitHub Issue|https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues]]!
 
-You can manually change the database mirror entry: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-repo]]
+You can manually change the database mirror entry: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]]
 
-You can also configure the CPL server endpoint independently: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-server]]
+You can also configure the CPL feature server independently: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo]]
 <<<
 
 ; Automatic update of check intervals <$edit-text tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/auto-update-intervals-minutes" tag="input" default="-1" /> (minute(s) per time)

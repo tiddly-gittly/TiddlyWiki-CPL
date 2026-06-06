@@ -1,0 +1,9 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-check-updates
+created: 20260604000000000
+modified: 20260604000000000
+tags: $:/tags/BackgroundAction
+track-filter: [[$:/temp/CPL-Repo/plugin-database-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$action-sendmessage $message="cpl-update-check"/>

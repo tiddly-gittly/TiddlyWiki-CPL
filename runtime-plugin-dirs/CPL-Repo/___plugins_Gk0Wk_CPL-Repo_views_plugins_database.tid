@@ -10,13 +10,22 @@ type: text/vnd.tiddlywiki
 <$let mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}} serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}}>
 <div class="cpl-mirror-toolbar">
 <div class="cpl-mirror-switcher">
-<span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[镜像源]else[Mirror]] }}}/>:</span>
 <$let isSelectDisabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/updaing]field:text[yes]then[yes]] +[limit[1]] }}}>
-<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
+<span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[数据库镜像]else[Database Mirror]] }}}/>:</span>
+<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
 <$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
 <$action-sendmessage $message="cpl-get-plugins-index" />
 """>
-<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/repos}enlist-input[]]" variable="repo">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
+<option value=<<repo>>><$text text=<<repo>>/></option>
+</$list>
+</$select>
+
+<span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[服务器]else[Server]] }}}/>:</span>
+<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
+<$action-sendmessage $message="cpl-refresh-mirror" />
+""">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/server-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
 </$list>
 </$select>
@@ -24,30 +33,28 @@ type: text/vnd.tiddlywiki
 
 <!-- Mirror Status Indicator -->
 <$let unreachableNotice={{{ [<chinese>match[yes]then[当前配置的 CPL 服务器暂时不可访问。评论、评分、统计、更新日志和登录功能当前不可用，但数据库镜像仍可正常浏览。]else[The configured CPL server is currently unreachable. Comments, ratings, stats, changelog, and login are unavailable right now, but the database mirror can still be browsed normally.]] }}}>
-<$list filter="[<mirrorType>match[server]]" variable="t">
-<$list filter="[<serverType>match[unreachable]]" variable="t">
-<span class="cpl-mirror-status cpl-mirror-unreachable" title=<<unreachableNotice>>>
-<span class="cpl-mirror-status-icon">⚠</span>
-<$text text={{{ [<chinese>match[yes]then[服务器镜像（不可访问）]else[Server Mirror (Unavailable)]] }}}/>
-</span>
-</$list>
-<$list filter="[<serverType>!match[unreachable]]" variable="t">
-<span class="cpl-mirror-status cpl-mirror-server">
-<span class="cpl-mirror-status-icon">✓</span>
-<$text text={{{ [<chinese>match[yes]then[服务器镜像]else[Server Mirror]] }}}/>
-</span>
-</$list>
-</$list>
 <$list filter="[<mirrorType>match[static]]" variable="t">
-<span class="cpl-mirror-status cpl-mirror-static" title=<<unreachableNotice>>>
-<span class="cpl-mirror-status-icon">⚠</span>
-<$text text={{{ [<chinese>match[yes]then[静态镜像]else[Static Mirror]] }}}/>
+<span class="cpl-mirror-status cpl-mirror-static">
+<span class="cpl-mirror-status-icon">✓</span>
+<$text text={{{ [<chinese>match[yes]then[静态数据库]else[Static Database]] }}}/>
 </span>
 </$list>
 <$list filter="[<mirrorType>match[unknown]]" variable="t">
 <span class="cpl-mirror-status cpl-mirror-unknown">
 <span class="cpl-mirror-status-icon">?</span>
 <$text text={{{ [<chinese>match[yes]then[检测中]else[Detecting]] }}}/>
+</span>
+</$list>
+<$list filter="[<serverType>match[server]]" variable="t">
+<span class="cpl-mirror-status cpl-mirror-server">
+<span class="cpl-mirror-status-icon">✓</span>
+<$text text={{{ [<chinese>match[yes]then[功能服务器]else[Feature Server]] }}}/>
+</span>
+</$list>
+<$list filter="[<serverType>match[unreachable]]" variable="t">
+<span class="cpl-mirror-status cpl-mirror-unreachable" title=<<unreachableNotice>>>
+<span class="cpl-mirror-status-icon">⚠</span>
+<$text text={{{ [<chinese>match[yes]then[服务器不可用]else[Server Unavailable]] }}}/>
 </span>
 </$list>
 </$let>
