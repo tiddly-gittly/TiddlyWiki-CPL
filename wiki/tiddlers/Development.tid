@@ -1,5 +1,5 @@
 created: 20260527000000001
-modified: 20260527000000001
+modified: 20260606000000001
 tags: 
 title: Development
 type: text/vnd.tiddlywiki
@@ -15,6 +15,40 @@ This project uses [Modern.TiddlyDev|https://github.com/tiddly-gittly/Modern.Tidd
 |`wiki/files/plugin-offline/`|Offline plugin files for plugins not available online|
 |`wiki/files/plugin-fetched/`|Fetched plugin files populated by scheduled syncs|
 |`data/`|Runtime data directory (downloads, ratings, comments, compatibility)|
+|`cache/runtime-plugins/`|Compiled runtime plugin JSON (built at server startup)|
+|`cache/plugins/`|Static plugin library for `/repo/` endpoint|
+|`tmp/test-wiki/`|Isolated test wiki (gitignored, recreated per test run)|
+
+!! Path Management
+
+All project paths are centralized in two files — this is the single source of truth:
+
+* `src/CPLServer/lib/paths.ts` — TypeScript module for server code and scripts
+* `tests/paths.js` — CommonJS mirror for test files
+
+Both derive `PROJECT_ROOT` from `__dirname` (not `process.cwd()`). When adding new paths, add them to these files. Never hardcode paths in individual modules.
+
+When `CPL_TEST_MODE=true`, `paths.wikiRoot` returns `tmp/test-wiki/` instead of `wiki/`, so test data never pollutes the production wiki.
+
+!! TW5 Filter Syntax Gotcha
+
+**TW5.4.0's filter parser re-interprets bracket characters from variable values as filter syntax.** If a `<variable>` in a filter expression contains `[`, `]`, `{`, `}` (e.g. JSON data), the brackets break parsing with "Missing [ in filter expression".
+
+//Wrong// — JSON brackets break the filter:
+```
+<$list filter="[<jsonData>jsonget[items]]" variable="item">
+```
+
+//Correct// — pre-process JSON in JavaScript into individual tiddlers, then iterate over tiddler titles:
+```
+<$list filter="[[$:/temp/data/items/list]get[text]split[\\n]]" var="itemTitle">
+  <$text text={{{ [<itemTitle>get[fieldName]] }}}/>
+</$list>
+```
+
+The comment system uses this pattern: `comment-processor.ts` parses JSON → creates `$:/temp/CPL-Server/comment-items/{prefix}/{index}` tiddlers → wikitext iterates over the list tiddler.
+
+Also, `then[X]else[Y]` must have a closing `]` for the outer `[`: use `then[X]else[Y]]` not `then[X]else[Y]`.
 
 !! Local Development
 
@@ -38,7 +72,7 @@ Three levels of automated tests are available:
 
 ```bash
 pnpm test:unit      # Data store, rate limiter, utilities
-pnpm test:api       # Server route handlers (test server on 9876)
+pnpm test:api       # Server route handlers (test server on dynamic port)
 pnpm test:e2e       # Playwright across Chromium / Firefox / WebKit
 pnpm test:e2e:ui    # Interactive Playwright UI
 ```
@@ -48,6 +82,12 @@ Run the full stack manually:
 ```bash
 pnpm test:unit && pnpm test:api && pnpm test:e2e
 ```
+
+**Important test rules:**
+* API tests use dynamic port allocation — safe to run alongside the Docker container.
+* E2E tests use port 19876 (configured in `playwright.config.js`) — never touches production port 8080.
+* All tests write to `tmp/test-wiki/` — never to `wiki/`.
+* Never stop the production Docker container to run tests.
 
 !! Building
 
@@ -75,14 +115,74 @@ For a writable local runtime server that exercises the CPL boot path exactly lik
 pnpm server:test
 ```
 
-Start the production server in read-only mode:
+Start the production server in read-only mode (requires `CPL_JWT_SECRET`):
 
 ```bash
-pnpm server:prod
+CPL_JWT_SECRET=your-secret pnpm server:prod
 ```
 
 The server launcher compiles the TypeScript plugin sources into runtime plugin JSON files under `cache/runtime-plugins/`, and then starts a standard TiddlyWiki Node.js server with those compiled plugins injected as boot-time plugin arguments. This keeps runtime behaviour compatible with TiddlyWiki's Node.js boot process while preserving TypeScript source under `src/`.
 
-This is intentionally different from `pnpm dev:wiki`: `pnpm dev:wiki` runs the Modern.TiddlyDev development server with wiki writes enabled, while `pnpm server:test` verifies the production-like runtime plugin loading path used by the CPL server.
+!! Deployment
 
-If the server is deployed behind a reverse proxy or CDN, make sure the real client IP is preserved correctly. Download throttling, vote limits, and similar protections depend on the client address seen by the CPL server.
+Production runs as a Docker container. The deployment flow:
+
+```bash
+# 1. Build and push image
+docker build -t linonetwo/tiddlywiki-cpl:latest .
+docker push linonetwo/tiddlywiki-cpl:latest
+
+# 2. On the server (or locally if running Docker Compose)
+docker compose pull cpl
+docker compose up -d --force-recreate cpl
+```
+
+The entrypoint (`docker-entrypoint.ts`) handles: git pull → build static library → start TW server → fetch plugins in background → periodic sync.
+
+The production site is at `https://cpl.tidgi.fun/` behind nginx (gzip, caching, maintenance page fallback).
+
+!! GitHub OAuth Setup
+
+The OAuth callback URL in the GitHub App must be:
+```
+https://cpl.tidgi.fun/cpl/auth/github/callback
+```
+Do NOT add `/api/` — the route is `/cpl/auth/github/callback`.
+
+Environment variables:
+* `CPL_GITHUB_CLIENT_ID` — GitHub OAuth App client ID
+* `CPL_GITHUB_CLIENT_SECRET` — GitHub OAuth App client secret
+* `CPL_JWT_SECRET` — Random 64-byte hex for signing session JWTs
+* `CPL_ADMIN_GITHUB_IDS` — Comma-separated GitHub user IDs for admin access
+
+!! Version Control Rules
+
+* `download-stats/` files ARE version controlled (persisted data).
+* `compatibility/*.tid` and `ratings/*.tid` are gitignored (runtime-generated).
+* `wiki/tiddlers/comments/pending/` is gitignored (pending moderation).
+* `tmp/` is gitignored (test artifacts).
+* `cache/runtime-plugins/` is gitignored (rebuilt at startup).
+
+!! CI Pipeline
+
+The GitHub Actions workflow (`.github/workflows/ci.yml`) runs on push/PR:
+1. `pnpm run build` + `pnpm run build:static-library`
+2. **Build verification**: checks compiled output for stale `else[]]]` filter errors
+3. `pnpm run test:unit` + `pnpm run test:api`
+4. `pnpm run test:e2e --project=chromium`
+
+!! Key Source Files
+
+|!File|!Purpose|
+|`src/CPLServer/lib/config.ts`|Environment variable configuration|
+|`src/CPLServer/lib/paths.ts`|Centralized path management (SSOT)|
+|`src/CPLServer/lib/auth.ts`|JWT authentication and GitHub OAuth|
+|`src/CPLServer/lib/store/`|Data persistence (comments, ratings, compatibility, download-stats)|
+|`src/CPLPlugin/startup/api-client.ts`|Browser-side API client (event handlers)|
+|`src/CPLPlugin/startup/api-client/comment-processor.ts`|JSON→tiddler pre-processing for TW5 filter compat|
+|`src/CPLPlugin/startup/api-client/oauth.ts`|GitHub OAuth flow with CSRF nonce|
+|`src/CPLPlugin/views/comments-center.tid`|Comment center wikitext view|
+|`src/CPLPlugin/views/plugins/stats.tid`|Plugin stats, rating, changelog, compatibility UI|
+|`src/CPLPlugin/views/plugins/comments.tid`|Per-plugin comment section|
+|`scripts/server.ts`|Server entry point (builds runtime plugins, starts TW)|
+|`docker-entrypoint.ts`|Docker startup sequence|
