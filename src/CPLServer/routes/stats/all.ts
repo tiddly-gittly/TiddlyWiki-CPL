@@ -4,7 +4,7 @@ import { DownloadStatsTiddlerStore } from '../../lib/store/download-stats-tiddle
 import { RatingTiddlerStore } from '../../lib/store/rating-tiddlers';
 import type { RouteHandler } from '../../lib/types';
 
-interface CombinedStats {
+interface StatEntry {
   downloadCount: number;
   averageRating: number;
   totalRatings: number;
@@ -17,65 +17,50 @@ export const handler: RouteHandler = (request, _response, context) => {
   try {
     const url = new URL(request.url ?? '/', 'http://localhost');
     const titlesParam = url.searchParams.get('titles');
-    const requestedTitles = titlesParam
-      ? titlesParam.split(',').map(decodeURIComponent).filter(Boolean)
-      : null;
+    const topParam = url.searchParams.get('top');
 
-    const allStats = DownloadStatsTiddlerStore.getAllStats();
-    const allRatings = RatingTiddlerStore.getAllStats();
+    // ── Build download-count map from in-memory cache ──
+    let downloadCounts: Record<string, number>;
 
-    // If titles filter is provided, only include those plugins
-    const statsToUse = requestedTitles
-      ? Object.fromEntries(
-          Object.entries(allStats).filter(([title]) =>
-            requestedTitles.includes(title),
-          ),
-        )
-      : allStats;
+    if (titlesParam) {
+      // Specific titles requested
+      const requestedTitles = titlesParam
+        .split(',')
+        .map(decodeURIComponent)
+        .filter(Boolean);
+      downloadCounts =
+        DownloadStatsTiddlerStore.getDownloadCountsFor(requestedTitles);
+    } else if (topParam) {
+      // Top-N by download count
+      const topN = parseInt(topParam, 10);
+      downloadCounts = DownloadStatsTiddlerStore.getTopDownloadCounts(
+        Number.isNaN(topN) || topN <= 0 ? 50 : topN,
+      );
+    } else {
+      // All plugins (from cache, no file I/O)
+      downloadCounts = DownloadStatsTiddlerStore.getAllDownloadCounts();
+    }
 
-    const ratingsToUse = requestedTitles
-      ? Object.fromEntries(
-          Object.entries(allRatings).filter(([title]) =>
-            requestedTitles.includes(title),
-          ),
-        )
-      : allRatings;
+    // ── Build result ──
+    const result: Record<string, StatEntry> = {};
 
-    const result: Record<string, CombinedStats> = {};
-
-    Object.entries(statsToUse).forEach(([pluginTitle, stats]) => {
+    Object.entries(downloadCounts).forEach(([pluginTitle, count]) => {
       result[pluginTitle] = {
-        downloadCount: stats.downloadCount || 0,
+        downloadCount: count,
         averageRating: 0,
         totalRatings: 0,
       };
     });
 
-    Object.entries(ratingsToUse).forEach(([pluginTitle, ratings]) => {
-      if (!result[pluginTitle]) {
-        result[pluginTitle] = {
-          downloadCount: 0,
-          averageRating: 0,
-          totalRatings: 0,
-        };
+    // ── Merge rating data (also from cache if available) ──
+    // Only fetch ratings for the plugins we're already returning
+    const allRatings = RatingTiddlerStore.getAllStats();
+    Object.entries(allRatings).forEach(([pluginTitle, ratings]) => {
+      if (result[pluginTitle]) {
+        result[pluginTitle].averageRating = ratings.averageRating || 0;
+        result[pluginTitle].totalRatings = ratings.totalRatings || 0;
       }
-
-      result[pluginTitle].averageRating = ratings.averageRating || 0;
-      result[pluginTitle].totalRatings = ratings.totalRatings || 0;
     });
-
-    // Also include requested titles that have no data yet (return zeros)
-    if (requestedTitles) {
-      for (const title of requestedTitles) {
-        if (!result[title]) {
-          result[title] = {
-            downloadCount: 0,
-            averageRating: 0,
-            totalRatings: 0,
-          };
-        }
-      }
-    }
 
     sendJson(
       context,

@@ -9,7 +9,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
 <$list filter="[[$:/temp/CPL-Server/api-base]get[text]!is[blank]]">
 <$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats]] }}}
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200]] }}}
   method="GET"
   oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats' text=<<data>> type='application/json'/>"/>
 </$list>
