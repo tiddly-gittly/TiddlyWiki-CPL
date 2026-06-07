@@ -55,7 +55,7 @@ type: text/vnd.tiddlywiki
     <div style="padding:6px;display:flex;flex-direction:row;overflow-x:auto;">
         <$let authorPattern={{{ [{!!cpl.title}removeprefix[$:/]split[/]first[2]last[]addprefix[/]addsuffix[/]] }}}>
             <$list
-                filter="[search:cpl.title<authorPattern>] [field:cpl.author{!!cpl.author}] +[!field:title<currentTiddler>unique[]shuffle[]]"
+                filter="[search:cpl.title<authorPattern>] [field:cpl.author{!!cpl.author}] +[!field:title<currentTiddler>unique[]sortbycount[]]"
                 variable="plugin">
                 <$macrocall $name="plugin-item" title=<<plugin>> class="row-scroll-plugin-item" />
             </$list>
@@ -71,7 +71,7 @@ type: text/vnd.tiddlywiki
         <$text text={{{ [<chinese>match[yes]then[同类插件]else[Similar plugins]] }}} />
     </summary>
     <div style="padding:6px;display:flex;flex-direction:row;overflow-x:auto;">
-        <$list filter="[field:cpl.category<category>] +[!field:title<currentTiddler>unique[]shuffle[16]]" variable="plugin">
+        <$list filter="[field:cpl.category<category>] +[!field:title<currentTiddler>unique[]sortbycount[]]" variable="plugin">
             <$macrocall $name="plugin-item" title=<<plugin>> class="row-scroll-plugin-item" />
         </$list>
     </div>

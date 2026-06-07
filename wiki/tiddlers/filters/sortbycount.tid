@@ -1,0 +1,55 @@
+created: 20260607000000000
+modified: 20260607000000000
+module-type: filteroperator
+tags: TW5CPL
+title: $:/plugins/Gk0Wk/CPL-Repo/filters/sortbycount
+type: application/javascript
+
+/*\
+title: $:/plugins/Gk0Wk/CPL-Repo/filters/sortbycount
+module-type: filteroperator
+type: application/javascript
+
+Sorts the input tiddler titles by download count (descending).
+Reads download counts from $:/temp/CPL-Server/all-plugin-stats JSON.
+When stats are unavailable, falls back to stable alphabetical order.
+Optional operand limits the result count (e.g. sortbycount[12]).
+\*/
+exports.sortbycount = function(source, operator) {
+  var wiki = $tw.wiki;
+  var statsTiddler = wiki.getTiddler('$:/temp/CPL-Server/all-plugin-stats');
+  var statsData = {};
+  if (statsTiddler && statsTiddler.fields.text) {
+    try {
+      var raw = JSON.parse(statsTiddler.fields.text);
+      statsData = raw.plugins || {};
+    } catch(e) {}
+  }
+
+  // Collect titles with their download counts
+  var results = [];
+  source(function(_tiddler, title) {
+    var tiddler = wiki.getTiddler(title);
+    var pluginTitle = (tiddler && tiddler.fields['cpl.title']) || title;
+    var downloadCount =
+      (statsData[pluginTitle] && statsData[pluginTitle].downloadCount) || 0;
+    results.push({ title: title, count: downloadCount });
+  });
+
+  // Sort by download count descending, then by title ascending for stability
+  results.sort(function(a, b) {
+    if (b.count !== a.count) return b.count - a.count;
+    if (a.title < b.title) return -1;
+    if (a.title > b.title) return 1;
+    return 0;
+  });
+
+  // Optional limit operand
+  var parsedOperand = parseInt(operator.operand || '', 10);
+  var targetCount = Math.min(
+    Math.max(0, isNaN(parsedOperand) ? results.length : parsedOperand),
+    results.length
+  );
+
+  return results.slice(0, targetCount).map(function(r) { return r.title; });
+};
