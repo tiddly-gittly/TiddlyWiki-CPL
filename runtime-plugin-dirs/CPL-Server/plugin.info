@@ -2,10 +2,10 @@
   "author": "Gk0Wk",
   "core-version": ">=5.3.0",
   "dependents": "",
-  "description": "CPL Server API - Download stats and ratings",
-  "list": "readme tree",
+  "description": "CPL Server API - Download stats, ratings, comments, and compatibility",
+  "list": "readme tree docs/changelog",
   "plugin-type": "plugin",
   "title": "$:/plugins/Gk0Wk/CPL-Server",
-  "version": "1.0.0",
-  "Modern.TiddlyDev#SHA256-Hashed": "551f363127732cad3bfc90cf08b279894bb282bb387e7cb91f67f1121899b037"
+  "version": "2026.06.08",
+  "Modern.TiddlyDev#SHA256-Hashed": "5759b5b4ec1d18047fdf951b679631893d9e6089dccc8a5b9bd56558baba3bb6"
 }

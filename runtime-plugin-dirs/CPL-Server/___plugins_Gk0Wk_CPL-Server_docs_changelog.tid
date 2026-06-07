@@ -1,0 +1,42 @@
+title: $:/plugins/Gk0Wk/CPL-Server/docs/changelog
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[更新日志]else[Changelog]] }}} />
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL Server 更新日志]else[CPL Server Changelog]] }}} />
+tags: 
+type: text/vnd.tiddlywiki
+
+! 2026.06.08
+
+* Download stats in-memory cache: `DownloadStatsTiddlerStore` now maintains an in-memory `downloadCount` cache
+  ** Built once on cold start from persisted `.tid` files — no re-aggregation on API calls
+  ** Incremented synchronously on each download — `updateDownloadStats()` updates both cache and file
+  ** New methods: `getTopDownloadCounts(topN)`, `getDownloadCountsFor(titles)`, `getAllDownloadCounts()` — all O(1) map lookups
+* Optimized `/cpl/stats` endpoint:
+  ** New `?top=N` query parameter — returns only top-N plugins by download count
+  ** Existing `?titles=` and no-filter modes now read from in-memory cache (zero disk I/O)
+  ** Response no longer includes `downloadsByIp` — only `downloadCount`, `averageRating`, `totalRatings`
+* Deleted legacy `getAllStats()` file-scanning loop — replaced by cache-backed implementation
+
+! 2026.06.07
+
+* Tiddler-based storage: comments, ratings, compatibility reports, and download stats all stored as `.tid` files instead of legacy JSON files
+  ** Comments split into `pending/` (gitignored) and `approved/` (version-controlled) directories
+  ** Download stats use multi-server suffix (`{name}.{serverId}.tid`) for future multi-instance support
+  ** Ratings deduplicated by `githubId` on write and aggregated on read to prevent duplicate votes
+* Comments Center API: full comment lifecycle management
+  ** `POST /cpl/comments/:pluginTitle` — submit comment (auth required)
+  ** `GET /cpl/comments/pending` — admin view of pending comments
+  ** `POST /cpl/comments/pending/:id/approve|reject` — moderation actions
+  ** `DELETE /cpl/comments/pending/:id` — delete comment
+  ** `GET /cpl/comments/all-recent` — public list of recently approved comments
+* Batch download stats endpoint: `GET /cpl/stats?titles=t1,t2,t3` fetches stats for multiple plugins in a single request
+* Flattened API routes: removed redundant `/api/` path segment, `/cpl/api/*` → `/cpl/*`
+* OAuth CSRF protection: server-side validation of GitHub OAuth state parameter, rejects mismatched nonce callbacks
+* ETag 304 caching: homepage supports `If-None-Match` conditional requests with `writeHead`/`write` wrapping for chunked response compatibility (Firefox fix)
+* Nginx reverse proxy + gzip: static asset gzip compression, API route proxying, sensible cache policies
+* Startup loading page & build status badge: server-rendered loading page, `/cpl/build-status` endpoint
+* Centralized path management: `src/CPLServer/lib/paths.ts` as single source of truth, eliminating scattered `process.cwd()` / `__dirname` usage
+* Test data isolation: test mode (`CPL_TEST_MODE=true`) uses isolated `tmp/test-wiki/` directory to prevent production wiki pollution
+* Fixed `parseCompatibilityTiddler` missing `title` field causing compatibility report IDs to always be empty
+* Fixed test config tiddlers leaking into production builds
+* Docker deployment: `Dockerfile` + `docker-compose.yml`, read-only mode baked in, pending comments directory persisted via volume
+* Code quality: zero lint and typecheck errors across entire codebase, Prettier formatting applied
