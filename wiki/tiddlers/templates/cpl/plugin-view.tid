@@ -1,13 +1,13 @@
 code-body: yes
 created: 20231006080749205
 modified: 20231010213737515
-tags: TW5CPL
-title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-view
+tags:
+title: CPL PluginWiki View Template
 type: text/vnd.tiddlywiki
 
 \import $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-gallery-item
 \import $:/plugins/Gk0Wk/notionpage-covericon/body
-\import $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/tag-picker
+\import CPL Tag Picker
 
 <$list filter="[[IfEditorMode]get[text]match[yes]]" variable="edit">
 <$macrocall $name="cpl-tag-picker" title=<<currentTiddler>> tagField="cpl.tags"/>

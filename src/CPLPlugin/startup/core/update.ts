@@ -92,18 +92,23 @@ export const createUpdateController = (): UpdateController => {
             }
 
             if (autoInstall) {
+              const autoConfirmConfig = tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/auto-confirm-install') === 'yes';
               tw.rootWidget.dispatchEvent({
                 type: 'cpl-install-plugin-request',
                 paramObject: {
                   titles: tw.utils.stringifyList(pluginsToShow),
-                  'auto-confirm': 'yes',
                   version: 'latest',
+                  ...(autoConfirmConfig ? { 'auto-confirm': 'yes' } : {}),
                 },
                 widget: tw.rootWidget,
               });
             }
           } else {
-            tw.wiki.deleteTiddler('$:/temp/CPL-Repo/update-plugins');
+            tw.wiki.addTiddler({
+              title: '$:/temp/CPL-Repo/update-plugins',
+              type: 'application/json',
+              text: JSON.stringify([]),
+            });
           }
 
           tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');

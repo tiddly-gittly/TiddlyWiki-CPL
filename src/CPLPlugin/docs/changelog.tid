@@ -6,6 +6,14 @@ type: text/vnd.tiddlywiki
 
 ! 2026.06.08
 
+* Mirror toolbar layout: status indicators (✓ Static Database, ⚠ Server Unavailable) now display inline with labels; flex-wrap prevents overflow on narrow viewports
+* Fixed update list not rendering: replaced `compare:integer:gt[0]` (returns count value, not boolean) with `search[0]then[no]else[yes]` pattern
+* Fixed auto-fetch on update tab switch: BackgroundAction `track-filter` now uses `prefix[...]` match to handle `$tabs` macro hash suffixes
+* Fixed "查看" button in update notification: removed redundant `cpl-get-plugins-index` call; now navigates directly to update tab and clears notification
+* New setting: "Auto-confirm installation during updates" — skips confirmation dialog when enabled (default: off)
+* Action buttons consolidation: refresh/update-all buttons moved from global action bar to update-manager sub-tab for better context
+* Fixed `getCurrentMirrorApiBase` returning server origin instead of mirror origin for static API calls
+* Build status badge auto-clears when switching to a static mirror
 * Homepage sorting: removed random shuffle filter — homepage now sorts plugins by download count (stable order, no flickering)
 * New `sortbycount` filter operator: sorts plugin tiddlers by download count from cached stats JSON, falls back to alphabetical order when offline
 * Download stats in-memory cache: download counts loaded once on cold start, incremented on each download — zero file I/O on API calls

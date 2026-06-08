@@ -137,7 +137,7 @@ export const getCurrentMirrorOrigin = (): string => getMirrorOrigin();
 export const getCurrentServerOrigin = (): string => getServerOrigin();
 
 export const getCurrentMirrorApiBase = (): string =>
-  `${getCurrentServerOrigin()}${CPL_API_BASE}`;
+  `${getCurrentMirrorOrigin()}${CPL_API_BASE}`;
 
 export const getConfiguredMirrorType = (
   entry = getCurrentMirrorEntry(),

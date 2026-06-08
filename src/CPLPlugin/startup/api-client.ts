@@ -13,7 +13,7 @@ import { createCplServerApi } from './api-client/api';
 import { refreshMirrorCapabilityState } from './api-client/server-status';
 import { setupCommentJsonProcessor } from './api-client/comment-processor';
 import { handleGithubLogin, handleOAuthCallback } from './api-client/oauth';
-import { startBuildStatusPolling } from './build-status-poll';
+import { startBuildStatusPolling, pollBuildStatus } from './build-status-poll';
 
 export const name = 'cpl-server-api-client';
 export const platforms = ['browser'];
@@ -61,6 +61,8 @@ export const startup = (): void => {
       $tw.utils.hop(changes, LEGACY_SERVER_CONFIG_TITLE)
     ) {
       refreshMirrorCapabilityState(cplServerApi);
+      // Re-poll build status so the badge clears when switching to a static mirror
+      pollBuildStatus();
     }
   });
 

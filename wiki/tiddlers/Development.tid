@@ -99,6 +99,41 @@ pnpm run build:static-site
 pnpm run build:static-library
 ```
 
+!! Testing Plugin in a Blank Wiki
+
+To verify the plugin works standalone (simulating an end-user installing it in Electron/TidGi or a vanilla TW), use a blank wiki with only the built plugin JSON:
+
+```bash
+# 1. Build the plugin
+pnpm build
+
+# 2. Create a blank test wiki
+mkdir -p tmp/test-blank-wiki/tiddlers
+
+# 3. Copy the built plugin JSON into it
+cp "dist/\$__plugins_Gk0Wk_CPL-Repo.json" "tmp/test-blank-wiki/tiddlers/"
+
+# 4. Create a minimal tiddlywiki.info
+cat > tmp/test-blank-wiki/tiddlywiki.info << 'EOF'
+{
+    "description": "Blank wiki for CPL-Repo plugin testing",
+    "plugins": ["tiddlywiki/pluginlibrary", "tiddlywiki/filesystem"],
+    "themes": ["tiddlywiki/vanilla"],
+    "config": { "retain-original-tiddler-path": "no" }
+}
+EOF
+
+# 5. Start the test server
+npx tiddlywiki tmp/test-blank-wiki --listen port=8090
+```
+
+Then open `http://127.0.0.1:8090` and navigate to the CPL layout. Verify:
+* All tabs display correct i18n captions (Chinese/English based on browser language)
+* Tab content renders without errors
+* No missing tiddler references in the browser console
+
+This approach loads the plugin JSON as a tiddler (TiddlyWiki treats it as a plugin bundle). Since the built JSON is a self-contained snapshot of `src/CPLPlugin/`, it catches any tiddlers that were accidentally left in `wiki/tiddlers/` instead of the plugin.
+
 * `pnpm build` prepares the plugin packages.
 * `pnpm run build:static-site` builds the browser-facing static website.
 * `pnpm run build:static-library` builds the static plugin library JSON artifacts used by the published mirror.

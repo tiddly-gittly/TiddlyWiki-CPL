@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_tiddlywiki_highlight
+plugin-title: $:/plugins/tiddlywiki/highlight
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-06-08T03:23:45.577Z","downloadsByIp":{"123.152.147.42":"2026-06-07T16:05:19.790Z","111.16.215.40":"2026-06-08T03:23:45.577Z"}}

@@ -1,12 +1,12 @@
 code-body: yes
 created: 20231006082350928
 modified: 20231010213624488
-tags: TW5CPL
-title: $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/plugin-edit
+tags:
+title: CPL PluginWiki Edit Template
 type: text/vnd.tiddlywiki
 
 \define illegalcharexp() [:/<>"\|?*]
-\import $:/plugins/Gk0Wk/CPL-Repo/templates/cpl/tag-picker
+\import CPL Tag Picker
 
 <$list filter="[[IfEditorMode]get[text]else[no]match[yes]]" variable="edit">
 

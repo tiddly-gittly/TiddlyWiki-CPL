@@ -23,7 +23,7 @@ const setBuildStatus = (phase: string, message: string): void => {
   });
 };
 
-const pollBuildStatus = (): void => {
+export const pollBuildStatus = (): void => {
   // When using a static mirror, the build-status endpoint is irrelevant —
   // skip the request and clear any stale badge so users aren't confused.
   if (getConfiguredMirrorType() !== 'server') {
