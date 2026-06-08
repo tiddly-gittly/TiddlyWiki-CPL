@@ -305,3 +305,57 @@ type: text/vnd.tiddlywiki
   border-color: <<colour tiddler-info-border>>;
   color: <<colour muted-foreground>>;
 }
+
+.cpl-status-banner-success {
+  background: <<colour diff-insert-background>>44;
+  border-color: <<colour diff-insert-background>>;
+  color: <<colour foreground>>;
+}
+
+/* Mirror Toolbar Layout */
+.cpl-mirror-toolbar {
+  margin-bottom: 0.5em;
+}
+
+.cpl-mirror-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.2em;
+  align-items: center;
+  padding: 0.5em 0;
+}
+
+.cpl-mirror-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  flex-shrink: 0;
+}
+
+.cpl-mirror-label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cpl-mirror-select {
+  min-width: 180px;
+  max-width: 360px;
+}
+
+.cpl-mirror-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.cpl-mirror-status-icon {
+  font-weight: bold;
+}
+
+.cpl-mirror-actions {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}

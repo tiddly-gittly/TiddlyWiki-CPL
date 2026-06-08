@@ -13,7 +13,17 @@ type: text/vnd.tiddlywiki
 <$list filter="[[$:/temp/CPL-Repo/update-plugins]is[tiddler]] [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] +[count[]compare:integer:eq[2]then[yes]else[no]]" variable="ready">
 
 <$list filter="[<ready>match[yes]]">
+<$list filter="[{$:/temp/CPL-Repo/update-plugins}jsonget[]count[]search[0]then[no]else[yes]]" variable="hasUpdates">
+<$list filter="[<hasUpdates>match[yes]]">
 	<<paged-plugin-list filter:"[{$:/temp/CPL-Repo/update-plugins}jsonget[]]" field:"update-list" class1:"cpl-plugin-info-box" class2:"cpl-paged-plugin-list-control">>
+</$list>
+<$list filter="[<hasUpdates>match[no]]">
+<div class="cpl-status-banner cpl-status-banner-success cpl-status-banner-large">
+	<span>✓</span>
+	<$text text={{{ [<chinese>match[yes]then[暂无需要更新的插件]else[All plugins are up to date]] }}} />
+</div>
+</$list>
+</$list>
 </$list>
 
 <$list filter="[<ready>match[no]]">

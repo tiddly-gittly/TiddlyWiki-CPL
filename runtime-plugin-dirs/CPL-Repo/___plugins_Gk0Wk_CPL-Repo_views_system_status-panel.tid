@@ -92,9 +92,9 @@ type: text/vnd.tiddlywiki
 {{$:/core/images/info-button}}
 <span><$text text={{{ [<chinese>match[yes]then[发现可更新插件：]else[Plugin updates available: ]] }}} /><$text text={{$:/temp/CPL-Repo/update-notification!!count}} /></span>
 <$button class="tc-btn-invisible cpl-inline-status-action">
-<$action-sendmessage $message="cpl-get-plugins-index" />
 <$action-setfield $tiddler="$:/temp/CPL-Repo/panel-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/plugins/database" />
 <$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-database-tab-state" text="$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager" />
+<$action-deletetiddler $tiddler="$:/temp/CPL-Repo/update-notification" />
 <$text text={{{ [<chinese>match[yes]then[查看]else[View]] }}} />
 </$button>
 <$button class="tc-btn-invisible cpl-inline-status-close" tooltip={{{ [<chinese>match[yes]then[关闭]else[Close]] }}}>
