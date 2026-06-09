@@ -1,9 +1,8 @@
-import { tw, type CPLServerApi, type JsonObject } from './types';
+import { tw, type CPLServerApi } from './types';
 import {
   ALL_PLUGIN_STATS_REFRESH_TITLE,
   PLUGIN_ACTIVITY_REFRESH_TITLE,
 } from './constants';
-import { rawApiRequest } from './http';
 import { setApiStatus, clearServerTempState, setRepoType } from './utilities';
 import {
   getConfiguredMirrorType,
@@ -47,7 +46,8 @@ const getMirrorLabel = (): string => {
 export const probeApiAvailability = (
   callback: (serverType: ApiServerType) => void,
 ): void => {
-  if (!getCurrentServerEntry()) {
+  const serverEntry = getCurrentServerEntry();
+  if (!serverEntry) {
     setApiAvailability(false);
     setApiStatus('unavailable', 'unknown', 'No CPL server is configured.');
     callback('unknown');
@@ -59,21 +59,19 @@ export const probeApiAvailability = (
     'unknown',
     `Checking CPL server ${getMirrorLabel()}...`,
   );
-  rawApiRequest<JsonObject>(
-    'GET',
-    `/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`,
-    null,
-    error => {
-      if (error) {
-        setApiAvailability(false);
-        setApiStatus(
-          'unavailable',
-          'unreachable',
-          `Configured CPL server ${getCurrentServerOrigin()} is currently unreachable or unavailable.`,
-        );
-        callback('unreachable');
-        return;
+
+  // Probe against the configured SERVER origin (dropdown #2), NOT the
+  // static mirror origin (dropdown #1).  rawApiRequest uses
+  // getCurrentMirrorApiBase() which derives from the static mirror —
+  // that would probe Netlify/GitHub Pages which never have /cpl/ APIs.
+  const probeUrl = `${getCurrentServerOrigin()}/cpl/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`;
+  fetch(probeUrl, { method: 'GET', credentials: 'include' })
+    .then(async response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
       }
+      // Consume body to avoid dangling promise warnings
+      await response.text();
 
       setApiAvailability(true);
       setApiStatus(
@@ -84,8 +82,16 @@ export const probeApiAvailability = (
       touchRefreshToken(ALL_PLUGIN_STATS_REFRESH_TITLE);
       touchRefreshToken(PLUGIN_ACTIVITY_REFRESH_TITLE);
       callback('server');
-    },
-  );
+    })
+    .catch(error => {
+      setApiAvailability(false);
+      setApiStatus(
+        'unavailable',
+        'unreachable',
+        `Configured CPL server ${getCurrentServerOrigin()} is currently unreachable or unavailable.`,
+      );
+      callback('unreachable');
+    });
 };
 
 export const refreshMirrorCapabilityState = (
@@ -98,7 +104,8 @@ export const refreshMirrorCapabilityState = (
 
   setLastMirrorEntry(signature);
   setApiAvailability(null);
-  setRepoType(getConfiguredMirrorType());
+  const mirrorType = getConfiguredMirrorType();
+  setRepoType(mirrorType);
   clearServerTempState();
 
   // Expose API base URL for Wikitext tm-http-request widgets

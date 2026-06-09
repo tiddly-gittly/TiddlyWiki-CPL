@@ -16,6 +16,13 @@ permissions:
   pages: write
   id-token: write
 
+# Cancel in-progress deployments when a new one is triggered.
+# Prevents "in progress deployment" errors from overlapping
+# scheduled (hourly cron) and push-triggered runs.
+concurrency:
+  group: pages-deployment
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
