@@ -145,7 +145,7 @@ type: text/vnd.tiddlywiki
   </div>
 
   <$list filter="[[$:/temp/CPL-Server/comment-items/recent/list]get[text]!is[blank]]" variable="hasRecent">
-    <$let searchText={{{ [<searchState>get[text]else[ ]] }}}>
+    <$let searchText={{{ [<searchState>get[text]] }}}>
       <$list filter="[[$:/temp/CPL-Server/comment-items/recent/list]get[text]split[\\n]]" variable="commentTitle">
         <$list filter="[<searchText>is[blank]] [<commentTitle>get[username]search:words<searchText>] [<commentTitle>get[content]search:words<searchText>] [<commentTitle>get[pluginTitle]search:words<searchText>] +[limit[1]]" variable="match">
           <$let

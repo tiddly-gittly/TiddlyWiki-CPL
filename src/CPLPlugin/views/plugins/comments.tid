@@ -33,7 +33,7 @@ type: text/vnd.tiddlywiki
   <!-- Login Status -->
   <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedIn">
     <!-- Logged in: Show user info and comment form -->
-    <$let userJson={{{ [[$:/temp/CPL-Server/user]get[text]else[{}]] }}} username={{{ [<userJson>jsonget[username]else[User]] }}} avatar={{{ [<userJson>jsonget[avatar]else[ ]] }}}>
+    <$let userJson={{{ [[$:/temp/CPL-Server/user]get[text]else[{}]] }}} username={{{ [<userJson>jsonget[username]else[User]] }}} avatar={{{ [<userJson>jsonget[avatar]] }}}>
     <div class="cpl-comment-user-card">
       <$list filter="[<avatar>!is[blank]]" variable="hasAvatar">
         <img src=<<avatar>> class="cpl-comment-avatar" alt="avatar"/>

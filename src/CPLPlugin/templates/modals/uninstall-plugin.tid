@@ -78,7 +78,7 @@ After deciding, click the button below to uninstall the plugin and remove the ch
 <$let tiddler=<<qualify "$:/temp/CPL-Repo/deleting-plugin-shadows">> field="text">
 
 <div style="display:flex;flex-direction:column;">
-<$list filter="[<plugin>get[text]jsonindexes[tiddlers]is[tiddler]]" variable="shadow" emptyMessage="<$text text={{{ [<chinese>match[yes]then[无]else[ ]] }}} />">
+<$list filter="[<plugin>get[text]jsonindexes[tiddlers]is[tiddler]]" variable="shadow" emptyMessage="<$text text={{{ [<chinese>match[yes]then[无]] }}} />">
 <$let is-keep={{{ [<tiddler>get[text]enlist-input[]match<shadow>limit[1]then[no]else[yes]] }}}>
 <div class={{{ [<is-keep>match[yes]then[cpl-shadow-row cpl-shadow-row-keep]else[cpl-shadow-row cpl-shadow-row-delete]] }}}>
 <span><<shadow>></span>
