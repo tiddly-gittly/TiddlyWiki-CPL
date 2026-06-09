@@ -5,6 +5,11 @@ modified: 20231010200158827
 tags: 
 type: text/vnd.tiddlywiki
 
+<!-- Automatically check for updates when entering the update tab -->
+<$list filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]match[yes]]">
+<$action-sendmessage $message="cpl-update-check"/>
+</$list>
+
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 
 <div class="cpl-action-bar">

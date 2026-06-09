@@ -12,6 +12,11 @@ type: text/vnd.tiddlywiki
 {{$:/plugins/Gk0Wk/CPL-Repo/views/system/build-status-badge}}
 </$list>
 
+<!-- Automatically load database when entering CPL layout -->
+<$list filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout]get[text]match[yes]]">
+<$action-sendmessage $message="cpl-get-plugins-index"/>
+</$list>
+
 <$macrocall
 	$name="tabs"
 	state="$:/temp/CPL-Repo/panel-tab-state"
