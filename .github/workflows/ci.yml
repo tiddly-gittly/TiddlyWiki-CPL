@@ -43,7 +43,9 @@ jobs:
       - name: Verify no stale filter errors in compiled output
         shell: bash
         run: |
-          if grep -r 'else\[\]\]\]' cache/runtime-plugins/ cache/runtime-plugin-dirs/ dist/; then
+          # Only check our own compiled plugins (not dist/, which contains
+          # inlined third-party plugin content we can't control).
+          if grep -r 'else\[\]\]\]' cache/runtime-plugins/ cache/runtime-plugin-dirs/; then
             echo "ERROR: Found stale filter errors in compiled output"
             exit 1
           fi
