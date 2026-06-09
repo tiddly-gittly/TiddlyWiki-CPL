@@ -1,12 +1,17 @@
 code-body: yes
 created: 20231014131224108
-modified: 20231014134943518
+modified: 20250609000000000
 tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/uninstall-item
 type: text/vnd.tiddlywiki
 
 \whitespace trim
-<$list filter="[!has[draft.of]plugin-type<currentTab>sort[name]]" emptyMessage={{$:/language/ControlPanel/Plugins/Empty/Hint}}>
+
+<div class="cpl-uninstall-search">
+<$edit-text tiddler="$:/temp/CPL-Repo/uninstall-search" tag="input" type="search" placeholder={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[搜索已安装插件...]else[Search installed plugins...]] }}} />
+</div>
+
+<$list filter="[!has[draft.of]plugin-type<currentTab>search:title{$:/temp/CPL-Repo/uninstall-search!!text}sort[name]]" emptyMessage={{$:/language/ControlPanel/Plugins/Empty/Hint}}>
 <div style="display:flex;margin:-0.5em 0;">
 	<div style="flex-grow:1;">{{||$:/core/ui/PluginListItemTemplate}}</div>
 	<$button class="cpl-delete-button" style="backdrop-filter:contrast(0.65);">
