@@ -16,6 +16,7 @@ export const rawApiRequest = <T extends JsonObject>(
   body: JsonObject | null,
   callback: ApiCallback<T>,
   extraHeaders?: Record<string, string>,
+  baseUrl?: string,
 ): void => {
   const headers: Record<string, string> = {
     ...(extraHeaders ?? {}),
@@ -27,7 +28,7 @@ export const rawApiRequest = <T extends JsonObject>(
     data = JSON.stringify(body);
   }
 
-  fetch(`${getCurrentMirrorApiBase()}${endpoint}`, {
+  fetch(`${baseUrl ?? getCurrentMirrorApiBase()}${endpoint}`, {
     method,
     headers,
     body: data,

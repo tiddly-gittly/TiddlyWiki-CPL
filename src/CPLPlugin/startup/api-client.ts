@@ -10,7 +10,7 @@ import {
 } from './api-client/constants';
 import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
-import { refreshMirrorCapabilityState, setupStatusSync } from './api-client/server-status';
+import { refreshMirrorCapabilityState } from './api-client/server-status';
 import { setupCommentJsonProcessor } from './api-client/comment-processor';
 import { handleGithubLogin, handleOAuthCallback } from './api-client/oauth';
 import { startBuildStatusPolling, pollBuildStatus } from './build-status-poll';
@@ -44,7 +44,6 @@ const requestCommentsCenterRefresh = (pluginTitle: string): void => {
 export const startup = (): void => {
   tw.cpl = cplServerApi;
   tw.cplServerAPI = tw.cpl;
-  setupStatusSync(cplServerApi);
   refreshMirrorCapabilityState(cplServerApi);
 
   // Start polling build status for the badge widget

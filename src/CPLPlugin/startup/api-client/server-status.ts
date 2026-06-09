@@ -1,4 +1,5 @@
-import { tw, type CPLServerApi } from './types';
+import { tw, type CPLServerApi, type JsonObject } from './types';
+import { rawApiRequest } from './http';
 import { setApiStatus, clearServerTempState, setRepoType } from './utilities';
 import {
   getConfiguredMirrorType,
@@ -11,16 +12,6 @@ import {
   setLastMirrorEntry,
 } from './state';
 
-const TOUCH_PROBE_TOKEN_TITLE = '$:/temp/CPL-Server/probe-refresh-token';
-
-/** Touch the probe token so the declarative BackgroundAction fires tm-http-request. */
-const triggerProbe = (): void => {
-  tw.wiki.addTiddler({
-    title: TOUCH_PROBE_TOKEN_TITLE,
-    text: String(Date.now()),
-  });
-};
-
 const setAnonymousUserStatus = (): void => {
   tw.wiki.addTiddler({
     title: '$:/temp/CPL-Server/user-status',
@@ -30,21 +21,6 @@ const setAnonymousUserStatus = (): void => {
     title: '$:/temp/CPL-Server/is-admin',
     text: 'no',
   });
-};
-
-/**
- * Sync the JS apiAvailability flag from the wikitext-maintained
- * $:/temp/CPL-Repo/server-type tiddler.
- */
-const syncApiAvailabilityFromTiddler = (): void => {
-  const type = tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
-  if (type === 'server') {
-    setApiAvailability(true);
-  } else if (type === 'unreachable' || type === 'unknown') {
-    setApiAvailability(false);
-  } else {
-    // Still checking or no tiddler — keep current value
-  }
 };
 
 export const refreshMirrorCapabilityState = (
@@ -61,7 +37,7 @@ export const refreshMirrorCapabilityState = (
   setRepoType(mirrorType);
   clearServerTempState();
 
-  // Expose API base URL so declarative tm-http-request widgets can get it
+  // Expose API base URL for Wikitext tm-http-request widgets
   tw.wiki.addTiddler({
     title: '$:/temp/CPL-Server/api-base',
     text: getCurrentServerOrigin(),
@@ -74,51 +50,58 @@ export const refreshMirrorCapabilityState = (
     return;
   }
 
-  // Probe server availability via declarative wikitext BackgroundAction
+  // Probe server availability — use server origin, not mirror origin
   setApiStatus('checking', 'unknown', 'Checking CPL server...');
-  triggerProbe();
-};
-
-export const setupStatusSync = (cplServerApi: CPLServerApi): void => {
-  // When the declarative background action sets server-type, sync apiAvailability
-  tw.wiki.addEventListener('change', changes => {
-    if ($tw.utils.hop(changes, '$:/temp/CPL-Repo/server-type')) {
-      syncApiAvailabilityFromTiddler();
-
-      const type = tw.wiki.getTiddlerText('$:/temp/CPL-Repo/server-type', '');
-      if (type === 'server') {
-        // Server probe succeeded — check auth
-        cplServerApi.getAuthConfig((configError, configData) => {
-          if (!configError && configData?.githubClientId) {
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/github-client-id',
-              text: String(configData.githubClientId),
-            });
-          }
-        });
-
-        cplServerApi.checkAuthStatus((error, data) => {
-          if (!error && data?.authenticated) {
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/user-status',
-              text: 'authenticated',
-            });
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/user',
-              text: JSON.stringify(data.user),
-              type: 'application/json',
-            });
-            tw.wiki.addTiddler({
-              title: '$:/temp/CPL-Server/is-admin',
-              text: data.isAdmin ? 'yes' : 'no',
-            });
-            return;
-          }
-          setAnonymousUserStatus();
-        });
-      } else {
+  rawApiRequest<JsonObject>(
+    'GET',
+    `/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`,
+    null,
+    error => {
+      if (error) {
+        setApiAvailability(false);
+        setApiStatus(
+          'unavailable',
+          'unreachable',
+          `CPL server ${getCurrentServerOrigin()} is unreachable.`,
+        );
         setAnonymousUserStatus();
+        return;
       }
-    }
-  });
+      // Probe succeeded — server is available
+      setApiAvailability(true);
+      setApiStatus('available', 'server', 'CPL server is available.');
+
+      // After successful probe, check auth status
+      cplServerApi.getAuthConfig((configError, configData) => {
+        if (!configError && configData?.githubClientId) {
+          tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Server/github-client-id',
+            text: String(configData.githubClientId),
+          });
+        }
+      });
+
+      cplServerApi.checkAuthStatus((authError, data) => {
+        if (!authError && data?.authenticated) {
+          tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Server/user-status',
+            text: 'authenticated',
+          });
+          tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Server/user',
+            text: JSON.stringify(data.user),
+            type: 'application/json',
+          });
+          tw.wiki.addTiddler({
+            title: '$:/temp/CPL-Server/is-admin',
+            text: data.isAdmin ? 'yes' : 'no',
+          });
+          return;
+        }
+        setAnonymousUserStatus();
+      });
+    },
+    undefined,
+    getCurrentServerOrigin() + '/cpl',
+  );
 };
