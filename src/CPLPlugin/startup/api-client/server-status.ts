@@ -1,8 +1,9 @@
-import { tw, type CPLServerApi } from './types';
+import { tw, type CPLServerApi, type JsonObject } from './types';
 import {
   ALL_PLUGIN_STATS_REFRESH_TITLE,
   PLUGIN_ACTIVITY_REFRESH_TITLE,
 } from './constants';
+import { rawApiRequest } from './http';
 import { setApiStatus, clearServerTempState, setRepoType } from './utilities';
 import {
   getConfiguredMirrorType,
@@ -60,18 +61,25 @@ export const probeApiAvailability = (
     `Checking CPL server ${getMirrorLabel()}...`,
   );
 
-  // Probe against the configured SERVER origin (dropdown #2), NOT the
-  // static mirror origin (dropdown #1).  rawApiRequest uses
+  // Probe the configured SERVER origin (dropdown #2), not the static
+  // mirror (dropdown #1).  rawApiRequest normally uses
   // getCurrentMirrorApiBase() which derives from the static mirror —
-  // that would probe Netlify/GitHub Pages which never have /cpl/ APIs.
-  const probeUrl = `${getCurrentServerOrigin()}/cpl/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`;
-  fetch(probeUrl, { method: 'GET', credentials: 'include' })
-    .then(async response => {
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+  // that would probe Netlify/GitHub Pages which never have /cpl/.
+  rawApiRequest<JsonObject>(
+    'GET',
+    `/stats/${encodeURIComponent('$:/plugins/Gk0Wk/CPL-Repo/__probe__')}`,
+    null,
+    error => {
+      if (error) {
+        setApiAvailability(false);
+        setApiStatus(
+          'unavailable',
+          'unreachable',
+          `Configured CPL server ${getCurrentServerOrigin()} is currently unreachable or unavailable.`,
+        );
+        callback('unreachable');
+        return;
       }
-      // Consume body to avoid dangling promise warnings
-      await response.text();
 
       setApiAvailability(true);
       setApiStatus(
@@ -82,16 +90,10 @@ export const probeApiAvailability = (
       touchRefreshToken(ALL_PLUGIN_STATS_REFRESH_TITLE);
       touchRefreshToken(PLUGIN_ACTIVITY_REFRESH_TITLE);
       callback('server');
-    })
-    .catch(error => {
-      setApiAvailability(false);
-      setApiStatus(
-        'unavailable',
-        'unreachable',
-        `Configured CPL server ${getCurrentServerOrigin()} is currently unreachable or unavailable.`,
-      );
-      callback('unreachable');
-    });
+    },
+    undefined,
+    getCurrentServerOrigin() + '/cpl',
+  );
 };
 
 export const refreshMirrorCapabilityState = (
