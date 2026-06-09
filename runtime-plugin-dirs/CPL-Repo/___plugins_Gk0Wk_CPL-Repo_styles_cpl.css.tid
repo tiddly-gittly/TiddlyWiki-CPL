@@ -137,6 +137,26 @@ type: text/vnd.tiddlywiki
   box-shadow: 0 0 0 2px <<colour primary>>1a;
 }
 
+.cpl-uninstall-search {
+  margin-bottom: 0.5em;
+}
+
+.cpl-uninstall-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.4em 0.6em;
+  border: 1px solid <<colour tiddler-editor-border>>;
+  border-radius: 4px;
+  background: <<colour tiddler-editor-background>>;
+  color: <<colour foreground>>;
+}
+
+.cpl-uninstall-search input:focus {
+  border-color: <<colour primary>>;
+  box-shadow: 0 0 0 2px <<colour primary>>1a;
+  outline: none;
+}
+
 .cpl-mirror-server {
   color: <<colour download-background>>;
 }

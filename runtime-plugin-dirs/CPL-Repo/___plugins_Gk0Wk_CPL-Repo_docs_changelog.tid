@@ -4,6 +4,12 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags: 
 type: text/vnd.tiddlywiki
 
+! 2026.06.09
+
+* Fixed server status probe using static mirror origin instead of configured server origin — switching the database mirror dropdown no longer incorrectly marks the feature server as unavailable
+* Added search box to Uninstall tab for quickly finding installed plugins, themes, and languages
+* Fixed concurrent deployment failures in GitHub Actions by adding concurrency control to `gh-pages.yml`
+
 ! 2026.06.08
 
 * Mirror toolbar layout: status indicators (✓ Static Database, ⚠ Server Unavailable) now display inline with labels; flex-wrap prevents overflow on narrow viewports
