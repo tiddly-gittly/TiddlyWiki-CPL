@@ -35,3 +35,7 @@ export const AUTH_CONFIG_RESPONSE_TITLE =
   '$:/temp/CPL-Server/auth-config-response';
 export const AUTH_STATUS_RESPONSE_TITLE =
   '$:/temp/CPL-Server/auth-status-response';
+export const BUILD_STATUS_REFRESH_TITLE =
+  '$:/temp/CPL-Server/build-status-refresh-token';
+export const BUILD_STATUS_RESPONSE_TITLE =
+  '$:/temp/CPL-Server/build-status-response';

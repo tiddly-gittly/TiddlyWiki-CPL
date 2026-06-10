@@ -1,16 +1,20 @@
 /**
- * Polls the /cpl/build-status endpoint and updates temp tiddlers
- * so the build-status-badge widget can reactively display build progress.
+ * Polls build status via declarative BackgroundAction + tm-http-request,
+ * then syncs response JSON into status tiddlers for the badge widget.
  *
  * Polls every 5 seconds when the status is not "idle". Stops polling
  * once idle to save resources.
  */
-import { tw, type JsonObject } from './api-client/types';
-import { rawApiRequest } from './api-client/http';
+import { tw } from './api-client/types';
+import {
+  BUILD_STATUS_REFRESH_TITLE,
+  BUILD_STATUS_RESPONSE_TITLE,
+} from './api-client/constants';
 import { getConfiguredMirrorType } from './api-client/state';
 
 const POLL_INTERVAL = 5000;
 let pollTimer: ReturnType<typeof setInterval> | null = null;
+let statusSyncInitialized = false;
 
 const setBuildStatus = (phase: string, message: string): void => {
   tw.wiki.addTiddler({
@@ -23,6 +27,59 @@ const setBuildStatus = (phase: string, message: string): void => {
   });
 };
 
+const triggerBuildStatusFetch = (): void => {
+  tw.wiki.addTiddler({
+    title: BUILD_STATUS_REFRESH_TITLE,
+    text: String(Date.now()),
+  });
+};
+
+const parseResponse = (): { phase: string; message: string } | null => {
+  const response = tw.wiki.getTiddlerText(BUILD_STATUS_RESPONSE_TITLE, '');
+  if (!response) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(response) as {
+      phase?: unknown;
+      message?: unknown;
+    };
+    return {
+      phase: String(parsed.phase ?? 'idle'),
+      message: String(parsed.message ?? ''),
+    };
+  } catch {
+    return null;
+  }
+};
+
+const setupBuildStatusSync = (): void => {
+  if (statusSyncInitialized) {
+    return;
+  }
+  statusSyncInitialized = true;
+
+  tw.wiki.addEventListener('change', changes => {
+    if (!$tw.utils.hop(changes, BUILD_STATUS_RESPONSE_TITLE)) {
+      return;
+    }
+
+    const data = parseResponse();
+    if (!data) {
+      setBuildStatus('restarting', 'Server is restarting...');
+      return;
+    }
+
+    setBuildStatus(data.phase, data.message);
+
+    if (data.phase === 'idle' && pollTimer) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+  });
+};
+
 export const pollBuildStatus = (): void => {
   // When using a static mirror, the build-status endpoint is irrelevant —
   // skip the request and clear any stale badge so users aren't confused.
@@ -31,28 +88,12 @@ export const pollBuildStatus = (): void => {
     return;
   }
 
-  rawApiRequest<JsonObject>('GET', '/build-status', null, (error, data) => {
-    if (error) {
-      // If the build-status endpoint fails (e.g. server restarting),
-      // show a transient "restarting" state
-      setBuildStatus('restarting', 'Server is restarting...');
-      return;
-    }
-
-    const phase = String(data?.phase ?? 'idle');
-    const message = String(data?.message ?? '');
-
-    setBuildStatus(phase, message);
-
-    // Stop polling once idle
-    if (phase === 'idle' && pollTimer) {
-      clearInterval(pollTimer);
-      pollTimer = null;
-    }
-  });
+  triggerBuildStatusFetch();
 };
 
 export const startBuildStatusPolling = (): void => {
+  setupBuildStatusSync();
+
   // Initial poll
   pollBuildStatus();
 
