@@ -1,6 +1,7 @@
 import { tw, type RootWidgetEvent } from './api-client/types';
 import {
   ALL_PLUGIN_STATS_REFRESH_TITLE,
+  AUTH_REFRESH_TITLE,
   COMMENTS_CENTER_REFRESH_TITLE,
   LEGACY_MIRROR_CONFIG_TITLE,
   LEGACY_SERVER_CONFIG_TITLE,
@@ -10,7 +11,10 @@ import {
 } from './api-client/constants';
 import { getEventParam } from './api-client/utilities';
 import { createCplServerApi } from './api-client/api';
-import { refreshMirrorCapabilityState } from './api-client/server-status';
+import {
+  refreshMirrorCapabilityState,
+  setupStatusSync,
+} from './api-client/server-status';
 import { setupCommentJsonProcessor } from './api-client/comment-processor';
 import { handleGithubLogin, handleOAuthCallback } from './api-client/oauth';
 import { startBuildStatusPolling, pollBuildStatus } from './build-status-poll';
@@ -44,7 +48,8 @@ const requestCommentsCenterRefresh = (pluginTitle: string): void => {
 export const startup = (): void => {
   tw.cpl = cplServerApi;
   tw.cplServerAPI = tw.cpl;
-  refreshMirrorCapabilityState(cplServerApi);
+  setupStatusSync();
+  refreshMirrorCapabilityState();
 
   // Start polling build status for the badge widget
   startBuildStatusPolling();
@@ -60,7 +65,7 @@ export const startup = (): void => {
       $tw.utils.hop(changes, SERVER_CONFIG_TITLE) ||
       $tw.utils.hop(changes, LEGACY_SERVER_CONFIG_TITLE)
     ) {
-      refreshMirrorCapabilityState(cplServerApi);
+      refreshMirrorCapabilityState();
       // Re-poll build status so the badge clears when switching to a static mirror
       pollBuildStatus();
     }
@@ -69,7 +74,18 @@ export const startup = (): void => {
   tw.rootWidget.addEventListener(
     'cpl-refresh-mirror',
     (_event: RootWidgetEvent): undefined => {
-      refreshMirrorCapabilityState(cplServerApi);
+      refreshMirrorCapabilityState();
+      return undefined;
+    },
+  );
+
+  tw.rootWidget.addEventListener(
+    'cpl-refresh-auth',
+    (_event: RootWidgetEvent): undefined => {
+      tw.wiki.addTiddler({
+        title: AUTH_REFRESH_TITLE,
+        text: String(Date.now()),
+      });
       return undefined;
     },
   );

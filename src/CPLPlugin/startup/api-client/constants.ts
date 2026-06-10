@@ -26,3 +26,12 @@ export const PLUGIN_ACTIVITY_REFRESH_TITLE =
   '$:/temp/CPL-Server/plugin-activity-refresh-token';
 export const COMMENTS_CENTER_REFRESH_TITLE =
   '$:/temp/CPL-Server/comments-center-refresh-token';
+export const SERVER_PROBE_REFRESH_TITLE =
+  '$:/temp/CPL-Server/probe-refresh-token';
+export const SERVER_PROBE_SUCCESS_TITLE =
+  '$:/temp/CPL-Server/probe-success-token';
+export const AUTH_REFRESH_TITLE = '$:/temp/CPL-Server/auth-refresh-token';
+export const AUTH_CONFIG_RESPONSE_TITLE =
+  '$:/temp/CPL-Server/auth-config-response';
+export const AUTH_STATUS_RESPONSE_TITLE =
+  '$:/temp/CPL-Server/auth-status-response';

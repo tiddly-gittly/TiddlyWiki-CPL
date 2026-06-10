@@ -118,17 +118,8 @@ export const handleOAuthCallback = (): void => {
           text: JSON.stringify(data.user),
           type: 'application/json',
         });
-        // Also check admin status after login
-        if (tw.cpl) {
-          tw.cpl.checkAuthStatus((_err, authData) => {
-            if (!_err && authData) {
-              tw.wiki.addTiddler({
-                title: '$:/temp/CPL-Server/is-admin',
-                text: authData.isAdmin ? 'yes' : 'no',
-              });
-            }
-          });
-        }
+        // Trigger declarative auth refresh so admin flag is synced from /auth/status.
+        tw.rootWidget.dispatchEvent({ type: 'cpl-refresh-auth' });
         window.location.replace(returnUrl);
       } catch (parseError) {
         console.error(
