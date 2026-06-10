@@ -7,15 +7,6 @@ export interface HttpErrorLike {
   statusText?: string;
 }
 
-export interface AuthStatusResponse extends JsonObject {
-  authenticated?: boolean;
-  user?: unknown;
-}
-
-export interface AuthConfigResponse extends JsonObject {
-  githubClientId?: string;
-}
-
 export interface RatingResponse extends JsonObject {
   averageRating?: number;
   totalRatings?: number;
@@ -26,31 +17,9 @@ export interface OAuthResponse extends JsonObject {
   user?: unknown;
 }
 
-export interface CompatibilityReportResponse extends JsonObject {
-  success?: boolean;
-  pluginTitle?: string;
-  reports?: Array<{
-    id: string;
-    pluginTitle: string;
-    reporterUsername: string;
-    twVersionMin?: string;
-    twVersionMax?: string;
-    conflictingPlugins: Array<{ pluginTitle: string; description: string }>;
-    description: string;
-    status: string;
-    createdAt: string;
-  }>;
-}
-
 export interface CPLServerApi {
   recordDownload: (
     pluginTitle: string,
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  getStats: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
-  getAllStats: (callback: ApiCallback<JsonObject>) => void;
-  getStatsBatch: (
-    pluginTitles: string[],
     callback: ApiCallback<JsonObject>,
   ) => void;
   submitRating: (
@@ -58,19 +27,10 @@ export interface CPLServerApi {
     rating: number,
     callback: ApiCallback<RatingResponse>,
   ) => void;
-  getChangelog: (
-    pluginTitle: string,
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  getComments: (pluginTitle: string, callback: ApiCallback<JsonObject>) => void;
   submitComment: (
     pluginTitle: string,
     content: string,
     callback: ApiCallback<JsonObject>,
-  ) => void;
-  getCompatibilityReports: (
-    pluginTitle: string,
-    callback: ApiCallback<CompatibilityReportResponse>,
   ) => void;
   submitCompatibilityReport: (
     pluginTitle: string,
@@ -82,18 +42,13 @@ export interface CPLServerApi {
     },
     callback: ApiCallback<JsonObject>,
   ) => void;
-  checkAuthStatus: (callback: ApiCallback<AuthStatusResponse>) => void;
-  getAuthConfig: (callback: ApiCallback<AuthConfigResponse>) => void;
   logout: () => void;
-  getPendingComments: (callback: ApiCallback<JsonObject>) => void;
-  getAllRecentComments: (callback: ApiCallback<JsonObject>) => void;
   moderateComment: (
     pluginTitle: string,
     commentId: string,
     status: string,
     callback: ApiCallback<JsonObject>,
   ) => void;
-  getPendingCompatibilityReports: (callback: ApiCallback<JsonObject>) => void;
   moderateCompatibilityReport: (
     pluginTitle: string,
     reportId: string,
