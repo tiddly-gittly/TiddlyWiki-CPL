@@ -55,8 +55,22 @@ export const path = /^\/cpl\/download-plugin\/(.+)$/;
 export const handler: RouteHandler = (request, _response, context) => {
   try {
     const pluginTitle = decodeRouteParam(context.params[0]);
-    const url = new URL(request.url ?? '', 'http://localhost');
-    const version = url.searchParams.get('version') ?? undefined;
+    // Parse query string manually — TW module sandbox does not provide URL.
+    let version: string | undefined;
+    const raw = request.url ?? '/';
+    const qIndex = raw.indexOf('?');
+    if (qIndex !== -1) {
+      for (const part of raw.slice(qIndex + 1).split('&')) {
+        const eq = part.indexOf('=');
+        const key =
+          eq === -1
+            ? decodeURIComponent(part)
+            : decodeURIComponent(part.slice(0, eq));
+        if (key === 'version') {
+          version = eq === -1 ? '' : decodeURIComponent(part.slice(eq + 1));
+        }
+      }
+    }
     const filePath = findPluginFile(pluginTitle, version);
 
     if (!filePath) {

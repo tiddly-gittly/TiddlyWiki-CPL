@@ -14,9 +14,28 @@ export const path = /^\/cpl\/stats$/;
 
 export const handler: RouteHandler = (request, _response, context) => {
   try {
-    const url = new URL(request.url ?? '/', 'http://localhost');
-    const titlesParam = url.searchParams.get('titles');
-    const topParam = url.searchParams.get('top');
+    // Parse query string manually — TW module sandbox does not provide URL/URLSearchParams.
+    const raw = request.url ?? '/';
+    const qIndex = raw.indexOf('?');
+    const queryString = qIndex === -1 ? '' : raw.slice(qIndex + 1);
+    let titlesParam: string | undefined;
+    let topParam: string | undefined;
+    if (queryString) {
+      for (const part of queryString.split('&')) {
+        const eq = part.indexOf('=');
+        const key =
+          eq === -1
+            ? decodeURIComponent(part)
+            : decodeURIComponent(part.slice(0, eq));
+        const value = eq === -1 ? '' : decodeURIComponent(part.slice(eq + 1));
+        if (key === 'titles') {
+          titlesParam = value;
+        }
+        if (key === 'top') {
+          topParam = value;
+        }
+      }
+    }
 
     // ── Build download-count map from in-memory cache ──
     let downloadCounts: Record<string, number>;
