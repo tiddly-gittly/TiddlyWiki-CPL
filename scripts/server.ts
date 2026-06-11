@@ -60,6 +60,9 @@ function prepareTestWiki(): void {
   // Use a fixed project-local temp directory so test helpers can reliably
   // clean up the same path that the server writes to.
   removeDirectorySync(paths.testWiki);
+  // On Windows, even after rmSync, cpSync can fail with ENOTEMPTY if
+  // residual file handles linger. Pre-remove via cmd too.
+  try { execSync(`cmd /c rd /s /q "${paths.testWiki}"`, { stdio: 'ignore' }); } catch { /* */ }
   fs.mkdirSync(path.dirname(paths.testWiki), { recursive: true });
   fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
   runtimeWikiPath = paths.testWiki;
