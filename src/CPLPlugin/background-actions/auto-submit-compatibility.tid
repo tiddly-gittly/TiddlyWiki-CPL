@@ -1,0 +1,36 @@
+created: 20260611000000000
+modified: 20260611000000000
+tags: $:/tags/BackgroundAction
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-submit-compatibility
+track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/compatibility-submit-request]get[text]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
+<$list filter="[[$:/temp/CPL-Server/api-base]get[text]!is[blank]]">
+<$list filter="[[$:/temp/CPL-Server/compatibility-submit-request]get[text]!is[blank]]">
+<$let pluginTitle={{$:/temp/CPL-Server/compatibility-submit-request!!plugin-title}} twVersionMin={{$:/temp/CPL-Server/compatibility-submit-request!!tw-version-min}} twVersionMax={{$:/temp/CPL-Server/compatibility-submit-request!!tw-version-max}} conflictPlugin={{$:/temp/CPL-Server/compatibility-submit-request!!conflict-plugin}} conflictDescription={{$:/temp/CPL-Server/compatibility-submit-request!!conflict-description}} description={{$:/temp/CPL-Server/compatibility-submit-request!!description}}>
+<$let statusTitle={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility-status/]] }}} draftTitle={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility-draft/]] }}}>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="POST"
+  header-Content-Type="application/json"
+  body={{{ [<description>jsonstringify[]addprefix[{"description":]addsuffix[}]] [<twVersionMin>!is[blank]then<twVersionMin>jsonstringify[]addprefix[,"twVersionMin":]] [<twVersionMax>!is[blank]then<twVersionMax>jsonstringify[]addprefix[,"twVersionMax":]] [<conflictPlugin>!is[blank]then<conflictPlugin>jsonstringify[]addprefix[,"conflictingPlugins":[{"pluginTitle":]addsuffix[]]] [<conflictPlugin>!is[blank]then<conflictDescription>jsonstringify[]addprefix[,"description":]addsuffix[}]]] [<conflictPlugin>!is[blank]then[]addprefix[]addsuffix[]] +[join[]addsuffix[}]] }}}
+  var-pluginTitle=<<pluginTitle>>
+  var-statusTitle=<<statusTitle>>
+  var-draftTitle=<<draftTitle>>
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTitle>> text='success'/>
+<$action-deletetiddler $tiddler=<<draftTitle>>/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTitle>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+</$list>
+<$action-setfield $tiddler='$:/temp/CPL-Server/compatibility-submit-request' text='' plugin-title='' tw-version-min='' tw-version-max='' conflict-plugin='' conflict-description='' description=''/>
+"""/>
+</$let>
+</$let>
+</$list>
+</$list>
+</$list>

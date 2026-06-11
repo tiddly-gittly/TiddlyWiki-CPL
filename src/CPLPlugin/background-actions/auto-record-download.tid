@@ -1,0 +1,21 @@
+created: 20260611000000000
+modified: 20260611000000000
+tags: $:/tags/BackgroundAction
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-record-download
+track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Repo/install-plugin-status]get[text]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]] [[$:/temp/CPL-Repo/install-plugin-status]get[text]match[success]] +[count[]compare:number:eq[2]]">
+<$let pluginTitle={{$:/temp/CPL-Repo/install-plugin-status!!plugin-title}}>
+<$list filter="[<pluginTitle>!is[blank]] [[$:/temp/CPL-Server/api-base]get[text]!is[blank]] +[count[]compare:number:eq[2]]">
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/download/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="POST"
+  body="{}"
+  header-Content-Type="application/json"
+  var-pluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>"/>
+</$list>
+</$let>
+</$list>

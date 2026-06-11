@@ -1,0 +1,23 @@
+created: 20260611000000000
+modified: 20260611000000000
+tags: $:/tags/BackgroundAction
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-api-record-download
+track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/api-record-download-request]get[text]]
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]] [[$:/temp/CPL-Server/api-record-download-request]get[text]!is[blank]] +[count[]compare:number:eq[2]]">
+<$let token={{$:/temp/CPL-Server/api-record-download-request!!text}} pluginTitle={{$:/temp/CPL-Server/api-record-download-request!!plugin-title}}>
+<$let responseTitle={{{ [<token>addprefix[$:/temp/CPL-Server/api-record-download-response/]] }}}>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/download/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="POST"
+  body="{}"
+  header-Content-Type="application/json"
+  var-responseTitle=<<responseTitle>>
+  oncompletion="""<$action-setfield $tiddler=<<responseTitle>> text=<<data>> error={{{ [<status>compare:number:gteq[200]compare:number:lt[300]then[]else<error>else<data>else<statusText>] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/api-record-download-request' text='' plugin-title='' endpoint=''/>
+"""/>
+</$let>
+</$let>
+</$list>
