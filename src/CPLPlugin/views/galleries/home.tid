@@ -9,10 +9,8 @@ type: text/vnd.tiddlywiki
 \import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
 \import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/paged-list
 \define go-search()
-<$action-setfield
-    $tiddler="$:/temp/CPL-Repo/search-plugins-request"
-    text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}
-    mode="mix"
+<$action-sendmessage
+    $message="cpl-search-plugins"
     query={{$:/temp/CPL-Repo/searchplugin-home/input}}
     saveTo="$:/temp/CPL-Repo/searchplugin-home/result"
 />

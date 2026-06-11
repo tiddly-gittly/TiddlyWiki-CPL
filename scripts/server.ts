@@ -24,7 +24,11 @@ const removeDirectorySync = (targetPath: string): void => {
       /* already gone */
     }
     // Give Windows a moment to release handles before re-creating.
-    try { execSync('cmd /c ping 127.0.0.1 -n 1 -w 500 > nul', { stdio: 'ignore' }); } catch { /* */ }
+    try {
+      execSync('cmd /c ping 127.0.0.1 -n 1 -w 500 > nul', { stdio: 'ignore' });
+    } catch {
+      /* */
+    }
   } else {
     fs.rmSync(targetPath, { recursive: true, force: true });
   }

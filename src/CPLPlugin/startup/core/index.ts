@@ -4,7 +4,6 @@ const asPluginInfoList = (value: unknown): PluginInfo[] =>
   value as PluginInfo[];
 
 const PLUGIN_INDEX_RAW_TITLE = '$:/temp/CPL-Repo/plugin-index-raw';
-const SEARCH_PLUGINS_REQUEST_TITLE = '$:/temp/CPL-Repo/search-plugins-request';
 
 let pluginIndexCache: PluginInfo[] | undefined;
 let allPluginsCache: string[] | undefined;
@@ -173,19 +172,16 @@ export const startup = (): void => {
         });
       }
     }
+  });
 
-    if (tw.utils.hop(changes, SEARCH_PLUGINS_REQUEST_TITLE)) {
-      const fields = tw.wiki.getTiddler(SEARCH_PLUGINS_REQUEST_TITLE)?.fields;
-      if (!fields || typeof fields.text !== 'string' || !fields.text) {
-        return;
-      }
-      tw.wiki.addTiddler({ title: SEARCH_PLUGINS_REQUEST_TITLE, text: '' });
-      const query = typeof fields.query === 'string' ? fields.query : '';
-      const saveTo = typeof fields.saveTo === 'string' ? fields.saveTo : '';
-      if (!saveTo) {
-        return;
-      }
+  tw.rootWidget.addEventListener('cpl-search-plugins', (event: unknown) => {
+    const e = event as { paramObject?: Record<string, string> };
+    const p = e.paramObject ?? {};
+    const query = p.query ?? '';
+    const saveTo = p.saveTo ?? '';
+    if (saveTo) {
       handleSearchPlugins(query, saveTo);
     }
+    return undefined;
   });
 };
