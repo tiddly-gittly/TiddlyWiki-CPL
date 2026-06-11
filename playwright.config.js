@@ -59,7 +59,7 @@ module.exports = defineConfig({
   webServer: {
     command: 'npm run server:test',
     url: TEST_URL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 300000, // 5 min: server startup includes runtime plugin compilation on first run
     env: {
       PORT: TEST_PORT,
