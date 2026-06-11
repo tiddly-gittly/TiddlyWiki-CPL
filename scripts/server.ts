@@ -12,20 +12,37 @@ type ServerMode = 'dev' | 'prod' | 'readonly';
 const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
 const removeDirectorySync = (targetPath: string): void => {
-  if (!fs.existsSync(targetPath)) return;
+  if (!fs.existsSync(targetPath)) {
+    return;
+  }
   // Try Node's rmSync first, then fall back to cmd /c rd for Windows resilience.
   for (const attempt of [1, 2, 3]) {
     try {
-      fs.rmSync(targetPath, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      fs.rmSync(targetPath, {
+        recursive: true,
+        force: true,
+        maxRetries: 5,
+        retryDelay: 200,
+      });
       return;
     } catch {
       if (attempt < 3) {
-        try { execSync('cmd /c ping 127.0.0.1 -n 1 -w 1000 > nul', { stdio: 'ignore' }); } catch { /* */ }
+        try {
+          execSync('cmd /c ping 127.0.0.1 -n 1 -w 1000 > nul', {
+            stdio: 'ignore',
+          });
+        } catch {
+          /* */
+        }
       }
     }
   }
   // Last resort: Windows cmd rd is more aggressive at releasing handles.
-  try { execSync(`cmd /c rd /s /q "${targetPath}"`, { stdio: 'ignore' }); } catch { /* ignore, already gone */ }
+  try {
+    execSync(`cmd /c rd /s /q "${targetPath}"`, { stdio: 'ignore' });
+  } catch {
+    /* ignore, already gone */
+  }
 };
 
 if (!fs.existsSync(paths.data)) {
@@ -62,7 +79,11 @@ function prepareTestWiki(): void {
   removeDirectorySync(paths.testWiki);
   // On Windows, even after rmSync, cpSync can fail with ENOTEMPTY if
   // residual file handles linger. Pre-remove via cmd too.
-  try { execSync(`cmd /c rd /s /q "${paths.testWiki}"`, { stdio: 'ignore' }); } catch { /* */ }
+  try {
+    execSync(`cmd /c rd /s /q "${paths.testWiki}"`, { stdio: 'ignore' });
+  } catch {
+    /* */
+  }
   fs.mkdirSync(path.dirname(paths.testWiki), { recursive: true });
   fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
   runtimeWikiPath = paths.testWiki;

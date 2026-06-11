@@ -8,10 +8,15 @@ const OAUTH_STATE_KEY = 'cpl-oauth-state';
 const OAUTH_RETURN_KEY = 'cpl-oauth-return';
 
 const getCurrentServerOrigin = (): string => {
-  const configuredRepo = tw.wiki.getTiddlerText(
-    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo',
-    tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-server', ''),
-  ).trim();
+  const configuredRepo = tw.wiki
+    .getTiddlerText(
+      '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo',
+      tw.wiki.getTiddlerText(
+        '$:/plugins/Gk0Wk/CPL-Repo/config/current-server',
+        '',
+      ),
+    )
+    .trim();
   const fromTempApiBase = tw.wiki
     .getTiddlerText('$:/temp/CPL-Server/api-base', '')
     .trim();

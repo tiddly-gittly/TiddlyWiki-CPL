@@ -82,7 +82,10 @@ const setupBuildStatusSync = (): void => {
 export const pollBuildStatus = (): void => {
   // When using a static mirror, the build-status endpoint is irrelevant —
   // skip the request and clear any stale badge so users aren't confused.
-  if (tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown') !== 'server') {
+  if (
+    tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown') !==
+    'server'
+  ) {
     setBuildStatus('idle', '');
     return;
   }

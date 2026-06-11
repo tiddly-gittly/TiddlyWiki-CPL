@@ -26,7 +26,6 @@ const setupGithubLoginRequest = (): void => {
 };
 
 export const startup = (): void => {
-
   // Force initial Wikitext-driven server config sync on startup.
   tw.wiki.addTiddler({
     title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo',

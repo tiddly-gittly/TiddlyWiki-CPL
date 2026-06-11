@@ -172,17 +172,19 @@ const ensureDownloadCache = (): void => {
         ? pluginTitleLine.substring(pluginTitleLine.indexOf(':') + 1).trim()
         : '';
       // Fallback: derive from title field
-      const resolvedTitle = pluginTitle || (() => {
-        const titleLine = content
-          .split(/\r?\n/)
-          .find(l => l.toLowerCase().startsWith('title:'));
-        const fullTitle = titleLine
-          ? titleLine.substring(titleLine.indexOf(':') + 1).trim()
-          : '';
-        return fullTitle.startsWith(TITLE_PREFIX)
-          ? fullTitle.slice(TITLE_PREFIX.length)
-          : fullTitle;
-      })();
+      const resolvedTitle =
+        pluginTitle ||
+        (() => {
+          const titleLine = content
+            .split(/\r?\n/)
+            .find(l => l.toLowerCase().startsWith('title:'));
+          const fullTitle = titleLine
+            ? titleLine.substring(titleLine.indexOf(':') + 1).trim()
+            : '';
+          return fullTitle.startsWith(TITLE_PREFIX)
+            ? fullTitle.slice(TITLE_PREFIX.length)
+            : fullTitle;
+        })();
 
       if (resolvedTitle) {
         _downloadCountCache[resolvedTitle] = parsed.downloadCount;
