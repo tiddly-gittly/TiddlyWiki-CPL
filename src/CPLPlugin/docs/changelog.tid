@@ -6,18 +6,18 @@ type: text/vnd.tiddlywiki
 
 ! 2026.06.11
 
-* 架构重构：全面迁移为声明式 Wikitext 请求驱动模式
-** 删除 5 个 JS 文件：`api.ts`、`http.ts`、`auth.ts`、`server-status.ts`、`state.ts`（共 -518 行），所有 HTTP 请求逻辑迁移到 BackgroundAction Wikitext tiddlers
-** 新增 10 个 Wikitext background-action tiddlers 处理评分/评论/兼容性/审核/登出/下载统计/配置同步
-** `api-client.ts`：从 375 行缩减到 186 行，所有 `rootWidget.addEventListener('cpl-*')` 替换为 `wiki.addEventListener('change')` 监听请求 tiddler
-** `core.ts`：从 150+ 行事件监听改为 130 行 change listener + 请求 tiddler 分发，删除 6 个 `cpl-*` 事件处理函数
-** 所有视图层 `$action-sendmessage`（`cpl-*` 和 `tm-http-request`）全部替换为 `$action-setfield` 写入请求 tiddler
-** 请求 tiddler 模式：视图写入 → BackgroundAction 读取执行 → `oncompletion` 回写结果 → TS change listener 解析回调
-** 状态同步 `server-status.ts`/`state.ts` 迁移为 Wikitext `auto-sync-server-config` + `auto-probe-server` 链式驱动
-** 认证刷新从 `dispatchEvent('cpl-refresh-auth')` 迁移为 `auth-refresh-token` tiddler 触发
-** OAuth 回调中的 auth 刷新改为写入 `auth-refresh-token` 而非同步调用 `dispatchEvent`
-** 构建状态轮询改用 `$:/temp/CPL-Repo/mirror-type` tiddler 替代 `getConfiguredMirrorType()` 函数调用
-** e2e 测试基础设施增强：Windows 兼容目录删除、host 对齐、mock repo URL 注入
+* Architecture refactoring: migrated the core trigger layer from `rootWidget.addEventListener('cpl-*')` to request tiddler + BackgroundAction pattern, eliminating all `$action-sendmessage` with `cpl-*` / `tm-http-request` messages
+* Removed 5 TS files no longer needed: `api.ts`, `http.ts`, `auth.ts`, `server-status.ts`, `state.ts`, reducing ~520 lines of frontend JavaScript
+* Added 10 Wikitext BackgroundAction tiddlers: rating submission, comment submission, compatibility submission, comment moderation, compatibility moderation, logout, download recording, stats query, server config sync
+* Server probing, auth state sync, and mirror config sync are now fully Wikitext BackgroundAction-driven instead of TypeScript polling/timers
+* All view-layer `$action-sendmessage` replaced with `$action-setfield` writing to request tiddlers, picked up by corresponding BackgroundActions
+* `$tw.cpl` API simplified to `getStats` and `recordDownload`, communicating with Wikitext through a request tiddler → BackgroundAction → response tiddler bridge pattern
+* Auto-update checking and auto-load database are now gated behind config tiddler `match[yes]` guards instead of firing unconditionally at render time
+* e2e test infrastructure fixes: Windows-safe recursive directory removal (with retries), test host alignment, mock repo URL injection
+* Removed iframe postMessage bridge (~180 lines) — all three pre-configured mirrors (Netlify, GitHub Pages, cpl.tidgi.fun) support CORS; `cpl()` now uses direct `fetch` exclusively
+* Replaced entire `cpl()` function and `static-mirror-fetch.ts` with generic `repoFetch()` bridge — writes request tiddlers picked up by `auto-fetch-repo-file` BackgroundAction; all repo data fetches (index, update, query, install) now go through Wikitext `tm-http-request` instead of direct TypeScript `fetch`
+* Deleted `static-mirror-fetch.ts` (~100 lines) — `formatPluginTitle` moved to `bridge.ts`; `fetchPluginFromStaticMirrors` and `STATIC_MIRROR_BASES` retired
+* Inverted the data-fetch architecture: `repoFetch()` bridge removed — all network I/O now originates in Wikitext BackgroundActions (`auto-fetch-plugin-index`, `auto-fetch-update-json`) via `tm-http-request`; TypeScript modules (`index.ts`, `update.ts`, `install.ts`) listen for raw response tiddlers and perform algorithmic processing only
 
 ! 2026.06.09
 

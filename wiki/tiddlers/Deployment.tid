@@ -198,184 +198,140 @@ Behind a proxy on Linux, forward the host proxy to the Docker bridge first:
 socat TCP-LISTEN:1081,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:1080 &
 ```
 
-!! Development Guide
+!! Development Architecture
 
-!!! Architecture Overview
+The CPL client plugin follows a strict two-language boundary:
 
-CPL 前端采用「请求 Tiddler」驱动的声明式架构。核心原则：
+* **TypeScript** handles browser-platform APIs (Blob download, OAuth CSRF/crypto), complex algorithms (recursive dependency resolution, search index building), and promise bridges that write request tiddlers for Wikitext BackgroundActions
+* **Wikitext** handles all HTTP requests (`tm-http-request`), state management, and user-facing logic through BackgroundActions and filter expressions. All network I/O goes through Wikitext — TypeScript never calls `fetch` directly
 
-* 视图层（Wikitext）不直接发起 HTTP 请求，而是写入请求 tiddler
-* BackgroundAction 监听请求 tiddler，执行 HTTP 请求，回写结果 tiddler
-* TypeScript 仅在需要浏览器 API（iframe、Blob、crypto、OAuth 重定向）或复杂算法（递归依赖解析、JSON→tiddler 拆分）时介入
-* 所有状态同步通过 Wikitext tiddler 链式传递，不依赖 JS 函数调用
+!!! Request Tiddler Pattern
 
-```
-┌─────────────┐     $action-setfield      ┌──────────────────┐
-│  视图层      │ ─────────────────────────→│  请求 Tiddler     │
-│  (Wikitext)  │                           │  $:/temp/...     │
-└─────────────┘                           └────────┬─────────┘
-                                                   │ track-filter
-                                                   ▼
-                                          ┌──────────────────┐
-                                          │  BackgroundAction │
-                                          │  tm-http-request  │
-                                          └────────┬─────────┘
-                                                   │ oncompletion
-                                                   ▼
-                                          ┌──────────────────┐
-                                          │  结果 Tiddler     │
-                                          │  + 状态 Tiddler   │
-                                          └────────┬─────────┘
-                                                   │ wiki change listener
-                                                   ▼
-                                          ┌──────────────────┐
-                                          │  TS Response     │
-                                          │  Bridge (可选)    │
-                                          └──────────────────┘
-```
-
-!!! 请求 Tiddler 模式
-
-用户操作（点击按钮、切换 tab）不再使用 `$action-sendmessage $message="cpl-xxx"`，而是写入一个临时请求 tiddler：
+Wikitext and TypeScript communicate exclusively through named request/response tiddlers. When the UI needs to trigger a server action (submit rating, check updates, login, etc.), it writes a //request tiddler//. A BackgroundAction or TypeScript change listener picks up the request, executes it, and writes a //response tiddler// back.
 
 ```
-<!-- 旧方式：发送 widget message -->
-<$action-sendmessage $message="cpl-get-plugins-index" />
-
-<!-- 新方式：写入请求 tiddler -->
-<$action-setfield $tiddler="$:/temp/CPL-Repo/plugins-index-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} />
+View → $action-setfield → request tiddler ($:/temp/CPL-Server/xxx-request)
+                                   ↓
+            BackgroundAction (wikitext)  or  change listener (TypeScript)
+                                   ↓
+            tm-http-request → oncompletion → response tiddler
+                                   ↓
+            View reads response tiddler via filter/list
 ```
 
-请求 tiddler 规范：
-* 放在 `$:/temp/` 下，名称以 `-request` 结尾
-* 必须写 `text` 字段，值用时间戳（用于触发 change 事件并区分多次请求）
-* 额外参数通过自定义字段传递（如 `plugin-title`、`version`、`status`）
-* BackgroundAction 执行完毕后清空 `text` 字段（重置请求）
+Request tiddlers live under `$:/temp/CPL-Server/` or `$:/temp/CPL-Repo/`. Each request tiddler must be //cleared// (set to empty text) after processing so it can be re-triggered by the same value later.
 
-!!! BackgroundAction 模式
+!!! BackgroundAction Conventions
 
-每个 API 端点对应一个 BackgroundAction tiddler：
+BackgroundActions are tiddlers tagged `$:/tags/BackgroundAction` that fire when their `track-filter` matches a change. When writing one:
 
-* 放在 `background-actions/` 目录
-* 带 `$:/tags/BackgroundAction` tag
-* 通过 `track-filter` 声明触发条件：同时监听请求 tiddler、server-type、api-base
-* 使用 `<action-sendmessage $message="tm-http-request">` 发起 HTTP 请求（完全声明式，无 fetch() 调用）
-* 在 `oncompletion` 中根据 HTTP 状态码回写结果 tiddler 和状态 tiddler
-* 执行完毕后清空请求 tiddler
+# `track-filter` must list //every// tiddler whose change should trigger re-evaluation. Missing dependencies = stale state.
+# Config-gated actions (auto-check updates, auto-load database) use a nested `<$list filter="[[config]get[text]match[yes]]">` guard before writing their request tiddler.
+# HTTP requests use `tm-http-request` with `oncompletion` for response handling. Use `var-*` attributes to pass context into the completion handler.
+# Use `<$let>` with nested let for derived variables (e.g. construct a response title from a token).
+# On success, write a refresh token tiddler (e.g. `all-plugin-stats-refresh-token`) that downstream BackgroundActions track.
+# On failure, write error into a status tiddler that the UI can display.
 
-示例：提交评分的 BackgroundAction
+Example layout for a BackgroundAction that handles a user action:
 
 ```tid
-title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-submit-rating
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-xxx
 tags: $:/tags/BackgroundAction
-track-filter: [[$:/temp/CPL-Repo/server-type]get[text]]
-  [[$:/temp/CPL-Server/api-base]get[text]]
-  [[$:/temp/CPL-Server/rating-request]get[text]]
+track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/xxx-request]get[text]]
 
 \whitespace trim
-<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]
-  [[$:/temp/CPL-Server/api-base]get[text]!is[blank]]
-  [[$:/temp/CPL-Server/rating-request]get[text]!is[blank]]
-  +[count[]compare:number:eq[3]]">
-<$let pluginTitle={{$:/temp/CPL-Server/rating-request!!plugin-title}}
-  rating={{$:/temp/CPL-Server/rating-request!!rating}}>
+<$list filter="[server-type=server] [api-base exists] [request exists] +[count[]compare:number:eq[3]]">
+<$let pluginTitle={{request!!plugin-title}}>
 <$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/rate/]]
-    [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
-  method="POST"
-  header-Content-Type="application/json"
-  body={{{ [<rating>jsonstringify[]addprefix[{"rating":]addsuffix[}]] }}}
-  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler=<<statusTitle>> text='success' ... />
+  url={{{ [[api-base]addsuffix[/cpl/xxx/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="POST" header-Content-Type="application/json"
+  body={{{ ... }}}
+  var-pluginTitle=<<pluginTitle>>
+  oncompletion="""<$list filter='[<status>gteq[200]lt[300]]'>
+<$action-setfield $tiddler='...-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}}/>
 </$list>
-<$action-setfield $tiddler='$:/temp/CPL-Server/rating-request'
-  text='' plugin-title='' rating=''/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/xxx-request' text='' plugin-title=''/>
 """/>
 </$let>
 </$list>
 ```
 
-!!! TS 响应桥接模式
+!!! State Tiddlers
 
-`api-client.ts` 中的 `$tw.cpl.getStats()` 和 `$tw.cpl.recordDownload()` 对外暴露 Promise 回调 API。
-这些函数内部写入请求 tiddler → BackgroundAction 执行 HTTP → 写入响应 tiddler → TS change listener 解析 JSON 回调 Promise。
+Server-derived state is stored in tiddlers under `$:/temp/CPL-Server/` and `$:/temp/CPL-Repo/`. These are //not persisted// — they are cleared on wiki reload.
 
-这是唯一需要 TS 参与 HTTP 请求的场景：为遗留代码或其他插件提供 `$tw.cpl` 编程接口。
+|!Tiddler|!Purpose|!Written by|
+|`$:/temp/CPL-Repo/server-type`|`server`, `unreachable`, or `unknown`|`auto-probe-server` on probe result|
+|`$:/temp/CPL-Repo/api-status`|`available`, `unavailable`, `checking`|`auto-sync-server-config` and `auto-probe-server`|
+|`$:/temp/CPL-Server/api-base`|Server origin URL for HTTP requests|`auto-sync-server-config`|
+|`$:/temp/CPL-Server/user-status`|`authenticated` or `anonymous`|`auto-fetch-auth-state`|
+|`$:/temp/CPL-Server/is-admin`|`yes` or `no`|`auto-fetch-auth-state` and `auto-logout`|
+|`$:/temp/CPL-Server/github-client-id`|GitHub OAuth client ID|`auto-fetch-auth-state`|
 
-!!! 状态管理：配置驱动链式同步
+!!! Adding a New API Endpoint
 
-服务器配置变更通过 Wikitext tiddler 链自动传播：
+# If the endpoint returns data for Wikitext consumption only, create a BackgroundAction tiddler that:
+## Writes `tm-http-request` with the endpoint URL
+## In `oncompletion`, writes the response into a result tiddler
+## Tracks a refresh token so views can detect new data
+# If the endpoint is called //programmatically// from TypeScript (e.g. `$tw.cpl.getStats()`):
+## Add a request constant to `constants.ts` (e.g. `XXX_REQUEST_TITLE`, `XXX_RESPONSE_PREFIX`)
+## Add a BackgroundAction that reads the request tiddler and writes the response
+## In `api-client.ts`, add the bridge method that writes the request tiddler and registers a callback in `setupApiResponseBridge`
+# Views read result tiddlers with standard list/filter widgets. Do not call TypeScript functions directly in view logic.
 
-```
-配置变更 (config/current-server-repo text)
-    │
-    ▼ auto-sync-server-config (track-filter 监听)
-    ├── 写入 $:/temp/CPL-Server/api-base
-    ├── 写入 $:/temp/CPL-Repo/mirror-type
-    └── 写入 $:/temp/CPL-Server/probe-refresh-token
-            │
-            ▼ auto-probe-server (track-filter 监听 probe-refresh-token)
-            ├── 成功 → 写入 server-type=server, api-status=available
-            │         └── 写入 auth-refresh-token
-            │                 │
-            │                 ▼ auto-fetch-auth-state (track-filter 监听)
-            │                 ├── GET /cpl/auth/config  → github-client-id
-            │                 └── GET /cpl/auth/status  → user-status, is-admin
-            └── 失败 → 写入 server-type=unreachable, 清空认证状态
-```
+!!! TypeScript Module Responsibilities
 
-!!! TypeScript 使用边界
+|!File|!Responsibility|!Keep as TS because|
+|`startup/api-client.ts`|Response bridge (`$tw.cpl.getStats`/`recordDownload`), OAuth handler, login request listener|Promise callback bridge, crypto, URL parsing|
+|`startup/api-client/oauth.ts`|GitHub OAuth CSRF state + sessionStorage + redirect + callback URL|`crypto.getRandomValues`, `sessionStorage`, `window.location`|
+|`startup/api-client/comment-processor.ts`|Splits JSON comment arrays into per-comment tiddlers|Filter operator limits — cannot iterate arbitrary JSON arrays in Wikitext|
+|`startup/core.ts`|Change listener dispatches request tiddlers to update/install/index/download controllers; initializes repo fetch bridge|`Blob`, `URL.createObjectURL`, `document`|
+|`startup/core/bridge.ts`|Utility exports only: `getCurrentRepoEntry`, `formatPluginTitle`, `getEventParam`, `getFieldString`|Pure functions, no side effects|
+|`startup/core/install.ts`|Recursive dependency resolution + tiddler creation; uses direct `fetch()` for plugin metadata/JSON|Complex async tree traversal|
+|`startup/core/index.ts`|Listens for `plugin-index-raw` (written by Wikitext `auto-fetch-plugin-index` BackgroundAction); builds search index + search/scoring logic|In-memory index structure, regex search|
+|`startup/core/update.ts`|Listens for `plugin-update-raw` (written by Wikitext `auto-fetch-update-json` BackgroundAction); version comparison + auto-schedule timer that writes `update-check-request`|`setInterval`, version comparison|
+|`startup/build-status-poll.ts`|Build status polling timer + badge state|`setInterval`, `AbortController`|
 
-| 场景 | 使用方式 | 原因 |
-|-------|---------|------|
-| HTTP 请求 | Wikitext `tm-http-request` | 声明式、可被 BackgroundAction 拦截 |
-| 用户操作触发 | `$action-setfield` 写请求 tiddler | 解耦视图和逻辑 |
-| 状态同步 | Wikitext 链式 `track-filter` | 响应式、可视化调试 |
-| 评分/评论/审核 | 全部 Wikitext BackgroundAction | 无需 JS |
-| `$tw.cpl.getStats()` | TS 响应桥接 | 对外 API 需要 Promise |
-| GitHub OAuth 登录 | TS `oauth.ts` | 需要 `crypto.getRandomValues`、`sessionStorage`、URL 重定向 |
-| 插件安装依赖解析 | TS `core/install.ts` | 递归算法 + 跨域 iframe 通信 |
-| 插件索引搜索 | TS `core/index.ts` | 大量 JSON 解析 + 本地搜索算法 |
-| Blob 下载 | TS `core.ts` | 需要 `Blob`、`URL.createObjectURL`、`<a>` 点击 |
-| iframe 跨域通信 | TS `core/bridge.ts` | 需要 `postMessage` API |
-| 评论 JSON → tiddler | TS `comment-processor.ts` | Wikitext filter 不支持复杂 JSON 拆分 |
-
-!!! 添加新功能的标准流程
-
-# 确定是否需要 TS：如果只是发 HTTP 请求 + 写状态 tiddler，纯 Wikitext 即可。
-# 创建请求 tiddler 常量：在 `constants.ts` 中添加 `XXX_REQUEST_TITLE` 和 `XXX_RESPONSE_TITLE`。
-# 创建 BackgroundAction tiddler：放在 `background-actions/`，设置 `track-filter` 监听请求 tiddler，用 `tm-http-request` 发请求。
-# 修改视图：将按钮的 `$action-sendmessage` 替换为 `$action-setfield` 写请求 tiddler。
-# （可选）TS 桥接：如果需要对其他插件暴露 JS API，在 `api-client.ts` 添加响应桥接。
-# e2e 测试：在 `tests/e2e/` 添加测试用例。
-
-!!! 目录结构约定
+!!! Directory Structure
 
 ```
 src/CPLPlugin/
-├── background-actions/       # Wikitext: HTTP 请求 BackgroundAction
+├── startup/
+│   ├── api-client.ts          # API bridge + OAuth handler
+│   ├── core.ts                # Change listener + request dispatcher
+│   ├── build-status-poll.ts   # Build status polling
+│   ├── api-client/
+│   │   ├── constants.ts       # All tiddler title constants
+│   │   ├── types.ts           # CplServerApi interface + type definitions
+│   │   ├── oauth.ts           # GitHub OAuth
+│   │   ├── comment-processor.ts
+│   │   └── utilities.ts       # Params extraction, status helpers
+│   └── core/
+│       ├── bridge.ts          # Utilities (repo URL, title formatting, param helpers)
+│       ├── index.ts           # Plugin index
+│       ├── install.ts         # Plugin installation
+│       ├── update.ts          # Update checking
+├── background-actions/        # Wikitext BackgroundAction tiddlers
 │   ├── auto-submit-rating.tid
 │   ├── auto-submit-comment.tid
+│   ├── auto-submit-compatibility.tid
+│   ├── auto-moderate-comment.tid
+│   ├── auto-moderate-compatibility.tid
+│   ├── auto-logout.tid
+│   ├── auto-record-download.tid
+│   ├── auto-api-get-stats.tid
+│   ├── auto-api-record-download.tid
+│   ├── auto-probe-server.tid
+│   ├── auto-fetch-auth-state.tid
+│   ├── auto-fetch-comments.tid
 │   ├── auto-sync-server-config.tid
-│   └── ...
-├── startup/
-│   ├── api-client.ts         # TS: $tw.cpl API + 响应桥接 + OAuth + 登录
-│   ├── api-client/
-│   │   ├── constants.ts      # 所有 tiddler 标题常量
-│   │   ├── types.ts          # TypeScript 类型定义
-│   │   ├── oauth.ts          # GitHub OAuth 登录/回调
-│   │   ├── comment-processor.ts  # JSON 评论 → tiddler 拆分
-│   │   └── utilities.ts      # 状态写入辅助函数
-│   ├── core.ts               # TS: 核心请求分发 + 下载
-│   ├── core/
-│   │   ├── bridge.ts         # iframe postMessage 跨域通信
-│   │   ├── install.ts        # 插件安装 + 依赖解析
-│   │   ├── index.ts          # 插件索引 + 搜索
-│   │   ├── update.ts         # 更新检查 + 自动调度
-│   │   └── static-mirror-fetch.ts  # 静态镜像 HTTP 回退
-│   └── build-status-poll.ts  # 构建状态轮询
-├── views/                    # Wikitext: 所有 UI 视图
-├── layout/                   # Wikitext: 布局定义
-├── templates/                # Wikitext: 弹窗模板
-└── notifications/            # Wikitext: 通知模板
+│   ├── auto-load-database.tid
+│   ├── auto-check-updates.tid
+│   ├── auto-check-updates-on-layout.tid
+│   └── auto-fetch-repo-file.tid
+├── views/                     # Wikitext views — no tm-http-request, no $action-sendmessage to TypeScript
+├── templates/                 # Wikitext templates and modals
+├── layout/                    # Wikitext layout components
+└── notifications/             # Wikitext notification templates
 ```

@@ -432,22 +432,22 @@ test.describe('CPL Server E2E', () => {
 
   // ── API from Browser ──────────────────────────────────────────────────
 
-  test('API should be accessible from browser via $tw.cpl', async ({
+  test('API should be accessible from browser via fetch', async ({
     page,
   }) => {
     await waitForReady(page);
 
-    const result = await page.evaluate(() => {
-      return new Promise(resolve => {
-        $tw.cpl.getStats('$:/plugins/test/plugin', (err, stats) => {
-          if (err) {
-            resolve({ error: err.message || String(err) });
-          } else {
-            resolve({ success: true, stats });
+    const TEST_PORT = process.env.TEST_PORT || '19876';
+    const result = await page.evaluate(port => {
+      return fetch(`http://localhost:${port}/cpl/stats/${encodeURIComponent('$:/plugins/test/plugin')}`)
+        .then(async response => {
+          if (!response.ok) {
+            return { error: `HTTP ${response.status}: ${await response.text()}` };
           }
-        });
-      });
-    });
+          return { success: true, stats: await response.json() };
+        })
+        .catch(err => ({ error: err.message || String(err) }));
+    }, TEST_PORT);
 
     expect(result.error).toBeUndefined();
     expect(result.success).toBe(true);
