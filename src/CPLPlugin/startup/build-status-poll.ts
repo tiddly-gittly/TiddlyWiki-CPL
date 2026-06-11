@@ -5,11 +5,11 @@
  * Polls every 5 seconds when the status is not "idle". Stops polling
  * once idle to save resources.
  */
-import { tw } from './api-client/types';
+import { tw } from './types';
 import {
   BUILD_STATUS_REFRESH_TITLE,
   BUILD_STATUS_RESPONSE_TITLE,
-} from './api-client/constants';
+} from './constants';
 
 const POLL_INTERVAL = 5000;
 let pollTimer: ReturnType<typeof setInterval> | null = null;

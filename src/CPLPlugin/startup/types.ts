@@ -1,3 +1,14 @@
+export interface HttpErrorLike {
+  message?: string;
+  status?: number;
+  statusText?: string;
+}
+
+export interface OAuthResponse {
+  success?: boolean;
+  user?: unknown;
+}
+
 export interface DependencyTree {
   [key: string]: DependencyTree;
 }
@@ -29,7 +40,10 @@ type TwWithLayoutState = typeof $tw & {
   titleContainer?: HTMLElement | null;
 };
 
-export const tw = $tw as TwWithLayoutState;
+export const tw = $tw as TwWithLayoutState & {
+  cpl?: unknown;
+  cplServerAPI?: unknown;
+};
 
 type RootWidgetListener = Parameters<typeof tw.rootWidget.addEventListener>[1];
 

@@ -1,7 +1,7 @@
-import { tw } from './api-client/types';
-import { SERVER_PROBE_REFRESH_TITLE } from './api-client/constants';
-import { setupCommentJsonProcessor } from './api-client/comment-processor';
-import { handleGithubLogin, handleOAuthCallback } from './api-client/oauth';
+import { tw } from './types';
+import { SERVER_PROBE_REFRESH_TITLE } from './constants';
+import { setupCommentJsonProcessor } from './comment-processor';
+import { handleGithubLogin, handleOAuthCallback } from './oauth';
 import { startBuildStatusPolling } from './build-status-poll';
 
 export const name = 'cpl-server-api-client';

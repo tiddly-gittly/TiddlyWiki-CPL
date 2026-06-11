@@ -1,4 +1,4 @@
-import { formatPluginTitle, getCurrentRepoEntry } from './bridge';
+import { formatPluginTitle, getCurrentRepoEntry } from './repo';
 import {
   tw,
   type DependencyTree,

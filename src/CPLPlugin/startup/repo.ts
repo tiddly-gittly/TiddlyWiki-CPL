@@ -1,7 +1,7 @@
 import {
   LEGACY_MIRROR_CONFIG_TITLE,
   STATIC_REPO_CONFIG_TITLE,
-} from '../api-client/constants';
+} from './constants';
 import { tw } from './types';
 
 export const DEFAULT_REPO_ENTRY = 'https://tw-cpl.netlify.app/repo';
