@@ -1,4 +1,3 @@
-import { URL } from 'url';
 import { sendInternalError, sendJson } from '../../lib/http';
 import { DownloadStatsTiddlerStore } from '../../lib/store/download-stats-tiddlers';
 import { RatingTiddlerStore } from '../../lib/store/rating-tiddlers';

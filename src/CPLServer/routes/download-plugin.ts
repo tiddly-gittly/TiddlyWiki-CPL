@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as pathModule from 'path';
-import { URL } from 'url';
 
 import { sanitizePluginFileName } from '../lib/files';
 import { RateLimiter } from '../lib/security/rate-limit';

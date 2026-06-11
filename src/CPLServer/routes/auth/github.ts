@@ -1,5 +1,3 @@
-import { URL } from 'url';
-
 import { Auth } from '../../lib/auth';
 import { Config } from '../../lib/config';
 import {
