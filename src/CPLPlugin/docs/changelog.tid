@@ -4,6 +4,21 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags:
 type: text/vnd.tiddlywiki
 
+! 2026.06.11
+
+* 架构重构：全面迁移为声明式 Wikitext 请求驱动模式
+** 删除 5 个 JS 文件：`api.ts`、`http.ts`、`auth.ts`、`server-status.ts`、`state.ts`（共 -518 行），所有 HTTP 请求逻辑迁移到 BackgroundAction Wikitext tiddlers
+** 新增 10 个 Wikitext background-action tiddlers 处理评分/评论/兼容性/审核/登出/下载统计/配置同步
+** `api-client.ts`：从 375 行缩减到 186 行，所有 `rootWidget.addEventListener('cpl-*')` 替换为 `wiki.addEventListener('change')` 监听请求 tiddler
+** `core.ts`：从 150+ 行事件监听改为 130 行 change listener + 请求 tiddler 分发，删除 6 个 `cpl-*` 事件处理函数
+** 所有视图层 `$action-sendmessage`（`cpl-*` 和 `tm-http-request`）全部替换为 `$action-setfield` 写入请求 tiddler
+** 请求 tiddler 模式：视图写入 → BackgroundAction 读取执行 → `oncompletion` 回写结果 → TS change listener 解析回调
+** 状态同步 `server-status.ts`/`state.ts` 迁移为 Wikitext `auto-sync-server-config` + `auto-probe-server` 链式驱动
+** 认证刷新从 `dispatchEvent('cpl-refresh-auth')` 迁移为 `auth-refresh-token` tiddler 触发
+** OAuth 回调中的 auth 刷新改为写入 `auth-refresh-token` 而非同步调用 `dispatchEvent`
+** 构建状态轮询改用 `$:/temp/CPL-Repo/mirror-type` tiddler 替代 `getConfiguredMirrorType()` 函数调用
+** e2e 测试基础设施增强：Windows 兼容目录删除、host 对齐、mock repo URL 注入
+
 ! 2026.06.09
 
 * Fixed server status probe using static mirror origin instead of configured server origin — switching the database mirror dropdown no longer incorrectly marks the feature server as unavailable
