@@ -23,6 +23,49 @@ export const shouldSkipLegacyDependency = (
   pluginTitle === CPL_REPO_PLUGIN_TITLE &&
   dependencyTitle === CPL_SERVER_PLUGIN_TITLE;
 
+export const name = 'cpl-install';
+export const platforms = ['browser'];
+export const after = ['startup'];
+export const synchronous = true;
+
+const INSTALL_PLUGIN_REQUEST_TITLE = '$:/temp/CPL-Repo/install-plugin-request';
+const INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE = '$:/temp/CPL-Repo/install-plugin-confirm-request';
+
+const getRequestFields = (changes: Record<string, unknown>, title: string): Record<string, string> | null => {
+  if (!tw.utils.hop(changes, title)) return null;
+  const tiddler = tw.wiki.getTiddler(title);
+  if (!tiddler || typeof tiddler.fields.text !== 'string' || !tiddler.fields.text) return null;
+  const result: Record<string, string> = {};
+  for (const [k, v] of Object.entries(tiddler.fields)) if (typeof v === 'string') result[k] = v;
+  return result;
+};
+
+export const startup = (): void => {
+  const controller = createInstallController();
+
+  tw.wiki.addEventListener('change', changes => {
+    const installRequest = getRequestFields(changes, INSTALL_PLUGIN_REQUEST_TITLE);
+    if (installRequest) {
+      tw.wiki.addTiddler({ title: INSTALL_PLUGIN_REQUEST_TITLE, text: '' });
+      void controller.handleInstallPluginRequest({
+        type: 'cpl-install-plugin-request',
+        paramObject: installRequest,
+        widget: tw.rootWidget,
+      } as unknown as RootWidgetEvent);
+    }
+
+    const installConfirmRequest = getRequestFields(changes, INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE);
+    if (installConfirmRequest) {
+      tw.wiki.addTiddler({ title: INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE, text: '' });
+      void controller.handleInstallPlugin({
+        type: 'cpl-install-plugin',
+        paramObject: installConfirmRequest,
+        widget: tw.rootWidget,
+      } as unknown as RootWidgetEvent);
+    }
+  });
+};
+
 export const createInstallController = (): InstallController => {
   let installRequestLock = false;
   let installLock = false;
