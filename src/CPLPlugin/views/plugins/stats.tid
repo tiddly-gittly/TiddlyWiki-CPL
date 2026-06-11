@@ -224,7 +224,7 @@ type: text/vnd.tiddlywiki
       <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可为插件评分。]else[Login to rate this plugin.]] }}}/></p>
       <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
         <$button class="tc-btn-primary cpl-comment-login-button">
-          <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+          <$action-sendmessage $message="cpl-github-login"/>
           <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
         </$button>
       </$list>
@@ -412,7 +412,7 @@ type: text/vnd.tiddlywiki
           <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可提交兼容性报告。]else[Login to submit a compatibility report.]] }}}/></p>
           <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
             <$button class="tc-btn-primary cpl-comment-login-button">
-              <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+              <$action-sendmessage $message="cpl-github-login"/>
               <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
             </$button>
           </$list>

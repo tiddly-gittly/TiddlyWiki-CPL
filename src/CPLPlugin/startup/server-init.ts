@@ -9,19 +9,10 @@ export const platforms = ['browser'];
 export const after = ['startup'];
 export const synchronous = true;
 
-const GITHUB_LOGIN_REQUEST_TITLE = '$:/temp/CPL-Server/github-login-request';
-
 const setupGithubLoginRequest = (): void => {
-  tw.wiki.addEventListener('change', changes => {
-    if (!tw.utils.hop(changes, GITHUB_LOGIN_REQUEST_TITLE)) {
-      return;
-    }
-    const request = tw.wiki.getTiddlerText(GITHUB_LOGIN_REQUEST_TITLE, '');
-    if (!request) {
-      return;
-    }
-    tw.wiki.addTiddler({ title: GITHUB_LOGIN_REQUEST_TITLE, text: '' });
+  tw.rootWidget.addEventListener('cpl-github-login', () => {
     handleGithubLogin();
+    return undefined;
   });
 };
 

@@ -23,7 +23,7 @@ type: text/vnd.tiddlywiki
   <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可审核评论和发表评论]else[Login to moderate and post comments]] }}}/></span>
   <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
     <$button class="tc-btn-primary cpl-comment-login-button" style="margin-top:8px;">
-      <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+      <$action-sendmessage $message="cpl-github-login"/>
       <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
     </$button>
   </$list>
