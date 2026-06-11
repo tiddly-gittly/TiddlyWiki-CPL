@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -12,12 +12,22 @@ type ServerMode = 'dev' | 'prod' | 'readonly';
 const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
 const removeDirectorySync = (targetPath: string): void => {
-  fs.rmSync(targetPath, {
-    recursive: true,
-    force: true,
-    maxRetries: 10,
-    retryDelay: 100,
-  });
+  if (!fs.existsSync(targetPath)) return;
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      fs.rmSync(targetPath, { recursive: true, force: true });
+      return;
+    } catch (err) {
+      lastError = err;
+      if (attempt < 5) {
+        // Windows may hold file handles for a moment after the owning
+        // process exits. Give the OS time to release them.
+        try { execSync('ping 127.0.0.1 -n 1 -w 500 > nul', { stdio: 'ignore' }); } catch { /* ignore */ }
+      }
+    }
+  }
+  throw lastError;
 };
 
 if (!fs.existsSync(paths.data)) {
