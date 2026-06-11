@@ -29,7 +29,14 @@ type: text/vnd.tiddlywiki
       </$list>
       <span><strong><$text text=<<username>>/></strong></span>
       <$button class="tc-btn-invisible cpl-comment-logout-button">
-        <$action-setfield $tiddler="$:/temp/CPL-Server/logout-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+        <$action-sendmessage $message="tm-http-request"
+          url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/auth/logout]] }}}
+          method="POST" header-Content-Type="application/json" body="{}"
+          oncompletion="""<$action-deletetiddler $tiddler='$:/temp/CPL-Server/user'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/auth-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}}/>
+"""/>
         <$text text={{{ [<chinese>match[yes]then[退出登录]else[Logout]] }}}/>
       </$button>
     </div>
@@ -40,11 +47,28 @@ type: text/vnd.tiddlywiki
       <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" placeholder={{{ [<chinese>match[yes]then[使用 Wikitext 写评论...]else[Write a comment using wikitext...]] }}}/>
       <div class="cpl-comment-form-actions">
         <span class="cpl-comment-hint"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
+        <$let statusTitle={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}} draftText={{$:/temp/CPL-Server/comment-draft}}>
         <$button class="tc-btn-primary cpl-comment-submit-button">
-          <$action-setfield $tiddler={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}} text="submitting" />
-          <$action-setfield $tiddler="$:/temp/CPL-Server/comment-submit-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> content={{$:/temp/CPL-Server/comment-draft}}/>
+          <$action-setfield $tiddler=<<statusTitle>> text="submitting" />
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body={{{ [<draftText>get[text]jsonstringify[]addprefix[{"content":]addsuffix[}]] }}}
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTitle=<<statusTitle>>
+            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Server/comment-draft' text=''/>
+<$action-setfield $tiddler=<<statusTitle>> text='success'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTitle>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+</$list>
+"""/>
           <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>
         </$button>
+        </$let>
       </div>
       <$let commentStatus={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}}>
         <$list filter="[<commentStatus>get[text]prefix[error:]]" variable="hasError">
@@ -104,11 +128,29 @@ type: text/vnd.tiddlywiki
                   <div class="cpl-moderation-actions">
                     <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
                     <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                      <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="approved" />
+                      <$action-sendmessage $message="tm-http-request"
+                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
+                        method="PUT" header-Content-Type="application/json"
+                        body='{"status":"approved"}'
+                        var-pluginTitle=<<pluginTitle>>
+                        oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                      <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="rejected" />
+                      <$action-sendmessage $message="tm-http-request"
+                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
+                        method="PUT" header-Content-Type="application/json"
+                        body='{"status":"rejected"}'
+                        var-pluginTitle=<<pluginTitle>>
+                        oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </div>

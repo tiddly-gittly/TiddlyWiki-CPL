@@ -15,7 +15,16 @@ type: text/vnd.tiddlywiki
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[数据库镜像]else[Database Mirror]] }}}/> <$list filter="[<mirrorType>match[static]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-static">✓ <$text text={{{ [<chinese>match[yes]then[静态数据库]else[Static Database]] }}}/></span>)</$list><$list filter="[<mirrorType>match[unknown]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-unknown">? <$text text={{{ [<chinese>match[yes]then[检测中]else[Detecting]] }}}/></span>)</$list>:</span>
 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
 <$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
-<$action-setfield $tiddler="$:/temp/CPL-Repo/plugins-index-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
+  method="GET"
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/plugin-index-raw' text=<<data>> type='application/json'/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>
+"""/>
 """>
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
@@ -37,7 +46,16 @@ type: text/vnd.tiddlywiki
 <!-- 刷新/加载数据库按钮 -->
 <div class="cpl-mirror-actions">
 <$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
-<$action-setfield $tiddler="$:/temp/CPL-Repo/plugins-index-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
+  method="GET"
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/plugin-index-raw' text=<<data>> type='application/json'/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>
+"""/>
 {{$:/core/images/download-button}}
 &#32;
 <$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />

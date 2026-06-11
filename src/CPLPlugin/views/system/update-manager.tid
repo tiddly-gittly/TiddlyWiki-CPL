@@ -9,7 +9,16 @@ type: text/vnd.tiddlywiki
 
 <div class="cpl-action-bar">
 <$button disabled={{{ [{$:/temp/CPL-Repo/updaing]match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
-<$action-setfield $tiddler="$:/temp/CPL-Repo/update-check-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/update.json]] }}}
+  method="GET"
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/plugin-update-raw' text=<<data>> type='application/json'/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/updaing' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>
+"""/>
 {{$:/core/images/refresh-button}}
 &#32;
 <$text text={{{ [[$:/temp/CPL-Repo/update-plugins]is[tiddler]] :then[<chinese>match[yes]then[重新获取更新]else[Refetch Updates]] :else[<chinese>match[yes]then[获取更新]else[Fetch Updates]] }}} />

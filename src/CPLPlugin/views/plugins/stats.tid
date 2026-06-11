@@ -5,10 +5,6 @@ title: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/stats
 type: text/vnd.tiddlywiki
 
 \whitespace trim
-\define rating-click-action(rating)
-<$action-setfield $tiddler={{{ [{$:/StoryList}get[list]split[ ]first[]get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}} text="submitting" plugin-title={{!!cpl.title}} />
-<$action-setfield $tiddler="$:/temp/CPL-Server/rating-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title={{!!cpl.title}} rating="$rating$" />
-\end
 
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
@@ -110,26 +106,101 @@ type: text/vnd.tiddlywiki
     <div class="cpl-rating-widget">
       <h4 class="cpl-card-heading">⭐ <$text text={{{ [<chinese>match[yes]then[为此插件评分]else[Rate this plugin]] }}}/></h4>
       <div class="cpl-rating-stars">
+        <$let
+          pluginTitle={{!!cpl.title}}
+          statusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}}
+        >
         <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="1">
-          <<rating-click-action 1>>
+          <$action-setfield $tiddler=<<statusTiddler>> text="submitting" plugin-title=<<pluginTitle>>/>
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/rate/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body='{"rating":1}'
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTiddler=<<statusTiddler>>
+            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
           <span class="cpl-rating-star">★</span>
         </$button>
         <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="2">
-          <<rating-click-action 2>>
+          <$action-setfield $tiddler=<<statusTiddler>> text="submitting" plugin-title=<<pluginTitle>>/>
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/rate/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body='{"rating":2}'
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTiddler=<<statusTiddler>>
+            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
           <span class="cpl-rating-star">★</span>
         </$button>
         <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="3">
-          <<rating-click-action 3>>
+          <$action-setfield $tiddler=<<statusTiddler>> text="submitting" plugin-title=<<pluginTitle>>/>
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/rate/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body='{"rating":3}'
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTiddler=<<statusTiddler>>
+            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
           <span class="cpl-rating-star">★</span>
         </$button>
         <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="4">
-          <<rating-click-action 4>>
+          <$action-setfield $tiddler=<<statusTiddler>> text="submitting" plugin-title=<<pluginTitle>>/>
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/rate/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body='{"rating":4}'
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTiddler=<<statusTiddler>>
+            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
           <span class="cpl-rating-star">★</span>
         </$button>
         <$button class="tc-btn-invisible cpl-rating-star-button" tooltip="5">
-          <<rating-click-action 5>>
+          <$action-setfield $tiddler=<<statusTiddler>> text="submitting" plugin-title=<<pluginTitle>>/>
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/rate/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body='{"rating":5}'
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTiddler=<<statusTiddler>>
+            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
           <span class="cpl-rating-star">★</span>
         </$button>
+        </$let>
       </div>
       <$let ratingStatusTiddler={{{ [<currentTiddler>get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}}>
         <$list filter="[<ratingStatusTiddler>is[tiddler]]" variable="hasStatus">
@@ -212,14 +283,32 @@ type: text/vnd.tiddlywiki
                     <$list filter="[<report>jsonget[status]match[pending]]" variable="isPending">
                       <div class="cpl-moderation-actions">
                         <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
+                        <$let reportId={{{ [<report>jsonget[id]] }}} cpTitle={{!!cpl.title}}>
                         <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                          <$action-setfield $tiddler="$:/temp/CPL-Server/compatibility-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title={{!!cpl.title}} report-id={{{ [<report>jsonget[id]] }}} status="approved" />
+                          <$action-sendmessage $message="tm-http-request"
+                            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<cpTitle>encodeuricomponent[]] [/] [<reportId>encodeuricomponent[]] +[join[]] }}}
+                            method="PUT" header-Content-Type="application/json"
+                            body='{"status":"approved"}'
+                            var-pluginTitle=<<cpTitle>>
+                            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
                           <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                         </$button>
                         <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                          <$action-setfield $tiddler="$:/temp/CPL-Server/compatibility-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title={{!!cpl.title}} report-id={{{ [<report>jsonget[id]] }}} status="rejected" />
+                          <$action-sendmessage $message="tm-http-request"
+                            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<cpTitle>encodeuricomponent[]] [/] [<reportId>encodeuricomponent[]] +[join[]] }}}
+                            method="PUT" header-Content-Type="application/json"
+                            body='{"status":"rejected"}'
+                            var-pluginTitle=<<cpTitle>>
+                            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+"""/>
                           <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                         </$button>
+                        </$let>
                       </div>
                     </$list>
                   </$list>
@@ -271,20 +360,34 @@ type: text/vnd.tiddlywiki
                 <$edit-text tiddler=<<draftTiddler>> field="description" default="" placeholder={{{ [<chinese>match[yes]then[详细描述兼容性问题...]else[Describe the compatibility issue in detail...]] }}} class="cpl-form-input cpl-form-textarea" />
               </div>
 
+              <$let
+                twVersionMin={{{ [<draftTiddler>get[tw-version-min]] }}}
+                twVersionMax={{{ [<draftTiddler>get[tw-version-max]] }}}
+                conflictPlugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
+                conflictDescription={{{ [<draftTiddler>get[conflict-description]] }}}
+                description={{{ [<draftTiddler>get[description]] }}}
+              >
               <$button class="tc-btn-primary cpl-submit-button-sm">
                 <$action-setfield $tiddler=<<statusTiddler>> text="submitting" />
-                <$action-setfield
-                  $tiddler="$:/temp/CPL-Server/compatibility-submit-request"
-                  text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}
-                  plugin-title=<<pluginTitle>>
-                  tw-version-min={{{ [<draftTiddler>get[tw-version-min]] }}}
-                  tw-version-max={{{ [<draftTiddler>get[tw-version-max]] }}}
-                  conflict-plugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
-                  conflict-description={{{ [<draftTiddler>get[conflict-description]] }}}
-                  description={{{ [<draftTiddler>get[description]] }}}
-                />
+                <$action-sendmessage $message="tm-http-request"
+                  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+                  method="POST" header-Content-Type="application/json"
+                  body={{{ [<description>jsonstringify[]addprefix[{"description":]addsuffix[}]] [<twVersionMin>!is[blank]then<twVersionMin>jsonstringify[]addprefix[,"twVersionMin":]] [<twVersionMax>!is[blank]then<twVersionMax>jsonstringify[]addprefix[,"twVersionMax":]] [<conflictPlugin>!is[blank]then<conflictPlugin>jsonstringify[]addprefix[,"conflictingPlugins":[{"pluginTitle":]addsuffix[]]] [<conflictPlugin>!is[blank]then<conflictDescription>jsonstringify[]addprefix[,"description":]addsuffix[}]]] [<conflictPlugin>!is[blank]then[]addprefix[]addsuffix[]] +[join[]addsuffix[}]] }}}
+                  var-pluginTitle=<<pluginTitle>>
+                  var-statusTiddler=<<statusTiddler>>
+                  var-draftTiddler=<<draftTiddler>>
+                  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text='success'/>
+<$action-deletetiddler $tiddler=<<draftTiddler>>/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+</$list>
+"""/>
                 <$text text={{{ [<chinese>match[yes]then[提交报告]else[Submit Report]] }}}/>
               </$button>
+              </$let>
             </div>
 
             <!-- Status messages -->
