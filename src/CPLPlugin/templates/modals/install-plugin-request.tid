@@ -146,7 +146,7 @@ Even so, do you still want to install it?
 </$list>
 
 <$button class="tc-btn-big-green tc-primary-btn">
-<$action-setfield $tiddler="$:/temp/CPL-Repo/install-plugin-confirm-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} response=<<requestTiddler>> />
+<$action-sendmessage $message="cpl-install-plugin-confirm" response=<<requestTiddler>> />
 {{$:/core/images/done-button}}
 &#32;
 <$text text={{{ [<chinese>match[yes]then[确认安装]else[Confirm to Install]] }}} />

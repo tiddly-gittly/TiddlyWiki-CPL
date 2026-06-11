@@ -2,7 +2,7 @@ import {
   LEGACY_MIRROR_CONFIG_TITLE,
   STATIC_REPO_CONFIG_TITLE,
 } from '../api-client/constants';
-import { tw, type RootWidgetEvent } from './types';
+import { tw } from './types';
 
 export const DEFAULT_REPO_ENTRY = 'https://tw-cpl.netlify.app/repo';
 export const CURRENT_REPO_TITLE = STATIC_REPO_CONFIG_TITLE;
@@ -26,22 +26,6 @@ export const getCurrentRepoEntry = (): string => {
   }
 
   return DEFAULT_REPO_ENTRY;
-};
-
-export const getEventParam = (
-  event: RootWidgetEvent,
-  name: string,
-): string | undefined => {
-  const value = event.paramObject?.[name];
-  return typeof value === 'string' ? value : undefined;
-};
-
-export const getFieldString = (
-  fields: Record<string, unknown>,
-  name: string,
-): string | undefined => {
-  const value = fields[name];
-  return typeof value === 'string' ? value : undefined;
 };
 
 /**

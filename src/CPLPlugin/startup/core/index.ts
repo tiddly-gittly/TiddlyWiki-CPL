@@ -1,4 +1,3 @@
-import { getEventParam } from "./bridge";
 import { tw, type PluginInfo } from "./types";
 
 const asPluginInfoList = (value: unknown): PluginInfo[] => value as PluginInfo[];
