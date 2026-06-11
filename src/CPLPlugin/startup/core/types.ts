@@ -1,24 +1,5 @@
-export type CplPayload = Record<string, string | number | boolean | undefined>;
-export type CplRequest = (
-  type: string,
-  payload?: CplPayload,
-) => Promise<string>;
-export type RequestHandlers = [
-  (value: string) => void,
-  (reason?: unknown) => void,
-  () => void,
-];
-
 export interface DependencyTree {
   [key: string]: DependencyTree;
-}
-
-export interface CplMessageData {
-  type?: string;
-  token?: number;
-  target?: string;
-  payload?: string;
-  success?: boolean;
 }
 
 export interface PluginInfo {
@@ -57,8 +38,3 @@ export type RootWidgetEvent = RootWidgetListener extends (
 ) => boolean | Promise<void> | undefined
   ? EventType
   : never;
-
-export const browserRuntime = globalThis as typeof globalThis & {
-  __tiddlywiki_cpl__?: CplRequest;
-  __tiddlywiki_cpl__reset__?: () => void;
-};

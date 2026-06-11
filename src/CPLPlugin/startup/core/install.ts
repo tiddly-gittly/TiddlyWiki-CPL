@@ -1,5 +1,4 @@
-import { cpl, getEventParam, getFieldString } from './bridge';
-import { fetchPluginFromStaticMirrors } from './static-mirror-fetch';
+import { formatPluginTitle, getCurrentRepoEntry, getEventParam, getFieldString } from './bridge';
 import {
   tw,
   type DependencyTree,
@@ -68,7 +67,13 @@ export const createInstallController = (): InstallController => {
         title: string,
       ): Promise<DependencyTree> => {
         try {
-          const text = await cpl('Query', { plugin: title });
+          const response = await fetch(
+            `${getCurrentRepoEntry()}/plugins/${formatPluginTitle(title)}/__meta__.json`,
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const text = await response.text();
           const data = asPluginInfo(JSON.parse(text));
 
           existingTitles.add(title);
@@ -258,21 +263,13 @@ export const createInstallController = (): InstallController => {
       const total = plugins.length;
       const tiddlers = await Promise.all(
         plugins.map(async ([pluginTitle, version]) => {
-          // Static mirrors first — reduces load on the server and works even
-          // when the user has configured a server mirror.  We fall back to the
-          // bridge (which may be a server mirror) only when both static mirrors
-          // are unreachable or don't have the file.
-          let text: string;
-          try {
-            text = await fetchPluginFromStaticMirrors(pluginTitle);
-          } catch {
-            // Both static mirrors failed — fall back to the current mirror via
-            // the bridge (supports versioning).
-            text = await cpl('Install', {
-              plugin: pluginTitle,
-              version: version ?? 'latest',
-            });
+          const response = await fetch(
+            `${getCurrentRepoEntry()}/plugins/${formatPluginTitle(pluginTitle)}/${version ?? 'latest'}.json`,
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
           }
+          const text = await response.text();
 
           count += 1;
           tw.wiki.addTiddler({

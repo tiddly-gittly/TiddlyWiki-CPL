@@ -1,6 +1,5 @@
-import { cpl } from './core/bridge';
-import { fetchPluginFromStaticMirrors } from './core/static-mirror-fetch';
-import { browserRuntime, tw, type RootWidgetEvent } from './core/types';
+import { formatPluginTitle, getCurrentRepoEntry } from './core/bridge';
+import { tw, type RootWidgetEvent } from './core/types';
 import { createIndexController } from './core/index';
 import { createInstallController } from './core/install';
 import { createUpdateController } from './core/update';
@@ -10,11 +9,9 @@ export const platforms = ['browser'];
 export const after = ['render'];
 export const synchronous = true;
 
-const UPDATE_CHECK_REQUEST_TITLE = '$:/temp/CPL-Repo/update-check-request';
 const INSTALL_PLUGIN_REQUEST_TITLE = '$:/temp/CPL-Repo/install-plugin-request';
 const INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE =
   '$:/temp/CPL-Repo/install-plugin-confirm-request';
-const PLUGINS_INDEX_REQUEST_TITLE = '$:/temp/CPL-Repo/plugins-index-request';
 const SEARCH_PLUGINS_REQUEST_TITLE = '$:/temp/CPL-Repo/search-plugins-request';
 const DOWNLOAD_PLUGIN_REQUEST_TITLE =
   '$:/temp/CPL-Repo/download-plugin-request';
@@ -61,15 +58,13 @@ const downloadPlugin = async (
     return;
   }
   try {
-    let text: string;
-    try {
-      text = await fetchPluginFromStaticMirrors(pluginTitle);
-    } catch {
-      text = await cpl('Install', {
-        plugin: pluginTitle,
-        version: version ?? 'latest',
-      });
+    const response = await fetch(
+      `${getCurrentRepoEntry()}/plugins/${formatPluginTitle(pluginTitle)}/${version ?? 'latest'}.json`,
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
+    const text = await response.text();
 
     const blob = new Blob([text], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -91,8 +86,6 @@ const downloadPlugin = async (
 };
 
 export const startup = (): void => {
-  browserRuntime.__tiddlywiki_cpl__ = cpl;
-
   const installController = createInstallController();
   const updateController = createUpdateController();
   const indexController = createIndexController();
@@ -109,12 +102,6 @@ export const startup = (): void => {
 
     if (tw.titleWidgetNode?.refresh(changes, tw.titleContainer ?? null, null)) {
       document.title = tw.titleContainer?.textContent ?? document.title;
-    }
-
-    const updateRequest = getRequestFields(changes, UPDATE_CHECK_REQUEST_TITLE);
-    if (updateRequest) {
-      clearRequest(UPDATE_CHECK_REQUEST_TITLE);
-      void updateController.update();
     }
 
     const installRequest = getRequestFields(
@@ -137,15 +124,6 @@ export const startup = (): void => {
       void installController.handleInstallPlugin(
         requestEvent('cpl-install-plugin', installConfirmRequest),
       );
-    }
-
-    const pluginsIndexRequest = getRequestFields(
-      changes,
-      PLUGINS_INDEX_REQUEST_TITLE,
-    );
-    if (pluginsIndexRequest) {
-      clearRequest(PLUGINS_INDEX_REQUEST_TITLE);
-      void indexController.handleGetPluginsIndex();
     }
 
     const searchRequest = getRequestFields(

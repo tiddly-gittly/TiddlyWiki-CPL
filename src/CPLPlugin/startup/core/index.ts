@@ -1,8 +1,7 @@
-import { cpl, getEventParam } from './bridge';
+import { getEventParam } from './bridge';
 import { tw, type PluginInfo, type RootWidgetEvent } from './types';
 
 export interface IndexController {
-  handleGetPluginsIndex: () => Promise<void>;
   handleSearchPlugins: (event: RootWidgetEvent) => void;
   isBusy: () => boolean;
 }
@@ -10,25 +9,29 @@ export interface IndexController {
 const asPluginInfoList = (value: unknown): PluginInfo[] =>
   value as PluginInfo[];
 
+const PLUGIN_INDEX_RAW_TITLE = '$:/temp/CPL-Repo/plugin-index-raw';
+
 export const createIndexController = (): IndexController => {
-  let getPluginsIndexLock = false;
   let pluginIndexCache: PluginInfo[] | undefined;
   let allPluginsCache: string[] | undefined;
   let searchLock = false;
 
-  const handleGetPluginsIndex = async (): Promise<void> => {
+  tw.wiki.addEventListener('change', changes => {
+    if (!tw.utils.hop(changes, PLUGIN_INDEX_RAW_TITLE)) {
+      return;
+    }
+    const raw = tw.wiki.getTiddlerText(PLUGIN_INDEX_RAW_TITLE, '');
+    if (!raw) {
+      return;
+    }
+    tw.wiki.deleteTiddler(PLUGIN_INDEX_RAW_TITLE);
     try {
-      if (getPluginsIndexLock) {
-        return;
-      }
-
-      getPluginsIndexLock = true;
       tw.wiki.addTiddler({
         title: '$:/temp/CPL-Repo/getting-plugins-index',
         text: 'yes',
       });
 
-      const data = asPluginInfoList(JSON.parse(await cpl('Index')));
+      const data = asPluginInfoList(JSON.parse(raw));
       const pluginMap: Record<string, PluginInfo> = {};
       const categories: Record<string, string[]> = {};
       const authors: Record<string, string[]> = {};
@@ -97,10 +100,8 @@ export const createIndexController = (): IndexController => {
         title: '$:/temp/CPL-Repo/getting-plugins-index',
         text: String(error),
       });
-    } finally {
-      getPluginsIndexLock = false;
     }
-  };
+  });
 
   const handleSearchPlugins = (event: RootWidgetEvent): void => {
     try {
@@ -233,8 +234,7 @@ export const createIndexController = (): IndexController => {
   };
 
   return {
-    handleGetPluginsIndex,
     handleSearchPlugins,
-    isBusy: () => getPluginsIndexLock,
+    isBusy: () => searchLock,
   };
 };
