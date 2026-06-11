@@ -11,6 +11,15 @@ type ServerMode = 'dev' | 'prod' | 'readonly';
 
 const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
+const removeDirectorySync = (targetPath: string): void => {
+  fs.rmSync(targetPath, {
+    recursive: true,
+    force: true,
+    maxRetries: 10,
+    retryDelay: 100,
+  });
+};
+
 if (!fs.existsSync(paths.data)) {
   fs.mkdirSync(paths.data, { recursive: true });
   console.log('[CPL Server] Created data directory:', paths.data);
@@ -42,7 +51,7 @@ function prepareTestWiki(): void {
 
   // Use a fixed project-local temp directory so test helpers can reliably
   // clean up the same path that the server writes to.
-  fs.rmSync(paths.testWiki, { recursive: true, force: true });
+  removeDirectorySync(paths.testWiki);
   fs.mkdirSync(path.dirname(paths.testWiki), { recursive: true });
   fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
   runtimeWikiPath = paths.testWiki;
@@ -73,18 +82,35 @@ function injectTestModeConfig(): void {
     return;
   }
 
-  const origin = `http://${host}:${port}`;
+  const publicHost = process.env.CPL_TEST_PUBLIC_HOST ?? 'localhost';
+  const origin = `http://${publicHost}:${port}`;
+  const repoOrigin = `${origin}/repo`;
   const tempDir = path.join(os.tmpdir(), 'cpl-test-config');
-  fs.rmSync(tempDir, { recursive: true, force: true });
+  removeDirectorySync(tempDir);
   fs.mkdirSync(tempDir, { recursive: true });
 
   // Write tiddler files that override the CPL-Repo client defaults.
   // Filesystem plugin loads these as user tiddlers, which take priority
   // over the plugin's shadow tiddlers from defaults.multids.
   const overrides: Record<string, string> = {
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-repo': repoOrigin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo': repoOrigin,
     '$:/plugins/Gk0Wk/CPL-Repo/config/current-server': origin,
-    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo': `${origin}/repo`,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo': repoOrigin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/repos': repoOrigin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos': repoOrigin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/server-repos': repoOrigin,
+    '$:/plugins/Gk0Wk/CPL-Repo/config/servers': origin,
   };
+
+  if (process.env.CPL_TEST_MOCK_REPO_URL) {
+    overrides['$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo'] =
+      process.env.CPL_TEST_MOCK_REPO_URL;
+    overrides['$:/plugins/Gk0Wk/CPL-Repo/config/repos'] =
+      process.env.CPL_TEST_MOCK_REPO_URL;
+    overrides['$:/plugins/Gk0Wk/CPL-Repo/config/static-repos'] =
+      process.env.CPL_TEST_MOCK_REPO_URL;
+  }
 
   for (const [title, text] of Object.entries(overrides)) {
     const filePath = path.join(

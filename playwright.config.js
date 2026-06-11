@@ -20,6 +20,8 @@ async function getAvailablePort(preferred = 19876) {
 // Determine the test port at config load time.
 // We use a port that won't conflict with a running Docker container on 8080.
 const TEST_PORT = process.env.TEST_PORT || '19876';
+const TEST_HOST = process.env.TEST_HOST || 'localhost';
+const TEST_URL = process.env.TEST_URL || `http://${TEST_HOST}:${TEST_PORT}`;
 
 module.exports = defineConfig({
   testDir: './tests/e2e',
@@ -28,10 +30,10 @@ module.exports = defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: 'html',
+  reporter: [['html', { open: 'never' }]],
   timeout: 90000,
   use: {
-    baseURL: process.env.TEST_URL || `http://localhost:${TEST_PORT}`,
+    baseURL: TEST_URL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     actionTimeout: 20000,
@@ -56,11 +58,13 @@ module.exports = defineConfig({
   // Run local dev server before starting the tests on a non-conflicting port
   webServer: {
     command: 'npm run server:test',
-    url: `http://localhost:${TEST_PORT}`,
+    url: TEST_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 300000, // 5 min: server startup includes runtime plugin compilation on first run
     env: {
       PORT: TEST_PORT,
+      CPL_TEST_PUBLIC_HOST: TEST_HOST,
+      CPL_TEST_MOCK_REPO_URL: 'http://127.0.0.1:8083',
       CPL_TEST_MODE: 'true',
       CPL_JWT_SECRET: 'test-secret'
     }

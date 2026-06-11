@@ -11,8 +11,6 @@ module.exports = async () => {
   }
 
   // In test mode the server uses tmp/test-wiki. Wipe it before E2E tests
-  // so the server starts from a clean copy of the production wiki.
-  if (fs.existsSync(paths.testWiki)) {
-    fs.rmSync(paths.testWiki, { recursive: true, force: true });
-  }
+  // lifecycle is owned by scripts/server.ts, which prepares a fresh copy
+  // with retry-aware cleanup for Windows.
 };
