@@ -10,7 +10,6 @@ import {
   BUILD_STATUS_REFRESH_TITLE,
   BUILD_STATUS_RESPONSE_TITLE,
 } from './api-client/constants';
-import { getConfiguredMirrorType } from './api-client/state';
 
 const POLL_INTERVAL = 5000;
 let pollTimer: ReturnType<typeof setInterval> | null = null;
@@ -83,7 +82,7 @@ const setupBuildStatusSync = (): void => {
 export const pollBuildStatus = (): void => {
   // When using a static mirror, the build-status endpoint is irrelevant —
   // skip the request and clear any stale badge so users aren't confused.
-  if (getConfiguredMirrorType() !== 'server') {
+  if (tw.wiki.getTiddlerText('$:/temp/CPL-Repo/mirror-type', 'unknown') !== 'server') {
     setBuildStatus('idle', '');
     return;
   }

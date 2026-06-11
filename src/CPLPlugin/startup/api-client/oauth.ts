@@ -3,10 +3,38 @@
  */
 
 import { tw, type OAuthResponse } from './types';
-import { getCurrentServerOrigin } from './state';
 
 const OAUTH_STATE_KEY = 'cpl-oauth-state';
 const OAUTH_RETURN_KEY = 'cpl-oauth-return';
+
+const getCurrentServerOrigin = (): string => {
+  const configuredRepo = tw.wiki.getTiddlerText(
+    '$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo',
+    tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/current-server', ''),
+  ).trim();
+  const fromTempApiBase = tw.wiki
+    .getTiddlerText('$:/temp/CPL-Server/api-base', '')
+    .trim();
+
+  const candidates = [fromTempApiBase, configuredRepo];
+  for (const value of candidates) {
+    if (!value) {
+      continue;
+    }
+    try {
+      const url = new URL(value, window.location.origin);
+      const pathname = url.pathname.replace(/\/$/, '');
+      if (pathname.endsWith('/repo')) {
+        url.pathname = pathname.slice(0, -'/repo'.length) || '/';
+      }
+      return url.toString().replace(/\/$/, '');
+    } catch {
+      // try next candidate
+    }
+  }
+
+  return '';
+};
 
 const generateOAuthState = (): string => {
   const array = new Uint8Array(16);
@@ -118,8 +146,10 @@ export const handleOAuthCallback = (): void => {
           text: JSON.stringify(data.user),
           type: 'application/json',
         });
-        // Trigger declarative auth refresh so admin flag is synced from /auth/status.
-        tw.rootWidget.dispatchEvent({ type: 'cpl-refresh-auth' });
+        tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Server/auth-refresh-token',
+          text: String(Date.now()),
+        });
         window.location.replace(returnUrl);
       } catch (parseError) {
         console.error(

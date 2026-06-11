@@ -1,4 +1,4 @@
-import { tw, type RootWidgetEvent, type HttpErrorLike } from './types';
+import { tw, type RootWidgetEvent } from './types';
 import {
   API_STATUS_TIDDLER,
   API_TYPE_TIDDLER,
@@ -50,62 +50,4 @@ export const setRepoType = (type: string): void => {
     text: type || 'unknown',
     timestamp: String(Date.now()),
   });
-};
-
-export const getErrorMessage = (error: unknown): string => {
-  if (!error) {
-    return 'Request failed';
-  }
-  if (typeof error === 'string') {
-    return error;
-  }
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-
-  const httpError = error as HttpErrorLike;
-  if (httpError.message) {
-    return httpError.message;
-  }
-  if (httpError.status !== undefined) {
-    return `HTTP ${httpError.status}${
-      httpError.statusText ? ` ${httpError.statusText}` : ''
-    }`;
-  }
-
-  try {
-    return JSON.stringify(error);
-  } catch {
-    return String(error);
-  }
-};
-
-export const hasPluginWikiTag = (tags: unknown): boolean => {
-  if (Array.isArray(tags)) {
-    return tags.includes('$:/tags/PluginWiki');
-  }
-  if (typeof tags === 'string') {
-    return tw.utils.parseStringArray(tags).includes('$:/tags/PluginWiki');
-  }
-
-  return false;
-};
-
-export const getViewedPluginTitle = (): string | null => {
-  const historyTiddler = tw.wiki.getTiddler('$:/HistoryList');
-  const currentTitle = historyTiddler?.fields?.['current-tiddler'];
-
-  if (typeof currentTitle !== 'string' || currentTitle.length === 0) {
-    return null;
-  }
-
-  const tiddler = tw.wiki.getTiddler(currentTitle);
-  if (!tiddler || !hasPluginWikiTag(tiddler.fields.tags)) {
-    return null;
-  }
-
-  const pluginTitle = tiddler.fields['cpl.title'];
-  return typeof pluginTitle === 'string' && pluginTitle.length > 0
-    ? pluginTitle
-    : null;
 };

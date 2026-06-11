@@ -7,7 +7,10 @@ export interface HttpErrorLike {
   statusText?: string;
 }
 
-export interface RatingResponse extends JsonObject {
+export interface PluginStatsResponse extends JsonObject {
+  plugintitle?: string;
+  downloadCount?: number;
+  downloadLastUpdated?: string | null;
   averageRating?: number;
   totalRatings?: number;
 }
@@ -18,41 +21,12 @@ export interface OAuthResponse extends JsonObject {
 }
 
 export interface CPLServerApi {
+  getStats: (
+    pluginTitle: string,
+    callback: ApiCallback<PluginStatsResponse>,
+  ) => void;
   recordDownload: (
     pluginTitle: string,
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  submitRating: (
-    pluginTitle: string,
-    rating: number,
-    callback: ApiCallback<RatingResponse>,
-  ) => void;
-  submitComment: (
-    pluginTitle: string,
-    content: string,
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  submitCompatibilityReport: (
-    pluginTitle: string,
-    payload: {
-      twVersionMin?: string;
-      twVersionMax?: string;
-      conflictingPlugins: Array<{ pluginTitle: string; description: string }>;
-      description: string;
-    },
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  logout: () => void;
-  moderateComment: (
-    pluginTitle: string,
-    commentId: string,
-    status: string,
-    callback: ApiCallback<JsonObject>,
-  ) => void;
-  moderateCompatibilityReport: (
-    pluginTitle: string,
-    reportId: string,
-    status: string,
     callback: ApiCallback<JsonObject>,
   ) => void;
 }

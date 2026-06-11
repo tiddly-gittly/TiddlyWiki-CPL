@@ -93,14 +93,12 @@ export const createUpdateController = (): UpdateController => {
 
             if (autoInstall) {
               const autoConfirmConfig = tw.wiki.getTiddlerText('$:/plugins/Gk0Wk/CPL-Repo/config/auto-confirm-install') === 'yes';
-              tw.rootWidget.dispatchEvent({
-                type: 'cpl-install-plugin-request',
-                paramObject: {
-                  titles: tw.utils.stringifyList(pluginsToShow),
-                  version: 'latest',
-                  ...(autoConfirmConfig ? { 'auto-confirm': 'yes' } : {}),
-                },
-                widget: tw.rootWidget,
+              tw.wiki.addTiddler({
+                title: '$:/temp/CPL-Repo/install-plugin-request',
+                text: String(Date.now()),
+                titles: tw.utils.stringifyList(pluginsToShow),
+                version: 'latest',
+                ...(autoConfirmConfig ? { 'auto-confirm': 'yes' } : {}),
               });
             }
           } else {

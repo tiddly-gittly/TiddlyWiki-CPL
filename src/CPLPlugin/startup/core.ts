@@ -10,6 +10,86 @@ export const platforms = ['browser'];
 export const after = ['render'];
 export const synchronous = true;
 
+const UPDATE_CHECK_REQUEST_TITLE = '$:/temp/CPL-Repo/update-check-request';
+const INSTALL_PLUGIN_REQUEST_TITLE = '$:/temp/CPL-Repo/install-plugin-request';
+const INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE =
+  '$:/temp/CPL-Repo/install-plugin-confirm-request';
+const PLUGINS_INDEX_REQUEST_TITLE = '$:/temp/CPL-Repo/plugins-index-request';
+const SEARCH_PLUGINS_REQUEST_TITLE = '$:/temp/CPL-Repo/search-plugins-request';
+const DOWNLOAD_PLUGIN_REQUEST_TITLE =
+  '$:/temp/CPL-Repo/download-plugin-request';
+
+const getRequestFields = (
+  changes: Record<string, unknown>,
+  title: string,
+): Record<string, string> | null => {
+  if (!tw.utils.hop(changes, title)) {
+    return null;
+  }
+  const fields = tw.wiki.getTiddler(title)?.fields;
+  if (!fields || typeof fields.text !== 'string' || fields.text.length === 0) {
+    return null;
+  }
+  const result: Record<string, string> = {};
+  for (const [field, value] of Object.entries(fields)) {
+    if (typeof value === 'string') {
+      result[field] = value;
+    }
+  }
+  return result;
+};
+
+const clearRequest = (title: string): void => {
+  tw.wiki.addTiddler({ title, text: '' });
+};
+
+const requestEvent = (
+  type: string,
+  fields: Record<string, string>,
+): RootWidgetEvent =>
+  ({
+    type,
+    paramObject: fields,
+    widget: tw.rootWidget,
+  } as unknown as RootWidgetEvent);
+
+const downloadPlugin = async (
+  fields: Record<string, string>,
+): Promise<void> => {
+  const { plugin: pluginTitle, version } = fields;
+  if (!pluginTitle) {
+    return;
+  }
+  try {
+    let text: string;
+    try {
+      text = await fetchPluginFromStaticMirrors(pluginTitle);
+    } catch {
+      text = await cpl('Install', {
+        plugin: pluginTitle,
+        version: version ?? 'latest',
+      });
+    }
+
+    const blob = new Blob([text], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${pluginTitle.replace(/[:/$]/g, '_')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('[CPL] Failed to download plugin:', error);
+    tw.wiki.addTiddler({
+      title: '$:/temp/CPL-Repo/download-plugin-status',
+      text: String(error),
+      plugin: pluginTitle,
+    });
+  }
+};
+
 export const startup = (): void => {
   browserRuntime.__tiddlywiki_cpl__ = cpl;
 
@@ -30,85 +110,67 @@ export const startup = (): void => {
     if (tw.titleWidgetNode?.refresh(changes, tw.titleContainer ?? null, null)) {
       document.title = tw.titleContainer?.textContent ?? document.title;
     }
+
+    const updateRequest = getRequestFields(changes, UPDATE_CHECK_REQUEST_TITLE);
+    if (updateRequest) {
+      clearRequest(UPDATE_CHECK_REQUEST_TITLE);
+      void updateController.update();
+    }
+
+    const installRequest = getRequestFields(
+      changes,
+      INSTALL_PLUGIN_REQUEST_TITLE,
+    );
+    if (installRequest) {
+      clearRequest(INSTALL_PLUGIN_REQUEST_TITLE);
+      void installController.handleInstallPluginRequest(
+        requestEvent('cpl-install-plugin-request', installRequest),
+      );
+    }
+
+    const installConfirmRequest = getRequestFields(
+      changes,
+      INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE,
+    );
+    if (installConfirmRequest) {
+      clearRequest(INSTALL_PLUGIN_CONFIRM_REQUEST_TITLE);
+      void installController.handleInstallPlugin(
+        requestEvent('cpl-install-plugin', installConfirmRequest),
+      );
+    }
+
+    const pluginsIndexRequest = getRequestFields(
+      changes,
+      PLUGINS_INDEX_REQUEST_TITLE,
+    );
+    if (pluginsIndexRequest) {
+      clearRequest(PLUGINS_INDEX_REQUEST_TITLE);
+      void indexController.handleGetPluginsIndex();
+    }
+
+    const searchRequest = getRequestFields(
+      changes,
+      SEARCH_PLUGINS_REQUEST_TITLE,
+    );
+    if (searchRequest) {
+      clearRequest(SEARCH_PLUGINS_REQUEST_TITLE);
+      indexController.handleSearchPlugins(
+        requestEvent('cpl-search-plugins', {
+          ...searchRequest,
+          text: searchRequest.query ?? '',
+        }),
+      );
+    }
+
+    const downloadRequest = getRequestFields(
+      changes,
+      DOWNLOAD_PLUGIN_REQUEST_TITLE,
+    );
+    if (downloadRequest) {
+      clearRequest(DOWNLOAD_PLUGIN_REQUEST_TITLE);
+      void downloadPlugin(downloadRequest);
+    }
   });
 
   updateController.initializeAutoUpdate();
-
-  tw.rootWidget.addEventListener(
-    'cpl-update-check',
-    (_event: RootWidgetEvent): undefined => {
-      void updateController.update();
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
-    'cpl-install-plugin-request',
-    (event: RootWidgetEvent): undefined => {
-      void installController.handleInstallPluginRequest(event);
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
-    'cpl-install-plugin',
-    (event: RootWidgetEvent): undefined => {
-      void installController.handleInstallPlugin(event);
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
-    'cpl-get-plugins-index',
-    (_event: RootWidgetEvent): undefined => {
-      void indexController?.handleGetPluginsIndex();
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
-    'cpl-search-plugins',
-    (event: RootWidgetEvent): undefined => {
-      indexController?.handleSearchPlugins(event);
-      return undefined;
-    },
-  );
-  tw.rootWidget.addEventListener(
-    'cpl-download-plugin',
-    (event: RootWidgetEvent): undefined => {
-      const pluginTitle = event.paramObject?.plugin as string | undefined;
-      const version = event.paramObject?.version as string | undefined;
-      if (!pluginTitle) {
-        return undefined;
-      }
-      void (async (): Promise<void> => {
-        try {
-          // Static mirrors first; fall back to bridge (may be server) if both fail.
-          let text: string;
-          try {
-            text = await fetchPluginFromStaticMirrors(pluginTitle);
-          } catch {
-            text = await cpl('Install', {
-              plugin: pluginTitle,
-              version: version ?? 'latest',
-            });
-          }
-
-          const blob = new Blob([text], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${pluginTitle.replace(/[:/$]/g, '_')}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        } catch (error) {
-          console.error('[CPL] Failed to download plugin:', error);
-          tw.wiki.addTiddler({
-            title: '$:/temp/CPL-Repo/download-plugin-status',
-            text: String(error),
-            plugin: pluginTitle,
-          });
-        }
-      })();
-      return undefined;
-    },
-  );
 };

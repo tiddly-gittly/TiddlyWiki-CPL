@@ -39,3 +39,21 @@ export const BUILD_STATUS_REFRESH_TITLE =
   '$:/temp/CPL-Server/build-status-refresh-token';
 export const BUILD_STATUS_RESPONSE_TITLE =
   '$:/temp/CPL-Server/build-status-response';
+export const RATING_REQUEST_TITLE = '$:/temp/CPL-Server/rating-request';
+export const COMMENT_SUBMIT_REQUEST_TITLE =
+  '$:/temp/CPL-Server/comment-submit-request';
+export const COMPATIBILITY_SUBMIT_REQUEST_TITLE =
+  '$:/temp/CPL-Server/compatibility-submit-request';
+export const COMMENT_MODERATION_REQUEST_TITLE =
+  '$:/temp/CPL-Server/comment-moderation-request';
+export const COMPATIBILITY_MODERATION_REQUEST_TITLE =
+  '$:/temp/CPL-Server/compatibility-moderation-request';
+export const LOGOUT_REQUEST_TITLE = '$:/temp/CPL-Server/logout-request';
+export const API_GET_STATS_REQUEST_TITLE =
+  '$:/temp/CPL-Server/api-get-stats-request';
+export const API_GET_STATS_RESPONSE_PREFIX =
+  '$:/temp/CPL-Server/api-get-stats-response/';
+export const API_RECORD_DOWNLOAD_REQUEST_TITLE =
+  '$:/temp/CPL-Server/api-record-download-request';
+export const API_RECORD_DOWNLOAD_RESPONSE_PREFIX =
+  '$:/temp/CPL-Server/api-record-download-response/';

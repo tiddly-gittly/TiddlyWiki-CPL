@@ -184,12 +184,16 @@ export const createInstallController = (): InstallController => {
   };
 
   const handleInstallPlugin = async (event: RootWidgetEvent): Promise<void> => {
+    const response = getEventParam(event, 'response');
+    const responseRootPlugin = response
+      ? getFieldString(tw.wiki.getTiddler(response)?.fields ?? {}, 'title')
+      : undefined;
+
     try {
       if (installLock) {
         return;
       }
 
-      const response = getEventParam(event, 'response');
       if (!response || !tw.wiki.tiddlerExists(response)) {
         return;
       }
@@ -290,22 +294,20 @@ export const createInstallController = (): InstallController => {
       tw.wiki.addTiddler({
         title: '$:/temp/CPL-Repo/install-plugin-status',
         text: 'success',
+        'plugin-title': rootPlugin ?? '',
       });
     } catch (error) {
       console.error(error);
       tw.wiki.addTiddler({
         title: '$:/temp/CPL-Repo/install-plugin-status',
         text: String(error),
+        'plugin-title': responseRootPlugin ?? '',
       });
-      const response = getEventParam(event, 'response');
-      const rootPlugin = response
-        ? getFieldString(tw.wiki.getTiddler(response)?.fields ?? {}, 'title')
-        : undefined;
-      if (rootPlugin) {
+      if (responseRootPlugin) {
         tw.wiki.addTiddler({
           title: '$:/temp/CPL-Repo/installing-plugin',
           text: String(error),
-          'plugin-title': rootPlugin,
+          'plugin-title': responseRootPlugin,
         });
       }
     } finally {
