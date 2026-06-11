@@ -1,11 +1,7 @@
-created: 20260604000000000
-modified: 20260604000000000
 tags: $:/tags/BackgroundAction
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-all-stats
 track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/all-plugin-stats-refresh-token]get[text]]
-type: text/vnd.tiddlywiki
 
-\whitespace trim
 <$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
 <$list filter="[[$:/temp/CPL-Server/api-base]get[text]!is[blank]]">
 <$action-sendmessage $message="tm-http-request"

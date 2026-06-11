@@ -1,11 +1,7 @@
-created: 20260604000000000
-modified: 20260604000000000
 tags: $:/tags/BackgroundAction
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-check-updates
 track-filter: [prefix[$:/temp/CPL-Repo/plugin-database-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]] [[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]]
-type: text/vnd.tiddlywiki
 
-\whitespace trim
 <$list filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]match[yes]]">
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/update.json]] }}}

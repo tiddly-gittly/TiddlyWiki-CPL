@@ -1,11 +1,7 @@
-created: 20260611000000000
-modified: 20260611000000000
 tags: $:/tags/BackgroundAction
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-probe-server
 track-filter: [[$:/temp/CPL-Server/probe-refresh-token]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
-type: text/vnd.tiddlywiki
 
-\whitespace trim
 <$list filter="[[$:/temp/CPL-Server/api-base]get[text]!is[blank]]">
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [[$:/plugins/Gk0Wk/CPL-Repo/__probe__]encodeuricomponent[]] +[join[]] }}}
