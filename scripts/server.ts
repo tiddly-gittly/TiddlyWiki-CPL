@@ -13,21 +13,19 @@ const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
 
 const removeDirectorySync = (targetPath: string): void => {
   if (!fs.existsSync(targetPath)) return;
-  let lastError: unknown;
-  for (let attempt = 1; attempt <= 5; attempt++) {
+  // Try Node's rmSync first, then fall back to cmd /c rd for Windows resilience.
+  for (const attempt of [1, 2, 3]) {
     try {
-      fs.rmSync(targetPath, { recursive: true, force: true });
+      fs.rmSync(targetPath, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
       return;
-    } catch (err) {
-      lastError = err;
-      if (attempt < 5) {
-        // Windows may hold file handles for a moment after the owning
-        // process exits. Give the OS time to release them.
-        try { execSync('ping 127.0.0.1 -n 1 -w 500 > nul', { stdio: 'ignore' }); } catch { /* ignore */ }
+    } catch {
+      if (attempt < 3) {
+        try { execSync('cmd /c ping 127.0.0.1 -n 1 -w 1000 > nul', { stdio: 'ignore' }); } catch { /* */ }
       }
     }
   }
-  throw lastError;
+  // Last resort: Windows cmd rd is more aggressive at releasing handles.
+  try { execSync(`cmd /c rd /s /q "${targetPath}"`, { stdio: 'ignore' }); } catch { /* ignore, already gone */ }
 };
 
 if (!fs.existsSync(paths.data)) {
