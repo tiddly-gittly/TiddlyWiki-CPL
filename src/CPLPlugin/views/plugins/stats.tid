@@ -6,32 +6,8 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 \define rating-click-action(rating)
-<$action-sendmessage $message="cpl-submit-rating" pluginTitle={{!!cpl.title}} rating="$rating$" />
-\end
-
-\procedure cpl-fetch-all-stats-action()
-<$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats]] }}}
-  method="GET"
-  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats' text=<<data>> type='application/json'/>"/>
-\end
-
-\procedure cpl-fetch-changelog-action(pluginTitle)
-<$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/changelog/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
-  method="GET"
-  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}
-  var-storePluginTitle=<<pluginTitle>>
-  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
-\end
-
-\procedure cpl-fetch-compatibility-action(pluginTitle)
-<$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
-  method="GET"
-  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility/]] }}}
-  var-storePluginTitle=<<pluginTitle>>
-  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+<$action-setfield $tiddler={{{ [{$:/StoryList}get[list]split[ ]first[]get[cpl.title]addprefix[$:/temp/CPL-Server/rating-status/]] }}} text="submitting" plugin-title={{!!cpl.title}} />
+<$action-setfield $tiddler="$:/temp/CPL-Server/rating-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title={{!!cpl.title}} rating="$rating$" />
 \end
 
 <!-- Plugin Stats Display -->
@@ -51,8 +27,6 @@ type: text/vnd.tiddlywiki
 
 <!-- Only show stats/rating/changelog for server mirrors -->
 <$list filter="[<serverType>match[server]]" variable="isServerMirror">
-
-<<cpl-fetch-all-stats-action>>
 
 <div class="cpl-plugin-stats">
   <!-- Download Count -->
@@ -88,7 +62,6 @@ type: text/vnd.tiddlywiki
   </$button>
 
   <!-- Changelog Toggle (inline in stats row) -->
-  <<cpl-fetch-changelog-action {{!!cpl.title}}>>
     <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看更新日志]else[Click to view changelog]] }}}>
       <$action-setfield $tiddler=<<changelogPanelStateTitle>> text={{{ [<changelogPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
       <span style="font-size: 1.2em;">📋</span>
@@ -110,7 +83,6 @@ type: text/vnd.tiddlywiki
     </$button>
 
   <!-- Compatibility Toggle (inline in stats row) -->
-  <<cpl-fetch-compatibility-action {{!!cpl.title}}>>
     <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看兼容性报告]else[Click to view compatibility reports]] }}}>
       <$action-setfield $tiddler=<<compatibilityPanelStateTitle>> text={{{ [<compatibilityPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
       <span style="font-size: 1.2em;">⚠️</span>
@@ -181,7 +153,7 @@ type: text/vnd.tiddlywiki
       <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可为插件评分。]else[Login to rate this plugin.]] }}}/></p>
       <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
         <$button class="tc-btn-primary cpl-comment-login-button">
-          <$action-sendmessage $message="cpl-github-login"/>
+          <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
           <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
         </$button>
       </$list>
@@ -241,11 +213,11 @@ type: text/vnd.tiddlywiki
                       <div class="cpl-moderation-actions">
                         <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
                         <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                          <$action-sendmessage $message="cpl-moderate-compatibility" pluginTitle={{!!cpl.title}} reportId={{{ [<report>jsonget[id]] }}} status="approved" />
+                          <$action-setfield $tiddler="$:/temp/CPL-Server/compatibility-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title={{!!cpl.title}} report-id={{{ [<report>jsonget[id]] }}} status="approved" />
                           <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                         </$button>
                         <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                          <$action-sendmessage $message="cpl-moderate-compatibility" pluginTitle={{!!cpl.title}} reportId={{{ [<report>jsonget[id]] }}} status="rejected" />
+                          <$action-setfield $tiddler="$:/temp/CPL-Server/compatibility-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title={{!!cpl.title}} report-id={{{ [<report>jsonget[id]] }}} status="rejected" />
                           <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                         </$button>
                       </div>
@@ -300,12 +272,15 @@ type: text/vnd.tiddlywiki
               </div>
 
               <$button class="tc-btn-primary cpl-submit-button-sm">
-                <$action-sendmessage $message="cpl-submit-compatibility"
-                  pluginTitle=<<pluginTitle>>
-                  twVersionMin={{{ [<draftTiddler>get[tw-version-min]] }}}
-                  twVersionMax={{{ [<draftTiddler>get[tw-version-max]] }}}
-                  conflictPlugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
-                  conflictDescription={{{ [<draftTiddler>get[conflict-description]] }}}
+                <$action-setfield $tiddler=<<statusTiddler>> text="submitting" />
+                <$action-setfield
+                  $tiddler="$:/temp/CPL-Server/compatibility-submit-request"
+                  text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}
+                  plugin-title=<<pluginTitle>>
+                  tw-version-min={{{ [<draftTiddler>get[tw-version-min]] }}}
+                  tw-version-max={{{ [<draftTiddler>get[tw-version-max]] }}}
+                  conflict-plugin={{{ [<draftTiddler>get[conflict-plugin]] }}}
+                  conflict-description={{{ [<draftTiddler>get[conflict-description]] }}}
                   description={{{ [<draftTiddler>get[description]] }}}
                 />
                 <$text text={{{ [<chinese>match[yes]then[提交报告]else[Submit Report]] }}}/>
@@ -334,7 +309,7 @@ type: text/vnd.tiddlywiki
           <p class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可提交兼容性报告。]else[Login to submit a compatibility report.]] }}}/></p>
           <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
             <$button class="tc-btn-primary cpl-comment-login-button">
-              <$action-sendmessage $message="cpl-github-login"/>
+              <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
               <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
             </$button>
           </$list>

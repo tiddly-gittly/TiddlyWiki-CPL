@@ -11,5 +11,19 @@ type: text/vnd.tiddlywiki
   url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [[$:/plugins/Gk0Wk/CPL-Repo/__probe__]encodeuricomponent[]] +[join[]] }}}
   method="GET"
   oncompletion="""<$action-setfield $tiddler='$:/temp/CPL-Server/probe-result' text=<<data>> type='application/json'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/probe-success-token' text={{{ [[$:/temp/CPL-Server/probe-refresh-token]get[text]] }}}/>"""/>
+<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-type' text='server'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/api-status' text='available'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-message' text='CPL server is available.'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/auth-refresh-token' text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-type' text='unreachable'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/api-status' text='unavailable'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-message' text={{{ [<error>!is[blank]then<error>] [<statusText>!is[blank]then<statusText>] [[$:/temp/CPL-Server/api-base]get[text]!is[blank]then[CPL server is unreachable.]] +[limit[1]] }}}/>
+<$action-deletetiddler $filter='[[$:/temp/CPL-Server/github-client-id]] [[$:/temp/CPL-Server/user]]'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
+</$list>
+"""/>
 </$list>

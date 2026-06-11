@@ -6,15 +6,6 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
-\procedure cpl-fetch-comments-action(pluginTitle)
-<$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
-  method="GET"
-  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}
-  var-storePluginTitle=<<pluginTitle>>
-  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
-\end
-
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
@@ -22,8 +13,6 @@ type: text/vnd.tiddlywiki
 
 <!-- Only show comment section for server mirrors -->
 <$list filter="[<serverType>match[server]]" variable="isServerMirror">
-
-<<cpl-fetch-comments-action {{!!cpl.title}}>>
 
 <div class="cpl-comment-section">
   <h3 class="cpl-comment-title">
@@ -40,9 +29,7 @@ type: text/vnd.tiddlywiki
       </$list>
       <span><strong><$text text=<<username>>/></strong></span>
       <$button class="tc-btn-invisible cpl-comment-logout-button">
-        <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user"/>
-        <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user-status"/>
-        <$action-sendmessage $message="cpl-logout"/>
+        <$action-setfield $tiddler="$:/temp/CPL-Server/logout-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
         <$text text={{{ [<chinese>match[yes]then[退出登录]else[Logout]] }}}/>
       </$button>
     </div>
@@ -54,7 +41,8 @@ type: text/vnd.tiddlywiki
       <div class="cpl-comment-form-actions">
         <span class="cpl-comment-hint"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
         <$button class="tc-btn-primary cpl-comment-submit-button">
-          <$action-sendmessage $message="cpl-submit-comment" pluginTitle=<<pluginTitle>>/>
+          <$action-setfield $tiddler={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}} text="submitting" />
+          <$action-setfield $tiddler="$:/temp/CPL-Server/comment-submit-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> content={{$:/temp/CPL-Server/comment-draft}}/>
           <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>
         </$button>
       </div>
@@ -81,7 +69,7 @@ type: text/vnd.tiddlywiki
       </p>
       <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
         <$button class="tc-btn-primary cpl-comment-login-button">
-          <$action-sendmessage $message="cpl-github-login"/>
+          <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
           <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
         </$button>
       </$list>
@@ -116,11 +104,11 @@ type: text/vnd.tiddlywiki
                   <div class="cpl-moderation-actions">
                     <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
                     <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                      <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="approved" />
+                      <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="approved" />
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                      <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="rejected" />
+                      <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="rejected" />
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </div>

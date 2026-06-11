@@ -23,7 +23,7 @@ type: text/vnd.tiddlywiki
   <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可审核评论和发表评论]else[Login to moderate and post comments]] }}}/></span>
   <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
     <$button class="tc-btn-primary cpl-comment-login-button" style="margin-top:8px;">
-      <$action-sendmessage $message="cpl-github-login"/>
+      <$action-setfield $tiddler="$:/temp/CPL-Server/github-login-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
       <$text text={{{ [<chinese>match[yes]then[使用 GitHub 登录]else[Login with GitHub]] }}}/>
     </$button>
   </$list>
@@ -69,24 +69,21 @@ type: text/vnd.tiddlywiki
           </div>
           <div class="cpl-moderation-actions">
             <$button class="tc-btn-primary cpl-moderation-approve-btn">
-              <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="approved" />
+              <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="approved" />
               <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
             </$button>
             <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-              <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="rejected" />
+              <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="rejected" />
               <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
             </$button>
             <$button class="tc-btn-invisible cpl-moderation-delete-btn">
-              <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="deleted" />
+              <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<pluginTitle>> comment-id=<<commentId>> status="deleted" />
               <$text text={{{ [<chinese>match[yes]then[删除]else[Delete]] }}}/>
             </$button>
           </div>
           <div class="cpl-moderation-refresh-hint">
             <$button class="tc-btn-invisible">
-              <$action-sendmessage $message="tm-http-request"
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/pending]] }}}
-                method="GET"
-                oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/pending-comments' text=<<data>> type='application/json'/>"/>
+              <$action-setfield $tiddler="$:/temp/CPL-Server/comments-center-refresh-token" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
               <$text text={{{ [<chinese>match[yes]then[审核后点此刷新]else[Click to refresh after moderation]] }}}/>
             </$button>
           </div>
@@ -125,10 +122,7 @@ type: text/vnd.tiddlywiki
       🕐 <$text text={{{ [<chinese>match[yes]then[最新评论]else[Recent Comments]] }}}/>
     </h3>
     <$button class="tc-btn-invisible cpl-inline-button-link">
-      <$action-sendmessage $message="tm-http-request"
-        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/all-recent]] }}}
-        method="GET"
-        oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-recent-comments' text=<<data>> type='application/json'/>"/>
+      <$action-setfield $tiddler="$:/temp/CPL-Server/comments-center-refresh-token" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
       🔄 <$text text={{{ [<chinese>match[yes]then[刷新]else[Refresh]] }}}/>
     </$button>
   </div>
@@ -174,11 +168,11 @@ type: text/vnd.tiddlywiki
                   <$list filter="[<commentStatus>match[pending]]" variable="isPending2">
                     <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
                     <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                      <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<commentPlugin>> commentId=<<commentId>> status="approved" />
+                      <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<commentPlugin>> comment-id=<<commentId>> status="approved" />
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                      <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<commentPlugin>> commentId=<<commentId>> status="rejected" />
+                      <$action-setfield $tiddler="$:/temp/CPL-Server/comment-moderation-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} plugin-title=<<commentPlugin>> comment-id=<<commentId>> status="rejected" />
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </$list>

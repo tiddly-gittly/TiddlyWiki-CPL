@@ -20,7 +20,7 @@ type: text/vnd.tiddlywiki
     <$let libraryVersion=<<__libraryVersion__>> installedVersion=<<__installedVersion__>> plugin=<<__plugin__>>>
     <$set name="reinstall-type" value={{{ [<libraryVersion>compare:version:eq<installedVersion>then[tc-reinstall]] [<libraryVersion>compare:version:gt<installedVersion>then[tc-reinstall-upgrade]] [<libraryVersion>compare:version:lt<installedVersion>then[tc-reinstall-downgrade]] }}}>
     <$button class={{{ [<installedVersion>!is[blank]then<reinstall-type>] tc-btn-invisible tc-install-plugin +[join[ ]] }}} disabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]] +[unique[]match[yes]limit[1]else[no]] }}}>>>
-    <$action-sendmessage $message="cpl-install-plugin-request" title=<<plugin>> version=<<libraryVersion>>/>
+    <$action-setfield $tiddler="$:/temp/CPL-Repo/install-plugin-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}} title=<<plugin>> version=<<libraryVersion>>/>
     <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]field:plugin-title<plugin>]">{{$:/core/images/timestamp-on}}</$list>
     <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]!field:plugin-title<plugin>]">
         {{$:/core/images/download-button}}
@@ -90,7 +90,7 @@ type: text/vnd.tiddlywiki
 
 <!-- Name -->
 <div style="margin-bottom: 2px;">
-<<plugin-name-link pluginTitle=<<title>> name=<<name>> >>
+<$macrocall $name="plugin-name-link" pluginTitle=<<title>> name=<<name>> />
 </div>
 
 <!-- Description -->

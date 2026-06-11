@@ -15,7 +15,7 @@ type: text/vnd.tiddlywiki
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[数据库镜像]else[Database Mirror]] }}}/> <$list filter="[<mirrorType>match[static]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-static">✓ <$text text={{{ [<chinese>match[yes]then[静态数据库]else[Static Database]] }}}/></span>)</$list><$list filter="[<mirrorType>match[unknown]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-unknown">? <$text text={{{ [<chinese>match[yes]then[检测中]else[Detecting]] }}}/></span>)</$list>:</span>
 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
 <$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
-<$action-sendmessage $message="cpl-get-plugins-index" />
+<$action-setfield $tiddler="$:/temp/CPL-Repo/plugins-index-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
 """>
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
@@ -25,7 +25,7 @@ type: text/vnd.tiddlywiki
 <div class="cpl-mirror-pair">
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[服务器]else[Server]] }}}/> <$list filter="[<serverType>match[server]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-server">✓ <$text text={{{ [<chinese>match[yes]then[功能服务器]else[Feature Server]] }}}/></span>)</$list><$list filter="[<serverType>match[unreachable]]" variable="t" >(<span class="cpl-mirror-status cpl-mirror-unreachable" title=<<unreachableNotice>> >⚠ <$text text={{{ [<chinese>match[yes]then[服务器不可用]else[Server Unavailable]] }}}/></span>)</$list>:</span>
 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
-<$action-sendmessage $message="cpl-refresh-mirror" />
+<$action-setfield $tiddler='$:/temp/CPL-Server/probe-refresh-token' text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
 """>
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/server-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
@@ -37,7 +37,7 @@ type: text/vnd.tiddlywiki
 <!-- 刷新/加载数据库按钮 -->
 <div class="cpl-mirror-actions">
 <$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
-<$action-sendmessage $message="cpl-get-plugins-index" />
+<$action-setfield $tiddler="$:/temp/CPL-Repo/plugins-index-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
 {{$:/core/images/download-button}}
 &#32;
 <$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />

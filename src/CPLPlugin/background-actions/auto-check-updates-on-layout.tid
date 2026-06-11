@@ -2,8 +2,10 @@ created: 20260604000000000
 modified: 20260604000000000
 tags: $:/tags/BackgroundAction
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-check-updates-on-layout
-track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]]
+track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]] [[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]]
 type: text/vnd.tiddlywiki
 
 \whitespace trim
-<$action-sendmessage $message="cpl-update-check"/>
+<$list filter="[[$:/plugins/Gk0Wk/CPL-Repo/config/auto-check-updates-in-cpl-layout]get[text]match[yes]]">
+<$action-setfield $tiddler="$:/temp/CPL-Repo/update-check-request" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+</$list>
