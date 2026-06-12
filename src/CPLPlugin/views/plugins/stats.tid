@@ -6,6 +6,8 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
+\import [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-all-stats]] [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity]]
+
 <!-- Plugin Stats Display -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 

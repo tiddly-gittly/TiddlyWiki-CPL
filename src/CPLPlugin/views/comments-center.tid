@@ -7,6 +7,8 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
+\import [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity]] [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-comments]]
+
 <$let
   chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}
   isAdmin={{{ [[$:/temp/CPL-Server/is-admin]get[text]else[no]] }}}
@@ -130,7 +132,6 @@ type: text/vnd.tiddlywiki
     </div>
   </$list>
 </div>
-</$list>
 
 <!-- Recent Comments (everyone) -->
 <div class="cpl-comments-center-section">
@@ -212,7 +213,7 @@ type: text/vnd.tiddlywiki
         </$list>
       </$list>
     </$let>
-  </$list>
+  </$let>
 
   <$list filter="[{$:/temp/CPL-Server/all-recent-comments}jsonget[comments]count[]match[0]]" variable="emptyRecent">
     <div class="cpl-comment-empty">

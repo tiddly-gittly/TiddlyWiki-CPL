@@ -6,6 +6,8 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
+\import [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity]] [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-comments]]
+
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
