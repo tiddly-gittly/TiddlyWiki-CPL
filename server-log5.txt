@@ -1,0 +1,56 @@
+Compiling...
+
+ Minimized plugins 
+ 200.90 KiB   $:/plugins/Gk0Wk/CPL-Repo
+   1.15 MiB   $:/plugins/Gk0Wk/CPL-Server
+
+[CPL Server] Test mode: using temporary wiki at E:\repo\TiddlyWiki-CPL\tmp\test-wiki
+[CPL Server] Test mode: injected local config at http://localhost:19876
+[CPL Server] Starting in DEV mode (writable)
+[CPL Server] Server will start on http://127.0.0.1:19876
+[CPL Server] Press Ctrl+C to stop
+鈼?injected env (6) from .env // tip: 鈱?override existing { override: true }
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?custom filepath { path: '/custom/path/.env' }
+鈼?injected env (0) from .env // tip: 鈼?encrypted .env [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈱?auth for agents [www.vestauth.com]
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈱?override existing { override: true }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈱?enable debugging { debug: true }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈱?override existing { override: true }
+鈼?injected env (0) from .env // tip: 鈱?suppress logs { quiet: true }
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+鈼?injected env (0) from .env // tip: 鈼?secrets for agents [www.dotenvx.com]
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-plugin-activity
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-sync-server-config
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-repo
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-all-stats
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-auth-state
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-comments
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-plugin-activity
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-probe-server
+Processing background action $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-record-download
+Serving on http://127.0.0.1:19876
+(press ctrl-C to exit)
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-server
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/repos
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/server-repos
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/servers
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/static-repos
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo
+syncer-server-filesystem: Dispatching 'save' task: $:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList

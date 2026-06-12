@@ -111,7 +111,9 @@ function extractPluginJsonToDir(jsonPath: string, outDir: string): void {
 }
 
 function ensureRuntimePluginsBuilt(): RuntimePluginFiles {
-  if (hasBuiltRuntimePlugins && hasRuntimePluginOutput()) {
+  // In test mode, always rebuild to avoid stale caches from previous runs.
+  const isTestMode = process.env.CPL_TEST_MODE === 'true';
+  if (!isTestMode && hasBuiltRuntimePlugins && hasRuntimePluginOutput()) {
     return runtimePluginFiles;
   }
 
