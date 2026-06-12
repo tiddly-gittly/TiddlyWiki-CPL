@@ -41,15 +41,16 @@ type: text/vnd.tiddlywiki
     🔔 <$text text={{{ [<chinese>match[yes]then[待审核评论]else[Pending Comments]] }}}/>
   </h3>
 
-  <$list filter="[[$:/temp/CPL-Server/comment-items/pending/list]get[text]!is[blank]]" variable="hasPending">
-    <$list filter="[[$:/temp/CPL-Server/comment-items/pending/list]get[text]split[\\n]]" variable="itemTitle">
-      <$let
-        pluginTitle={{{ [<itemTitle>get[pluginTitle]] }}}
-        commentId={{{ [<itemTitle>get[commentId]] }}}
-        commentUsername={{{ [<itemTitle>get[username]else[Anonymous]] }}}
-        commentContent={{{ [<itemTitle>get[content]] }}}
-        commentDate={{{ [<itemTitle>get[createdAt]] }}}
-        commentAvatar={{{ [<itemTitle>get[avatar]] }}}
+  <$list filter="[{$:/temp/CPL-Server/pending-comments}jsonget[comments]jsonindexes[]]" variable="idx">
+    <$let
+        rawTiddler="$:/temp/CPL-Server/pending-comments"
+        commentJson={{{ [<rawTiddler>jsonget[comments]jsonget<idx>] }}}
+        pluginTitle={{{ [<commentJson>jsonget[pluginTitle]] }}}
+        commentId={{{ [<commentJson>jsonget[id]] }}}
+        commentUsername={{{ [<commentJson>jsonget[username]else[Anonymous]] }}}
+        commentContent={{{ [<commentJson>jsonget[content]] }}}
+        commentDate={{{ [<commentJson>jsonget[createdAt]] }}}
+        commentAvatar={{{ [<commentJson>jsonget[avatar]] }}}
       >
         <div class="cpl-comment-item cpl-moderation-item">
           <div class="cpl-comment-meta">
@@ -119,7 +120,7 @@ type: text/vnd.tiddlywiki
     </$list>
   </$list>
 
-  <$list filter="[[$:/temp/CPL-Server/comment-items/pending/list]get[text]is[blank]]" variable="emptyPending">
+  <$list filter="[{$:/temp/CPL-Server/pending-comments}jsonget[comments]count[]match[0]]" variable="emptyPending">
     <div class="cpl-comment-empty cpl-moderation-all-clear">
       ✅ <$text text={{{ [<chinese>match[yes]then[所有评论已审核完毕！]else[All comments have been reviewed!]] }}}/>
     </div>
@@ -165,18 +166,17 @@ type: text/vnd.tiddlywiki
     </$list>
   </div>
 
-  <$list filter="[[$:/temp/CPL-Server/comment-items/recent/list]get[text]!is[blank]]" variable="hasRecent">
-    <$let searchText={{{ [<searchState>get[text]] }}}>
-      <$list filter="[[$:/temp/CPL-Server/comment-items/recent/list]get[text]split[\\n]]" variable="commentTitle">
-        <$list filter="[<searchText>is[blank]] [<commentTitle>get[username]search:words<searchText>] [<commentTitle>get[content]search:words<searchText>] [<commentTitle>get[pluginTitle]search:words<searchText>] +[limit[1]]" variable="match">
+  <$list filter="[{$:/temp/CPL-Server/all-recent-comments}jsonget[comments]jsonindexes[]]" variable="idx">
+    <$let searchText={{{ [<searchState>get[text]] }}} rawTiddler="$:/temp/CPL-Server/all-recent-comments" commentJson={{{ [<rawTiddler>jsonget[comments]jsonget<idx>] }}}>
+        <$list filter="[<searchText>is[blank]] [<commentJson>search:words<searchText>] +[limit[1]]" variable="match">
           <$let
-            commentUsername={{{ [<commentTitle>get[username]else[Anonymous]] }}}
-            commentContent={{{ [<commentTitle>get[content]] }}}
-            commentDate={{{ [<commentTitle>get[createdAt]] }}}
-            commentAvatar={{{ [<commentTitle>get[avatar]] }}}
-            commentPlugin={{{ [<commentTitle>get[pluginTitle]] }}}
-            commentStatus={{{ [<commentTitle>get[status]else[approved]] }}}
-            commentId={{{ [<commentTitle>get[commentId]] }}}
+            commentUsername={{{ [<commentJson>jsonget[username]else[Anonymous]] }}}
+            commentContent={{{ [<commentJson>jsonget[content]] }}}
+            commentDate={{{ [<commentJson>jsonget[createdAt]] }}}
+            commentAvatar={{{ [<commentJson>jsonget[avatar]] }}}
+            commentPlugin={{{ [<commentJson>jsonget[pluginTitle]] }}}
+            commentStatus={{{ [<commentJson>jsonget[status]else[approved]] }}}
+            commentId={{{ [<commentJson>jsonget[id]] }}}
           >
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
@@ -233,7 +233,7 @@ type: text/vnd.tiddlywiki
     </$let>
   </$list>
 
-  <$list filter="[[$:/temp/CPL-Server/comment-items/recent/list]get[text]is[blank]]" variable="emptyRecent">
+  <$list filter="[{$:/temp/CPL-Server/all-recent-comments}jsonget[comments]count[]match[0]]" variable="emptyRecent">
     <div class="cpl-comment-empty">
       <$text text={{{ [<chinese>match[yes]then[暂无评论。]else[No comments yet.]] }}}/>
     </div>

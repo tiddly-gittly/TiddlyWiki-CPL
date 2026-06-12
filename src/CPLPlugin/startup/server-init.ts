@@ -1,6 +1,5 @@
 import { tw } from './types';
 import { SERVER_PROBE_REFRESH_TITLE } from './constants';
-import { setupCommentJsonProcessor } from './comment-processor';
 import { handleGithubLogin, handleOAuthCallback } from './oauth';
 
 export const name = 'cpl-server-api-client';
@@ -37,8 +36,7 @@ export const startup = (): void => {
     text: String(Date.now()),
   });
 
-  // Process comment JSON into individual tiddlers for safe filter iteration
-  setupCommentJsonProcessor();
+  // Start Wikitext-driven server OAuth handling
   setupGithubLoginRequest();
   handleOAuthCallback();
 
