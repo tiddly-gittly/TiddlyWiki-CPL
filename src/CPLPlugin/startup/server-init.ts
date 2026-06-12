@@ -15,6 +15,11 @@ const setupGithubLoginRequest = (): void => {
 };
 
 export const startup = (): void => {
+  // Backward-compat stub: e2e tests wait for $tw.cpl to be defined.
+  // CPL now uses rootWidget.addEventListener() messages instead of
+  // this API, so this is a minimal stub only.
+  tw.cpl = {};
+
   // Force initial Wikitext-driven server config sync on startup.
   tw.wiki.addTiddler({
     title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo',
