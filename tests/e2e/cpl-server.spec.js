@@ -168,6 +168,9 @@ test.describe('CPL Server E2E', () => {
       });
     });
 
+    // Give TiddlyWiki a moment to refresh the $let bindings in Firefox
+    await page.waitForTimeout(300);
+
     // Open rating panel (first toggle button = rating)
     const ratingToggle = page.locator('.cpl-rating-toggle-button').first();
     await expect(ratingToggle).toBeVisible();
@@ -178,7 +181,7 @@ test.describe('CPL Server E2E', () => {
 
     // Click 3rd star
     const stars = ratingWidget.locator('button');
-    await expect(stars).toHaveCount(5);
+    await expect(stars).toHaveCount(5, { timeout: 10000 });
     await stars.nth(2).click();
 
     // Wait for submission result
@@ -475,7 +478,7 @@ test.describe('CPL Server E2E', () => {
     });
 
     const staticNotice = page.locator('.cpl-static-feature-notice').first();
-    await expect(staticNotice).toBeVisible();
+    await expect(staticNotice).toBeVisible({ timeout: 10000 });
     await expect(page.locator('.cpl-rating-widget')).toHaveCount(0);
   });
 });

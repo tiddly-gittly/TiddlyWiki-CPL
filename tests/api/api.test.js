@@ -395,23 +395,25 @@ describe('CPL Server API', () => {
 
     expect(submitResponse.statusCode).toBe(201);
     expect(submitResponse.body.success).toBe(true);
-    expect(submitResponse.body.comment.status).toBe('pending');
+    expect(submitResponse.body.comment.status).toBe('approved');
     expect(submitResponse.body.comment.content).toBe('This is a test comment for E2E validation');
     expect(submitResponse.body.comment).toHaveProperty('id');
     expect(submitResponse.body.comment).toHaveProperty('username');
 
     const commentId = submitResponse.body.comment.id;
 
-    // 2. Public list should NOT show pending comments
+    // 2. Public list should show auto-approved comments immediately
     const publicListResponse = await makeRequest(
       'GET',
       `/cpl/comments/${encodedPluginTitle}`
     );
 
     expect(publicListResponse.statusCode).toBe(200);
-    expect(publicListResponse.body.comments).toEqual([]);
+    expect(publicListResponse.body.comments).toHaveLength(1);
+    expect(publicListResponse.body.comments[0].id).toBe(commentId);
+    expect(publicListResponse.body.comments[0].status).toBe('approved');
 
-    // 3. Admin can see pending comments
+    // 3. Pending queue is empty under block-only moderation
     const pendingResponse = await makeRequest(
       'GET',
       '/cpl/comments/pending',
@@ -420,14 +422,16 @@ describe('CPL Server API', () => {
     );
 
     expect(pendingResponse.statusCode).toBe(200);
-    expect(pendingResponse.body.comments.some(c => c.comment.id === commentId)).toBe(true);
+    expect(
+      pendingResponse.body.comments.some(c => c.comment.id === commentId)
+    ).toBe(false);
 
-    // 4. all-recent should NOT show pending comments to anonymous
+    // 4. all-recent should show the approved comment
     const allRecentAnonymous = await makeRequest('GET', '/cpl/comments/all-recent');
     expect(allRecentAnonymous.statusCode).toBe(200);
-    expect(allRecentAnonymous.body.comments.some(c => c.id === commentId)).toBe(false);
+    expect(allRecentAnonymous.body.comments.some(c => c.id === commentId)).toBe(true);
 
-    // 5. Approve the comment
+    // 5. Approve is idempotent for already-approved comments
     const approveResponse = await makeRequest(
       'PUT',
       `/cpl/comments/${encodedPluginTitle}/${encodeURIComponent(commentId)}`,
@@ -438,7 +442,7 @@ describe('CPL Server API', () => {
     expect(approveResponse.statusCode).toBe(200);
     expect(approveResponse.body.success).toBe(true);
 
-    // 6. Public list should now show the approved comment
+    // 6. Public list still shows the approved comment
     const publicListAfterApproval = await makeRequest(
       'GET',
       `/cpl/comments/${encodedPluginTitle}`
@@ -449,7 +453,7 @@ describe('CPL Server API', () => {
     expect(publicListAfterApproval.body.comments[0].id).toBe(commentId);
     expect(publicListAfterApproval.body.comments[0].status).toBe('approved');
 
-    // 7. all-recent should now show the approved comment
+    // 7. all-recent still shows the approved comment
     const allRecentAfterApproval = await makeRequest('GET', '/cpl/comments/all-recent');
     expect(allRecentAfterApproval.statusCode).toBe(200);
     expect(allRecentAfterApproval.body.comments.some(c => c.id === commentId)).toBe(true);
@@ -542,7 +546,7 @@ describe('CPL Server API', () => {
     );
 
     expect(submitResponse.statusCode).toBe(201);
-    expect(submitResponse.body.report.status).toBe('pending');
+    expect(submitResponse.body.report.status).toBe('approved');
     expect(submitResponse.body.report.twVersionMin).toBe('5.3.0');
     expect(submitResponse.body.report.conflictingPlugins[0]).toMatchObject({
       pluginTitle: conflictingTitle,
@@ -560,7 +564,11 @@ describe('CPL Server API', () => {
     );
 
     expect(pendingResponse.statusCode).toBe(200);
-    expect(pendingResponse.body.reports.some(report => report.comment.id === submitResponse.body.report.id)).toBe(true);
+    expect(
+      pendingResponse.body.reports.some(
+        report => report.comment.id === submitResponse.body.report.id
+      )
+    ).toBe(false);
 
     const publicBeforeModeration = await makeRequest(
       'GET',
@@ -568,7 +576,8 @@ describe('CPL Server API', () => {
     );
 
     expect(publicBeforeModeration.statusCode).toBe(200);
-    expect(publicBeforeModeration.body.reports).toEqual([]);
+    expect(publicBeforeModeration.body.reports).toHaveLength(1);
+    expect(publicBeforeModeration.body.reports[0].id).toBe(submitResponse.body.report.id);
 
     const moderateResponse = await makeRequest(
       'PUT',

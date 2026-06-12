@@ -1,6 +1,6 @@
 const {
   shouldSkipLegacyDependency,
-} = require('../../src/CPLPlugin/startup/core/install.ts');
+} = require('../../src/CPLPlugin/startup/plugin-install.ts');
 
 describe('legacy dependency compatibility', () => {
   test('should skip legacy CPL-Repo -> CPL-Server dependency edge', () => {

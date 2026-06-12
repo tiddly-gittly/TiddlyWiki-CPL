@@ -1,6 +1,7 @@
 import { spawnSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { rimrafSync } from 'rimraf';
 import { paths } from '../src/CPLServer/lib/paths';
 
 interface RuntimePluginFiles {
@@ -71,7 +72,7 @@ function extractPluginJsonToDir(jsonPath: string, outDir: string): void {
   const tiddlers = parsedText.tiddlers ?? {};
 
   if (fs.existsSync(outDir)) {
-    fs.rmSync(outDir, { recursive: true });
+    rimrafSync(outDir);
   }
   fs.mkdirSync(outDir, { recursive: true });
 
