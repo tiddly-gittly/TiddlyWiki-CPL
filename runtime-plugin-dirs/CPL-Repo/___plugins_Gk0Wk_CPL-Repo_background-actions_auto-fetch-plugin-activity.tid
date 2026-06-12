@@ -1,11 +1,7 @@
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-plugin-activity
-created: 20260604000000000
-modified: 20260604000000000
 tags: $:/tags/BackgroundAction
-track-filter: [[$:/HistoryList]get[current-tiddler]] [[$:/HistoryList]get[current-tiddler]get[cpl.title]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/plugin-activity-refresh-token]get[text]]
-type: text/vnd.tiddlywiki
+track-filter: [[$:/HistoryList]get[current-tiddler]] [[$:/HistoryList]get[current-tiddler]get[cpl.title]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
 
-\whitespace trim
 <$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
 <$let pluginTitle={{{ [[$:/HistoryList]get[current-tiddler]get[cpl.title]!is[blank]] [[$:/HistoryList]get[current-tiddler]tag[$:/tags/PluginWiki]get[title]!is[blank]] +[limit[1]] }}}>
 <$list filter="[<pluginTitle>!is[blank]]">

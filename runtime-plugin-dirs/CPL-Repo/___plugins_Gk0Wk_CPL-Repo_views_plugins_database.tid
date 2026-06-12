@@ -13,9 +13,16 @@ type: text/vnd.tiddlywiki
 <$let isSelectDisabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/updaing]field:text[yes]then[yes]] +[limit[1]] }}}>
 <div class="cpl-mirror-pair">
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[数据库镜像]else[Database Mirror]] }}}/> <$list filter="[<mirrorType>match[static]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-static">✓ <$text text={{{ [<chinese>match[yes]then[静态数据库]else[Static Database]] }}}/></span>)</$list><$list filter="[<mirrorType>match[unknown]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-unknown">? <$text text={{{ [<chinese>match[yes]then[检测中]else[Detecting]] }}}/></span>)</$list>:</span>
-<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
-<$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
-<$action-sendmessage $message="cpl-get-plugins-index" />
+<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""<$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
+  method="GET"
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>"""/>
 """>
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
@@ -24,8 +31,7 @@ type: text/vnd.tiddlywiki
 </div>
 <div class="cpl-mirror-pair">
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[服务器]else[Server]] }}}/> <$list filter="[<serverType>match[server]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-server">✓ <$text text={{{ [<chinese>match[yes]then[功能服务器]else[Feature Server]] }}}/></span>)</$list><$list filter="[<serverType>match[unreachable]]" variable="t" >(<span class="cpl-mirror-status cpl-mirror-unreachable" title=<<unreachableNotice>> >⚠ <$text text={{{ [<chinese>match[yes]then[服务器不可用]else[Server Unavailable]] }}}/></span>)</$list>:</span>
-<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""
-<$action-sendmessage $message="cpl-refresh-mirror" />
+<$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions="""<$action-setfield $tiddler='$:/temp/CPL-Server/probe-refresh-token' text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
 """>
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/server-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
@@ -37,7 +43,15 @@ type: text/vnd.tiddlywiki
 <!-- 刷新/加载数据库按钮 -->
 <div class="cpl-mirror-actions">
 <$button disabled={{{ [{$:/temp/CPL-Repo/getting-plugins-index}match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
-<$action-sendmessage $message="cpl-get-plugins-index" />
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
+  method="GET"
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+  <$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+  <$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>"""/>
 {{$:/core/images/download-button}}
 &#32;
 <$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />
@@ -47,29 +61,4 @@ type: text/vnd.tiddlywiki
 </div>
 </div>
 </$let>
-
-<!-- 错误提示 -->
-<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]!field:text[yes]]">
-<div class="cpl-status-banner cpl-status-banner-error">
-	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
-	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
-</div>
-</$list>
-
-<!-- 加载中提示 -->
-<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]]">
-<div class="cpl-status-banner cpl-status-banner-loading">
-	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
-</div>
-</$list>
-
-<$list filter="[[$:/temp/CPL-Repo/plugins-index]is[tiddler]]" variable="ready">
-<$macrocall
-	$name="tabs"
-	state="$:/temp/CPL-Repo/plugin-database-tab-state"
-	tabsList="[[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/home]] [[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/category]] [[$:/plugins/Gk0Wk/CPL-Repo/views/galleries/tags]] [[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]]"
-	default="$:/plugins/Gk0Wk/CPL-Repo/views/galleries/home"
-/>
-</$list>
-
 </$list>

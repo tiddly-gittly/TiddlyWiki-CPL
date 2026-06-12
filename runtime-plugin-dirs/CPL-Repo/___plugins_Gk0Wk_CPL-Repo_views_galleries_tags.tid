@@ -66,8 +66,7 @@ type: text/vnd.tiddlywiki
         <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[{$:/temp/CPL-Repo/searching-plugin}match[yes]then[搜索中...]else[搜索]] :else[{$:/temp/CPL-Repo/searching-plugin}match[yes]then[Searching...]else[Search]] }}} />
         <$action-sendmessage
             $message="cpl-search-plugins"
-            mode="tags"
-            text={{{ [<saveTiddler>get[text]] }}}
+            query={{{ [<saveTiddler>get[text]] }}}
             saveTo="$:/temp/CPL-Repo/searchplugin-tags/result"
         />
     </$button>

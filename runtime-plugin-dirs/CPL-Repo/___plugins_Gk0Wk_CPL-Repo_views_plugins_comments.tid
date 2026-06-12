@@ -6,14 +6,7 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
-\procedure cpl-fetch-comments-action(pluginTitle)
-<$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
-  method="GET"
-  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}
-  var-storePluginTitle=<<pluginTitle>>
-  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
-\end
+\import [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity]] [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-comments]]
 
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
@@ -22,8 +15,6 @@ type: text/vnd.tiddlywiki
 
 <!-- Only show comment section for server mirrors -->
 <$list filter="[<serverType>match[server]]" variable="isServerMirror">
-
-<<cpl-fetch-comments-action {{!!cpl.title}}>>
 
 <div class="cpl-comment-section">
   <h3 class="cpl-comment-title">
@@ -40,9 +31,15 @@ type: text/vnd.tiddlywiki
       </$list>
       <span><strong><$text text=<<username>>/></strong></span>
       <$button class="tc-btn-invisible cpl-comment-logout-button">
-        <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user"/>
-        <$action-deletetiddler $tiddler="$:/temp/CPL-Server/user-status"/>
-        <$action-sendmessage $message="cpl-logout"/>
+        <$action-sendmessage $message="tm-http-request"
+          url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/auth/logout]] }}}
+          method="POST" header-Content-Type="application/json" body="{}"
+          oncompletion="""
+            <$action-deletetiddler $tiddler='$:/temp/CPL-Server/user'/>
+            <$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
+            <$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
+            <$action-setfield $tiddler='$:/temp/CPL-Server/auth-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}}/>
+            """/>
         <$text text={{{ [<chinese>match[yes]then[退出登录]else[Logout]] }}}/>
       </$button>
     </div>
@@ -53,10 +50,29 @@ type: text/vnd.tiddlywiki
       <$edit-text tiddler="$:/temp/CPL-Server/comment-draft" field="text" class="cpl-comment-textarea" tag="textarea" placeholder={{{ [<chinese>match[yes]then[使用 Wikitext 写评论...]else[Write a comment using wikitext...]] }}}/>
       <div class="cpl-comment-form-actions">
         <span class="cpl-comment-hint"><$text text={{{ [<chinese>match[yes]then[支持 Wikitext]else[Wikitext supported]] }}}/></span>
+        <$let statusTitle={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}} draftText={{$:/temp/CPL-Server/comment-draft}}>
         <$button class="tc-btn-primary cpl-comment-submit-button">
-          <$action-sendmessage $message="cpl-submit-comment" pluginTitle=<<pluginTitle>>/>
+          <$action-setfield $tiddler=<<statusTitle>> text="submitting" />
+          <$action-sendmessage $message="tm-http-request"
+            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+            method="POST" header-Content-Type="application/json"
+            body={{{ [<draftText>get[text]jsonstringify[]addprefix[{"content":]addsuffix[}]] }}}
+            var-pluginTitle=<<pluginTitle>>
+            var-statusTitle=<<statusTitle>>
+            oncompletion="""
+              <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+              <$action-setfield $tiddler='$:/temp/CPL-Server/comment-draft' text=''/>
+              <$action-setfield $tiddler=<<statusTitle>> text='success'/>
+              <<cpl-fetch-plugin-activity pluginTitle>>
+              <<cpl-fetch-comments>>
+              </$list>
+              <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+              <$action-setfield $tiddler=<<statusTitle>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+              </$list>
+              """/>
           <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>
         </$button>
+        </$let>
       </div>
       <$let commentStatus={{{ [[$:/temp/CPL-Server/comment-status/]addsuffix<pluginTitle>] }}}>
         <$list filter="[<commentStatus>get[text]prefix[error:]]" variable="hasError">
@@ -96,9 +112,8 @@ type: text/vnd.tiddlywiki
   <!-- Comments List -->
   <div class="cpl-comments-list">
     <$let commentsTiddler={{{ [[$:/temp/CPL-Server/comments/]addsuffix<pluginTitle>] }}}>
-      <$list filter="[[$:/temp/CPL-Server/comment-items/plugin/<pluginTitle>/list]get[text]!is[blank]]" variable="hasComments">
-        <$list filter="[[$:/temp/CPL-Server/comment-items/plugin/<pluginTitle>/list]get[text]split[\\n]]" variable="commentTitle">
-          <$let commentUsername={{{ [<commentTitle>get[username]else[Anonymous]] }}} commentContent={{{ [<commentTitle>get[content]] }}} commentDate={{{ [<commentTitle>get[createdAt]] }}} commentAvatar={{{ [<commentTitle>get[avatar]] }}} commentStatus={{{ [<commentTitle>get[status]else[approved]] }}} commentId={{{ [<commentTitle>get[commentId]] }}}>
+      <$list filter="[<commentsTiddler>jsonget[comments]jsonindexes[]]" variable="idx">
+      <$let commentJson={{{ [<commentsTiddler>jsonget[comments]jsonget<idx>] }}} commentUsername={{{ [<commentJson>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentJson>jsonget[content]] }}} commentDate={{{ [<commentJson>jsonget[createdAt]] }}} commentAvatar={{{ [<commentJson>jsonget[avatar]] }}} commentStatus={{{ [<commentJson>jsonget[status]else[approved]] }}} commentId={{{ [<commentJson>jsonget[id]] }}}>
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
                 <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
@@ -116,11 +131,21 @@ type: text/vnd.tiddlywiki
                   <div class="cpl-moderation-actions">
                     <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
                     <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                      <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="approved" />
+                      <$action-sendmessage $message="tm-http-request"
+                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
+                        method="PUT" header-Content-Type="application/json"
+                        body='{"status":"approved"}'
+                        var-pluginTitle=<<pluginTitle>>
+                        oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                      <$action-sendmessage $message="cpl-moderate-comment" pluginTitle=<<pluginTitle>> commentId=<<commentId>> status="rejected" />
+                      <$action-sendmessage $message="tm-http-request"
+                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
+                        method="PUT" header-Content-Type="application/json"
+                        body='{"status":"rejected"}'
+                        var-pluginTitle=<<pluginTitle>>
+                        oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </div>
@@ -130,7 +155,7 @@ type: text/vnd.tiddlywiki
           </$let>
         </$list>
       </$list>
-      <$list filter="[[$:/temp/CPL-Server/comment-items/plugin/<pluginTitle>/list]get[text]is[blank]]" variable="noComments">
+      <$list filter="[<commentsTiddler>jsonget[comments]jsontype[match[array]then[]else[1]]]" variable="noComments">
         <div class="cpl-comment-empty">
           <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
         </div>

@@ -1,0 +1,12 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-comments
+
+\procedure cpl-fetch-comments()
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/all-recent]] }}}
+  method="GET"
+  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-recent-comments' text=<<data>> type='application/json'/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/pending]] }}}
+  method="GET"
+  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/pending-comments' text=<<data>> type='application/json'/>"/>
+\end

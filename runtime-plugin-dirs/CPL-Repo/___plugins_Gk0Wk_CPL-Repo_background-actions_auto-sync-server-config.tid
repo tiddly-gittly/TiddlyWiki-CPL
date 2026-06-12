@@ -1,0 +1,24 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-sync-server-config
+tags: $:/tags/BackgroundAction
+track-filter: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]] [[$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo]get[text]]
+
+<$let staticRepo={{$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo}} serverRepo={{$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo}}>
+<$let apiBase={{{ [<serverRepo>trim[]removesuffix[/repo]] }}}>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/mirror-type' text={{{ [<staticRepo>is[blank]then[unknown]else[static]] }}}/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/api-base' text=<<apiBase>>/>
+<$list filter='[<apiBase>is[blank]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-type' text='unknown'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/api-status' text='unavailable'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-message' text='No CPL server is configured.'/>
+<$action-deletetiddler $filter='[[$:/temp/CPL-Server/github-client-id]] [[$:/temp/CPL-Server/user]]'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
+</$list>
+<$list filter='[<apiBase>!is[blank]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-type' text='server'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/api-status' text='checking'/>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/server-message' text='Checking CPL server...'/>
+<$action-setfield $tiddler='$:/temp/CPL-Server/probe-refresh-token' text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+</$list>
+</$let>
+</$let>

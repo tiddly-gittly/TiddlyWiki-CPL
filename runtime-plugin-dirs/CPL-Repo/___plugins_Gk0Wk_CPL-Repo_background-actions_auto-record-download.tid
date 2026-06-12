@@ -1,0 +1,17 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-record-download
+tags: $:/tags/BackgroundAction
+track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Repo/install-plugin-status]get[text]]
+
+<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]] [[$:/temp/CPL-Repo/install-plugin-status]get[text]match[success]] +[count[]compare:number:eq[2]]">
+<$let pluginTitle={{$:/temp/CPL-Repo/install-plugin-status!!plugin-title}}>
+<$list filter="[<pluginTitle>!is[blank]] [[$:/temp/CPL-Server/api-base]get[text]!is[blank]] +[count[]compare:number:eq[2]]">
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/download/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="POST"
+  body="{}"
+  header-Content-Type="application/json"
+  var-pluginTitle=<<pluginTitle>>
+  oncompletion="<<cpl-fetch-all-stats>>"/>
+</$list>
+</$let>
+</$list>

@@ -1,9 +1,0 @@
-title: $:/plugins/Gk0Wk/CPL-Repo/startup/auto-language
-tags: $:/tags/StartupAction/Browser
-type: text/vnd.tiddlywiki
-caption: Auto-detect UI language from browser
-
-<!-- Auto-detect language from browser, only if $:/language is not already set by user or another plugin -->
-<$list filter="[[$:/language]is[missing]]" variable="noLang">
-<$action-setfield $tiddler="$:/language" text={{{ [{$:/info/browser/language}search:title[zh]then[zh-Hans]else[en-GB]addprefix[$:/languages/]] }}}/>
-</$list>

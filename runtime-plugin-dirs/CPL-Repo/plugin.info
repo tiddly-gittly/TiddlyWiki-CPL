@@ -3,9 +3,9 @@
   "core-version": ">=5.3.0",
   "dependents": "",
   "description": "TiddlyWiki Community Plugin Library - Frontend",
-  "list": "docs/readme docs/tree background-actions views/system/settings docs/changelog",
+  "list": "docs/readme docs/tree background-actions views/system/settings docs/changelog procedures",
   "plugin-type": "plugin",
   "title": "$:/plugins/Gk0Wk/CPL-Repo",
-  "version": "2026.06.09",
-  "Modern.TiddlyDev#SHA256-Hashed": "11947df149e465c16a235f991eaa2b62a874381e1e2a30dbf396715306fe03e5"
+  "version": "2026.06.12",
+  "Modern.TiddlyDev#SHA256-Hashed": "e85adf15e0049298e0b1d2bc9cd1eb686b12957263f7e1797d4a3f88bff1716e"
 }

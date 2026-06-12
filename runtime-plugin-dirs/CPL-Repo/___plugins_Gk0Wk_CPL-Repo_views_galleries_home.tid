@@ -11,8 +11,7 @@ type: text/vnd.tiddlywiki
 \define go-search()
 <$action-sendmessage
     $message="cpl-search-plugins"
-    mode="mix"
-    text={{$:/temp/CPL-Repo/searchplugin-home/input}}
+    query={{$:/temp/CPL-Repo/searchplugin-home/input}}
     saveTo="$:/temp/CPL-Repo/searchplugin-home/result"
 />
 \end
