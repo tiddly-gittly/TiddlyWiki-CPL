@@ -66,7 +66,8 @@ module.exports = defineConfig({
       CPL_TEST_PUBLIC_HOST: TEST_HOST,
       CPL_TEST_MOCK_REPO_URL: 'http://127.0.0.1:8083',
       CPL_TEST_MODE: 'true',
-      CPL_JWT_SECRET: 'test-secret'
+      CPL_JWT_SECRET: 'test-secret',
+      CPL_ADMIN_GITHUB_IDS: '42'
     }
   },
 });

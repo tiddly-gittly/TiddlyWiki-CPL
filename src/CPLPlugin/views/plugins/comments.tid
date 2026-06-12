@@ -134,12 +134,7 @@ type: text/vnd.tiddlywiki
                         method="PUT" header-Content-Type="application/json"
                         body='{"status":"approved"}'
                         var-pluginTitle=<<pluginTitle>>
-                        oncompletion="""
-                          <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                          <<cpl-fetch-plugin-activity pluginTitle>>
-                          <<cpl-fetch-comments>>
-                          </$list>
-                          """/>
+                        oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
@@ -148,12 +143,7 @@ type: text/vnd.tiddlywiki
                         method="PUT" header-Content-Type="application/json"
                         body='{"status":"rejected"}'
                         var-pluginTitle=<<pluginTitle>>
-                        oncompletion="""
-                          <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                          <<cpl-fetch-plugin-activity pluginTitle>>
-                          <<cpl-fetch-comments>>
-                          </$list>
-                          """/>
+                        oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </div>

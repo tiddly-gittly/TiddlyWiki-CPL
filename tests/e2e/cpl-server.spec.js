@@ -356,25 +356,8 @@ test.describe('CPL Server E2E', () => {
         },
       ],
     };
-    await page.evaluate(data => {
-      $tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/pending-comments',
-        text: JSON.stringify(data),
-        type: 'application/json',
-      });
-    }, pendingData);
-
-    // Wait for JS processor to create individual tiddlers
-    await page.waitForFunction(
-      () =>
-        $tw.wiki.getTiddlerText(
-          '$:/temp/CPL-Server/comment-items/pending/list',
-          '',
-        ) !== '',
-      { timeout: 10000 },
-    );
-
-    // Navigate to comments center
+    // Navigate to comments center first so the BackgroundAction
+    // auto-fetch-comments fires and completes before we inject test data.
     await page.evaluate(() => {
       $tw.wiki.addTiddler({
         title: '$:/StoryList',
@@ -387,7 +370,39 @@ test.describe('CPL Server E2E', () => {
       $tw.rootWidget.refresh({ '$:/StoryList': { modified: true } });
     });
 
+    // Wait for comments center to load and reach idle state.
     await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
+    await page.waitForTimeout(1000);
+
+    // Now overwrite pending-comments with test data (after BCA has settled).
+    await page.evaluate(data => {
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/pending-comments',
+        text: JSON.stringify(data),
+        type: 'application/json',
+      });
+    }, pendingData);
+
+    // Wait for pending comments JSON tiddler to be ready.
+    await page.waitForFunction(
+      () =>
+        typeof $tw.wiki.getTiddlerText(
+          '$:/temp/CPL-Server/pending-comments',
+          '',
+        ) === 'string' &&
+        $tw.wiki.getTiddlerText('$:/temp/CPL-Server/pending-comments', '')
+          .length > 0,
+      { timeout: 10000 },
+    );
+
+    // Refresh so view picks up the injected pending data
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/pending-comments',
+        'modified-token': String(Date.now()),
+      });
+    });
+    await page.waitForTimeout(500);
 
     // No filter errors
     const text = await page.locator('.cpl-comments-center').textContent();

@@ -44,8 +44,9 @@ type: text/vnd.tiddlywiki
   <$list filter="[{$:/temp/CPL-Server/pending-comments}jsonget[comments]jsonindexes[]]" variable="idx">
     <$let
         rawTiddler="$:/temp/CPL-Server/pending-comments"
-        commentJson={{{ [<rawTiddler>jsonget[comments]jsonget<idx>] }}}
-        pluginTitle={{{ [<commentJson>jsonget[pluginTitle]] }}}
+        itemJson={{{ [<rawTiddler>jsonget[comments]jsonget<idx>] }}}
+        commentJson={{{ [<itemJson>jsonget[comment]else<itemJson>] }}}
+        pluginTitle={{{ [<itemJson>jsonget[pluginTitle]] }}}
         commentId={{{ [<commentJson>jsonget[id]] }}}
         commentUsername={{{ [<commentJson>jsonget[username]else[Anonymous]] }}}
         commentContent={{{ [<commentJson>jsonget[content]] }}}
@@ -75,12 +76,7 @@ type: text/vnd.tiddlywiki
                 method="PUT" header-Content-Type="application/json"
                 body='{"status":"approved"}'
                 var-pluginTitle=<<pluginTitle>>
-                oncompletion="""
-                  <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                  <<cpl-fetch-plugin-activity pluginTitle>>
-                  <<cpl-fetch-comments>>
-                  </$list>
-                  """/>
+                oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
               <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
             </$button>
             <$button class="tc-btn-secondary cpl-moderation-reject-btn">
@@ -89,12 +85,7 @@ type: text/vnd.tiddlywiki
                 method="PUT" header-Content-Type="application/json"
                 body='{"status":"rejected"}'
                 var-pluginTitle=<<pluginTitle>>
-                oncompletion="""
-                  <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                  <<cpl-fetch-plugin-activity pluginTitle>>
-                  <<cpl-fetch-comments>>
-                  </$list>
-                  """/>
+                oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
               <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
             </$button>
             <$button class="tc-btn-invisible cpl-moderation-delete-btn">
@@ -103,12 +94,7 @@ type: text/vnd.tiddlywiki
                 method="PUT" header-Content-Type="application/json"
                 body='{"status":"deleted"}'
                 var-pluginTitle=<<pluginTitle>>
-                oncompletion="""
-                  <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                  <<cpl-fetch-plugin-activity pluginTitle>>
-                  <<cpl-fetch-comments>>
-                  </$list>
-                  """/>
+                oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
               <$text text={{{ [<chinese>match[yes]then[删除]else[Delete]] }}}/>
             </$button>
           </div>
@@ -203,12 +189,7 @@ type: text/vnd.tiddlywiki
                         method="PUT" header-Content-Type="application/json"
                         body='{"status":"approved"}'
                         var-pluginTitle=<<commentPlugin>>
-                        oncompletion="""
-                          <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                          <<cpl-fetch-plugin-activity commentPlugin>>
-                          <<cpl-fetch-comments>>
-                          </$list>
-                          """/>
+                        oncompletion="<<cpl-fetch-plugin-activity commentPlugin>> <<cpl-fetch-comments>>"/>
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
@@ -217,12 +198,7 @@ type: text/vnd.tiddlywiki
                         method="PUT" header-Content-Type="application/json"
                         body='{"status":"rejected"}'
                         var-pluginTitle=<<commentPlugin>>
-                        oncompletion="""
-                          <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                          <<cpl-fetch-plugin-activity commentPlugin>>
-                          <<cpl-fetch-comments>>
-                          </$list>
-                          """/>
+                        oncompletion="<<cpl-fetch-plugin-activity commentPlugin>> <<cpl-fetch-comments>>"/>
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </$list>
