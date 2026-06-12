@@ -3,8 +3,6 @@ import { tw, type PluginInfo } from './types';
 const asPluginInfoList = (value: unknown): PluginInfo[] =>
   value as PluginInfo[];
 
-const PLUGIN_INDEX_RAW_TITLE = '$:/temp/CPL-Repo/plugin-index-raw';
-
 let pluginIndexCache: PluginInfo[] | undefined;
 let allPluginsCache: string[] | undefined;
 let searchLock = false;
@@ -26,6 +24,7 @@ const handleSearchPlugins = (text: string, saveTo: string): void => {
         text: JSON.stringify(allPluginsCache),
         type: 'application/json',
       });
+      searchLock = false;
       return;
     }
     tw.wiki.addTiddler({
@@ -66,9 +65,8 @@ const handleSearchPlugins = (text: string, saveTo: string): void => {
           }
         }
         if (typeof plugin.description === 'string') {
-          const d = plugin.description.toLowerCase();
           for (const p of patterns) {
-            if (d.includes(p)) {
+            if (plugin.description.toLowerCase().includes(p)) {
               weight += 1;
             }
           }
@@ -96,13 +94,14 @@ const handleSearchPlugins = (text: string, saveTo: string): void => {
 };
 
 export const startup = (): void => {
-  tw.wiki.addEventListener('change', changes => {
-    if (tw.utils.hop(changes, PLUGIN_INDEX_RAW_TITLE)) {
-      const raw = tw.wiki.getTiddlerText(PLUGIN_INDEX_RAW_TITLE, '');
+  tw.rootWidget.addEventListener(
+    'cpl-process-plugin-index',
+    (event: unknown) => {
+      const e = event as { paramObject?: Record<string, string> };
+      const raw = e.paramObject?.data;
       if (!raw) {
-        return;
+        return undefined;
       }
-      tw.wiki.deleteTiddler(PLUGIN_INDEX_RAW_TITLE);
       try {
         tw.wiki.addTiddler({
           title: '$:/temp/CPL-Repo/getting-plugins-index',
@@ -171,8 +170,9 @@ export const startup = (): void => {
           text: String(error),
         });
       }
-    }
-  });
+      return undefined;
+    },
+  );
 
   tw.rootWidget.addEventListener('cpl-search-plugins', (event: unknown) => {
     const e = event as { paramObject?: Record<string, string> };
