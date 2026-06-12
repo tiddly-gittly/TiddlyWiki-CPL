@@ -2,6 +2,14 @@
   overflow: hidden;
 }
 
+/* Suppress TW's default border/shadow on tab content */
+.cpl-layout-container .tc-tab-content,
+.cpl-layout-container .tc-reveal,
+.cpl-layout-container .tc-tab-set-item {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .cpl-plugin-info-box > .tc-plugin-info {
   margin: 0 !important;
   border: none !important;
@@ -310,6 +318,7 @@
 }
 
 .cpl-plugin-card {
+  border: none;
   border-radius: 8px;
   padding: 14px 16px;
   display: flex;

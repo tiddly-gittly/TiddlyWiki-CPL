@@ -16,27 +16,24 @@ type: text/vnd.tiddlywiki
 \define install-plugin-button(plugin,libraryVersion,installedVersion)
 \whitespace trim
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
-<div>
-    <$let libraryVersion=<<__libraryVersion__>> installedVersion=<<__installedVersion__>> plugin=<<__plugin__>>>
-    <$set name="reinstall-type" value={{{ [<libraryVersion>compare:version:eq<installedVersion>then[tc-reinstall]] [<libraryVersion>compare:version:gt<installedVersion>then[tc-reinstall-upgrade]] [<libraryVersion>compare:version:lt<installedVersion>then[tc-reinstall-downgrade]] }}}>
-    <$button class={{{ [<installedVersion>!is[blank]then<reinstall-type>] tc-btn-invisible tc-install-plugin +[join[ ]] }}} disabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]] +[unique[]match[yes]limit[1]else[no]] }}}>>>
-    <$action-sendmessage $message="cpl-install-plugin-request" title=<<plugin>> version=<<libraryVersion>>/>
-    <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]field:plugin-title<plugin>]">{{$:/core/images/timestamp-on}}</$list>
-    <$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]!field:plugin-title<plugin>]">
-        {{$:/core/images/download-button}}
-        &#32;
-        <!-- 根据版本判断安装/升级/降级/重装 -->
-        <$list filter="[<installedVersion>is[blank]]"><$text text={{{ [<chinese>match[yes]then[安装]else[Install]] }}}/></$list>
-        <$list filter="[<installedVersion>!is[blank]]">
-            <$list filter="[<libraryVersion>compare:version:gt<installedVersion>]"><$text text={{{ [<chinese>match[yes]then[升级]else[Update]] }}}/></$list>
-            <$list filter="[<libraryVersion>compare:version:lt<installedVersion>]"><$text text={{{ [<chinese>match[yes]then[降级]else[Downgrade]] }}}/></$list>
-            <$list filter="[<libraryVersion>compare:version:eq<installedVersion>]"><$text text={{{ [<chinese>match[yes]then[重装]else[Reinstall]] }}}/></$list>
-        </$list>
+<$let libraryVersion=<<__libraryVersion__>> installedVersion=<<__installedVersion__>> plugin=<<__plugin__>>>
+<$set name="reinstall-type" value={{{ [<libraryVersion>compare:version:eq<installedVersion>then[tc-reinstall]] [<libraryVersion>compare:version:gt<installedVersion>then[tc-reinstall-upgrade]] [<libraryVersion>compare:version:lt<installedVersion>then[tc-reinstall-downgrade]] }}}>
+<$button class={{{ [<installedVersion>!is[blank]then<reinstall-type>] tc-btn-invisible tc-install-plugin +[join[ ]] }}} disabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]] +[unique[]match[yes]limit[1]else[no]] }}}>>>
+<$action-sendmessage $message="cpl-install-plugin-request" title=<<plugin>> version=<<libraryVersion>>/>
+<$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]field:plugin-title<plugin>]">{{$:/core/images/timestamp-on}}</$list>
+<$list filter="[[$:/temp/CPL-Repo/instal-plugin-requesting]!field:plugin-title<plugin>]">
+    {{$:/core/images/download-button}}
+    &#32;
+    <$list filter="[<installedVersion>is[blank]]"><$text text={{{ [<chinese>match[yes]then[安装]else[Install]] }}}/></$list>
+    <$list filter="[<installedVersion>!is[blank]]">
+        <$list filter="[<libraryVersion>compare:version:gt<installedVersion>]"><$text text={{{ [<chinese>match[yes]then[升级]else[Update]] }}}/></$list>
+        <$list filter="[<libraryVersion>compare:version:lt<installedVersion>]"><$text text={{{ [<chinese>match[yes]then[降级]else[Downgrade]] }}}/></$list>
+        <$list filter="[<libraryVersion>compare:version:eq<installedVersion>]"><$text text={{{ [<chinese>match[yes]then[重装]else[Reinstall]] }}}/></$list>
     </$list>
-    </$button>
-    </$set>
-    </$let>
-</div>
+</$list>
+</$button>
+</$set>
+</$let>
 </$list>
 \end
 
