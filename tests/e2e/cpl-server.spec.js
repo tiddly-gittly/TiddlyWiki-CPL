@@ -329,6 +329,11 @@ test.describe('CPL Server E2E', () => {
         title: '$:/temp/CPL-Server/github-client-id',
         text: 'fake-id',
       });
+      // Disable auto-fetch so the injected test data is not overwritten.
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/disable-auto-fetch-comments',
+        text: 'yes',
+      });
     });
 
     // Set cookie so browser fetch includes auth
@@ -338,14 +343,14 @@ test.describe('CPL Server E2E', () => {
         { name: 'cpl_jwt_token', value: adminToken, url: BASE_URL },
       ]);
 
-    // Inject pending comment data directly (avoids browser fetch timeout)
+    // Inject pending comment data directly.
     const pendingData = {
       success: true,
       comments: [
         {
           pluginTitle: '$:/plugins/test/e2e-admin-comment',
           comment: {
-            id: commentData.commentId,
+            id: commentData.comment.id,
             githubId: '42',
             username: 'admin-test',
             avatar: '',
@@ -356,8 +361,20 @@ test.describe('CPL Server E2E', () => {
         },
       ],
     };
-    // Navigate to comments center first so the BackgroundAction
-    // auto-fetch-comments fires and completes before we inject test data.
+    await page.evaluate(data => {
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/pending-comments',
+        text: JSON.stringify(data),
+        type: 'application/json',
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Server/all-recent-comments',
+        text: JSON.stringify({ success: true, comments: [] }),
+        type: 'application/json',
+      });
+    }, pendingData);
+
+    // Navigate to comments center.
     await page.evaluate(() => {
       $tw.wiki.addTiddler({
         title: '$:/StoryList',
@@ -372,36 +389,6 @@ test.describe('CPL Server E2E', () => {
 
     // Wait for comments center to load and reach idle state.
     await page.waitForSelector('.cpl-comments-center', { timeout: 30000 });
-    await page.waitForTimeout(1000);
-
-    // Now overwrite pending-comments with test data (after BCA has settled).
-    await page.evaluate(data => {
-      $tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/pending-comments',
-        text: JSON.stringify(data),
-        type: 'application/json',
-      });
-    }, pendingData);
-
-    // Wait for pending comments JSON tiddler to be ready.
-    await page.waitForFunction(
-      () =>
-        typeof $tw.wiki.getTiddlerText(
-          '$:/temp/CPL-Server/pending-comments',
-          '',
-        ) === 'string' &&
-        $tw.wiki.getTiddlerText('$:/temp/CPL-Server/pending-comments', '')
-          .length > 0,
-      { timeout: 10000 },
-    );
-
-    // Refresh so view picks up the injected pending data
-    await page.evaluate(() => {
-      $tw.wiki.addTiddler({
-        title: '$:/temp/CPL-Server/pending-comments',
-        'modified-token': String(Date.now()),
-      });
-    });
     await page.waitForTimeout(500);
 
     // No filter errors
@@ -432,7 +419,7 @@ test.describe('CPL Server E2E', () => {
       .put(
         `${BASE_URL}/cpl/comments/${encodeURIComponent(
           '$:/plugins/test/e2e-admin-comment',
-        )}/${encodeURIComponent(commentData.commentId)}`,
+        )}/${encodeURIComponent(commentData.comment.id)}`,
         {
           headers: {
             'Content-Type': 'application/json',

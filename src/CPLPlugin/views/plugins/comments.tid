@@ -8,6 +8,8 @@ type: text/vnd.tiddlywiki
 
 \import [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity]] [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-comments]]
 
+\define commentsTiddler() $:/temp/CPL-Server/comments/$(pluginTitle)$
+
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
@@ -111,9 +113,8 @@ type: text/vnd.tiddlywiki
 
   <!-- Comments List -->
   <div class="cpl-comments-list">
-    <$let commentsTiddler={{{ [[$:/temp/CPL-Server/comments/]addsuffix<pluginTitle>] }}}>
-      <$list filter="[<commentsTiddler>jsonget[comments]jsonindexes[]]" variable="idx">
-      <$let commentJson={{{ [<commentsTiddler>jsonget[comments]jsonget<idx>] }}} commentUsername={{{ [<commentJson>jsonget[username]else[Anonymous]] }}} commentContent={{{ [<commentJson>jsonget[content]] }}} commentDate={{{ [<commentJson>jsonget[createdAt]] }}} commentAvatar={{{ [<commentJson>jsonget[avatar]] }}} commentStatus={{{ [<commentJson>jsonget[status]else[approved]] }}} commentId={{{ [<commentJson>jsonget[id]] }}}>
+      <$list filter="[{<<commentsTiddler>>}jsonindexes[comments]]" variable="idx">
+      <$let commentUsername={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[username]else[Anonymous]] }}} commentContent={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[content]] }}} commentDate={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[createdAt]] }}} commentAvatar={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[avatar]] }}} commentStatus={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[status]else[approved]] }}} commentId={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[id]] }}}}>
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
                 <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
@@ -155,12 +156,11 @@ type: text/vnd.tiddlywiki
           </$let>
         </$list>
       </$list>
-      <$list filter="[<commentsTiddler>jsonget[comments]jsontype[match[array]then[]else[1]]]" variable="noComments">
+      <$list filter="[{<<commentsTiddler>>}jsonindexes[comments]count[]match[0]]" variable="noComments">
         <div class="cpl-comment-empty">
           <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
         </div>
       </$list>
-    </$let>
   </div>
 </div>
 

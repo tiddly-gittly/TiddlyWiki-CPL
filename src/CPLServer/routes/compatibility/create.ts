@@ -106,6 +106,15 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
+    if (Auth.isBlocked(user)) {
+      sendError(
+        context,
+        403,
+        'Your account has been blocked by the administrator.',
+      );
+      return;
+    }
+
     if (typeof body?.description !== 'string' || !body.description.trim()) {
       sendError(context, 400, 'Missing description field');
       return;
@@ -165,7 +174,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       twVersionMax: asOptionalString(body.twVersionMax),
       conflictingPlugins,
       description,
-      status: 'pending',
+      status: 'approved',
       createdAt: timestamp,
       updatedAt: timestamp,
     };
@@ -175,7 +184,7 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     sendJson(context, 201, {
       success: true,
-      message: 'Compatibility report submitted for review',
+      message: 'Compatibility report submitted successfully',
       report,
     });
   } catch (error) {

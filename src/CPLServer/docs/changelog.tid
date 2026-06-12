@@ -4,6 +4,14 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags:
 type: text/vnd.tiddlywiki
 
+! 2026.06.12
+
+* Moderation model changed from pre-approval to block-only:
+  ** `POST /cpl/comments/:pluginTitle` now creates comments with `status: approved` by default; only users in `CPL_BLOCKED_GITHUB_IDS` receive `403 Blocked`
+  ** `POST /cpl/compatibility/:pluginTitle` now creates compatibility reports with `status: approved` by default; same block-list check
+  ** `CommentTiddlerStore.addComment` respects the incoming `status` field and writes approved comments directly to the `approved/` directory
+  ** Pending comments are still supported for backward-compat/admin review of existing pending items
+
 ! 2026.06.08
 
 * Download stats in-memory cache: `DownloadStatsTiddlerStore` now maintains an in-memory `downloadCount` cache

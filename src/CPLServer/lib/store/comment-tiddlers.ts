@@ -193,14 +193,13 @@ export const CommentTiddlerStore = {
    * Create a new comment — always goes to pending/.
    */
   addComment(pluginTitle: string, comment: CommentRecord): CommentRecord {
-    const dir = getPendingDir();
+    const dir =
+      comment.status === 'approved' ? getApprovedDir() : getPendingDir();
     ensureDir(dir);
     const filePath = getFilePath(dir, comment.id);
-    // New comments always start as pending
-    const pendingComment = { ...comment, status: 'pending' as const };
     fs.writeFileSync(
       filePath,
-      serializeCommentTiddler(pendingComment, pluginTitle),
+      serializeCommentTiddler(comment, pluginTitle),
       'utf-8',
     );
     return comment;

@@ -23,7 +23,8 @@ type: text/vnd.tiddlywiki
 * Fixed view rendering: missing `\import` for procedures causing stray `>>` characters; unbalanced `</$list>` tags; nested `<select>` onClick quote collision in database mirror dropdown
 * Fixed CPL-Server crash: replaced `new URL()` with manual query-string parsing in `stats/all` and `download-plugin` routes (TW sandbox does not provide `URL`)
 * CSS polish: suppressed TW default `tc-tab-content` borders/shadows inside CPL layout; added `border:none` to plugin cards for cleaner list appearance
-* e2e: added `CPL_ADMIN_GITHUB_IDS` to test server config; made runtime-plugin compilation mandatory in test mode to avoid stale cache; fixed commentary center admin test
+* Moderation model changed from pre-approval to block-only: new comments and compatibility reports are automatically `approved`; only users in the block list are rejected
+* e2e: added `CPL_ADMIN_GITHUB_IDS` to test server config; made runtime-plugin compilation mandatory in test mode to avoid stale cache; fixed comments center filter/tag balance and admin view test
 * CPL-Repo plugin: 215 KiB → 199 KiB (-16 KiB); startup TypeScript: 1,400+ lines → ~750 lines
 
 ! 2026.06.09

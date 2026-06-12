@@ -60,6 +60,15 @@ export const handler: RouteHandler = (request, _response, context) => {
       return;
     }
 
+    if (Auth.isBlocked(user)) {
+      sendError(
+        context,
+        403,
+        'Your account has been blocked by the administrator.',
+      );
+      return;
+    }
+
     if (typeof body?.content !== 'string') {
       sendError(context, 400, 'Missing content field');
       return;
@@ -94,7 +103,7 @@ export const handler: RouteHandler = (request, _response, context) => {
       username: user.username,
       avatar: user.avatar,
       content: WikitextFilter.sanitize(content),
-      status: 'pending',
+      status: 'approved',
       createdAt: timestamp,
       updatedAt: timestamp,
     };
@@ -104,7 +113,7 @@ export const handler: RouteHandler = (request, _response, context) => {
 
     sendJson(context, 201, {
       success: true,
-      message: 'Comment submitted for moderation',
+      message: 'Comment submitted successfully',
       comment,
     });
   } catch (error) {
