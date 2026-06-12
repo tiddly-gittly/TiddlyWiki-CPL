@@ -202,136 +202,72 @@ socat TCP-LISTEN:1081,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:1080 &
 
 The CPL client plugin follows a strict two-language boundary:
 
-* **TypeScript** handles browser-platform APIs (Blob download, OAuth CSRF/crypto), complex algorithms (recursive dependency resolution, search index building), and promise bridges that write request tiddlers for Wikitext BackgroundActions
-* **Wikitext** handles all HTTP requests (`tm-http-request`), state management, and user-facing logic through BackgroundActions and filter expressions. All network I/O goes through Wikitext — TypeScript never calls `fetch` directly
+* **Wikitext** is the entry point for all logic — user actions, network requests, state management, and view rendering all live in Wikitext. BackgroundActions handle polling and data fetching via `tm-http-request`. Procedures encapsulate reusable action sequences.
+* **TypeScript** is used only when a problem genuinely requires JavaScript: browser-only APIs (`Blob`, `crypto`), complex algorithms (recursive dependency resolution, weighted search scoring, `compareVersions`), and message handlers that respond to `rootWidget.addEventListener` events triggered by Wikitext.
 
-!!! Request Tiddler Pattern
+!!! Communication Pattern
 
-Wikitext and TypeScript communicate exclusively through named request/response tiddlers. When the UI needs to trigger a server action (submit rating, check updates, login, etc.), it writes a //request tiddler//. A BackgroundAction or TypeScript change listener picks up the request, executes it, and writes a //response tiddler// back.
+Wikitext → TypeScript flow is one-directional:
 
 ```
-View → $action-setfield → request tiddler ($:/temp/CPL-Server/xxx-request)
+View button → $action-sendmessage "cpl-xxx" (Wikitext)
                                    ↓
-            BackgroundAction (wikitext)  or  change listener (TypeScript)
+            TypeScript rootWidget.addEventListener("cpl-xxx", handler)
                                    ↓
-            tm-http-request → oncompletion → response tiddler
+            TS handler does algorithm work → writes result tiddlers
                                    ↓
-            View reads response tiddler via filter/list
+            View reads result tiddlers via filter/list
 ```
 
-Request tiddlers live under `$:/temp/CPL-Server/` or `$:/temp/CPL-Repo/`. Each request tiddler must be //cleared// (set to empty text) after processing so it can be re-triggered by the same value later.
+For data fetched by BackgroundActions:
 
-!!! BackgroundAction Conventions
-
-BackgroundActions are tiddlers tagged `$:/tags/BackgroundAction` that fire when their `track-filter` matches a change. When writing one:
-
-# `track-filter` must list //every// tiddler whose change should trigger re-evaluation. Missing dependencies = stale state.
-# Config-gated actions (auto-check updates, auto-load database) use a nested `<$list filter="[[config]get[text]match[yes]]">` guard before writing their request tiddler.
-# HTTP requests use `tm-http-request` with `oncompletion` for response handling. Use `var-*` attributes to pass context into the completion handler.
-# Use `<$let>` with nested let for derived variables (e.g. construct a response title from a token).
-# On success, write a refresh token tiddler (e.g. `all-plugin-stats-refresh-token`) that downstream BackgroundActions track.
-# On failure, write error into a status tiddler that the UI can display.
-
-Example layout for a BackgroundAction that handles a user action:
-
-```tid
-title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-xxx
-tags: $:/tags/BackgroundAction
-track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Server/xxx-request]get[text]]
-
-\whitespace trim
-<$list filter="[server-type=server] [api-base exists] [request exists] +[count[]compare:number:eq[3]]">
-<$let pluginTitle={{request!!plugin-title}}>
-<$action-sendmessage $message="tm-http-request"
-  url={{{ [[api-base]addsuffix[/cpl/xxx/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
-  method="POST" header-Content-Type="application/json"
-  body={{{ ... }}}
-  var-pluginTitle=<<pluginTitle>>
-  oncompletion="""<$list filter='[<status>gteq[200]lt[300]]'>
-<$action-setfield $tiddler='...-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}}/>
-</$list>
-<$action-setfield $tiddler='$:/temp/CPL-Server/xxx-request' text='' plugin-title=''/>
-"""/>
-</$let>
-</$list>
 ```
-
-!!! State Tiddlers
-
-Server-derived state is stored in tiddlers under `$:/temp/CPL-Server/` and `$:/temp/CPL-Repo/`. These are //not persisted// — they are cleared on wiki reload.
-
-|!Tiddler|!Purpose|!Written by|
-|`$:/temp/CPL-Repo/server-type`|`server`, `unreachable`, or `unknown`|`auto-probe-server` on probe result|
-|`$:/temp/CPL-Repo/api-status`|`available`, `unavailable`, `checking`|`auto-sync-server-config` and `auto-probe-server`|
-|`$:/temp/CPL-Server/api-base`|Server origin URL for HTTP requests|`auto-sync-server-config`|
-|`$:/temp/CPL-Server/user-status`|`authenticated` or `anonymous`|`auto-fetch-auth-state`|
-|`$:/temp/CPL-Server/is-admin`|`yes` or `no`|`auto-fetch-auth-state` and `auto-logout`|
-|`$:/temp/CPL-Server/github-client-id`|GitHub OAuth client ID|`auto-fetch-auth-state`|
-
-!!! Adding a New API Endpoint
-
-# If the endpoint returns data for Wikitext consumption only, create a BackgroundAction tiddler that:
-## Writes `tm-http-request` with the endpoint URL
-## In `oncompletion`, writes the response into a result tiddler
-## Tracks a refresh token so views can detect new data
-# If the endpoint is called //programmatically// from TypeScript (e.g. `$tw.cpl.getStats()`):
-## Add a request constant to `constants.ts` (e.g. `XXX_REQUEST_TITLE`, `XXX_RESPONSE_PREFIX`)
-## Add a BackgroundAction that reads the request tiddler and writes the response
-## In `api-client.ts`, add the bridge method that writes the request tiddler and registers a callback in `setupApiResponseBridge`
-# Views read result tiddlers with standard list/filter widgets. Do not call TypeScript functions directly in view logic.
+BackgroundAction → tm-http-request → oncompletion → $action-sendmessage "cpl-process-xxx" data=<<data>>
+                                                           ↓
+                               TypeScript handler → builds index / compares versions → writes result tiddlers
+```
 
 !!! TypeScript Module Responsibilities
 
 |!File|!Responsibility|!Keep as TS because|
-|`startup/api-client.ts`|Response bridge (`$tw.cpl.getStats`/`recordDownload`), OAuth handler, login request listener|Promise callback bridge, crypto, URL parsing|
-|`startup/api-client/oauth.ts`|GitHub OAuth CSRF state + sessionStorage + redirect + callback URL|`crypto.getRandomValues`, `sessionStorage`, `window.location`|
-|`startup/api-client/comment-processor.ts`|Splits JSON comment arrays into per-comment tiddlers|Filter operator limits — cannot iterate arbitrary JSON arrays in Wikitext|
-|`startup/core.ts`|Change listener dispatches request tiddlers to update/install/index/download controllers; initializes repo fetch bridge|`Blob`, `URL.createObjectURL`, `document`|
-|`startup/core/bridge.ts`|Utility exports only: `getCurrentRepoEntry`, `formatPluginTitle`, `getEventParam`, `getFieldString`|Pure functions, no side effects|
-|`startup/core/install.ts`|Recursive dependency resolution + tiddler creation; uses direct `fetch()` for plugin metadata/JSON|Complex async tree traversal|
-|`startup/core/index.ts`|Listens for `plugin-index-raw` (written by Wikitext `auto-fetch-plugin-index` BackgroundAction); builds search index + search/scoring logic|In-memory index structure, regex search|
-|`startup/core/update.ts`|Listens for `plugin-update-raw` (written by Wikitext `auto-fetch-update-json` BackgroundAction); version comparison + auto-schedule timer that writes `update-check-request`|`setInterval`, version comparison|
-|`startup/build-status-poll.ts`|Build status polling timer + badge state|`setInterval`, `AbortController`|
+|`startup/server-init.ts`|Server config sync + OAuth handler; `$tw.cpl` backward-compat stub|`window.location`, crypto|
+|`startup/oauth.ts`|GitHub OAuth CSRF state + sessionStorage + redirect + callback|`crypto.getRandomValues`, `sessionStorage`|
+|`startup/repo.ts`|Pure utilities: `getCurrentRepoEntry`, `formatPluginTitle`|Pure functions, no side effects|
+|`startup/plugin-install.ts`|Listens for `cpl-install-plugin-request` message; recursive dependency resolution + direct `fetch()` for plugin JSON|Complex async tree traversal|
+|`startup/plugin-index.ts`|Listens for `cpl-process-plugin-index` message; builds in-memory search index + weighted scoring; listens for `cpl-search-plugins`|In-memory Map structure, regex search|
+|`startup/plugin-update.ts`|Listens for `cpl-process-update-json` message; version comparison via `tw.utils.compareVersions`|`compareVersions` TS API|
+|`startup/types.ts`|Shared TypeScript type definitions|—|
+|`startup/constants.ts`|Tiddler title string constants (5 entries)|—|
 
 !!! Directory Structure
 
 ```
 src/CPLPlugin/
 ├── startup/
-│   ├── api-client.ts          # API bridge + OAuth handler
-│   ├── core.ts                # Change listener + request dispatcher
-│   ├── build-status-poll.ts   # Build status polling
-│   ├── api-client/
-│   │   ├── constants.ts       # All tiddler title constants
-│   │   ├── types.ts           # CplServerApi interface + type definitions
-│   │   ├── oauth.ts           # GitHub OAuth
-│   │   ├── comment-processor.ts
-│   │   └── utilities.ts       # Params extraction, status helpers
-│   └── core/
-│       ├── bridge.ts          # Utilities (repo URL, title formatting, param helpers)
-│       ├── index.ts           # Plugin index
-│       ├── install.ts         # Plugin installation
-│       ├── update.ts          # Update checking
-├── background-actions/        # Wikitext BackgroundAction tiddlers
-│   ├── auto-submit-rating.tid
-│   ├── auto-submit-comment.tid
-│   ├── auto-submit-compatibility.tid
-│   ├── auto-moderate-comment.tid
-│   ├── auto-moderate-compatibility.tid
-│   ├── auto-logout.tid
-│   ├── auto-record-download.tid
-│   ├── auto-api-get-stats.tid
-│   ├── auto-api-record-download.tid
-│   ├── auto-probe-server.tid
+│   ├── server-init.ts           # Config sync + OAuth init
+│   ├── repo.ts                  # Repo URL + title formatting utilities
+│   ├── plugin-index.ts          # Plugin index building + search
+│   ├── plugin-install.ts        # Plugin installation (message-driven)
+│   ├── plugin-update.ts         # Update check (message-driven)
+│   ├── oauth.ts                 # GitHub OAuth
+│   ├── types.ts                 # Shared TS types
+│   └── constants.ts             # Tiddler title constants
+├── background-actions/          # Wikitext BackgroundAction tiddlers
+│   ├── auto-fetch-plugin-index.tid
+│   ├── auto-fetch-update-json.tid
+│   ├── auto-fetch-all-stats.tid
 │   ├── auto-fetch-auth-state.tid
 │   ├── auto-fetch-comments.tid
-│   ├── auto-sync-server-config.tid
-│   ├── auto-load-database.tid
-│   ├── auto-check-updates.tid
-│   ├── auto-check-updates-on-layout.tid
-│   └── auto-fetch-repo-file.tid
-├── views/                     # Wikitext views — no tm-http-request, no $action-sendmessage to TypeScript
-├── templates/                 # Wikitext templates and modals
-├── layout/                    # Wikitext layout components
-└── notifications/             # Wikitext notification templates
+│   ├── auto-fetch-plugin-activity.tid
+│   ├── auto-probe-server.tid
+│   ├── auto-record-download.tid
+│   └── auto-sync-server-config.tid
+├── procedures/                  # Wikitext procedure tiddlers
+│   ├── fetch-all-stats.tid
+│   ├── fetch-comments.tid
+│   └── fetch-plugin-activity.tid
+├── views/                       # Wikitext views
+├── templates/                   # Wikitext templates and modals
+├── layout/                      # Wikitext layout components
+└── notifications/               # Wikitext notification templates
 ```

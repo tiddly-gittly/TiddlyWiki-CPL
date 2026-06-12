@@ -4,20 +4,27 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags:
 type: text/vnd.tiddlywiki
 
-! 2026.06.11
+! 2026.06.12
 
-* Architecture refactoring: migrated the core trigger layer from `rootWidget.addEventListener('cpl-*')` to request tiddler + BackgroundAction pattern, eliminating all `$action-sendmessage` with `cpl-*` / `tm-http-request` messages
-* Removed 5 TS files no longer needed: `api.ts`, `http.ts`, `auth.ts`, `server-status.ts`, `state.ts`, reducing ~520 lines of frontend JavaScript
-* Added 10 Wikitext BackgroundAction tiddlers: rating submission, comment submission, compatibility submission, comment moderation, compatibility moderation, logout, download recording, stats query, server config sync
-* Server probing, auth state sync, and mirror config sync are now fully Wikitext BackgroundAction-driven instead of TypeScript polling/timers
-* All view-layer `$action-sendmessage` replaced with `$action-setfield` writing to request tiddlers, picked up by corresponding BackgroundActions
-* `$tw.cpl` API simplified to `getStats` and `recordDownload`, communicating with Wikitext through a request tiddler → BackgroundAction → response tiddler bridge pattern
-* Auto-update checking and auto-load database are now gated behind config tiddler `match[yes]` guards instead of firing unconditionally at render time
-* e2e test infrastructure fixes: Windows-safe recursive directory removal (with retries), test host alignment, mock repo URL injection
-* Removed iframe postMessage bridge (~180 lines) — all three pre-configured mirrors (Netlify, GitHub Pages, cpl.tidgi.fun) support CORS; `cpl()` now uses direct `fetch` exclusively
-* Replaced entire `cpl()` function and `static-mirror-fetch.ts` with generic `repoFetch()` bridge — writes request tiddlers picked up by `auto-fetch-repo-file` BackgroundAction; all repo data fetches (index, update, query, install) now go through Wikitext `tm-http-request` instead of direct TypeScript `fetch`
-* Deleted `static-mirror-fetch.ts` (~100 lines) — `formatPluginTitle` moved to `bridge.ts`; `fetchPluginFromStaticMirrors` and `STATIC_MIRROR_BASES` retired
-* Inverted the data-fetch architecture: `repoFetch()` bridge removed — all network I/O now originates in Wikitext BackgroundActions (`auto-fetch-plugin-index`, `auto-fetch-update-json`) via `tm-http-request`; TypeScript modules (`index.ts`, `update.ts`, `install.ts`) listen for raw response tiddlers and perform algorithmic processing only
+* Architecture overhaul: Wikitext is now the single entry point for all logic — every user action and network request originates in Wikitext; TypeScript is reduced to pure algorithmic modules that register message handlers and respond via `rootWidget.addEventListener`
+* Eliminated all RPC round-trips: BackgroundActions no longer proxy button clicks through request tiddlers; buttons call procedures or send messages directly (e.g. rating stars, moderation buttons, comment submit, logout)
+* Removed `core.ts` (the last central controller) — install/index/update/search/download each self-start as independent modules
+* Deleted 6 dead files: `static-mirror-fetch.ts` (~100 lines), `comment-processor.ts` (~120 lines), `build-status-poll.ts` (~110 lines), `build-status-badge.tid`, `auto-fetch-build-status.tid`, `download-plugin.ts`
+* Removed iframe postMessage bridge (~180 lines) — all three mirrors (Netlify, GitHub Pages, cpl.tidgi.fun) support CORS; repo access now uses Wikitext `tm-http-request` exclusively
+* Replaced `$tw.cpl` JS API with Wikitext `cpl-process-plugin-index` / `cpl-process-update-json` message handlers; `$tw.cpl` reduced to empty stub for e2e backward-compat
+* Comment views now use native `jsonindexes[]` / `jsonget[]` filter operators instead of a JS comment-to-tiddler pre-processor
+* Replaced all `$action-setfield` + BackgroundAction refresh-token RPC with procedures: `fetch-all-stats`, `fetch-plugin-activity`, `fetch-comments`
+* `install.ts` and `plugin-index.ts` search changed to `rootWidget.addEventListener` — view buttons send `cpl-install-plugin-request` / `cpl-search-plugins` messages directly
+* Removed auto-update timer — update check now fires only when user enters the Updates tab
+* Flattened startup directory structure: merged types, eliminated `api-client/` and `core/` sub-directories
+* Renamed BackgroundActions for clarity: `auto-load-database` → `auto-fetch-plugin-index`, `auto-check-updates` → `auto-fetch-update-json`; deleted duplicate `auto-check-updates-on-layout`
+* Cleaned up constants: removed 16 unused tiddler title constants
+* Fixed TID formatting: removed redundant `created`/`modified`/`type`/`\whitespace trim` from all BackgroundActions
+* Fixed view rendering: missing `\import` for procedures causing stray `>>` characters; unbalanced `</$list>` tags; nested `<select>` onClick quote collision in database mirror dropdown
+* Fixed CPL-Server crash: replaced `new URL()` with manual query-string parsing in `stats/all` and `download-plugin` routes (TW sandbox does not provide `URL`)
+* CSS polish: suppressed TW default `tc-tab-content` borders/shadows inside CPL layout; added `border:none` to plugin cards for cleaner list appearance
+* e2e: added `CPL_ADMIN_GITHUB_IDS` to test server config; made runtime-plugin compilation mandatory in test mode to avoid stale cache; fixed commentary center admin test
+* CPL-Repo plugin: 215 KiB → 199 KiB (-16 KiB); startup TypeScript: 1,400+ lines → ~750 lines
 
 ! 2026.06.09
 
