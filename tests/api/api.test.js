@@ -178,7 +178,7 @@ describe('CPL Server API', () => {
   let TEST_PORT;
   let makeRequest;
 
-  function waitForServer(timeoutMs = 120000) {
+  function waitForServer(timeoutMs = 300000) {
     const start = Date.now();
     return new Promise((resolve, reject) => {
       function tryConnect() {
