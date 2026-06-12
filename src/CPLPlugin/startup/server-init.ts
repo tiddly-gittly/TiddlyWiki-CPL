@@ -2,7 +2,6 @@ import { tw } from './types';
 import { SERVER_PROBE_REFRESH_TITLE } from './constants';
 import { setupCommentJsonProcessor } from './comment-processor';
 import { handleGithubLogin, handleOAuthCallback } from './oauth';
-import { startBuildStatusPolling } from './build-status-poll';
 
 export const name = 'cpl-server-api-client';
 export const platforms = ['browser'];
@@ -37,9 +36,6 @@ export const startup = (): void => {
     title: SERVER_PROBE_REFRESH_TITLE,
     text: String(Date.now()),
   });
-
-  // Start polling build status for the badge widget
-  startBuildStatusPolling();
 
   // Process comment JSON into individual tiddlers for safe filter iteration
   setupCommentJsonProcessor();

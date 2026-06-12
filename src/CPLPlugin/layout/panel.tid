@@ -9,7 +9,6 @@ type: text/vnd.tiddlywiki
 <$list filter="[<listItem>!match[$:/core/ui/SideBarSegments/tabs]]">
 {{$:/plugins/Gk0Wk/CPL-Repo/layout/action-bar}}
 {{$:/plugins/Gk0Wk/CPL-Repo/views/system/status-panel}}
-{{$:/plugins/Gk0Wk/CPL-Repo/views/system/build-status-badge}}
 </$list>
 
 <$macrocall
