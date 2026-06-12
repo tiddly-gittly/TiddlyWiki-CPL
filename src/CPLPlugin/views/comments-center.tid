@@ -76,8 +76,8 @@ type: text/vnd.tiddlywiki
                 body='{"status":"approved"}'
                 var-pluginTitle=<<pluginTitle>>
                 oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-plugin-activity pluginTitle>>
+<<cpl-fetch-comments>>
 </$list>
 """/>
               <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
@@ -89,8 +89,8 @@ type: text/vnd.tiddlywiki
                 body='{"status":"rejected"}'
                 var-pluginTitle=<<pluginTitle>>
                 oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-plugin-activity pluginTitle>>
+<<cpl-fetch-comments>>
 </$list>
 """/>
               <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
@@ -102,8 +102,8 @@ type: text/vnd.tiddlywiki
                 body='{"status":"deleted"}'
                 var-pluginTitle=<<pluginTitle>>
                 oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-plugin-activity pluginTitle>>
+<<cpl-fetch-comments>>
 </$list>
 """/>
               <$text text={{{ [<chinese>match[yes]then[删除]else[Delete]] }}}/>
@@ -111,7 +111,7 @@ type: text/vnd.tiddlywiki
           </div>
           <div class="cpl-moderation-refresh-hint">
             <$button class="tc-btn-invisible">
-              <$action-setfield $tiddler="$:/temp/CPL-Server/comments-center-refresh-token" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+<<cpl-fetch-comments>>
               <$text text={{{ [<chinese>match[yes]then[审核后点此刷新]else[Click to refresh after moderation]] }}}/>
             </$button>
           </div>
@@ -150,7 +150,7 @@ type: text/vnd.tiddlywiki
       🕐 <$text text={{{ [<chinese>match[yes]then[最新评论]else[Recent Comments]] }}}/>
     </h3>
     <$button class="tc-btn-invisible cpl-inline-button-link">
-      <$action-setfield $tiddler="$:/temp/CPL-Server/comments-center-refresh-token" text={{{ [<now "0hh:0mm:0ss.XYZ"]] }}}/>
+<<cpl-fetch-comments>>
       🔄 <$text text={{{ [<chinese>match[yes]then[刷新]else[Refresh]] }}}/>
     </$button>
   </div>
@@ -201,8 +201,8 @@ type: text/vnd.tiddlywiki
                         body='{"status":"approved"}'
                         var-pluginTitle=<<commentPlugin>>
                         oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<commentPlugin>>/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<commentPlugin>>/>
+<<cpl-fetch-plugin-activity commentPlugin>>
+<<cpl-fetch-comments>>
 </$list>
 """/>
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
@@ -214,8 +214,8 @@ type: text/vnd.tiddlywiki
                         body='{"status":"rejected"}'
                         var-pluginTitle=<<commentPlugin>>
                         oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<commentPlugin>>/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/comments-center-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<commentPlugin>>/>
+<<cpl-fetch-plugin-activity commentPlugin>>
+<<cpl-fetch-comments>>
 </$list>
 """/>
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>

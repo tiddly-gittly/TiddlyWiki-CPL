@@ -11,7 +11,7 @@ track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api
   body="{}"
   header-Content-Type="application/json"
   var-pluginTitle=<<pluginTitle>>
-  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>"/>
+  oncompletion="<<cpl-fetch-all-stats>>"/>
 </$list>
 </$let>
 </$list>

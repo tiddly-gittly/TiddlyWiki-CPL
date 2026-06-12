@@ -120,7 +120,7 @@ type: text/vnd.tiddlywiki
             var-statusTiddler=<<statusTiddler>>
             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-all-stats>>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -138,7 +138,7 @@ type: text/vnd.tiddlywiki
             var-statusTiddler=<<statusTiddler>>
             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-all-stats>>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -156,7 +156,7 @@ type: text/vnd.tiddlywiki
             var-statusTiddler=<<statusTiddler>>
             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-all-stats>>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -174,7 +174,7 @@ type: text/vnd.tiddlywiki
             var-statusTiddler=<<statusTiddler>>
             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-all-stats>>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -192,7 +192,7 @@ type: text/vnd.tiddlywiki
             var-statusTiddler=<<statusTiddler>>
             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-all-stats>>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -291,7 +291,7 @@ type: text/vnd.tiddlywiki
                             body='{"status":"approved"}'
                             var-pluginTitle=<<cpTitle>>
                             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-plugin-activity pluginTitle>>
 </$list>
 """/>
                           <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
@@ -303,7 +303,7 @@ type: text/vnd.tiddlywiki
                             body='{"status":"rejected"}'
                             var-pluginTitle=<<cpTitle>>
                             oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-plugin-activity pluginTitle>>
 </$list>
 """/>
                           <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
@@ -379,7 +379,7 @@ type: text/vnd.tiddlywiki
                   oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text='success'/>
 <$action-deletetiddler $tiddler=<<draftTiddler>>/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/plugin-activity-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}} plugin-title=<<pluginTitle>>/>
+<<cpl-fetch-plugin-activity pluginTitle>>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
 <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>

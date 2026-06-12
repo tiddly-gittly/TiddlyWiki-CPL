@@ -1,0 +1,22 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity
+
+\procedure cpl-fetch-plugin-activity(pluginTitle)
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/changelog/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/plugin-changelog/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility/]] }}}
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+\end
