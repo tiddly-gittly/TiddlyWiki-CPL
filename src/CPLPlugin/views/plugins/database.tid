@@ -18,13 +18,14 @@ type: text/vnd.tiddlywiki
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
   method="GET"
-  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
-</$list>
-<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
-</$list>
-"""/>
+  oncompletion="""
+    <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+    <$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
+    </$list>
+    <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+    <$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+    </$list>
+    """/>
 """>
 <$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/static-repos}enlist-input[]]" variable="repo">
 <option value=<<repo>>><$text text=<<repo>>/></option>
@@ -49,13 +50,14 @@ type: text/vnd.tiddlywiki
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
   method="GET"
-  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
-</$list>
-<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
-</$list>
-"""/>
+  oncompletion="""
+    <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+    <$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
+    </$list>
+    <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+    <$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+    </$list>
+    """/>
 {{$:/core/images/download-button}}
 &#32;
 <$text text={{{ [[$:/temp/CPL-Repo/plugins-index]is[tiddler]] :then[<chinese>match[yes]then[刷新数据库]else[Refresh Database]] :else[<chinese>match[yes]then[加载数据库]else[Load Database]] }}} />

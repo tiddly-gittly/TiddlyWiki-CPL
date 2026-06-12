@@ -8,27 +8,25 @@ track-filter: [[$:/temp/CPL-Server/auth-refresh-token]get[text]] [[$:/temp/CPL-R
   url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/auth/config]] }}}
   method="GET"
   oncompletion="""<$action-setfield $tiddler='$:/temp/CPL-Server/auth-config-response' text=<<data>> type='application/json'/>
-<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/github-client-id' text={{{ [<data>jsonget[githubClientId]trim[]] }}}/>
-</$list>
-<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-<$action-deletetiddler $tiddler='$:/temp/CPL-Server/github-client-id'/>
-</$list>
-"""/>
+  <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/github-client-id' text={{{ [<data>jsonget[githubClientId]trim[]] }}}/>
+  </$list>
+  <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+    <$action-deletetiddler $tiddler='$:/temp/CPL-Server/github-client-id'/>
+  </$list>"""/>
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/auth/status]] }}}
   method="GET"
   oncompletion="""<$action-setfield $tiddler='$:/temp/CPL-Server/auth-status-response' text=<<data>> type='application/json'/>
-<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]] [<data>jsonget[authenticated]match[true]] +[count[]compare:number:eq[2]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='authenticated'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/user' text={{{ [<data>jsonget[user]else[{}]] }}} type='application/json'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text={{{ [<data>jsonget[isAdmin]match[true]then[yes]else[no]] }}}/>
-</$list>
-<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] [<data>jsonget[authenticated]!match[true]] +[limit[1]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
-<$action-deletetiddler $tiddler='$:/temp/CPL-Server/user'/>
-</$list>
-"""/>
+  <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]] [<data>jsonget[authenticated]match[true]] +[count[]compare:number:eq[2]]'>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='authenticated'/>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/user' text={{{ [<data>jsonget[user]else[{}]] }}} type='application/json'/>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text={{{ [<data>jsonget[isAdmin]match[true]then[yes]else[no]] }}}/>
+  </$list>
+  <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] [<data>jsonget[authenticated]!match[true]] +[limit[1]]'>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
+    <$action-deletetiddler $tiddler='$:/temp/CPL-Server/user'/>
+  </$list>"""/>
 </$list>
 </$list>

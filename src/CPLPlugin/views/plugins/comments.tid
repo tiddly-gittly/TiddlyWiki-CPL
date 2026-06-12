@@ -32,11 +32,12 @@ type: text/vnd.tiddlywiki
         <$action-sendmessage $message="tm-http-request"
           url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/auth/logout]] }}}
           method="POST" header-Content-Type="application/json" body="{}"
-          oncompletion="""<$action-deletetiddler $tiddler='$:/temp/CPL-Server/user'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
-<$action-setfield $tiddler='$:/temp/CPL-Server/auth-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}}/>
-"""/>
+          oncompletion="""
+            <$action-deletetiddler $tiddler='$:/temp/CPL-Server/user'/>
+            <$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='anonymous'/>
+            <$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text='no'/>
+            <$action-setfield $tiddler='$:/temp/CPL-Server/auth-refresh-token' text={{{ [<now '0hh:0mm:0ss.XYZ'] ] }}}/>
+            """/>
         <$text text={{{ [<chinese>match[yes]then[退出登录]else[Logout]] }}}/>
       </$button>
     </div>
@@ -56,16 +57,17 @@ type: text/vnd.tiddlywiki
             body={{{ [<draftText>get[text]jsonstringify[]addprefix[{"content":]addsuffix[}]] }}}
             var-pluginTitle=<<pluginTitle>>
             var-statusTitle=<<statusTitle>>
-            oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Server/comment-draft' text=''/>
-<$action-setfield $tiddler=<<statusTitle>> text='success'/>
-<<cpl-fetch-plugin-activity pluginTitle>>
-<<cpl-fetch-comments>>
-</$list>
-<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-<$action-setfield $tiddler=<<statusTitle>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
-</$list>
-"""/>
+            oncompletion="""
+              <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+              <$action-setfield $tiddler='$:/temp/CPL-Server/comment-draft' text=''/>
+              <$action-setfield $tiddler=<<statusTitle>> text='success'/>
+              <<cpl-fetch-plugin-activity pluginTitle>>
+              <<cpl-fetch-comments>>
+              </$list>
+              <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+              <$action-setfield $tiddler=<<statusTitle>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+              </$list>
+              """/>
           <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>
         </$button>
         </$let>
@@ -132,11 +134,12 @@ type: text/vnd.tiddlywiki
                         method="PUT" header-Content-Type="application/json"
                         body='{"status":"approved"}'
                         var-pluginTitle=<<pluginTitle>>
-                        oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<<cpl-fetch-plugin-activity pluginTitle>>
-<<cpl-fetch-comments>>
-</$list>
-"""/>
+                        oncompletion="""
+                          <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+                          <<cpl-fetch-plugin-activity pluginTitle>>
+                          <<cpl-fetch-comments>>
+                          </$list>
+                          """/>
                       <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
                     </$button>
                     <$button class="tc-btn-secondary cpl-moderation-reject-btn">
@@ -145,11 +148,12 @@ type: text/vnd.tiddlywiki
                         method="PUT" header-Content-Type="application/json"
                         body='{"status":"rejected"}'
                         var-pluginTitle=<<pluginTitle>>
-                        oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<<cpl-fetch-plugin-activity pluginTitle>>
-<<cpl-fetch-comments>>
-</$list>
-"""/>
+                        oncompletion="""
+                          <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+                          <<cpl-fetch-plugin-activity pluginTitle>>
+                          <<cpl-fetch-comments>>
+                          </$list>
+                          """/>
                       <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
                     </$button>
                   </div>

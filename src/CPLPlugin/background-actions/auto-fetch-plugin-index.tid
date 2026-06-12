@@ -6,10 +6,8 @@ track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout
   url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
   method="GET"
   oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-<$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
+  <$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
-</$list>
-""/>
-
+  <$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>"""/>
