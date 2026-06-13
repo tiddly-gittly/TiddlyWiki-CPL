@@ -35,19 +35,19 @@ type: text/vnd.tiddlywiki
 </div>
 </$list>
 <!-- 错误提示 -->
-<$list filter="[[$:/temp/CPL-Repo/updaing]is[tiddler]!field:text[yes]]">
+<$list filter="[[$:/temp/CPL-Repo/updating]is[tiddler]!field:text[yes]]">
 <div class="cpl-status-banner cpl-status-banner-error cpl-status-banner-large">
 	<$text text={{{ [<chinese>match[yes]then[出现了一些问题]else[Some errors occured]] }}}/>: <$text text={{!!text}}/>
 	<$text text={{{ [<chinese>match[yes]then[请尝试刷新]else[Please try refreshing]] }}}/>
 </div>
 </$list>
 <!-- 加载中提示 -->
-<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updaing]is[tiddler]field:text[yes]] +[limit[1]]">
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updating]is[tiddler]field:text[yes]] +[limit[1]]">
 <div class="cpl-status-banner cpl-status-banner-loading cpl-status-banner-large">
 	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
 </div>
 </$list>
-<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updaing]is[tiddler]field:text[yes]] +[limit[1]]">
+<$list filter="[[$:/temp/CPL-Repo/getting-plugins-index]is[tiddler]field:text[yes]] [[$:/temp/CPL-Repo/updating]is[tiddler]field:text[yes]] +[limit[1]]">
 <div class="cpl-status-banner cpl-status-banner-loading cpl-status-banner-large">
 	<$text text={{{ [<chinese>match[yes]then[加载中...]else[Loading...]] }}}/>
 </div>
