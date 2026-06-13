@@ -49,7 +49,7 @@ type: text/vnd.tiddlywiki
 \whitespace trim
 \import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/size
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
-<div class="$class$" style="margin-bottom: 8px;">
+<div class="$class$">
 <$let json=<<__json__>>>
 <$let
     title={{{ [<json>jsonget[title]] }}}

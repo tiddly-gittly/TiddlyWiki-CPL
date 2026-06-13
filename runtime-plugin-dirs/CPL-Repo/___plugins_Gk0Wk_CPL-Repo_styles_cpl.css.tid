@@ -10,8 +10,7 @@ type: text/vnd.tiddlywiki
 }
 
 .cpl-plugin-info-box {
-  border: 1px solid <<colour tiddler-info-border>>;
-  background-color: <<colour tiddler-info-background>>;
+  overflow: hidden;
 }
 
 .cpl-plugin-info-box > .tc-plugin-info-dropdown > .tc-plugin-info-dropdown-body {

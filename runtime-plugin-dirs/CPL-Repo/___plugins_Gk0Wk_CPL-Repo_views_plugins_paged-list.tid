@@ -36,7 +36,7 @@ type: text/vnd.tiddlywiki
         $name="plugin-list-item"
         json={{{ [{$:/temp/CPL-Repo/plugins-index}jsonextract<plugin>] }}}
         field="$field$"
-        class="cpl-plugin-info-box"
+        class="cpl-plugin-list-item"
     />
     </$list>
 </div>
