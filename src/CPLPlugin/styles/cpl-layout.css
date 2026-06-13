@@ -2,6 +2,10 @@
   overflow: hidden;
 }
 
+.cpl-plugin-list-item {
+  margin-bottom: 8px;
+}
+
 /* Suppress TW's default border/shadow on tab content */
 .cpl-layout-container .tc-tab-content,
 .cpl-layout-container .tc-reveal,
