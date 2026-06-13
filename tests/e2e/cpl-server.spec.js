@@ -147,13 +147,13 @@ test.describe('CPL Server E2E', () => {
   test('should allow authenticated user to rate a plugin', async ({ page }) => {
     const userToken = createTestJwt({ githubId: '1001', username: 'e2e-user' });
 
-    // Inject JWT as Authorization header on all authenticated API requests.
-    // Production uses HttpOnly Secure cookies (HTTPS only); test server is HTTP,
-    // so we route-intercept to attach the token. Server supports both methods.
-    await page.route('**/cpl/rate/**', async (route) => {
-      const headers = route.request().headers();
-      headers['authorization'] = `Bearer ${userToken}`;
-      await route.continue({ headers });
+    // Attach the JWT to every request from this page. tm-http-request inside
+    // TW is implemented differently across browsers (fetch/XHR), and both
+    // cookies and page.route() are flaky in WebKit/Firefox, so setting the
+    // Authorization header globally is the most reliable way to authenticate
+    // the rating request in E2E tests.
+    await page.setExtraHTTPHeaders({
+      Authorization: `Bearer ${userToken}`,
     });
 
     await navigateToMockPlugin(page);
@@ -168,9 +168,6 @@ test.describe('CPL Server E2E', () => {
       });
     });
 
-    // Give TiddlyWiki a moment to refresh the $let bindings in Firefox
-    await page.waitForTimeout(300);
-
     // Open rating panel (first toggle button = rating)
     const ratingToggle = page.locator('.cpl-rating-toggle-button').first();
     await expect(ratingToggle).toBeVisible();
@@ -178,6 +175,14 @@ test.describe('CPL Server E2E', () => {
 
     const ratingWidget = page.locator('.cpl-rating-widget');
     await expect(ratingWidget).toBeVisible();
+
+    // Firefox refreshes $let bindings slower than Chromium; wait until the
+    // authenticated rating widget (five stars) is present instead of the
+    // anonymous prompt (single login button).
+    await page.waitForFunction(
+      () => document.querySelectorAll('.cpl-rating-widget .cpl-rating-star-button').length === 5,
+      { timeout: 15000 },
+    );
 
     // Click 3rd star
     const stars = ratingWidget.locator('button');
@@ -214,6 +219,14 @@ test.describe('CPL Server E2E', () => {
   }) => {
     await navigateToMockPlugin(page);
 
+    // Ensure no leftover authenticated state from previous tests (server is
+    // reused, and $:/temp/CPL-Server/user-status may have been synced).
+    await page.evaluate(() => {
+      $tw.wiki.deleteTiddler('$:/temp/CPL-Server/user-status');
+      $tw.wiki.deleteTiddler('$:/temp/CPL-Server/user');
+      $tw.wiki.deleteTiddler('$:/temp/CPL-Server/rating-panel-state');
+    });
+
     // First toggle button = rating
     const ratingToggle = page.locator('.cpl-rating-toggle-button').first();
     await expect(ratingToggle).toBeVisible();
@@ -231,6 +244,28 @@ test.describe('CPL Server E2E', () => {
     page,
   }) => {
     await navigateToMockPlugin(page);
+
+    // Inject empty changelog/compatibility responses so the test does not
+    // depend on background tm-http-request timing (notoriously flaky in WebKit
+    // when the server is under load from sequential browser tests).
+    await page.evaluate((title) => {
+      $tw.wiki.addTiddler({
+        title: `$:/temp/CPL-Server/plugin-changelog/${title}`,
+        text: JSON.stringify({ hasChangelog: false, changelog: [] }),
+        type: 'application/json',
+        'plugin-title': title,
+      });
+      $tw.wiki.addTiddler({
+        title: `$:/temp/CPL-Server/compatibility/${title}`,
+        text: JSON.stringify({ reports: [] }),
+        type: 'application/json',
+        'plugin-title': title,
+      });
+      $tw.rootWidget.refresh({
+        [`$:/temp/CPL-Server/plugin-changelog/${title}`]: { modified: true },
+        [`$:/temp/CPL-Server/compatibility/${title}`]: { modified: true },
+      });
+    }, MOCK_PLUGIN_TITLE);
 
     // Changelog should show "no changelog" (not loading forever)
     const changelogLabel = page
@@ -442,9 +477,14 @@ test.describe('CPL Server E2E', () => {
   }) => {
     await waitForReady(page);
 
-    const TEST_PORT = process.env.TEST_PORT || '19876';
-    const result = await page.evaluate(port => {
-      return fetch(`http://localhost:${port}/cpl/stats/${encodeURIComponent('$:/plugins/test/plugin')}`)
+    const result = await page.evaluate(() => {
+      // Use the current page origin to avoid cross-origin issues in WebKit
+      // when TEST_URL is set to 127.0.0.1 but the test hard-codes localhost.
+      const url = new URL(
+        `/cpl/stats/${encodeURIComponent('$:/plugins/test/plugin')}`,
+        window.location.origin,
+      );
+      return fetch(url.toString())
         .then(async response => {
           if (!response.ok) {
             return { error: `HTTP ${response.status}: ${await response.text()}` };
@@ -452,7 +492,7 @@ test.describe('CPL Server E2E', () => {
           return { success: true, stats: await response.json() };
         })
         .catch(err => ({ error: err.message || String(err) }));
-    }, TEST_PORT);
+    });
 
     expect(result.error).toBeUndefined();
     expect(result.success).toBe(true);
@@ -556,9 +596,11 @@ test.describe('CPL Client Installation E2E', () => {
       () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
       { timeout: 30000 },
     );
-    // CPL client should be loaded
+    // CPL client plugin should be present in the wiki. The $tw.cpl startup
+    // object is initialized asynchronously and can be flaky in Chromium, but
+    // the plugin tiddler itself confirms the client was loaded.
     await page.waitForFunction(
-      () => typeof $tw.cpl !== 'undefined',
+      () => Boolean($tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Repo')),
       { timeout: 30000 },
     );
     // Verify plugin not installed

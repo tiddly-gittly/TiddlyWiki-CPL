@@ -112,39 +112,66 @@ function extractPluginJsonToDir(jsonPath: string, outDir: string): void {
 }
 
 function ensureRuntimePluginsBuilt(): RuntimePluginFiles {
-  // In test mode, always rebuild to avoid stale caches from previous runs.
   const isTestMode = process.env.CPL_TEST_MODE === 'true';
-  if (!isTestMode && hasBuiltRuntimePlugins && hasRuntimePluginOutput()) {
-    return runtimePluginFiles;
-  }
+  const forceRebuild = process.env.CPL_FORCE_RUNTIME_REBUILD === 'true';
 
-  fs.mkdirSync(RUNTIME_PLUGIN_DIR, { recursive: true });
-
-  const buildResult = spawnSync(
-    process.execPath,
-    [
-      PLUGIN_DEV_ENTRY,
-      'build',
-      '--output',
-      RUNTIME_PLUGIN_DIR,
-      '--wiki',
-      'wiki',
-      '--src',
-      'src',
-    ],
-    {
-      cwd: paths.projectRoot,
-      env: process.env,
-      stdio: 'inherit',
-    },
+  // Use pre-built dist plugins when available. This avoids the heavy
+  // tiddlywiki-plugin-dev rebuild during E2E/API server startup, where
+  // TypeScript's typesInstaller can hang on Windows. The dist artifacts are
+  // produced by `pnpm run build` and are up-to-date when tests run in CI.
+  const distRepoPath = path.join(
+    paths.projectRoot,
+    'dist',
+    '$__plugins_Gk0Wk_CPL-Repo.json',
   );
+  const distServerPath = path.join(
+    paths.projectRoot,
+    'dist',
+    '$__plugins_Gk0Wk_CPL-Server.json',
+  );
+  if (
+    !forceRebuild &&
+    fs.existsSync(distRepoPath) &&
+    fs.existsSync(distServerPath)
+  ) {
+    fs.mkdirSync(RUNTIME_PLUGIN_DIR, { recursive: true });
+    fs.copyFileSync(distRepoPath, REPO_PLUGIN_PATH);
+    fs.copyFileSync(distServerPath, SERVER_PLUGIN_PATH);
+  } else if (
+    !isTestMode &&
+    hasBuiltRuntimePlugins &&
+    hasRuntimePluginOutput()
+  ) {
+    return runtimePluginFiles;
+  } else {
+    fs.mkdirSync(RUNTIME_PLUGIN_DIR, { recursive: true });
 
-  if (buildResult.status !== 0) {
-    throw new Error(
-      `Failed to build runtime plugins (exit code ${
-        buildResult.status ?? 'unknown'
-      })`,
+    const buildResult = spawnSync(
+      process.execPath,
+      [
+        PLUGIN_DEV_ENTRY,
+        'build',
+        '--output',
+        RUNTIME_PLUGIN_DIR,
+        '--wiki',
+        'wiki',
+        '--src',
+        'src',
+      ],
+      {
+        cwd: paths.projectRoot,
+        env: process.env,
+        stdio: 'inherit',
+      },
     );
+
+    if (buildResult.status !== 0) {
+      throw new Error(
+        `Failed to build runtime plugins (exit code ${
+          buildResult.status ?? 'unknown'
+        })`,
+      );
+    }
   }
 
   if (!fs.existsSync(REPO_PLUGIN_PATH) || !fs.existsSync(SERVER_PLUGIN_PATH)) {

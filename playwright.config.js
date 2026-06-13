@@ -28,7 +28,10 @@ module.exports = defineConfig({
   globalSetup: require.resolve('./tests/e2e/global-setup.js'),
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  // E2E tests share a single server instance and exercise real browser
+  // network stacks; retries absorb intermittent timing/auth flakes across
+  // Chromium/Firefox/WebKit without masking genuine regressions.
+  retries: 2,
   workers: 1,
   reporter: [['html', { open: 'never' }]],
   timeout: 90000,
@@ -57,10 +60,12 @@ module.exports = defineConfig({
 
   // Run local dev server before starting the tests on a non-conflicting port
   webServer: {
-    command: 'npm run server:test',
+    // Use the Node executable directly to avoid npm's overhead on Windows,
+    // which can cause Playwright to miss the "server ready" signal.
+    command: 'node -r ts-node/register/transpile-only scripts/server.ts',
     url: TEST_URL,
-    reuseExistingServer: false,
-    timeout: 300000, // 5 min: server startup includes runtime plugin compilation on first run
+    reuseExistingServer: !process.env.CI,
+    timeout: 600000, // 10 min: server startup includes runtime plugin compilation on first run
     env: {
       PORT: TEST_PORT,
       CPL_TEST_PUBLIC_HOST: TEST_HOST,

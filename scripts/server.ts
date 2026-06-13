@@ -3,6 +3,7 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
+import * as fse from 'fs-extra';
 
 import { paths } from '../src/CPLServer/lib/paths';
 import { ensureRuntimePluginsBuilt } from './runtime-plugins';
@@ -15,22 +16,29 @@ const removeDirectorySync = (targetPath: string): void => {
   if (!fs.existsSync(targetPath)) {
     return;
   }
-  // On Windows, Node's fs.rmSync often fails with ENOTEMPTY for deeply
-  // nested directories (plugin-fetched-history). Use cmd for reliable removal.
+  // On Windows, cmd's rd and Node's fs.rmSync often fail with ENOTEMPTY for
+  // deeply-nested directories such as plugin-fetched-history. PowerShell's
+  // Remove-Item handles these cases reliably, so prefer it on Windows.
   if (process.platform === 'win32') {
     try {
-      execSync(`cmd /c rd /s /q "${targetPath}"`, { stdio: 'ignore' });
+      execSync(
+        `powershell -NoProfile -Command "try { Remove-Item -Path '${targetPath.replace(
+          /'/g,
+          "''",
+        )}' -Recurse -Force -ErrorAction Stop } catch {}; exit 0"`,
+        { stdio: 'ignore' },
+      );
+      if (!fs.existsSync(targetPath)) {
+        return;
+      }
     } catch {
-      /* already gone */
+      /* fall through to fs.rmSync */
     }
-    // Give Windows a moment to release handles before re-creating.
-    try {
-      execSync('cmd /c ping 127.0.0.1 -n 1 -w 500 > nul', { stdio: 'ignore' });
-    } catch {
-      /* */
-    }
-  } else {
+  }
+  try {
     fs.rmSync(targetPath, { recursive: true, force: true });
+  } catch {
+    /* last resort: leave it for the caller to handle */
   }
 };
 
@@ -66,19 +74,48 @@ function prepareTestWiki(): void {
   removeDirectorySync(paths.testWiki);
   fs.mkdirSync(path.dirname(paths.testWiki), { recursive: true });
 
-  // On Windows, fs.cpSync internally calls rmdir on existing subdirectories,
-  // which can fail with ENOTEMPTY. Fall back to xcopy.
+  // Copy the production wiki to a temporary location for tests.
+  // The plugin-fetched and plugin-fetched-history directories contain
+  // ~1 GB of cached plugin JSON files. Copying them on every test run
+  // is unnecessary and causes multi-minute startup times on Windows.
+  // Use robocopy on Windows with /XD to skip them; fall back to fs-extra
+  // on other platforms.
   if (process.platform === 'win32') {
+    const wikiPath = path.resolve(paths.wiki);
+    const testWikiPath = path.resolve(paths.testWiki);
+    const excludeDirs = [
+      path.join(wikiPath, 'files', 'plugin-fetched'),
+      path.join(wikiPath, 'files', 'plugin-fetched-history'),
+    ];
+    const robocopyArgs = [
+      `"${wikiPath}"`,
+      `"${testWikiPath}"`,
+      '/E',
+      ...excludeDirs.map(dir => `/XD "${dir}"`),
+      '/NFL',
+      '/NDL',
+      '/NJH',
+      '/NJS',
+      '/R:2',
+      '/W:1',
+    ];
     try {
-      fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
+      execSync(`robocopy ${robocopyArgs.join(' ')}`, { stdio: 'ignore' });
     } catch {
-      execSync(
-        `cmd /c xcopy /E /I /Y "${paths.wiki}" "${paths.testWiki}" > nul`,
-        { stdio: 'ignore' },
-      );
+      // robocopy returns non-zero for success-with-files-copied (exit codes
+      // 1-7). Ignore failures here; the existence checks below will catch
+      // real problems.
     }
+    // Recreate the excluded dirs as empty so downstream code can still
+    // write fetched-plugin caches into the test wiki if needed.
+    fs.mkdirSync(path.join(testWikiPath, 'files', 'plugin-fetched'), {
+      recursive: true,
+    });
+    fs.mkdirSync(path.join(testWikiPath, 'files', 'plugin-fetched-history'), {
+      recursive: true,
+    });
   } else {
-    fs.cpSync(paths.wiki, paths.testWiki, { recursive: true });
+    fse.copySync(paths.wiki, paths.testWiki, { overwrite: true });
   }
 
   runtimeWikiPath = paths.testWiki;

@@ -260,7 +260,7 @@ describe('CPL Server API', () => {
     if (serverOutput) {
       console.log('[Server Output]\n', serverOutput);
     }
-  }, 180000);
+  }, 300000);
 
   afterAll(() => {
     if (serverProcess) {
