@@ -67,6 +67,7 @@ function createMockRepoDir() {
         title: MOCK_PLUGIN_TITLE,
         description: 'E2E test mock plugin',
         version: '1.0.0',
+        category: 'Functional',
       },
     ]),
   );

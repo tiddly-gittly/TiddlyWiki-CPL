@@ -14,12 +14,13 @@ const paths = require('../paths');
 const {
   startBlankWiki,
   stopBlankWiki,
-  BLANK_WIKI_URL,
+  getBlankWikiUrl,
 } = require('./helpers/blank-wiki-server');
 const {
   startMockRepoServer,
   stopMockRepoServer,
   MOCK_PLUGIN_TITLE,
+  MOCK_REPO_URL,
 } = require('./helpers/mock-repo-server');
 
 const BASE_URL =
@@ -431,7 +432,7 @@ test.describe('CPL Client Installation E2E', () => {
   });
 
   test('blank wiki loads CPL client successfully', async ({ page }) => {
-    await page.goto(BLANK_WIKI_URL, {
+    await page.goto(getBlankWikiUrl(), {
       waitUntil: 'domcontentloaded',
       timeout: 60000,
     });
@@ -452,5 +453,81 @@ test.describe('CPL Client Installation E2E', () => {
       TEST_PLUGIN_TITLE,
     );
     expect(hasPlugin).toBe(false);
+  });
+
+  test('CPL layout can load database and render clean Install buttons', async ({
+    page,
+  }) => {
+    await page.goto(getBlankWikiUrl(), {
+      waitUntil: 'domcontentloaded',
+      timeout: 60000,
+    });
+    await page.waitForFunction(
+      () => typeof $tw !== 'undefined' && typeof $tw.wiki !== 'undefined',
+      { timeout: 30000 },
+    );
+    await page.waitForFunction(
+      () => Boolean($tw.wiki.getTiddler('$:/plugins/Gk0Wk/CPL-Repo')),
+      { timeout: 30000 },
+    );
+
+    // Switch to CPL layout.
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/layout',
+        text: '$:/plugins/Gk0Wk/CPL-Repo/layout/layout',
+      });
+      $tw.rootWidget.refresh({ tiddler: '$:/layout' });
+    });
+
+    // Wait for the CPL layout to render.
+    await page.waitForSelector('button:has-text("Load Database")', {
+      timeout: 10000,
+    });
+
+    // Configure the blank wiki to use the mock static repo.
+    await page.evaluate(mockRepoUrl => {
+      $tw.wiki.addTiddler({
+        title: '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo',
+        text: mockRepoUrl,
+      });
+      $tw.wiki.addTiddler({
+        title: '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos',
+        text: mockRepoUrl,
+      });
+      $tw.rootWidget.refresh({
+        '$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo': {
+          modified: true,
+        },
+        '$:/plugins/Gk0Wk/CPL-Repo/config/static-repos': { modified: true },
+      });
+    }, MOCK_REPO_URL);
+
+    // Load the plugin database.
+    await page.click('button:has-text("Load Database")');
+
+    // After loading, the Home/Categories/Tags/Updates tabs should appear.
+    await page.waitForSelector('text=Categories', { timeout: 15000 });
+    await page.waitForSelector('text=Tags', { timeout: 10000 });
+    await page.waitForSelector('text=Updates', { timeout: 10000 });
+
+    // Switch to Categories and wait for the plugin card.
+    await page.click('text=Categories');
+    await page.waitForSelector('.cpl-plugin-card', { timeout: 15000 });
+
+    // Install/Update/etc buttons must not contain stray ">>" text.
+    const buttons = page.locator('.cpl-plugin-card-actions button');
+    const count = await buttons.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i += 1) {
+      const text = await buttons.nth(i).textContent();
+      expect(text).not.toMatch(/>>/);
+    }
+
+    // At least one plugin card should render with a readable title.
+    const cards = page.locator('.cpl-plugin-card');
+    await expect(cards.first()).toBeVisible();
+    const firstCardText = await cards.first().textContent();
+    expect(firstCardText?.length ?? 0).toBeGreaterThan(0);
   });
 });

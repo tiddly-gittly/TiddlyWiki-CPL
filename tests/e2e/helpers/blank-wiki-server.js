@@ -7,20 +7,47 @@ const paths = require('../../paths');
 require('ts-node/register/transpile-only');
 const { ensureRuntimePluginsBuilt } = require('../../../scripts/runtime-plugins.ts');
 
-const BLANK_WIKI_PORT = 8081;
+const BLANK_WIKI_PORT_START = 8081;
+const BLANK_WIKI_PORT_END = 8095;
 const BLANK_WIKI_HOST = '127.0.0.1';
 
 let blankWikiProcess = null;
 let blankWikiPath = null;
+let blankWikiPort = BLANK_WIKI_PORT_START;
 
-function waitForBlankWiki(timeoutMs = 30000) {
+function isPortAvailable(port) {
+  return new Promise((resolve) => {
+    const server = http.createServer();
+    server.once('error', () => {
+      resolve(false);
+    });
+    server.once('listening', () => {
+      server.close();
+      resolve(true);
+    });
+    server.listen(port, BLANK_WIKI_HOST);
+  });
+}
+
+async function findAvailablePort() {
+  for (let port = BLANK_WIKI_PORT_START; port <= BLANK_WIKI_PORT_END; port += 1) {
+    if (await isPortAvailable(port)) {
+      return port;
+    }
+  }
+  throw new Error(
+    `No available port found for blank wiki in range ${BLANK_WIKI_PORT_START}-${BLANK_WIKI_PORT_END}`,
+  );
+}
+
+function waitForBlankWiki(port, timeoutMs = 30000) {
   const start = Date.now();
   return new Promise((resolve, reject) => {
     function tryConnect() {
       const req = http.request(
         {
           hostname: BLANK_WIKI_HOST,
-          port: BLANK_WIKI_PORT,
+          port,
           path: '/',
           method: 'GET',
         },
@@ -90,6 +117,8 @@ async function startBlankWiki(options = {}) {
     );
   }
 
+  blankWikiPort = await findAvailablePort();
+
   const toBootPluginArg = (filePath) => `++${path.relative(paths.projectRoot, filePath).replace(/\\/g, '/')}`;
   const args = [
     twEntry,
@@ -106,7 +135,7 @@ async function startBlankWiki(options = {}) {
   args.push(
     blankWikiPath,
     '--listen',
-    `port=${BLANK_WIKI_PORT}`,
+    `port=${blankWikiPort}`,
     `host=${BLANK_WIKI_HOST}`
   );
 
@@ -119,8 +148,8 @@ async function startBlankWiki(options = {}) {
     console.error('[Blank Wiki] Failed to start:', err.message);
   });
 
-  await waitForBlankWiki();
-  console.log(`[Blank Wiki] Started on http://${BLANK_WIKI_HOST}:${BLANK_WIKI_PORT}`);
+  await waitForBlankWiki(blankWikiPort);
+  console.log(`[Blank Wiki] Started on http://${BLANK_WIKI_HOST}:${blankWikiPort}`);
 }
 
 function stopBlankWiki() {
@@ -136,8 +165,17 @@ function stopBlankWiki() {
   }
 }
 
+function getBlankWikiUrl() {
+  return `http://${BLANK_WIKI_HOST}:${blankWikiPort}`;
+}
+
 module.exports = {
   startBlankWiki,
   stopBlankWiki,
-  BLANK_WIKI_URL: `http://${BLANK_WIKI_HOST}:${BLANK_WIKI_PORT}`
+  getBlankWikiUrl,
+  // Kept for backwards compatibility, but resolves at import time only.
+  // Prefer getBlankWikiUrl() after startBlankWiki() has been called.
+  get BLANK_WIKI_URL() {
+    return getBlankWikiUrl();
+  },
 };
