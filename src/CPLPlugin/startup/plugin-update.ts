@@ -15,7 +15,7 @@ export const startup = (): void => {
         return undefined;
       }
       try {
-        tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updaing', text: 'yes' });
+        tw.wiki.addTiddler({ title: '$:/temp/CPL-Repo/updating', text: 'yes' });
         const updatePlugins = JSON.parse(raw) as Record<
           string,
           [string, string?]
@@ -56,7 +56,7 @@ export const startup = (): void => {
       } catch (error) {
         console.error(error);
       }
-      tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updaing');
+      tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updating');
       return undefined;
     },
   );

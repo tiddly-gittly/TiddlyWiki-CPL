@@ -64,12 +64,21 @@ const requestJson = <T>(
   new Promise((resolve, reject) => {
     const request = https.request(options, response => {
       let data = '';
+      const statusCode = response.statusCode ?? 0;
 
       response.on('data', chunk => {
         data += typeof chunk === 'string' ? chunk : chunk.toString();
       });
 
       response.on('end', () => {
+        if (statusCode < 200 || statusCode >= 300) {
+          reject(
+            new Error(
+              `HTTP ${statusCode}: ${data.slice(0, 200)}`,
+            ),
+          );
+          return;
+        }
         try {
           resolve(JSON.parse(data) as T);
         } catch (error) {

@@ -9,5 +9,5 @@ track-filter: [prefix[$:/temp/CPL-Repo/plugin-database-tab-state]get[text]match[
   <$action-sendmessage $message="cpl-process-update-json" data=<<data>>/>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-  <$action-setfield $tiddler='$:/temp/CPL-Repo/updaing' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+  <$action-setfield $tiddler='$:/temp/CPL-Repo/updating' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
 </$list>"""/>

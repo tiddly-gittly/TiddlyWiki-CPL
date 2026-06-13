@@ -56,7 +56,7 @@ const doInstallPluginRequest = async (
 
     installRequestLock = true;
     tw.wiki.addTiddler({
-      title: '$:/temp/CPL-Repo/instal-plugin-requesting',
+      title: '$:/temp/CPL-Repo/install-plugin-requesting',
       text: 'yes',
       'plugin-titles': JSON.stringify(titles),
     });
@@ -145,7 +145,7 @@ const doInstallPluginRequest = async (
     }
 
     tw.wiki.addTiddler({
-      title: '$:/temp/CPL-Repo/instal-plugin-request-tree',
+      title: '$:/temp/CPL-Repo/install-plugin-request-tree',
       type: 'application/json',
       text: JSON.stringify({
         title: titles.length > 1 ? undefined : titles[0],
@@ -156,12 +156,12 @@ const doInstallPluginRequest = async (
       }),
       ...tiddlerFields,
     });
-    tw.wiki.deleteTiddler('$:/temp/CPL-Repo/instal-plugin-requesting');
+    tw.wiki.deleteTiddler('$:/temp/CPL-Repo/install-plugin-requesting');
     if (autoConfirm) {
       await doInstallPlugin({
         type: 'cpl-install-plugin-confirm',
         paramObject: {
-          response: '$:/temp/CPL-Repo/instal-plugin-request-tree',
+          response: '$:/temp/CPL-Repo/install-plugin-request-tree',
         },
         widget: event.widget,
       } as unknown as RootWidgetEvent);
@@ -169,7 +169,7 @@ const doInstallPluginRequest = async (
   } catch (error) {
     console.error(error);
     tw.wiki.addTiddler({
-      title: '$:/temp/CPL-Repo/instal-plugin-requesting',
+      title: '$:/temp/CPL-Repo/install-plugin-requesting',
       text: String(error),
       'plugin-title': JSON.stringify(event.paramObject ?? {}),
     });

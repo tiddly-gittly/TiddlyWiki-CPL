@@ -5,4 +5,4 @@ tags:
 title: $:/plugins/Gk0Wk/CPL-Repo/templates/category/tab-button
 type: text/vnd.tiddlywiki
 
-<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[<currentTab>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[?]] :else[<currentTab>else[Unknown]else[?]] }}} />
+<$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]] :then[<currentTab>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[?]] :else[<currentTab>else[?]] }}} />

@@ -8,7 +8,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
 
 <div class="cpl-action-bar">
-<$button disabled={{{ [{$:/temp/CPL-Repo/updaing]match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
+<$button disabled={{{ [{$:/temp/CPL-Repo/updating]match[yes]else[no]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button">
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/update.json]] }}}
   method="GET"
@@ -17,7 +17,7 @@ type: text/vnd.tiddlywiki
     <$action-sendmessage $message="cpl-process-update-json" data=<<data>>/>
     </$list>
     <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-    <$action-setfield $tiddler='$:/temp/CPL-Repo/updaing' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+    <$action-setfield $tiddler='$:/temp/CPL-Repo/updating' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
     </$list>
     """/>
 {{$:/core/images/refresh-button}}
@@ -25,7 +25,7 @@ type: text/vnd.tiddlywiki
 <$text text={{{ [[$:/temp/CPL-Repo/update-plugins]is[tiddler]] :then[<chinese>match[yes]then[重新获取更新]else[Refetch Updates]] :else[<chinese>match[yes]then[获取更新]else[Fetch Updates]] }}} />
 </$button>
 
-<$button disabled={{{ [{$:/temp/CPL-Repo/updaing}match[yes]] [{$:/temp/CPL-Repo/installing-plugin}is[tiddler]] +[limit[1]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button" style="display:{{{ [{$:/temp/CPL-Repo/update-plugins}jsonget[]count[]search[0]then[none]else[inline-flex]] }}}">
+<$button disabled={{{ [{$:/temp/CPL-Repo/updating}match[yes]] [{$:/temp/CPL-Repo/installing-plugin}is[tiddler]] +[limit[1]] }}} class="tc-btn-big-green tc-primary-btn cpl-action-button" style="display:{{{ [{$:/temp/CPL-Repo/update-plugins}jsonget[]count[]search[0]then[none]else[inline-flex]] }}}">
 <$action-sendmessage $message="cpl-install-plugin-request" titles={{{ [{$:/temp/CPL-Repo/update-plugins}jsonget[]format:titlelist[]join[ ]] }}} version="latest" auto-confirm={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/auto-confirm-install]get[text]else[no]] }}}/>
 {{$:/core/images/download-button}}
 &#32;

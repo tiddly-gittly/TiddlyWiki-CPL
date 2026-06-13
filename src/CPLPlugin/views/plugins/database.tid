@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
 <$let mirrorType={{{ [[$:/temp/CPL-Repo/mirror-type]get[text]else[unknown]] }}} serverType={{{ [[$:/temp/CPL-Repo/server-type]get[text]else[unknown]] }}} unreachableNotice={{{ [<chinese>match[yes]then[当前配置的 CPL 服务器暂时不可访问。评论、评分、统计、更新日志和登录功能当前不可用，但数据库镜像仍可正常浏览。]else[The configured CPL server is currently unreachable. Comments, ratings, stats, changelog, and login are unavailable right now, but the database mirror can still be browsed normally.]] }}}>
 <div class="cpl-mirror-toolbar">
 <div class="cpl-mirror-switcher">
-<$let isSelectDisabled={{{ [[$:/temp/CPL-Repo/instal-plugin-requesting]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/updaing]field:text[yes]then[yes]] +[limit[1]] }}}>
+<$let isSelectDisabled={{{ [[$:/temp/CPL-Repo/install-plugin-requesting]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/installing-plugin]field:text[yes]then[yes]] [[$:/temp/CPL-Repo/updating]field:text[yes]then[yes]] +[limit[1]] }}}>
 <div class="cpl-mirror-pair">
 <span class="cpl-mirror-label"><$text text={{{ [<chinese>match[yes]then[数据库镜像]else[Database Mirror]] }}}/> <$list filter="[<mirrorType>match[static]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-static">✓ <$text text={{{ [<chinese>match[yes]then[静态数据库]else[Static Database]] }}}/></span>)</$list><$list filter="[<mirrorType>match[unknown]]" variable="t">(<span class="cpl-mirror-status cpl-mirror-unknown">? <$text text={{{ [<chinese>match[yes]then[检测中]else[Detecting]] }}}/></span>)</$list>:</span>
 <$select tiddler="$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo" field="text" class="cpl-mirror-select" disabled=<<isSelectDisabled>> actions=<<on-static-repo-change>>>
