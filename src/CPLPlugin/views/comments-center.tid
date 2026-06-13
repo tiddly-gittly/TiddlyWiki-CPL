@@ -1,7 +1,7 @@
 caption: 💬 <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[评论中心]else[Comment Center]] }}} />
 created: 20260603000000000
 modified: 20260603000000000
-subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[浏览和管理所有插件评论]else[Browse & moderate all comments]] }}} />
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[浏览所有插件评论]else[Browse all comments]] }}} />
 title: $:/plugins/Gk0Wk/CPL-Repo/views/comments-center
 type: text/vnd.tiddlywiki
 
@@ -22,7 +22,7 @@ type: text/vnd.tiddlywiki
 <!-- Login prompt for anonymous users -->
 <$list filter="[<userStatus>!match[authenticated]]" variable="notLoggedIn">
 <div class="cpl-comment-login-prompt" style="margin-bottom:20px;">
-  <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可审核评论和发表评论]else[Login to moderate and post comments]] }}}/></span>
+      <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[登录后即可发表评论]else[Login to post comments]] }}}/></span>
   <$list filter="[<githubClientId>!is[blank]]" variable="hasGithubOAuth">
     <$button class="tc-btn-primary cpl-comment-login-button" style="margin-top:8px;">
       <$action-sendmessage $message="cpl-github-login"/>
@@ -31,101 +31,6 @@ type: text/vnd.tiddlywiki
   </$list>
   <$list filter="[<githubClientId>is[blank]]" variable="missingGithubOAuth">
     <span class="cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[GitHub 登录暂未配置。]else[GitHub login is not configured.]] }}}/></span>
-  </$list>
-</div>
-</$list>
-
-<!-- Admin: Pending Comments Section -->
-<$list filter="[<isAdmin>match[yes]]" variable="adminView">
-
-<div class="cpl-comments-center-section">
-  <h3 class="cpl-card-heading-bordered">
-    🔔 <$text text={{{ [<chinese>match[yes]then[待审核评论]else[Pending Comments]] }}}/>
-  </h3>
-
-  <$list filter="[{$:/temp/CPL-Server/pending-comments}jsonindexes[comments]]" variable="idx">
-    <$let
-        pluginTitle={{{ [{$:/temp/CPL-Server/pending-comments}jsonget[comments],<idx>,[pluginTitle]] }}}
-        commentId={{{ [{$:/temp/CPL-Server/pending-comments}jsonget[comments],<idx>,[comment],[id]] }}}
-        commentUsername={{{ [{$:/temp/CPL-Server/pending-comments}jsonget[comments],<idx>,[comment],[username]else[Anonymous]] }}}
-        commentContent={{{ [{$:/temp/CPL-Server/pending-comments}jsonget[comments],<idx>,[comment],[content]] }}}
-        commentDate={{{ [{$:/temp/CPL-Server/pending-comments}jsonget[comments],<idx>,[comment],[createdAt]] }}}
-        commentAvatar={{{ [{$:/temp/CPL-Server/pending-comments}jsonget[comments],<idx>,[comment],[avatar]] }}}
-      >
-        <div class="cpl-comment-item cpl-moderation-item">
-          <div class="cpl-comment-meta">
-            <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
-              <img src=<<commentAvatar>> class="cpl-comment-avatar-small" alt=""/>
-            </$list>
-            <strong><$text text=<<commentUsername>>/></strong>
-            <span class="cpl-comment-date"><$text text=<<commentDate>>/></span>
-            <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
-            <$button class="tc-btn-invisible cpl-comment-plugin-pill">
-              <$action-navigate $to=<<pluginTitle>>/>
-              📦 <$text text=<<pluginTitle>>/>
-            </$button>
-          </div>
-          <div class="cpl-comment-body">
-            <$text text=<<commentContent>>/>
-          </div>
-          <div class="cpl-moderation-actions">
-            <$button class="tc-btn-primary cpl-moderation-approve-btn">
-              <$action-sendmessage $message="tm-http-request"
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                method="PUT" header-Content-Type="application/json"
-                body='{"status":"approved"}'
-                var-pluginTitle=<<pluginTitle>>
-                oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
-              <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
-            </$button>
-            <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-              <$action-sendmessage $message="tm-http-request"
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                method="PUT" header-Content-Type="application/json"
-                body='{"status":"rejected"}'
-                var-pluginTitle=<<pluginTitle>>
-                oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
-              <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
-            </$button>
-            <$button class="tc-btn-invisible cpl-moderation-delete-btn">
-              <$action-sendmessage $message="tm-http-request"
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                method="PUT" header-Content-Type="application/json"
-                body='{"status":"deleted"}'
-                var-pluginTitle=<<pluginTitle>>
-                oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
-              <$text text={{{ [<chinese>match[yes]then[删除]else[Delete]] }}}/>
-            </$button>
-          </div>
-          <div class="cpl-moderation-refresh-hint">
-            <$button class="tc-btn-invisible">
-<<cpl-fetch-comments>>
-              <$text text={{{ [<chinese>match[yes]then[审核后点此刷新]else[Click to refresh after moderation]] }}}/>
-            </$button>
-          </div>
-        </div>
-      </$let>
-    </$list>
-
-  <$list filter="[{$:/temp/CPL-Server/pending-comments}jsonindexes[comments]count[]match[0]]" variable="emptyPending">
-    <div class="cpl-comment-empty cpl-moderation-all-clear">
-      ✅ <$text text={{{ [<chinese>match[yes]then[所有评论已审核完毕！]else[All comments have been reviewed!]] }}}/>
-    </div>
-  </$list>
-
-  <$list filter="[[$:/temp/CPL-Server/pending-comments]get[text]else[{}]jsonget[success]match[false]]" variable="authError">
-    <div class="cpl-comment-empty cpl-auth-error">
-      ⚠️ <$text text={{{ [<chinese>match[yes]then[获取失败：]else[Failed to load:]] }}}/> <$text text={{{ [[$:/temp/CPL-Server/pending-comments]get[text]else[{}]jsonget[error]else[Unknown error]] }}}/><br/>
-      <$list filter="[[$:/temp/CPL-Server/pending-comments]get[text]else[{}]jsonget[error]match[Authentication required]]" variable="needLogin">
-        <$text text={{{ [<chinese>match[yes]then[请重新登录后刷新页面]else[Please re-login and refresh the page]] }}}/>.
-      </$list>
-    </div>
-  </$list>
-
-  <$list filter="[[$:/temp/CPL-Server/pending-comments]get[text]is[blank]] [[$:/temp/CPL-Server/pending-comments]get[text]!match[*success*]] +[limit[1]]" variable="loading">
-    <div class="cpl-comment-empty">
-      <$text text={{{ [<chinese>match[yes]then[正在加载...]else[Loading...]] }}}/>
-    </div>
   </$list>
 </div>
 </$list>
@@ -177,29 +82,6 @@ type: text/vnd.tiddlywiki
                     <$action-navigate $to=<<commentPlugin>>/>
                     📦 <$text text=<<commentPlugin>>/>
                   </$button>
-                </$list>
-                <$list filter="[<isAdmin>match[yes]]" variable="adminView2">
-                  <$list filter="[<commentStatus>match[pending]]" variable="isPending2">
-                    <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
-                    <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                      <$action-sendmessage $message="tm-http-request"
-                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<commentPlugin>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                        method="PUT" header-Content-Type="application/json"
-                        body='{"status":"approved"}'
-                        var-pluginTitle=<<commentPlugin>>
-                        oncompletion="<<cpl-fetch-plugin-activity commentPlugin>> <<cpl-fetch-comments>>"/>
-                      <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
-                    </$button>
-                    <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                      <$action-sendmessage $message="tm-http-request"
-                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<commentPlugin>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                        method="PUT" header-Content-Type="application/json"
-                        body='{"status":"rejected"}'
-                        var-pluginTitle=<<commentPlugin>>
-                        oncompletion="<<cpl-fetch-plugin-activity commentPlugin>> <<cpl-fetch-comments>>"/>
-                      <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
-                    </$button>
-                  </$list>
                 </$list>
               </div>
               <div class="cpl-comment-body">
