@@ -6,11 +6,9 @@ type: text/vnd.tiddlywiki
 
 ! 2026.06.13
 
-* Removed comment/compatibility moderation UI from the client: no more pending-comments section, approve/reject/delete buttons, or "pending" badges now that the moderation model is block-only
-* Updated comment center login prompt: "登录后即可发表评论" / "Login to post comments" (no longer mentions moderation)
-* Updated comment submission success message: "评论已提交" / "Comment submitted" (no longer says "waiting for moderation")
-* Stopped client from fetching `/cpl/comments/pending`; only `/cpl/comments/all-recent` is requested by comments center and the auto-fetch background action
-* E2E tests updated to match the simplified comments center UI
+* 修复插件数据库列表不显示的问题
+* 评论和兼容性报告改为仅屏蔽模式：移除客户端的待审核界面、通过/拒绝/删除按钮和“待审核”徽章
+* 简化评论中心文案：登录提示改为“登录后即可发表评论”，提交成功提示改为“评论已提交”
 
 ! 2026.06.12
 
