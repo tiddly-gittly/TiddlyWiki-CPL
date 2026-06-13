@@ -285,42 +285,6 @@ type: text/vnd.tiddlywiki
                   <div class="cpl-compatibility-description">
                     <$text text={{{ [<report>jsonget[description]] }}} />
                   </div>
-                  <!-- Admin moderation buttons for pending reports -->
-                  <$list filter="[<isAdmin>match[yes]]" variable="isAdminUser">
-                    <$list filter="[<report>jsonget[status]match[pending]]" variable="isPending">
-                      <div class="cpl-moderation-actions">
-                        <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
-                        <$let reportId={{{ [<report>jsonget[id]] }}} cpTitle={{!!cpl.title}}>
-                        <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                          <$action-sendmessage $message="tm-http-request"
-                            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<cpTitle>encodeuricomponent[]] [/] [<reportId>encodeuricomponent[]] +[join[]] }}}
-                            method="PUT" header-Content-Type="application/json"
-                            body='{"status":"approved"}'
-                            var-pluginTitle=<<cpTitle>>
-                            oncompletion="""
-                              <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                              <<cpl-fetch-plugin-activity pluginTitle>>
-                              </$list>
-                              """/>
-                          <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
-                        </$button>
-                        <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                          <$action-sendmessage $message="tm-http-request"
-                            url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<cpTitle>encodeuricomponent[]] [/] [<reportId>encodeuricomponent[]] +[join[]] }}}
-                            method="PUT" header-Content-Type="application/json"
-                            body='{"status":"rejected"}'
-                            var-pluginTitle=<<cpTitle>>
-                            oncompletion="""
-                              <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-                              <<cpl-fetch-plugin-activity pluginTitle>>
-                              </$list>
-                              """/>
-                          <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
-                        </$button>
-                        </$let>
-                      </div>
-                    </$list>
-                  </$list>
                 </div>
               </$list>
             </div>
@@ -410,7 +374,7 @@ type: text/vnd.tiddlywiki
                   <span class="cpl-status-error">✗ <$text text={{{ [<statusTiddler>get[text]removeprefix[error: ]] }}}/></span>
                 </$list>
                 <$list filter="[<statusTiddler>get[text]match[success]]">
-                  <span class="cpl-status-success">✓ <$text text={{{ [<chinese>match[yes]then[报告已提交，等待审核！]else[Report submitted for moderation!]] }}}/></span>
+                  <span class="cpl-status-success">✓ <$text text={{{ [<chinese>match[yes]then[报告已提交！]else[Report submitted!]] }}}/></span>
                 </$list>
               </div>
             </$list>

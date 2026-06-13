@@ -4,6 +4,14 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags: 
 type: text/vnd.tiddlywiki
 
+! 2026.06.13
+
+* Removed comment/compatibility moderation UI from the client: no more pending-comments section, approve/reject/delete buttons, or "pending" badges now that the moderation model is block-only
+* Updated comment center login prompt: "登录后即可发表评论" / "Login to post comments" (no longer mentions moderation)
+* Updated comment submission success message: "评论已提交" / "Comment submitted" (no longer says "waiting for moderation")
+* Stopped client from fetching `/cpl/comments/pending`; only `/cpl/comments/all-recent` is requested by comments center and the auto-fetch background action
+* E2E tests updated to match the simplified comments center UI
+
 ! 2026.06.12
 
 * Architecture overhaul: Wikitext is now the single entry point for all logic — every user action and network request originates in Wikitext; TypeScript is reduced to pure algorithmic modules that register message handlers and respond via `rootWidget.addEventListener`

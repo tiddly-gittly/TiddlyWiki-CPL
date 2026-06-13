@@ -6,6 +6,6 @@
   "list": "docs/readme docs/tree background-actions views/system/settings docs/changelog procedures",
   "plugin-type": "plugin",
   "title": "$:/plugins/Gk0Wk/CPL-Repo",
-  "version": "2026.06.12",
-  "Modern.TiddlyDev#SHA256-Hashed": "5670ee9d1c9524254ecc0ce9a8298c5c002a7ad0f2df2f8e8e37193c9145cfbd"
+  "version": "2026.06.13",
+  "Modern.TiddlyDev#SHA256-Hashed": "d9639b6991a342bd03b3d5ad1e2b13f897da73628d7229e8bbdf35f5a94f96d3"
 }

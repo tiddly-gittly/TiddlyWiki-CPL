@@ -84,7 +84,7 @@ type: text/vnd.tiddlywiki
         </$list>
         <$list filter="[<commentStatus>get[text]match[success]]" variable="hasSuccess">
           <div class="cpl-comment-status cpl-comment-status-success">
-            ✓ <$text text={{{ [<chinese>match[yes]then[评论已提交，等待审核]else[Comment submitted for moderation]] }}}/>
+            ✓ <$text text={{{ [<chinese>match[yes]then[评论已提交]else[Comment submitted]] }}}/>
           </div>
         </$list>
       </$let>
@@ -126,32 +126,6 @@ type: text/vnd.tiddlywiki
               <div class="cpl-comment-body">
                 <$text text=<<commentContent>>/>
               </div>
-              <!-- Admin moderation for pending comments -->
-              <$list filter="[<isAdmin>match[yes]]" variable="isAdminUser">
-                <$list filter="[<commentStatus>match[pending]]" variable="isPending">
-                  <div class="cpl-moderation-actions">
-                    <span class="cpl-moderation-badge cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[待审核]else[Pending]] }}}/></span>
-                    <$button class="tc-btn-primary cpl-moderation-approve-btn">
-                      <$action-sendmessage $message="tm-http-request"
-                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                        method="PUT" header-Content-Type="application/json"
-                        body='{"status":"approved"}'
-                        var-pluginTitle=<<pluginTitle>>
-                        oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
-                      <$text text={{{ [<chinese>match[yes]then[通过]else[Approve]] }}}/>
-                    </$button>
-                    <$button class="tc-btn-secondary cpl-moderation-reject-btn">
-                      <$action-sendmessage $message="tm-http-request"
-                        url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] [/] [<commentId>encodeuricomponent[]] +[join[]] }}}
-                        method="PUT" header-Content-Type="application/json"
-                        body='{"status":"rejected"}'
-                        var-pluginTitle=<<pluginTitle>>
-                        oncompletion="<<cpl-fetch-plugin-activity pluginTitle>> <<cpl-fetch-comments>>"/>
-                      <$text text={{{ [<chinese>match[yes]then[拒绝]else[Reject]] }}}/>
-                    </$button>
-                  </div>
-                </$list>
-              </$list>
             </div>
           </$let>
         </$list>
