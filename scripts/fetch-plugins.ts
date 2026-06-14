@@ -21,6 +21,52 @@ const OUTPUT_DIR = paths.pluginFetched;
 const HISTORY_DIR = paths.pluginFetchedHistory;
 const SUPPORTED_METADATA_EXTENSIONS = new Set(['.json', '.tid']);
 
+/**
+ * Archive the previous plugin version into the history directory when a new
+ * version has been downloaded and the two versions differ.
+ *
+ * Exported for testing — callers in the main loop pass the real
+ * OUTPUT_DIR / HISTORY_DIR; tests pass temporary directories.
+ *
+ * @returns true when an old version was successfully archived.
+ */
+export function archiveOldPluginVersion(
+  oldContent: string | undefined,
+  oldVersion: string | undefined,
+  newVersion: string | undefined,
+  pluginTitle: string,
+  historyRootDir: string,
+): boolean {
+  if (!oldContent || !oldVersion || !newVersion) {
+    return false;
+  }
+  if (oldVersion === newVersion) {
+    return false;
+  }
+  if (!isSafePluginVersionFileName(oldVersion)) {
+    console.warn(
+      `[fetch-plugins] ${pluginTitle}: not archiving unsafe version name ${oldVersion}`,
+    );
+    return false;
+  }
+
+  const historyPluginDir = path.join(
+    historyRootDir,
+    sanitizePluginFileName(pluginTitle),
+  );
+  ensureDir(historyPluginDir);
+  const historyPath = path.join(historyPluginDir, `${oldVersion}.json`);
+  if (fs.existsSync(historyPath)) {
+    return false; // already archived
+  }
+
+  fs.writeFileSync(historyPath, oldContent, 'utf-8');
+  console.log(
+    `[fetch-plugins] ${pluginTitle}: archived old version ${oldVersion} to history`,
+  );
+  return true;
+}
+
 function ensureDir(dir: string): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -419,31 +465,13 @@ async function main(): Promise<void> {
         >;
         const newVersion =
           typeof newParsed.version === 'string' ? newParsed.version : undefined;
-        const versionToArchive =
-          oldVersion && newVersion && oldVersion !== newVersion
-            ? oldVersion
-            : undefined;
-        if (
-          versionToArchive &&
-          oldContent &&
-          isSafePluginVersionFileName(versionToArchive)
-        ) {
-          const historyPluginDir = path.join(
-            HISTORY_DIR,
-            sanitizePluginFileName(pluginTitle),
-          );
-          ensureDir(historyPluginDir);
-          const historyPath = path.join(
-            historyPluginDir,
-            `${versionToArchive}.json`,
-          );
-          if (!fs.existsSync(historyPath)) {
-            fs.writeFileSync(historyPath, oldContent, 'utf-8');
-            console.log(
-              `[fetch-plugins] ${pluginTitle}: archived old version ${versionToArchive} to history`,
-            );
-          }
-        }
+        archiveOldPluginVersion(
+          oldContent,
+          oldVersion,
+          newVersion,
+          pluginTitle,
+          HISTORY_DIR,
+        );
       } catch {
         // Non-fatal: history archiving failure should not affect the main fetch.
       }
@@ -462,7 +490,9 @@ async function main(): Promise<void> {
   process.exit(failed > 0 && !bestEffort ? 1 : 0);
 }
 
-main().catch((error: unknown) => {
-  console.error('[fetch-plugins] Fatal error:', error);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((error: unknown) => {
+    console.error('[fetch-plugins] Fatal error:', error);
+    process.exit(1);
+  });
+}

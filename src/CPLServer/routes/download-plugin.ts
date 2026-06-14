@@ -5,6 +5,7 @@ import {
   isSafePluginVersionFileName,
   sanitizePluginFileName,
 } from '../lib/files';
+import { paths } from '../lib/paths';
 import { RateLimiter } from '../lib/security/rate-limit';
 import { DownloadStatsTiddlerStore } from '../lib/store/download-stats-tiddlers';
 import { decodeRouteParam, sendError, sendInternalError } from '../lib/http';
@@ -14,14 +15,12 @@ const findPluginFile = (
   pluginTitle: string,
   version?: string,
 ): string | null => {
-  const baseDir = pathModule.resolve('wiki', 'files');
   const sanitizedTitle = sanitizePluginFileName(pluginTitle);
 
   // Specific version requested → look in history directory first.
   if (version && version !== 'latest') {
     const historyPath = pathModule.join(
-      baseDir,
-      'plugin-fetched-history',
+      paths.pluginFetchedHistory,
       sanitizedTitle,
       `${version}.json`,
     );
@@ -32,8 +31,7 @@ const findPluginFile = (
   }
 
   const fetchedPath = pathModule.join(
-    baseDir,
-    'plugin-fetched',
+    paths.pluginFetched,
     `${sanitizedTitle}.json`,
   );
   if (fs.existsSync(fetchedPath)) {
@@ -41,8 +39,7 @@ const findPluginFile = (
   }
 
   const offlinePath = pathModule.join(
-    baseDir,
-    'plugin-offline',
+    paths.pluginOffline,
     `${sanitizedTitle}.json`,
   );
   if (fs.existsSync(offlinePath)) {
