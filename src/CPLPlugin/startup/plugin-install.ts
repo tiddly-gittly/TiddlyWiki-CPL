@@ -75,9 +75,7 @@ const doInstallPluginRequest = async (
     ): Promise<DependencyTree> => {
       try {
         const response = await fetch(
-          `${getCurrentRepoEntry()}/plugins/${formatPluginTitle(
-            title,
-          )}/__meta__.json`,
+          `${getCurrentRepoEntry()}/${formatPluginTitle(title)}/__meta__.json`,
         );
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
@@ -235,7 +233,7 @@ const doInstallPlugin = async (event: RootWidgetEvent): Promise<void> => {
     const tiddlers = await Promise.all(
       plugins.map(async ([pt, version]) => {
         const resp = await fetch(
-          `${getCurrentRepoEntry()}/plugins/${formatPluginTitle(pt)}/${
+          `${getCurrentRepoEntry()}/${formatPluginTitle(pt)}/${
             version ?? 'latest'
           }.json`,
         );

@@ -22,6 +22,7 @@ async function getAvailablePort(preferred = 19876) {
 const TEST_PORT = process.env.TEST_PORT || '19876';
 const TEST_HOST = process.env.TEST_HOST || 'localhost';
 const TEST_URL = process.env.TEST_URL || `http://${TEST_HOST}:${TEST_PORT}`;
+process.env.CPL_FORCE_RUNTIME_REBUILD ??= 'true';
 
 module.exports = defineConfig({
   testDir: './tests/e2e',
@@ -71,6 +72,7 @@ module.exports = defineConfig({
       CPL_TEST_PUBLIC_HOST: TEST_HOST,
       CPL_TEST_MOCK_REPO_URL: 'http://127.0.0.1:8083',
       CPL_TEST_MODE: 'true',
+      CPL_FORCE_RUNTIME_REBUILD: process.env.CPL_FORCE_RUNTIME_REBUILD,
       CPL_JWT_SECRET: 'test-secret',
       CPL_ADMIN_GITHUB_IDS: '42'
     }

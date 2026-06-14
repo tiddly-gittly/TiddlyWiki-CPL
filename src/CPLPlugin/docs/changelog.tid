@@ -4,6 +4,11 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags:
 type: text/vnd.tiddlywiki
 
+! 2026.06.14
+
+* 插件数据库列表项现在整块可点击，点击后在 modal 中展示插件元信息，不再导航到可能不存在的插件条目
+* 修复从 CPL 静态镜像安装插件时请求 URL 多出 `/plugins/` 导致 `__meta__.json` 和插件 JSON 404 的问题
+
 ! 2026.06.13
 
 * 修复插件数据库列表不显示的问题

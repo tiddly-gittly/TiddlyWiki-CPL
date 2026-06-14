@@ -1,0 +1,126 @@
+code-body: yes
+created: 20260614000000000
+modified: 20260614000000000
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[插件详情]else[Plugin Details]] }}} />
+tags:
+title: $:/plugins/Gk0Wk/CPL-Repo/templates/modals/plugin-detail
+type: text/vnd.tiddlywiki
+
+\import $:/plugins/Gk0Wk/CPL-Repo/views/plugins/list-item
+
+<$let
+  chinese={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]] }}}
+  selectedTitle={{$:/temp/CPL-Repo/plugin-detail-title}}
+  json={{{ [{$:/temp/CPL-Repo/plugins-index}jsonextract<selectedTitle>] }}}
+>
+
+<$list filter="[<json>!is[blank]]" variable="hasPluginDetail">
+<$let
+  title={{{ [<json>jsonget[title]] }}}
+  tags={{{ [<json>jsonget[tags]] }}}
+  icon={{{ [<json>jsonget[icon]trim[]] }}}
+  type={{{ [<json>jsonget[type]else[plugin]] }}}
+  name={{{ [<json>jsonget[name]] ~[<json>jsonget[title]split[/]last[1]] }}}
+  description={{{ [<json>jsonget[description]] }}}
+  version={{{ [<json>jsonget[version]] }}}
+  author={{{ [<json>jsonget[author]] }}}
+  coreVersion={{{ [<json>jsonget[core]] }}}
+  category={{{ [<json>jsonget[category]!is[blank]else[Unknown]] }}}
+  installedVersion={{{ [<json>jsonget[title]get[version]] }}}
+>
+
+<div class="cpl-plugin-detail">
+
+<div class="cpl-plugin-detail-header">
+<div class="cpl-plugin-detail-icon cpl-plugin-card-icon-frame">
+<$list filter="[<icon>!is[blank]]">
+<img src=<<icon>> style="width: 48px; height: 48px; object-fit: contain;"/>
+</$list>
+<$list filter="[<icon>is[blank]]">
+<$transclude tiddler={{{ [[$:/core/images/plugin-generic-]addsuffix<type>] }}} style="width: 48px; height: 48px;"/>
+</$list>
+</div>
+
+<div class="cpl-plugin-detail-heading">
+<h2 class="cpl-plugin-detail-name"><$text text=<<name>>/></h2>
+<div class="cpl-plugin-detail-title"><$text text=<<title>>/></div>
+<div class="cpl-plugin-card-meta cpl-plugin-detail-meta">
+<span class="cpl-plugin-card-meta-text">v<$text text=<<version>>/></span>
+<$list filter="[<author>!is[blank]]">
+<span class="cpl-plugin-card-meta-text">by <$text text=<<author>>/></span>
+</$list>
+<$list filter="[<installedVersion>!is[blank]]" variable="t">
+<span class="cpl-plugin-card-meta-text cpl-status-success"><em>{{$:/language/ControlPanel/Plugins/AlreadyInstalled/Hint}}</em></span>
+</$list>
+</div>
+</div>
+</div>
+
+<$list filter="[<description>!is[blank]]">
+<p class="cpl-plugin-detail-description"><$text text=<<description>>/></p>
+</$list>
+
+<div class="cpl-plugin-detail-actions">
+<$macrocall $name="install-plugin-button" plugin=<<title>> libraryVersion=<<version>> installedVersion=<<installedVersion>> />
+<$list filter="[<title>is[tiddler]]">
+<$button class="tc-btn-invisible cpl-inline-button-link">
+<$action-navigate $to=<<title>>/>
+{{$:/core/images/open-window}}
+<$text text={{{ [<chinese>match[yes]then[打开已安装条目]else[Open installed tiddler]] }}}/>
+</$button>
+</$list>
+</div>
+
+<dl class="cpl-plugin-detail-fields">
+<div>
+<dt><$text text={{{ [<chinese>match[yes]then[分类]else[Category]] }}}/></dt>
+<dd><$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg={{{ [{$:/palette}getindex[tag-background]] }}} color={{{ [{$:/palette}getindex[tag-foreground]] }}} /></dd>
+</div>
+<div>
+<dt><$text text={{{ [<chinese>match[yes]then[类型]else[Type]] }}}/></dt>
+<dd><$text text=<<type>>/></dd>
+</div>
+<$list filter="[<coreVersion>!is[blank]]">
+<div>
+<dt><$text text={{{ [<chinese>match[yes]then[核心版本]else[Core Version]] }}}/></dt>
+<dd><$text text=<<coreVersion>>/></dd>
+</div>
+</$list>
+<$list filter="[<installedVersion>!is[blank]]">
+<div>
+<dt><$text text={{{ [<chinese>match[yes]then[已安装版本]else[Installed Version]] }}}/></dt>
+<dd><$text text=<<installedVersion>>/></dd>
+</div>
+</$list>
+</dl>
+
+<$list filter="[<tags>!is[blank]]">
+<div class="cpl-plugin-detail-section">
+<h3 class="cpl-card-heading"><$text text={{{ [<chinese>match[yes]then[标签]else[Tags]] }}}/></h3>
+<div class="cpl-plugin-card-tags">
+<$list filter="[<tags>enlist-input[]]" variable="tag">
+<span class="tc-tag-label cpl-plugin-detail-tag"><$text text=<<tag>>/></span>
+</$list>
+</div>
+</div>
+</$list>
+
+<div class="cpl-plugin-detail-section">
+<h3 class="cpl-card-heading"><$text text={{{ [<chinese>match[yes]then[安装标题]else[Plugin Title]] }}}/></h3>
+<div class="cpl-code-panel cpl-plugin-detail-code"><$text text=<<title>>/></div>
+</div>
+
+</div>
+
+</$let>
+
+</$list>
+
+<$list filter="[<json>is[blank]]" variable="missingPluginDetail">
+<div class="cpl-inline-status cpl-inline-status-error">
+{{$:/core/images/warning}}
+<span><$text text={{{ [<chinese>match[yes]then[没有在当前插件索引里找到这个插件。请刷新数据库后再试。]else[This plugin was not found in the current plugin index. Refresh the database and try again.]] }}}/></span>
+</div>
+</$list>
+
+</$let>

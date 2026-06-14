@@ -407,6 +407,7 @@ test.describe('CPL Client Installation E2E', () => {
   }
 
   test.beforeAll(async () => {
+    await startMockRepoServer();
     createTestPluginFile();
     await startBlankWiki({ loadCplClient: true });
   });
@@ -414,6 +415,7 @@ test.describe('CPL Client Installation E2E', () => {
   test.afterAll(() => {
     stopBlankWiki();
     removeTestPluginFile();
+    stopMockRepoServer();
   });
 
   test('blank wiki can download test plugin from server', async ({
@@ -529,5 +531,26 @@ test.describe('CPL Client Installation E2E', () => {
     await expect(cards.first()).toBeVisible();
     const firstCardText = await cards.first().textContent();
     expect(firstCardText?.length ?? 0).toBeGreaterThan(0);
+
+    // Clicking the card opens a metadata modal instead of navigating to a
+    // plugin tiddler that may not exist in the wiki yet.
+    await cards.first().locator('.cpl-plugin-card-open-button').click();
+
+    const detailModal = page.locator('.tc-modal').filter({
+      hasText: /E2E test mock plugin/,
+    });
+    await expect(detailModal).toBeVisible({ timeout: 10000 });
+    await expect(detailModal).toContainText(MOCK_PLUGIN_TITLE);
+
+    const selectedDetailTitle = await page.evaluate(() =>
+      $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/plugin-detail-title', ''),
+    );
+    expect(selectedDetailTitle).toBe(MOCK_PLUGIN_TITLE);
+
+    const currentTiddler = await page.evaluate(() => {
+      const history = $tw.wiki.getTiddler('$:/HistoryList');
+      return history?.fields['current-tiddler'] || '';
+    });
+    expect(currentTiddler).not.toBe(MOCK_PLUGIN_TITLE);
   });
 });

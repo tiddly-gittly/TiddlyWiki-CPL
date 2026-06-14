@@ -327,8 +327,8 @@
   padding: 14px 16px;
   display: flex;
   gap: 14px;
-  align-items: flex-start;
-  transition: box-shadow 0.2s;
+  align-items: stretch;
+  transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 /* Undo TW paragraph wrapping that breaks flex layout */
@@ -344,6 +344,27 @@
   align-items: flex-start;
 }
 
+.cpl-plugin-card-open-button {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.cpl-plugin-card-open-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.cpl-plugin-card-open-button .cpl-plugin-card-main {
+  width: 100%;
+}
+
 .cpl-plugin-card-actions {
   flex-shrink: 0;
   display: flex;
@@ -353,6 +374,7 @@
 }
 
 .cpl-plugin-card-icon-wrapper {
+  display: block;
   flex-shrink: 0;
 }
 
@@ -369,11 +391,13 @@
 }
 
 .cpl-plugin-card-body {
+  display: block;
   flex: 1;
   min-width: 0;
 }
 
 .cpl-plugin-card-title {
+  display: block;
   padding: 0;
   margin: 0;
   font-weight: 600;
@@ -381,7 +405,94 @@
   text-align: left;
 }
 
+.cpl-plugin-detail {
+  min-width: min(680px, 100%);
+}
+
+.cpl-plugin-detail-header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.cpl-plugin-detail-icon {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+}
+
+.cpl-plugin-detail-heading {
+  min-width: 0;
+}
+
+.cpl-plugin-detail-name {
+  margin: 0 0 4px 0;
+  font-size: 1.25em;
+  line-height: 1.25;
+}
+
+.cpl-plugin-detail-title {
+  word-break: break-word;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.cpl-plugin-detail-meta {
+  margin-top: 6px;
+}
+
+.cpl-plugin-detail-description {
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.cpl-plugin-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.cpl-plugin-detail-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 16px;
+  margin: 14px 0;
+}
+
+.cpl-plugin-detail-fields > div {
+  min-width: 0;
+}
+
+.cpl-plugin-detail-fields dt {
+  font-size: 0.85em;
+  margin-bottom: 3px;
+}
+
+.cpl-plugin-detail-fields dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.cpl-plugin-detail-section {
+  margin-top: 14px;
+}
+
+.cpl-plugin-detail-tag {
+  margin-right: 0;
+}
+
+.cpl-plugin-detail-code {
+  max-height: none;
+}
+
 .cpl-plugin-card-description {
+  display: block;
   font-size: 1em;
   margin-bottom: 6px;
   white-space: nowrap;
