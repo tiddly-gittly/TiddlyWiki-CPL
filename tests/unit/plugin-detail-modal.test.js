@@ -39,4 +39,15 @@ describe('CPL plugin detail modal wiring', () => {
     expect(modal).toContain('{$:/temp/CPL-Repo/plugins-index}jsonextract<selectedTitle>');
     expect(modal).toContain('install-plugin-button');
   });
+
+  test('plugin detail modal should include a version selector for historical versions', () => {
+    const modal = fs.readFileSync(modalPath, 'utf8');
+
+    expect(modal).toContain('cpl-plugin-detail-version-select');
+    expect(modal).toContain('jsonget[versions]');
+    expect(modal).toContain('selectedVersion');
+    expect(modal).toContain(
+      '$:/state/CPL-Repo/plugin-detail-version'
+    );
+  });
 });

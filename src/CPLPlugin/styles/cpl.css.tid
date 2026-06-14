@@ -234,6 +234,12 @@ type: text/vnd.tiddlywiki
   color: <<colour muted-foreground>>;
 }
 
+.cpl-plugin-detail-version-select select {
+  border-color: <<colour tiddler-editor-border>>;
+  background: <<colour tiddler-editor-background>>;
+  color: <<colour foreground>>;
+}
+
 .cpl-dependency-tag {
   background: <<colour background>>22;
   color: <<colour foreground>>;

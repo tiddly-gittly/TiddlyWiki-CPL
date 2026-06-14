@@ -23,11 +23,15 @@ type: text/vnd.tiddlywiki
   name={{{ [<json>jsonget[name]] ~[<json>jsonget[title]split[/]last[1]] }}}
   description={{{ [<json>jsonget[description]] }}}
   version={{{ [<json>jsonget[version]] }}}
+  versions={{{ [<json>jsonget[versions]] }}}
   author={{{ [<json>jsonget[author]] }}}
   coreVersion={{{ [<json>jsonget[core]] }}}
   category={{{ [<json>jsonget[category]!is[blank]else[Unknown]] }}}
   installedVersion={{{ [<json>jsonget[title]get[version]] }}}
+  versionState=<<qualify "$:/state/CPL-Repo/plugin-detail-version">>
 >
+
+<$let selectedVersion={{{ [<versionState>get[text]else<version>] }}}>
 
 <div class="cpl-plugin-detail">
 
@@ -61,7 +65,17 @@ type: text/vnd.tiddlywiki
 </$list>
 
 <div class="cpl-plugin-detail-actions">
-<$macrocall $name="install-plugin-button" plugin=<<title>> libraryVersion=<<version>> installedVersion=<<installedVersion>> />
+<$list filter="[<versions>count[]compare:integer:gt[1]]" variable="hasMultipleVersions">
+<span class="cpl-plugin-detail-version-select">
+<span class="cpl-plugin-card-meta-text"><$text text={{{ [<chinese>match[yes]then[版本]else[Version]] }}}/>:</span>
+<$select tiddler=<<versionState>> field="text">
+<$list filter="[<versions>enlist-input[]]" variable="v">
+<option value=<<v>>><$text text=<<v>>/></option>
+</$list>
+</$select>
+</span>
+</$list>
+<$macrocall $name="install-plugin-button" plugin=<<title>> libraryVersion=<<selectedVersion>> installedVersion=<<installedVersion>> />
 <$list filter="[<title>is[tiddler]]">
 <$button class="tc-btn-invisible cpl-inline-button-link">
 <$action-navigate $to=<<title>>/>
@@ -111,6 +125,8 @@ type: text/vnd.tiddlywiki
 </div>
 
 </div>
+
+</$let>
 
 </$let>
 

@@ -458,6 +458,19 @@
   margin: 12px 0;
 }
 
+.cpl-plugin-detail-version-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cpl-plugin-detail-version-select select {
+  padding: 2px 6px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+}
+
 .cpl-plugin-detail-fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

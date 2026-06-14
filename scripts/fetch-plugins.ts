@@ -380,7 +380,21 @@ async function main(): Promise<void> {
     }
 
     try {
+      // Read old version *before* overwriting so we can archive it when
+      // the downloaded plugin has a different version.
+      let oldVersion: string | undefined;
+      let oldContent: string | undefined;
       if (fs.existsSync(destPath)) {
+        try {
+          oldContent = fs.readFileSync(destPath, 'utf-8');
+          const oldParsed = JSON.parse(oldContent) as Record<string, unknown>;
+          oldVersion =
+            typeof oldParsed.version === 'string'
+              ? oldParsed.version
+              : undefined;
+        } catch {
+          /* corrupt old file; treat as absent */
+        }
         fs.unlinkSync(destPath);
       }
       await downloadFile(normalizedUri, destPath);
@@ -394,29 +408,39 @@ async function main(): Promise<void> {
       console.log(`[fetch-plugins] ${pluginTitle}: saved to ${destPath}`);
       downloaded += 1;
 
-      // Save a versioned copy to plugin-fetched-history/{sanitizedTitle}/{version}.json
-      // so the server can serve historical versions on request.
+      // Archive the *previous* version into plugin-fetched-history only when
+      // the newly downloaded version differs. This keeps history/ as a
+      // genuine archive of old versions rather than a duplicate of
+      // plugin-fetched/.
       try {
-        const parsed = JSON.parse(downloadedContent) as Record<string, unknown>;
-        const version =
-          typeof parsed.version === 'string' ? parsed.version : undefined;
-        if (version) {
-          if (!isSafePluginVersionFileName(version)) {
-            console.warn(
-              `[fetch-plugins] ${pluginTitle}: not archiving unsafe version name ${version}`,
-            );
-            continue;
-          }
+        const newParsed = JSON.parse(downloadedContent) as Record<
+          string,
+          unknown
+        >;
+        const newVersion =
+          typeof newParsed.version === 'string' ? newParsed.version : undefined;
+        const versionToArchive =
+          oldVersion && newVersion && oldVersion !== newVersion
+            ? oldVersion
+            : undefined;
+        if (
+          versionToArchive &&
+          oldContent &&
+          isSafePluginVersionFileName(versionToArchive)
+        ) {
           const historyPluginDir = path.join(
             HISTORY_DIR,
             sanitizePluginFileName(pluginTitle),
           );
           ensureDir(historyPluginDir);
-          const historyPath = path.join(historyPluginDir, `${version}.json`);
+          const historyPath = path.join(
+            historyPluginDir,
+            `${versionToArchive}.json`,
+          );
           if (!fs.existsSync(historyPath)) {
-            fs.copyFileSync(destPath, historyPath);
+            fs.writeFileSync(historyPath, oldContent, 'utf-8');
             console.log(
-              `[fetch-plugins] ${pluginTitle}: archived version ${version} to history`,
+              `[fetch-plugins] ${pluginTitle}: archived old version ${versionToArchive} to history`,
             );
           }
         }

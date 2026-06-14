@@ -292,17 +292,34 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
       writeFileSync(
         pluginIndexPath,
         JSON.stringify(
-          pluginInfos.map(info => ({
-            title: info.title,
-            name: info.name,
-            author: info.author,
-            tags: info.tags,
-            category: info.category,
-            type: info['plugin-type'],
-            version: info.version,
-            core: info['core-version'],
-            description: info.description,
-          })),
+          pluginInfos.map(info => {
+            const formatted = formatTitle(info.title);
+            const cacheFolder = resolve(cachePluginsDir, formatted);
+            const versions: string[] = [];
+            if (existsSync(cacheFolder)) {
+              for (const f of readdirSync(cacheFolder)) {
+                if (
+                  f.endsWith('.json') &&
+                  f !== 'latest.json' &&
+                  f !== '__meta__.json'
+                ) {
+                  versions.push(f.replace(/\.json$/, ''));
+                }
+              }
+            }
+            return {
+              title: info.title,
+              name: info.name,
+              author: info.author,
+              tags: info.tags,
+              category: info.category,
+              type: info['plugin-type'],
+              version: info.version,
+              core: info['core-version'],
+              description: info.description,
+              versions,
+            };
+          }),
         ),
       );
 
