@@ -1,273 +1,159 @@
 created: 20260527000000000
-modified: 20260527000000000
+modified: 20260614000000000
 tags: 
 title: Deployment
 type: text/vnd.tiddlywiki
 
-!! Docker Deployment
+!! Docker Compose Deployment
 
-The published image is `linonetwo/tiddlywiki-cpl`. Run from inside your clone of this repo so that volume mounts point at the right paths:
+The published image is `linonetwo/tiddlywiki-cpl`. Clone the repo, fill in `.env`, then start:
 
 ```bash
 git clone https://github.com/tiddly-gittly/TiddlyWiki-CPL.git
 cd TiddlyWiki-CPL
 cp .env.example .env   # fill in secrets — see Environment Variables below
-docker run -d -p 8080:8080 \
-  -v $(pwd)/data:/app/data \
-  -v $(pwd)/wiki/files/plugin-fetched:/app/wiki/files/plugin-fetched \
-  -v $(pwd)/wiki/files/plugin-fetched-history:/app/wiki/files/plugin-fetched-history \
-  -v $(pwd)/repo-cache:/app/repo-cache \
-  --env-file .env \
-  linonetwo/tiddlywiki-cpl:latest
+
+# Pull latest image and start
+docker compose pull
+docker compose up -d
 ```
 
-!!! Volume mounts
+Architecture:
 
-|!Path in container|!Mount from repo|!Notes|
-|`/app/data`|`$(pwd)/data`|Stats, ratings, comments. Bind-mounted so writes are immediately visible on the host and committable via git.|
-|`/app/wiki/files/plugin-fetched`|`$(pwd)/wiki/files/plugin-fetched`|Latest plugin JSONs. Gitignored; persists across restarts.|
-|`/app/wiki/files/plugin-fetched-history`|`$(pwd)/wiki/files/plugin-fetched-history`|Per-version plugin archives. Gitignored.|
-|`/app/repo-cache`|`$(pwd)/repo-cache`|Shallow git clone cache. Gitignored; avoids full re-clone on restart.|
-|`/app/wiki/files/plugin-offline`|❌ do not mount|Offline fallback plugins are baked into the image; mounting would hide them.|
+```
+frpc → 127.0.0.1:28080 → cpl-nginx (:80)
+                              ├─ /tmp/cpl-maintenance-active 存在? → maintenance (:8081)
+                              └─ 否则 → tiddlywiki-cpl (:8080)
+```
 
-> //Bind mount behaviour://  `-v $(pwd)/data:/app/data` makes the host and container share the exact same directory. Every write the container makes is immediately visible on the host — no copying required. The image content at that path is shadowed (not deleted).
+Two containers run together:
+* `tiddlywiki-cpl` — TiddlyWiki + CPL server. Attaches to port `28081` for local debugging (no gzip). Does not expose port 8080 publicly.
+* `cpl-nginx` — nginx reverse proxy. Handles gzip (homepage ~10MB → ~2MB), static asset caching, and maintenance-page fallback during startup.
+
+Both containers share a `cpl-runtime` Docker volume at `/tmp`. The entrypoint writes `/tmp/cpl-maintenance-active` during startup; nginx checks this file per-request and proxies to the maintenance page on 8081 when present. Once the TiddlyWiki server is ready, the flag file is deleted and nginx switches to 8080.
+
+!!! Volume mounts (from docker-compose.yml)
+
+|!Host path|!Container path|!Purpose|
+|`./cache`|`/app/cache`|Runtime plugin cache (rebuilt on startup)|
+|`./wiki/files/plugin-fetched`|`/app/wiki/files/plugin-fetched`|Latest plugin JSONs|
+|`./wiki/files/plugin-fetched-history`|`/app/wiki/files/plugin-fetched-history`|Per-version plugin archives|
+|`./wiki/tiddlers/comments/approved`|`/app/wiki/tiddlers/comments/approved`|Approved comments|
+|`./wiki/tiddlers/comments/pending`|`/app/wiki/tiddlers/comments/pending`|Pending comments|
+|`./wiki/tiddlers/ratings`|`/app/wiki/tiddlers/ratings`|Plugin ratings data|
+|`./wiki/tiddlers/compatibility`|`/app/wiki/tiddlers/compatibility`|Compatibility reports|
+|`./wiki/tiddlers/download-stats`|`/app/wiki/tiddlers/download-stats`|Per-plugin download counts|
+|`./docker/IfEditorMode.tid`|`/app/wiki/tiddlers/IfEditorMode.tid`|Read-only editor mode toggle|
 
 !!! Container lifecycle (`docker-entrypoint.ts`)
 
-# `git clone` (first start) or `git pull` into `/app/repo-cache` — keeps plugin metadata current. Non-fatal if GitHub is unreachable.
-# Server starts immediately.
-# `fetch-plugins` runs in the background; server restarts when it completes to serve the new plugin files.
+# Start maintenance server on `:8081` (prevents 502 while building).
+# `git clone` (first run) or `git pull` into `/app/repo-cache` — non-fatal if GitHub unreachable.
+# Build `cache/plugins` static repo artifacts.
+# Stop maintenance server, start TiddlyWiki on `:8080`.
+# `fetch-plugins` runs in background; server restarts when new plugin files are ready.
 # Repeats every `SYNC_INTERVAL_SECONDS` (default `3600`).
-
-Plugin downloads and git sync happen automatically inside the container. Deployers do not need to schedule these separately.
-
-!! Syncing `data/` back to GitHub
-
-The container carries no git credentials. Run this on the host once a week to open a Pull Request with the accumulated stats/ratings/comments:
-
-```bash
-# Requires gh CLI: https://cli.github.com  (gh auth login)
-pnpm run sync-data
-```
-
-`scripts/sync-data.ts` creates a branch `data-sync/{serverId}/{timestamp}`, commits only `data/`, pushes it, and opens a PR via `gh pr create`. The PR provides a review step and prevents direct-push conflicts between mirrors.
-
-Suggested cron (weekly, Monday 03:00):
-
-```
-0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
-```
-
-!!! `data/` directory
-
-`data/` is runtime state written by the server and committed via host-side PRs.
-
-|!File / Directory|!Description|
-|`stats.json`|Aggregate download counts read by the server at startup|
-|`stats.{serverId}.json`|Per-mirror download stats written by each mirror|
-|`ratings.json`|Aggregate plugin ratings|
-|`ratings.{serverId}.json`|Per-mirror ratings|
-|`comments/{plugin}.json`|Approved comments for a plugin|
-|`comments/{plugin}.{serverId}.json`|Per-mirror comments|
-|`compatibility/`|User-submitted compatibility reports|
-
-Because `data/` is bind-mounted into the cloned repo, every write the container makes is immediately visible on the host and reviewable before merge via `pnpm run sync-data`.
 
 !! Environment Variables
 
-Copy `.env.example` to `.env` and fill in your values:
-
-```bash
-cp .env.example .env
-```
+Copy `.env.example` to `.env`:
 
 |!Variable|!Default|!Description|
 |`HOST`|`0.0.0.0`|Bind address|
 |`PORT`|`8080`|Listen port|
-|`CPL_JWT_SECRET`|—|Random string for JWT signing. Generate: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`|
+|`CPL_JWT_SECRET`|—|Random 64-byte hex for JWT signing. Generate: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`|
 |`CPL_GITHUB_CLIENT_ID`|—|GitHub OAuth App Client ID|
 |`CPL_GITHUB_CLIENT_SECRET`|—|GitHub OAuth App Client Secret|
 |`CPL_ADMIN_GITHUB_IDS`|—|Comma-separated GitHub user IDs for comment moderators|
-|`CPL_BLOCKED_GITHUB_IDS`|—|Optional comma-separated GitHub user IDs blocked from submitting ratings, comments, and compatibility reports|
+|`CPL_BLOCKED_GITHUB_IDS`|—|Optional comma-separated GitHub user IDs to block|
 |`CPL_SERVER_ID`|—|Mirror identifier (e.g. `china`, `us`, `eu`). Leave empty for single-server.|
-|`SYNC_INTERVAL_SECONDS`|`3600`|Seconds between git pull + plugin re-fetch inside the container. Set `0` to disable.|
+|`SYNC_INTERVAL_SECONDS`|`3600`|Seconds between git pull + plugin re-fetch. Set `0` to disable.|
 
-Never commit `.env` to git — it is already in `.gitignore`.
+Never commit `.env` — it is in `.gitignore`.
 
 !!! Creating a GitHub OAuth App
 
 # Go to https://github.com/settings/applications/new
 # Set //Homepage URL// to `https://cpl.tidgi.fun/`
 # Set //Authorization callback URL// to `https://cpl.tidgi.fun/cpl/auth/github/callback`
-# Copy the Client ID and Client Secret into `.env`
-
-Use a dedicated OAuth App for the CPL server. Desktop/local OAuth Apps such as TidGi Desktop usually use a `127.0.0.1` callback and PKCE flow, so they cannot be reused by this server-side callback unless their GitHub App callback URL is changed to the CPL server URL.
+# Copy Client ID and Client Secret into `.env`
 
 !!! GitHub User IDs
 
-`CPL_ADMIN_GITHUB_IDS` and `CPL_BLOCKED_GITHUB_IDS` use numeric GitHub IDs, not usernames.
-
-To find an ID:
+`CPL_ADMIN_GITHUB_IDS` and `CPL_BLOCKED_GITHUB_IDS` use numeric IDs, not usernames:
 
 ```bash
-curl https://api.github.com/users/<login>
-# or
 gh api users/<login> --jq .id
 ```
 
-!!! Authentication and Cookies
-
-GitHub OAuth is used only to identify the user. After login, the CPL server signs a CPL JWT with `CPL_JWT_SECRET` and sends it as the `cpl_jwt_token` HttpOnly cookie.
-
-`CPL_JWT_SECRET` is generated by the deployer; it is not a GitHub value. Rotate it if it leaks, but remember that rotation invalidates existing sessions.
-
-The CPL client sends authenticated requests with browser credentials, so no `localStorage` token is required. For the simplest deployment, serve the wiki and `/cpl/*` from the same public origin. If you put the API behind a separate origin, configure HTTPS and cookie/CORS behavior deliberately before relying on authenticated actions.
-
 !! Multi-Server Deployment
 
-CPL supports multiple mirror servers (e.g. China, US, Europe) that all write to the same git repository without conflicts.
+Each mirror writes to its own files (`stats.{serverId}.json`, `ratings.{serverId}.json`, `comments/{plugin}.{serverId}.json`). The server aggregates all files at read time — no merge conflicts.
 
-Each mirror writes to its own files: `stats.{serverId}.json`, `ratings.{serverId}.json`, `comments/{plugin}.{serverId}.json`. The server aggregates all files at read time — no merge conflicts on git.
+Set `CPL_SERVER_ID` per mirror, e.g. `CPL_SERVER_ID=china`. Each mirror runs `pnpm run sync-data` weekly to open independent PRs.
 
-!!! Setup
-
-Set `CPL_SERVER_ID` in each mirror's `.env`:
-
-```
-CPL_SERVER_ID=china   # or us, eu, etc.
-```
-
-Each mirror runs `pnpm run sync-data` weekly to open a PR for its own `data/` changes. PRs from different mirrors are independent and can be merged or reviewed separately.
-
-To detect data issues across mirrors:
+To audit across mirrors:
 
 ```bash
-pnpm run reconcile-data             # dry run (report only)
+pnpm run reconcile-data             # dry run
 pnpm run reconcile-data -- --fix    # apply fixes
 pnpm run reconcile-data -- --clean-stale   # remove files from mirrors inactive 30+ days
 ```
 
-Comment IDs use the format `{serverId}-{timestamp}-{random}` to prevent collisions.
+Comment IDs use format `{serverId}-{timestamp}-{random}` to prevent collisions.
+
+!! Syncing `data/` back to GitHub
+
+The container has no git credentials. Run on the host weekly:
+
+```bash
+# Requires gh CLI: gh auth login
+pnpm run sync-data
+```
+
+`scripts/sync-data.ts` creates a branch `data-sync/{serverId}/{timestamp}`, commits `data/`, pushes, and opens a PR via `gh pr create`.
+
+Cron (weekly, Monday 03:00):
+
+```
+0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
+```
 
 !! Comment System Administration
 
 * Users authenticate via GitHub OAuth
-* New comments are held in `pending` status until a moderator approves them
-* Moderators are the GitHub user IDs listed in `CPL_ADMIN_GITHUB_IDS`
-* Ratings, comments, and compatibility reports are tied to GitHub identity
-* Block abusive accounts by adding their numeric GitHub IDs to `CPL_BLOCKED_GITHUB_IDS`
-* Comment data lives in `data/comments/` as JSON files
-* Rate limit: 10 comments per hour per user (configurable via `CPL_COMMENT_RATE_LIMIT`)
+* New comments held `pending` until moderator approval
+* Moderators: GitHub user IDs in `CPL_ADMIN_GITHUB_IDS`
+* Block abusers: numeric GitHub IDs in `CPL_BLOCKED_GITHUB_IDS`
+* Rate limit: `CPL_COMMENT_RATE_LIMIT` comments per hour per user (default `10`)
 
 !! Bare-Metal Deployment (without Docker)
 
 ```bash
 pnpm install
-pnpm run fetch-plugins   # download plugin JSONs into wiki/files/plugin-fetched/
-pnpm server:prod         # start production server
+pnpm run fetch-plugins
+pnpm server:prod
 ```
 
-To keep plugin files current on a bare-metal server, schedule `fetch-plugins` yourself (the Docker image does this automatically):
+Schedule plugin sync (Docker does this automatically):
 
-```bash
-# crontab: daily at 03:00
+```
 0 3 * * *  cd /path/to/TiddlyWiki-CPL && pnpm run fetch-plugins >> /var/log/cpl-fetch.log 2>&1
 ```
 
-And sync data to GitHub weekly:
+!! Building the Docker Image
 
 ```bash
-0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
+docker build -t linonetwo/tiddlywiki-cpl:latest .
 ```
 
-If the server is behind a reverse proxy or CDN, ensure the real client IP is forwarded correctly — rate limiting and download counting depend on it.
-
-!! Building the Docker Image Yourself
+Behind a proxy on Linux:
 
 ```bash
+socat TCP-LISTEN:1081,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:1080 &
 docker build \
   --build-arg HTTP_PROXY=http://172.17.0.1:1081 \
   --build-arg HTTPS_PROXY=http://172.17.0.1:1081 \
   -t linonetwo/tiddlywiki-cpl:latest \
   .
-```
-
-Behind a proxy on Linux, forward the host proxy to the Docker bridge first:
-
-```bash
-socat TCP-LISTEN:1081,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:1080 &
-```
-
-!! Development Architecture
-
-The CPL client plugin follows a strict two-language boundary:
-
-* **Wikitext** is the entry point for all logic — user actions, network requests, state management, and view rendering all live in Wikitext. BackgroundActions handle polling and data fetching via `tm-http-request`. Procedures encapsulate reusable action sequences.
-* **TypeScript** is used only when a problem genuinely requires JavaScript: browser-only APIs (`Blob`, `crypto`), complex algorithms (recursive dependency resolution, weighted search scoring, `compareVersions`), and message handlers that respond to `rootWidget.addEventListener` events triggered by Wikitext.
-
-!!! Communication Pattern
-
-Wikitext → TypeScript flow is one-directional:
-
-```
-View button → $action-sendmessage "cpl-xxx" (Wikitext)
-                                   ↓
-            TypeScript rootWidget.addEventListener("cpl-xxx", handler)
-                                   ↓
-            TS handler does algorithm work → writes result tiddlers
-                                   ↓
-            View reads result tiddlers via filter/list
-```
-
-For data fetched by BackgroundActions:
-
-```
-BackgroundAction → tm-http-request → oncompletion → $action-sendmessage "cpl-process-xxx" data=<<data>>
-                                                           ↓
-                               TypeScript handler → builds index / compares versions → writes result tiddlers
-```
-
-!!! TypeScript Module Responsibilities
-
-|!File|!Responsibility|!Keep as TS because|
-|`startup/server-init.ts`|Server config sync + OAuth handler; `$tw.cpl` backward-compat stub|`window.location`, crypto|
-|`startup/oauth.ts`|GitHub OAuth CSRF state + sessionStorage + redirect + callback|`crypto.getRandomValues`, `sessionStorage`|
-|`startup/repo.ts`|Pure utilities: `getCurrentRepoEntry`, `formatPluginTitle`|Pure functions, no side effects|
-|`startup/plugin-install.ts`|Listens for `cpl-install-plugin-request` message; recursive dependency resolution + direct `fetch()` for plugin JSON|Complex async tree traversal|
-|`startup/plugin-index.ts`|Listens for `cpl-process-plugin-index` message; builds in-memory search index + weighted scoring; listens for `cpl-search-plugins`|In-memory Map structure, regex search|
-|`startup/plugin-update.ts`|Listens for `cpl-process-update-json` message; version comparison via `tw.utils.compareVersions`|`compareVersions` TS API|
-|`startup/types.ts`|Shared TypeScript type definitions|—|
-|`startup/constants.ts`|Tiddler title string constants (5 entries)|—|
-
-!!! Directory Structure
-
-```
-src/CPLPlugin/
-├── startup/
-│   ├── server-init.ts           # Config sync + OAuth init
-│   ├── repo.ts                  # Repo URL + title formatting utilities
-│   ├── plugin-index.ts          # Plugin index building + search
-│   ├── plugin-install.ts        # Plugin installation (message-driven)
-│   ├── plugin-update.ts         # Update check (message-driven)
-│   ├── oauth.ts                 # GitHub OAuth
-│   ├── types.ts                 # Shared TS types
-│   └── constants.ts             # Tiddler title constants
-├── background-actions/          # Wikitext BackgroundAction tiddlers
-│   ├── auto-fetch-plugin-index.tid
-│   ├── auto-fetch-update-json.tid
-│   ├── auto-fetch-all-stats.tid
-│   ├── auto-fetch-auth-state.tid
-│   ├── auto-fetch-comments.tid
-│   ├── auto-fetch-plugin-activity.tid
-│   ├── auto-probe-server.tid
-│   ├── auto-record-download.tid
-│   └── auto-sync-server-config.tid
-├── procedures/                  # Wikitext procedure tiddlers
-│   ├── fetch-all-stats.tid
-│   ├── fetch-comments.tid
-│   └── fetch-plugin-activity.tid
-├── views/                       # Wikitext views
-├── templates/                   # Wikitext templates and modals
-├── layout/                      # Wikitext layout components
-└── notifications/               # Wikitext notification templates
 ```

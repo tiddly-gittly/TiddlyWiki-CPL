@@ -71,6 +71,10 @@ RUN rm -rf /app/wiki/files/plugin-fetched && \
     find /app/wiki/tiddlers -type f -name '\$__plugins_Gk0Wk_CPL-Repo_config_*' -delete && \
     rm -rf '/app/wiki/tiddlers/website/$_/plugins/Gk0Wk/CPL-Repo/config'
 
+# Pre-build CPL plugin dist artifacts so the entrypoint doesn't need to run
+# `pnpm run build` at startup (which can hang in spawnSync).
+RUN pnpm run build
+
 # TypeScript entrypoint: clones/pulls the repo at first/subsequent startups,
 # fetches plugin JSONs, then starts the server.
 # .git is NOT baked into the image — it lives in the repo-cache volume.
@@ -88,12 +92,13 @@ VOLUME ["/app/data", "/app/repo-cache", "/app/wiki/files/plugin-fetched", "/app/
 EXPOSE 8080
 
 # STARTUP SEQUENCE (docker-entrypoint.ts via ts-node):
+#   0. Start maintenance server on :8081
 #   1. git clone / git pull into /app/repo-cache (volume-mounted)
 #   2. copy wiki/tiddlers/plugin-metadata from repo-cache into /app
 #   3. build-static-library — generate cache/plugins for /repo/* from available plugin files
-#   4. scripts/server.ts --prod — build runtime plugins, start TiddlyWiki
-#   5. fetch-plugins — download plugin JSONs into wiki/files/plugin-fetched/
-#   6. rebuild cache/plugins, then restart the server with the updated plugin files
+#   4. Stop maintenance server, start TiddlyWiki on :8080
+#   5. fetch-plugins in background; restart server when done
+#   6. Repeat every SYNC_INTERVAL_SECONDS (default 3600)
 #
 # Use HOST=0.0.0.0 so the container is reachable from outside.
 ENV HOST=0.0.0.0

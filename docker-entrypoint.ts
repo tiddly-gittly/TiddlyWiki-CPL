@@ -167,24 +167,37 @@ function ensureCplPluginDist(): boolean {
   return run('pnpm run build');
 }
 
-function buildStaticRepo(): void {
+/**
+ * Build cache/plugins asynchronously via spawn (non-blocking).
+ * Calls onDone when complete, regardless of success/failure.
+ */
+function buildStaticRepoAsync(onDone: () => void): void {
   if (!ensureCplPluginDist()) {
     console.warn(
       '[entrypoint] WARNING: cannot build static repo because plugin dist build failed.',
     );
+    onDone();
     return;
   }
 
   updateBuildStatus('building', 'Building plugin library (cache/plugins)...');
-  console.log('[entrypoint] Building cache/plugins static repo artifacts...');
-  if (!run('pnpm run build:static-library')) {
-    console.warn(
-      '[entrypoint] WARNING: static repo build failed. /repo/* may be unavailable.',
-    );
-    return;
-  }
-
-  console.log('[entrypoint] cache/plugins static repo build OK.');
+  console.log(
+    '[entrypoint] Building cache/plugins static repo artifacts (async)...',
+  );
+  const proc = spawn('pnpm', ['run', 'build:static-library'], {
+    stdio: 'inherit',
+    cwd: APP_DIR,
+  });
+  proc.on('exit', code => {
+    if (code !== 0) {
+      console.warn(
+        `[entrypoint] WARNING: static repo build failed with code ${code}. /repo/* may be unavailable.`,
+      );
+    } else {
+      console.log('[entrypoint] cache/plugins static repo build OK.');
+    }
+    onDone();
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -264,17 +277,17 @@ function restartServer(): void {
 // fetch-plugins (background) -> restart server when done
 // ---------------------------------------------------------------------------
 
-function runFetchPlugins(onDone: () => void): void {
+function runFetchPlugins(onDone: () => void, force = false): void {
   updateBuildStatus('fetching', 'Downloading plugin data from sources...');
   console.log('[entrypoint] Starting background plugin fetch...');
-  const proc = spawn(
-    TSNODEPATH,
-    ['--transpile-only', 'scripts/fetch-plugins.ts'],
-    {
-      stdio: 'inherit',
-      cwd: APP_DIR,
-    },
-  );
+  const args = ['--transpile-only', 'scripts/fetch-plugins.ts'];
+  if (force) {
+    args.push('--force');
+  }
+  const proc = spawn(TSNODEPATH, args, {
+    stdio: 'inherit',
+    cwd: APP_DIR,
+  });
   proc.on('exit', code => {
     if (code !== 0) {
       console.warn(
@@ -283,8 +296,7 @@ function runFetchPlugins(onDone: () => void): void {
     } else {
       console.log('[entrypoint] fetch-plugins completed OK.');
     }
-    buildStaticRepo();
-    onDone();
+    buildStaticRepoAsync(onDone);
   });
 }
 
@@ -312,7 +324,7 @@ function scheduleSync(): void {
       setTimeout(() => {
         updateBuildStatus('idle', 'Server is running');
       }, 5000);
-    });
+    }, true); /* force=true — always re-download to pick up latest plugin versions */
   }, SYNC_INTERVAL_SECONDS * 1000);
 }
 
@@ -334,27 +346,28 @@ startMaintenanceServer();
 // Failures are non-fatal: the server will start with baked-in metadata.
 gitSync();
 
-// 2. Build static repo from persisted/baked plugin files if available
-buildStaticRepo();
-
-// 3. Stop maintenance server and start the real TiddlyWiki server
+// 2. Start the server immediately with whatever cache/plugins already exists.
+//    build:static-library runs in background and will restart server when done.
 updateBuildStatus('ready', 'Server is starting...');
 stopMaintenanceServer();
 startServer();
 
-// Mark as idle once server is up (give it a moment to boot)
+// Mark as idle once server is up
 setTimeout(() => {
   updateBuildStatus('idle', 'Server is running');
 }, 5000);
 
-// 4. Fetch plugins in background; restart server when done so it loads them
-runFetchPlugins(() => {
-  updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
-  restartServer();
-  setTimeout(() => {
-    updateBuildStatus('idle', 'Server is running');
-  }, 5000);
+// 3. Run build:static-library in background to build initial cache/plugins,
+//    then fetch plugins and restart server.
+buildStaticRepoAsync(() => {
+  runFetchPlugins(() => {
+    updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
+    restartServer();
+    setTimeout(() => {
+      updateBuildStatus('idle', 'Server is running');
+    }, 5000);
+  });
 });
 
-// 5. Schedule periodic sync + restart
+// 4. Schedule periodic sync + restart
 scheduleSync();
