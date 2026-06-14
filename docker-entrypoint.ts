@@ -136,22 +136,6 @@ function run(cmd: string, cwd = APP_DIR): boolean {
   return true;
 }
 
-function copyDir(src: string, dest: string): void {
-  if (!fs.existsSync(src)) {
-    return;
-  }
-  fs.mkdirSync(dest, { recursive: true });
-  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
-    const s = path.join(src, entry.name);
-    const d = path.join(dest, entry.name);
-    if (entry.isDirectory()) {
-      copyDir(s, d);
-    } else {
-      fs.copyFileSync(s, d);
-    }
-  }
-}
-
 function hasBuiltCplPluginDist(): boolean {
   return DIST_CPL_PLUGIN_FILES.every(fileName =>
     fs.existsSync(path.join(APP_DIR, 'dist', fileName)),
@@ -201,7 +185,7 @@ function buildStaticRepoAsync(onDone: () => void): void {
 }
 
 // ---------------------------------------------------------------------------
-// git clone / pull + metadata sync
+// git clone / pull + async metadata sync
 // ---------------------------------------------------------------------------
 
 function gitSync(): void {
@@ -226,12 +210,42 @@ function gitSync(): void {
       console.log('[entrypoint] git pull OK');
     }
   }
+}
+
+function syncPluginMetadataAsync(onDone: () => void): void {
   const src = path.join(REPO_CACHE_DIR, 'wiki', 'tiddlers', 'plugin-metadata');
   const dest = path.join(APP_DIR, 'wiki', 'tiddlers', 'plugin-metadata');
-  if (fs.existsSync(src)) {
-    copyDir(src, dest);
-    console.log('[entrypoint] plugin-metadata synced OK');
+  if (!fs.existsSync(src)) {
+    console.warn(
+      '[entrypoint] plugin-metadata source missing; using baked metadata.',
+    );
+    onDone();
+    return;
   }
+
+  updateBuildStatus('syncing', 'Syncing plugin metadata...');
+  fs.mkdirSync(dest, { recursive: true });
+  console.log('[entrypoint] Syncing plugin-metadata in background...');
+  const proc = spawn('cp', ['-a', `${src}/.`, dest], {
+    stdio: 'inherit',
+    cwd: APP_DIR,
+  });
+  proc.on('error', error => {
+    console.warn(
+      `[entrypoint] WARNING: plugin-metadata sync failed to start: ${error.message}`,
+    );
+    onDone();
+  });
+  proc.on('exit', code => {
+    if (code !== 0) {
+      console.warn(
+        `[entrypoint] WARNING: plugin-metadata sync failed with code ${code}. Using baked metadata.`,
+      );
+    } else {
+      console.log('[entrypoint] plugin-metadata synced OK');
+    }
+    onDone();
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -317,14 +331,18 @@ function scheduleSync(): void {
   setInterval(() => {
     console.log('[entrypoint] === Periodic sync start ===');
     gitSync();
-    runFetchPlugins(() => {
-      console.log('[entrypoint] Periodic sync complete. Restarting server...');
-      updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
-      restartServer();
-      setTimeout(() => {
-        updateBuildStatus('idle', 'Server is running');
-      }, 5000);
-    }, true); /* force=true — always re-download to pick up latest plugin versions */
+    syncPluginMetadataAsync(() => {
+      runFetchPlugins(() => {
+        console.log(
+          '[entrypoint] Periodic sync complete. Restarting server...',
+        );
+        updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
+        restartServer();
+        setTimeout(() => {
+          updateBuildStatus('idle', 'Server is running');
+        }, 5000);
+      }, true); /* force=true — always re-download to pick up latest plugin versions */
+    });
   }, SYNC_INTERVAL_SECONDS * 1000);
 }
 
@@ -342,7 +360,7 @@ fs.mkdirSync(HISTORY_DIR, { recursive: true });
 // 0. Start maintenance/loading page server immediately (prevents 502 errors)
 startMaintenanceServer();
 
-// 1. git clone / pull + metadata sync (blocking, so server starts with latest metadata)
+// 1. git clone / pull into repo-cache. Metadata sync happens in background.
 // Failures are non-fatal: the server will start with baked-in metadata.
 gitSync();
 
@@ -357,15 +375,17 @@ setTimeout(() => {
   updateBuildStatus('idle', 'Server is running');
 }, 5000);
 
-// 3. Run build:static-library in background to build initial cache/plugins,
+// 3. Sync latest metadata and run build:static-library in background,
 //    then fetch plugins and restart server.
-buildStaticRepoAsync(() => {
-  runFetchPlugins(() => {
-    updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
-    restartServer();
-    setTimeout(() => {
-      updateBuildStatus('idle', 'Server is running');
-    }, 5000);
+syncPluginMetadataAsync(() => {
+  buildStaticRepoAsync(() => {
+    runFetchPlugins(() => {
+      updateBuildStatus('rebuilding', 'Rebuilding with fetched plugins...');
+      restartServer();
+      setTimeout(() => {
+        updateBuildStatus('idle', 'Server is running');
+      }, 5000);
+    });
   });
 });
 
