@@ -17,6 +17,7 @@ export interface RouteRequest extends IncomingMessage {
 }
 
 export interface RouteContext extends ServerEndpointContext {
+  queryParameters?: Record<string, string | string[] | undefined>;
   sendResponse: (
     statusCode: number,
     headers: Record<string, string>,

@@ -226,6 +226,7 @@ describe('CPL Server API', () => {
         PORT: String(TEST_PORT),
         HOST: TEST_HOST,
         CPL_TEST_MODE: 'true',
+        CPL_FORCE_RUNTIME_REBUILD: 'true',
         CPL_JWT_SECRET: JWT_SECRET,
         CPL_ADMIN_GITHUB_IDS: '42',
         CPL_BLOCKED_GITHUB_IDS: '666'
@@ -369,6 +370,21 @@ describe('CPL Server API', () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('title', TEST_FETCHED_PLUGIN_TITLE);
     expect(response.body).toHaveProperty('plugin-type', 'plugin');
+  });
+
+  test('GET /cpl/download-plugin/:pluginTitle should reject unsafe version paths', async () => {
+    const pluginTitle = encodeURIComponent(TEST_FETCHED_PLUGIN_TITLE);
+    const unsafeVersion = encodeURIComponent(
+      `../../plugin-fetched/${TEST_FETCHED_PLUGIN_FILENAME.replace(/\.json$/, '')}`
+    );
+    const response = await makeRequest(
+      'GET',
+      `/cpl/download-plugin/${pluginTitle}?version=${unsafeVersion}`
+    );
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.error).toBe('Invalid plugin version');
   });
 
   test('POST /cpl/comments/:pluginTitle should require authentication', async () => {

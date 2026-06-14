@@ -72,11 +72,7 @@ const requestJson = <T>(
 
       response.on('end', () => {
         if (statusCode < 200 || statusCode >= 300) {
-          reject(
-            new Error(
-              `HTTP ${statusCode}: ${data.slice(0, 200)}`,
-            ),
-          );
+          reject(new Error(`HTTP ${statusCode}: ${data.slice(0, 200)}`));
           return;
         }
         try {

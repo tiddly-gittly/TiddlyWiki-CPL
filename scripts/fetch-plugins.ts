@@ -3,6 +3,10 @@ import * as http from 'http';
 import * as https from 'https';
 import * as path from 'path';
 import { URL } from 'url';
+import {
+  isSafePluginVersionFileName,
+  sanitizePluginFileName,
+} from '../src/CPLServer/lib/files';
 import { paths } from '../src/CPLServer/lib/paths';
 
 interface PluginMetadata {
@@ -16,10 +20,6 @@ const PLUGIN_METADATA_DIR = path.join(WIKI_TIDDLERS_DIR, 'plugin-metadata');
 const OUTPUT_DIR = paths.pluginFetched;
 const HISTORY_DIR = paths.pluginFetchedHistory;
 const SUPPORTED_METADATA_EXTENSIONS = new Set(['.json', '.tid']);
-
-function sanitizeFilename(title: string): string {
-  return title.replace(/[\\/:*?"<>|]/g, '_').replace(/\.+$/g, '');
-}
 
 function ensureDir(dir: string): void {
   if (!fs.existsSync(dir)) {
@@ -349,7 +349,7 @@ async function main(): Promise<void> {
       continue;
     }
 
-    const destFileName = `${sanitizeFilename(pluginTitle)}.json`;
+    const destFileName = `${sanitizePluginFileName(pluginTitle)}.json`;
     const destPath = path.join(OUTPUT_DIR, destFileName);
 
     if (!force && shouldReuseExistingFile(destPath, pluginTitle)) {
@@ -401,9 +401,15 @@ async function main(): Promise<void> {
         const version =
           typeof parsed.version === 'string' ? parsed.version : undefined;
         if (version) {
+          if (!isSafePluginVersionFileName(version)) {
+            console.warn(
+              `[fetch-plugins] ${pluginTitle}: not archiving unsafe version name ${version}`,
+            );
+            continue;
+          }
           const historyPluginDir = path.join(
             HISTORY_DIR,
-            sanitizeFilename(pluginTitle),
+            sanitizePluginFileName(pluginTitle),
           );
           ensureDir(historyPluginDir);
           const historyPath = path.join(historyPluginDir, `${version}.json`);

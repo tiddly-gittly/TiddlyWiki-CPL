@@ -4,6 +4,11 @@ subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else
 tags:
 type: text/vnd.tiddlywiki
 
+! 2026.06.14
+
+* `GET /cpl/download-plugin/:pluginTitle?version=...` 现在会拒绝不安全的版本文件名，避免历史版本路径被 `../` 或路径分隔符绕出插件历史目录
+* `fetch-plugins` 归档历史版本时复用同一份版本文件名校验，跳过不安全的版本名
+
 ! 2026.06.12
 
 * Moderation model changed from pre-approval to block-only:
