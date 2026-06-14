@@ -62,14 +62,15 @@ module.exports = {
   },
 
   files: path.join(PROJECT_ROOT, 'wiki', 'files'),
-  pluginFetched: path.join(PROJECT_ROOT, 'wiki', 'files', 'plugin-fetched'),
-  pluginOffline: path.join(PROJECT_ROOT, 'wiki', 'files', 'plugin-offline'),
-  pluginFetchedHistory: path.join(
-    PROJECT_ROOT,
-    'wiki',
-    'files',
-    'plugin-fetched-history',
-  ),
+  get pluginFetched() {
+    return path.join(getWikiRoot(), 'files', 'plugin-fetched');
+  },
+  get pluginOffline() {
+    return path.join(getWikiRoot(), 'files', 'plugin-offline');
+  },
+  get pluginFetchedHistory() {
+    return path.join(getWikiRoot(), 'files', 'plugin-fetched-history');
+  },
 
   cache: {
     root: path.join(PROJECT_ROOT, 'cache'),

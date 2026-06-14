@@ -25,49 +25,64 @@ function createMockRepoDir() {
   );
   fs.mkdirSync(tmpDir, { recursive: true });
 
-  // Create a minimal plugin entry
+  // Create a plugin entry with two historical versions so the
+  // version-selector dropdown renders in the detail modal.
   const pluginDir = path.join(tmpDir, 'test_e2e-mock-plugin');
   fs.mkdirSync(pluginDir, { recursive: true });
+
+  const makePluginBundle = (version) => ({
+    title: MOCK_PLUGIN_TITLE,
+    description: 'E2E test mock plugin',
+    version,
+    author: 'test',
+    'plugin-type': 'plugin',
+    text: JSON.stringify({ tiddlers: {} }),
+  });
 
   fs.writeFileSync(
     path.join(pluginDir, '__meta__.json'),
     JSON.stringify({
       title: MOCK_PLUGIN_TITLE,
       description: 'E2E test mock plugin',
-      version: '1.0.0',
+      version: '2.0.0',
+      latest: '2.0.0',
       author: 'test',
+      versions: ['1.0.0', '2.0.0'],
     }),
   );
 
   fs.writeFileSync(
     path.join(pluginDir, 'latest.json'),
-    JSON.stringify({
-      title: MOCK_PLUGIN_TITLE,
-      description: 'E2E test mock plugin',
-      version: '1.0.0',
-      author: 'test',
-      'plugin-type': 'plugin',
-      text: JSON.stringify({ tiddlers: {} }),
-    }),
+    JSON.stringify(makePluginBundle('2.0.0')),
+  );
+  fs.writeFileSync(
+    path.join(pluginDir, '1.0.0.json'),
+    JSON.stringify(makePluginBundle('1.0.0')),
+  );
+  fs.writeFileSync(
+    path.join(pluginDir, '2.0.0.json'),
+    JSON.stringify(makePluginBundle('2.0.0')),
   );
 
   // Create update.json
   fs.writeFileSync(
     path.join(tmpDir, 'update.json'),
     JSON.stringify({
-      [MOCK_PLUGIN_TITLE]: { version: '1.0.0' },
+      [MOCK_PLUGIN_TITLE]: { version: '2.0.0' },
     }),
   );
 
-  // Create index.json
+  // Create index.json — include the versions array so the client
+  // plugin-detail modal can enumerate historical versions.
   fs.writeFileSync(
     path.join(tmpDir, 'index.json'),
     JSON.stringify([
       {
         title: MOCK_PLUGIN_TITLE,
         description: 'E2E test mock plugin',
-        version: '1.0.0',
+        version: '2.0.0',
         category: 'Functional',
+        versions: ['1.0.0', '2.0.0'],
       },
     ]),
   );

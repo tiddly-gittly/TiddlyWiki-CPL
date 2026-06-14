@@ -86,16 +86,19 @@ export const paths = {
     return path.join(getWikiRoot(), 'tiddlers', 'download-stats');
   },
 
-  // Wiki 文件目录
-  files: path.join(PROJECT_ROOT, 'wiki', 'files'),
-  pluginFetched: path.join(PROJECT_ROOT, 'wiki', 'files', 'plugin-fetched'),
-  pluginOffline: path.join(PROJECT_ROOT, 'wiki', 'files', 'plugin-offline'),
-  pluginFetchedHistory: path.join(
-    PROJECT_ROOT,
-    'wiki',
-    'files',
-    'plugin-fetched-history',
-  ),
+  // Wiki 文件目录（测试模式下自动重定向到 tmp/test-wiki/files）
+  get files() {
+    return path.join(getWikiRoot(), 'files');
+  },
+  get pluginFetched() {
+    return path.join(getWikiRoot(), 'files', 'plugin-fetched');
+  },
+  get pluginOffline() {
+    return path.join(getWikiRoot(), 'files', 'plugin-offline');
+  },
+  get pluginFetchedHistory() {
+    return path.join(getWikiRoot(), 'files', 'plugin-fetched-history');
+  },
 
   // 缓存目录
   cache: {

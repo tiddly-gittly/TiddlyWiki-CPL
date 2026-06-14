@@ -365,6 +365,80 @@ test.describe('CPL Server E2E', () => {
     await expect(staticNotice).toBeVisible({ timeout: 10000 });
     await expect(page.locator('.cpl-rating-widget')).toHaveCount(0);
   });
+
+  // ── Plugin Detail Modal ────────────────────────────────────────────
+
+  test('detail modal shows version selector for multi-version plugins', async ({
+    page,
+  }) => {
+    await waitForReady(page);
+
+    // Switch to CPL layout.
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/layout',
+        text: '$:/plugins/Gk0Wk/CPL-Repo/layout/layout',
+      });
+      $tw.rootWidget.refresh({ tiddler: '$:/layout' });
+    });
+
+    // Wait for layout to render.
+    await page.waitForSelector('text=Load Database', { timeout: 10000 });
+
+    // Inject a multi-version mock plugin into the index.
+    await page.evaluate((data) => {
+      const map = {};
+      map[data.title] = data;
+      $tw.wiki.addTiddler({
+        title: '$:/temp/CPL-Repo/plugins-index',
+        text: JSON.stringify(map),
+        type: 'application/json',
+      });
+      $tw.rootWidget.refresh({
+        '$:/temp/CPL-Repo/plugins-index': { modified: true },
+      });
+    }, {
+      title: MOCK_PLUGIN_TITLE,
+      name: 'E2E test mock plugin',
+      description: 'E2E test mock plugin',
+      version: '2.0.0',
+      author: 'test',
+      category: 'Functional',
+      tags: 'test',
+      type: 'plugin',
+      versions: ['1.0.0', '2.0.0'],
+    });
+
+    // Switch to Categories and wait for the plugin card.
+    await page.click('text=Categories');
+    await page.waitForSelector('.cpl-plugin-card', { timeout: 15000 });
+
+    // Open the detail modal.
+    const cards = page.locator('.cpl-plugin-card');
+    await cards.first().locator('.cpl-plugin-card-open-button').click();
+
+    const modal = page.locator('.tc-modal').filter({
+      hasText: /E2E test mock plugin/,
+    });
+    await expect(modal).toBeVisible({ timeout: 10000 });
+    await expect(modal).toContainText(MOCK_PLUGIN_TITLE);
+
+    // Version selector dropdown should be in the modal.
+    const select = modal.locator('select');
+    await expect(select).toBeVisible({ timeout: 5000 });
+
+    // Should have options for both versions.
+    await select.selectOption('2.0.0');
+    expect(await select.inputValue()).toBe('2.0.0');
+    await select.selectOption('1.0.0');
+    expect(await select.inputValue()).toBe('1.0.0');
+
+    // Detail title should be set.
+    const detail = await page.evaluate(() =>
+      $tw.wiki.getTiddlerText('$:/temp/CPL-Repo/plugin-detail-title', ''),
+    );
+    expect(detail).toBe(MOCK_PLUGIN_TITLE);
+  });
 });
 
 // ── Blank Wiki Installation ─────────────────────────────────────────────────
