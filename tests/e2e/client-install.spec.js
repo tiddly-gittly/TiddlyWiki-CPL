@@ -24,11 +24,15 @@ const { BASE_URL } = require('./helpers/shared');
 const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
 const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
 const TEST_PLUGIN_OFFLINE_PATH = path.join(
-  paths.pluginOffline,
+  paths.tmp,
+  'test-wiki',
+  'files',
+  'plugin-offline',
   `${TEST_PLUGIN_SANITIZED}.json`,
 );
 
 function createTestPluginFile() {
+  fs.mkdirSync(path.dirname(TEST_PLUGIN_OFFLINE_PATH), { recursive: true });
   const testPlugin = {
     title: TEST_PLUGIN_TITLE,
     type: 'application/json',
@@ -73,12 +77,16 @@ test.describe('CPL Client Installation E2E', () => {
   test('blank wiki can download test plugin from server', async ({
     request,
   }) => {
-    const pluginResp = await request.get(
-      `${BASE_URL}/cpl/download-plugin/${encodeURIComponent(
-        TEST_PLUGIN_TITLE,
-      )}`,
-    );
-    expect(pluginResp.ok()).toBe(true);
+    const pluginUrl = `${BASE_URL}/cpl/download-plugin/${encodeURIComponent(
+      TEST_PLUGIN_TITLE,
+    )}`;
+    const pluginResp = await request.get(pluginUrl);
+    if (!pluginResp.ok()) {
+      const body = await pluginResp.text().catch(() => '<unreadable>');
+      throw new Error(
+        `Download ${pluginUrl} failed with ${pluginResp.status()}: ${body}`,
+      );
+    }
     const pluginJson = await pluginResp.json();
     expect(pluginJson).toHaveProperty('title', TEST_PLUGIN_TITLE);
     expect(pluginJson).toHaveProperty('text');

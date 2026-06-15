@@ -238,15 +238,19 @@ test.describe('CPL Server E2E', () => {
         window.location.origin,
       );
       return fetch(url.toString())
-        .then(async response => {
+        .then(function (response) {
           if (!response.ok) {
-            return {
-              error: `HTTP ${response.status}: ${await response.text()}`,
-            };
+            return response.text().then(function (t) {
+              return { error: 'HTTP ' + response.status + ': ' + t };
+            });
           }
-          return { success: true, stats: await response.json() };
+          return response.json().then(function (stats) {
+            return { success: true, stats: stats };
+          });
         })
-        .catch(err => ({ error: err.message || String(err) }));
+        .catch(function (err) {
+          return { error: err.message || String(err) };
+        });
     });
 
     expect(result.error).toBeUndefined();
