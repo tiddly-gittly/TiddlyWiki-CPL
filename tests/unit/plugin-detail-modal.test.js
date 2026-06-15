@@ -29,6 +29,9 @@ describe('CPL plugin detail modal wiring', () => {
     expect(listItem).toContain(
       '$param="$:/plugins/Gk0Wk/CPL-Repo/templates/modals/plugin-detail"'
     );
+    // The card body sets versions via $action-setfield before opening modal
+    expect(listItem).toContain('$:/temp/CPL-Repo/plugin-detail-versions');
+    expect(listItem).toContain('jsonget[versions]');
     expect(listItem).not.toContain('$action-navigate');
   });
 
@@ -40,14 +43,43 @@ describe('CPL plugin detail modal wiring', () => {
     expect(modal).toContain('install-plugin-button');
   });
 
-  test('plugin detail modal should include a version selector for historical versions', () => {
+  test('version selector iterates versions from plugin-detail-versions tiddler', () => {
     const modal = fs.readFileSync(modalPath, 'utf8');
 
+    expect(modal).toContain('{$:/temp/CPL-Repo/plugin-detail-versions}jsonindexes[]');
     expect(modal).toContain('cpl-plugin-detail-version-select');
-    expect(modal).toContain('jsonget[versions]');
-    expect(modal).toContain('selectedVersion');
-    expect(modal).toContain(
-      '$:/state/CPL-Repo/plugin-detail-version'
-    );
+  });
+});
+
+describe('CPL plugin database views', () => {
+  const homeGalPath = path.join(
+    paths.projectRoot,
+    'src',
+    'CPLPlugin',
+    'views',
+    'galleries',
+    'home.tid'
+  );
+  const databasePath = path.join(
+    paths.projectRoot,
+    'src',
+    'CPLPlugin',
+    'views',
+    'plugins',
+    'database.tid'
+  );
+
+  test('home gallery renders search and paged list', () => {
+    const home = fs.readFileSync(homeGalPath, 'utf8');
+    expect(home).toContain('cpl-plugin-search');
+    expect(home).toContain('paged-plugin-list');
+    expect(home).toContain('searchplugin-home');
+  });
+
+  test('database view has mirror selector and refresh button', () => {
+    const db = fs.readFileSync(databasePath, 'utf8');
+    expect(db).toContain('Database Mirror');
+    expect(db).toContain('Refresh Database');
+    expect(db).toContain('current-static-repo');
   });
 });

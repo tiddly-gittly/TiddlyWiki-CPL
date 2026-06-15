@@ -37,9 +37,8 @@ type: text/vnd.tiddlywiki
 </$list>
 \end
 
-\define open-plugin-detail(pluginTitle,pluginVersions)
+\define open-plugin-detail(pluginTitle)
 \whitespace trim
-<$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-detail-versions" text=<<__pluginVersions__>> type="application/json"/>
 <$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-detail-title" text=<<__pluginTitle__>>/>
 <$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/templates/modals/plugin-detail"/>
 \end
@@ -68,7 +67,8 @@ type: text/vnd.tiddlywiki
 <div class="cpl-plugin-card">
 
 <$button class="tc-btn-invisible cpl-plugin-card-open-button" tooltip={{{ [<chinese>match[yes]then[查看插件详情]else[View plugin details]] }}}>
-<$macrocall $name="open-plugin-detail" pluginTitle=<<title>> pluginVersions=<<versions>>/>
+<$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-detail-versions" text={{{ [<json>jsonget[versions]] }}} type="application/json"/>
+<$macrocall $name="open-plugin-detail" pluginTitle=<<title>>/>
 
 <span class="cpl-plugin-card-main">
 
