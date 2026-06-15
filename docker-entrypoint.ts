@@ -267,10 +267,18 @@ function startServer(): void {
   serverProcess.on('exit', code => {
     if (code !== null && code !== 0) {
       console.error(
-        `[entrypoint] Server exited unexpectedly with code ${code}. Exiting container.`,
+        `[entrypoint] Server exited unexpectedly with code ${code}. Restarting in 5 seconds...`,
       );
-      process.exit(code);
+      // Brief back-off to avoid tight crash-loop.
+      setTimeout(() => {
+        startServer();
+      }, 5000);
+      return;
     }
+    console.error(
+      `[entrypoint] Server exited with code ${code}. Exiting container.`,
+    );
+    process.exit(code ?? 1);
   });
 }
 

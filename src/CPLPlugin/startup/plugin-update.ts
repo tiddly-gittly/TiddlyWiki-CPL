@@ -55,6 +55,10 @@ export const startup = (): void => {
         }
       } catch (error) {
         console.error(error);
+        tw.wiki.addTiddler({
+          title: '$:/temp/CPL-Repo/updating',
+          text: String(error),
+        });
       }
       tw.wiki.deleteTiddler('$:/temp/CPL-Repo/updating');
       return undefined;

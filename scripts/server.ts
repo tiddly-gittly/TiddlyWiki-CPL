@@ -10,8 +10,6 @@ import { ensureRuntimePluginsBuilt } from './runtime-plugins';
 
 type ServerMode = 'dev' | 'prod' | 'readonly';
 
-const DEFAULT_JWT_SECRET = 'default-dev-secret-change-me';
-
 const removeDirectorySync = (targetPath: string): void => {
   if (!fs.existsSync(targetPath)) {
     return;
@@ -201,10 +199,8 @@ twArgs.push(runtimeWikiPath, '--listen', `port=${port}`, `host=${host}`);
 injectTestModeConfig();
 
 if (mode === 'prod' || mode === 'readonly') {
-  if (
-    !process.env.CPL_JWT_SECRET ||
-    process.env.CPL_JWT_SECRET === DEFAULT_JWT_SECRET
-  ) {
+  const secret = process.env.CPL_JWT_SECRET;
+  if (!secret || secret === 'default-dev-secret-change-me') {
     console.error(
       '[CPL Server] Refusing to start read-only production server without CPL_JWT_SECRET.',
     );
