@@ -69,8 +69,8 @@ type: text/vnd.tiddlywiki
 <span class="cpl-plugin-card-meta-text"><$text text={{{ [<chinese>match[yes]then[版本]else[Version]] }}}/>:</span>
 <$select tiddler=<<versionState>> field="text" default=<<version>>>
 <option value=<<version>>><$text text=<<version>>/></option>
-<$list filter="[<versions>jsonindexes[]]" variable="idx">
-<$let v={{{ [<versions>jsonget<idx>] }}}>
+<$list filter="[{$:/temp/CPL-Repo/plugin-detail-versions}jsonindexes[]]" variable="idx">
+<$let v={{{ [{$:/temp/CPL-Repo/plugin-detail-versions}jsonget<idx>] }}}>
 <$list filter="[<v>!match<version>]">
 <option value=<<v>>><$text text=<<v>>/></option>
 </$list>
