@@ -42,7 +42,7 @@
     "url": "https://github.com/tiddly-gittly/TiddlyWiki-CPL/issues"
   },
   "engines": {
-    "node": "24.x"
+    "node": ">=20"
   },
   "homepage": "https://github.com/tiddly-gittly/TiddlyWiki-CPL#readme",
   "devDependencies": {
