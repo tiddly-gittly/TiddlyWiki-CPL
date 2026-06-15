@@ -42,10 +42,7 @@ const blockedGithubIds = envList('CPL_BLOCKED_GITHUB_IDS');
 const serverId = env('CPL_SERVER_ID', '');
 
 export const Config = {
-  jwtSecret: env('CPL_JWT_SECRET', ''),
-  get isJwtSecretMissing() {
-    return !this.jwtSecret || this.jwtSecret === 'default-dev-secret-change-me';
-  },
+  jwtSecret: env('CPL_JWT_SECRET', 'default-dev-secret-change-me'),
   jwtExpiryDays: envInt('CPL_JWT_EXPIRY_DAYS', 30),
   githubClientId: env('CPL_GITHUB_CLIENT_ID', ''),
   githubClientSecret: env('CPL_GITHUB_CLIENT_SECRET', ''),

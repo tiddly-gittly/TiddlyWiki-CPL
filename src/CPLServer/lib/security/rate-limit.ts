@@ -38,21 +38,8 @@ if (!runtimeState.cleanupTimer) {
 export const RateLimiter = {
   getClientIp(request: RouteRequest): string {
     const forwardedFor = getHeaderValue(request.headers, 'x-forwarded-for');
-    // Only trust x-forwarded-for when behind a trusted proxy.
-    // In test mode we skip rate-limiting entirely, so this is safe.
-    if (forwardedFor && process.env.CPL_BEHIND_PROXY === 'true') {
-      return forwardedFor.split(',')[0]?.trim() || 'unknown';
-    }
-
     if (forwardedFor) {
-      // Not behind a trusted proxy — use the direct connection IP instead.
-      // Log once per session to help diagnose misconfiguration.
-      if (!getClientIp._warnedForwardedFor) {
-        getClientIp._warnedForwardedFor = true;
-        console.warn(
-          '[CPL-Server] x-forwarded-for header received but CPL_BEHIND_PROXY is not set. Using direct IP.',
-        );
-      }
+      return forwardedFor.split(',')[0]?.trim() || 'unknown';
     }
 
     const realIp = getHeaderValue(request.headers, 'x-real-ip');
