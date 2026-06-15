@@ -7,6 +7,12 @@
 const fs = require('fs');
 const path = require('path');
 const { test, expect } = require('@playwright/test');
+
+// The webServer in playwright.config.js runs with CPL_TEST_MODE=true,
+// so plugin-offline files are read from tmp/test-wiki/.  Align the
+// test process so paths.pluginOffline resolves to the same directory.
+process.env.CPL_TEST_MODE = 'true';
+
 const paths = require('../paths');
 const {
   startBlankWiki,
@@ -24,10 +30,7 @@ const { BASE_URL } = require('./helpers/shared');
 const TEST_PLUGIN_TITLE = '$:/plugins/test/e2e-test-plugin';
 const TEST_PLUGIN_SANITIZED = '$__plugins_test_e2e-test-plugin';
 const TEST_PLUGIN_OFFLINE_PATH = path.join(
-  paths.tmp,
-  'test-wiki',
-  'files',
-  'plugin-offline',
+  paths.pluginOffline,
   `${TEST_PLUGIN_SANITIZED}.json`,
 );
 
@@ -64,13 +67,13 @@ function removeTestPluginFile() {
 test.describe('CPL Client Installation E2E', () => {
   test.beforeAll(async () => {
     await startMockRepoServer();
-    createTestPluginFile();
     await startBlankWiki({ loadCplClient: true });
+    createTestPluginFile();
   });
 
   test.afterAll(() => {
-    stopBlankWiki();
     removeTestPluginFile();
+    stopBlankWiki();
     stopMockRepoServer();
   });
 

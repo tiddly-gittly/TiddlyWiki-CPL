@@ -169,6 +169,10 @@ function getBlankWikiUrl() {
   return `http://${BLANK_WIKI_HOST}:${blankWikiPort}`;
 }
 
+function getBlankWikiPath() {
+  return blankWikiPath;
+}
+
 module.exports = {
   startBlankWiki,
   stopBlankWiki,
