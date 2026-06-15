@@ -22,17 +22,28 @@ const cachePluginsDir = paths.cache.plugins;
 
 // These tests require build artefacts. If the build has not been run yet (e.g.
 // a developer running just unit tests), skip gracefully so they are not
-// confusingly red. In CI the build step runs before this suite.
+// confusingly red. In CI the build step runs before this suite — fail loudly.
 const distExists = fs.existsSync(distDir);
 const cacheExists = fs.existsSync(cachePluginsDir);
+const isCI = process.env.CI === 'true';
+
+function requireBuildOrSkip(dirName, dirExists) {
+  if (dirExists) return;
+  if (isCI) {
+    throw new Error(
+      `${dirName} not found — run \`pnpm run build\` before tests in CI`
+    );
+  }
+  console.warn(`Skipping: ${dirName} not found – run \`pnpm run build\` first.`);
+  return true;
+}
 
 describe('CPL Static Library Build Artifacts', () => {
+  const skipDist = requireBuildOrSkip('dist/', distExists);
+  const skipCache = requireBuildOrSkip('cache/plugins/', cacheExists);
   describe('dist/ build output', () => {
     test('dist/$__plugins_Gk0Wk_CPL-Repo.json should exist', () => {
-      if (!distExists) {
-        console.warn('Skipping: dist/ not found – run `pnpm run build` first.');
-        return;
-      }
+      if (skipDist) return;
       const filePath = path.join(distDir, '$__plugins_Gk0Wk_CPL-Repo.json');
       expect(fs.existsSync(filePath)).toBe(true);
     });
@@ -41,13 +52,10 @@ describe('CPL Static Library Build Artifacts', () => {
       'CPL-Repo built plugin must have empty dependents ' +
         '(regression: client must not force-install server plugin)',
       () => {
-        if (!distExists) {
-          console.warn('Skipping: dist/ not found – run `pnpm run build` first.');
-          return;
-        }
+        if (skipDist) return;
         const filePath = path.join(distDir, '$__plugins_Gk0Wk_CPL-Repo.json');
         if (!fs.existsSync(filePath)) {
-          return; // covered by the existence test above
+          return;
         }
         const plugin = JSON.parse(fs.readFileSync(filePath, 'utf8'));
         expect(plugin.dependents ?? '').toBe('');
@@ -55,10 +63,7 @@ describe('CPL Static Library Build Artifacts', () => {
     );
 
     test('dist/$__plugins_Gk0Wk_CPL-Server.json should exist', () => {
-      if (!distExists) {
-        console.warn('Skipping: dist/ not found – run `pnpm run build` first.');
-        return;
-      }
+      if (skipDist) return;
       const filePath = path.join(distDir, '$__plugins_Gk0Wk_CPL-Server.json');
       expect(fs.existsSync(filePath)).toBe(true);
       const plugin = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -71,12 +76,7 @@ describe('CPL Static Library Build Artifacts', () => {
       'Gk0Wk_CPL-Server/__meta__.json must exist ' +
         '(regression: legacy update check must return 200, not 404)',
       () => {
-        if (!cacheExists) {
-          console.warn(
-            'Skipping: cache/plugins/ not found – run `pnpm run build:static-library` first.'
-          );
-          return;
-        }
+        if (skipCache) return;
         const metaPath = path.join(
           cachePluginsDir,
           'Gk0Wk_CPL-Server',
@@ -92,12 +92,7 @@ describe('CPL Static Library Build Artifacts', () => {
     );
 
     test('Gk0Wk_CPL-Repo/__meta__.json must exist with correct title', () => {
-      if (!cacheExists) {
-        console.warn(
-          'Skipping: cache/plugins/ not found – run `pnpm run build:static-library` first.'
-        );
-        return;
-      }
+      if (skipCache) return;
       const metaPath = path.join(
         cachePluginsDir,
         'Gk0Wk_CPL-Repo',
@@ -112,12 +107,7 @@ describe('CPL Static Library Build Artifacts', () => {
       'update.json must contain entries for both CPL-Repo and CPL-Server ' +
         '(regression: both plugins must be discoverable by update checker)',
       () => {
-        if (!cacheExists) {
-          console.warn(
-            'Skipping: cache/plugins/ not found – run `pnpm run build:static-library` first.'
-          );
-          return;
-        }
+        if (skipCache) return;
         const updatePath = path.join(cachePluginsDir, 'update.json');
         expect(fs.existsSync(updatePath)).toBe(true);
         const update = JSON.parse(fs.readFileSync(updatePath, 'utf8'));

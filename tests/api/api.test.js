@@ -2,6 +2,11 @@
  * API Integration Tests for CPL Server
  */
 
+// Align with the test server which runs in CPL_TEST_MODE.
+// Without this, paths.pluginFetched resolves to production wiki/
+// while the server reads from tmp/test-wiki/.
+process.env.CPL_TEST_MODE = 'true';
+
 const { spawn } = require('child_process');
 const http = require('http');
 const net = require('net');
@@ -47,31 +52,7 @@ const RUNTIME_PLUGIN_CACHE_DIR = paths.cache.runtimePlugins;
 const RUNTIME_PLUGIN_DIR_CACHE_DIR = paths.cache.runtimePluginDirs;
 const JWT_SECRET = 'test-secret';
 
-function base64UrlEncode(value) {
-  return Buffer.from(JSON.stringify(value))
-    .toString('base64')
-    .replace(/=/g, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
-}
-
-function createTestJwt(payload) {
-  const crypto = require('crypto');
-  const header = base64UrlEncode({ alg: 'HS256', typ: 'JWT' });
-  const body = base64UrlEncode({
-    avatar: 'https://example.com/avatar.png',
-    exp: Math.floor(Date.now() / 1000) + 3600,
-    ...payload
-  });
-  const signature = crypto
-    .createHmac('sha256', JWT_SECRET)
-    .update(`${header}.${body}`)
-    .digest('base64')
-    .replace(/=/g, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
-  return `${header}.${body}.${signature}`;
-}
+const { createTestJwt } = require('../e2e/helpers/shared');
 
 const userToken = createTestJwt({ githubId: '1001', username: 'compat-user' });
 const adminToken = createTestJwt({ githubId: '42', username: 'compat-admin' });
@@ -214,7 +195,6 @@ describe('CPL Server API', () => {
   beforeAll(async () => {
     TEST_PORT = await getAvailablePort();
     makeRequest = createMakeRequest(TEST_PORT);
-    createFetchedPluginFile();
     cleanupCompatibilityFiles();
     cleanupRuntimePluginCache();
 
@@ -261,6 +241,9 @@ describe('CPL Server API', () => {
     if (serverOutput) {
       console.log('[Server Output]\n', serverOutput);
     }
+
+    // Write test files AFTER the server has prepared the test wiki.
+    createFetchedPluginFile();
   }, 300000);
 
   afterAll(() => {
@@ -270,6 +253,7 @@ describe('CPL Server API', () => {
     }
     cleanupFetchedPluginFile();
     cleanupCompatibilityFiles();
+    cleanupRuntimePluginCache();
   });
 
   test('GET /cpl/stats/:pluginTitle should return stats', async () => {

@@ -137,7 +137,9 @@ function stopMockRepoServer() {
   if (mockRepoDir) {
     try {
       fs.rmSync(mockRepoDir, { recursive: true, force: true });
-    } catch {}
+    } catch (e) {
+      console.warn('[Mock Repo Server] Failed to clean up temp directory:', e.message);
+    }
     mockRepoDir = null;
   }
   console.log('[Mock Repo Server] Stopped');

@@ -160,7 +160,11 @@ function stopBlankWiki() {
   }
 
   if (blankWikiPath && fs.existsSync(blankWikiPath)) {
-    fs.rmSync(blankWikiPath, { recursive: true, force: true });
+    try {
+      fs.rmSync(blankWikiPath, { recursive: true, force: true });
+    } catch (e) {
+      console.warn('[Blank Wiki] Failed to clean up temp directory:', e.message);
+    }
     blankWikiPath = null;
   }
 }
