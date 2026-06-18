@@ -77,6 +77,43 @@ test.describe('CPL Client Installation E2E', () => {
     stopMockRepoServer();
   });
 
+  test('blank wiki can download test plugin from server', async ({
+    request,
+  }) => {
+    // The webServer (playwright.config.js) serves the test plugin from
+    // tmp/test-wiki/files/plugin-offline, which createTestPluginFile()
+    // populates in beforeAll. Retry up to 3 times because the webServer
+    // may still be binding its port when tests start.
+    const pluginUrl = `${BASE_URL}/cpl/download-plugin/${encodeURIComponent(
+      TEST_PLUGIN_TITLE,
+    )}`;
+    let lastError;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const pluginResp = await request.get(pluginUrl);
+        if (pluginResp.ok()) {
+          const pluginJson = await pluginResp.json();
+          expect(pluginJson).toHaveProperty('title', TEST_PLUGIN_TITLE);
+          expect(pluginJson).toHaveProperty('text');
+          return;
+        }
+        if (pluginResp.status() === 404) {
+          // File not ready yet; wait and retry.
+          await new Promise(r => setTimeout(r, 2000));
+          continue;
+        }
+        lastError = new Error(
+          `HTTP ${pluginResp.status()}: ${await pluginResp.text().catch(() => '<unreadable>')}`,
+        );
+      } catch (e) {
+        lastError = e;
+        // ECONNREFUSED — server not ready; wait and retry.
+        await new Promise(r => setTimeout(r, 2000));
+      }
+    }
+    throw lastError || new Error(`Download ${pluginUrl} failed after 3 attempts`);
+  });
+
   test('blank wiki loads CPL client successfully', async ({ page }) => {
     await page.goto(getBlankWikiUrl(), {
       waitUntil: 'domcontentloaded',
@@ -122,10 +159,15 @@ test.describe('CPL Client Installation E2E', () => {
       $tw.rootWidget.refresh({ tiddler: '$:/layout' });
     });
 
-    // Wait for the CPL layout to render. Increase timeout for CI runners.
-    await page.waitForSelector('button:has-text("Load Database")', {
-      timeout: 30000,
+    // Wait for the CPL layout container to appear — the layout's root
+    // element signals that TW has applied the new layout tiddler.
+    await page.waitForSelector('.cpl-layout-container', {
+      timeout: 15000,
     });
+
+    // The Load Database button should now be visible.
+    const loadButton = page.locator('button:has-text("Load Database")');
+    await expect(loadButton).toBeVisible({ timeout: 5000 });
 
     // Configure the blank wiki to use the mock static repo.
     await page.evaluate(mockRepoUrl => {
@@ -149,9 +191,9 @@ test.describe('CPL Client Installation E2E', () => {
     await page.click('button:has-text("Load Database")');
 
     // After loading, the Home/Categories/Tags/Updates tabs should appear.
-    await page.waitForSelector('text=Categories', { timeout: 30000 });
-    await page.waitForSelector('text=Tags', { timeout: 30000 });
-    await page.waitForSelector('text=Updates', { timeout: 30000 });
+    await page.waitForSelector('text=Categories', { timeout: 15000 });
+    await page.waitForSelector('text=Tags', { timeout: 5000 });
+    await page.waitForSelector('text=Updates', { timeout: 5000 });
 
     // Switch to Categories and wait for the plugin card.
     await page.click('text=Categories');
@@ -179,7 +221,7 @@ test.describe('CPL Client Installation E2E', () => {
     const detailModal = page.locator('.tc-modal').filter({
       hasText: /E2E test mock plugin/,
     });
-    await expect(detailModal).toBeVisible({ timeout: 30000 });
+    await expect(detailModal).toBeVisible({ timeout: 10000 });
     await expect(detailModal).toContainText(MOCK_PLUGIN_TITLE);
 
     const selectedDetailTitle = await page.evaluate(() =>
