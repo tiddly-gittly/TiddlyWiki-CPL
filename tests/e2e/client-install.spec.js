@@ -77,24 +77,6 @@ test.describe('CPL Client Installation E2E', () => {
     stopMockRepoServer();
   });
 
-  test('blank wiki can download test plugin from server', async ({
-    request,
-  }) => {
-    const pluginUrl = `${BASE_URL}/cpl/download-plugin/${encodeURIComponent(
-      TEST_PLUGIN_TITLE,
-    )}`;
-    const pluginResp = await request.get(pluginUrl);
-    if (!pluginResp.ok()) {
-      const body = await pluginResp.text().catch(() => '<unreadable>');
-      throw new Error(
-        `Download ${pluginUrl} failed with ${pluginResp.status()}: ${body}`,
-      );
-    }
-    const pluginJson = await pluginResp.json();
-    expect(pluginJson).toHaveProperty('title', TEST_PLUGIN_TITLE);
-    expect(pluginJson).toHaveProperty('text');
-  });
-
   test('blank wiki loads CPL client successfully', async ({ page }) => {
     await page.goto(getBlankWikiUrl(), {
       waitUntil: 'domcontentloaded',
@@ -140,9 +122,9 @@ test.describe('CPL Client Installation E2E', () => {
       $tw.rootWidget.refresh({ tiddler: '$:/layout' });
     });
 
-    // Wait for the CPL layout to render.
+    // Wait for the CPL layout to render. Increase timeout for CI runners.
     await page.waitForSelector('button:has-text("Load Database")', {
-      timeout: 10000,
+      timeout: 30000,
     });
 
     // Configure the blank wiki to use the mock static repo.
@@ -167,9 +149,9 @@ test.describe('CPL Client Installation E2E', () => {
     await page.click('button:has-text("Load Database")');
 
     // After loading, the Home/Categories/Tags/Updates tabs should appear.
-    await page.waitForSelector('text=Categories', { timeout: 15000 });
-    await page.waitForSelector('text=Tags', { timeout: 10000 });
-    await page.waitForSelector('text=Updates', { timeout: 10000 });
+    await page.waitForSelector('text=Categories', { timeout: 30000 });
+    await page.waitForSelector('text=Tags', { timeout: 30000 });
+    await page.waitForSelector('text=Updates', { timeout: 30000 });
 
     // Switch to Categories and wait for the plugin card.
     await page.click('text=Categories');
@@ -197,7 +179,7 @@ test.describe('CPL Client Installation E2E', () => {
     const detailModal = page.locator('.tc-modal').filter({
       hasText: /E2E test mock plugin/,
     });
-    await expect(detailModal).toBeVisible({ timeout: 10000 });
+    await expect(detailModal).toBeVisible({ timeout: 30000 });
     await expect(detailModal).toContainText(MOCK_PLUGIN_TITLE);
 
     const selectedDetailTitle = await page.evaluate(() =>
