@@ -6,6 +6,6 @@
   "list": "readme tree docs/changelog",
   "plugin-type": "plugin",
   "title": "$:/plugins/Gk0Wk/CPL-Server",
-  "version": "2026.06.08",
-  "Modern.TiddlyDev#SHA256-Hashed": "b3fa6c6ab034874d79e0150f966cd874c54101d8e92c5e84cb22a5a6d6ef8420"
+  "version": "2026.06.14-2",
+  "Modern.TiddlyDev#SHA256-Hashed": "e651ce92d4e74a7e85925a500306952094eaad11ecb586ce86a10a388990926a"
 }

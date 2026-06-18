@@ -207,8 +207,37 @@ type: text/vnd.tiddlywiki
   box-shadow: 0 2px 8px <<colour very-muted-foreground>>22;
 }
 
+.cpl-plugin-card:focus-within {
+  border-color: <<colour primary>>;
+}
+
+.cpl-plugin-card-open-button {
+  color: <<colour foreground>>;
+  fill: <<colour foreground>>;
+}
+
+.cpl-plugin-card-open-button:hover .cpl-plugin-card-title,
+.cpl-plugin-card-open-button:focus-visible .cpl-plugin-card-title {
+  color: <<colour primary>>;
+}
+
 .cpl-plugin-card-icon-frame {
   background: <<colour tiddler-info-background>>;
+}
+
+.cpl-plugin-detail-header {
+  border-bottom-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-plugin-detail-title,
+.cpl-plugin-detail-fields dt {
+  color: <<colour muted-foreground>>;
+}
+
+.cpl-plugin-detail-version-select select {
+  border-color: <<colour tiddler-editor-border>>;
+  background: <<colour tiddler-editor-background>>;
+  color: <<colour foreground>>;
 }
 
 .cpl-dependency-tag {

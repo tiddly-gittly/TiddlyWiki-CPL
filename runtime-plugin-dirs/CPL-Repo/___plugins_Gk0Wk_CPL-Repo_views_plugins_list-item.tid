@@ -37,12 +37,10 @@ type: text/vnd.tiddlywiki
 </$list>
 \end
 
-\define plugin-name-link(pluginTitle,name)
+\define open-plugin-detail(pluginTitle)
 \whitespace trim
-<$button class="tc-btn-invisible cpl-plugin-card-title" style="color: inherit;">
-<$action-navigate $to=<<__pluginTitle__>>/>
-<$text text=<<__name__>>/>
-</$button>
+<$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-detail-title" text=<<__pluginTitle__>>/>
+<$action-sendmessage $message="tm-modal" $param="$:/plugins/Gk0Wk/CPL-Repo/templates/modals/plugin-detail"/>
 \end
 
 \define plugin-list-item(json,field,show-suggestion:"yes",class:"")
@@ -59,6 +57,7 @@ type: text/vnd.tiddlywiki
     name={{{ [<json>jsonget[name]] ~[<json>jsonget[title]split[/]last[1]] }}}
     description={{{ [<json>jsonget[description]] }}}
     version={{{ [<json>jsonget[version]] }}}
+    versions={{{ [<json>jsonget[versions]] }}}
     author={{{ [<json>jsonget[author]] }}}
     category={{{ [<json>jsonget[category]!is[blank]else[Unknown]] }}}
     installedVersion={{{ [<json>jsonget[title]get[version]] }}}
@@ -67,36 +66,37 @@ type: text/vnd.tiddlywiki
 <!-- Card Container -->
 <div class="cpl-plugin-card">
 
-<div class="cpl-plugin-card-main">
+<$button class="tc-btn-invisible cpl-plugin-card-open-button" tooltip={{{ [<chinese>match[yes]then[查看插件详情]else[View plugin details]] }}}>
+<$action-setfield $tiddler="$:/temp/CPL-Repo/plugin-detail-versions" text={{{ [<json>jsonget[versions]] }}} type="application/json"/>
+<$macrocall $name="open-plugin-detail" pluginTitle=<<title>>/>
 
-<!-- Plugin Icon (clickable) -->
-<div class="cpl-plugin-card-icon-wrapper">
-<$button class="tc-btn-invisible cpl-plugin-card-icon-frame">
-<$action-navigate $to=<<title>>/>
+<span class="cpl-plugin-card-main">
+
+<!-- Plugin Icon -->
+<span class="cpl-plugin-card-icon-wrapper">
+<span class="cpl-plugin-card-icon-frame">
 <$list filter="[<icon>!is[blank]]">
 <img src=<<icon>> style="width: 40px; height: 40px; object-fit: contain;"/>
 </$list>
 <$list filter="[<icon>is[blank]]">
 <$transclude tiddler={{{ [[$:/core/images/plugin-generic-]addsuffix<type>] }}} style="width: 40px; height: 40px;"/>
 </$list>
-</$button>
-</div>
+</span>
+</span>
 
 <!-- Plugin Info -->
-<div class="cpl-plugin-card-body">
+<span class="cpl-plugin-card-body">
 
 <!-- Name -->
-<div style="margin-bottom: 2px;">
-<$macrocall $name="plugin-name-link" pluginTitle=<<title>> name=<<name>> />
-</div>
+<span class="cpl-plugin-card-title"><$text text=<<name>>/></span>
 
 <!-- Description -->
-<div class="cpl-plugin-card-description">
+<span class="cpl-plugin-card-description">
 <$text text=<<description>>/>
-</div>
+</span>
 
 <!-- Meta info -->
-<div class="cpl-plugin-card-meta">
+<span class="cpl-plugin-card-meta">
 <span class="cpl-plugin-card-meta-text">v<$text text=<<version>>/></span>
 <$list filter="[<author>!is[blank]]">
 <span class="cpl-plugin-card-meta-text">by <$text text=<<author>>/></span>
@@ -104,16 +104,17 @@ type: text/vnd.tiddlywiki
 <$list filter="[<installedVersion>!is[blank]]" variable="t">
 <span class="cpl-plugin-card-meta-text cpl-status-success"><em>{{$:/language/ControlPanel/Plugins/AlreadyInstalled/Hint}}</em></span>
 </$list>
-</div>
+</span>
 
 <!-- Tags -->
-<div class="cpl-plugin-card-tags">
+<span class="cpl-plugin-card-tags">
 <$macrocall $name="tag-plain" text={{{ [<chinese>match[yes]] :then[<category>addprefix[$:/plugins/Gk0Wk/CPL-Repo/config/plugin-categories/]get[text]else[未分类]] :else[<category>] }}} icon="$:/core/images/folder" bg={{{ [{$:/palette}getindex[tag-background]] }}} color={{{ [{$:/palette}getindex[tag-foreground]] }}} />
-</div>
+</span>
 
-</div>
+</span>
 
-</div>
+</span>
+</$button>
 
 <!-- Install Button -->
 <div class="cpl-plugin-card-actions">
