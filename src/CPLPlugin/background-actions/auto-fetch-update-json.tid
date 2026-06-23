@@ -1,4 +1,5 @@
 tags: $:/tags/BackgroundAction
+platforms: browser
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-update-json
 track-filter: [prefix[$:/temp/CPL-Repo/plugin-database-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/system/update-manager]]
 

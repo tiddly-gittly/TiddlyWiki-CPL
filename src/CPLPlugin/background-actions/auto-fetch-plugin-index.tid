@@ -1,7 +1,12 @@
 tags: $:/tags/BackgroundAction
+platforms: browser
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-plugin-index
-track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]]
+track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]] [[$:/temp/CPL-Repo/auto-load-trigger]get[text]]
 
+<!-- Only auto-load when inside the CPL layout, auto-load is enabled, and the index is not already present. -->
+<$list filter="[[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout]]">
+<$list filter="[{$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout}match[yes]]">
+<$list filter="[[$:/temp/CPL-Repo/plugins-index]!is[tiddler]]">
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
   method="GET"
@@ -9,5 +14,8 @@ track-filter: [[$:/layout]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/layout/layout
   <$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
 </$list>
 <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-  <$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+  <$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}$/>
 </$list>"""/>
+</$list>
+</$list>
+</$list>

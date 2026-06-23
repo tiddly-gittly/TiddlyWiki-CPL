@@ -1,4 +1,5 @@
 tags: $:/tags/BackgroundAction
+platforms: browser
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-auth-state
 track-filter: [[$:/temp/CPL-Server/auth-refresh-token]get[text]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
 

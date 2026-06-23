@@ -1,0 +1,8 @@
+tags: $:/tags/BackgroundAction
+platforms: browser
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-sync-mirror-type
+track-filter: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]]
+
+<$let staticRepo={{$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo}}>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/mirror-type' text={{{ [<staticRepo>is[blank]then[unknown]else[static]] }}}/>
+</$let>

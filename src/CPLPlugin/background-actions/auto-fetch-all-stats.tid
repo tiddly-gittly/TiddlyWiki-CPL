@@ -1,8 +1,10 @@
 tags: $:/tags/BackgroundAction
+platforms: browser
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-all-stats
-track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
+track-filter: [[$:/temp/CPL-Repo/api-status]get[text]match[available]] [[$:/temp/CPL-Server/api-base]get[text]]
 
-<$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
+<!-- Only fetch aggregate stats after the server probe has confirmed availability. -->
+<$list filter="[[$:/temp/CPL-Repo/api-status]get[text]match[available]]">
 <$list filter="[[$:/temp/CPL-Server/api-base]get[text]!is[blank]]">
 <$action-sendmessage $message="tm-http-request"
   url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200]] }}}

@@ -1,6 +1,7 @@
 tags: $:/tags/BackgroundAction
+platforms: browser
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-plugin-activity
-track-filter: [[$:/HistoryList]get[current-tiddler]] [[$:/HistoryList]get[current-tiddler]get[cpl.title]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
+track-filter: [[$:/HistoryList]get[current-tiddler]get[cpl.title]] [[$:/HistoryList]get[current-tiddler]tag[$:/tags/PluginWiki]get[title]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
 
 <$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]]">
 <$let pluginTitle={{{ [[$:/HistoryList]get[current-tiddler]get[cpl.title]!is[blank]] [[$:/HistoryList]get[current-tiddler]tag[$:/tags/PluginWiki]get[title]!is[blank]] +[limit[1]] }}}>

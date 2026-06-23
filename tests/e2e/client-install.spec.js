@@ -150,6 +150,16 @@ test.describe('CPL Client Installation E2E', () => {
       { timeout: 30000 },
     );
 
+    // Disable auto-load so this test can exercise the manual Load Database
+    // path. Otherwise the layout switch may trigger the BackgroundAction and
+    // turn the button into "Refresh Database" before we can click it.
+    await page.evaluate(() => {
+      $tw.wiki.addTiddler({
+        title: '$:/plugins/Gk0Wk/CPL-Repo/config/auto-load-database-in-cpl-layout',
+        text: 'no',
+      });
+    });
+
     // Switch to CPL layout.
     await page.evaluate(() => {
       $tw.wiki.addTiddler({
