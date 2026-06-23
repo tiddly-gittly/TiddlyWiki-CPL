@@ -1,5 +1,6 @@
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-fetch-comments
 tags: $:/tags/BackgroundAction
+platforms: browser
 track-filter: [[$:/temp/CPL-Repo/panel-tab-state]get[text]match[$:/plugins/Gk0Wk/CPL-Repo/views/comments-center]] [[$:/temp/CPL-Server/user-status]get[text]] [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]]
 
 <$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]] [[$:/temp/CPL-Server/disable-auto-fetch-comments]is[blank]] +[count[]compare:number:eq[2]]">

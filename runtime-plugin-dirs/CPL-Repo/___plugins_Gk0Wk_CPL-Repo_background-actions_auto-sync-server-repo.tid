@@ -1,10 +1,10 @@
-title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-sync-server-config
+title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-sync-server-repo
 tags: $:/tags/BackgroundAction
-track-filter: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]] [[$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo]get[text]]
+platforms: browser
+track-filter: [[$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo]get[text]]
 
-<$let staticRepo={{$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo}} serverRepo={{$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo}}>
+<$let serverRepo={{$:/plugins/Gk0Wk/CPL-Repo/config/current-server-repo}}>
 <$let apiBase={{{ [<serverRepo>trim[]removesuffix[/repo]] }}}>
-<$action-setfield $tiddler='$:/temp/CPL-Repo/mirror-type' text={{{ [<staticRepo>is[blank]then[unknown]else[static]] }}}/>
 <$action-setfield $tiddler='$:/temp/CPL-Server/api-base' text=<<apiBase>>/>
 <$list filter='[<apiBase>is[blank]]'>
 <$action-setfield $tiddler='$:/temp/CPL-Repo/server-type' text='unknown'/>

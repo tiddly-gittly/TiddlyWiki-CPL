@@ -1,5 +1,6 @@
 title: $:/plugins/Gk0Wk/CPL-Repo/background-actions/auto-record-download
 tags: $:/tags/BackgroundAction
+platforms: browser
 track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api-base]get[text]] [[$:/temp/CPL-Repo/install-plugin-status]get[text]]
 
 <$list filter="[[$:/temp/CPL-Repo/server-type]get[text]match[server]] [[$:/temp/CPL-Repo/install-plugin-status]get[text]match[success]] +[count[]compare:number:eq[2]]">
