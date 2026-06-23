@@ -84,6 +84,11 @@ jobs:
           rm -rf cache/.git
           cp -r cache/plugins dist/repo
 
+      # cache branch only stores plugin artifacts. Vercel reads vercel.json from
+      # the pushed branch, so master-side "cache": false is ignored there.
+      - name: Disable Vercel deploys for cache branch
+        run: cp .github/vercel-cache-branch.json cache/vercel.json
+
       - name: Save Plugin Cache
         uses: s0/git-publish-subdir-action@develop
         env:
