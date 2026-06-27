@@ -1,0 +1,17 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "; LXGW ZhenKai / 霞鹜臻楷\n\n霞鹜臻楷复活版\n\nhttps://github.com/lxgw/LxgwZhenKai\n\n''字体介绍''\n\n霞鹜臻楷：基于「霞鹜文楷」衍生，前期手动加粗调整字形，后期由 AI 生成字形辅助补字的开源中文字体。\n\n本字体一度于 2022 年 6 月停止更新〔详情（酷安）〕，后来想到还有很多喜爱这款字体的用户对这款字体的停更表示可惜，经过反复考虑，决定恢复这款字体的更新维护工作，只是后续版本的汉字字形均由 AI 生成（因此汉字字形轮廓的曲线质量会有所下降）。\n\n需要说明的是，虽然这款字体是在「霞鹜文楷」的基础上加粗衍生的，但「霞鹜臻楷」是一款独立的字体，并不隶属于「霞鹜文楷」系列。虽然用户可以 暂且 将这款字体当成「霞鹜文楷」的粗体版本与文楷搭配使用，但是本字体的更新维护并不随着文楷同步进行，且并未计划将字符集与文楷看齐。",
+        "cpl.uri": "https://dyp1121054136.github.io/dyp-plugins-library/library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fdyp%252FLxgwZhenKai.json",
+        "cpl.title": "$:/plugins/dyp/LxgwZhenKai",
+        "cpl.author": "dyp",
+        "cpl.name": "Font",
+        "cpl.description": "LxgwZhenKai",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/dyp1121054136/dyp-plugins-library",
+        "cpl.dependents": "",
+        "cpl.parent-plugin": "",
+        "cpl.core-version": "5.3.7-prerelease",
+        "title": "Plugin_202606274249044"
+    }
+]
