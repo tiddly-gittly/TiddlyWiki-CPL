@@ -20,10 +20,6 @@
     "uri": "https://oflg.github.io/Tidme-decks/library/index.html"
   },
   {
-    "name": "Relink (flibbles)",
-    "uri": "https://flibbles.github.io/tw5-relink/library/index.html"
-  },
-  {
     "name": "benwebber",
     "uri": "https://benwebber.github.io/tiddlywiki-plugins/library/"
   },
@@ -50,6 +46,10 @@
   {
     "name": "SQPL (Saq)",
     "uri": "https://saqimtiaz.github.io/SQPL/library/index.html"
+  },
+  {
+    "name": "Relink (flibbles)",
+    "uri": "https://flibbles.github.io/tw5-relink/library/index.html"
   },
   {
     "name": "TSKPL (oeyoews)",
