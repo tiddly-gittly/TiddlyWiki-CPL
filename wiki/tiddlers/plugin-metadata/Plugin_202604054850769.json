@@ -6,7 +6,7 @@
         "cpl.title": "$:/plugins/wikilabs/tw-mcp",
         "cpl.author": "pmario",
         "cpl.name": "TW MCP Server",
-        "cpl.description": "TODO description",
+        "cpl.description": "Model Context Protocol server for TiddlyWiki",
         "cpl.plugin-type": "plugin",
         "cpl.dependents": "",
         "cpl.core-version": ">=5.4.0",
