@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20260723043000000",
+        "creator": "林一二",
+        "text": "",
+        "title": "linonetwo/tidgi-routing-chain",
+        "modified": "20260723043000000",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "modifier": "林一二",
+        "cpl.title": "$:/plugins/linonetwo/tidgi-routing-chain",
+        "cpl.author": "LinOnetwo",
+        "cpl.name": "TidGi Routing Chain Indicator",
+        "cpl.description": "(Requires next TidGi) Show why a tiddler is routed to a public or private workspace, with the highest-priority tag chain in the toolbar tooltip.",
+        "cpl.uri": "https://github.com/tiddly-gittly/tiddlywiki-plugins/releases/latest/download/__plugins_linonetwo_tidgi-routing-chain.json",
+        "cpl.readme": "!! TidGi Routing Chain Indicator\n\nShows a ViewToolbar button in [[TidGi Desktop|https://github.com/tiddly-gittly/TidGi-Desktop/]] that indicates whether the current tiddler is routed to a ''main'' or ''sub-wiki'' workspace.\n\nHover the button to see the '''highest-priority''' matching tag chain returned by TidGi (same rules as filesystem save routing).\n\n!! Requirements\n\n* '''Next TidGi Desktop release''' (or newer) that exposes `window.service.wiki.getTiddlerRoutingInfo` — this plugin will not activate on older TidGi builds\n* Current wiki has at least one sub-wiki with routing settings enabled (`tagNames` / `includeTagTree` / filters)\n\n!! Usage\n\n# Open a tiddler in the story river\n# Look at the view toolbar button (preview open/closed icons)\n# Hover to inspect the winning routing chain\n# Click to add/remove the configured private tag (default: `私有`)\n\n!! Config\n\n* `$:/plugins/linonetwo/tidgi-routing-chain/config/private-tag` — tag added/removed by the button (default `私有`)",
+        "cpl.source": "https://github.com/tiddly-gittly/tiddlywiki-plugins/tree/master/src/tidgi-routing-chain",
+        "cpl.plugin-type": "plugin",
+        "cpl.category": "Functional",
+        "cpl.tags": "TidGi"
+    }
+]
