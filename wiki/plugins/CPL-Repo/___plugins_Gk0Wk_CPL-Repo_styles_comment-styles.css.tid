@@ -1,0 +1,54 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/styles/comment-styles.css
+created: 20260101000000000
+modified: 20260527000000000
+tags: $:/tags/Stylesheet
+type: text/vnd.tiddlywiki
+
+.cpl-comment-section {
+  background: <<colour tiddler-info-background>>;
+  border-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-comment-title {
+  color: <<colour foreground>>;
+  border-bottom-color: <<colour tiddler-info-border>>;
+}
+
+.cpl-comment-user-card {
+  background: <<colour primary>>14;
+}
+
+.cpl-comment-logout-button,
+.cpl-comment-hint,
+.cpl-comment-login-text,
+.cpl-comment-date,
+.cpl-comment-empty {
+  color: <<colour muted-foreground>>;
+}
+
+.cpl-comment-textarea {
+  background: <<colour tiddler-editor-background>>;
+  color: <<colour foreground>>;
+  border-color: <<colour tiddler-editor-border>>;
+}
+
+.cpl-comment-textarea:focus {
+  border-color: <<colour primary>>;
+  box-shadow: 0 0 0 2px <<colour primary>>33;
+}
+
+.cpl-comment-status-error {
+  color: <<colour diff-delete-foreground>>;
+}
+
+.cpl-comment-status-success {
+  color: <<colour diff-insert-foreground>>;
+}
+
+.cpl-comment-login-prompt {
+  background: <<colour background>>;
+}
+
+.cpl-comment-item {
+  border-bottom-color: <<colour tiddler-info-border>>;
+}

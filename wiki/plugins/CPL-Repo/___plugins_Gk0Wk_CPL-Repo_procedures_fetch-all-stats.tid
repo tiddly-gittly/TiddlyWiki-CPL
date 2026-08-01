@@ -1,0 +1,8 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-all-stats
+
+\procedure cpl-fetch-all-stats()
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200]] }}}
+  method="GET"
+  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats' text=<<data>> type='application/json'/>"/>
+\end

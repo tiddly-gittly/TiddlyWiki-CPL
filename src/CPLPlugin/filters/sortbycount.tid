@@ -25,6 +25,17 @@ exports.sortbycount = function(source, operator) {
       statsData = raw.plugins || {};
     } catch(e) {}
   }
+  wiki.each(function(tiddler) {
+    var pluginTitle = tiddler.fields['plugin-title'];
+    if (!pluginTitle || statsData[pluginTitle]) return;
+    if (String(tiddler.fields.title || '').indexOf('$:/cpl/download-stats/') !== 0) return;
+    try {
+      var storedStats = JSON.parse(tiddler.fields.text || '{}');
+      if (typeof storedStats.downloadCount === 'number') {
+        statsData[pluginTitle] = storedStats;
+      }
+    } catch(e) {}
+  });
 
   // Collect titles with their download counts
   var results = [];

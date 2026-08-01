@@ -68,12 +68,39 @@ describe('CPL plugin database views', () => {
     'plugins',
     'database.tid'
   );
+  const websiteHomePath = path.join(
+    paths.projectRoot,
+    'wiki',
+    'tiddlers',
+    'templates',
+    'cpl',
+    'home-tab.tid'
+  );
+  const websiteCardPath = path.join(
+    paths.projectRoot,
+    'wiki',
+    'tiddlers',
+    'templates',
+    'cpl',
+    'plugin-gallery-item.tid'
+  );
 
   test('home gallery renders search and paged list', () => {
     const home = fs.readFileSync(homeGalPath, 'utf8');
     expect(home).toContain('cpl-plugin-search');
     expect(home).toContain('paged-plugin-list');
     expect(home).toContain('searchplugin-home');
+  });
+
+  test('website home limits the default gallery to top 20 downloads', () => {
+    const home = fs.readFileSync(websiteHomePath, 'utf8');
+    expect(home).toContain('sortbycount[20]');
+  });
+
+  test('website cards navigate to metadata tiddlers', () => {
+    const card = fs.readFileSync(websiteCardPath, 'utf8');
+    expect(card).toContain('to=<<currentTiddler>>');
+    expect(card).not.toContain('pluginTarget');
   });
 
   test('database view has mirror selector and refresh button', () => {

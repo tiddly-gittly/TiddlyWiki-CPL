@@ -7,6 +7,7 @@ title: CommentForPlugins
 type: text/vnd.tiddlywiki
 
 <$list filter="[all[current]tag[$:/tags/PluginWiki]!is[draft]]" variable="plugin">
+<$list filter="[[$:/plugins/Gk0Wk/CPL-Repo]is[missing]]">
 <$list filter="[[IfEditorMode]get[text]else[no]!match[yes]]">
 <$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]]" variable="lang">
 <$list filter="[<lang>search[zh]]">
@@ -14,6 +15,7 @@ type: text/vnd.tiddlywiki
 </$list>
 <$list filter="[<lang>!search[zh]]">
 <h2>Comments</h2>
+</$list>
 </$list>
 </$list>
 </$list>

@@ -14,6 +14,10 @@ const PROJECT_ROOT =
     ? path.resolve(__dirname, '../../..')
     : path.resolve(process.cwd());
 
+const DEPLOYED_WIKI_ROOT = process.env.WIKI_PATH
+  ? path.resolve(process.env.WIKI_PATH, process.env.WIKI_SUBPATH ?? '')
+  : null;
+
 /** 检测是否处于测试模式 */
 const isTestMode = (): boolean => process.env.CPL_TEST_MODE === 'true';
 
@@ -27,7 +31,7 @@ const getWikiRoot = (): string => {
   if (isTestMode()) {
     return path.join(PROJECT_ROOT, 'tmp', 'test-wiki');
   }
-  return path.join(PROJECT_ROOT, 'wiki');
+  return DEPLOYED_WIKI_ROOT ?? path.join(PROJECT_ROOT, 'wiki');
 };
 
 /**
@@ -44,10 +48,12 @@ export const paths = {
   projectRoot: PROJECT_ROOT,
 
   // 数据目录
-  data: path.join(PROJECT_ROOT, 'data'),
+  data: process.env.CPL_DATA_DIR
+    ? path.resolve(process.env.CPL_DATA_DIR)
+    : path.join(DEPLOYED_WIKI_ROOT ?? PROJECT_ROOT, '.cpl-data'),
 
   // Wiki 根目录（生产环境）
-  wiki: path.join(PROJECT_ROOT, 'wiki'),
+  wiki: DEPLOYED_WIKI_ROOT ?? path.join(PROJECT_ROOT, 'wiki'),
 
   // 测试 Wiki 根目录（由 server.ts 在测试前复制）
   testWiki: path.join(PROJECT_ROOT, 'tmp', 'test-wiki'),

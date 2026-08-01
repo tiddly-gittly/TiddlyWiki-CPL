@@ -1,0 +1,107 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/docs/changelog
+caption: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[更新日志]else[Changelog]] }}} />
+subtitle: <$text text={{{ [[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[CPL 更新日志]else[CPL Changelog]] }}} />
+tags: 
+type: text/vnd.tiddlywiki
+
+! 2026.06.23
+
+* 修复 BackgroundAction 在 Node.js 服务端执行的问题：所有 CPL 后台任务现在只在浏览器端运行
+* 删除 `server-init.ts` 中自动创建 `$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo` 和 `current-server-repo` 用户条目的逻辑，改为依赖插件 shadow tiddler 默认值
+* 镜像类型检测和服务器配置同步拆分为两个独立的后台任务，避免互相等待
+* 收紧自动加载数据库的触发条件：仅在 CPL layout、开启自动加载、且尚未加载索引时执行
+* 收紧服务器统计信息拉取：仅在探测到服务器可用（`api-status` 为 `available`）后才请求
+* 收紧插件活动数据拉取：仅在当前条目是插件（含 `cpl.title` 或 `$:/tags/PluginWiki`）时触发，不再在每次导航历史变化时执行
+* 新增单元测试覆盖后台任务平台限制、解耦逻辑和触发条件
+
+! 2026.06.14
+
+* 插件详情 modal 新增版本选择器，可以从历史版本中选择安装
+* 插件数据库列表项现在整块可点击，点击后在 modal 中展示插件元信息，不再导航到可能不存在的插件条目
+* 修复从 CPL 静态镜像安装插件时请求 URL 多出 `/plugins/` 导致 `__meta__.json` 和插件 JSON 404 的问题
+
+! 2026.06.13
+
+* 修复插件数据库列表不显示的问题
+* 修复插件卡片 Install 按钮左侧出现多余 “>>” 的问题
+* 修复插件列表的双重嵌套和多余边框：列表项外层改用 `cpl-plugin-list-item`，移除容器 `cpl-plugin-info-box` 的边框和背景色
+* 评论和兼容性报告改为仅屏蔽模式：移除客户端的待审核界面、通过/拒绝/删除按钮和“待审核”徽章
+* 简化评论中心文案：登录提示改为“登录后即可发表评论”，提交成功提示改为“评论已提交”
+
+! 2026.06.12
+
+* Architecture overhaul: Wikitext is now the single entry point for all logic — every user action and network request originates in Wikitext; TypeScript is reduced to pure algorithmic modules that register message handlers and respond via `rootWidget.addEventListener`
+* Eliminated all RPC round-trips: BackgroundActions no longer proxy button clicks through request tiddlers; buttons call procedures or send messages directly (e.g. rating stars, moderation buttons, comment submit, logout)
+* Removed `core.ts` (the last central controller) — install/index/update/search/download each self-start as independent modules
+* Deleted 6 dead files: `static-mirror-fetch.ts` (~100 lines), `comment-processor.ts` (~120 lines), `build-status-poll.ts` (~110 lines), `build-status-badge.tid`, `auto-fetch-build-status.tid`, `download-plugin.ts`
+* Removed iframe postMessage bridge (~180 lines) — all three mirrors (Netlify, GitHub Pages, cpl.tidgi.fun) support CORS; repo access now uses Wikitext `tm-http-request` exclusively
+* Replaced `$tw.cpl` JS API with Wikitext `cpl-process-plugin-index` / `cpl-process-update-json` message handlers; `$tw.cpl` reduced to empty stub for e2e backward-compat
+* Comment views now use native `jsonindexes[]` / `jsonget[]` filter operators instead of a JS comment-to-tiddler pre-processor
+* Replaced all `$action-setfield` + BackgroundAction refresh-token RPC with procedures: `fetch-all-stats`, `fetch-plugin-activity`, `fetch-comments`
+* `install.ts` and `plugin-index.ts` search changed to `rootWidget.addEventListener` — view buttons send `cpl-install-plugin-request` / `cpl-search-plugins` messages directly
+* Removed auto-update timer — update check now fires only when user enters the Updates tab
+* Flattened startup directory structure: merged types, eliminated `api-client/` and `core/` sub-directories
+* Renamed BackgroundActions for clarity: `auto-load-database` → `auto-fetch-plugin-index`, `auto-check-updates` → `auto-fetch-update-json`; deleted duplicate `auto-check-updates-on-layout`
+* Cleaned up constants: removed 16 unused tiddler title constants
+* Fixed TID formatting: removed redundant `created`/`modified`/`type`/`\whitespace trim` from all BackgroundActions
+* Fixed view rendering: missing `\import` for procedures causing stray `>>` characters; unbalanced `</$list>` tags; nested `<select>` onClick quote collision in database mirror dropdown
+* Fixed CPL-Server crash: replaced `new URL()` with manual query-string parsing in `stats/all` and `download-plugin` routes (TW sandbox does not provide `URL`)
+* CSS polish: suppressed TW default `tc-tab-content` borders/shadows inside CPL layout; added `border:none` to plugin cards for cleaner list appearance
+* Moderation model changed from pre-approval to block-only: new comments and compatibility reports are automatically `approved`; only users in the block list are rejected
+* e2e: added `CPL_ADMIN_GITHUB_IDS` to test server config; made runtime-plugin compilation mandatory in test mode to avoid stale cache; fixed comments center filter/tag balance and admin view test
+* CPL-Repo plugin: 215 KiB → 199 KiB (-16 KiB); startup TypeScript: 1,400+ lines → ~750 lines
+
+! 2026.06.09
+
+* Fixed server status probe using static mirror origin instead of configured server origin — switching the database mirror dropdown no longer incorrectly marks the feature server as unavailable
+* Added search box to Uninstall tab for quickly finding installed plugins, themes, and languages
+* Fixed concurrent deployment failures in GitHub Actions by adding concurrency control to `gh-pages.yml`
+
+! 2026.06.08
+
+* Mirror toolbar layout: status indicators (✓ Static Database, ⚠ Server Unavailable) now display inline with labels; flex-wrap prevents overflow on narrow viewports
+* Fixed update list not rendering: replaced `compare:integer:gt[0]` (returns count value, not boolean) with `search[0]then[no]else[yes]` pattern
+* Fixed auto-fetch on update tab switch: BackgroundAction `track-filter` now uses `prefix[...]` match to handle `$tabs` macro hash suffixes
+* Fixed "查看" button in update notification: removed redundant `cpl-get-plugins-index` call; now navigates directly to update tab and clears notification
+* New setting: "Auto-confirm installation during updates" — skips confirmation dialog when enabled (default: off)
+* Action buttons consolidation: refresh/update-all buttons moved from global action bar to update-manager sub-tab for better context
+* Fixed `getCurrentMirrorApiBase` returning server origin instead of mirror origin for static API calls
+* Build status badge auto-clears when switching to a static mirror
+* Homepage sorting: removed random shuffle filter — homepage now sorts plugins by download count (stable order, no flickering)
+* New `sortbycount` filter operator: sorts plugin tiddlers by download count from cached stats JSON, falls back to alphabetical order when offline
+* Download stats in-memory cache: download counts loaded once on cold start, incremented on each download — zero file I/O on API calls
+* Optimized `/cpl/stats` API: new `?top=N` parameter for top-N plugins by downloads; response no longer includes `downloadsByIp` (IP history)
+* Batched stats fetch: background action requests `?top=200` to reduce payload size instead of fetching all plugins
+
+! 2026.06.07
+
+* Comments Center: submit, view, and reply to comments via GitHub OAuth login; admins can moderate pending comments (approve/reject/delete)
+* OAuth security: cryptographically random nonce for state parameter validation to prevent CSRF attacks
+* Split static mirror and feature server: database mirror (static) and feature server can now be configured independently
+* Batch download stats: multiple plugin stats merged into a single HTTP request with 100ms debounce, dramatically reducing page load requests
+* Declarative Wikitext migration: replaced 5 JS fetch handlers with TW native `tm-http-request` + BackgroundAction pattern, reducing ~170 lines of frontend JavaScript
+* Removed plugin detail view: clicking plugins now navigates directly to the plugin's own tiddler, eliminating persistent tag nesting bugs and 268 lines of dead code
+* Fixed critical CSS bug: empty `.cpl-status-banner` rule caused browsers to discard all subsequent styles, breaking gradients, buttons, and most visual styles
+* Fixed `plugin-item` macro navigating to page title instead of `cpl.title`, affecting home gallery and author plugin lists
+* Fixed 15+ filter syntax errors (missing/extra `]`) in comments and stats views, eliminating "Filter error: Missing [ in filter expression"
+* Fixed build status polling failing for static mirror due to missing mirror type detection
+* Optimized default image loading speed
+* Improved login error display: explicit error message on 401 instead of perpetual Loading spinner, auto-refresh comments center after login
+
+! 2026.06.01
+
+* Server mirror fallback: iframe bridge timeout now falls back to direct HTTP fetch for static files on server-type mirrors instead of blocking the UI
+* Reduced iframe bridge timeout from 15s to 8s for less perceived lag
+* Dropdown no longer disabled during data loading — users can switch mirrors anytime
+* CPL Server now serves `/repo/` static library route with CORS headers for direct plugin database JSON access
+* New setting: "Auto-check for updates when entering CPL layout" (default: off)
+* Fixed mirror source being unexpectedly switched when entering CPL layout
+
+! 2026.05.30
+
+* Fixed `plugin.info` `list` field: corrected Settings tab path to `views/system/settings` so it displays in the plugin info panel
+* Fixed `readonly-api.ts` metadata: added `platforms: node` to prevent `require("url")` module-not-found errors in browser builds
+* Docker deployment support:
+  ** `docker-compose.yml` template
+  ** `Dockerfile` with read-only mode baked in (`IfEditorMode=no`)
+  ** `.dockerignore` / `.gitignore` excluding runtime cache directories

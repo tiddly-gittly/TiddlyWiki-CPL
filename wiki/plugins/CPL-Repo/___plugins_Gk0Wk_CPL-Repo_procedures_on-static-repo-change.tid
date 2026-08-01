@@ -1,0 +1,17 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/procedures/on-static-repo-change
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+\procedure on-static-repo-change()
+<$action-deletetiddler $filter="[prefix[$:/temp/CPL-Repo/]!match[$:/temp/CPL-Repo/mirror-type]!match[$:/temp/CPL-Repo/server-type]!match[$:/temp/CPL-Repo/plugin-database-tab-state]!match[$:/temp/CPL-Repo/api-status]!match[$:/temp/CPL-Repo/server-message]]" />
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/plugins/Gk0Wk/CPL-Repo/config/current-static-repo]get[text]addsuffix[/index.json]] }}}
+  method="GET"
+  oncompletion="""<$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
+<$action-sendmessage $message="cpl-process-plugin-index" data=<<data>>/>
+</$list>
+<$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
+<$action-setfield $tiddler='$:/temp/CPL-Repo/getting-plugins-index' text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]] }}}/>
+</$list>"""/>
+\end

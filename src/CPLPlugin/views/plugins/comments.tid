@@ -129,7 +129,6 @@ type: text/vnd.tiddlywiki
             </div>
           </$let>
         </$list>
-      </$list>
       <$list filter="[{<<commentsTiddler>>}jsonindexes[comments]count[]match[0]]" variable="noComments">
         <div class="cpl-comment-empty">
           <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>

@@ -1,0 +1,18 @@
+title: $:/plugins/Gk0Wk/CPL-Repo/layout/action-bar
+created: 20260520000000000
+modified: 20260520000000000
+tags: 
+type: text/vnd.tiddlywiki
+
+<$list filter="[[$:/language]get[text]removeprefix[$:/languages/]else[en-GB]search[zh]then[yes]else[no]]" variable="chinese">
+<div class="cpl-action-bar">
+<$list filter="[[$:/layout]is[tiddler]!field:text[]]" variable="inCustomLayout">
+<$button class="tc-btn-big-green tc-primary-btn cpl-action-button">
+{{$:/core/images/default-layout}}
+&#32;
+<$text text={{{ [<chinese>match[yes]then[返回标准布局]else[Back to Standard Layout]] }}} />
+<$action-setfield $tiddler="$:/layout" text="" />
+</$button>
+</$list>
+</div>
+</$list>
