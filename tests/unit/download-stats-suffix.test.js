@@ -9,7 +9,9 @@ describe('download stats legacy server suffix compatibility', () => {
   beforeAll(() => {
     delete process.env.WIKI_PATH;
     delete process.env.WIKI_SUBPATH;
-    global.$tw = { boot: { wikiPath: path.join(paths.projectRoot, 'wiki') } };
+    global.$tw = {
+      boot: { wikiPath: path.join(paths.projectRoot, 'wiki', 'wiki') },
+    };
     jest.resetModules();
   });
 

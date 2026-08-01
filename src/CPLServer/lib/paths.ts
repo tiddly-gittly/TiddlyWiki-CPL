@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as path from 'path';
 
 /**
@@ -18,11 +19,21 @@ const bootWikiPath = (globalThis as {
   $tw?: { boot?: { wikiPath?: string } };
 }).$tw?.boot?.wikiPath;
 
-const DEPLOYED_WIKI_ROOT = bootWikiPath
-  ? path.resolve(bootWikiPath)
-  : process.env.WIKI_PATH
+const wikiRootCandidates = [
+  bootWikiPath ? path.resolve(bootWikiPath) : null,
+  process.env.WIKI_PATH
     ? path.resolve(process.env.WIKI_PATH, process.env.WIKI_SUBPATH ?? '')
-    : null;
+    : null,
+  path.join(PROJECT_ROOT, 'wiki'),
+  PROJECT_ROOT,
+].filter((candidate): candidate is string => candidate !== null);
+
+const DEPLOYED_WIKI_ROOT =
+  wikiRootCandidates.find(
+    candidate =>
+      fs.existsSync(path.join(candidate, 'tiddlywiki.info')) &&
+      fs.existsSync(path.join(candidate, 'tiddlers')),
+  ) ?? wikiRootCandidates[0] ?? null;
 
 /** 检测是否处于测试模式 */
 const isTestMode = (): boolean => process.env.CPL_TEST_MODE === 'true';
