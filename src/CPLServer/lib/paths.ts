@@ -14,9 +14,15 @@ const PROJECT_ROOT =
     ? path.resolve(__dirname, '../../..')
     : path.resolve(process.cwd());
 
-const DEPLOYED_WIKI_ROOT = process.env.WIKI_PATH
-  ? path.resolve(process.env.WIKI_PATH, process.env.WIKI_SUBPATH ?? '')
-  : null;
+const bootWikiPath = (globalThis as {
+  $tw?: { boot?: { wikiPath?: string } };
+}).$tw?.boot?.wikiPath;
+
+const DEPLOYED_WIKI_ROOT = bootWikiPath
+  ? path.resolve(bootWikiPath)
+  : process.env.WIKI_PATH
+    ? path.resolve(process.env.WIKI_PATH, process.env.WIKI_SUBPATH ?? '')
+    : null;
 
 /** 检测是否处于测试模式 */
 const isTestMode = (): boolean => process.env.CPL_TEST_MODE === 'true';
