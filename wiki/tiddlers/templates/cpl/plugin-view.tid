@@ -1,7 +1,7 @@
 code-body: yes
 created: 20231006080749205
 modified: 20231010213737515
-list-before: CommentForPlugins
+list-before: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/comments
 tags: $:/tags/ViewTemplate
 title: CPL PluginWiki View Template
 type: text/vnd.tiddlywiki

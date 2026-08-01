@@ -132,7 +132,9 @@ describe('CPL plugin database views', () => {
     const cascade = fs.readFileSync(websiteDetailCascadePath, 'utf8');
 
     expect(detail).toContain('tags: $:/tags/ViewTemplate');
-    expect(detail).toContain('list-before: CommentForPlugins');
+    expect(detail).toContain(
+      'list-before: $:/plugins/Gk0Wk/CPL-Repo/views/plugins/comments'
+    );
     expect(detail).toContain(
       '<$list filter="[all[current]tag[$:/tags/PluginWiki]!is[draft]]"'
     );
