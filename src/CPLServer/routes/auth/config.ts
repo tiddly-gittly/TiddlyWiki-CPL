@@ -8,7 +8,7 @@ export const path = /^\/cpl\/auth\/config$/;
 export const handler: RouteHandler = (_request, _response, context) => {
   try {
     sendJson(context, 200, {
-      githubClientId: Config.githubClientId || null,
+      githubClientId: Config.githubClientId.trim(),
     });
   } catch (error) {
     sendInternalError(context, 'auth-config handler', error);

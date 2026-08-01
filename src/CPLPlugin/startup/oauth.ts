@@ -57,11 +57,14 @@ const generateOAuthState = (): string => {
 
 /** Initiate GitHub OAuth login with CSRF nonce. */
 export const handleGithubLogin = (): void => {
-  const githubClientId = tw.wiki.getTiddlerText(
-    '$:/temp/CPL-Server/github-client-id',
-    '',
-  );
-  if (!githubClientId) {
+  const githubClientId = tw.wiki
+    .getTiddlerText('$:/temp/CPL-Server/github-client-id', '')
+    .trim();
+  if (
+    !githubClientId ||
+    githubClientId.toLowerCase() === 'null' ||
+    githubClientId.toLowerCase() === 'undefined'
+  ) {
     console.error(
       '[CPL-Server] GitHub client ID not available. Server may not have OAuth configured.',
     );

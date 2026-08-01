@@ -208,6 +208,8 @@ describe('CPL Server API', () => {
         CPL_TEST_MODE: 'true',
         CPL_FORCE_RUNTIME_REBUILD: 'true',
         CPL_JWT_SECRET: JWT_SECRET,
+        CPL_GITHUB_CLIENT_ID: '',
+        CPL_GITHUB_CLIENT_SECRET: '',
         CPL_ADMIN_GITHUB_IDS: '42',
         CPL_BLOCKED_GITHUB_IDS: '666'
       }
@@ -264,6 +266,13 @@ describe('CPL Server API', () => {
     expect(response.body).toHaveProperty('downloadCount');
     expect(response.body).toHaveProperty('averageRating');
     expect(response.body).toHaveProperty('totalRatings');
+  });
+
+  test('GET /cpl/auth/config should return an empty client ID when OAuth is disabled', async () => {
+    const response = await makeRequest('GET', '/cpl/auth/config');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({ githubClientId: '' });
   });
 
   test('native TiddlyWiki tiddler writes should be rejected in production mode', async () => {
