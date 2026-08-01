@@ -99,6 +99,18 @@ const readStats = (pluginTitle: string): DownloadStats => {
     ? [`${baseName}${suffix}.tid`, `${baseName}.tid`]
     : [`${baseName}.tid`];
 
+  if (fs.existsSync(dir)) {
+    for (const fileName of fs.readdirSync(dir)) {
+      if (
+        fileName.startsWith(`${baseName}.`) &&
+        fileName.endsWith('.tid') &&
+        !candidates.includes(fileName)
+      ) {
+        candidates.push(fileName);
+      }
+    }
+  }
+
   for (const filename of candidates) {
     const filePath = pathModule.join(dir, filename);
     if (!fs.existsSync(filePath)) {
@@ -143,7 +155,10 @@ ensureDir();
 let _downloadCountCache: Record<string, number> | null = null;
 
 const ensureDownloadCache = (): void => {
-  if (_downloadCountCache !== null) {
+  if (
+    _downloadCountCache !== null &&
+    Object.keys(_downloadCountCache).length > 0
+  ) {
     return;
   }
 
