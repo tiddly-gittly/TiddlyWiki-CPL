@@ -1,5 +1,5 @@
 created: 20260527000000000
-modified: 20260614000000000
+modified: 20260801000000000
 tags: 
 title: Deployment
 type: text/vnd.tiddlywiki
@@ -88,9 +88,11 @@ gh api users/<login> --jq .id
 
 !! Multi-Server Deployment
 
-Each mirror writes to its own files (`stats.{serverId}.json`, `ratings.{serverId}.json`, `comments/{plugin}.{serverId}.json`). The server aggregates all files at read time — no merge conflicts.
+Each mirror writes runtime Tiddlers with its own `CPL_SERVER_ID` suffix or identifier. Runtime data remains under `wiki/tiddlers/comments`, `wiki/tiddlers/ratings`, `wiki/tiddlers/compatibility`, and `wiki/tiddlers/download-stats`. The server aggregates these Tiddlers at read time, so independent mirror writes can be merged through Git without sharing a writable filesystem.
 
-Set `CPL_SERVER_ID` per mirror, e.g. `CPL_SERVER_ID=china`. Each mirror runs `pnpm run sync-data` weekly to open independent PRs.
+Set a unique `CPL_SERVER_ID` per mirror, for example `china` and `us`. Each mirror periodically pushes its runtime paths to a stable `data-sync/{serverId}` branch. GitHub Actions opens one Pull Request for that branch and later pushes refresh the same Pull Request.
+
+After a data Pull Request is reviewed and merged, each mirror's normal Git sync pulls `master`. Before reset/clean, the deployment stashes the four runtime paths and restores them afterward. This preserves local writes while also receiving merged data from the other mirrors. Distinct server identifiers keep independently-created records from colliding.
 
 To audit across mirrors:
 
@@ -102,21 +104,20 @@ pnpm run reconcile-data -- --clean-stale   # remove files from mirrors inactive 
 
 Comment IDs use format `{serverId}-{timestamp}-{random}` to prevent collisions.
 
-!! Syncing `data/` back to GitHub
+!! Syncing runtime Tiddlers back to GitHub
 
-The container has no git credentials. Run on the host weekly:
+The sync process requires repository-scoped Git push credentials. In Kubernetes, a dedicated sidecar mounts a writable GitHub deploy key and runs the sync script periodically. For a manual or bare-metal deployment, provide equivalent Git credentials and run:
 
 ```bash
-# Requires gh CLI: gh auth login
-pnpm run sync-data
+CPL_SERVER_ID=china pnpm run sync-data
 ```
 
-`scripts/sync-data.ts` creates a branch `data-sync/{serverId}/{timestamp}`, commits `data/`, pushes, and opens a PR via `gh pr create`.
+`scripts/sync-data.sh` clones the latest `master` into a temporary worktree, overlays only the four runtime-data paths, commits changes to the stable `data-sync/{serverId}` branch, and force-updates that branch. It never switches or resets the live wiki worktree. `.github/workflows/data-sync-pr.yml` creates the Pull Request when one does not already exist.
 
-Cron (weekly, Monday 03:00):
+Example cron (weekly, Monday 03:00):
 
 ```
-0 3 * * 1  cd /path/to/TiddlyWiki-CPL && pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
+0 3 * * 1  cd /path/to/TiddlyWiki-CPL && CPL_SERVER_ID=china pnpm run sync-data >> /var/log/cpl-sync.log 2>&1
 ```
 
 !! Comment System Administration

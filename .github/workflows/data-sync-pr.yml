@@ -1,0 +1,33 @@
+name: Open CPL Data Sync Pull Request
+
+on:
+  push:
+    branches:
+      - 'data-sync/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Pull Request when missing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SYNC_BRANCH: ${{ github.ref_name }}
+        run: |
+          existing_pr=$(gh pr list --state open --head "$SYNC_BRANCH" --json number --jq '.[0].number // empty')
+          if [ -n "$existing_pr" ]; then
+            echo "Pull Request #$existing_pr already tracks $SYNC_BRANCH"
+            exit 0
+          fi
+
+          server_id=${SYNC_BRANCH#data-sync/}
+          gh pr create \
+            --base master \
+            --head "$SYNC_BRANCH" \
+            --title "chore(data): sync from ${server_id} server" \
+            --body "Automated runtime-data synchronization from the **${server_id}** CPL server.\n\nIncludes comments, ratings, compatibility reports, and download statistics."
