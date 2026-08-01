@@ -28,8 +28,26 @@ const wikiRootCandidates = [
   PROJECT_ROOT,
 ].filter((candidate): candidate is string => candidate !== null);
 
+const expandedWikiRootCandidates = Array.from(
+  new Set(
+    wikiRootCandidates.flatMap(candidate => {
+      const candidates = [candidate];
+      let parent = path.dirname(candidate);
+      while (parent !== candidates[candidates.length - 1]) {
+        candidates.push(parent);
+        const nextParent = path.dirname(parent);
+        if (nextParent === parent) {
+          break;
+        }
+        parent = nextParent;
+      }
+      return candidates;
+    }),
+  ),
+);
+
 const DEPLOYED_WIKI_ROOT =
-  wikiRootCandidates.find(
+  expandedWikiRootCandidates.find(
     candidate =>
       fs.existsSync(path.join(candidate, 'tiddlywiki.info')) &&
       fs.existsSync(path.join(candidate, 'tiddlers')),
