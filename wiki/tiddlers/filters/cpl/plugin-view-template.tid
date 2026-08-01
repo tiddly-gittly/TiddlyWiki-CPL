@@ -1,7 +1,7 @@
 created: 20231006080707364
 list-before: $:/config/ViewTemplateBodyFilters/hide-body
 modified: 20231008153857419
-tags: $:/tags/ViewTemplateBodyFilter
+tags:
 title: CPL PluginWiki View Body Filter
 type: text/vnd.tiddlywiki
 

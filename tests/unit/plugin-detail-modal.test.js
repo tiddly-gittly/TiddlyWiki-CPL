@@ -84,6 +84,30 @@ describe('CPL plugin database views', () => {
     'cpl',
     'plugin-gallery-item.tid'
   );
+  const websiteDetailPath = path.join(
+    paths.projectRoot,
+    'wiki',
+    'tiddlers',
+    'templates',
+    'cpl',
+    'plugin-view.tid'
+  );
+  const websiteDetailCascadePath = path.join(
+    paths.projectRoot,
+    'wiki',
+    'tiddlers',
+    'filters',
+    'cpl',
+    'plugin-view-template.tid'
+  );
+  const statsPath = path.join(
+    paths.projectRoot,
+    'src',
+    'CPLPlugin',
+    'views',
+    'plugins',
+    'stats.tid'
+  );
 
   test('home gallery renders search and paged list', () => {
     const home = fs.readFileSync(homeGalPath, 'utf8');
@@ -101,6 +125,27 @@ describe('CPL plugin database views', () => {
     const card = fs.readFileSync(websiteCardPath, 'utf8');
     expect(card).toContain('to=<<currentTiddler>>');
     expect(card).not.toContain('pluginTarget');
+  });
+
+  test('website plugin details render as a direct view template', () => {
+    const detail = fs.readFileSync(websiteDetailPath, 'utf8');
+    const cascade = fs.readFileSync(websiteDetailCascadePath, 'utf8');
+
+    expect(detail).toContain('tags: $:/tags/ViewTemplate');
+    expect(detail).toContain('list-before: CommentForPlugins');
+    expect(detail).toContain(
+      '<$list filter="[all[current]tag[$:/tags/PluginWiki]!is[draft]]"'
+    );
+    expect(detail).toContain('field="cpl.readme" mode="block"');
+    expect(cascade).not.toContain('tags: $:/tags/ViewTemplateBodyFilter');
+  });
+
+  test('website plugin stats close the compatibility list correctly', () => {
+    const stats = fs.readFileSync(statsPath, 'utf8');
+
+    expect(stats).not.toContain('    </$list>\n  </$let>');
+    expect(stats).not.toContain('  </$list>\n\n</$list>\n<!-- End server mirror check -->');
+    expect(stats).toContain('    </$list>\n  </$list>\n<!-- End server mirror check -->');
   });
 
   test('database view has mirror selector and refresh button', () => {
