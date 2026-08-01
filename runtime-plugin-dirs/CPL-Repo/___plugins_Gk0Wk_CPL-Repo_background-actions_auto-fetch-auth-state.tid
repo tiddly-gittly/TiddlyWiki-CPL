@@ -10,7 +10,14 @@ track-filter: [[$:/temp/CPL-Server/auth-refresh-token]get[text]] [[$:/temp/CPL-R
   method="GET"
   oncompletion="""<$action-setfield $tiddler='$:/temp/CPL-Server/auth-config-response' text=<<data>> type='application/json'/>
   <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
-    <$action-setfield $tiddler='$:/temp/CPL-Server/github-client-id' text={{{ [<data>jsonget[githubClientId]trim[]] }}}/>
+    <$let githubClientId={{{ [<data>jsonget[githubClientId]trim[]!match[null]!match[undefined]] }}}>
+      <$list filter='[<githubClientId>!is[blank]]'>
+        <$action-setfield $tiddler='$:/temp/CPL-Server/github-client-id' text=<<githubClientId>>/>
+      </$list>
+      <$list filter='[<githubClientId>is[blank]]'>
+        <$action-deletetiddler $tiddler='$:/temp/CPL-Server/github-client-id'/>
+      </$list>
+    </$let>
   </$list>
   <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
     <$action-deletetiddler $tiddler='$:/temp/CPL-Server/github-client-id'/>
