@@ -116,6 +116,43 @@ test('runtime data sync preserves modifications, ignored files, and deletions', 
         path.join(verify, 'wiki/tiddlers/comments/approved/old.china.tid'),
       ),
     ).toBe(false);
+
+    fs.writeFileSync(
+      path.join(live, 'wiki/tiddlers/download-stats/plugin.china.tid'),
+      'count=1\n',
+    );
+    fs.writeFileSync(
+      path.join(live, 'wiki/tiddlers/comments/approved/old.china.tid'),
+      'approved\n',
+    );
+    fs.rmSync(path.join(live, 'wiki/tiddlers/ratings/new.china.tid'));
+
+    run(shellExecutable(), [shellPath(syncScript)], {
+      env: {
+        ...process.env,
+        CPL_REPO_ROOT: shellPath(live),
+        CPL_SERVER_ID: 'china',
+        CPL_SYNC_REPO: shellPath(remote),
+        CPL_SYNC_BRANCH: 'master',
+      },
+    });
+
+    run('git', ['fetch', 'origin', 'data-sync/china'], { cwd: verify });
+    run('git', ['reset', '--hard', 'origin/data-sync/china'], { cwd: verify });
+    expect(
+      fs.readFileSync(
+        path.join(verify, 'wiki/tiddlers/download-stats/plugin.china.tid'),
+        'utf8',
+      ),
+    ).toBe('count=1\n');
+    expect(
+      fs.existsSync(path.join(verify, 'wiki/tiddlers/ratings/new.china.tid')),
+    ).toBe(false);
+    expect(
+      fs.existsSync(
+        path.join(verify, 'wiki/tiddlers/comments/approved/old.china.tid'),
+      ),
+    ).toBe(true);
   } finally {
     fs.rmSync(tempRoot, { recursive: true, force: true });
   }

@@ -90,7 +90,12 @@ if [ "${CPL_SYNC_DEBUG:-false}" = "true" ]; then
   git -C "$checkout_dir" diff --cached --stat
 fi
 if git -C "$checkout_dir" diff --cached --quiet; then
-  echo "[sync-data] No runtime data changes to sync"
+  if git -C "$checkout_dir" ls-remote --exit-code --heads origin "refs/heads/$SYNC_BRANCH" >/dev/null 2>&1; then
+    git -C "$checkout_dir" push --force origin "HEAD:refs/heads/$SYNC_BRANCH"
+    echo "[sync-data] Reset $SYNC_BRANCH to $BASE_BRANCH because no runtime data changes remain"
+  else
+    echo "[sync-data] No runtime data changes to sync"
+  fi
   exit 0
 fi
 
