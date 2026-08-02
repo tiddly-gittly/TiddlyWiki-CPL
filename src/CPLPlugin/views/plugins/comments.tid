@@ -6,7 +6,6 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
-\import [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-plugin-activity]] [[$:/plugins/Gk0Wk/CPL-Repo/procedures/fetch-comments]]
 
 \define commentsTiddler() $:/temp/CPL-Server/comments/$(pluginTitle)$
 
@@ -65,8 +64,16 @@ type: text/vnd.tiddlywiki
               <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
               <$action-setfield $tiddler='$:/temp/CPL-Server/comment-draft' text=''/>
               <$action-setfield $tiddler=<<statusTitle>> text='success'/>
-              <<cpl-fetch-plugin-activity pluginTitle>>
-              <<cpl-fetch-comments>>
+              <$action-sendmessage $message='tm-http-request'
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+                method='GET'
+                var-refreshTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}
+                var-refreshPluginTitle=<<pluginTitle>>
+                oncompletion='<$action-setfield $tiddler=<<refreshTiddler>> text=<<data>> type="application/json" plugin-title=<<refreshPluginTitle>>/>'/>
+              <$action-sendmessage $message='tm-http-request'
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/all-recent]] }}}
+                method='GET'
+                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-recent-comments" text=<<data>> type="application/json"/>'/>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
               <$action-setfield $tiddler=<<statusTitle>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}}/>

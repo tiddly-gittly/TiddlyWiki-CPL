@@ -97,7 +97,11 @@ describe('CPL interaction request bodies', () => {
 
     expect(comments).toContain('body={{{ [[{}]jsonset[content],<draftText>] }}}');
     expect(comments).not.toContain('<draftText>get[text]jsonstringify');
+    expect(comments).not.toContain('<<cpl-fetch-plugin-activity pluginTitle>>');
+    expect(comments).toContain('addsuffix[/cpl/comments/all-recent]');
     expect(stats).toContain('body=<<requestBody>>');
+    expect(stats).not.toContain('<<cpl-fetch-all-stats>>');
+    expect(stats).toContain('addsuffix[/cpl/stats?top=200]');
     expect(stats).not.toContain('addprefix[{"description":]');
     expect(authState).toContain('[<data>jsonextract[user]else[{}]]');
   });
