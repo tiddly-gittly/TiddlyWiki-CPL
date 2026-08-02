@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__themes_nico_notebook
+plugin-title: $:/themes/nico/notebook
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-02T06:27:02.216Z","downloadsByIp":{"100.64.0.1":"2026-08-02T06:27:02.216Z"}}
