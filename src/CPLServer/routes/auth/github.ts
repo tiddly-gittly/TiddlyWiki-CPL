@@ -1,12 +1,9 @@
 import * as querystring from 'querystring';
-import * as nodeUrl from 'url';
-
 import { Auth } from '../../lib/auth';
 import { Config } from '../../lib/config';
 import { GitHubOAuth } from '../../lib/github-oauth';
 import {
   CORS_HEADERS,
-  getHeaderValue,
   sendError,
   sendInternalError,
   sendJson,
@@ -15,55 +12,6 @@ import type { AuthenticatedUser, RouteHandler } from '../../lib/types';
 
 export const method = 'GET';
 export const path = /^\/cpl\/auth\/github\/callback$/;
-
-const isLocalClientReturnUrl = (
-  url: nodeUrl.UrlWithStringQuery,
-): boolean => {
-  const hostname = (url.hostname ?? '').toLowerCase();
-  return (
-    url.protocol === 'file:' ||
-    url.protocol === 'app:' ||
-    url.protocol === 'tidgi:' ||
-    ((url.protocol === 'http:' || url.protocol === 'https:') &&
-      (hostname === 'localhost' ||
-        hostname === '127.0.0.1' ||
-        hostname === '::1' ||
-        hostname === '[::1]'))
-  );
-};
-
-const getRequestOrigin = (request: Parameters<RouteHandler>[0]): string => {
-  const host =
-    getHeaderValue(request.headers, 'x-forwarded-host') ||
-    getHeaderValue(request.headers, 'host');
-  const proto = getHeaderValue(request.headers, 'x-forwarded-proto') || 'https';
-  return host ? `${proto}://${host}` : '';
-};
-
-const getAllowedReturnUrl = (
-  rawReturnUrl: string | null,
-  request: Parameters<RouteHandler>[0],
-): string | null => {
-  if (!rawReturnUrl || /[\r\n]/.test(rawReturnUrl)) {
-    return null;
-  }
-
-  try {
-    const returnUrl = nodeUrl.parse(rawReturnUrl);
-    const requestOrigin = nodeUrl.parse(getRequestOrigin(request));
-    const isSameOrigin =
-      returnUrl.protocol?.toLowerCase() ===
-        requestOrigin.protocol?.toLowerCase() &&
-      returnUrl.host?.toLowerCase() === requestOrigin.host?.toLowerCase();
-    if (isSameOrigin || isLocalClientReturnUrl(returnUrl)) {
-      return rawReturnUrl;
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-};
 
 export const handler: RouteHandler = async (request, _response, context) => {
   try {
@@ -75,10 +23,32 @@ export const handler: RouteHandler = async (request, _response, context) => {
     const getQueryValue = (value: string | string[] | undefined) =>
       Array.isArray(value) ? value[0] : value ?? null;
     const code = getQueryValue(query.code);
-    const returnUrl = getAllowedReturnUrl(getQueryValue(query.state), request);
+    const state = getQueryValue(query.state);
 
     if (!code) {
       sendError(context, 400, 'Missing authorization code');
+      return;
+    }
+
+    if (state) {
+      if (!/^[a-f0-9]{32}$/i.test(state)) {
+        sendError(context, 400, 'Invalid OAuth state');
+        return;
+      }
+
+      const callbackQuery = querystring.stringify({
+        cpl_oauth_code: code,
+        cpl_oauth_state: state,
+      });
+      context.sendResponse(
+        302,
+        {
+          ...CORS_HEADERS,
+          Location: `/?${callbackQuery}`,
+          'Cache-Control': 'no-store',
+        },
+        '',
+      );
       return;
     }
 
@@ -117,20 +87,6 @@ export const handler: RouteHandler = async (request, _response, context) => {
 
     const token = Auth.generateToken(user);
     const cookie = Auth.createCookie(token);
-
-    if (returnUrl) {
-      context.sendResponse(
-        302,
-        {
-          ...CORS_HEADERS,
-          Location: returnUrl,
-          'Set-Cookie': cookie,
-          'Cache-Control': 'no-store',
-        },
-        '',
-      );
-      return;
-    }
 
     sendJson(
       context,

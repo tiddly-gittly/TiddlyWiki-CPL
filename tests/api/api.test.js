@@ -289,6 +289,32 @@ describe('CPL Server API', () => {
     });
   });
 
+  test('GET /cpl/auth/github/callback should redirect GitHub responses into the wiki', async () => {
+    const state = '0123456789abcdef0123456789abcdef';
+    const response = await makeRequest(
+      'GET',
+      `/cpl/auth/github/callback?code=test-code&state=${state}`
+    );
+
+    expect(response.statusCode).toBe(302);
+    expect(response.headers.location).toBe(
+      '/?cpl_oauth_code=test-code&cpl_oauth_state=0123456789abcdef0123456789abcdef'
+    );
+  });
+
+  test('GET /cpl/auth/github/callback should reject malformed OAuth state', async () => {
+    const response = await makeRequest(
+      'GET',
+      '/cpl/auth/github/callback?code=test-code&state=not-a-valid-state'
+    );
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual({
+      success: false,
+      error: 'Invalid OAuth state'
+    });
+  });
+
   test('native TiddlyWiki tiddler writes should be rejected in production mode', async () => {
     const response = await makeRequest('PUT', '/recipes/default/tiddlers/ReadonlyCheck', {
       title: 'ReadonlyCheck',

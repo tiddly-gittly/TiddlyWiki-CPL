@@ -90,13 +90,17 @@ export const handleGithubLogin = (): void => {
 
 /** Process OAuth callback: validate state, exchange code, set user tiddlers. */
 export const handleOAuthCallback = (): void => {
-  if (window.location.pathname !== '/cpl/auth/github/callback') {
+  const urlParams = new URLSearchParams(window.location.search);
+  const redirectedCode = urlParams.get('cpl_oauth_code');
+  const isLegacyCallback =
+    window.location.pathname === '/cpl/auth/github/callback';
+  if (!redirectedCode && !isLegacyCallback) {
     return;
   }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get('code');
-  const state = urlParams.get('state');
+  const code = redirectedCode || urlParams.get('code');
+  const state =
+    urlParams.get('cpl_oauth_state') || urlParams.get('state');
   let returnUrl = '/';
   let stateValid = false;
 
@@ -128,6 +132,14 @@ export const handleOAuthCallback = (): void => {
   if (!code) {
     window.location.replace('/');
     return;
+  }
+
+  if (window.history?.replaceState) {
+    window.history.replaceState(
+      {},
+      document.title,
+      `${window.location.pathname}${window.location.hash || ''}`,
+    );
   }
 
   tw.utils.httpRequest({
