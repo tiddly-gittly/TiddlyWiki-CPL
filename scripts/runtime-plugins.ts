@@ -144,6 +144,7 @@ function ensureRuntimePluginsBuilt(): RuntimePluginFiles {
   ) {
     return runtimePluginFiles;
   } else {
+    rimrafSync(RUNTIME_PLUGIN_DIR);
     fs.mkdirSync(RUNTIME_PLUGIN_DIR, { recursive: true });
 
     const buildResult = spawnSync(

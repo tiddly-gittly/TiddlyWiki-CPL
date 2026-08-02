@@ -1,5 +1,9 @@
+import * as querystring from 'querystring';
+import * as nodeUrl from 'url';
+
 import { Auth } from '../../lib/auth';
 import { Config } from '../../lib/config';
+import { GitHubOAuth } from '../../lib/github-oauth';
 import {
   CORS_HEADERS,
   getHeaderValue,
@@ -12,8 +16,10 @@ import type { AuthenticatedUser, RouteHandler } from '../../lib/types';
 export const method = 'GET';
 export const path = /^\/cpl\/auth\/github\/callback$/;
 
-const isLocalClientReturnUrl = (url: URL): boolean => {
-  const hostname = url.hostname.toLowerCase();
+const isLocalClientReturnUrl = (
+  url: nodeUrl.UrlWithStringQuery,
+): boolean => {
+  const hostname = (url.hostname ?? '').toLowerCase();
   return (
     url.protocol === 'file:' ||
     url.protocol === 'app:' ||
@@ -38,17 +44,19 @@ const getAllowedReturnUrl = (
   rawReturnUrl: string | null,
   request: Parameters<RouteHandler>[0],
 ): string | null => {
-  if (!rawReturnUrl) {
+  if (!rawReturnUrl || /[\r\n]/.test(rawReturnUrl)) {
     return null;
   }
 
   try {
-    const returnUrl = new URL(rawReturnUrl);
-    if (
-      returnUrl.origin === getRequestOrigin(request) ||
-      isLocalClientReturnUrl(returnUrl)
-    ) {
-      return returnUrl.toString();
+    const returnUrl = nodeUrl.parse(rawReturnUrl);
+    const requestOrigin = nodeUrl.parse(getRequestOrigin(request));
+    const isSameOrigin =
+      returnUrl.protocol?.toLowerCase() ===
+        requestOrigin.protocol?.toLowerCase() &&
+      returnUrl.host?.toLowerCase() === requestOrigin.host?.toLowerCase();
+    if (isSameOrigin || isLocalClientReturnUrl(returnUrl)) {
+      return rawReturnUrl;
     }
   } catch {
     return null;
@@ -59,12 +67,15 @@ const getAllowedReturnUrl = (
 
 export const handler: RouteHandler = async (request, _response, context) => {
   try {
-    const requestUrl = new URL(request.url ?? '/', 'http://localhost');
-    const code = requestUrl.searchParams.get('code');
-    const returnUrl = getAllowedReturnUrl(
-      requestUrl.searchParams.get('state'),
-      request,
+    const rawRequestUrl = request.url ?? '/';
+    const queryIndex = rawRequestUrl.indexOf('?');
+    const query = querystring.parse(
+      queryIndex >= 0 ? rawRequestUrl.slice(queryIndex + 1) : '',
     );
+    const getQueryValue = (value: string | string[] | undefined) =>
+      Array.isArray(value) ? value[0] : value ?? null;
+    const code = getQueryValue(query.code);
+    const returnUrl = getAllowedReturnUrl(getQueryValue(query.state), request);
 
     if (!code) {
       sendError(context, 400, 'Missing authorization code');
@@ -80,7 +91,7 @@ export const handler: RouteHandler = async (request, _response, context) => {
       return;
     }
 
-    const tokenData = await Auth.exchangeGitHubCode(code);
+    const tokenData = await GitHubOAuth.exchangeCode(code);
     if (!tokenData.access_token) {
       console.error(
         '[CPL-Server] GitHub OAuth token exchange failed:',
@@ -90,7 +101,7 @@ export const handler: RouteHandler = async (request, _response, context) => {
       return;
     }
 
-    const githubUser = await Auth.fetchGitHubUser(tokenData.access_token);
+    const githubUser = await GitHubOAuth.fetchUser(tokenData.access_token);
     if (!githubUser.id) {
       console.error('[CPL-Server] Failed to fetch GitHub user:', githubUser);
       sendError(context, 400, 'Failed to fetch GitHub user profile');

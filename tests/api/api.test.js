@@ -210,6 +210,7 @@ describe('CPL Server API', () => {
         CPL_JWT_SECRET: JWT_SECRET,
         CPL_GITHUB_CLIENT_ID: '',
         CPL_GITHUB_CLIENT_SECRET: '',
+        CPL_HTTPS_PROXY: 'http://127.0.0.1:9',
         CPL_ADMIN_GITHUB_IDS: '42',
         CPL_BLOCKED_GITHUB_IDS: '666'
       }
@@ -273,6 +274,19 @@ describe('CPL Server API', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({ githubClientId: '' });
+  });
+
+  test('GET /cpl/auth/github/callback should parse queries in the TiddlyWiki sandbox', async () => {
+    const response = await makeRequest(
+      'GET',
+      '/cpl/auth/github/callback?state=oauth-state-without-code'
+    );
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual({
+      success: false,
+      error: 'Missing authorization code'
+    });
   });
 
   test('native TiddlyWiki tiddler writes should be rejected in production mode', async () => {

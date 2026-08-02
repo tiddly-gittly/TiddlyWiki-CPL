@@ -1,12 +1,7 @@
-import * as https from 'https';
-import * as querystring from 'querystring';
-
 import { Config } from './config';
 import { getHeaderValue } from './http';
 import type {
   AuthenticatedUser,
-  GitHubTokenResponse,
-  GitHubUserProfile,
   RouteRequest,
   TokenPayload,
 } from './types';
@@ -21,7 +16,6 @@ interface JwtModule {
 }
 
 const jwt = require('jsonwebtoken') as JwtModule;
-
 export const AUTH_COOKIE_NAME = 'cpl_jwt_token';
 const JWT_SECRET = Config.jwtSecret;
 const JWT_EXPIRY = `${Config.jwtExpiryDays}d`;
@@ -56,41 +50,6 @@ const isTokenPayload = (value: unknown): value is TokenPayload => {
     typeof candidate.avatar === 'string'
   );
 };
-
-const requestJson = <T>(
-  options: https.RequestOptions,
-  body?: string,
-): Promise<T> =>
-  new Promise((resolve, reject) => {
-    const request = https.request(options, response => {
-      let data = '';
-      const statusCode = response.statusCode ?? 0;
-
-      response.on('data', chunk => {
-        data += typeof chunk === 'string' ? chunk : chunk.toString();
-      });
-
-      response.on('end', () => {
-        if (statusCode < 200 || statusCode >= 300) {
-          reject(new Error(`HTTP ${statusCode}: ${data.slice(0, 200)}`));
-          return;
-        }
-        try {
-          resolve(JSON.parse(data) as T);
-        } catch (error) {
-          reject(error);
-        }
-      });
-    });
-
-    request.on('error', reject);
-
-    if (body) {
-      request.write(body);
-    }
-
-    request.end();
-  });
 
 export const Auth = {
   generateToken(user: AuthenticatedUser): string {
@@ -135,41 +94,6 @@ export const Auth = {
 
   clearCookie(): string {
     return `${AUTH_COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly; SameSite=None; Secure`;
-  },
-
-  async exchangeGitHubCode(code: string): Promise<GitHubTokenResponse> {
-    const postData = querystring.stringify({
-      client_id: Config.githubClientId,
-      client_secret: Config.githubClientSecret,
-      code,
-    });
-
-    return requestJson<GitHubTokenResponse>(
-      {
-        hostname: 'github.com',
-        path: '/login/oauth/access_token',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Accept: 'application/json',
-          'Content-Length': String(Buffer.byteLength(postData)),
-        },
-      },
-      postData,
-    );
-  },
-
-  async fetchGitHubUser(accessToken: string): Promise<GitHubUserProfile> {
-    return requestJson<GitHubUserProfile>({
-      hostname: 'api.github.com',
-      path: '/user',
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'TiddlyWiki-CPL-Server',
-        Accept: 'application/vnd.github.v3+json',
-      },
-    });
   },
 
   isAdmin(user?: { githubId?: string | number | null } | null): boolean {
