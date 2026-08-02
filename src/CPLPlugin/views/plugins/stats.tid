@@ -123,9 +123,10 @@ type: text/vnd.tiddlywiki
               <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
               <$action-sendmessage $message='tm-http-request'
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
                 method='GET'
-                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+                var-refreshPluginTitle=<<pluginTitle>>
+                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{"plugins":{}}]jsonset:json[plugins],<refreshPluginTitle>,<data>] }}} type="application/json"/>'/>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -145,9 +146,10 @@ type: text/vnd.tiddlywiki
               <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
               <$action-sendmessage $message='tm-http-request'
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
                 method='GET'
-                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+                var-refreshPluginTitle=<<pluginTitle>>
+                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{"plugins":{}}]jsonset:json[plugins],<refreshPluginTitle>,<data>] }}} type="application/json"/>'/>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -167,9 +169,10 @@ type: text/vnd.tiddlywiki
               <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
               <$action-sendmessage $message='tm-http-request'
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
                 method='GET'
-                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+                var-refreshPluginTitle=<<pluginTitle>>
+                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{"plugins":{}}]jsonset:json[plugins],<refreshPluginTitle>,<data>] }}} type="application/json"/>'/>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -189,9 +192,10 @@ type: text/vnd.tiddlywiki
               <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
               <$action-sendmessage $message='tm-http-request'
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
                 method='GET'
-                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+                var-refreshPluginTitle=<<pluginTitle>>
+                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{"plugins":{}}]jsonset:json[plugins],<refreshPluginTitle>,<data>] }}} type="application/json"/>'/>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
@@ -211,9 +215,10 @@ type: text/vnd.tiddlywiki
               <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text='success' plugin-title=<<pluginTitle>> average-rating={{{ [<data>jsonget[averageRating]else[0]] }}} total-ratings={{{ [<data>jsonget[totalRatings]else[0]] }}}/>
               <$action-sendmessage $message='tm-http-request'
-                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+                url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
                 method='GET'
-                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+                var-refreshPluginTitle=<<pluginTitle>>
+                oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{"plugins":{}}]jsonset:json[plugins],<refreshPluginTitle>,<data>] }}} type="application/json"/>'/>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
               <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>

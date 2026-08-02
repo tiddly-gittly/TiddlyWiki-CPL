@@ -101,7 +101,8 @@ describe('CPL interaction request bodies', () => {
     expect(comments).toContain('addsuffix[/cpl/comments/all-recent]');
     expect(stats).toContain('body=<<requestBody>>');
     expect(stats).not.toContain('<<cpl-fetch-all-stats>>');
-    expect(stats).toContain('addsuffix[/cpl/stats?top=200&refresh=]');
+    expect(stats).toContain('addsuffix[/cpl/stats/]');
+    expect(stats).toContain('jsonset:json[plugins],<refreshPluginTitle>,<data>');
     expect(stats).not.toContain('addprefix[{"description":]');
     expect(authState).toContain('[<data>jsonextract[user]else[{}]]');
 
@@ -110,6 +111,7 @@ describe('CPL interaction request bodies', () => {
       'utf8'
     );
     expect(autoRecordDownload).not.toContain('oncompletion="<<cpl-fetch-all-stats>>"');
-    expect(autoRecordDownload).toContain('addsuffix[/cpl/stats?top=200&refresh=]');
+    expect(autoRecordDownload).toContain('addsuffix[/cpl/stats/]');
+    expect(autoRecordDownload).toContain('jsonset:json[plugins],<refreshPluginTitle>,<data>');
   });
 });
