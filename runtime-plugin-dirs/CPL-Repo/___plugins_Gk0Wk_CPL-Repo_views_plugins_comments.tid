@@ -7,8 +7,6 @@ type: text/vnd.tiddlywiki
 \whitespace trim
 
 
-\define commentsTiddler() $:/temp/CPL-Server/comments/$(pluginTitle)$
-
 <!-- Comment Section for Plugin Pages -->
 <$list filter="[all[current]tag[$:/tags/PluginWiki]has[cpl.title]]" variable="pluginTiddler">
 
@@ -119,9 +117,11 @@ type: text/vnd.tiddlywiki
   </$list>
 
   <!-- Comments List -->
+  <$let commentsDataTitle={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/comments/]] }}}>
+  <$tiddler tiddler=<<commentsDataTitle>>>
   <div class="cpl-comments-list">
-      <$list filter="[{<<commentsTiddler>>}jsonindexes[comments]]" variable="idx">
-      <$let commentUsername={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[username]else[Anonymous]] }}} commentContent={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[content]] }}} commentDate={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[createdAt]] }}} commentAvatar={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[avatar]] }}} commentStatus={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[status]else[approved]] }}} commentId={{{ [{<<commentsTiddler>>}jsonget[comments],<idx>,[id]] }}}}>
+      <$list filter="[<currentTiddler>get[text]jsonindexes[comments]]" variable="idx">
+      <$let commentUsername={{{ [<currentTiddler>get[text]jsonget[comments],<idx>,[username]else[Anonymous]] }}} commentContent={{{ [<currentTiddler>get[text]jsonget[comments],<idx>,[content]] }}} commentDate={{{ [<currentTiddler>get[text]jsonget[comments],<idx>,[createdAt]] }}} commentAvatar={{{ [<currentTiddler>get[text]jsonget[comments],<idx>,[avatar]] }}} commentStatus={{{ [<currentTiddler>get[text]jsonget[comments],<idx>,[status]else[approved]] }}} commentId={{{ [<currentTiddler>get[text]jsonget[comments],<idx>,[id]] }}}}>
             <div class="cpl-comment-item">
               <div class="cpl-comment-meta">
                 <$list filter="[<commentAvatar>!is[blank]]" variable="hasAvatar">
@@ -136,12 +136,14 @@ type: text/vnd.tiddlywiki
             </div>
           </$let>
         </$list>
-      <$list filter="[{<<commentsTiddler>>}jsonindexes[comments]count[]match[0]]" variable="noComments">
+      <$list filter="[<currentTiddler>get[text]jsonindexes[comments]count[]match[0]]" variable="noComments">
         <div class="cpl-comment-empty">
           <$text text={{{ [<chinese>match[yes]then[暂无评论，来发表第一条吧！]else[No comments yet. Be the first!]] }}}/>
         </div>
       </$list>
   </div>
+  </$tiddler>
+  </$let>
 </div>
 
 </$list>
