@@ -7,7 +7,7 @@ track-filter: [[$:/temp/CPL-Repo/api-status]get[text]match[available]] [[$:/temp
 <$list filter="[[$:/temp/CPL-Repo/api-status]get[text]match[available]]">
 <$list filter="[[$:/temp/CPL-Server/api-base]get[text]!is[blank]]">
 <$action-sendmessage $message="tm-http-request"
-  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200]] }}}
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
   method="GET"
   oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats' text=<<data>> type='application/json'/>"/>
 </$list>

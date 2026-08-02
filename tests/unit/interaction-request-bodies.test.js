@@ -101,8 +101,15 @@ describe('CPL interaction request bodies', () => {
     expect(comments).toContain('addsuffix[/cpl/comments/all-recent]');
     expect(stats).toContain('body=<<requestBody>>');
     expect(stats).not.toContain('<<cpl-fetch-all-stats>>');
-    expect(stats).toContain('addsuffix[/cpl/stats?top=200]');
+    expect(stats).toContain('addsuffix[/cpl/stats?top=200&refresh=]');
     expect(stats).not.toContain('addprefix[{"description":]');
     expect(authState).toContain('[<data>jsonextract[user]else[{}]]');
+
+    const autoRecordDownload = fs.readFileSync(
+      path.join(paths.projectRoot, 'src/CPLPlugin/background-actions/auto-record-download.tid'),
+      'utf8'
+    );
+    expect(autoRecordDownload).not.toContain('oncompletion="<<cpl-fetch-all-stats>>"');
+    expect(autoRecordDownload).toContain('addsuffix[/cpl/stats?top=200&refresh=]');
   });
 });
