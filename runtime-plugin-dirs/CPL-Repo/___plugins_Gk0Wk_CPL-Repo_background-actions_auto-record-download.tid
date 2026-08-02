@@ -12,7 +12,12 @@ track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api
   body="{}"
   header-Content-Type="application/json"
   var-pluginTitle=<<pluginTitle>>
-  oncompletion="<<cpl-fetch-all-stats>>"/>
+  oncompletion="""
+  <$action-sendmessage $message='tm-http-request'
+    url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+    method='GET'
+    oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+  """/>
 </$list>
 </$let>
 </$list>
