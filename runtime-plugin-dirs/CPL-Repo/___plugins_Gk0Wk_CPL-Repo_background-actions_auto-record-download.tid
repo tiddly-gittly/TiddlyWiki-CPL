@@ -14,9 +14,10 @@ track-filter: [[$:/temp/CPL-Repo/server-type]get[text]] [[$:/temp/CPL-Server/api
   var-pluginTitle=<<pluginTitle>>
   oncompletion="""
   <$action-sendmessage $message='tm-http-request'
-    url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats?top=200&refresh=]addsuffix<now 'YYYY0MM0DD0hh0mm0ssXXX'>] }}}
+    url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
     method='GET'
-    oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text=<<data>> type="application/json"/>'/>
+    var-refreshPluginTitle=<<pluginTitle>>
+    oncompletion='<$action-setfield $tiddler="$:/temp/CPL-Server/all-plugin-stats" text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{"plugins":{}}]jsonset:json[plugins],<refreshPluginTitle>,<data>] }}} type="application/json"/>'/>
   """/>
 </$list>
 </$let>
