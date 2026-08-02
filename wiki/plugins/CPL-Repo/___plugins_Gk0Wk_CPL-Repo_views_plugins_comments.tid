@@ -32,7 +32,7 @@ type: text/vnd.tiddlywiki
         <img src=<<avatar>> class="cpl-comment-avatar" alt="avatar"/>
       </$list>
       <span><strong><$text text=<<username>>/></strong></span>
-      <$button class="tc-btn-invisible cpl-comment-logout-button">
+      <$button class="cpl-comment-logout-button" tooltip={{{ [<chinese>match[yes]then[退出当前 GitHub 账号]else[Sign out of the current GitHub account]] }}}>
         <$action-sendmessage $message="tm-http-request"
           url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/auth/logout]] }}}
           method="POST" header-Content-Type="application/json" body="{}"
@@ -58,7 +58,7 @@ type: text/vnd.tiddlywiki
           <$action-sendmessage $message="tm-http-request"
             url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/comments/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
             method="POST" header-Content-Type="application/json"
-            body={{{ [<draftText>get[text]jsonstringify[]addprefix[{"content":]addsuffix[}]] }}}
+            body={{{ [[{}]jsonset[content],<draftText>] }}}
             var-pluginTitle=<<pluginTitle>>
             var-statusTitle=<<statusTitle>>
             oncompletion="""
@@ -69,7 +69,7 @@ type: text/vnd.tiddlywiki
               <<cpl-fetch-comments>>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-              <$action-setfield $tiddler=<<statusTitle>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+              <$action-setfield $tiddler=<<statusTitle>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}}/>
               </$list>
               """/>
           <$text text={{{ [<chinese>match[yes]then[提交评论]else[Submit Comment]] }}}/>

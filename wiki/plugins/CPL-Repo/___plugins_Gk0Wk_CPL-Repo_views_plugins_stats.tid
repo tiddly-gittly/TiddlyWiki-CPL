@@ -126,7 +126,7 @@ type: text/vnd.tiddlywiki
               <<cpl-fetch-all-stats>>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
               </$list>
               """/>
           <span class="cpl-rating-star">★</span>
@@ -145,7 +145,7 @@ type: text/vnd.tiddlywiki
               <<cpl-fetch-all-stats>>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
               </$list>
               """/>
           <span class="cpl-rating-star">★</span>
@@ -164,7 +164,7 @@ type: text/vnd.tiddlywiki
               <<cpl-fetch-all-stats>>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
               </$list>
               """/>
           <span class="cpl-rating-star">★</span>
@@ -183,7 +183,7 @@ type: text/vnd.tiddlywiki
               <<cpl-fetch-all-stats>>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
               </$list>
               """/>
           <span class="cpl-rating-star">★</span>
@@ -202,7 +202,7 @@ type: text/vnd.tiddlywiki
               <<cpl-fetch-all-stats>>
               </$list>
               <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
+              <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}} plugin-title=<<pluginTitle>>/>
               </$list>
               """/>
           <span class="cpl-rating-star">★</span>
@@ -340,12 +340,17 @@ type: text/vnd.tiddlywiki
                 conflictDescription={{{ [<draftTiddler>get[conflict-description]] }}}
                 description={{{ [<draftTiddler>get[description]] }}}
               >
+              <$let requestBody={{{ [[{}]jsonset[description],<description>] }}}>
+              <$let requestBody={{{ [<twVersionMin>!is[blank]then<requestBody>jsonset[twVersionMin],<twVersionMin>] [<twVersionMin>is[blank]then<requestBody>] +[first[]] }}}>
+              <$let requestBody={{{ [<twVersionMax>!is[blank]then<requestBody>jsonset[twVersionMax],<twVersionMax>] [<twVersionMax>is[blank]then<requestBody>] +[first[]] }}}>
+              <$let conflictJson={{{ [[{}]jsonset[pluginTitle],<conflictPlugin>jsonset[description],<conflictDescription>] }}}>
+              <$let requestBody={{{ [<conflictPlugin>!is[blank]then<requestBody>jsonset:array[conflictingPlugins]jsonset:json[conflictingPlugins],[0],<conflictJson>] [<conflictPlugin>is[blank]then<requestBody>] +[first[]] }}}>
               <$button class="tc-btn-primary cpl-submit-button-sm">
                 <$action-setfield $tiddler=<<statusTiddler>> text="submitting" />
                 <$action-sendmessage $message="tm-http-request"
                   url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/compatibility/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
                   method="POST" header-Content-Type="application/json"
-                  body={{{ [<description>jsonstringify[]addprefix[{"description":]addsuffix[}]] [<twVersionMin>!is[blank]then<twVersionMin>jsonstringify[]addprefix[,"twVersionMin":]] [<twVersionMax>!is[blank]then<twVersionMax>jsonstringify[]addprefix[,"twVersionMax":]] [<conflictPlugin>!is[blank]then<conflictPlugin>jsonstringify[]addprefix[,"conflictingPlugins":[{"pluginTitle":]addsuffix[]]] [<conflictPlugin>!is[blank]then<conflictDescription>jsonstringify[]addprefix[,"description":]addsuffix[}]]] [<conflictPlugin>!is[blank]then[]addprefix[]addsuffix[]] +[join[]addsuffix[}]] }}}
+                  body=<<requestBody>>
                   var-pluginTitle=<<pluginTitle>>
                   var-statusTiddler=<<statusTiddler>>
                   var-draftTiddler=<<draftTiddler>>
@@ -356,11 +361,16 @@ type: text/vnd.tiddlywiki
                     <<cpl-fetch-plugin-activity pluginTitle>>
                     </$list>
                     <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] +[limit[1]]'>
-                    <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<error>!is[blank]then<error>] [<data>!is[blank]then<data>] [<statusText>!is[blank]then<statusText>] +[limit[1]addprefix[error: ]] }}}/>
+                    <$action-setfield $tiddler=<<statusTiddler>> text={{{ [<data>jsonget[error]!is[blank]] [<error>!is[blank]] [<statusText>!is[blank]] +[limit[1]addprefix[error: ]] }}}/>
                     </$list>
                     """/>
                 <$text text={{{ [<chinese>match[yes]then[提交报告]else[Submit Report]] }}}/>
               </$button>
+              </$let>
+              </$let>
+              </$let>
+              </$let>
+              </$let>
               </$let>
             </div>
 

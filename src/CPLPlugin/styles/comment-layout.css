@@ -37,7 +37,19 @@
 }
 
 .cpl-comment-logout-button {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  font: inherit;
   font-size: 0.85em;
+  cursor: pointer;
+}
+
+.cpl-comment-logout-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .cpl-comment-form {

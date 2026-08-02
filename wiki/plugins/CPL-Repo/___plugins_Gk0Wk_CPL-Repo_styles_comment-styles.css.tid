@@ -18,12 +18,24 @@ type: text/vnd.tiddlywiki
   background: <<colour primary>>14;
 }
 
-.cpl-comment-logout-button,
 .cpl-comment-hint,
 .cpl-comment-login-text,
 .cpl-comment-date,
 .cpl-comment-empty {
   color: <<colour muted-foreground>>;
+}
+
+.cpl-comment-logout-button {
+  background: <<colour tiddler-background>>;
+  color: <<colour foreground>>;
+  border-color: <<colour tiddler-editor-border>>;
+}
+
+.cpl-comment-logout-button:hover,
+.cpl-comment-logout-button:focus-visible {
+  background: <<colour very-muted-foreground>>22;
+  border-color: <<colour primary>>;
+  color: <<colour primary>>;
 }
 
 .cpl-comment-textarea {

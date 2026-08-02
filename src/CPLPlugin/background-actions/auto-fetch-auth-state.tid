@@ -28,7 +28,7 @@ track-filter: [[$:/temp/CPL-Server/auth-refresh-token]get[text]] [[$:/temp/CPL-R
   oncompletion="""<$action-setfield $tiddler='$:/temp/CPL-Server/auth-status-response' text=<<data>> type='application/json'/>
   <$list filter='[<status>compare:number:gteq[200]compare:number:lt[300]] [<data>jsonget[authenticated]match[true]] +[count[]compare:number:eq[2]]'>
     <$action-setfield $tiddler='$:/temp/CPL-Server/user-status' text='authenticated'/>
-    <$action-setfield $tiddler='$:/temp/CPL-Server/user' text={{{ [<data>jsonget[user]else[{}]] }}} type='application/json'/>
+    <$action-setfield $tiddler='$:/temp/CPL-Server/user' text={{{ [<data>jsonextract[user]else[{}]] }}} type='application/json'/>
     <$action-setfield $tiddler='$:/temp/CPL-Server/is-admin' text={{{ [<data>jsonget[isAdmin]match[true]then[yes]else[no]] }}}/>
   </$list>
   <$list filter='[<status>compare:number:lt[200]] [<status>compare:number:gteq[300]] [<data>jsonget[authenticated]!match[true]] +[limit[1]]'>

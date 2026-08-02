@@ -19,8 +19,9 @@ for (const title of runtime.wiki.filterTiddlers('[all[shadows+tiddlers]]')) {
 
 for (const fields of [
   { title: '$:/temp/CPL-Repo/server-type', text: 'server' },
-  { title: '$:/temp/CPL-Server/user-status', text: 'anonymous' },
-  { title: '$:/temp/CPL-Server/github-client-id', text: '' },
+  { title: '$:/temp/CPL-Server/user-status', text: 'authenticated' },
+  { title: '$:/temp/CPL-Server/user', text: JSON.stringify({ username: 'linonetwo', avatar: 'https://avatars.example/user.png' }), type: 'application/json' },
+  { title: '$:/temp/CPL-Server/github-client-id', text: 'test-client-id' },
 ]) {
   wiki.addTiddler(new runtime.Tiddler(fields));
 }
@@ -75,6 +76,12 @@ const result = {
     comments: /Comments|评论/.test(html),
     stats: /downloads|下载/.test(html),
   },
+  authUi: {
+    username: html.includes('linonetwo'),
+    avatar: html.includes('https://avatars.example/user.png'),
+    logoutButton: html.includes('class="cpl-comment-logout-button"'),
+    invisibleLogout: html.includes('tc-btn-invisible cpl-comment-logout-button'),
+  },
   leakedParseText,
   escapedClosingTag: /&lt;\/(?:\$[a-z-]+|div|span|p)&gt;/i.test(html),
   literalWidgetClosingTag: /<\/\$[a-z-]+>/i.test(html),
@@ -125,6 +132,15 @@ describe('CPL plugin metadata rendering', () => {
       related: true,
       comments: true,
       stats: true,
+    });
+  });
+
+  test('renders the authenticated username and a visible logout button', () => {
+    expect(result.authUi).toEqual({
+      username: true,
+      avatar: true,
+      logoutButton: true,
+      invisibleLogout: false,
     });
   });
 
