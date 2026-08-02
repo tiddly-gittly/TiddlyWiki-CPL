@@ -22,6 +22,7 @@ for (const fields of [
   { title: '$:/temp/CPL-Server/user-status', text: 'authenticated' },
   { title: '$:/temp/CPL-Server/user', text: JSON.stringify({ username: 'linonetwo', avatar: 'https://avatars.example/user.png' }), type: 'application/json' },
   { title: '$:/temp/CPL-Server/github-client-id', text: 'test-client-id' },
+  { title: '$:/temp/CPL-Server/comments/$:/plugins/linonetwo/tidgi-routing-chain', text: JSON.stringify({ comments: [{ id: 'comment-render-test', username: 'render-user', avatar: '', content: 'Rendered comment body', status: 'approved', createdAt: '2026-08-02T00:00:00.000Z' }] }), type: 'application/json' },
 ]) {
   wiki.addTiddler(new runtime.Tiddler(fields));
 }
@@ -81,6 +82,9 @@ const result = {
     avatar: html.includes('https://avatars.example/user.png'),
     logoutButton: html.includes('class="cpl-comment-logout-button"'),
     invisibleLogout: html.includes('tc-btn-invisible cpl-comment-logout-button'),
+    commentUsername: html.includes('render-user'),
+    commentBody: html.includes('Rendered comment body'),
+    emptyCommentState: html.includes('No comments yet. Be the first!') || html.includes('暂无评论，来发表第一条吧！'),
   },
   leakedParseText,
   escapedClosingTag: /&lt;\/(?:\$[a-z-]+|div|span|p)&gt;/i.test(html),
@@ -141,6 +145,9 @@ describe('CPL plugin metadata rendering', () => {
       avatar: true,
       logoutButton: true,
       invisibleLogout: false,
+      commentUsername: true,
+      commentBody: true,
+      emptyCommentState: false,
     });
   });
 
