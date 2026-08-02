@@ -23,6 +23,8 @@ for (const fields of [
   { title: '$:/temp/CPL-Server/user', text: JSON.stringify({ username: 'linonetwo', avatar: 'https://avatars.example/user.png' }), type: 'application/json' },
   { title: '$:/temp/CPL-Server/github-client-id', text: 'test-client-id' },
   { title: '$:/temp/CPL-Server/comments/$:/plugins/linonetwo/tidgi-routing-chain', text: JSON.stringify({ comments: [{ id: 'comment-render-test', username: 'render-user', avatar: '', content: 'Rendered comment body', status: 'approved', createdAt: '2026-08-02T00:00:00.000Z' }] }), type: 'application/json' },
+  { title: '$:/state/CPL-Repo/compatibility-panel/$:/plugins/linonetwo/tidgi-routing-chain', text: 'open' },
+  { title: '$:/temp/CPL-Server/compatibility/$:/plugins/linonetwo/tidgi-routing-chain', text: JSON.stringify({ reports: [{ id: 'compat-render-test', reporterUsername: 'compat-render-user', twVersionMin: '5.3.0', twVersionMax: '5.4.1', conflictingPlugins: [{ pluginTitle: 'conflict/plugin', description: 'Conflict' }], description: 'Rendered compatibility report', createdAt: '2026-08-02T00:00:00.000Z' }] }), type: 'application/json' },
 ]) {
   wiki.addTiddler(new runtime.Tiddler(fields));
 }
@@ -85,6 +87,8 @@ const result = {
     commentUsername: html.includes('render-user'),
     commentBody: html.includes('Rendered comment body'),
     emptyCommentState: html.includes('No comments yet. Be the first!') || html.includes('暂无评论，来发表第一条吧！'),
+    compatibilityReporter: html.includes('compat-render-user'),
+    compatibilityDescription: html.includes('Rendered compatibility report'),
   },
   leakedParseText,
   escapedClosingTag: /&lt;\/(?:\$[a-z-]+|div|span|p)&gt;/i.test(html),
@@ -148,6 +152,8 @@ describe('CPL plugin metadata rendering', () => {
       commentUsername: true,
       commentBody: true,
       emptyCommentState: false,
+      compatibilityReporter: true,
+      compatibilityDescription: true,
     });
   });
 

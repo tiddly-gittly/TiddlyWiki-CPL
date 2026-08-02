@@ -276,11 +276,13 @@ type: text/vnd.tiddlywiki
 
 <!-- Compatibility Expandable Content -->
 <$list filter="[<compatibilityPanelStateTitle>get[text]match[open]]" variable="showCompatibilityContent">
-  <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
-    <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
+  <$tiddler tiddler=<<compatibilityTiddler>> >
+  <$list filter="[<currentTiddler>is[tiddler]]" variable="hasCompatibility">
+    <$let reportCount={{{ [<currentTiddler>get[text]jsonindexes[reports]count[]else[0]] }}}>
           <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
             <div class="cpl-compatibility-list">
-              <$list filter="[<compatibilityTiddler>get[text]jsonget[reports]]" variable="report">
+              <$list filter="[<currentTiddler>get[text]jsonindexes[reports]]" variable="reportIndex">
+                <$let report={{{ [<currentTiddler>get[text]jsonextract[reports],<reportIndex>] }}}>
                 <div class="cpl-compatibility-item">
                   <div class="cpl-compatibility-header">
                     <span style="font-weight: 600; font-size: 0.9em;"><$text text={{{ [<chinese>match[yes]then[报告人：]else[Reported by ]] }}}/><$text text={{{ [<report>jsonget[reporterUsername]else[Anonymous]] }}} /></span>
@@ -305,11 +307,13 @@ type: text/vnd.tiddlywiki
                     <$text text={{{ [<report>jsonget[description]] }}} />
                   </div>
                 </div>
+                </$let>
               </$list>
             </div>
           </$list>
         </$let>
       </$list>
+      </$tiddler>
 
       <$list filter="[<userStatus>match[authenticated]]" variable="isLoggedInForCompatibility">
         <!-- Submit Compatibility Report Form -->
