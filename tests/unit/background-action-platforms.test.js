@@ -182,4 +182,16 @@ describe('Tightened background action triggers', () => {
     expect(fields['track-filter']).toContain('PluginWiki');
     expect(fields['track-filter']).not.toContain('[[$:/HistoryList]get[current-tiddler]] ');
   });
+
+  test('auto-fetch-plugin-activity refreshes current plugin stats', () => {
+    const content = readTid(path.join(BG_DIR, 'auto-fetch-plugin-activity.tid'));
+
+    expect(content).toContain('addsuffix[/cpl/stats/]');
+    expect(content).toContain(
+      "$tiddler='$:/temp/CPL-Server/all-plugin-stats'",
+    );
+    expect(content).toContain(
+      'jsonset:json[plugins],<storePluginTitle>,<data>',
+    );
+  });
 });

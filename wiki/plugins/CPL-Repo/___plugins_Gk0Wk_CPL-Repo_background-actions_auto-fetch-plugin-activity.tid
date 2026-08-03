@@ -24,6 +24,11 @@ track-filter: [[$:/HistoryList]get[current-tiddler]get[cpl.title]] [[$:/HistoryL
   var-storeTiddler={{{ [<pluginTitle>addprefix[$:/temp/CPL-Server/compatibility/]] }}}
   var-storePluginTitle=<<pluginTitle>>
   oncompletion="<$action-setfield $tiddler=<<storeTiddler>> text=<<data>> type='application/json' plugin-title=<<storePluginTitle>>/>"/>
+<$action-sendmessage $message="tm-http-request"
+  url={{{ [[$:/temp/CPL-Server/api-base]get[text]addsuffix[/cpl/stats/]] [<pluginTitle>encodeuricomponent[]] +[join[]] }}}
+  method="GET"
+  var-storePluginTitle=<<pluginTitle>>
+  oncompletion="<$action-setfield $tiddler='$:/temp/CPL-Server/all-plugin-stats' text={{{ [[$:/temp/CPL-Server/all-plugin-stats]get[text]else[{&quot;plugins&quot;:{}}]jsonset:json[plugins],<storePluginTitle>,<data>] }}} type='application/json'/>"/>
 </$list>
 </$let>
 </$list>
