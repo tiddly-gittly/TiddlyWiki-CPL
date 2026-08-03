@@ -26,13 +26,15 @@ type: text/vnd.tiddlywiki
 <$list filter="[<serverType>match[server]]" variable="isServerMirror">
 
 <div class="cpl-plugin-stats">
+  <$let statsPluginTitle=<<pluginTitle>>>
+  <$tiddler tiddler=<<allStatsTiddler>>>
   <!-- Download Count -->
   <div class="cpl-stat-item">
     <span style="font-size: 1.2em;">⬇️</span>
-      <$list filter="[<allStatsTiddler>is[tiddler]]" variable="hasStats">
-        <$text text={{{ [<allStatsTiddler>get[text]jsonget[plugins]jsonget<pluginTitle>jsonget[downloadCount]else[0]] }}} />
+      <$list filter="[<currentTiddler>is[tiddler]]" variable="hasStats">
+        <$text text={{{ [<currentTiddler>get[text]jsonget[plugins],<statsPluginTitle>,[downloadCount]else[0]] }}} />
       </$list>
-      <$list filter="[<allStatsTiddler>!is[tiddler]]" variable="noStats">
+      <$list filter="[<currentTiddler>!is[tiddler]]" variable="noStats">
         <span class="cpl-status-muted">-</span>
       </$list>
     <span class="cpl-stat-label cpl-status-muted"><$text text={{{ [<chinese>match[yes]then[下载]else[downloads]] }}}/></span>
@@ -42,8 +44,8 @@ type: text/vnd.tiddlywiki
   <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[为此插件评分]else[Rate this plugin]] }}} aria-expanded={{{ [<ratingPanelStateTitle>get[text]match[open]then[true]else[false]] }}}>
     <$action-setfield $tiddler=<<ratingPanelStateTitle>> text={{{ [<ratingPanelStateTitle>get[text]match[open]then[closed]else[open]] }}} />
     <span class="cpl-rating-toggle-icon" style="font-size: 1.2em;">⭐</span>
-      <$list filter="[<allStatsTiddler>is[tiddler]]" variable="hasStats">
-        <$let avgRating={{{ [<allStatsTiddler>get[text]jsonget[plugins]jsonget<pluginTitle>jsonget[averageRating]else[0]] }}} totalRatings={{{ [<allStatsTiddler>get[text]jsonget[plugins]jsonget<pluginTitle>jsonget[totalRatings]else[0]] }}}>
+      <$list filter="[<currentTiddler>is[tiddler]]" variable="hasStats">
+        <$let avgRating={{{ [<currentTiddler>get[text]jsonget[plugins],<statsPluginTitle>,[averageRating]else[0]] }}} totalRatings={{{ [<currentTiddler>get[text]jsonget[plugins],<statsPluginTitle>,[totalRatings]else[0]] }}}>
           <$list filter="[<totalRatings>compare:integer:gt[0]]" variable="hasRatings">
             <span><$text text=<<avgRating>> />/5</span>
             <span class="cpl-stat-label cpl-status-muted">(<$text text=<<totalRatings>> /> <$text text={{{ [<chinese>match[yes]then[评分]else[ratings]] }}}/>)</span>
@@ -53,10 +55,12 @@ type: text/vnd.tiddlywiki
           </$list>
         </$let>
       </$list>
-      <$list filter="[<allStatsTiddler>!is[tiddler]]" variable="noStats">
+      <$list filter="[<currentTiddler>!is[tiddler]]" variable="noStats">
         <span class="cpl-status-muted">-</span>
       </$list>
   </$button>
+  </$tiddler>
+  </$let>
 
   <!-- Changelog Toggle (inline in stats row) -->
     <$button class="tc-btn-invisible cpl-stat-item cpl-rating-toggle-button" tooltip={{{ [<chinese>match[yes]then[点击查看更新日志]else[Click to view changelog]] }}}>
@@ -85,7 +89,7 @@ type: text/vnd.tiddlywiki
       <span style="font-size: 1.2em;">⚠️</span>
       <$list filter="[<compatibilityPanelStateTitle>get[text]else[closed]!match[open]]" variable="collapsed">
         <$list filter="[<compatibilityTiddler>is[tiddler]]" variable="hasCompatibility">
-          <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonget[reports]count[]else[0]] }}}>
+          <$let reportCount={{{ [<compatibilityTiddler>get[text]jsonindexes[reports]count[]else[0]] }}}>
             <$list filter="[<reportCount>compare:integer:gt[0]]" variable="hasReports">
               <span class="cpl-stat-label"><$text text={{{ [<chinese>match[yes]then[兼容性报告]else[Compatibility]] }}}/> (<$text text=<<reportCount>>/>)</span>
             </$list>
@@ -296,10 +300,12 @@ type: text/vnd.tiddlywiki
                   <$list filter="[<report>jsonget[conflictingPlugins]count[]compare:integer:gt[0]]" variable="hasConflicts">
                     <div class="cpl-compatibility-meta">
                       <strong><$text text={{{ [<chinese>match[yes]then[冲突插件：]else[Conflicts with:]] }}}/></strong>
-                      <$list filter="[<report>jsonget[conflictingPlugins]]" variable="conflict">
+                      <$list filter="[<report>jsonindexes[conflictingPlugins]]" variable="conflictIndex">
+                        <$let conflict={{{ [<report>jsonextract[conflictingPlugins],<conflictIndex>] }}}>
                         <span class="cpl-compatibility-pill">
                           <$text text={{{ [<conflict>jsonget[pluginTitle]else[Unknown]] }}} />
                         </span>
+                        </$let>
                       </$list>
                     </div>
                   </$list>
