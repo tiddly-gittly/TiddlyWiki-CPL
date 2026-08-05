@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "The runtime-agnostic core of the [[tw-mcp|$:/plugins/wikilabs/tw-mcp]] MCP server: the tool handlers (crud, query, render, inspect), the hashline edit engine and the tool dispatcher. It contains no transport and no filesystem tools — the ''tw-mcp'' server plugin adds those plus HTTP/SSE/stdio on top and is the plugin to install for a node MCP server. Install BOTH plugins there; this core alone serves embedders that host the handlers against their own `$tw` (e.g. the Facets bare-vm engine).\n\nTool handlers are modules of `module-type: mcp-handler`; each export becomes a tool, keyed by export name. Any plugin can contribute tools by shipping such a module.\n\nCode in this plugin must stay runtime-agnostic: no unguarded node requires at load time, and no `\\p{...}` regex without feature detection (no-ICU JS engines reject them).\n\nThe changelog lives in the [[tw-mcp history|$:/plugins/wikilabs/tw-mcp/history]].\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ftw-mcp-core.json",
+        "cpl.title": "$:/plugins/wikilabs/tw-mcp-core",
+        "cpl.author": "pmario",
+        "cpl.name": "TW MCP Core",
+        "cpl.description": "MCP tool handlers for TiddlyWiki (runtime-agnostic core)",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.4.0",
+        "title": "Plugin_202608055045103"
+    }
+]
