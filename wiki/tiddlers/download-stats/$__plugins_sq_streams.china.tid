@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_sq_streams
+plugin-title: $:/plugins/sq/streams
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-07T21:17:44.297Z","downloadsByIp":{"112.192.164.17":"2026-08-07T21:17:44.297Z"}}

@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_hyper-table
+plugin-title: $:/plugins/linonetwo/hyper-table
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-05T16:34:40.900Z","downloadsByIp":{"171.122.247.220":"2026-08-05T16:34:40.900Z"}}

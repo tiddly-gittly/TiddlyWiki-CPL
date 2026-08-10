@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_early-sleep-early-work
+plugin-title: $:/plugins/linonetwo/early-sleep-early-work
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-05T16:33:44.488Z","downloadsByIp":{"171.122.247.220":"2026-08-05T16:33:44.488Z"}}
