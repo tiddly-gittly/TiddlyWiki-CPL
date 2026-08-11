@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_flibbles_relink
+plugin-title: $:/plugins/flibbles/relink
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-07T03:39:39.884Z","downloadsByIp":{"14.145.46.132":"2026-08-07T03:39:39.884Z"}}

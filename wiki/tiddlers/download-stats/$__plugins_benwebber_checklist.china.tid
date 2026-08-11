@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_benwebber_checklist
+plugin-title: $:/plugins/benwebber/checklist
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-06T21:10:05.715Z","downloadsByIp":{"120.227.79.83":"2026-08-06T21:10:05.715Z"}}

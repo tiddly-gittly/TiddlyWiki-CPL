@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__languages_zh-Hans
 plugin-title: $:/languages/zh-Hans
 type: application/json
 
-{"downloadCount":1,"lastUpdated":"2026-08-02T05:35:10.701Z","downloadsByIp":{"100.64.0.1":"2026-08-02T05:35:10.701Z"}}
+{"downloadCount":2,"lastUpdated":"2026-08-05T16:32:15.417Z","downloadsByIp":{"100.64.0.1":"2026-08-02T05:35:10.701Z","171.122.247.220":"2026-08-05T16:32:15.417Z"}}
