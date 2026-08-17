@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_tw-calendar
+plugin-title: $:/plugins/linonetwo/tw-calendar
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-08-15T06:49:06.901Z","downloadsByIp":{"134.238.82.175":"2026-06-09T04:38:44.565Z","120.231.191.24":"2026-08-15T06:49:06.901Z"}}
