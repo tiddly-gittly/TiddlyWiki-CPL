@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_twcloud_tiddlyweb-sse
+plugin-title: $:/plugins/twcloud/tiddlyweb-sse
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-13T19:50:01.151Z","downloadsByIp":{"14.212.92.46":"2026-08-13T19:50:01.151Z"}}
