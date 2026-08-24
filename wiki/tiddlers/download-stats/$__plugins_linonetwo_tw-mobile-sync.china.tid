@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_linonetwo_tw-mobile-sync
 plugin-title: $:/plugins/linonetwo/tw-mobile-sync
 type: application/json
 
-{"downloadCount":1,"lastUpdated":"2026-08-13T19:43:26.889Z","downloadsByIp":{"14.212.92.46":"2026-08-13T19:43:26.889Z"}}
+{"downloadCount":3,"lastUpdated":"2026-08-22T08:49:27.787Z","downloadsByIp":{"14.212.92.46":"2026-08-13T19:43:26.889Z","220.184.181.3":"2026-08-21T17:51:36.852Z","120.231.191.24":"2026-08-22T08:49:27.787Z"}}

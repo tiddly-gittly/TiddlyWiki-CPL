@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_tidme_fsrs4tw
+plugin-title: $:/plugins/tidme/fsrs4tw
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-24T06:16:25.501Z","downloadsByIp":{"120.224.18.224":"2026-08-24T06:16:25.501Z"}}

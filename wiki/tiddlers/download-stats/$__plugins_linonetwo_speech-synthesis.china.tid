@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_speech-synthesis
+plugin-title: $:/plugins/linonetwo/speech-synthesis
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-24T09:45:30.652Z","downloadsByIp":{"120.224.18.224":"2026-08-24T09:45:30.652Z"}}
