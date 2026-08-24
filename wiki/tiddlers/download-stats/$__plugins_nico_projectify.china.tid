@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_nico_projectify
+plugin-title: $:/plugins/nico/projectify
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-19T14:08:29.865Z","downloadsByIp":{"111.29.182.165":"2026-08-19T14:08:29.865Z"}}

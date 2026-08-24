@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_fira-code-font
+plugin-title: $:/plugins/linonetwo/fira-code-font
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-21T18:04:43.596Z","downloadsByIp":{"111.29.182.165":"2026-08-21T18:04:43.596Z"}}

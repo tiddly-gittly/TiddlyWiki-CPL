@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_TW5-CodeMirror-Enhanced
+plugin-title: $:/plugins/Gk0Wk/TW5-CodeMirror-Enhanced
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-08-21T16:21:08.549Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:23:46.451Z","111.29.182.165":"2026-08-21T16:21:08.549Z"}}
