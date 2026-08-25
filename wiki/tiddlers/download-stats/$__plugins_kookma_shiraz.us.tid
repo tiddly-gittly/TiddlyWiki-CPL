@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_kookma_shiraz
 plugin-title: $:/plugins/kookma/shiraz
 type: application/json
 
-{"downloadCount":1,"lastUpdated":"2026-08-02T10:00:35.894Z","downloadsByIp":{"49.105.103.200":"2026-08-02T10:00:35.894Z"}}
+{"downloadCount":2,"lastUpdated":"2026-08-17T16:59:42.484Z","downloadsByIp":{"49.105.103.200":"2026-08-02T10:00:35.894Z","170.254.229.107":"2026-08-17T16:59:42.484Z"}}

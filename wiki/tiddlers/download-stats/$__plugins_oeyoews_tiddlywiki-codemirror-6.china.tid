@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_oeyoews_tiddlywiki-codemirror-6
 plugin-title: $:/plugins/oeyoews/tiddlywiki-codemirror-6
 type: application/json
 
-{"downloadCount":5,"lastUpdated":"2026-08-22T12:34:58.746Z","downloadsByIp":{"120.227.79.83":"2026-08-05T20:32:53.740Z","112.192.164.17":"2026-08-07T21:20:21.774Z","111.29.182.165":"2026-08-21T16:29:52.325Z","120.231.191.24":"2026-08-22T12:34:58.746Z"}}
+{"downloadCount":3,"lastUpdated":"2026-08-07T21:20:21.774Z","downloadsByIp":{"120.227.79.83":"2026-08-05T20:32:53.740Z","112.192.164.17":"2026-08-07T21:20:21.774Z"}}
