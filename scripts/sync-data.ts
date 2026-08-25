@@ -72,9 +72,7 @@ export const parseStatsTiddler = (raw: string): DownloadStats | null => {
   return { downloadCount: count, lastUpdated: null, downloadsByIp: {} };
 };
 
-export const splitTiddler = (
-  raw: string,
-): { header: string; body: string } => {
+export const splitTiddler = (raw: string): { header: string; body: string } => {
   const normalized = raw.replace(/\r\n/g, '\n');
   const blank = normalized.indexOf('\n\n');
   if (blank === -1) {
@@ -106,7 +104,8 @@ export const mergeDownloadStats = (
   const downloadsByIp = { ...remote.downloadsByIp };
   for (const [ip, timestamp] of Object.entries(local.downloadsByIp)) {
     const existing = downloadsByIp[ip];
-    downloadsByIp[ip] = laterTimestamp(existing ?? null, timestamp) ?? timestamp;
+    downloadsByIp[ip] =
+      laterTimestamp(existing ?? null, timestamp) ?? timestamp;
   }
 
   const uniqueIps = Object.keys(downloadsByIp).length;
@@ -208,11 +207,7 @@ export const overlayServerTiddlers = ({
   }
 };
 
-const runGit = (
-  args: string[],
-  cwd: string,
-  allowFail = false,
-): GitResult => {
+const runGit = (args: string[], cwd: string, allowFail = false): GitResult => {
   const result = spawnSync('git', args, {
     cwd,
     encoding: 'utf8',
@@ -237,7 +232,7 @@ const acquireLock = (lockDir: string): void => {
       fs.writeFileSync(path.join(lockDir, 'timestamp'), String(Date.now()));
       return;
     } catch (error) {
-      const code = (error as NodeJS.ErrnoException).code;
+      const { code } = error as NodeJS.ErrnoException;
       if (code !== 'EEXIST') {
         throw error;
       }
@@ -282,7 +277,7 @@ const applyOwnDeletions = (
 
 export const syncRuntimeData = (options: SyncDataOptions): SyncDataResult => {
   const repoRoot = path.resolve(options.repoRoot);
-  const serverId = options.serverId;
+  const { serverId } = options;
   const syncBranch = `data-sync/${serverId}`;
   const lockDir = path.join(repoRoot, '.cpl-sync-lock');
 
@@ -349,12 +344,21 @@ export const syncRuntimeData = (options: SyncDataOptions): SyncDataResult => {
     const staged = runGit(['diff', '--cached', '--quiet'], checkoutDir, true);
     if (staged.status === 0) {
       const remoteBranch = runGit(
-        ['ls-remote', '--exit-code', '--heads', 'origin', `refs/heads/${syncBranch}`],
+        [
+          'ls-remote',
+          '--exit-code',
+          '--heads',
+          'origin',
+          `refs/heads/${syncBranch}`,
+        ],
         checkoutDir,
         true,
       );
       if (remoteBranch.status === 0) {
-        runGit(['push', '--force', 'origin', `HEAD:refs/heads/${syncBranch}`], checkoutDir);
+        runGit(
+          ['push', '--force', 'origin', `HEAD:refs/heads/${syncBranch}`],
+          checkoutDir,
+        );
         log(
           `Reset ${syncBranch} to ${options.baseBranch} because no runtime data changes remain`,
         );
@@ -369,7 +373,10 @@ export const syncRuntimeData = (options: SyncDataOptions): SyncDataResult => {
       ['commit', '-m', `chore(data): sync from ${serverId} [${timestamp}]`],
       checkoutDir,
     );
-    runGit(['push', '--force', 'origin', `HEAD:refs/heads/${syncBranch}`], checkoutDir);
+    runGit(
+      ['push', '--force', 'origin', `HEAD:refs/heads/${syncBranch}`],
+      checkoutDir,
+    );
     log(
       `Updated ${syncBranch}; GitHub Actions will create or refresh the Pull Request`,
     );
