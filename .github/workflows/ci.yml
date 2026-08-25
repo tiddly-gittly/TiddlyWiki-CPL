@@ -2,9 +2,19 @@ name: CI
 
 on:
   pull_request:
+    paths-ignore:
+      - 'wiki/tiddlers/download-stats/**'
+      - 'wiki/tiddlers/comments/**'
+      - 'wiki/tiddlers/ratings/**'
+      - 'wiki/tiddlers/compatibility/**'
   push:
     branches:
       - master
+    paths-ignore:
+      - 'wiki/tiddlers/download-stats/**'
+      - 'wiki/tiddlers/comments/**'
+      - 'wiki/tiddlers/ratings/**'
+      - 'wiki/tiddlers/compatibility/**'
 
 permissions:
   contents: read
@@ -15,6 +25,7 @@ concurrency:
 
 jobs:
   build-and-tests:
+    if: ${{ github.event_name != 'pull_request' || !startsWith(github.head_ref, 'data-sync/') }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
 

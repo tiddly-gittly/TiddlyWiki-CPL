@@ -8,5 +8,5 @@
       "cache": false
     }
   },
-  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"cache\" ]; then exit 0; else exit 1; fi"
+  "ignoreCommand": "case \"$VERCEL_GIT_COMMIT_REF\" in cache|data-sync/*) exit 0;; esac; if git rev-parse --verify --quiet HEAD^ >/dev/null && [ -z \"$(git diff --name-only HEAD^ HEAD | grep -vE '^wiki/tiddlers/(download-stats|comments|ratings|compatibility)/' || true)\" ]; then exit 0; fi; exit 1"
 }

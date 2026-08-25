@@ -58,23 +58,73 @@ git -C "$checkout_dir" checkout -B "$SYNC_BRANCH" >/dev/null
 git -C "$checkout_dir" config user.name "CPL Data Sync (${SERVER_ID})"
 git -C "$checkout_dir" config user.email "cpl-data-sync@users.noreply.github.com"
 
+# Each mirror may only overlay its own suffixed tiddlers. Copying the whole
+# directory would rewrite the other server's files from a stale PVC/Forgejo
+# snapshot and can decrease download counts / rewind lastUpdated.
+SUFFIX=".${SERVER_ID}.tid"
+
+stats_count() {
+  sed -n 's/.*"downloadCount":\([0-9][0-9]*\).*/\1/p' "$1"
+}
+
+stats_updated() {
+  sed -n 's/.*"lastUpdated":"\([^"]*\)".*/\1/p' "$1"
+}
+
+should_copy_stats() {
+  src=$1
+  dest=$2
+  if [ ! -f "$dest" ]; then
+    return 0
+  fi
+  src_count=$(stats_count "$src")
+  dest_count=$(stats_count "$dest")
+  src_count=${src_count:-0}
+  dest_count=${dest_count:-0}
+  if [ "$src_count" -gt "$dest_count" ]; then
+    return 0
+  fi
+  if [ "$src_count" -lt "$dest_count" ]; then
+    echo "[sync-data] Skip stale $src (count $src_count < $dest_count)"
+    return 1
+  fi
+  src_updated=$(stats_updated "$src")
+  dest_updated=$(stats_updated "$dest")
+  if [ -n "$src_updated" ] && [ -n "$dest_updated" ] && [ "$src_updated" \< "$dest_updated" ]; then
+    echo "[sync-data] Skip stale $src (lastUpdated $src_updated < $dest_updated)"
+    return 1
+  fi
+  return 0
+}
+
 for relative_path in $SYNC_PATHS; do
   source_path="$REPO_ROOT/$relative_path"
   destination_path="$checkout_dir/$relative_path"
-  if [ -d "$source_path" ]; then
-    mkdir -p "$destination_path"
-    cp -a "$source_path/." "$destination_path/"
-  elif [ -f "$source_path" ]; then
-    mkdir -p "$(dirname "$destination_path")"
-    cp -a "$source_path" "$destination_path"
+  if [ ! -d "$source_path" ]; then
+    continue
   fi
+  mkdir -p "$destination_path"
+  find "$source_path" -type f -name "*$SUFFIX" | while IFS= read -r src_file; do
+    rel="${src_file#$source_path/}"
+    dest_file="$destination_path/$rel"
+    mkdir -p "$(dirname "$dest_file")"
+    if [ "$relative_path" = "wiki/tiddlers/download-stats" ]; then
+      if should_copy_stats "$src_file" "$dest_file"; then
+        cp -a "$src_file" "$dest_file"
+      fi
+    else
+      cp -a "$src_file" "$dest_file"
+    fi
+  done
 done
 
 git -C "$REPO_ROOT" diff --name-only --diff-filter=D -- $SYNC_PATHS |
 while IFS= read -r deleted_path; do
-  if [ -n "$deleted_path" ]; then
-    rm -rf "$checkout_dir/$deleted_path"
-  fi
+  case "$deleted_path" in
+    *"$SUFFIX")
+      rm -rf "$checkout_dir/$deleted_path"
+      ;;
+  esac
 done
 
 if [ "${CPL_SYNC_DEBUG:-false}" = "true" ]; then

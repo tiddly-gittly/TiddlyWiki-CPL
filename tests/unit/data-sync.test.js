@@ -39,7 +39,7 @@ function shellExecutable() {
   return gitBash;
 }
 
-test('runtime data sync preserves modifications, ignored files, and deletions', () => {
+test('runtime data sync overlays only this server and never decreases stats', () => {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'cpl-data-sync-'));
   const remote = path.join(tempRoot, 'remote.git');
   const live = path.join(tempRoot, 'live');
@@ -68,7 +68,11 @@ test('runtime data sync preserves modifications, ignored files, and deletions', 
     );
     fs.writeFileSync(
       path.join(live, 'wiki/tiddlers/download-stats/plugin.china.tid'),
-      'count=1\n',
+      '{"downloadCount":3,"lastUpdated":"2026-08-22T00:00:00.000Z"}\n',
+    );
+    fs.writeFileSync(
+      path.join(live, 'wiki/tiddlers/download-stats/plugin.us.tid'),
+      '{"downloadCount":9,"lastUpdated":"2026-08-22T00:00:00.000Z"}\n',
     );
     fs.writeFileSync(
       path.join(live, 'wiki/tiddlers/comments/approved/old.china.tid'),
@@ -79,9 +83,37 @@ test('runtime data sync preserves modifications, ignored files, and deletions', 
     run('git', ['branch', '-M', 'master'], { cwd: live });
     run('git', ['push', 'origin', 'master'], { cwd: live });
 
+    // Stale PVC: this server's count went backwards, and it also holds an
+    // outdated copy of the other mirror's file.
     fs.writeFileSync(
       path.join(live, 'wiki/tiddlers/download-stats/plugin.china.tid'),
-      'count=2\n',
+      '{"downloadCount":1,"lastUpdated":"2026-08-01T00:00:00.000Z"}\n',
+    );
+    fs.writeFileSync(
+      path.join(live, 'wiki/tiddlers/download-stats/plugin.us.tid'),
+      '{"downloadCount":1,"lastUpdated":"2026-08-02T00:00:00.000Z"}\n',
+    );
+
+    run(shellExecutable(), [shellPath(syncScript)], {
+      env: {
+        ...process.env,
+        CPL_REPO_ROOT: shellPath(live),
+        CPL_SERVER_ID: 'china',
+        CPL_SYNC_REPO: shellPath(remote),
+        CPL_SYNC_BRANCH: 'master',
+      },
+    });
+
+    const staleBranch = spawnSync(
+      'git',
+      ['ls-remote', '--exit-code', '--heads', remote, 'refs/heads/data-sync/china'],
+      { encoding: 'utf8' },
+    );
+    expect(staleBranch.status).not.toBe(0);
+
+    fs.writeFileSync(
+      path.join(live, 'wiki/tiddlers/download-stats/plugin.china.tid'),
+      '{"downloadCount":4,"lastUpdated":"2026-08-25T00:00:00.000Z"}\n',
     );
     fs.rmSync(
       path.join(live, 'wiki/tiddlers/comments/approved/old.china.tid'),
@@ -107,52 +139,25 @@ test('runtime data sync preserves modifications, ignored files, and deletions', 
         path.join(verify, 'wiki/tiddlers/download-stats/plugin.china.tid'),
         'utf8',
       ),
-    ).toBe('count=2\n');
-    expect(
-      fs.existsSync(path.join(verify, 'wiki/tiddlers/ratings/new.china.tid')),
-    ).toBe(true);
-    expect(
-      fs.existsSync(
-        path.join(verify, 'wiki/tiddlers/comments/approved/old.china.tid'),
-      ),
-    ).toBe(false);
-
-    fs.writeFileSync(
-      path.join(live, 'wiki/tiddlers/download-stats/plugin.china.tid'),
-      'count=1\n',
+    ).toBe(
+      '{"downloadCount":4,"lastUpdated":"2026-08-25T00:00:00.000Z"}\n',
     );
-    fs.writeFileSync(
-      path.join(live, 'wiki/tiddlers/comments/approved/old.china.tid'),
-      'approved\n',
-    );
-    fs.rmSync(path.join(live, 'wiki/tiddlers/ratings/new.china.tid'));
-
-    run(shellExecutable(), [shellPath(syncScript)], {
-      env: {
-        ...process.env,
-        CPL_REPO_ROOT: shellPath(live),
-        CPL_SERVER_ID: 'china',
-        CPL_SYNC_REPO: shellPath(remote),
-        CPL_SYNC_BRANCH: 'master',
-      },
-    });
-
-    run('git', ['fetch', 'origin', 'data-sync/china'], { cwd: verify });
-    run('git', ['reset', '--hard', 'origin/data-sync/china'], { cwd: verify });
     expect(
       fs.readFileSync(
-        path.join(verify, 'wiki/tiddlers/download-stats/plugin.china.tid'),
+        path.join(verify, 'wiki/tiddlers/download-stats/plugin.us.tid'),
         'utf8',
       ),
-    ).toBe('count=1\n');
+    ).toBe(
+      '{"downloadCount":9,"lastUpdated":"2026-08-22T00:00:00.000Z"}\n',
+    );
     expect(
       fs.existsSync(path.join(verify, 'wiki/tiddlers/ratings/new.china.tid')),
-    ).toBe(false);
+    ).toBe(true);
     expect(
       fs.existsSync(
         path.join(verify, 'wiki/tiddlers/comments/approved/old.china.tid'),
       ),
-    ).toBe(true);
+    ).toBe(false);
   } finally {
     fs.rmSync(tempRoot, { recursive: true, force: true });
   }
