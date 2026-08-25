@@ -112,7 +112,7 @@ The sync process requires repository-scoped Git push credentials. In Kubernetes,
 CPL_SERVER_ID=china pnpm run sync-data
 ```
 
-`scripts/sync-data.sh` clones the latest `master` into a temporary worktree, overlays only the four runtime-data paths, commits changes to the stable `data-sync/{serverId}` branch, and force-updates that branch. It never switches or resets the live wiki worktree. `.github/workflows/data-sync-pr.yml` creates the Pull Request when one does not already exist.
+`scripts/sync-data.ts` clones the latest `master` into a temporary worktree, overlays only this mirror's `*.{serverId}.tid` files, merges download stats (max count / newest timestamp / union of IPs), commits to `data-sync/{serverId}`, and force-updates that branch. It never switches or resets the live wiki worktree. `.github/workflows/data-sync-pr.yml` creates the Pull Request when one does not already exist.
 
 Example cron (weekly, Monday 03:00):
 

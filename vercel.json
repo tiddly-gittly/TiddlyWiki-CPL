@@ -8,5 +8,5 @@
       "cache": false
     }
   },
-  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"cache\" ]; then exit 0; else exit 1; fi"
+  "ignoreCommand": "case \"$VERCEL_GIT_COMMIT_REF\" in cache|data-sync/*) exit 0;; *) exit 1;; esac"
 }

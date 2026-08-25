@@ -15,6 +15,10 @@ on:
       - "scripts/**"
       - "src/**"
       - "wiki/**"
+      - "!wiki/tiddlers/download-stats/**"
+      - "!wiki/tiddlers/comments/**"
+      - "!wiki/tiddlers/ratings/**"
+      - "!wiki/tiddlers/compatibility/**"
   workflow_dispatch:
 
 env:
