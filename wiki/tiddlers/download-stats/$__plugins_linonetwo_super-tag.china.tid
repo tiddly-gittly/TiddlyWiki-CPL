@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_super-tag
+plugin-title: $:/plugins/linonetwo/super-tag
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-25T07:32:17.709Z","downloadsByIp":{"120.236.217.190":"2026-08-25T07:32:17.709Z"}}
