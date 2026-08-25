@@ -406,6 +406,14 @@ export const main = (): number => {
   }
 };
 
-if (typeof require !== 'undefined' && require.main === module) {
+const invokedAsCli = (): boolean => {
+  const entry = process.argv[1];
+  return Boolean(entry && path.basename(entry) === 'sync-data.ts');
+};
+
+// Node 22 `--experimental-strip-types` re-parses this file as ESM, so
+// `require.main === module` never fires and the sidecar would exit 0
+// without overlaying or pushing.
+if (invokedAsCli()) {
   process.exit(main());
 }
