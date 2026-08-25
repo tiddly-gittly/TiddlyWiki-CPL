@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_tiddlywiki_codemirror
 plugin-title: $:/plugins/tiddlywiki/codemirror
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-08-22T13:12:25.533Z","downloadsByIp":{"112.192.164.17":"2026-08-07T19:42:30.417Z","120.231.191.24":"2026-08-22T13:12:25.533Z"}}
+{"downloadCount":1,"lastUpdated":"2026-08-07T19:42:30.417Z","downloadsByIp":{"112.192.164.17":"2026-08-07T19:42:30.417Z"}}

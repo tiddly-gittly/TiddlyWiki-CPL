@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_dyp_WikiText-highlight
 plugin-title: $:/plugins/dyp/WikiText-highlight
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-08-21T16:39:56.218Z","downloadsByIp":{"222.215.178.216":"2026-08-09T13:38:02.520Z","111.29.182.165":"2026-08-21T16:39:56.218Z"}}
+{"downloadCount":1,"lastUpdated":"2026-08-09T13:38:02.520Z","downloadsByIp":{"222.215.178.216":"2026-08-09T13:38:02.520Z"}}
