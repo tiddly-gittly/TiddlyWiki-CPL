@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_linonetwo_edit-tags-on-view-mode
 plugin-title: $:/plugins/linonetwo/edit-tags-on-view-mode
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-08-15T09:33:58.365Z","downloadsByIp":{"183.192.12.24":"2026-06-03T13:33:43.681Z","193.116.71.135":"2026-08-15T09:33:58.365Z"}}
+{"downloadCount":3,"lastUpdated":"2026-08-26T06:40:24.811Z","downloadsByIp":{"183.192.12.24":"2026-06-03T13:33:43.681Z","193.116.71.135":"2026-08-26T06:40:24.811Z"}}
