@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_intention-tower-knowledge-graph
+plugin-title: $:/plugins/linonetwo/intention-tower-knowledge-graph
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-01T08:56:31.652Z","downloadsByIp":{"223.104.72.127":"2026-09-01T08:56:31.652Z"}}

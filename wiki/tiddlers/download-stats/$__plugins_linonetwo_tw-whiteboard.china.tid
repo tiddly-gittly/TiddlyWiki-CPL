@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_tw-whiteboard
+plugin-title: $:/plugins/linonetwo/tw-whiteboard
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-30T01:31:47.245Z","downloadsByIp":{"183.198.250.19":"2026-08-30T01:31:47.245Z"}}
