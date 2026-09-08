@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_flibbles_graph
+plugin-title: $:/plugins/flibbles/graph
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-03T08:30:42.318Z","downloadsByIp":{"218.240.163.251":"2026-09-03T08:30:42.318Z"}}
