@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_principles
+plugin-title: $:/plugins/linonetwo/principles
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-05T07:27:42.949Z","downloadsByIp":{"120.231.191.45":"2026-09-05T07:27:42.949Z"}}
