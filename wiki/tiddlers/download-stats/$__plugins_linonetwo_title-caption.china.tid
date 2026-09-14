@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_linonetwo_title-caption
 plugin-title: $:/plugins/linonetwo/title-caption
 type: application/json
 
-{"downloadCount":1,"lastUpdated":"2026-09-01T03:15:18.285Z","downloadsByIp":{"111.61.76.233":"2026-09-01T03:15:18.285Z"}}
+{"downloadCount":2,"lastUpdated":"2026-09-12T04:47:37.633Z","downloadsByIp":{"111.61.76.233":"2026-09-01T03:15:18.285Z","120.236.217.190":"2026-09-12T04:47:37.633Z"}}

@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_preview-glass
+plugin-title: $:/plugins/linonetwo/preview-glass
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-09T11:58:23.931Z","downloadsByIp":{"223.104.80.55":"2026-09-09T11:58:23.931Z"}}

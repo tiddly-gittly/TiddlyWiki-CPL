@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_mabuqian_GuMo-Palettes
+plugin-title: $:/plugins/mabuqian/GuMo-Palettes
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-09-12T23:38:14.985Z","downloadsByIp":{"46.110.132.146":"2026-08-31T05:39:21.286Z","183.247.175.194":"2026-09-10T08:53:18.477Z","182.136.216.37":"2026-09-12T23:38:14.985Z"}}

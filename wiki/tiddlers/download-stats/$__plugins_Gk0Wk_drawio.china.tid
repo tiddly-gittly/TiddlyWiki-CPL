@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_drawio
+plugin-title: $:/plugins/Gk0Wk/drawio
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-09-13T15:51:41.776Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:05:43.460Z","212.107.30.201":"2026-09-13T15:51:41.776Z"}}
