@@ -1,0 +1,36 @@
+name: Update CPL's Own Plugins
+
+on:
+  schedule:
+    # Weekly, Thursday 02:41 UTC: keeps the plugins used by the CPL site itself
+    # up to date. Only wiki/plugins is committed, so the plugin metadata that
+    # CPL serves (wiki/tiddlers, plugin-offline files) is never touched.
+    - cron: '41 2 * * 4'
+  workflow_dispatch:
+
+jobs:
+  update-own-plugins:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Update plugins used by this wiki in place
+        run: npx --yes tiddlywiki-cpl@latest update --root wiki --source jsdelivr
+
+      # Commit changed files back to the repository (wiki/plugins only)
+      - uses: EndBug/add-and-commit@v10
+        with:
+          message: 'chore(plugins): update CPL own plugins via tw-cpl'
+          add: 'wiki/plugins'
+          author_name: Github Action
+          author_email: actions@github.com
+          commit: '--no-verify'
