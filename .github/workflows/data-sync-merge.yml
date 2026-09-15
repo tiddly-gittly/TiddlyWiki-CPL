@@ -27,12 +27,19 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          open_prs=$(gh pr list --state open --json number,mergeable,headRefName)
+          open_prs=$(gh pr list --state open --json number,headRefName)
           echo "Open PRs: $open_prs"
           echo "$open_prs" | jq -c '.[] | select(.headRefName | startswith("data-sync/"))' | while read -r pr; do
             number=$(echo "$pr" | jq -r '.number')
             branch=$(echo "$pr" | jq -r '.headRefName')
-            mergeable=$(echo "$pr" | jq -r '.mergeable')
+            # GitHub computes mergeability asynchronously and reports UNKNOWN
+            # right after a query; wait briefly until it resolves.
+            mergeable="UNKNOWN"
+            for attempt in 1 2 3 4 5 6; do
+              mergeable=$(gh pr view "$number" --json mergeable --jq '.mergeable')
+              [ "$mergeable" != "UNKNOWN" ] && break
+              sleep 2
+            done
             if [ "$mergeable" != "MERGEABLE" ]; then
               echo "PR #$number ($branch) is '$mergeable'; skipping."
               continue
