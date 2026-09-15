@@ -340,13 +340,19 @@ export const buildLibrary = (distDir = defaultDistDir, cache = false) => {
     }
 
     console.log(chalk.bgCyan.black.bold('\nGenerating plugin library file...'));
-    writeFileSync(
-      resolve(distDir, 'index.html'),
-      readFileSync(resolve(__dirname, 'library.emplate.html'), 'utf-8').replace(
-        "'%%plugins%%'",
-        JSON.stringify(pluginInfos),
-      ),
-    );
+    // The library page template is a standalone TiddlyWiki HTML saved long
+    // ago; stamp it with the TiddlyWiki version used for this build so the
+    // deployed library page does not advertise a stale version.
+    const libraryHtml = readFileSync(
+      resolve(__dirname, 'library.emplate.html'),
+      'utf-8',
+    )
+      .replace("'%%plugins%%'", JSON.stringify(pluginInfos))
+      .replace(
+        /content="v[^"]*" name="application-version"/,
+        `content="v${$tw.version}" name="application-version"`,
+      );
+    writeFileSync(resolve(distDir, 'index.html'), libraryHtml);
 
     console.log(chalk.bgCyan.black.bold('\nCleaning up...'));
     rmSync(tmpDir, { recursive: true, force: true });

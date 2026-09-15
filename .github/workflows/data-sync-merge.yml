@@ -1,0 +1,43 @@
+name: Auto-merge CPL Data Sync Pull Requests
+
+# The CPL production servers (china / us) push runtime data (comments,
+# ratings, compatibility reports, download stats) to data-sync/* branches and
+# the data-sync-pr workflow opens PRs for them. Those PRs are routine and
+# safe to merge as soon as GitHub reports them mergeable; this workflow merges
+# them on a fixed cadence so data does not pile up waiting for a maintainer.
+# Any bad merge can be reverted manually with `git revert`.
+
+on:
+  schedule:
+    # every 6 hours, off the top of the hour
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge open data-sync PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          open_prs=$(gh pr list --state open --json number,mergeable,headRefName)
+          echo "Open PRs: $open_prs"
+          echo "$open_prs" | jq -c '.[] | select(.headRefName | startswith("data-sync/"))' | while read -r pr; do
+            number=$(echo "$pr" | jq -r '.number')
+            branch=$(echo "$pr" | jq -r '.headRefName')
+            mergeable=$(echo "$pr" | jq -r '.mergeable')
+            if [ "$mergeable" != "MERGEABLE" ]; then
+              echo "PR #$number ($branch) is '$mergeable'; skipping."
+              continue
+            fi
+            echo "Auto-merging PR #$number ($branch)"
+            # Squash, and keep the sync branch: the servers keep pushing to it.
+            gh pr merge "$number" --squash
+          done
