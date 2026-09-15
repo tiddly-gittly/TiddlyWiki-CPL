@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_oeyoews_mermaid
+plugin-title: $:/plugins/oeyoews/mermaid
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-12T13:47:46.204Z","downloadsByIp":{"182.136.216.37":"2026-09-12T13:47:46.204Z"}}

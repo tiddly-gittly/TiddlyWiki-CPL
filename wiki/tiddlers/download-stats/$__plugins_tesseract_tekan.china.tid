@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_tesseract_tekan
+plugin-title: $:/plugins/tesseract/tekan
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-14T15:39:06.162Z","downloadsByIp":{"109.245.70.98":"2026-09-14T15:39:06.162Z"}}

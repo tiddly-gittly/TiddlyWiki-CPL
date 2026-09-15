@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_sidebar-resizer
+plugin-title: $:/plugins/Gk0Wk/sidebar-resizer
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-09-12T23:43:02.577Z","downloadsByIp":{"183.247.175.194":"2026-09-10T08:34:00.840Z","182.136.216.37":"2026-09-12T23:43:02.577Z"}}
