@@ -24,7 +24,9 @@ jobs:
           node-version: '22'
 
       - name: Update plugins used by this wiki in place
-        run: npx --yes tiddlywiki-cpl@latest update --root wiki --source jsdelivr
+        # Pin to the 0.x line so a future major release cannot break the
+        # weekly auto-update without being reviewed here first.
+        run: npx --yes tiddlywiki-cpl@0 update --root wiki --source jsdelivr
 
       # Commit changed files back to the repository (wiki/plugins only)
       - uses: EndBug/add-and-commit@v10
