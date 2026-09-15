@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_echarts-gl
+plugin-title: $:/plugins/Gk0Wk/echarts-gl
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-08-09T22:29:55.330Z","downloadsByIp":{"109.245.134.19":"2026-08-09T22:29:55.330Z"}}

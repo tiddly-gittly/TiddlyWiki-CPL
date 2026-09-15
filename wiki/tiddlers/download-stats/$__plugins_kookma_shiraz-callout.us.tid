@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_kookma_shiraz-callout
+plugin-title: $:/plugins/kookma/shiraz-callout
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-01T16:08:43.942Z","downloadsByIp":{"109.245.134.19":"2026-09-01T16:08:43.942Z"}}
