@@ -1,6 +1,8 @@
 /**
  * Overlay this mirror's runtime tiddlers onto a fresh clone of GitHub master
- * and force-update data-sync/{serverId}. Never touches the live wiki worktree.
+ * and force-update data-sync/{serverId}. Corrupt local runtime files are
+ * quarantined (moved to .cpl-corrupt/ in the live worktree) instead of being
+ * overlaid, so a SIGKILL-truncated file can never empty good GitHub data.
  */
 import { spawnSync } from 'child_process';
 import * as fs from 'fs';
@@ -154,6 +156,29 @@ export const overlayServerTiddlers = ({
   serverId: string;
 }): void => {
   const suffix = serverTidSuffix(serverId);
+  const quarantineDir = path.join(sourceRoot, '.cpl-corrupt');
+
+  // A zero-byte or unparseable runtime tiddler is the signature of a SIGKILL
+  // mid-write (node restart / OOM). It must never be overlaid onto the fresh
+  // clone: doing so empties good data on GitHub (see CPL#283, where emptied
+  // download-stats reached a sync PR). Move it aside for inspection; the
+  // chart's git-sync removes .cpl-corrupt on its next clean cycle.
+  const quarantineCorruptFile = (sourceFile: string, reason: string): void => {
+    try {
+      fs.mkdirSync(quarantineDir, { recursive: true });
+      const quarantineName = `${Date.now()}-${path.basename(sourceFile)}`;
+      fs.renameSync(sourceFile, path.join(quarantineDir, quarantineName));
+      log(
+        `Quarantined corrupt runtime file: ${sourceFile} (${reason}); kept remote data`,
+      );
+    } catch (error) {
+      log(
+        `WARNING: failed to quarantine ${sourceFile} (${reason}): ${String(
+          error,
+        )}`,
+      );
+    }
+  };
 
   for (const relativePath of SYNC_PATHS) {
     const sourceDir = path.join(sourceRoot, relativePath);
@@ -169,6 +194,10 @@ export const overlayServerTiddlers = ({
       fs.mkdirSync(path.dirname(destinationFile), { recursive: true });
 
       if (relativePath !== DOWNLOAD_STATS_PATH) {
+        if (fs.statSync(sourceFile).size === 0) {
+          quarantineCorruptFile(sourceFile, 'empty runtime tiddler');
+          continue;
+        }
         fs.copyFileSync(sourceFile, destinationFile);
         continue;
       }
@@ -176,7 +205,7 @@ export const overlayServerTiddlers = ({
       const localRaw = fs.readFileSync(sourceFile, 'utf8');
       const localStats = parseStatsTiddler(localRaw);
       if (!localStats) {
-        fs.copyFileSync(sourceFile, destinationFile);
+        quarantineCorruptFile(sourceFile, 'unparseable download stats');
         continue;
       }
 
@@ -193,6 +222,21 @@ export const overlayServerTiddlers = ({
       }
 
       const merged = mergeDownloadStats(localStats, remoteStats);
+      // Defense in depth: a sync must never reduce information already on
+      // GitHub, even if a future merge regression slips in.
+      const remoteIpCount = Object.keys(remoteStats.downloadsByIp).length;
+      const mergedIpCount = Object.keys(merged.downloadsByIp).length;
+      if (
+        merged.downloadCount < remoteStats.downloadCount ||
+        mergedIpCount < remoteIpCount
+      ) {
+        log(
+          `WARNING: merging ${destinationFile} would shrink stats ` +
+            `(count ${remoteStats.downloadCount} -> ${merged.downloadCount}, ` +
+            `ips ${remoteIpCount} -> ${mergedIpCount}); keeping remote`,
+        );
+        continue;
+      }
       if (statsEqual(merged, remoteStats)) {
         continue;
       }
