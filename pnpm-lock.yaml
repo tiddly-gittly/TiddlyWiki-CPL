@@ -12,8 +12,8 @@ importers:
         specifier: ^5.3.8
         version: 5.3.8
       chalk:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^4.1.2
+        version: 4.1.2
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -31,11 +31,11 @@ importers:
         version: 14.0.0
     devDependencies:
       '@modern-js/eslint-config':
-        specifier: ^2.59.0
+        specifier: ^2.58.1
         version: 2.59.0(supports-color@8.1.1)(typescript@5.1.6)
       '@modern-js/tsconfig':
-        specifier: ^2.58.1
-        version: 2.58.1
+        specifier: ^2.68.9
+        version: 2.68.9
       '@playwright/test':
         specifier: ^1.61.0
         version: 1.61.0
@@ -1863,8 +1863,8 @@ packages:
   '@modern-js/eslint-config@2.59.0':
     resolution: {integrity: sha512-11a3XS0BYBYwQ7ejszQC78MgoitsqraRdFytYpFDe0HlYewoQQyjA6ZoPWjsW8SpKyhoOTQKZYJbyTsQA4sYDg==}
 
-  '@modern-js/tsconfig@2.58.1':
-    resolution: {integrity: sha512-zXOKaUVFUXJuTrB/ZEDj36bqWMUHMXrnj5cs7fZMtJ+tSNMoOPP4BgqzpSh2o/1O+3qV8GN2z38LbCqlaz8xkg==}
+  '@modern-js/tsconfig@2.68.9':
+    resolution: {integrity: sha512-bb3mkBw7Y6FbSqTnvXfqAdV3Fop7Y36O5+mIkJn8BCJyGYvS5zxgqBdAvvc5mMURzqLKiUUPX9Wst8n810X7Bg==}
 
   '@module-federation/runtime-tools@0.5.1':
     resolution: {integrity: sha512-nfBedkoZ3/SWyO0hnmaxuz0R0iGPSikHZOAZ0N/dVSQaIzlffUo35B5nlC2wgWIc0JdMZfkwkjZRrnuuDIJbzg==}
@@ -2786,10 +2786,6 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
-
-  chalk@5.0.0:
-    resolution: {integrity: sha512-/duVOqst+luxCQRKEo4bNxinsOQtMP80ZYm7mMqzuh5PociNL0PvmHFvREJ9ueYL2TxlHjBcmLCdmocx9Vg+IQ==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   chalk@5.6.2:
     resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
@@ -6170,7 +6166,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.29.7
       '@babel/helper-validator-option': 7.29.7
-      browserslist: 4.28.2
+      browserslist: 4.28.8
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -8142,7 +8138,7 @@ snapshots:
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
@@ -8152,8 +8148,8 @@ snapshots:
 
   '@jridgewell/remapping@2.3.5':
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
@@ -8252,7 +8248,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@modern-js/tsconfig@2.58.1': {}
+  '@modern-js/tsconfig@2.68.9': {}
 
   '@module-federation/runtime-tools@0.5.1':
     dependencies:
@@ -8599,24 +8595,24 @@ snapshots:
 
   '@types/babel__core@7.20.5':
     dependencies:
-      '@babel/parser': 7.25.3
-      '@babel/types': 7.25.2
+      '@babel/parser': 7.29.8
+      '@babel/types': 7.29.8
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.5
 
   '@types/babel__generator@7.6.8':
     dependencies:
-      '@babel/types': 7.25.2
+      '@babel/types': 7.29.8
 
   '@types/babel__template@7.4.4':
     dependencies:
-      '@babel/parser': 7.25.3
-      '@babel/types': 7.25.2
+      '@babel/parser': 7.29.8
+      '@babel/types': 7.29.8
 
   '@types/babel__traverse@7.20.5':
     dependencies:
-      '@babel/types': 7.25.2
+      '@babel/types': 7.29.8
 
   '@types/codemirror@5.60.15':
     dependencies:
@@ -9260,8 +9256,6 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-
-  chalk@5.0.0: {}
 
   chalk@5.6.2: {}
 
