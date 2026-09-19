@@ -1,0 +1,15 @@
+[
+  {
+    "tags": "$:/tags/PluginWiki",
+    "cpl.title": "$:/plugins/linonetwo/memeloop-agent-ui",
+    "cpl.name": "MemeLoop Agent UI",
+    "cpl.author": "LinOnetwo",
+    "cpl.description": "Responsive MemeLoop Agent chat workspace for a TiddlyWiki tiddler or sidebar tab",
+    "cpl.uri": "https://github.com/tiddly-gittly/tidgi-language-model/releases/latest/download/%24__plugins_linonetwo_memeloop-agent-ui.json",
+    "cpl.source": "https://github.com/tiddly-gittly/tidgi-language-model/tree/master/src/memeloop-agent-ui",
+    "cpl.core-version": ">=5.3.0",
+    "cpl.plugin-type": "plugin",
+    "cpl.dependents": "$:/plugins/linonetwo/tw-react",
+    "title": "linonetwo/memeloop-agent-ui"
+  }
+]
