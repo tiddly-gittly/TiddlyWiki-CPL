@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_kookma_pinboard
+plugin-title: $:/plugins/kookma/pinboard
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-19T02:37:45.621Z","downloadsByIp":{"39.180.88.185":"2026-09-19T02:37:45.621Z"}}

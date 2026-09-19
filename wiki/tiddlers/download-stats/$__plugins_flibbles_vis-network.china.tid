@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_flibbles_vis-network
+plugin-title: $:/plugins/flibbles/vis-network
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-09-18T06:22:39.150Z","downloadsByIp":{"61.175.241.71":"2026-09-16T04:35:02.149Z","171.88.182.23":"2026-09-18T06:22:39.150Z"}}

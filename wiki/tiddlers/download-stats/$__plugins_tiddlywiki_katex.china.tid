@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_tiddlywiki_katex
 plugin-title: $:/plugins/tiddlywiki/katex
 type: application/json
 
-{"downloadCount":1,"lastUpdated":"2026-08-08T06:31:02.610Z","downloadsByIp":{"221.236.208.96":"2026-08-08T06:31:02.610Z"}}
+{"downloadCount":2,"lastUpdated":"2026-09-17T02:54:07.218Z","downloadsByIp":{"221.236.208.96":"2026-08-08T06:31:02.610Z","223.160.127.73":"2026-09-17T02:54:07.218Z"}}

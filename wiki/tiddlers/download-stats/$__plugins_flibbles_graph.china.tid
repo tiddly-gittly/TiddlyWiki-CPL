@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_flibbles_graph
 plugin-title: $:/plugins/flibbles/graph
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-09-15T06:01:48.803Z","downloadsByIp":{"218.240.163.251":"2026-09-03T08:30:42.318Z","120.236.217.190":"2026-09-15T06:01:48.803Z"}}
+{"downloadCount":4,"lastUpdated":"2026-09-19T03:36:18.000Z","downloadsByIp":{"218.240.163.251":"2026-09-03T08:30:42.318Z","120.236.217.190":"2026-09-15T06:01:48.803Z","61.175.241.71":"2026-09-16T04:25:36.976Z","39.180.88.185":"2026-09-19T03:36:18.000Z"}}

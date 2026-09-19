@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_inverse-link-and-folder
+plugin-title: $:/plugins/linonetwo/inverse-link-and-folder
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-19T10:50:55.518Z","downloadsByIp":{"112.12.145.82":"2026-09-19T10:50:55.518Z"}}

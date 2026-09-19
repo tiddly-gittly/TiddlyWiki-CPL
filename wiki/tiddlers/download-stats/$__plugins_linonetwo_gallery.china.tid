@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_linonetwo_gallery
 plugin-title: $:/plugins/linonetwo/gallery
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-09-12T23:48:00.306Z","downloadsByIp":{"183.247.175.194":"2026-09-10T08:46:44.238Z","182.136.216.37":"2026-09-12T23:48:00.306Z"}}
+{"downloadCount":3,"lastUpdated":"2026-09-18T09:46:08.075Z","downloadsByIp":{"183.247.175.194":"2026-09-10T08:46:44.238Z","182.136.216.37":"2026-09-12T23:48:00.306Z","39.180.88.185":"2026-09-18T09:46:08.075Z"}}
