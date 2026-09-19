@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_kookma_gatha-thirdflow
+plugin-title: $:/plugins/kookma/gatha-thirdflow
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-16T09:51:41.546Z","downloadsByIp":{"120.224.18.224":"2026-09-16T09:51:41.546Z"}}

@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_TWaddle_ListTree
+plugin-title: $:/plugins/TWaddle/ListTree
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-19T11:45:08.920Z","downloadsByIp":{"112.12.144.59":"2026-09-19T11:45:08.920Z"}}

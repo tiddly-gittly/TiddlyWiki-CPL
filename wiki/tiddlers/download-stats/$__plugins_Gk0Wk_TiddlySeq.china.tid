@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_TiddlySeq
+plugin-title: $:/plugins/Gk0Wk/TiddlySeq
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-16T04:59:10.960Z","downloadsByIp":{"222.212.90.230":"2026-09-16T04:59:10.960Z"}}

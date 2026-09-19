@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_oeyoews_neotw-image-gallery
+plugin-title: $:/plugins/oeyoews/neotw-image-gallery
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-18T10:18:10.416Z","downloadsByIp":{"39.180.88.185":"2026-09-18T10:18:10.416Z"}}

@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_kookma_trashbin
 plugin-title: $:/plugins/kookma/trashbin
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-09-08T13:24:06.347Z","downloadsByIp":{"171.15.162.133":"2026-09-07T09:50:08.016Z","120.231.191.45":"2026-09-08T13:24:06.347Z"}}
+{"downloadCount":3,"lastUpdated":"2026-09-16T08:01:22.953Z","downloadsByIp":{"171.15.162.133":"2026-09-07T09:50:08.016Z","120.231.191.45":"2026-09-08T13:24:06.347Z","223.166.105.148":"2026-09-16T08:01:22.953Z"}}
