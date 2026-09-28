@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_EvidentlyCube_ExtraOperators
+plugin-title: $:/plugins/EvidentlyCube/ExtraOperators
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-23T11:38:35.123Z","downloadsByIp":{"112.12.144.169":"2026-09-23T11:38:35.123Z"}}

@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_orange_mermaid-tw5
+plugin-title: $:/plugins/orange/mermaid-tw5
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-09-25T06:26:26.801Z","downloadsByIp":{"111.29.182.165":"2026-09-21T01:48:58.842Z","39.180.64.32":"2026-09-25T06:26:26.801Z"}}

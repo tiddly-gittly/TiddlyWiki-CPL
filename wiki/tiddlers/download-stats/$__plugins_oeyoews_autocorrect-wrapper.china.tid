@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_oeyoews_autocorrect-wrapper
+plugin-title: $:/plugins/oeyoews/autocorrect-wrapper
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-09-23T15:04:51.372Z","downloadsByIp":{"112.12.144.169":"2026-09-23T15:04:51.372Z"}}
