@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_mobile-imessage-layout
+plugin-title: $:/plugins/linonetwo/mobile-imessage-layout
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-10-04T06:38:34.036Z","downloadsByIp":{"49.75.111.177":"2026-06-03T13:04:37.405Z","120.230.181.126":"2026-10-04T06:38:34.036Z"}}
