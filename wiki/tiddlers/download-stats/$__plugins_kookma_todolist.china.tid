@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_kookma_todolist
+plugin-title: $:/plugins/kookma/todolist
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-03T04:46:21.733Z","downloadsByIp":{"223.166.105.148":"2026-10-03T04:46:21.733Z"}}

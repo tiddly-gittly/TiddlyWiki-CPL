@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_EvidentlyCube_TaskList
+plugin-title: $:/plugins/EvidentlyCube/TaskList
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-03T07:13:38.448Z","downloadsByIp":{"223.166.105.148":"2026-10-03T07:13:38.448Z"}}
