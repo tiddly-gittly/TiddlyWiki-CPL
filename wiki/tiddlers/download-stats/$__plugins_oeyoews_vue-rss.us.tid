@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_oeyoews_vue-rss
+plugin-title: $:/plugins/oeyoews/vue-rss
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-23T18:03:58.941Z","downloadsByIp":{"109.245.70.98":"2026-10-23T18:03:58.941Z"}}
