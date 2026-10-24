@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_oeyoews_echarts-addons
+plugin-title: $:/plugins/oeyoews/echarts-addons
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-23T16:46:42.874Z","downloadsByIp":{"170.203.121.238":"2026-10-23T16:46:42.874Z"}}

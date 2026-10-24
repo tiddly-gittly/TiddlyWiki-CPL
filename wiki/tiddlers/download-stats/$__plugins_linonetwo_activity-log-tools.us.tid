@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_activity-log-tools
+plugin-title: $:/plugins/linonetwo/activity-log-tools
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-23T12:26:35.852Z","downloadsByIp":{"84.162.123.2":"2026-10-23T12:26:35.852Z"}}

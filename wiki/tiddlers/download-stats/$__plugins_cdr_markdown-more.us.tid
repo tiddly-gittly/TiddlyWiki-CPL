@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_cdr_markdown-more
+plugin-title: $:/plugins/cdr/markdown-more
+type: application/json
+
+{"downloadCount":5,"lastUpdated":"2026-10-24T01:57:22.686Z","downloadsByIp":{"120.227.79.83":"2026-08-07T14:59:37.993Z","59.61.24.208":"2026-08-07T08:45:18.192Z","50.36.248.182":"2026-10-24T01:57:22.686Z"}}
