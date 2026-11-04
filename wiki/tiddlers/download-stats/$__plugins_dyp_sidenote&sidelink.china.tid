@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_dyp_sidenote&sidelink
+plugin-title: $:/plugins/dyp/sidenote&sidelink
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-16T20:28:00.890Z","downloadsByIp":{"112.12.144.228":"2026-10-16T20:28:00.890Z"}}

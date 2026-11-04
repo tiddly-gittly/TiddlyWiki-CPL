@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_page-toc
+plugin-title: $:/plugins/Gk0Wk/page-toc
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-23T13:43:59.873Z","downloadsByIp":{"123.185.56.36":"2026-10-23T13:43:59.873Z"}}

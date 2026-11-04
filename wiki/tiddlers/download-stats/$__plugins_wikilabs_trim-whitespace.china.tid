@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_wikilabs_trim-whitespace
+plugin-title: $:/plugins/wikilabs/trim-whitespace
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-02T13:27:43.694Z","downloadsByIp":{"14.150.160.59":"2026-11-02T13:27:43.694Z"}}

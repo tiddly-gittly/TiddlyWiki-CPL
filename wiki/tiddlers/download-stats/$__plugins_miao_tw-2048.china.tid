@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_miao_tw-2048
+plugin-title: $:/plugins/miao/tw-2048
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-16T21:11:21.907Z","downloadsByIp":{"112.12.144.228":"2026-10-16T21:11:21.907Z"}}
