@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_tiddlywiki_markdown
 plugin-title: $:/plugins/tiddlywiki/markdown
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-09-17T02:52:58.925Z","downloadsByIp":{"59.61.24.141":"2026-09-07T06:55:05.718Z","223.160.127.73":"2026-09-17T02:52:58.925Z"}}
+{"downloadCount":3,"lastUpdated":"2026-10-15T23:56:49.690Z","downloadsByIp":{"59.61.24.141":"2026-09-07T06:55:05.718Z","223.160.127.73":"2026-09-17T02:52:58.925Z","218.24.156.80":"2026-10-15T23:56:49.690Z"}}

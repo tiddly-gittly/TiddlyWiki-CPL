@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_oeyoews_timeline
+plugin-title: $:/plugins/oeyoews/timeline
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-10-16T12:20:49.912Z","downloadsByIp":{"123.185.56.71":"2026-10-16T12:20:49.912Z"}}

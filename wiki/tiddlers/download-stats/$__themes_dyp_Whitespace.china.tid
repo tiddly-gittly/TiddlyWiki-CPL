@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__themes_dyp_Whitespace
+plugin-title: $:/themes/dyp/Whitespace
+type: application/json
+
+{"downloadCount":3,"lastUpdated":"2026-11-02T15:27:29.168Z","downloadsByIp":{"14.24.227.117":"2026-10-31T08:07:15.853Z","14.150.160.59":"2026-11-02T15:27:29.168Z"}}
