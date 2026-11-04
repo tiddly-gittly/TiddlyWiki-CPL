@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_linonetwo_tw-whiteboard
 plugin-title: $:/plugins/linonetwo/tw-whiteboard
 type: application/json
 
-{"downloadCount":2,"lastUpdated":"2026-09-16T05:03:03.522Z","downloadsByIp":{"183.198.250.19":"2026-08-30T01:31:47.245Z","59.49.12.114":"2026-09-16T05:03:03.522Z"}}
+{"downloadCount":3,"lastUpdated":"2026-11-04T11:52:56.857Z","downloadsByIp":{"183.198.250.19":"2026-08-30T01:31:47.245Z","59.49.12.114":"2026-09-16T05:03:03.522Z","123.139.139.85":"2026-11-04T11:52:56.857Z"}}
