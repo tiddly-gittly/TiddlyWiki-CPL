@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_wikilabs_space-space-newline
+plugin-title: $:/plugins/wikilabs/space-space-newline
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-06T23:31:31.040Z","downloadsByIp":{"109.245.70.98":"2026-11-06T23:31:31.040Z"}}

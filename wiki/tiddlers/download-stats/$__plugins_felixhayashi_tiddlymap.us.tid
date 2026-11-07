@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_felixhayashi_tiddlymap
+plugin-title: $:/plugins/felixhayashi/tiddlymap
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-06T08:19:13.306Z","downloadsByIp":{"109.245.70.98":"2026-11-06T08:19:13.306Z"}}
