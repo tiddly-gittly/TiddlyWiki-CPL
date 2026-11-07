@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__themes_linonetwo_itonnote
+plugin-title: $:/themes/linonetwo/itonnote
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-04T20:27:32.986Z","downloadsByIp":{"109.245.70.98":"2026-11-04T20:27:32.986Z"}}

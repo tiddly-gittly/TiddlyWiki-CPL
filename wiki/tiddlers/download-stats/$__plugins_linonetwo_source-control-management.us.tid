@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_linonetwo_source-control-management
+plugin-title: $:/plugins/linonetwo/source-control-management
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-05T11:09:01.459Z","downloadsByIp":{"109.245.70.98":"2026-11-05T11:09:01.459Z"}}

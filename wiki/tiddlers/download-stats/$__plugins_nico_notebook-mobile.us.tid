@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_nico_notebook-mobile
+plugin-title: $:/plugins/nico/notebook-mobile
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-04T20:28:40.207Z","downloadsByIp":{"109.245.70.98":"2026-11-04T20:28:40.207Z"}}
