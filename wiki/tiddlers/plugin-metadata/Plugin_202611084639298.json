@@ -1,0 +1,15 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "The `<$viewportobserver>` widget is an [[EventCatcherWidget|https://tiddlywiki.com/#EventCatcherWidget]] that can also run actions when elements enter or leave the viewport. It accepts every attribute of the eventcatcher, plus:\n\n|!Attribute |!Description |\n|$enterview |Actions run when an element matching `selector` scrolls into the viewport |\n|$leaveview |Actions run when an element that was in the viewport leaves it |\n|rootMargin |Grows or shrinks the viewport, like CSS margin, e.g. `300px` to start early (default `0px`) |\n|threshold |Visible fraction that counts as \"in view\", one or more numbers between 0 and 1 (default `0`) |\n|lazy |`yes` renders the content only when the widget's own element first comes into view (default `no`) |\n\nWithout `selector`, the widget's own element is observed. The actions get the same `dom-*` variables as the eventcatcher actions, plus `event-type` (`enterview` or `leaveview`) and `intersection-ratio`.\n\nExample: collect the titles of the rows that were scrolled into view.\n\n```\n\\procedure seenActions()\n<$action-listops $tiddler=\"$:/temp/volatile/seen\" $subfilter=\"[<dom-data-title>]\"/>\n\\end\n\n<$viewportobserver selector=\".row\" rootMargin=\"300px\" $enterview=<<seenActions>>>\n<$list filter=\"[tag[Rows]]\">\n<div class=\"row\" data-title=<<currentTiddler>>><$link/></div>\n</$list>\n</$viewportobserver>\n```\n\nWriting to a `$:/temp/volatile/` tiddler delays the refresh until scrolling pauses, so a fast scroll causes one refresh instead of many.\n\nExample: render expensive content only when it is about to scroll into view. `lazy` renders in place and changes no tiddler, so the rest of the page does not refresh.\n\n```\n<$list filter=\"[tag[Rows]]\">\n<$viewportobserver lazy=\"yes\" rootMargin=\"200% 0px\">\n<<expensive-preview>>\n</$viewportobserver>\n</$list>\n```\n\nAll widgets with the same `rootMargin` and `threshold` share one browser observer. Where the browser has no `IntersectionObserver`, e.g. when TiddlyWiki renders on Node.js, the view actions never run and `lazy` content renders at once.\n",
+        "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Fviewportobserver.json",
+        "cpl.title": "$:/plugins/wikilabs/viewportobserver",
+        "cpl.author": "pmario",
+        "cpl.name": "Viewport Observer",
+        "cpl.description": "Eventcatcher that also runs actions when elements enter or leave the viewport",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202611084639298"
+    }
+]

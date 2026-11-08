@@ -1,7 +1,7 @@
 [
     {
         "tags": "$:/tags/PluginWiki",
-        "cpl.readme": "The full documentation can be found at [[tw-mcp plugin|https://wikilabs.github.io/editions/tw-mcp/]] main page.\n\n''Since v0.14.0'' the tool handlers live in the separate [[tw-mcp-core|$:/plugins/wikilabs/tw-mcp-core]] plugin — install BOTH plugins.\n\n----\n\n''Important'': This plugin adds or modifies several core modules\n\n<$list filter=\"[[$:/plugins/wikilabs/tw-mcp]plugintiddlers[]prefix[$:/core/]]\"><$link to=<<currentTiddler>>><<currentTiddler>><br></$link></$list>",
+        "cpl.readme": "The full documentation can be found at [[tw-mcp plugin|https://wikilabs.github.io/editions/tw-mcp/]] main page.\n\n''Since v0.14.0'' most tool handlers live in the separate [[tw-mcp-core|$:/plugins/wikilabs/tw-mcp-core]] plugin; this one keeps the transports and the node-only tools. Install BOTH plugins.\n\n----\n\n''Important'': This plugin ships {{{ [[$:/plugins/wikilabs/tw-mcp]plugintiddlers[]prefix[$:/core/]count[]] }}} tiddlers in the `$:/core/` namespace. They are new modules, except where marked: that one replaces a tiddler ~TiddlyWiki ships.\n\n<details>\n<summary>''The tiddlers''</summary>\n<$list filter=\"[[$:/plugins/wikilabs/tw-mcp]plugintiddlers[]prefix[$:/core/]]\"><$link to=<<currentTiddler>>><$text text=<<currentTiddler>>/></$link><$list filter=\"[[$:/core]plugintiddlers[]match<currentTiddler>]\" variable=\"ignore\"> ''replaces a core tiddler''</$list><br></$list>\n</details>",
         "cpl.uri": "https://wikilabs.github.io/editions/pluginlibraryWL/library/latest/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fwikilabs%252Ftw-mcp.json",
         "cpl.title": "$:/plugins/wikilabs/tw-mcp",
         "cpl.author": "pmario",
