@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_kookma_section
 plugin-title: $:/plugins/kookma/section
 type: application/json
 
-{"downloadCount":3,"lastUpdated":"2026-10-19T02:47:22.684Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:13:19.408Z","171.88.182.23":"2026-09-22T06:17:01.659Z","223.104.80.165":"2026-10-19T02:47:22.684Z"}}
+{"downloadCount":4,"lastUpdated":"2026-11-09T12:36:59.452Z","downloadsByIp":{"60.190.11.50":"2026-06-04T01:13:19.408Z","171.88.182.23":"2026-09-22T06:17:01.659Z","223.104.80.165":"2026-10-19T02:47:22.684Z","120.230.180.181":"2026-11-09T12:36:59.452Z"}}
