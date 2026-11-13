@@ -1,0 +1,21 @@
+[
+    {
+        "created": "20261113230329156",
+        "text": "",
+        "title": "yan/hypergsd",
+        "modified": "20261113232522408",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Yannis Anthymidis",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.4.0",
+        "cpl.description": "Get Stuff Done in Hypermedia",
+        "cpl.documentation": "https://superuser-does.github.io/hypergsd/",
+        "cpl.name": "HyperGSD",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/superuser-does/hypergsd/tree/main/plugins/hypergsd",
+        "cpl.title": "yan/hypergsd",
+        "cpl.uri": "https://github.com/superuser-does/hypergsd/releases/latest/download/hypergsd.json",
+        "cpl.readme": "The main HyperGSD plugin, enabling you to manage your tasks better.\n\nHyperGSD is highly customisable. Out of the box, it provides a two-part way of organising your work, with discrete \"Capture\" (collecting tasks) and \"Review\" (sorting and prioritising tasks) steps.\nYou can find tools for both these processes in the sidebar.\n\nThe plugin provides:\n\n* Actions (tagged <<tag-pill $:/GSD/Action>>)\n* Projects, which can contain actions or other projects (tagged <<tag-pill $:/GSD/Project>>)\n* Realms, to help compartmentalise different domains of interest. Realms are simple tags (in the format of <<tag-pill \"$:/GSD/Realm/<RealmName>\">>), with the ability to select the realm(s) you are operating in from the //Review// sidebar tab\n* Several dashboards which can be found in the \"Review\" sidebar. These are mainly composed from re-usable lists that you can configure in HyperGSD's list settings.\n* Cleanup dashboards\n* A platform for expansion with sub-plugins and beyond."
+    }
+]

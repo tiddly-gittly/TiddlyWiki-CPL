@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20261113233051073",
+        "text": "",
+        "title": "yan/hypergsd-trashbin",
+        "modified": "20261113233051073",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Yannis Anthymidis",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.4.0",
+        "cpl.description": "Trash completed items via kookma's Trashbin instead of deleting",
+        "cpl.documentation": "https://superuser-does.github.io/hypergsd/",
+        "cpl.name": "HyperGSD Trashbin",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/superuser-does/hypergsd/tree/main/plugins/hypergsd-trashbin",
+        "cpl.title": "yan/hypergsd-trashbin",
+        "cpl.uri": "https://github.com/superuser-does/hypergsd/releases/latest/download/hypergsd-trashbin.json",
+        "cpl.readme": "A sub-plugin of [[HyperGSD|$:/plugins/yan/hypergsd]] that adds a button to move completed items to the trashbin, instead of deleting them outright.\nDepends on Mohammad Rahmani's Trashbin ([[$:/plugins/kookma/trashbin]]).\n\nBy default, the trashbin button will coexist with the regular <button disabled>{{$:/core/images/delete-button}}&nbsp;{{$:/language/Buttons/Delete/Caption}}</button> button.\nTo hide the standard <button disabled>{{$:/core/images/delete-button}}&nbsp;{{$:/language/Buttons/Delete/Caption}}</button> button, open [[$:/plugins/yan/hypergsd/ui/list-items/delete]] and untag <<tag $:/tags/hypergsd/Fragment/Row/Suffix>>, or just press this button: <$button>hide {{$:/core/images/delete-button}}&nbsp;{{$:/language/Buttons/Delete/Caption}} button<$action-listops $tiddler=\"$:/plugins/yan/hypergsd/ui/list-items/delete\" $tags=\"-[[$:/tags/hypergsd/Fragment/Row/Suffix]]\" /></$button>",
+        "cpl.parent-plugin": "$:/plugins/yan/hypergsd"
+    }
+]
