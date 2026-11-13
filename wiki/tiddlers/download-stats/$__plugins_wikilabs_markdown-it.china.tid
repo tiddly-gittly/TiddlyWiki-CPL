@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_wikilabs_markdown-it
+plugin-title: $:/plugins/wikilabs/markdown-it
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-12T10:15:11.458Z","downloadsByIp":{"153.101.144.82":"2026-11-12T10:15:11.458Z"}}
