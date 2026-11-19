@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_Gk0Wk_notionpage-backlink
+plugin-title: $:/plugins/Gk0Wk/notionpage-backlink
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-13T10:51:59.134Z","downloadsByIp":{"109.245.70.98":"2026-11-13T10:51:59.134Z"}}
