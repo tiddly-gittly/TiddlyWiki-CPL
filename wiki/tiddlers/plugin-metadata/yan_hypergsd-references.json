@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20261113233051073",
+        "text": "",
+        "title": "yan/hypergsd-references",
+        "modified": "20261113233051073",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Yannis Anthymidis",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.4.0",
+        "cpl.description": "References for HyperGSD",
+        "cpl.documentation": "https://superuser-does.github.io/hypergsd/",
+        "cpl.name": "HyperGSD References",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/superuser-does/hypergsd/tree/main/plugins/hypergsd-references",
+        "cpl.title": "yan/hypergsd-references",
+        "cpl.uri": "https://github.com/superuser-does/hypergsd/releases/latest/download/hypergsd-references.json",
+        "cpl.readme": "''HyperGSD References'' is a sub-plugin of [[HyperGSD|$:/plugins/yan/hypergsd]] that adds the //Reference// type and lists to make references easy to review.\n\nReferences are supporting material for your projects. It is an easy way to create additional tiddlers that are in context of your project, and existing your realm(s) of interest.\n\nEach reference is tagged with <<tag-pill $:/GSD/Reference>> and can be put under a project through the `gsd_project` field.\n\nYour collected references can be viewed either in project panels, or all together in the [[GSD/References]] dashboard. As with most things in HyperGSD, you can filter the dashboard using your realm selector.",
+        "cpl.parent-plugin": "$:/plugins/yan/hypergsd"
+    }
+]
