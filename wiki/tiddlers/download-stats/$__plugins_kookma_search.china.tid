@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_kookma_search
+plugin-title: $:/plugins/kookma/search
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-11-15T07:57:10.398Z","downloadsByIp":{"84.98.147.5":"2026-10-20T16:32:11.953Z","120.230.180.249":"2026-11-15T07:57:10.398Z"}}
