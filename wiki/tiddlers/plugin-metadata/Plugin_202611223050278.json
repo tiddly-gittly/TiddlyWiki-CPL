@@ -1,0 +1,14 @@
+[
+    {
+        "tags": "$:/tags/PluginWiki",
+        "cpl.readme": "Open any tiddler in a draggable, resizable pane that floats over the main\nstory river, without leaving the current window. Panes render through the\nnormal `ViewTemplate`/`EditTemplate` cascade, so any installed content-type\nplugin (parsers, editors) works inside a pane exactly as it does in the main\nwindow.\n\nPanes are pure UI state (`$:/state/tearoff/<tiddler title>`) with no\nboot-time restore -- closing or reopening the document, or clicking Home,\nclears them the same way any tiddler not listed in `$:/DefaultTiddlers`\nwould be cleared.\n",
+        "cpl.uri": "https://mmerlin.github.io/tw-phriendly-library/recipes/library/tiddlers/%2524%253A%252Fplugins%252Fphriendly%252Ftearoff-panes.json",
+        "cpl.title": "$:/plugins/phriendly/tearoff-panes",
+        "cpl.author": "H. Phil Duby",
+        "cpl.description": "Open tiddlers in draggable, resizable panes within the current window",
+        "cpl.plugin-type": "plugin",
+        "cpl.dependents": "",
+        "cpl.core-version": ">=5.3.0",
+        "title": "Plugin_202611223050278"
+    }
+]
