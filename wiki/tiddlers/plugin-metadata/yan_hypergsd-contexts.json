@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20261113233051073",
+        "text": "",
+        "title": "yan/hypergsd-contexts",
+        "modified": "20261113233051073",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Yannis Anthymidis",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.4.0",
+        "cpl.description": "Contexts for HyperGSD",
+        "cpl.documentation": "https://superuser-does.github.io/hypergsd/",
+        "cpl.name": "HyperGSD Contexts",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/superuser-does/hypergsd/tree/main/plugins/hypergsd-contexts",
+        "cpl.title": "yan/hypergsd-contexts",
+        "cpl.uri": "https://github.com/superuser-does/hypergsd/releases/latest/download/hypergsd-contexts.json",
+        "cpl.readme": "''HyperGSD Contexts'' is a sub-plugin of [[HyperGSD|$:/plugins/yan/hypergsd]] that adds the //Context// type and has the following benefits:\n\n* Offers easy ways to enter context on GSD tiddlers\n* Offers dashboards and grouping mechanisms to look through your actions/projects by context:\n** On the [[GSD/Contexts]] dashboard\n** On individual contexts you create.\n\nContexts are ordinary tags, which are in turn tagged with <<tag GSD/Contexts>>.\nBeing simple tags, context will be automatically inherited when you create actions from a tiddler.\n\nYou can add as many contexts as you want to action or project tiddlers.\n\nThe plugin also ships with a button in lists that lets you quickly contextualise an action or project.",
+        "cpl.parent-plugin": "$:/plugins/yan/hypergsd"
+    }
+]

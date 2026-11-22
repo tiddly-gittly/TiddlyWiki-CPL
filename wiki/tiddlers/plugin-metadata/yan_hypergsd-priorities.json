@@ -1,0 +1,22 @@
+[
+    {
+        "created": "20261113233051073",
+        "text": "",
+        "title": "yan/hypergsd-priorities",
+        "modified": "20261113233555655",
+        "tags": "$:/tags/PluginWiki",
+        "type": "text/vnd.tiddlywiki",
+        "cpl.author": "Yannis Anthymidis",
+        "cpl.category": "Functional",
+        "cpl.core-version": ">=5.4.0",
+        "cpl.description": "Priorities for HyperGSD",
+        "cpl.documentation": "https://superuser-does.github.io/hypergsd/",
+        "cpl.name": "HyperGSD Priorities",
+        "cpl.plugin-type": "plugin",
+        "cpl.source": "https://github.com/superuser-does/hypergsd/tree/main/plugins/hypergsd-priorities",
+        "cpl.title": "yan/hypergsd-priorities",
+        "cpl.uri": "https://github.com/superuser-does/hypergsd/releases/latest/download/hypergsd-priorities.json",
+        "cpl.readme": "A set of three priorities you can apply to HyperGSD actions and projects.\n\n| Field | Meaning |h\n| `gsd_priority` | `A` (high), `B` (medium) or `C` (low). Empty is treated as not set. |\n\nYou can configure the appearance of these priorities and set the default priority in the [[Priorities settings|$:/plugins/yan/hypergsd-priorities/ui/control-panel/priorities]].\n\n! Where priorities appear\n\n* Action and project panels\n** Option to enable in modals\n* Action and project list rows\n* Every list's ''Sort by'' control gains a ''Priority'' option\n* Every list's ''Group by'' control gains a ''Priority'' option",
+        "cpl.parent-plugin": "$:/plugins/yan/hypergsd"
+    }
+]
