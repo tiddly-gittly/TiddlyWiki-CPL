@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_tiddlywiki_text-slicer
+plugin-title: $:/plugins/tiddlywiki/text-slicer
+type: application/json
+
+{"downloadCount":1,"lastUpdated":"2026-11-22T10:45:28.294Z","downloadsByIp":{"179.255.110.250":"2026-11-22T10:45:28.294Z"}}
