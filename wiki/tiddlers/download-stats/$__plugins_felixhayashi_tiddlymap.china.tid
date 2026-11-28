@@ -2,4 +2,4 @@ title: $:/cpl/download-stats/$__plugins_felixhayashi_tiddlymap
 plugin-title: $:/plugins/felixhayashi/tiddlymap
 type: application/json
 
-{"downloadCount":1,"lastUpdated":"2026-10-03T04:44:42.651Z","downloadsByIp":{"223.166.105.148":"2026-10-03T04:44:42.651Z"}}
+{"downloadCount":2,"lastUpdated":"2026-11-27T02:38:42.034Z","downloadsByIp":{"223.166.105.148":"2026-10-03T04:44:42.651Z","153.101.144.82":"2026-11-27T02:38:42.034Z"}}
