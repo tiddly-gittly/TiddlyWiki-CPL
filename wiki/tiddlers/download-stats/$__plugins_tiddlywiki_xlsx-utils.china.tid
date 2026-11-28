@@ -1,0 +1,5 @@
+title: $:/cpl/download-stats/$__plugins_tiddlywiki_xlsx-utils
+plugin-title: $:/plugins/tiddlywiki/xlsx-utils
+type: application/json
+
+{"downloadCount":2,"lastUpdated":"2026-11-25T01:07:01.964Z","downloadsByIp":{"124.114.241.155":"2026-11-25T00:52:16.267Z","124.114.244.100":"2026-11-25T01:07:01.964Z"}}
